@@ -81,13 +81,13 @@ MaterialManager::MaterialManager()
    Con::addVariableNotify( "$pref::Video::defaultAnisotropy", callabck );
 
    Con::NotifyDelegate callabck2( this, &MaterialManager::_onDisableMaterialFeature );
-   Con::setVariable( "$pref::Video::disableNormalMapping", false );
+   Con::setVariable( "$pref::Video::disableNormalMapping", "false" );
    Con::addVariableNotify( "$pref::Video::disableNormalMapping", callabck2 );
-   Con::setVariable( "$pref::Video::disablePixSpecular", false );
+   Con::setVariable( "$pref::Video::disablePixSpecular", "false" );
    Con::addVariableNotify( "$pref::Video::disablePixSpecular", callabck2 );
-   Con::setVariable( "$pref::Video::disableCubemapping", false );
+   Con::setVariable( "$pref::Video::disableCubemapping", "false" );
    Con::addVariableNotify( "$pref::Video::disableCubemapping", callabck2 );
-   Con::setVariable( "$pref::Video::disableParallaxMapping", false );
+   Con::setVariable( "$pref::Video::disableParallaxMapping", "false" );
    Con::addVariableNotify( "$pref::Video::disableParallaxMapping", callabck2 );
 }
 
