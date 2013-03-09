@@ -48,6 +48,7 @@
 
 #include "gfx/gl/ggl/generated/glc.h"
 #include "gfx/gl/ggl/generated/gle.h"
+#define __gl_h_
 
 
 //-----------------------------------------------------------------------------

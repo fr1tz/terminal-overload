@@ -40,6 +40,7 @@
 #include "materials/baseMatInstance.h"
 #include "materials/sceneData.h"
 #include "math/util/matrixSet.h"
+#include "gfx/gfxDebugEvent.h"
 
 
 IMPLEMENT_CO_NETOBJECT_V1(Sun);
@@ -440,6 +441,7 @@ void Sun::_initCorona()
 
 void Sun::_renderCorona( ObjectRenderInst *ri, SceneRenderState *state, BaseMatInstance *overrideMat )
 {   
+    GFXDEBUGEVENT_SCOPE( Sun_renderCorona, ColorF::WHITE );
    // Calculate Billboard Radius (in world units) to be constant, independent of distance.
    // Takes into account distance, viewport size, and specified size in editor
    F32 BBRadius = mCoronaWorldRadius;

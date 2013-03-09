@@ -117,7 +117,10 @@ switch( Generator::$platform )
    case "linux":
      addEngineSrcDir('platformX86UNIX');
      addEngineSrcDir('platformX86UNIX/threads');
+     addEngineSrcDir('platformX86UNIX/nativeDialogs');
+     addEngineSrcDir('platformX86UNIX/menus');
      addEngineSrcDir('platformPOSIX');
+     addEngineSrcDir('windowManager/x11');
      break;
 }
 
@@ -138,12 +141,17 @@ switch( Generator::$platform )
       addEngineSrcDir( 'gfx/D3D' );
       addEngineSrcDir( 'gfx/D3D9' );
       addEngineSrcDir( 'gfx/D3D9/pc' );
-      addEngineSrcDir( 'shaderGen/HLSL' );
+      //addEngineSrcDir( 'shaderGen/HLSL' );
+      addEngineSrcDir( 'gfx/gl' );
+      addEngineSrcDir( 'gfx/gl/ggl' );
+      addEngineSrcDir( 'gfx/gl/ggl/generated' );
+      addEngineSrcDir( 'gfx/gl/ggl/win32' );
+      //addEngineSrcDir( 'shaderGen/GLSL' );
       break;
    case "360":
       addEngineSrcDir( 'gfx/D3D9' );
       addEngineSrcDir( 'gfx/D3D9/360' );
-      addEngineSrcDir( 'shaderGen/HLSL' );
+      //addEngineSrcDir( 'shaderGen/HLSL' );
       addEngineSrcDir( 'shaderGen/360' );
       break;
    case "mac":
@@ -153,16 +161,17 @@ switch( Generator::$platform )
       addEngineSrcDir( 'gfx/gl' );
       addEngineSrcDir( 'gfx/gl/ggl' );
       addEngineSrcDir( 'gfx/gl/ggl/generated' );
-      addEngineSrcDir( 'shaderGen/GLSL' );
+      //addEngineSrcDir( 'shaderGen/GLSL' );
       break;
    case "linux":
    case "linux_dedicated":
-      //addEngineSrcDir( 'gfx/gl/ggl/x11' ); // This one is not yet implemented!
       // GFX - GGL
       addEngineSrcDir( 'gfx/gl' );
+      addEngineSrcDir( 'gfx/gl/x11' );
       addEngineSrcDir( 'gfx/gl/ggl' );
       addEngineSrcDir( 'gfx/gl/ggl/generated' );
-      addEngineSrcDir( 'shaderGen/GLSL' );
+      addEngineSrcDir( 'gfx/gl/ggl/x11' );
+      //addEngineSrcDir( 'shaderGen/GLSL' );
       break;
    case "ps3":
       addEngineSrcDir( 'gfx/gl/ggl/ps3' );
@@ -171,7 +180,7 @@ switch( Generator::$platform )
       addEngineSrcDir( 'gfx/gl' );
       addEngineSrcDir( 'gfx/gl/ggl' );
       addEngineSrcDir( 'gfx/gl/ggl/generated' );
-      addEngineSrcDir( 'shaderGen/GLSL' );
+      //addEngineSrcDir( 'shaderGen/GLSL' );
       break;
 }
 
@@ -200,12 +209,23 @@ addIncludePath( getAppLibSrcDir() ); 	   // main lib source dir relative to app 
 
 if ( Generator::$platform == "win32" )
 {
-   addIncludePath( getAppLibSrcDir() . 'directx8' );
-   addIncludePath( getAppLibSrcDir() . 'openal/win32' );
+}
+
+switch( Generator::$platform )
+{
+   case "win32":
+      addIncludePath( getAppLibSrcDir() . 'directx8' );
+      addIncludePath( getAppLibSrcDir() . 'openal/win32' );
    
-   addProjectLibDir( getAppLibSrcDir() . 'SDL/win32' );
-   addProjectLibDir( getAppLibSrcDir() . 'unicode' );
-   addProjectLibDir( getAppLibSrcDir() . 'directx8' );
+      addProjectLibDir( getAppLibSrcDir() . 'SDL/win32' );
+      addProjectLibDir( getAppLibSrcDir() . 'unicode' );
+      addProjectLibDir( getAppLibSrcDir() . 'directx8' );
+      
+      addProjectLibInput("Opengl32.lib");
+      break;
+   case "linux":
+      addIncludePath( '/usr/include/freetype2/' );
+      break;
 }
 
 ?>

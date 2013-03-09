@@ -23,11 +23,9 @@
 
 singleton ShaderData( BL_ShadowFilterShaderV )
 {   
-   DXVertexShaderFile 	= "shaders/common/lighting/basic/shadowFilterV.hlsl";
-   DXPixelShaderFile 	= "shaders/common/lighting/basic/shadowFilterP.hlsl";
+   CGVertexShaderFile 	= "shaders/common/lighting/basic/shadowFilterV.cg";
+   CGPixelShaderFile 	= "shaders/common/lighting/basic/shadowFilterP.cg";
    
-   OGLVertexShaderFile 	= "shaders/common/lighting/basic/gl/shadowFilterV.glsl";
-   OGLPixelShaderFile 	= "shaders/common/lighting/basic/gl/shadowFilterP.glsl";
 
    samplerNames[0] = "$diffuseMap";
 

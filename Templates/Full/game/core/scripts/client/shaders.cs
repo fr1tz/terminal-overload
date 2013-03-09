@@ -27,11 +27,9 @@
 
 singleton ShaderData( _DebugInterior_ )
 {
-   DXVertexShaderFile   = "shaders/common/debugInteriorsV.hlsl";
-   DXPixelShaderFile    = "shaders/common/debugInteriorsP.hlsl";
+   CGVertexShaderFile   = "shaders/common/debugInteriorsV.cg";
+   CGPixelShaderFile    = "shaders/common/debugInteriorsP.cg";
    
-   OGLVertexShaderFile   = "shaders/common/gl/debugInteriorsV.glsl";
-   OGLPixelShaderFile    = "shaders/common/gl/debugInteriorsP.glsl";
    
    samplerNames[0] = "$diffuseMap";
    
@@ -40,23 +38,17 @@ singleton ShaderData( _DebugInterior_ )
 
 singleton ShaderData( ParticlesShaderData )
 {
-   DXVertexShaderFile     = "shaders/common/particlesV.hlsl";
-   DXPixelShaderFile      = "shaders/common/particlesP.hlsl";   
-   
-   OGLVertexShaderFile     = "shaders/common/gl/particlesV.glsl";
-   OGLPixelShaderFile      = "shaders/common/gl/particlesP.glsl";
-   
+   CGVertexShaderFile     = "shaders/common/particlesV.cg";
+   CGPixelShaderFile      = "shaders/common/particlesP.cg";   
+      
    pixVersion = 2.0;
 };
 
 singleton ShaderData( OffscreenParticleCompositeShaderData )
 {
-   DXVertexShaderFile     = "shaders/common/particleCompositeV.hlsl";
-   DXPixelShaderFile      = "shaders/common/particleCompositeP.hlsl";
-   
-   OGLVertexShaderFile     = "shaders/common/gl/particleCompositeV.glsl";
-   OGLPixelShaderFile      = "shaders/common/gl/particleCompositeP.glsl";
-   
+   CGVertexShaderFile     = "shaders/common/particleCompositeV.cg";
+   CGPixelShaderFile      = "shaders/common/particleCompositeP.cg";
+      
    pixVersion = 2.0;
 };
 
@@ -65,11 +57,8 @@ singleton ShaderData( OffscreenParticleCompositeShaderData )
 //-----------------------------------------------------------------------------
 new ShaderData( ReflectBump )
 {
-   DXVertexShaderFile 	= "shaders/common/planarReflectBumpV.hlsl";
-   DXPixelShaderFile 	= "shaders/common/planarReflectBumpP.hlsl";
-   
-   OGLVertexShaderFile 	= "shaders/common/gl/planarReflectBumpV.glsl";
-   OGLPixelShaderFile 	= "shaders/common/gl/planarReflectBumpP.glsl";
+   CGVertexShaderFile 	= "shaders/common/planarReflectBumpV.cg";
+   CGPixelShaderFile 	= "shaders/common/planarReflectBumpP.cg";
               
    samplerNames[0] = "$diffuseMap";
    samplerNames[1] = "$refractMap";
@@ -80,12 +69,9 @@ new ShaderData( ReflectBump )
 
 new ShaderData( Reflect )
 {
-   DXVertexShaderFile 	= "shaders/common/planarReflectV.hlsl";
-   DXPixelShaderFile 	= "shaders/common/planarReflectP.hlsl";
-   
-   OGLVertexShaderFile 	= "shaders/common/gl/planarReflectV.glsl";
-   OGLPixelShaderFile 	= "shaders/common/gl/planarReflectP.glsl";
-   
+   CGVertexShaderFile 	= "shaders/common/planarReflectV.cg";
+   CGPixelShaderFile 	= "shaders/common/planarReflectP.cg";
+      
    samplerNames[0] = "$diffuseMap";
    samplerNames[1] = "$refractMap";
    
@@ -97,12 +83,9 @@ new ShaderData( Reflect )
 //-----------------------------------------------------------------------------
 new ShaderData( fxFoliageReplicatorShader )
 {
-   DXVertexShaderFile 	= "shaders/common/fxFoliageReplicatorV.hlsl";
-   DXPixelShaderFile 	= "shaders/common/fxFoliageReplicatorP.hlsl";
+   CGVertexShaderFile 	= "shaders/common/fxFoliageReplicatorV.cg";
+   CGPixelShaderFile 	= "shaders/common/fxFoliageReplicatorP.cg";
    
-   OGLVertexShaderFile  = "shaders/common/gl/fxFoliageReplicatorV.glsl";
-   OGLPixelShaderFile   = "shaders/common/gl/fxFoliageReplicatorP.glsl";
-
    samplerNames[0] = "$diffuseMap";
    samplerNames[1] = "$alphaMap";
    

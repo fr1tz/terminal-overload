@@ -23,8 +23,6 @@
 #include "platform/platform.h"
 #include "T3D/sfx/sfxSpace.h"
 
-#include "scene/mixin/sceneAmbientSoundObject.impl.h"
-#include "scene/mixin/scenePolyhedralObject.impl.h"
 #include "console/engineAPI.h"
 
 

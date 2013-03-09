@@ -32,16 +32,16 @@ $LightRayPostFX::resolutionScale = 1.0;
 
 singleton ShaderData( LightRayOccludeShader )
 {
-   DXVertexShaderFile 	= "shaders/common/postFx/postFxV.hlsl";
-   DXPixelShaderFile 	= "shaders/common/postFx/lightRay/lightRayOccludeP.hlsl";
+   CGVertexShaderFile 	= "shaders/common/postFx/postFxV.cg";
+   CGPixelShaderFile 	= "shaders/common/postFx/lightRay/lightRayOccludeP.cg";
 
    pixVersion = 3.0;   
 };
 
 singleton ShaderData( LightRayShader )
 {
-   DXVertexShaderFile 	= "shaders/common/postFx/postFxV.hlsl";
-   DXPixelShaderFile 	= "shaders/common/postFx/lightRay/lightRayP.hlsl";
+   CGVertexShaderFile 	= "shaders/common/postFx/postFxV.cg";
+   CGPixelShaderFile 	= "shaders/common/postFx/lightRay/lightRayP.cg";
 
    pixVersion = 3.0;   
 };

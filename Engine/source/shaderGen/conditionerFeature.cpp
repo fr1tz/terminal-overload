@@ -149,14 +149,17 @@ void ConditionerFeature::_updateConditioners()
 {
    smDirtyConditioners = false;
 
-   String includePath = "shadergen:/" + ConditionerIncludeFileName;
+   if( smConditioners.size() > 0 )
+   {
+       String includePath = "shaders/shadergen/" + ConditionerIncludeFileName;
 
-   FileStream stream;
-   if ( !stream.open( includePath, Torque::FS::File::Write ) )
-      return;
+       FileStream stream;
+       if ( !stream.open( includePath, Torque::FS::File::Write ) )
+          return;
 
-   for ( U32 i=0; i < smConditioners.size(); i++ )
-      smConditioners[i]->_print( &stream );
+       for ( U32 i=0; i < smConditioners.size(); i++ )
+          smConditioners[i]->_print( &stream );
+   }
 }
 
 Var *ConditionerFeature::printMethodHeader( MethodType methodType, const String &methodName, Stream &stream, MultiLine *meta )

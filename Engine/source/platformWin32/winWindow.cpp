@@ -231,6 +231,41 @@ bool Platform::AlertRetry(const char *windowTitle, const char *message)
 #endif
 }
 
+Platform::ALERT_ASSERT_RESULT Platform::AlertAssert(const char *windowTitle, const char *message)
+{
+#ifndef TORQUE_TOOLS
+   ShowCursor(true);
+#endif // TORQUE_TOOLS
+
+#ifdef UNICODE
+   UTF16 messageUTF[1024], title[512];
+   convertUTF8toUTF16((UTF8 *)windowTitle, title, sizeof(title));
+   convertUTF8toUTF16((UTF8 *)message, messageUTF, sizeof(messageUTF));
+#else
+   const char* messageUTF = message;
+   const char* title = windowTitle;
+#endif
+
+   // TODO: Change this to a custom dialog that has Exit, Ignore, Ignore All, and Debug buttons
+   ALERT_ASSERT_RESULT alertResult = ALERT_ASSERT_DEBUG;
+   int result = MessageBox(winState.appWindow, messageUTF, title, MB_ABORTRETRYIGNORE | MB_ICONSTOP | MB_DEFBUTTON2 | MB_TASKMODAL | MB_SETFOREGROUND);
+   switch( result )
+   {
+		case IDABORT:
+			alertResult = ALERT_ASSERT_EXIT;
+			break;
+		case IDIGNORE:
+			alertResult = ALERT_ASSERT_IGNORE;
+			break;
+		default:
+		case IDRETRY:
+			alertResult = ALERT_ASSERT_DEBUG;
+			break;
+   }
+
+   return alertResult;
+}
+
 //--------------------------------------
 HIMC gIMEContext;
 

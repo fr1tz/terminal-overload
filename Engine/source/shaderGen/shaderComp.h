@@ -70,6 +70,7 @@ protected:
    Vector <Var*> mElementList;
 
    U32 mCurTexElem;
+   bool mTexCoordMap[NUM_TEX_REGS];
    U8 mName[32];
 
 public:
@@ -80,20 +81,42 @@ public:
    ///
    virtual Var* getElement(   RegisterType type, 
                               U32 numElements = 1, 
-                              U32 numRegisters = -1 ) = 0;
+                              U32 numRegisters = 1 );
+   virtual Var* getIndexedElement(  S32 index,
+                                    RegisterType type, 
+                                    U32 numElements = 1, 
+                                    U32 numRegisters = 1 );
 
-   virtual void setName( char *newName ) = 0;
-   virtual void reset() = 0;
-   virtual void sortVars() = 0;
+   virtual void setName( char *newName );
+   virtual void reset();
+   virtual void sortVars();
 
-   virtual void print( Stream &stream ) = 0;
+   virtual void print( Stream &stream );
+
+private:
+    S32 _allocTexCoord(U32 numRegistersNeeded, S32 requestedIndex = -1);
+    bool _isTexCoordBlockAvailable(S32 index, U32 numRegistersNeeded);
+    void _setTexCoordBlockAllocated(S32 index, U32 numRegisters);
 };
 
 /// This is to provide common functionalty needed by vertex and pixel main defs
 class ParamsDef : public ShaderComponent
 {
 protected:
-   virtual void assignConstantNumbers() {}
+   virtual void assignConstantNumbers();
+};
+
+class VertexParamsDef : public ParamsDef
+{
+public:
+   virtual void print( Stream &stream );
+};
+
+
+class PixelParamsDef : public ParamsDef
+{
+public:
+   virtual void print( Stream &stream );
 };
 
 #endif // _SHADERCOMP_H_

@@ -23,8 +23,8 @@
 
 singleton ShaderData( PFX_GlowBlurVertShader )
 {
-   DXVertexShaderFile 	= "shaders/common/postFx/glowBlurV.hlsl";
-   DXPixelShaderFile 	= "shaders/common/postFx/glowBlurP.hlsl";
+   CGVertexShaderFile 	= "shaders/common/postFx/glowBlurV.cg";
+   CGPixelShaderFile 	= "shaders/common/postFx/glowBlurP.cg";
    
 //   OGLVertexShaderFile  = "shaders/common/postFx/glowBlurV.glsl";
 //   OGLPixelShaderFile   = "shaders/common/postFx/glowBlurP.glsl";

@@ -22,5 +22,3 @@
 
 #include "platform/platform.h"
 #include "scene/scenePolyhedralSpace.h"
-
-#include "scene/mixin/scenePolyhedralObject.impl.h"

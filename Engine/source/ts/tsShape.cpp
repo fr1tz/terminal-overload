@@ -578,8 +578,8 @@ void TSShape::initVertexFeatures()
    mVertSize = ( hasTexcoord2 || hasColors ) ? sizeof(TSMesh::__TSMeshVertex_3xUVColor) : sizeof(TSMesh::__TSMeshVertexBase);
    mVertexFormat.clear();
   
-   mVertexFormat.addElement( GFXSemantic::POSITION, GFXDeclType_Float3 );
-   mVertexFormat.addElement( GFXSemantic::TANGENTW, GFXDeclType_Float, 3 );
+   mVertexFormat.addElement( GFXSemantic::POSITION, GFXDeclType_Float4 );
+   //mVertexFormat.addElement( GFXSemantic::TANGENTW, GFXDeclType_Float, 3 );
    mVertexFormat.addElement( GFXSemantic::NORMAL, GFXDeclType_Float3 );
    mVertexFormat.addElement( GFXSemantic::TANGENT, GFXDeclType_Float3 );
 

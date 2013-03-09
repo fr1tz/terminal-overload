@@ -82,8 +82,6 @@ switch( Generator::$platform )
       // Fall through
       
    case "win32":
-      addEngineSrcDir( 'terrain/hlsl' );
-      addEngineSrcDir( 'forest/hlsl' );
       break;
 
    case "ps3":
@@ -93,8 +91,6 @@ switch( Generator::$platform )
    case "mac":
    case "linux":
    case "linux_dedicated":
-      addEngineSrcDir( 'terrain/glsl' );
-      addEngineSrcDir( 'forest/glsl' );
       break;
 }
 

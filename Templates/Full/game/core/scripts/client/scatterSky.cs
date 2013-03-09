@@ -38,11 +38,9 @@ new GFXStateBlockData( ScatterSkySBData )
 
 singleton ShaderData( ScatterSkyShaderData )
 {
-   DXVertexShaderFile     = "shaders/common/scatterSkyV.hlsl";
-   DXPixelShaderFile      = "shaders/common/scatterSkyP.hlsl";   
-   
-   OGLVertexShaderFile     = "shaders/common/gl/scatterSkyV.glsl";
-   OGLPixelShaderFile      = "shaders/common/gl/scatterSkyP.glsl";   
+   CGVertexShaderFile     = "shaders/common/scatterSkyV.cg";
+   CGPixelShaderFile      = "shaders/common/scatterSkyP.cg";   
+    
    
    pixVersion = 2.0;
 };

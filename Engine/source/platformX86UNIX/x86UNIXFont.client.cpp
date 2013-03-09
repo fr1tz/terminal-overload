@@ -35,48 +35,48 @@
 #include <X11/Xos.h>
 #include <X11/Xatom.h>
 #include <X11/Xft/Xft.h>
-#include <X11/extensions/Xrender.h>      // For XRenderColor
+//#include <X11/extensions/Xrender.h>      // For XRenderColor
 
 // Needed for getenv in createFont
 #include <stdlib.h>
 XftFont *loadFont(const char *name, S32 size, Display *display)
 {
-  XftFont *fontInfo = NULL;
-  char* fontname = const_cast<char*>(name);
-  if (dStrlen(fontname)==0)
-    fontname = "arial";
-  else if (stristr(const_cast<char*>(name), "arial") != NULL)
-    fontname = "arial";
-  else if (stristr(const_cast<char*>(name), "lucida console") != NULL)
-    fontname = "lucida console";
+    XftFont *fontInfo = NULL;
+    const char* fontname = name;
+    if (dStrlen(fontname)==0)
+        fontname = "arial";
+    else if (stristr(name, "arial") != NULL)
+        fontname = "arial";
+    else if (stristr(name, "lucida console") != NULL)
+        fontname = "lucida console";
+    
+    const char* weight = "medium";
+    const char* slant = "roman"; // no slant
 
-  char* weight = "medium";
-  char* slant = "roman"; // no slant
-
-  if (stristr(const_cast<char*>(name), "bold") != NULL)
-    weight = "bold";
-  if (stristr(const_cast<char*>(name), "italic") != NULL)
-    slant = "italic";
-
-  int mSize = size - 2 - (int)((float)size * 0.1);
-  char xfontName[512];
-  // We specify a lower DPI to get 'correct' looking fonts, if we go with the
-  // native DPI the fonts are to big and don't fit the widgets.
-  dSprintf(xfontName, 512, "%s-%d:%s:slant=%s:dpi=76", fontname, mSize, weight, slant);
-
-  // Lets see if Xft can get a font for us.
-  char xftname[1024];
-  fontInfo = XftFontOpenName(display, DefaultScreen(display), xfontName);
-  // Cant find a suitabke font, default to a known font (6x10)
-  if ( !fontInfo )
+    if (stristr(name, "bold") != NULL)
+        weight = "bold";
+    if (stristr(name, "italic") != NULL)
+        slant = "italic";
+    
+    int mSize = size - 2 - (int)((float)size * 0.1);
+    char xfontName[512];
+    // We specify a lower DPI to get 'correct' looking fonts, if we go with the
+    // native DPI the fonts are to big and don't fit the widgets.
+    dSprintf(xfontName, 512, "%s-%d:%s:slant=%s:dpi=76", fontname, mSize, weight, slant);
+    
+    // Lets see if Xft can get a font for us.
+    char xftname[1024];
+    fontInfo = XftFontOpenName(display, DefaultScreen(display), xfontName);
+    // Cant find a suitabke font, default to a known font (6x10)
+    if ( !fontInfo )
     {
-  	dSprintf(xfontName, 512, "6x10-%d:%s:slant=%s:dpi=76", mSize, weight, slant);
-      fontInfo = XftFontOpenName(display, DefaultScreen(display), xfontName);
+        dSprintf(xfontName, 512, "6x10-%d:%s:slant=%s:dpi=76", mSize, weight, slant);
+        fontInfo = XftFontOpenName(display, DefaultScreen(display), xfontName);
     }
-      XftNameUnparse(fontInfo->pattern, xftname, 1024);
+    XftNameUnparse(fontInfo->pattern, xftname, 1024);
 
 #ifdef DEBUG
-      Con::printf("Font '%s %d' mapped to '%s'\n", name, size, xftname);
+    Con::printf("Font '%s %d' mapped to '%s'\n", name, size, xftname);
 #endif
 
   return fontInfo;
@@ -345,4 +345,3 @@ PlatformFont::CharInfo &x86UNIXFont::getCharInfo(const UTF8 *str) const
 {
   return getCharInfo(oneUTF32toUTF16(oneUTF8toUTF32(str,NULL)));
 }
-

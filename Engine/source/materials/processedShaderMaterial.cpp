@@ -1031,7 +1031,7 @@ void ProcessedShaderMaterial::_setShaderConstants(SceneRenderState * state, cons
    // MFT_ImposterVert
    if ( handles->mImposterUVs->isValid() )
    {
-      U32 uvCount = getMin( mMaterial->mImposterUVs.size(), 64 ); // See imposter.hlsl   
+      U32 uvCount = getMin( mMaterial->mImposterUVs.size(), 64 ); // See imposter.cg   
       AlignedArray<Point4F> imposterUVs( uvCount, sizeof( Point4F ), (U8*)mMaterial->mImposterUVs.address(), false );
       shaderConsts->set( handles->mImposterUVs, imposterUVs );
    }

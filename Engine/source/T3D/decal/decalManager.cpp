@@ -1182,6 +1182,8 @@ void DecalManager::prepRenderImage( SceneRenderState* state )
    if ( mDecalQueue.empty() )
       return;
 
+   GFXDEBUGEVENT_SCOPE_EX( DecalManager, ColorI::GREEN, avar("DecalManager") );
+
    // Sort queued decals...
    // 1. Editor decals - in render priority order first, creation time second, and material third.
    // 2. Dynamic decals - in render priority order first and creation time second.

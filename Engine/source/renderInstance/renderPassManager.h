@@ -364,6 +364,8 @@ struct MeshRenderInst : public RenderInst
    GFXTextureObject *miscTex;
    GFXCubemap   *cubemap;
 
+   const char* meshName;
+
    void clear();
 };
 

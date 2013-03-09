@@ -28,6 +28,7 @@ GFXGLOcclusionQuery::GFXGLOcclusionQuery(GFXDevice* device) :
    GFXOcclusionQuery(device), mQuery(0)
 {
    glGenQueries(1, &mQuery);
+   mQueryStarted = false;
 }
 
 GFXGLOcclusionQuery::~GFXGLOcclusionQuery()
@@ -38,6 +39,7 @@ GFXGLOcclusionQuery::~GFXGLOcclusionQuery()
 bool GFXGLOcclusionQuery::begin()
 {
    glBeginQuery(GL_SAMPLES_PASSED, mQuery);
+   mQueryStarted = true;
    return true;
 }
 
@@ -53,20 +55,26 @@ GFXOcclusionQuery::OcclusionQueryStatus GFXGLOcclusionQuery::getStatus(bool bloc
    PROFILE_SCOPE(GFXGLOcclusionQuery_getStatus);
    
    GLint numPixels = 0;
-   GLint queryDone = false;
+   GLint queryDone = GL_FALSE;
+
+   if( mQueryStarted )
+   {
+       if (block)
+       {
+           while( queryDone == GL_FALSE )
+               glGetQueryObjectiv(mQuery, GL_QUERY_RESULT_AVAILABLE, &queryDone);
+       }
+       else
+          glGetQueryObjectiv(mQuery, GL_QUERY_RESULT_AVAILABLE, &queryDone);
    
-   if (block)
-      queryDone = true;
-   else
-      glGetQueryObjectiv(mQuery, GL_QUERY_RESULT_AVAILABLE, &queryDone);
+       if (queryDone == GL_TRUE)
+          glGetQueryObjectiv(mQuery, GL_QUERY_RESULT, &numPixels);
+       else
+          return Waiting;
    
-   if (queryDone)
-      glGetQueryObjectiv(mQuery, GL_QUERY_RESULT, &numPixels);
-   else
-      return Waiting;
-   
-   if (data)
-      *data = numPixels;
+       if (data)
+          *data = numPixels;
+   }
    
    return numPixels > 0 ? NotOccluded : Occluded;
 }

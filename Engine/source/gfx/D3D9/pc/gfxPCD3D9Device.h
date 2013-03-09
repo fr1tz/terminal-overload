@@ -66,6 +66,9 @@ public:
    virtual void initStates();
    virtual void reset( D3DPRESENT_PARAMETERS &d3dpp );
    virtual D3DPRESENT_PARAMETERS setupPresentParams( const GFXVideoMode &mode, const HWND &hwnd ) const;
+      
+   virtual CGprofile getCGVertexProfile() const;
+   virtual CGprofile getCGPixelProfile() const;
 protected:
 
    VideoFrameGrabberD3D9* mVideoFrameGrabber;

@@ -37,6 +37,9 @@
 #  include "windowManager/win32/win32Window.h"
 #endif
 
+#include "gfx/gfxCGShader.h"
+#include "gfx/gfxDebugEvent.h"
+
 D3DXFNTable GFXD3D9Device::smD3DX;
 
 GFXD3D9Device::GFXD3D9Device( LPDIRECT3D9 d3d, U32 index ) 
@@ -200,11 +203,18 @@ void GFXD3D9Device::setShaderConstBufferInternal(GFXShaderConstBuffer* buffer)
    if (buffer)
    {
       PROFILE_SCOPE(GFXD3D9Device_setShaderConstBufferInternal);
-      AssertFatal(dynamic_cast<GFXD3D9ShaderConstBuffer*>(buffer), "Incorrect shader const buffer type for this device!");
-      GFXD3D9ShaderConstBuffer* d3dBuffer = static_cast<GFXD3D9ShaderConstBuffer*>(buffer);
-
-      d3dBuffer->activate(mCurrentConstBuffer);
-      mCurrentConstBuffer = d3dBuffer;
+      GFXCGShaderConstBuffer* cgBuffer = dynamic_cast<GFXCGShaderConstBuffer*>(buffer);
+      if( cgBuffer )
+      {
+          cgBuffer->activate();
+      }
+      else
+      {
+          GFXD3D9ShaderConstBuffer* d3dBuffer = dynamic_cast<GFXD3D9ShaderConstBuffer*>(buffer);
+          if( d3dBuffer )
+              d3dBuffer->activate(mCurrentConstBuffer);
+      }
+      mCurrentConstBuffer = (GFXD3D9ShaderConstBuffer*)buffer;
    } else {
       mCurrentConstBuffer = NULL;
    }
@@ -708,23 +718,39 @@ void GFXD3D9Device::disableShaders()
 //-----------------------------------------------------------------------------
 void GFXD3D9Device::setShader( GFXShader *shader )
 {
-   GFXD3D9Shader *d3dShader = static_cast<GFXD3D9Shader*>( shader );
+    GFXCGShader* cgShader = dynamic_cast<GFXCGShader*>( shader );
+    if( cgShader )
+    {
+        char tag[2048];
+        dSprintf(tag, sizeof(tag), "CG: %s", shader->getPixelShaderFile().c_str());
+        GFX->setDebugMarker(ColorI::BLUE, tag);
+        if( (IDirect3DVertexShader9 *)cgShader != mLastVertShader )
+        {
+            cgShader->bind();
+            mLastVertShader = (IDirect3DVertexShader9 *)cgShader;
+            mLastPixShader = (IDirect3DPixelShader9 *)cgShader;
+        }
+    }
+    else
+    {
+        if( shader )
+            GFXDEBUGEVENT_MARKER("DX ShaderDraw", ColorI::BLUE);
+        GFXD3D9Shader *d3dShader = static_cast<GFXD3D9Shader*>( shader );
+        IDirect3DPixelShader9 *pixShader = ( d3dShader != NULL ? d3dShader->mPixShader : NULL );
+        IDirect3DVertexShader9 *vertShader = ( d3dShader ? d3dShader->mVertShader : NULL );
 
-   IDirect3DPixelShader9 *pixShader = ( d3dShader != NULL ? d3dShader->mPixShader : NULL );
-   IDirect3DVertexShader9 *vertShader = ( d3dShader ? d3dShader->mVertShader : NULL );
+        if( pixShader != mLastPixShader )
+        {
+            mD3DDevice->SetPixelShader( pixShader );
+            mLastPixShader = pixShader;
+        }
 
-   if( pixShader != mLastPixShader )
-   {
-      mD3DDevice->SetPixelShader( pixShader );
-      mLastPixShader = pixShader;
-   }
-
-   if( vertShader != mLastVertShader )
-   {
-      mD3DDevice->SetVertexShader( vertShader );
-      mLastVertShader = vertShader;
-   }
-
+        if( vertShader != mLastVertShader )
+        {
+            mD3DDevice->SetVertexShader( vertShader );
+            mLastVertShader = vertShader;
+        }
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -900,9 +926,19 @@ GFXVertexDecl* GFXD3D9Device::allocVertexDecl( const GFXVertexFormat *vertexForm
       else if ( element.isSemantic( GFXSemantic::COLOR ) )
          vd[i].Usage = D3DDECLUSAGE_COLOR;
       else if ( element.isSemantic( GFXSemantic::TANGENT ) )
-         vd[i].Usage = D3DDECLUSAGE_TANGENT;
+      {
+         //vd[i].Usage = D3DDECLUSAGE_TANGENT;
+          // Use TEXCOORD6 so the shaders can be the same between GLSL and DX
+          vd[i].Usage = D3DDECLUSAGE_TEXCOORD;
+          vd[i].UsageIndex = 6;
+      }
       else if ( element.isSemantic( GFXSemantic::BINORMAL ) )
-         vd[i].Usage = D3DDECLUSAGE_BINORMAL;
+      {
+         //vd[i].Usage = D3DDECLUSAGE_BINORMAL;
+          // Use TEXCOORD7 so the shaders can be the same between GLSL and DX
+          vd[i].Usage = D3DDECLUSAGE_TEXCOORD;
+          vd[i].UsageIndex = 7;
+      }
       else
       {
          // Anything that falls thru to here will be a texture coord.

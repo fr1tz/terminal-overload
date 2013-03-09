@@ -40,11 +40,11 @@
 ///
 /// By default, if no other polyhedron is assigned to a polyhedral zone, the
 /// polyhedron is initialized from the zone's object box.
-class ScenePolyhedralZone : public ScenePolyhedralObject< SceneSimpleZone >
+class ScenePolyhedralZone : public ScenePolyhedralObject
 {
    public:
 
-      typedef ScenePolyhedralObject< SceneSimpleZone > Parent;
+      typedef ScenePolyhedralObject Parent;
 
    protected:
 

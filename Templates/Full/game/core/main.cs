@@ -66,10 +66,10 @@ function onStart()
    //$pref::Video::forcePixVersion = true;
    //$pref::Video::forcedPixVersion = 0;
 
-   if ($platform $= "macos")
-      $pref::Video::displayDevice = "OpenGL";
-   else
+   if ($platform $= "windows")
       $pref::Video::displayDevice = "D3D9";
+   else
+      $pref::Video::displayDevice = "OpenGL";
    
    // Initialise stuff.
    exec("./scripts/client/core.cs");

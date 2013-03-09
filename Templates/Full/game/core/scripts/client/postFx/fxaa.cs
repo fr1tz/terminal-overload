@@ -25,7 +25,7 @@
 // http://timothylottes.blogspot.com/
 //
 // The shader is tuned for the defaul quality and good performance.
-// See shaders\common\postFx\fxaa\fxaaP.hlsl to tweak the internal
+// See shaders\common\postFx\fxaa\fxaaP.cg to tweak the internal
 // quality and performance settings.
 
 singleton GFXStateBlockData( FXAA_StateBlock : PFX_DefaultStateBlock )
@@ -36,8 +36,8 @@ singleton GFXStateBlockData( FXAA_StateBlock : PFX_DefaultStateBlock )
 
 singleton ShaderData( FXAA_ShaderData )
 {   
-   DXVertexShaderFile 	= "shaders/common/postFx/fxaa/fxaaV.hlsl";
-   DXPixelShaderFile 	= "shaders/common/postFx/fxaa/fxaaP.hlsl";
+   CGVertexShaderFile 	= "shaders/common/postFx/fxaa/fxaaV.cg";
+   CGPixelShaderFile 	= "shaders/common/postFx/fxaa/fxaaP.cg";
    
    samplerNames[0] = "$colorTex";
 

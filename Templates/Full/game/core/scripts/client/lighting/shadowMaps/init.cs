@@ -23,10 +23,8 @@
 
 new ShaderData(BlurDepthShader)
 {
-   DXVertexShaderFile = "shaders/common/lighting/shadowMap/boxFilterV.hlsl";
-   DXPixelShaderFile  = "shaders/common/lighting/shadowMap/boxFilterP.hlsl";
+   CGVertexShaderFile = "shaders/common/lighting/shadowMap/boxFilterV.cg";
+   CGPixelShaderFile  = "shaders/common/lighting/shadowMap/boxFilterP.cg";
    
-   OGLVertexShaderFile = "shaders/common/lighting/shadowMap/gl/boxFilterV.glsl";
-   OGLPixelShaderFile = "shaders/common/lighting/shadowMap/gl/boxFilterP.glsl";
    pixVersion = 2.0;
 };

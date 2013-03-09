@@ -55,11 +55,8 @@ new GFXStateBlockData( AL_VectorLightState )
 // Vector Light Material
 new ShaderData( AL_VectorLightShader )
 {
-   DXVertexShaderFile = "shaders/common/lighting/advanced/farFrustumQuadV.hlsl";
-   DXPixelShaderFile  = "shaders/common/lighting/advanced/vectorLightP.hlsl";
-
-   OGLVertexShaderFile = "shaders/common/lighting/advanced/gl/farFrustumQuadV.glsl";
-   OGLPixelShaderFile  = "shaders/common/lighting/advanced/gl/vectorLightP.glsl";
+   CGVertexShaderFile = "shaders/common/lighting/advanced/farFrustumQuadV.cg";
+   CGPixelShaderFile  = "shaders/common/lighting/advanced/vectorLightP.cg";
    
    pixVersion = 3.0;
 };
@@ -115,11 +112,8 @@ new GFXStateBlockData( AL_ConvexLightState )
 // Point Light Material
 new ShaderData( AL_PointLightShader )
 {
-   DXVertexShaderFile = "shaders/common/lighting/advanced/convexGeometryV.hlsl";
-   DXPixelShaderFile  = "shaders/common/lighting/advanced/pointLightP.hlsl";
-
-   OGLVertexShaderFile = "shaders/common/lighting/advanced/gl/convexGeometryV.glsl";
-   OGLPixelShaderFile  = "shaders/common/lighting/advanced/gl/pointLightP.glsl";
+   CGVertexShaderFile = "shaders/common/lighting/advanced/convexGeometryV.cg";
+   CGPixelShaderFile  = "shaders/common/lighting/advanced/pointLightP.cg";
 
    pixVersion = 3.0;
 };
@@ -141,11 +135,8 @@ new CustomMaterial( AL_PointLightMaterial )
 // Spot Light Material
 new ShaderData( AL_SpotLightShader )
 {
-   DXVertexShaderFile = "shaders/common/lighting/advanced/convexGeometryV.hlsl";
-   DXPixelShaderFile  = "shaders/common/lighting/advanced/spotLightP.hlsl";
-
-   OGLVertexShaderFile = "shaders/common/lighting/advanced/gl/convexGeometryV.glsl";
-   OGLPixelShaderFile  = "shaders/common/lighting/advanced/gl/spotLightP.glsl";
+   CGVertexShaderFile = "shaders/common/lighting/advanced/convexGeometryV.cg";
+   CGPixelShaderFile  = "shaders/common/lighting/advanced/spotLightP.cg";
    
    pixVersion = 3.0;
 };
@@ -205,11 +196,8 @@ new Material( AL_DefaultShadowMaterial )
 // Particle System Point Light Material
 new ShaderData( AL_ParticlePointLightShader )
 {
-   DXVertexShaderFile = "shaders/common/lighting/advanced/particlePointLightV.hlsl";
-   DXPixelShaderFile  = "shaders/common/lighting/advanced/particlePointLightP.hlsl";
-
-   OGLVertexShaderFile = "shaders/common/lighting/advanced/gl/convexGeometryV.glsl";
-   OGLPixelShaderFile  = "shaders/common/lighting/advanced/gl/pointLightP.glsl";
+   CGVertexShaderFile = "shaders/common/lighting/advanced/particlePointLightV.cg";
+   CGPixelShaderFile  = "shaders/common/lighting/advanced/particlePointLightP.cg";
       
    pixVersion = 3.0;
 };

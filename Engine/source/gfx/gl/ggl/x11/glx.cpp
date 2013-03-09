@@ -19,7 +19,7 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 // IN THE SOFTWARE.
 //-----------------------------------------------------------------------------
-
+#if 0
 #include "os/osDlibrary.h"
 #include "os/osLog.h"
 #include "util/utilArray.h"
@@ -411,3 +411,4 @@ bool gglSetPbufferTarget(GLSurface sp,U32 mip,U32 face)
 
 } // Namespace
 
+#endif //0

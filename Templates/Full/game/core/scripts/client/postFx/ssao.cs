@@ -150,15 +150,15 @@ singleton GFXStateBlockData( SSAOBlurStateBlock : PFX_DefaultStateBlock )
 
 singleton ShaderData( SSAOShader )
 {   
-   DXVertexShaderFile 	= "shaders/common/postFx/postFxV.hlsl";
-   DXPixelShaderFile 	= "shaders/common/postFx/ssao/SSAO_P.hlsl";            
+   CGVertexShaderFile 	= "shaders/common/postFx/postFxV.cg";
+   CGPixelShaderFile 	= "shaders/common/postFx/ssao/SSAO_P.cg";            
    pixVersion = 3.0;
 };
 
 singleton ShaderData( SSAOBlurYShader )
 {
-   DXVertexShaderFile 	= "shaders/common/postFx/ssao/SSAO_Blur_V.hlsl";
-   DXPixelShaderFile 	= "shaders/common/postFx/ssao/SSAO_Blur_P.hlsl";   
+   CGVertexShaderFile 	= "shaders/common/postFx/ssao/SSAO_Blur_V.cg";
+   CGPixelShaderFile 	= "shaders/common/postFx/ssao/SSAO_Blur_P.cg";   
    pixVersion = 3.0;      
    
    defines = "BLUR_DIR=float2(0.0,1.0)";         
@@ -263,8 +263,8 @@ singleton PostEffect( SSAOVizPostFx )
 
 singleton ShaderData( SSAOPowTableShader )
 {
-   DXVertexShaderFile 	= "shaders/common/postFx/ssao/SSAO_PowerTable_V.hlsl";
-   DXPixelShaderFile 	= "shaders/common/postFx/ssao/SSAO_PowerTable_P.hlsl";            
+   CGVertexShaderFile 	= "shaders/common/postFx/ssao/SSAO_PowerTable_V.cg";
+   CGPixelShaderFile 	= "shaders/common/postFx/ssao/SSAO_PowerTable_P.cg";            
    pixVersion = 2.0;
 };
 

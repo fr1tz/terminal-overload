@@ -487,7 +487,7 @@ enum GFXTextureTransformFlags
 
 // CodeReview: This number is used for the declaration of variables, but it
 // should *not* be used for any run-time purposes [7/2/2007 Pat]
-#define TEXTURE_STAGE_COUNT 16
+#define TEXTURE_STAGE_COUNT 128
 
 enum GFXSamplerState 
 {
@@ -587,7 +587,10 @@ enum GFXShaderConstType
    GFXSCT_Int4, 
    // Samplers
    GFXSCT_Sampler,
-   GFXSCT_SamplerCube
+   GFXSCT_SamplerCube,
+
+   GFXSCT_Struct,
+   GFXSCT_Unknown
 };
 
 

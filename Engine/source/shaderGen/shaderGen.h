@@ -57,22 +57,22 @@ public:
    
    /// Prints a simple header, including the engine name, language type, and
    /// the fact that the shader was procedurally generated
-   virtual void printShaderHeader(Stream& stream) = 0;
+   virtual void printShaderHeader(Stream& stream);
 
    /// Prints a comment block specifying the beginning of the main() function (or equivalent)
-   virtual void printMainComment(Stream& stream) = 0;
+   virtual void printMainComment(Stream& stream);
 
    /// Prints the final line of the vertex shader, e.g. return OUT; }, }, END
-   virtual void printVertexShaderCloser(Stream& stream) = 0;
+   virtual void printVertexShaderCloser(Stream& stream);
 
    /// Prints the output struct for the pixel shader.  Probably only used in HLSL/Cg.
-   virtual void printPixelShaderOutputStruct(Stream& stream, const MaterialFeatureData &featureData) = 0;
+   virtual void printPixelShaderOutputStruct(Stream& stream, const MaterialFeatureData &featureData);
 
    /// Prints the final line of the pixel shader.
-   virtual void printPixelShaderCloser(Stream& stream) = 0;
+   virtual void printPixelShaderCloser(Stream& stream);
    
    // Prints a line into the shader adding the proper terminator.
-   virtual void printLine(Stream& stream, const String& line) = 0;
+   virtual void printLine(Stream& stream, const String& line);
 };
 
 /// Abstract factory for created (and initializating, if necessary) shader components.
@@ -82,16 +82,18 @@ public:
    virtual ~ShaderGenComponentFactory() {}
 
    /// Creates and initializes a vertex input connector with the specified flags
-   virtual ShaderComponent* createVertexInputConnector( const GFXVertexFormat &vertexFormat ) = 0;
+   virtual ShaderComponent* createVertexInputConnector( const GFXVertexFormat &vertexFormat );
 
    /// Creates and names a vertex/pixel connector
-   virtual ShaderComponent* createVertexPixelConnector() = 0;
+   virtual ShaderComponent* createVertexPixelConnector();
 
    /// Creates an instance of VertexParamsDef
-   virtual ShaderComponent* createVertexParamsDef() = 0;
+   virtual ShaderComponent* createVertexParamsDef();
 
    /// Creates an instance of PixelParamsDef
-   virtual ShaderComponent* createPixelParamsDef() = 0;
+   virtual ShaderComponent* createPixelParamsDef();
+
+   static const char* typeToString( GFXDeclType type );
 };
 
 //**************************************************************************

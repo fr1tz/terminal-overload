@@ -52,8 +52,8 @@ function MaterialEditorGui::establishMaterials(%this)
    //Custom shader to allow the display of just the alpha channel. 
    singleton ShaderData( materialEd_justAlphaShader )
    {
-      DXVertexShaderFile 	= "shaders/alphaOnlyV.hlsl";
-      DXPixelShaderFile 	= "shaders/alphaOnlyP.hlsl";
+      CGVertexShaderFile 	= "shaders/alphaOnlyV.cg";
+      CGPixelShaderFile 	= "shaders/alphaOnlyP.cg";
       pixVersion = 1.0;
    };
 }

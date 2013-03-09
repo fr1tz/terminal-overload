@@ -145,6 +145,8 @@ SceneManager::~SceneManager()
 
 void SceneManager::renderScene( ScenePassType passType, U32 objectMask )
 {
+    GFXDEBUGEVENT_SCOPE_EX( SceneManager_render, ColorI::GREEN, avar("SceneManager_render") );
+
    SceneCameraState cameraState = SceneCameraState::fromGFX();
    
    // Handle frustum locking.
@@ -232,8 +234,9 @@ void SceneManager::renderScene( SceneRenderState* renderState, U32 objectMask, S
    PROFILE_END();
 
    // Render the scene.
-
+   GFX->enterDebugEvent( ColorI::GREEN, "renderSceneNoLights" );
    renderSceneNoLights( renderState, objectMask, baseObject, baseZone );
+   GFX->leaveDebugEvent();
 
    // Trigger the post-render signal.
 

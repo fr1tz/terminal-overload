@@ -19,11 +19,9 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 // IN THE SOFTWARE.
 //-----------------------------------------------------------------------------
-
 #include "platformX86UNIX/platformX86UNIX.h"
 #include "console/consoleTypes.h"
 #include "platform/event.h"
-#include "platform/gameInterface.h"
 #include "platformX86UNIX/x86UNIXState.h"
 #include "platformX86UNIX/x86UNIXInputManager.h"
 #include "math/mMathFn.h"
@@ -397,11 +395,12 @@ void UInputManager::resetKeyboardState()
 {
    // unpress any pressed keys; in the future we may want
    // to actually sync with the keyboard state
+    /*
    for (int i = 0; i < 256; ++i)
    {
       if (mKeyboardState[i])
       {
-         InputEvent event;
+         InputEventInfo event;
          
          event.deviceInst = 0;
          event.deviceType = KeyboardDeviceType;
@@ -409,9 +408,10 @@ void UInputManager::resetKeyboardState()
          event.objInst = i;
          event.action = SI_BREAK;
          event.fValue = 0.0;
-         Game->postEvent(event);
+         event.postToSignal(Input::smInputEvent);
       }
    }
+   */
    dMemset(mKeyboardState, 0, 256);
 
    // clear modifier keys
@@ -430,15 +430,15 @@ void UInputManager::resetMouseState()
          // add KEY_BUTTON0 to the index to get the real
          // button ID
          S32 buttonID = i + KEY_BUTTON0;
-         InputEvent event;
+         InputEventInfo event;
         
          event.deviceInst = 0;
          event.deviceType = MouseDeviceType;
          event.objType = SI_BUTTON;
-         event.objInst = buttonID;
+         event.objInst = (InputObjectInstances)(KEY_BUTTON0 + i);
          event.action = SI_BREAK;
          event.fValue = 0.0;
-         Game->postEvent(event);
+         event.postToSignal(Input::smInputEvent);
       }
    }
 
@@ -524,26 +524,26 @@ void UInputManager::mouseMotionEvent(const SDL_Event& event)
 //       event.motion.x, event.motion.y);
    if (x86UNIXState->windowLocked())
    {
-      InputEvent ievent;
+      InputEventInfo ievent;
       ievent.deviceInst = 0;
       ievent.deviceType = MouseDeviceType;
-      ievent.objInst = 0;
-      ievent.modifier = mModifierKeys;
+      ievent.objType = SI_AXIS;
+      ievent.modifier = (InputModifiers)mModifierKeys;
       ievent.ascii = 0;
       ievent.action = SI_MOVE;
             
       // post events if things have changed
       if (event.motion.xrel != 0)
       {
-         ievent.objType = SI_XAXIS;
+         ievent.objInst = SI_XAXIS;
          ievent.fValue = event.motion.xrel;
-         Game->postEvent(ievent);
+         ievent.postToSignal(Input::smInputEvent);
       }
       if (event.motion.yrel != 0)
       {
-         ievent.objType = SI_YAXIS;
+         ievent.objInst = SI_YAXIS;
          ievent.fValue = event.motion.yrel; 
-         Game->postEvent(ievent);
+         ievent.postToSignal(Input::smInputEvent);
       }
 #ifdef LOG_INPUT
 #ifdef LOG_MOUSEMOVE
@@ -555,18 +555,7 @@ void UInputManager::mouseMotionEvent(const SDL_Event& event)
    }
    else
    {
-      MouseMoveEvent mmevent;
-      mmevent.xPos = mLastMouseX = event.motion.x;
-      mmevent.yPos = mLastMouseY = event.motion.y;
-      mmevent.modifier = mModifierKeys;
-      Game->postEvent(mmevent);
-#ifdef LOG_INPUT
-#ifdef LOG_MOUSEMOVE
-         Input::log( "EVENT (Input): Mouse absolute move (%.1f, %.1f).\n",
-            F32(event.motion.x),
-            F32(event.motion.y));
-#endif
-#endif
+       AssertFatal(0, "Not Implemented");
    }
 }
 
@@ -581,21 +570,21 @@ void UInputManager::joyButtonEvent(const SDL_Event& event)
 void UInputManager::joyButtonEvent(U8 deviceID, U8 buttonNum, bool pressed)
 
 {
-   S32 action = pressed ? SI_MAKE : SI_BREAK;
+   InputActionType action = pressed ? SI_MAKE : SI_BREAK;
    S32 objInst = buttonNum + KEY_BUTTON0;
 
-   InputEvent ievent;
+   InputEventInfo ievent;
 
    ievent.deviceInst = deviceID;
    ievent.deviceType = JoystickDeviceType;
-   ievent.modifier = mModifierKeys;
+   ievent.modifier = (InputModifiers)mModifierKeys;
    ievent.ascii = 0;
    ievent.objType = SI_BUTTON;
-   ievent.objInst = objInst;
+   ievent.objInst = (InputObjectInstances)objInst;
    ievent.action = action;
    ievent.fValue = (action == SI_MAKE) ? 1.0 : 0.0;
-
-   Game->postEvent(ievent);
+   
+   ievent.postToSignal(Input::smInputEvent);
 #ifdef LOG_INPUT
    Input::log( "EVENT (Input): joystick%d button%d %s. MODS:%c%c%c \n",
       deviceID,
@@ -614,11 +603,11 @@ void UInputManager::joyHatEvent(U8 deviceID, U8 hatNum,
    if (prevHatState == currHatState)
       return;
 
-   InputEvent ievent;
+   InputEventInfo ievent;
 
    ievent.deviceInst = deviceID;
    ievent.deviceType = JoystickDeviceType;
-   ievent.modifier = mModifierKeys;
+   ievent.modifier = (InputModifiers)mModifierKeys;
    ievent.ascii = 0;
    ievent.objType = SI_POV;
 
@@ -632,7 +621,7 @@ void UInputManager::joyHatEvent(U8 deviceID, U8 hatNum,
       Input::log( "EVENT (Input): Up POV released.\n");
 #endif
       ievent.objInst = SI_UPOV;
-      Game->postEvent(ievent);
+      ievent.postToSignal(Input::smInputEvent);
    }
    else if (prevHatState & SDL_HAT_DOWN && !(currHatState & SDL_HAT_DOWN))
    {
@@ -640,7 +629,7 @@ void UInputManager::joyHatEvent(U8 deviceID, U8 hatNum,
       Input::log( "EVENT (Input): Down POV released.\n");
 #endif
       ievent.objInst = SI_DPOV;
-      Game->postEvent(ievent);
+      ievent.postToSignal(Input::smInputEvent);
    }
    if (prevHatState & SDL_HAT_LEFT && !(currHatState & SDL_HAT_LEFT))
    {
@@ -648,7 +637,7 @@ void UInputManager::joyHatEvent(U8 deviceID, U8 hatNum,
       Input::log( "EVENT (Input): Left POV released.\n");
 #endif
       ievent.objInst = SI_LPOV;
-      Game->postEvent(ievent);
+      ievent.postToSignal(Input::smInputEvent);
    }
    else if (prevHatState & SDL_HAT_RIGHT && !(currHatState & SDL_HAT_RIGHT))
    {
@@ -656,7 +645,7 @@ void UInputManager::joyHatEvent(U8 deviceID, U8 hatNum,
       Input::log( "EVENT (Input): Right POV released.\n");
 #endif
       ievent.objInst = SI_RPOV;
-      Game->postEvent(ievent);
+      ievent.postToSignal(Input::smInputEvent);
    }
 
    // now do the make events
@@ -669,7 +658,7 @@ void UInputManager::joyHatEvent(U8 deviceID, U8 hatNum,
       Input::log( "EVENT (Input): Up POV pressed.\n");
 #endif
       ievent.objInst = SI_UPOV;
-      Game->postEvent(ievent);
+      ievent.postToSignal(Input::smInputEvent);
    }
    else if (!(prevHatState & SDL_HAT_DOWN) && currHatState & SDL_HAT_DOWN)
    {
@@ -677,7 +666,7 @@ void UInputManager::joyHatEvent(U8 deviceID, U8 hatNum,
       Input::log( "EVENT (Input): Down POV pressed.\n");
 #endif
       ievent.objInst = SI_DPOV;
-      Game->postEvent(ievent);
+      ievent.postToSignal(Input::smInputEvent);
    }
    if (!(prevHatState & SDL_HAT_LEFT) && currHatState & SDL_HAT_LEFT)
    {
@@ -685,7 +674,7 @@ void UInputManager::joyHatEvent(U8 deviceID, U8 hatNum,
       Input::log( "EVENT (Input): Left POV pressed.\n");
 #endif
       ievent.objInst = SI_LPOV;
-      Game->postEvent(ievent);
+      ievent.postToSignal(Input::smInputEvent);
    }
    else if (!(prevHatState & SDL_HAT_RIGHT) && currHatState & SDL_HAT_RIGHT)
    {
@@ -693,7 +682,7 @@ void UInputManager::joyHatEvent(U8 deviceID, U8 hatNum,
       Input::log( "EVENT (Input): Right POV pressed.\n");
 #endif
       ievent.objInst = SI_RPOV;
-      Game->postEvent(ievent);
+      ievent.postToSignal(Input::smInputEvent);
    }
 }
 
@@ -732,18 +721,18 @@ void UInputManager::joyAxisEvent(U8 deviceID, U8 axisNum, S16 axisValue)
       scaledValue = -1.f;
 
    // create and post the event
-   InputEvent ievent;
+   InputEventInfo ievent;
 
    ievent.deviceInst = deviceID;
    ievent.deviceType = JoystickDeviceType;
-   ievent.modifier = mModifierKeys;
+   ievent.modifier = (InputModifiers)mModifierKeys;
    ievent.ascii = 0;
-   ievent.objType = axisInfo.type;
-   ievent.objInst = 0;
+   ievent.objType = (InputEventType)axisInfo.type;
+   ievent.objInst = KEY_NULL;
    ievent.action = SI_MOVE;
    ievent.fValue = scaledValue;
 
-   Game->postEvent(ievent);
+   ievent.postToSignal(Input::smInputEvent);
 
 #ifdef LOG_INPUT
       Input::log( "EVENT (Input): joystick axis %d moved: %.1f.\n",
@@ -755,7 +744,7 @@ void UInputManager::joyAxisEvent(U8 deviceID, U8 axisNum, S16 axisValue)
 //------------------------------------------------------------------------------
 void UInputManager::mouseButtonEvent(const SDL_Event& event)
 {
-   S32 action = (event.type == SDL_MOUSEBUTTONDOWN) ? SI_MAKE : SI_BREAK;
+   InputActionType action = (event.type == SDL_MOUSEBUTTONDOWN) ? SI_MAKE : SI_BREAK;
    S32 objInst = -1;
    // JMQTODO: support wheel delta like windows version?
    // JMQTODO: make this value configurable?
@@ -786,11 +775,11 @@ void UInputManager::mouseButtonEvent(const SDL_Event& event)
       // unsupported button
       return;
 
-   InputEvent ievent;
+   InputEventInfo ievent;
 
    ievent.deviceInst = 0;
    ievent.deviceType = MouseDeviceType;
-   ievent.modifier = mModifierKeys;
+   ievent.modifier = (InputModifiers)mModifierKeys;
    ievent.ascii = 0;
 
    if (wheel)
@@ -799,8 +788,8 @@ void UInputManager::mouseButtonEvent(const SDL_Event& event)
       // so ignore breaks to translate those into a single event
       if (action == SI_BREAK)
          return;
-      ievent.objType = SI_ZAXIS;
-      ievent.objInst = 0;
+      ievent.objType = SI_AXIS;
+      ievent.objInst = SI_ZAXIS;
       ievent.action = SI_MOVE;
       ievent.fValue = wheelDelta;
 #ifdef LOG_INPUT
@@ -819,7 +808,7 @@ void UInputManager::mouseButtonEvent(const SDL_Event& event)
          mMouseButtonState[buttonID] = ( action == SI_MAKE ) ? true : false;
 
       ievent.objType = SI_BUTTON;
-      ievent.objInst = objInst;
+      ievent.objInst = (InputObjectInstances)objInst;
       ievent.action = action;
       ievent.fValue = (action == SI_MAKE) ? 1.0 : 0.0;
 #ifdef LOG_INPUT
@@ -832,7 +821,7 @@ void UInputManager::mouseButtonEvent(const SDL_Event& event)
 #endif
    }
 
-   Game->postEvent(ievent);
+   ievent.postToSignal(Input::smInputEvent);
 }
 
 //------------------------------------------------------------------------------
@@ -927,13 +916,13 @@ const char* getKeyName( U16 key )
 //------------------------------------------------------------------------------
 void UInputManager::keyEvent(const SDL_Event& event)
 {
-   S32 action = (event.type == SDL_KEYDOWN) ? SI_MAKE : SI_BREAK;
-   InputEvent ievent;
+   InputActionType action = (event.type == SDL_KEYDOWN) ? SI_MAKE : SI_BREAK;
+   InputEventInfo ievent;
 
    ievent.deviceInst = 0;
    ievent.deviceType = KeyboardDeviceType;
    ievent.objType = SI_KEY;
-   ievent.objInst = TranslateSDLKeytoTKey(event.key.keysym.sym);
+   ievent.objInst = (InputObjectInstances)TranslateSDLKeytoTKey(event.key.keysym.sym);
    // if the action is a make but this key is already pressed, 
    // count it as a repeat
    if (action == SI_MAKE && mKeyboardState[ievent.objInst])
@@ -942,7 +931,7 @@ void UInputManager::keyEvent(const SDL_Event& event)
    ievent.fValue = (action == SI_MAKE || action == SI_REPEAT) ? 1.0 : 0.0;
 
    processKeyEvent(ievent);
-   Game->postEvent(ievent);
+   ievent.postToSignal(Input::smInputEvent);
 
 #if 0
    if (ievent.action == SI_MAKE)
@@ -979,7 +968,7 @@ void UInputManager::keyEvent(const SDL_Event& event)
 
 //------------------------------------------------------------------------------
 // This function was ripped from DInputDevice almost entirely intact.  
-bool UInputManager::processKeyEvent( InputEvent &event )
+bool UInputManager::processKeyEvent( InputEventInfo &event )
 {
    if ( event.deviceType != KeyboardDeviceType || event.objType != SI_KEY )
       return false;
@@ -1065,9 +1054,9 @@ bool UInputManager::processKeyEvent( InputEvent &event )
    }
 
    if ( modKey )
-      event.modifier = 0;
+      event.modifier = (InputModifiers)0;
    else
-      event.modifier = mModifierKeys;
+      event.modifier = (InputModifiers)mModifierKeys;
 
    // TODO: alter this getAscii call
    KEY_STATE state = STATE_LOWER;

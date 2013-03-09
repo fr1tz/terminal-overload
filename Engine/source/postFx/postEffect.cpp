@@ -124,7 +124,7 @@ GFX_ImplementTextureProfile(  PostFxTargetProfile,
                               GFXTextureProfile::PreserveSize |
                               GFXTextureProfile::RenderTarget |
                               GFXTextureProfile::Pooled,
-                              GFXTextureProfile::None );
+                              GFXTextureProfile::NONE );
 
 IMPLEMENT_CONOBJECT(PostEffect);
 
@@ -132,7 +132,7 @@ IMPLEMENT_CONOBJECT(PostEffect);
 GFX_ImplementTextureProfile( PostFxTextureProfile,
                             GFXTextureProfile::DiffuseMap,
                             GFXTextureProfile::Static | GFXTextureProfile::PreserveSize | GFXTextureProfile::NoMipmap,
-                            GFXTextureProfile::None );
+                            GFXTextureProfile::NONE );
 
 
 void PostEffect::EffectConst::set( const String &newVal )
@@ -1052,9 +1052,9 @@ void PostEffect::process(  const SceneRenderState *state,
    // Setup the shader and constants.
    if ( mShader )
    {
+      GFX->setShader( mShader );
       _setupConstants( state );
 
-      GFX->setShader( mShader );
       GFX->setShaderConstBuffer( mShaderConsts );
    }
    else

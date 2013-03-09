@@ -335,7 +335,7 @@ void GuiBitmapButtonCtrl::setBitmap( const String& name )
       }
       
       if( mAutoFitExtents && !mTextures[ 0 ].mTextureNormal.isNull() )
-         setExtent( mTextures[ 0 ].mTextureNormal.getWidth(), mTextures[ 0 ].mTextureNormal.getHeight() );
+         setExtent( mTextures[ 0 ].mTextureNormal.getBitmapWidth(), mTextures[ 0 ].mTextureNormal.getBitmapHeight() );
    }
    else
    {
@@ -507,8 +507,8 @@ void GuiBitmapButtonCtrl::renderButton( GFXTexHandle &texture, const Point2I &of
       {
          Point2I p = offset;
          
-         p.x += getExtent().x / 2 - texture.getWidth() / 2;
-         p.y += getExtent().y / 2 - texture.getHeight() / 2;
+         p.x += getExtent().x / 2 - texture.getBitmapWidth() / 2;
+         p.y += getExtent().y / 2 - texture.getBitmapHeight() / 2;
          
          GFX->getDrawUtil()->drawBitmap( texture, p );
          break;
