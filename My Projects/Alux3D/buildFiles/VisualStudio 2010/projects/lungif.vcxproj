@@ -46,13 +46,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:/Alux3D/Alux3D/Engine/lib//compiled/$(Configuration).$(Platform)/</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../../../../Engine/lib//compiled/$(Configuration).$(Platform)/</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../Link/VC2010.$(Configuration).$(PlatformName)/$(ProjectName)/</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">lungif_DEBUG</TargetName>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Optimized Debug|Win32'">D:/Alux3D/Alux3D/Engine/lib//compiled/$(Configuration).$(Platform)/</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Optimized Debug|Win32'">../../../../../Engine/lib//compiled/$(Configuration).$(Platform)/</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Optimized Debug|Win32'">../../Link/VC2010.$(Configuration).$(PlatformName)/$(ProjectName)/</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Optimized Debug|Win32'">lungif_OPTIMIZEDDEBUG</TargetName>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:/Alux3D/Alux3D/Engine/lib//compiled/$(Configuration).$(Platform)/</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../../../../Engine/lib//compiled/$(Configuration).$(Platform)/</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../Link/VC2010.$(Configuration).$(PlatformName)/$(ProjectName)/</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">lungif</TargetName>
   </PropertyGroup>
@@ -61,7 +61,7 @@
       <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
       <Optimization>Disabled</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>D:/Alux3D/Alux3D/Engine/lib/lungif;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../../../../Engine/lib/lungif;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_GBA_NO_FILEIO;TORQUE_DEBUG;TORQUE_DEBUG_GUARD;D3D_DEBUG_INFO;TORQUE_NET_STATS;UNICODE;_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>
       </ExceptionHandling>
@@ -98,7 +98,7 @@
       <Optimization>Full</Optimization>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>D:/Alux3D/Alux3D/Engine/lib/lungif;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../../../../Engine/lib/lungif;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_GBA_NO_FILEIO;TORQUE_DEBUG;TORQUE_DEBUG_GUARD;D3D_DEBUG_INFO;TORQUE_NET_STATS;UNICODE;_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>
       </ExceptionHandling>
@@ -134,7 +134,7 @@
       <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
       <Optimization>Full</Optimization>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>D:/Alux3D/Alux3D/Engine/lib/lungif;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../../../../Engine/lib/lungif;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_GBA_NO_FILEIO;UNICODE;_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>
       </ExceptionHandling>
@@ -167,27 +167,27 @@
 
                
                
-               			                     <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\lungif\dgif_lib.c" />      
+               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\lungif\dgif_lib.c" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\lungif\gifalloc.c" />      
+               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\lungif\gifalloc.c" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\lungif\gif_err.c" />      
+               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\lungif\gif_err.c" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\lungif\gif_lib.h" />      
+               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\lungif\gif_lib.h" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\lungif\gif_lib_private.h" />      
+               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\lungif\gif_lib_private.h" />      
 			         
 			      
    

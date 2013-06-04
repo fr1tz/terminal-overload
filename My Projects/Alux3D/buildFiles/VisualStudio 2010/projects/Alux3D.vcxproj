@@ -219,7 +219,7 @@
 
                
                
-               			                     <ClCompile Include="D:\Alux3D\Alux3D\Engine\source\main\main.cpp" />      
+               			                     <ClCompile Include="..\..\..\..\..\Engine\source\main\main.cpp" />      
 			         
 			      
    

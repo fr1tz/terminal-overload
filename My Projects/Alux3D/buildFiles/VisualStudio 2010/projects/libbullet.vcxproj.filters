@@ -2,59 +2,59 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
    <ItemGroup>
       <Filter Include="Source Files">
-         <UniqueIdentifier>{f2d8e400-aef4-4958-bfce-8ced151de68c}</UniqueIdentifier>
+         <UniqueIdentifier>{bd32a936-32d0-4d75-952e-61b4a24a721c}</UniqueIdentifier>
          <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat;cc</Extensions>
       </Filter>
       <Filter Include="Source Files\lib">
-         <UniqueIdentifier>{6006cce7-b081-4dbf-8a2e-f25ce67d3093}</UniqueIdentifier>
+         <UniqueIdentifier>{b4a51c8e-48a4-4976-8c4b-0dd9149b2974}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\src">
-         <UniqueIdentifier>{e8973397-6b06-46eb-a9a3-2edb0214fba2}</UniqueIdentifier>
+         <UniqueIdentifier>{31990235-0bb7-4b79-865d-21ad68d7a884}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\src\BulletCollision">
-         <UniqueIdentifier>{2e20238e-d800-4bad-a9cc-a8e5fcae003e}</UniqueIdentifier>
+         <UniqueIdentifier>{a100f57a-a447-446b-b16f-f1f3cc842225}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\src\BulletCollision\BroadphaseCollision">
-         <UniqueIdentifier>{ac9706a0-cbac-42d6-b3dd-58949cf59838}</UniqueIdentifier>
+         <UniqueIdentifier>{e676f1ca-883f-483e-b1af-ef22fdd18582}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\src\BulletCollision\CollisionDispatch">
-         <UniqueIdentifier>{ce1444f6-4789-4ef7-981b-74b1ecdd0c61}</UniqueIdentifier>
+         <UniqueIdentifier>{a3902ead-1a08-40aa-be93-f3736ceaab63}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\src\BulletCollision\CollisionShapes">
-         <UniqueIdentifier>{34aa558f-b83b-41a5-89fd-c9736d91cc32}</UniqueIdentifier>
+         <UniqueIdentifier>{a2569a57-fa61-4988-8b45-d3571453723d}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\src\BulletCollision\Gimpact">
-         <UniqueIdentifier>{465521a6-23bd-4d34-a646-9067d7026611}</UniqueIdentifier>
+         <UniqueIdentifier>{ca48fecf-f8ba-4e10-b8bf-7693c6e33b61}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\src\BulletCollision\NarrowPhaseCollision">
-         <UniqueIdentifier>{457924e2-11c5-4b41-ba1e-869a00a26cc8}</UniqueIdentifier>
+         <UniqueIdentifier>{808ccd5f-6f63-44f9-8e65-80ca51fb8951}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\src\BulletDynamics">
-         <UniqueIdentifier>{26cfa60c-117f-4a24-91e9-7ff3cef4bf38}</UniqueIdentifier>
+         <UniqueIdentifier>{1352c737-51db-409b-ac68-e9f4e55c7b87}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\src\BulletDynamics\Character">
-         <UniqueIdentifier>{a9878320-ae8e-4663-9c43-5725fdc88a8c}</UniqueIdentifier>
+         <UniqueIdentifier>{9ea27469-4f18-4548-967e-6cc0424d0741}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\src\BulletDynamics\ConstraintSolver">
-         <UniqueIdentifier>{5372351c-11a4-4e64-944d-997eefc4bfad}</UniqueIdentifier>
+         <UniqueIdentifier>{b7758156-2af8-4160-af55-36e9b77efe17}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\src\BulletDynamics\Dynamics">
-         <UniqueIdentifier>{ceee9209-fd5c-4f6f-a424-12f7f925fe89}</UniqueIdentifier>
+         <UniqueIdentifier>{27ddafe0-285b-47df-a2cc-65f04af67060}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\src\BulletDynamics\Vehicle">
-         <UniqueIdentifier>{57bac064-0d24-475c-b695-d3cfd2d81c7e}</UniqueIdentifier>
+         <UniqueIdentifier>{346b49cd-c11c-4f50-ab18-b501b1f00192}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\src\BulletMultiThreaded">
-         <UniqueIdentifier>{64612379-004b-4e72-a871-4c831830491c}</UniqueIdentifier>
+         <UniqueIdentifier>{de3a6261-02a4-42c2-9f40-e5466c526e0f}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\src\BulletMultiThreaded\MiniCLTask">
-         <UniqueIdentifier>{37b4b0e3-f8a2-434f-9b63-e7c18e8d6c2c}</UniqueIdentifier>
+         <UniqueIdentifier>{0f4ff817-beaf-4d1c-af4e-3dab77429b39}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\src\BulletMultiThreaded\SpuNarrowPhaseCollisionTask">
-         <UniqueIdentifier>{468961d2-2cce-4fb9-830e-1fb9e57e0c23}</UniqueIdentifier>
+         <UniqueIdentifier>{1020717a-417b-4793-b669-426f63a704fa}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\src\LinearMath">
-         <UniqueIdentifier>{135f5eef-1876-4f3e-a041-14464671b40b}</UniqueIdentifier>
+         <UniqueIdentifier>{aa97271d-f1e7-4b73-8c95-ec51626b8525}</UniqueIdentifier>
       </Filter>
    </ItemGroup>
   <ItemGroup>
@@ -63,1014 +63,1014 @@
     </ResourceCompile>
   </ItemGroup>
    <ItemGroup>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\BroadphaseCollision\btAxisSweep3.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\BroadphaseCollision\btAxisSweep3.cpp">
          <Filter>Source Files\lib\src\BulletCollision\BroadphaseCollision</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\BroadphaseCollision\btBroadphaseProxy.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\BroadphaseCollision\btBroadphaseProxy.cpp">
          <Filter>Source Files\lib\src\BulletCollision\BroadphaseCollision</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\BroadphaseCollision\btCollisionAlgorithm.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\BroadphaseCollision\btCollisionAlgorithm.cpp">
          <Filter>Source Files\lib\src\BulletCollision\BroadphaseCollision</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\BroadphaseCollision\btDbvt.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\BroadphaseCollision\btDbvt.cpp">
          <Filter>Source Files\lib\src\BulletCollision\BroadphaseCollision</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\BroadphaseCollision\btDbvtBroadphase.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\BroadphaseCollision\btDbvtBroadphase.cpp">
          <Filter>Source Files\lib\src\BulletCollision\BroadphaseCollision</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\BroadphaseCollision\btDispatcher.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\BroadphaseCollision\btDispatcher.cpp">
          <Filter>Source Files\lib\src\BulletCollision\BroadphaseCollision</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\BroadphaseCollision\btMultiSapBroadphase.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\BroadphaseCollision\btMultiSapBroadphase.cpp">
          <Filter>Source Files\lib\src\BulletCollision\BroadphaseCollision</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\BroadphaseCollision\btOverlappingPairCache.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\BroadphaseCollision\btOverlappingPairCache.cpp">
          <Filter>Source Files\lib\src\BulletCollision\BroadphaseCollision</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\BroadphaseCollision\btQuantizedBvh.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\BroadphaseCollision\btQuantizedBvh.cpp">
          <Filter>Source Files\lib\src\BulletCollision\BroadphaseCollision</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\BroadphaseCollision\btSimpleBroadphase.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\BroadphaseCollision\btSimpleBroadphase.cpp">
          <Filter>Source Files\lib\src\BulletCollision\BroadphaseCollision</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btActivatingCollisionAlgorithm.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btActivatingCollisionAlgorithm.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionDispatch</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btBox2dBox2dCollisionAlgorithm.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btBox2dBox2dCollisionAlgorithm.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionDispatch</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btBoxBoxCollisionAlgorithm.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btBoxBoxCollisionAlgorithm.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionDispatch</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btBoxBoxDetector.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btBoxBoxDetector.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionDispatch</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btCollisionDispatcher.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btCollisionDispatcher.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionDispatch</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btCollisionObject.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btCollisionObject.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionDispatch</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btCollisionWorld.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btCollisionWorld.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionDispatch</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btCompoundCollisionAlgorithm.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btCompoundCollisionAlgorithm.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionDispatch</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btConvex2dConvex2dAlgorithm.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btConvex2dConvex2dAlgorithm.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionDispatch</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btConvexConcaveCollisionAlgorithm.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btConvexConcaveCollisionAlgorithm.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionDispatch</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btConvexConvexAlgorithm.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btConvexConvexAlgorithm.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionDispatch</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btConvexPlaneCollisionAlgorithm.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btConvexPlaneCollisionAlgorithm.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionDispatch</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btDefaultCollisionConfiguration.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btDefaultCollisionConfiguration.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionDispatch</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btEmptyCollisionAlgorithm.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btEmptyCollisionAlgorithm.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionDispatch</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btGhostObject.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btGhostObject.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionDispatch</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btManifoldResult.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btManifoldResult.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionDispatch</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btSimulationIslandManager.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btSimulationIslandManager.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionDispatch</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btSphereBoxCollisionAlgorithm.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btSphereBoxCollisionAlgorithm.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionDispatch</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btSphereSphereCollisionAlgorithm.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btSphereSphereCollisionAlgorithm.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionDispatch</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btSphereTriangleCollisionAlgorithm.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btSphereTriangleCollisionAlgorithm.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionDispatch</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btUnionFind.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btUnionFind.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionDispatch</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\SphereTriangleDetector.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\SphereTriangleDetector.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionDispatch</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btBox2dShape.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btBox2dShape.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btBoxShape.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btBoxShape.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btBvhTriangleMeshShape.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btBvhTriangleMeshShape.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btCapsuleShape.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btCapsuleShape.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btCollisionShape.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btCollisionShape.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btCompoundShape.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btCompoundShape.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btConcaveShape.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btConcaveShape.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btConeShape.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btConeShape.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btConvex2dShape.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btConvex2dShape.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btConvexHullShape.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btConvexHullShape.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btConvexInternalShape.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btConvexInternalShape.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btConvexPointCloudShape.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btConvexPointCloudShape.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btConvexShape.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btConvexShape.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btConvexTriangleMeshShape.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btConvexTriangleMeshShape.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btCylinderShape.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btCylinderShape.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btEmptyShape.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btEmptyShape.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btHeightfieldTerrainShape.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btHeightfieldTerrainShape.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btMinkowskiSumShape.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btMinkowskiSumShape.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btMultimaterialTriangleMeshShape.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btMultimaterialTriangleMeshShape.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btMultiSphereShape.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btMultiSphereShape.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btOptimizedBvh.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btOptimizedBvh.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btPolyhedralConvexShape.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btPolyhedralConvexShape.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btScaledBvhTriangleMeshShape.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btScaledBvhTriangleMeshShape.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btShapeHull.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btShapeHull.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btSphereShape.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btSphereShape.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btStaticPlaneShape.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btStaticPlaneShape.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btStridingMeshInterface.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btStridingMeshInterface.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btTetrahedronShape.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btTetrahedronShape.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btTriangleBuffer.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btTriangleBuffer.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btTriangleCallback.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btTriangleCallback.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btTriangleIndexVertexArray.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btTriangleIndexVertexArray.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btTriangleIndexVertexMaterialArray.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btTriangleIndexVertexMaterialArray.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btTriangleMesh.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btTriangleMesh.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btTriangleMeshShape.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btTriangleMeshShape.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btUniformScalingShape.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btUniformScalingShape.cpp">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\Gimpact\btContactProcessing.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\Gimpact\btContactProcessing.cpp">
          <Filter>Source Files\lib\src\BulletCollision\Gimpact</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\Gimpact\btGenericPoolAllocator.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\Gimpact\btGenericPoolAllocator.cpp">
          <Filter>Source Files\lib\src\BulletCollision\Gimpact</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\Gimpact\btGImpactBvh.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\Gimpact\btGImpactBvh.cpp">
          <Filter>Source Files\lib\src\BulletCollision\Gimpact</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\Gimpact\btGImpactCollisionAlgorithm.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\Gimpact\btGImpactCollisionAlgorithm.cpp">
          <Filter>Source Files\lib\src\BulletCollision\Gimpact</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\Gimpact\btGImpactQuantizedBvh.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\Gimpact\btGImpactQuantizedBvh.cpp">
          <Filter>Source Files\lib\src\BulletCollision\Gimpact</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\Gimpact\btGImpactShape.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\Gimpact\btGImpactShape.cpp">
          <Filter>Source Files\lib\src\BulletCollision\Gimpact</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\Gimpact\btTriangleShapeEx.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\Gimpact\btTriangleShapeEx.cpp">
          <Filter>Source Files\lib\src\BulletCollision\Gimpact</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\Gimpact\gim_box_set.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\Gimpact\gim_box_set.cpp">
          <Filter>Source Files\lib\src\BulletCollision\Gimpact</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\Gimpact\gim_contact.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\Gimpact\gim_contact.cpp">
          <Filter>Source Files\lib\src\BulletCollision\Gimpact</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\Gimpact\gim_memory.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\Gimpact\gim_memory.cpp">
          <Filter>Source Files\lib\src\BulletCollision\Gimpact</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\Gimpact\gim_tri_collision.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\Gimpact\gim_tri_collision.cpp">
          <Filter>Source Files\lib\src\BulletCollision\Gimpact</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btContinuousConvexCollision.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btContinuousConvexCollision.cpp">
          <Filter>Source Files\lib\src\BulletCollision\NarrowPhaseCollision</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btConvexCast.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btConvexCast.cpp">
          <Filter>Source Files\lib\src\BulletCollision\NarrowPhaseCollision</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btGjkConvexCast.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btGjkConvexCast.cpp">
          <Filter>Source Files\lib\src\BulletCollision\NarrowPhaseCollision</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btGjkEpa2.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btGjkEpa2.cpp">
          <Filter>Source Files\lib\src\BulletCollision\NarrowPhaseCollision</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btGjkEpaPenetrationDepthSolver.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btGjkEpaPenetrationDepthSolver.cpp">
          <Filter>Source Files\lib\src\BulletCollision\NarrowPhaseCollision</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btGjkPairDetector.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btGjkPairDetector.cpp">
          <Filter>Source Files\lib\src\BulletCollision\NarrowPhaseCollision</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btMinkowskiPenetrationDepthSolver.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btMinkowskiPenetrationDepthSolver.cpp">
          <Filter>Source Files\lib\src\BulletCollision\NarrowPhaseCollision</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btPersistentManifold.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btPersistentManifold.cpp">
          <Filter>Source Files\lib\src\BulletCollision\NarrowPhaseCollision</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btRaycastCallback.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btRaycastCallback.cpp">
          <Filter>Source Files\lib\src\BulletCollision\NarrowPhaseCollision</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btSubSimplexConvexCast.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btSubSimplexConvexCast.cpp">
          <Filter>Source Files\lib\src\BulletCollision\NarrowPhaseCollision</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btVoronoiSimplexSolver.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btVoronoiSimplexSolver.cpp">
          <Filter>Source Files\lib\src\BulletCollision\NarrowPhaseCollision</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletDynamics\Character\btKinematicCharacterController.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletDynamics\Character\btKinematicCharacterController.cpp">
          <Filter>Source Files\lib\src\BulletDynamics\Character</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btConeTwistConstraint.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btConeTwistConstraint.cpp">
          <Filter>Source Files\lib\src\BulletDynamics\ConstraintSolver</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btContactConstraint.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btContactConstraint.cpp">
          <Filter>Source Files\lib\src\BulletDynamics\ConstraintSolver</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btGeneric6DofConstraint.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btGeneric6DofConstraint.cpp">
          <Filter>Source Files\lib\src\BulletDynamics\ConstraintSolver</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btGeneric6DofSpringConstraint.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btGeneric6DofSpringConstraint.cpp">
          <Filter>Source Files\lib\src\BulletDynamics\ConstraintSolver</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btHinge2Constraint.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btHinge2Constraint.cpp">
          <Filter>Source Files\lib\src\BulletDynamics\ConstraintSolver</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btHingeConstraint.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btHingeConstraint.cpp">
          <Filter>Source Files\lib\src\BulletDynamics\ConstraintSolver</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btPoint2PointConstraint.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btPoint2PointConstraint.cpp">
          <Filter>Source Files\lib\src\BulletDynamics\ConstraintSolver</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btSequentialImpulseConstraintSolver.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btSequentialImpulseConstraintSolver.cpp">
          <Filter>Source Files\lib\src\BulletDynamics\ConstraintSolver</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btSliderConstraint.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btSliderConstraint.cpp">
          <Filter>Source Files\lib\src\BulletDynamics\ConstraintSolver</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btSolve2LinearConstraint.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btSolve2LinearConstraint.cpp">
          <Filter>Source Files\lib\src\BulletDynamics\ConstraintSolver</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btTypedConstraint.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btTypedConstraint.cpp">
          <Filter>Source Files\lib\src\BulletDynamics\ConstraintSolver</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btUniversalConstraint.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btUniversalConstraint.cpp">
          <Filter>Source Files\lib\src\BulletDynamics\ConstraintSolver</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletDynamics\Dynamics\btContinuousDynamicsWorld.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletDynamics\Dynamics\btContinuousDynamicsWorld.cpp">
          <Filter>Source Files\lib\src\BulletDynamics\Dynamics</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletDynamics\Dynamics\btDiscreteDynamicsWorld.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletDynamics\Dynamics\btDiscreteDynamicsWorld.cpp">
          <Filter>Source Files\lib\src\BulletDynamics\Dynamics</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletDynamics\Dynamics\btRigidBody.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletDynamics\Dynamics\btRigidBody.cpp">
          <Filter>Source Files\lib\src\BulletDynamics\Dynamics</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletDynamics\Dynamics\btSimpleDynamicsWorld.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletDynamics\Dynamics\btSimpleDynamicsWorld.cpp">
          <Filter>Source Files\lib\src\BulletDynamics\Dynamics</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletDynamics\Dynamics\Bullet-C-API.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletDynamics\Dynamics\Bullet-C-API.cpp">
          <Filter>Source Files\lib\src\BulletDynamics\Dynamics</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletDynamics\Vehicle\btRaycastVehicle.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletDynamics\Vehicle\btRaycastVehicle.cpp">
          <Filter>Source Files\lib\src\BulletDynamics\Vehicle</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletDynamics\Vehicle\btWheelInfo.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletDynamics\Vehicle\btWheelInfo.cpp">
          <Filter>Source Files\lib\src\BulletDynamics\Vehicle</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletMultiThreaded\btGpu3DGridBroadphase.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletMultiThreaded\btGpu3DGridBroadphase.cpp">
          <Filter>Source Files\lib\src\BulletMultiThreaded</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletMultiThreaded\btThreadSupportInterface.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletMultiThreaded\btThreadSupportInterface.cpp">
          <Filter>Source Files\lib\src\BulletMultiThreaded</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletMultiThreaded\MiniCLTaskScheduler.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletMultiThreaded\MiniCLTaskScheduler.cpp">
          <Filter>Source Files\lib\src\BulletMultiThreaded</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletMultiThreaded\PosixThreadSupport.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletMultiThreaded\PosixThreadSupport.cpp">
          <Filter>Source Files\lib\src\BulletMultiThreaded</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletMultiThreaded\SequentialThreadSupport.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletMultiThreaded\SequentialThreadSupport.cpp">
          <Filter>Source Files\lib\src\BulletMultiThreaded</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletMultiThreaded\SpuCollisionObjectWrapper.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletMultiThreaded\SpuCollisionObjectWrapper.cpp">
          <Filter>Source Files\lib\src\BulletMultiThreaded</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletMultiThreaded\SpuCollisionTaskProcess.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletMultiThreaded\SpuCollisionTaskProcess.cpp">
          <Filter>Source Files\lib\src\BulletMultiThreaded</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletMultiThreaded\SpuContactManifoldCollisionAlgorithm.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletMultiThreaded\SpuContactManifoldCollisionAlgorithm.cpp">
          <Filter>Source Files\lib\src\BulletMultiThreaded</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletMultiThreaded\SpuFakeDma.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletMultiThreaded\SpuFakeDma.cpp">
          <Filter>Source Files\lib\src\BulletMultiThreaded</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletMultiThreaded\SpuGatheringCollisionDispatcher.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletMultiThreaded\SpuGatheringCollisionDispatcher.cpp">
          <Filter>Source Files\lib\src\BulletMultiThreaded</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletMultiThreaded\SpuLibspe2Support.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletMultiThreaded\SpuLibspe2Support.cpp">
          <Filter>Source Files\lib\src\BulletMultiThreaded</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletMultiThreaded\SpuSampleTaskProcess.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletMultiThreaded\SpuSampleTaskProcess.cpp">
          <Filter>Source Files\lib\src\BulletMultiThreaded</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletMultiThreaded\Win32ThreadSupport.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletMultiThreaded\Win32ThreadSupport.cpp">
          <Filter>Source Files\lib\src\BulletMultiThreaded</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletMultiThreaded\MiniCLTask\MiniCLTask.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletMultiThreaded\MiniCLTask\MiniCLTask.cpp">
          <Filter>Source Files\lib\src\BulletMultiThreaded\MiniCLTask</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\boxBoxDistance.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\boxBoxDistance.cpp">
          <Filter>Source Files\lib\src\BulletMultiThreaded\SpuNarrowPhaseCollisionTask</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\SpuCollisionShapes.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\SpuCollisionShapes.cpp">
          <Filter>Source Files\lib\src\BulletMultiThreaded\SpuNarrowPhaseCollisionTask</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\SpuContactResult.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\SpuContactResult.cpp">
          <Filter>Source Files\lib\src\BulletMultiThreaded\SpuNarrowPhaseCollisionTask</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\SpuGatheringCollisionTask.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\SpuGatheringCollisionTask.cpp">
          <Filter>Source Files\lib\src\BulletMultiThreaded\SpuNarrowPhaseCollisionTask</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\SpuMinkowskiPenetrationDepthSolver.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\SpuMinkowskiPenetrationDepthSolver.cpp">
          <Filter>Source Files\lib\src\BulletMultiThreaded\SpuNarrowPhaseCollisionTask</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\LinearMath\btAlignedAllocator.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\LinearMath\btAlignedAllocator.cpp">
          <Filter>Source Files\lib\src\LinearMath</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\LinearMath\btConvexHull.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\LinearMath\btConvexHull.cpp">
          <Filter>Source Files\lib\src\LinearMath</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\LinearMath\btGeometryUtil.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\LinearMath\btGeometryUtil.cpp">
          <Filter>Source Files\lib\src\LinearMath</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\LinearMath\btQuickprof.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\bullet\src\LinearMath\btQuickprof.cpp">
          <Filter>Source Files\lib\src\LinearMath</Filter>
       </ClCompile>
    </ItemGroup>
    <ItemGroup>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\btBulletCollisionCommon.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\btBulletCollisionCommon.h">
          <Filter>Source Files\lib\src</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\btBulletDynamicsCommon.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\btBulletDynamicsCommon.h">
          <Filter>Source Files\lib\src</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\Bullet-C-Api.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\Bullet-C-Api.h">
          <Filter>Source Files\lib\src</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\BroadphaseCollision\btAxisSweep3.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\BroadphaseCollision\btAxisSweep3.h">
          <Filter>Source Files\lib\src\BulletCollision\BroadphaseCollision</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\BroadphaseCollision\btBroadphaseInterface.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\BroadphaseCollision\btBroadphaseInterface.h">
          <Filter>Source Files\lib\src\BulletCollision\BroadphaseCollision</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\BroadphaseCollision\btBroadphaseProxy.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\BroadphaseCollision\btBroadphaseProxy.h">
          <Filter>Source Files\lib\src\BulletCollision\BroadphaseCollision</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\BroadphaseCollision\btCollisionAlgorithm.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\BroadphaseCollision\btCollisionAlgorithm.h">
          <Filter>Source Files\lib\src\BulletCollision\BroadphaseCollision</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\BroadphaseCollision\btDbvt.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\BroadphaseCollision\btDbvt.h">
          <Filter>Source Files\lib\src\BulletCollision\BroadphaseCollision</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\BroadphaseCollision\btDbvtBroadphase.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\BroadphaseCollision\btDbvtBroadphase.h">
          <Filter>Source Files\lib\src\BulletCollision\BroadphaseCollision</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\BroadphaseCollision\btDispatcher.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\BroadphaseCollision\btDispatcher.h">
          <Filter>Source Files\lib\src\BulletCollision\BroadphaseCollision</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\BroadphaseCollision\btMultiSapBroadphase.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\BroadphaseCollision\btMultiSapBroadphase.h">
          <Filter>Source Files\lib\src\BulletCollision\BroadphaseCollision</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\BroadphaseCollision\btOverlappingPairCache.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\BroadphaseCollision\btOverlappingPairCache.h">
          <Filter>Source Files\lib\src\BulletCollision\BroadphaseCollision</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\BroadphaseCollision\btOverlappingPairCallback.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\BroadphaseCollision\btOverlappingPairCallback.h">
          <Filter>Source Files\lib\src\BulletCollision\BroadphaseCollision</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\BroadphaseCollision\btQuantizedBvh.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\BroadphaseCollision\btQuantizedBvh.h">
          <Filter>Source Files\lib\src\BulletCollision\BroadphaseCollision</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\BroadphaseCollision\btSimpleBroadphase.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\BroadphaseCollision\btSimpleBroadphase.h">
          <Filter>Source Files\lib\src\BulletCollision\BroadphaseCollision</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btActivatingCollisionAlgorithm.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btActivatingCollisionAlgorithm.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionDispatch</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btBox2dBox2dCollisionAlgorithm.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btBox2dBox2dCollisionAlgorithm.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionDispatch</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btBoxBoxCollisionAlgorithm.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btBoxBoxCollisionAlgorithm.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionDispatch</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btBoxBoxDetector.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btBoxBoxDetector.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionDispatch</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btCollisionConfiguration.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btCollisionConfiguration.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionDispatch</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btCollisionCreateFunc.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btCollisionCreateFunc.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionDispatch</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btCollisionDispatcher.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btCollisionDispatcher.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionDispatch</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btCollisionObject.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btCollisionObject.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionDispatch</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btCollisionWorld.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btCollisionWorld.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionDispatch</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btCompoundCollisionAlgorithm.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btCompoundCollisionAlgorithm.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionDispatch</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btConvex2dConvex2dAlgorithm.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btConvex2dConvex2dAlgorithm.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionDispatch</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btConvexConcaveCollisionAlgorithm.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btConvexConcaveCollisionAlgorithm.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionDispatch</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btConvexConvexAlgorithm.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btConvexConvexAlgorithm.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionDispatch</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btConvexPlaneCollisionAlgorithm.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btConvexPlaneCollisionAlgorithm.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionDispatch</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btDefaultCollisionConfiguration.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btDefaultCollisionConfiguration.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionDispatch</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btEmptyCollisionAlgorithm.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btEmptyCollisionAlgorithm.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionDispatch</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btGhostObject.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btGhostObject.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionDispatch</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btManifoldResult.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btManifoldResult.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionDispatch</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btSimulationIslandManager.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btSimulationIslandManager.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionDispatch</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btSphereBoxCollisionAlgorithm.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btSphereBoxCollisionAlgorithm.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionDispatch</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btSphereSphereCollisionAlgorithm.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btSphereSphereCollisionAlgorithm.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionDispatch</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btSphereTriangleCollisionAlgorithm.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btSphereTriangleCollisionAlgorithm.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionDispatch</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btUnionFind.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\btUnionFind.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionDispatch</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\SphereTriangleDetector.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionDispatch\SphereTriangleDetector.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionDispatch</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btBox2dShape.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btBox2dShape.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btBoxShape.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btBoxShape.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btBvhTriangleMeshShape.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btBvhTriangleMeshShape.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btCapsuleShape.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btCapsuleShape.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btCollisionMargin.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btCollisionMargin.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btCollisionShape.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btCollisionShape.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btCompoundShape.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btCompoundShape.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btConcaveShape.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btConcaveShape.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btConeShape.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btConeShape.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btConvex2dShape.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btConvex2dShape.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btConvexHullShape.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btConvexHullShape.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btConvexInternalShape.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btConvexInternalShape.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btConvexPointCloudShape.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btConvexPointCloudShape.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btConvexShape.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btConvexShape.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btConvexTriangleMeshShape.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btConvexTriangleMeshShape.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btCylinderShape.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btCylinderShape.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btEmptyShape.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btEmptyShape.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btHeightfieldTerrainShape.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btHeightfieldTerrainShape.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btMaterial.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btMaterial.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btMinkowskiSumShape.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btMinkowskiSumShape.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btMultimaterialTriangleMeshShape.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btMultimaterialTriangleMeshShape.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btMultiSphereShape.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btMultiSphereShape.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btOptimizedBvh.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btOptimizedBvh.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btPolyhedralConvexShape.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btPolyhedralConvexShape.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btScaledBvhTriangleMeshShape.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btScaledBvhTriangleMeshShape.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btShapeHull.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btShapeHull.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btSphereShape.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btSphereShape.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btStaticPlaneShape.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btStaticPlaneShape.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btStridingMeshInterface.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btStridingMeshInterface.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btTetrahedronShape.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btTetrahedronShape.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btTriangleBuffer.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btTriangleBuffer.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btTriangleCallback.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btTriangleCallback.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btTriangleIndexVertexArray.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btTriangleIndexVertexArray.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btTriangleIndexVertexMaterialArray.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btTriangleIndexVertexMaterialArray.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btTriangleMesh.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btTriangleMesh.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btTriangleMeshShape.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btTriangleMeshShape.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btTriangleShape.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btTriangleShape.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btUniformScalingShape.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\CollisionShapes\btUniformScalingShape.h">
          <Filter>Source Files\lib\src\BulletCollision\CollisionShapes</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\Gimpact\btBoxCollision.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\Gimpact\btBoxCollision.h">
          <Filter>Source Files\lib\src\BulletCollision\Gimpact</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\Gimpact\btClipPolygon.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\Gimpact\btClipPolygon.h">
          <Filter>Source Files\lib\src\BulletCollision\Gimpact</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\Gimpact\btContactProcessing.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\Gimpact\btContactProcessing.h">
          <Filter>Source Files\lib\src\BulletCollision\Gimpact</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\Gimpact\btGenericPoolAllocator.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\Gimpact\btGenericPoolAllocator.h">
          <Filter>Source Files\lib\src\BulletCollision\Gimpact</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\Gimpact\btGeometryOperations.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\Gimpact\btGeometryOperations.h">
          <Filter>Source Files\lib\src\BulletCollision\Gimpact</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\Gimpact\btGImpactBvh.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\Gimpact\btGImpactBvh.h">
          <Filter>Source Files\lib\src\BulletCollision\Gimpact</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\Gimpact\btGImpactCollisionAlgorithm.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\Gimpact\btGImpactCollisionAlgorithm.h">
          <Filter>Source Files\lib\src\BulletCollision\Gimpact</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\Gimpact\btGImpactMassUtil.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\Gimpact\btGImpactMassUtil.h">
          <Filter>Source Files\lib\src\BulletCollision\Gimpact</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\Gimpact\btGImpactQuantizedBvh.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\Gimpact\btGImpactQuantizedBvh.h">
          <Filter>Source Files\lib\src\BulletCollision\Gimpact</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\Gimpact\btGImpactShape.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\Gimpact\btGImpactShape.h">
          <Filter>Source Files\lib\src\BulletCollision\Gimpact</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\Gimpact\btQuantization.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\Gimpact\btQuantization.h">
          <Filter>Source Files\lib\src\BulletCollision\Gimpact</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\Gimpact\btTriangleShapeEx.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\Gimpact\btTriangleShapeEx.h">
          <Filter>Source Files\lib\src\BulletCollision\Gimpact</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\Gimpact\gim_array.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\Gimpact\gim_array.h">
          <Filter>Source Files\lib\src\BulletCollision\Gimpact</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\Gimpact\gim_basic_geometry_operations.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\Gimpact\gim_basic_geometry_operations.h">
          <Filter>Source Files\lib\src\BulletCollision\Gimpact</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\Gimpact\gim_bitset.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\Gimpact\gim_bitset.h">
          <Filter>Source Files\lib\src\BulletCollision\Gimpact</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\Gimpact\gim_box_collision.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\Gimpact\gim_box_collision.h">
          <Filter>Source Files\lib\src\BulletCollision\Gimpact</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\Gimpact\gim_box_set.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\Gimpact\gim_box_set.h">
          <Filter>Source Files\lib\src\BulletCollision\Gimpact</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\Gimpact\gim_clip_polygon.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\Gimpact\gim_clip_polygon.h">
          <Filter>Source Files\lib\src\BulletCollision\Gimpact</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\Gimpact\gim_contact.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\Gimpact\gim_contact.h">
          <Filter>Source Files\lib\src\BulletCollision\Gimpact</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\Gimpact\gim_geometry.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\Gimpact\gim_geometry.h">
          <Filter>Source Files\lib\src\BulletCollision\Gimpact</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\Gimpact\gim_geom_types.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\Gimpact\gim_geom_types.h">
          <Filter>Source Files\lib\src\BulletCollision\Gimpact</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\Gimpact\gim_hash_table.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\Gimpact\gim_hash_table.h">
          <Filter>Source Files\lib\src\BulletCollision\Gimpact</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\Gimpact\gim_linear_math.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\Gimpact\gim_linear_math.h">
          <Filter>Source Files\lib\src\BulletCollision\Gimpact</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\Gimpact\gim_math.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\Gimpact\gim_math.h">
          <Filter>Source Files\lib\src\BulletCollision\Gimpact</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\Gimpact\gim_memory.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\Gimpact\gim_memory.h">
          <Filter>Source Files\lib\src\BulletCollision\Gimpact</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\Gimpact\gim_radixsort.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\Gimpact\gim_radixsort.h">
          <Filter>Source Files\lib\src\BulletCollision\Gimpact</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\Gimpact\gim_tri_collision.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\Gimpact\gim_tri_collision.h">
          <Filter>Source Files\lib\src\BulletCollision\Gimpact</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btContinuousConvexCollision.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btContinuousConvexCollision.h">
          <Filter>Source Files\lib\src\BulletCollision\NarrowPhaseCollision</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btConvexCast.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btConvexCast.h">
          <Filter>Source Files\lib\src\BulletCollision\NarrowPhaseCollision</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btConvexPenetrationDepthSolver.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btConvexPenetrationDepthSolver.h">
          <Filter>Source Files\lib\src\BulletCollision\NarrowPhaseCollision</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btDiscreteCollisionDetectorInterface.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btDiscreteCollisionDetectorInterface.h">
          <Filter>Source Files\lib\src\BulletCollision\NarrowPhaseCollision</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btGjkConvexCast.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btGjkConvexCast.h">
          <Filter>Source Files\lib\src\BulletCollision\NarrowPhaseCollision</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btGjkEpa2.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btGjkEpa2.h">
          <Filter>Source Files\lib\src\BulletCollision\NarrowPhaseCollision</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btGjkEpaPenetrationDepthSolver.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btGjkEpaPenetrationDepthSolver.h">
          <Filter>Source Files\lib\src\BulletCollision\NarrowPhaseCollision</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btGjkPairDetector.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btGjkPairDetector.h">
          <Filter>Source Files\lib\src\BulletCollision\NarrowPhaseCollision</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btManifoldPoint.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btManifoldPoint.h">
          <Filter>Source Files\lib\src\BulletCollision\NarrowPhaseCollision</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btMinkowskiPenetrationDepthSolver.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btMinkowskiPenetrationDepthSolver.h">
          <Filter>Source Files\lib\src\BulletCollision\NarrowPhaseCollision</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btPersistentManifold.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btPersistentManifold.h">
          <Filter>Source Files\lib\src\BulletCollision\NarrowPhaseCollision</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btPointCollector.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btPointCollector.h">
          <Filter>Source Files\lib\src\BulletCollision\NarrowPhaseCollision</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btRaycastCallback.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btRaycastCallback.h">
          <Filter>Source Files\lib\src\BulletCollision\NarrowPhaseCollision</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btSimplexSolverInterface.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btSimplexSolverInterface.h">
          <Filter>Source Files\lib\src\BulletCollision\NarrowPhaseCollision</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btSubSimplexConvexCast.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btSubSimplexConvexCast.h">
          <Filter>Source Files\lib\src\BulletCollision\NarrowPhaseCollision</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btVoronoiSimplexSolver.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletCollision\NarrowPhaseCollision\btVoronoiSimplexSolver.h">
          <Filter>Source Files\lib\src\BulletCollision\NarrowPhaseCollision</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletDynamics\Character\btCharacterControllerInterface.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletDynamics\Character\btCharacterControllerInterface.h">
          <Filter>Source Files\lib\src\BulletDynamics\Character</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletDynamics\Character\btKinematicCharacterController.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletDynamics\Character\btKinematicCharacterController.h">
          <Filter>Source Files\lib\src\BulletDynamics\Character</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btConeTwistConstraint.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btConeTwistConstraint.h">
          <Filter>Source Files\lib\src\BulletDynamics\ConstraintSolver</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btConstraintSolver.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btConstraintSolver.h">
          <Filter>Source Files\lib\src\BulletDynamics\ConstraintSolver</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btContactConstraint.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btContactConstraint.h">
          <Filter>Source Files\lib\src\BulletDynamics\ConstraintSolver</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btContactSolverInfo.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btContactSolverInfo.h">
          <Filter>Source Files\lib\src\BulletDynamics\ConstraintSolver</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btGeneric6DofConstraint.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btGeneric6DofConstraint.h">
          <Filter>Source Files\lib\src\BulletDynamics\ConstraintSolver</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btGeneric6DofSpringConstraint.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btGeneric6DofSpringConstraint.h">
          <Filter>Source Files\lib\src\BulletDynamics\ConstraintSolver</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btHinge2Constraint.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btHinge2Constraint.h">
          <Filter>Source Files\lib\src\BulletDynamics\ConstraintSolver</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btHingeConstraint.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btHingeConstraint.h">
          <Filter>Source Files\lib\src\BulletDynamics\ConstraintSolver</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btJacobianEntry.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btJacobianEntry.h">
          <Filter>Source Files\lib\src\BulletDynamics\ConstraintSolver</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btPoint2PointConstraint.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btPoint2PointConstraint.h">
          <Filter>Source Files\lib\src\BulletDynamics\ConstraintSolver</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btSequentialImpulseConstraintSolver.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btSequentialImpulseConstraintSolver.h">
          <Filter>Source Files\lib\src\BulletDynamics\ConstraintSolver</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btSliderConstraint.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btSliderConstraint.h">
          <Filter>Source Files\lib\src\BulletDynamics\ConstraintSolver</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btSolve2LinearConstraint.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btSolve2LinearConstraint.h">
          <Filter>Source Files\lib\src\BulletDynamics\ConstraintSolver</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btSolverBody.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btSolverBody.h">
          <Filter>Source Files\lib\src\BulletDynamics\ConstraintSolver</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btSolverConstraint.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btSolverConstraint.h">
          <Filter>Source Files\lib\src\BulletDynamics\ConstraintSolver</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btTypedConstraint.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btTypedConstraint.h">
          <Filter>Source Files\lib\src\BulletDynamics\ConstraintSolver</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btUniversalConstraint.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletDynamics\ConstraintSolver\btUniversalConstraint.h">
          <Filter>Source Files\lib\src\BulletDynamics\ConstraintSolver</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletDynamics\Dynamics\btActionInterface.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletDynamics\Dynamics\btActionInterface.h">
          <Filter>Source Files\lib\src\BulletDynamics\Dynamics</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletDynamics\Dynamics\btContinuousDynamicsWorld.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletDynamics\Dynamics\btContinuousDynamicsWorld.h">
          <Filter>Source Files\lib\src\BulletDynamics\Dynamics</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletDynamics\Dynamics\btDiscreteDynamicsWorld.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletDynamics\Dynamics\btDiscreteDynamicsWorld.h">
          <Filter>Source Files\lib\src\BulletDynamics\Dynamics</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletDynamics\Dynamics\btDynamicsWorld.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletDynamics\Dynamics\btDynamicsWorld.h">
          <Filter>Source Files\lib\src\BulletDynamics\Dynamics</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletDynamics\Dynamics\btRigidBody.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletDynamics\Dynamics\btRigidBody.h">
          <Filter>Source Files\lib\src\BulletDynamics\Dynamics</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletDynamics\Dynamics\btSimpleDynamicsWorld.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletDynamics\Dynamics\btSimpleDynamicsWorld.h">
          <Filter>Source Files\lib\src\BulletDynamics\Dynamics</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletDynamics\Vehicle\btRaycastVehicle.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletDynamics\Vehicle\btRaycastVehicle.h">
          <Filter>Source Files\lib\src\BulletDynamics\Vehicle</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletDynamics\Vehicle\btVehicleRaycaster.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletDynamics\Vehicle\btVehicleRaycaster.h">
          <Filter>Source Files\lib\src\BulletDynamics\Vehicle</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletDynamics\Vehicle\btWheelInfo.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletDynamics\Vehicle\btWheelInfo.h">
          <Filter>Source Files\lib\src\BulletDynamics\Vehicle</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletMultiThreaded\btGpu3DGridBroadphase.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletMultiThreaded\btGpu3DGridBroadphase.h">
          <Filter>Source Files\lib\src\BulletMultiThreaded</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletMultiThreaded\btGpu3DGridBroadphaseSharedCode.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletMultiThreaded\btGpu3DGridBroadphaseSharedCode.h">
          <Filter>Source Files\lib\src\BulletMultiThreaded</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletMultiThreaded\btGpu3DGridBroadphaseSharedDefs.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletMultiThreaded\btGpu3DGridBroadphaseSharedDefs.h">
          <Filter>Source Files\lib\src\BulletMultiThreaded</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletMultiThreaded\btGpu3DGridBroadphaseSharedTypes.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletMultiThreaded\btGpu3DGridBroadphaseSharedTypes.h">
          <Filter>Source Files\lib\src\BulletMultiThreaded</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletMultiThreaded\btGpuDefines.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletMultiThreaded\btGpuDefines.h">
          <Filter>Source Files\lib\src\BulletMultiThreaded</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletMultiThreaded\btGpuUtilsSharedCode.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletMultiThreaded\btGpuUtilsSharedCode.h">
          <Filter>Source Files\lib\src\BulletMultiThreaded</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletMultiThreaded\btGpuUtilsSharedDefs.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletMultiThreaded\btGpuUtilsSharedDefs.h">
          <Filter>Source Files\lib\src\BulletMultiThreaded</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletMultiThreaded\btThreadSupportInterface.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletMultiThreaded\btThreadSupportInterface.h">
          <Filter>Source Files\lib\src\BulletMultiThreaded</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletMultiThreaded\MiniCLTaskScheduler.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletMultiThreaded\MiniCLTaskScheduler.h">
          <Filter>Source Files\lib\src\BulletMultiThreaded</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletMultiThreaded\PlatformDefinitions.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletMultiThreaded\PlatformDefinitions.h">
          <Filter>Source Files\lib\src\BulletMultiThreaded</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletMultiThreaded\PosixThreadSupport.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletMultiThreaded\PosixThreadSupport.h">
          <Filter>Source Files\lib\src\BulletMultiThreaded</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletMultiThreaded\PpuAddressSpace.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletMultiThreaded\PpuAddressSpace.h">
          <Filter>Source Files\lib\src\BulletMultiThreaded</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletMultiThreaded\SequentialThreadSupport.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletMultiThreaded\SequentialThreadSupport.h">
          <Filter>Source Files\lib\src\BulletMultiThreaded</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletMultiThreaded\SpuCollisionObjectWrapper.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletMultiThreaded\SpuCollisionObjectWrapper.h">
          <Filter>Source Files\lib\src\BulletMultiThreaded</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletMultiThreaded\SpuCollisionTaskProcess.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletMultiThreaded\SpuCollisionTaskProcess.h">
          <Filter>Source Files\lib\src\BulletMultiThreaded</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletMultiThreaded\SpuContactManifoldCollisionAlgorithm.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletMultiThreaded\SpuContactManifoldCollisionAlgorithm.h">
          <Filter>Source Files\lib\src\BulletMultiThreaded</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletMultiThreaded\SpuDoubleBuffer.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletMultiThreaded\SpuDoubleBuffer.h">
          <Filter>Source Files\lib\src\BulletMultiThreaded</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletMultiThreaded\SpuFakeDma.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletMultiThreaded\SpuFakeDma.h">
          <Filter>Source Files\lib\src\BulletMultiThreaded</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletMultiThreaded\SpuGatheringCollisionDispatcher.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletMultiThreaded\SpuGatheringCollisionDispatcher.h">
          <Filter>Source Files\lib\src\BulletMultiThreaded</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletMultiThreaded\SpuLibspe2Support.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletMultiThreaded\SpuLibspe2Support.h">
          <Filter>Source Files\lib\src\BulletMultiThreaded</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletMultiThreaded\SpuSampleTaskProcess.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletMultiThreaded\SpuSampleTaskProcess.h">
          <Filter>Source Files\lib\src\BulletMultiThreaded</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletMultiThreaded\SpuSync.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletMultiThreaded\SpuSync.h">
          <Filter>Source Files\lib\src\BulletMultiThreaded</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletMultiThreaded\vectormath2bullet.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletMultiThreaded\vectormath2bullet.h">
          <Filter>Source Files\lib\src\BulletMultiThreaded</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletMultiThreaded\Win32ThreadSupport.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletMultiThreaded\Win32ThreadSupport.h">
          <Filter>Source Files\lib\src\BulletMultiThreaded</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletMultiThreaded\MiniCLTask\MiniCLTask.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletMultiThreaded\MiniCLTask\MiniCLTask.h">
          <Filter>Source Files\lib\src\BulletMultiThreaded\MiniCLTask</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\Box.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\Box.h">
          <Filter>Source Files\lib\src\BulletMultiThreaded\SpuNarrowPhaseCollisionTask</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\boxBoxDistance.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\boxBoxDistance.h">
          <Filter>Source Files\lib\src\BulletMultiThreaded\SpuNarrowPhaseCollisionTask</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\SpuCollisionShapes.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\SpuCollisionShapes.h">
          <Filter>Source Files\lib\src\BulletMultiThreaded\SpuNarrowPhaseCollisionTask</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\SpuContactResult.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\SpuContactResult.h">
          <Filter>Source Files\lib\src\BulletMultiThreaded\SpuNarrowPhaseCollisionTask</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\SpuConvexPenetrationDepthSolver.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\SpuConvexPenetrationDepthSolver.h">
          <Filter>Source Files\lib\src\BulletMultiThreaded\SpuNarrowPhaseCollisionTask</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\SpuGatheringCollisionTask.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\SpuGatheringCollisionTask.h">
          <Filter>Source Files\lib\src\BulletMultiThreaded\SpuNarrowPhaseCollisionTask</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\SpuLocalSupport.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\SpuLocalSupport.h">
          <Filter>Source Files\lib\src\BulletMultiThreaded\SpuNarrowPhaseCollisionTask</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\SpuMinkowskiPenetrationDepthSolver.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\SpuMinkowskiPenetrationDepthSolver.h">
          <Filter>Source Files\lib\src\BulletMultiThreaded\SpuNarrowPhaseCollisionTask</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\SpuPreferredPenetrationDirections.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\BulletMultiThreaded\SpuNarrowPhaseCollisionTask\SpuPreferredPenetrationDirections.h">
          <Filter>Source Files\lib\src\BulletMultiThreaded\SpuNarrowPhaseCollisionTask</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\LinearMath\btAabbUtil2.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\LinearMath\btAabbUtil2.h">
          <Filter>Source Files\lib\src\LinearMath</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\LinearMath\btAlignedAllocator.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\LinearMath\btAlignedAllocator.h">
          <Filter>Source Files\lib\src\LinearMath</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\LinearMath\btAlignedObjectArray.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\LinearMath\btAlignedObjectArray.h">
          <Filter>Source Files\lib\src\LinearMath</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\LinearMath\btConvexHull.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\LinearMath\btConvexHull.h">
          <Filter>Source Files\lib\src\LinearMath</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\LinearMath\btDefaultMotionState.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\LinearMath\btDefaultMotionState.h">
          <Filter>Source Files\lib\src\LinearMath</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\LinearMath\btGeometryUtil.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\LinearMath\btGeometryUtil.h">
          <Filter>Source Files\lib\src\LinearMath</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\LinearMath\btHashMap.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\LinearMath\btHashMap.h">
          <Filter>Source Files\lib\src\LinearMath</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\LinearMath\btIDebugDraw.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\LinearMath\btIDebugDraw.h">
          <Filter>Source Files\lib\src\LinearMath</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\LinearMath\btList.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\LinearMath\btList.h">
          <Filter>Source Files\lib\src\LinearMath</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\LinearMath\btMatrix3x3.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\LinearMath\btMatrix3x3.h">
          <Filter>Source Files\lib\src\LinearMath</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\LinearMath\btMinMax.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\LinearMath\btMinMax.h">
          <Filter>Source Files\lib\src\LinearMath</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\LinearMath\btMotionState.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\LinearMath\btMotionState.h">
          <Filter>Source Files\lib\src\LinearMath</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\LinearMath\btPoolAllocator.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\LinearMath\btPoolAllocator.h">
          <Filter>Source Files\lib\src\LinearMath</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\LinearMath\btQuadWord.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\LinearMath\btQuadWord.h">
          <Filter>Source Files\lib\src\LinearMath</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\LinearMath\btQuaternion.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\LinearMath\btQuaternion.h">
          <Filter>Source Files\lib\src\LinearMath</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\LinearMath\btQuickprof.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\LinearMath\btQuickprof.h">
          <Filter>Source Files\lib\src\LinearMath</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\LinearMath\btRandom.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\LinearMath\btRandom.h">
          <Filter>Source Files\lib\src\LinearMath</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\LinearMath\btScalar.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\LinearMath\btScalar.h">
          <Filter>Source Files\lib\src\LinearMath</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\LinearMath\btStackAlloc.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\LinearMath\btStackAlloc.h">
          <Filter>Source Files\lib\src\LinearMath</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\LinearMath\btTransform.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\LinearMath\btTransform.h">
          <Filter>Source Files\lib\src\LinearMath</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\LinearMath\btTransformUtil.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\LinearMath\btTransformUtil.h">
          <Filter>Source Files\lib\src\LinearMath</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\bullet\src\LinearMath\btVector3.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\bullet\src\LinearMath\btVector3.h">
          <Filter>Source Files\lib\src\LinearMath</Filter>
       </ClInclude>
    </ItemGroup>

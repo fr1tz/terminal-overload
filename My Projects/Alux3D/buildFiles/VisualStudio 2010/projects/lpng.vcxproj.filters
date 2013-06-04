@@ -2,11 +2,11 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
    <ItemGroup>
       <Filter Include="Source Files">
-         <UniqueIdentifier>{e6c4fbd6-6cb6-4bca-8f16-03fb0c2ac1fe}</UniqueIdentifier>
+         <UniqueIdentifier>{0b88a48c-ed92-4b1e-ad73-edafcf1dbf71}</UniqueIdentifier>
          <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat;cc</Extensions>
       </Filter>
       <Filter Include="Source Files\lib">
-         <UniqueIdentifier>{0d291bc9-2e60-4611-8da4-bca72ba9a41d}</UniqueIdentifier>
+         <UniqueIdentifier>{6fdef9a9-fdde-4406-bd17-beb9a1ffe998}</UniqueIdentifier>
       </Filter>
    </ItemGroup>
   <ItemGroup>
@@ -15,78 +15,78 @@
     </ResourceCompile>
   </ItemGroup>
    <ItemGroup>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\lpng\example.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\lpng\example.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\lpng\png.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\lpng\png.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\lpng\pngerror.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\lpng\pngerror.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\lpng\pngget.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\lpng\pngget.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\lpng\pngmem.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\lpng\pngmem.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\lpng\pngpread.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\lpng\pngpread.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\lpng\pngread.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\lpng\pngread.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\lpng\pngrio.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\lpng\pngrio.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\lpng\pngrtran.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\lpng\pngrtran.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\lpng\pngrutil.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\lpng\pngrutil.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\lpng\pngset.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\lpng\pngset.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\lpng\pngtest.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\lpng\pngtest.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\lpng\pngtrans.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\lpng\pngtrans.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\lpng\pngwio.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\lpng\pngwio.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\lpng\pngwrite.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\lpng\pngwrite.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\lpng\pngwtran.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\lpng\pngwtran.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\lpng\pngwutil.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\lpng\pngwutil.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
    </ItemGroup>
    <ItemGroup>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\lpng\png.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\lpng\png.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\lpng\pngconf.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\lpng\pngconf.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\lpng\pngdebug.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\lpng\pngdebug.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\lpng\pnginfo.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\lpng\pnginfo.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\lpng\pnglibconf.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\lpng\pnglibconf.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\lpng\pngpriv.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\lpng\pngpriv.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\lpng\pngstruct.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\lpng\pngstruct.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
    </ItemGroup>

@@ -15,7 +15,7 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="D:/Alux3D/Alux3D/Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
+			OutputDirectory="../../../../../Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
 			IntermediateDirectory="../../Link/Vc2k8.$(ConfigurationName).$(PlatformName)/$(ProjectName)"
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
@@ -42,7 +42,7 @@
 				AdditionalOptions="/MP"
 				Optimization="0"
 				EnableIntrinsicFunctions="1"
-				AdditionalIncludeDirectories="D:/Alux3D/Alux3D/Engine/lib/libvorbis/lib;D:/Alux3D/Alux3D/Engine/lib/libvorbis/include;D:/Alux3D/Alux3D/Engine/lib/libogg/include;"
+				AdditionalIncludeDirectories="../../../../../Engine/lib/libvorbis/lib;../../../../../Engine/lib/libvorbis/include;../../../../../Engine/lib/libogg/include;"
 				PreprocessorDefinitions="TORQUE_DEBUG;TORQUE_DEBUG_GUARD;D3D_DEBUG_INFO;TORQUE_NET_STATS;UNICODE;_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS"
 				ExceptionHandling="0"
 				BasicRuntimeChecks="0"
@@ -96,7 +96,7 @@
 		</Configuration>
       <Configuration
 			Name="Optimized Debug|Win32"
-			OutputDirectory="D:/Alux3D/Alux3D/Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
+			OutputDirectory="../../../../../Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
 			IntermediateDirectory="../../Link/Vc2k8.$(ConfigurationName).$(PlatformName)/$(ProjectName)"
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
@@ -124,7 +124,7 @@
 				Optimization="3"
 				InlineFunctionExpansion="2"
 				EnableIntrinsicFunctions="1"
-				AdditionalIncludeDirectories="D:/Alux3D/Alux3D/Engine/lib/libvorbis/lib;D:/Alux3D/Alux3D/Engine/lib/libvorbis/include;D:/Alux3D/Alux3D/Engine/lib/libogg/include;"
+				AdditionalIncludeDirectories="../../../../../Engine/lib/libvorbis/lib;../../../../../Engine/lib/libvorbis/include;../../../../../Engine/lib/libogg/include;"
 				PreprocessorDefinitions="TORQUE_DEBUG;TORQUE_DEBUG_GUARD;D3D_DEBUG_INFO;TORQUE_NET_STATS;UNICODE;_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS"
 				ExceptionHandling="0"
 				BasicRuntimeChecks="0"
@@ -178,7 +178,7 @@
       </Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="D:/Alux3D/Alux3D/Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
+			OutputDirectory="../../../../../Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
 			IntermediateDirectory="../../Link/Vc2k8.$(ConfigurationName).$(PlatformName)/$(ProjectName)"
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
@@ -205,7 +205,7 @@
 				AdditionalOptions="/MP"
 				Optimization="3"
 				InlineFunctionExpansion="2"
-				AdditionalIncludeDirectories="D:/Alux3D/Alux3D/Engine/lib/libvorbis/lib;D:/Alux3D/Alux3D/Engine/lib/libvorbis/include;D:/Alux3D/Alux3D/Engine/lib/libogg/include;"
+				AdditionalIncludeDirectories="../../../../../Engine/lib/libvorbis/lib;../../../../../Engine/lib/libvorbis/include;../../../../../Engine/lib/libogg/include;"
 				PreprocessorDefinitions="UNICODE;_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS"
 				ExceptionHandling="0"
 				BasicRuntimeChecks="0"
@@ -267,140 +267,140 @@
 				Name="include"
 				Filter="">
 				<File
-				   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\include\vorbis\codec.h">
+				   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\include\vorbis\codec.h">
 				</File>
 				<File
-				   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\include\vorbis\vorbisenc.h">
+				   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\include\vorbis\vorbisenc.h">
 				</File>
 				<File
-				   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\include\vorbis\vorbisfile.h">
+				   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\include\vorbis\vorbisfile.h">
 				</File>
 			</Filter>
 			<Filter
 				Name="lib"
 				Filter="">
 				<File
-				   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\analysis.c">
+				   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\analysis.c">
 				</File>
 				<File
-				   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\backends.h">
+				   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\backends.h">
 				</File>
 				<File
-				   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\bitrate.c">
+				   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\bitrate.c">
 				</File>
 				<File
-				   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\bitrate.h">
+				   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\bitrate.h">
 				</File>
 				<File
-				   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\block.c">
+				   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\block.c">
 				</File>
 				<File
-				   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\codebook.c">
+				   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\codebook.c">
 				</File>
 				<File
-				   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\codebook.h">
+				   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\codebook.h">
 				</File>
 				<File
-				   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\codec_internal.h">
+				   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\codec_internal.h">
 				</File>
 				<File
-				   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\envelope.c">
+				   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\envelope.c">
 				</File>
 				<File
-				   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\envelope.h">
+				   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\envelope.h">
 				</File>
 				<File
-				   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\floor0.c">
+				   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\floor0.c">
 				</File>
 				<File
-				   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\floor1.c">
+				   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\floor1.c">
 				</File>
 				<File
-				   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\highlevel.h">
+				   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\highlevel.h">
 				</File>
 				<File
-				   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\info.c">
+				   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\info.c">
 				</File>
 				<File
-				   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\lookup.c">
+				   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\lookup.c">
 				</File>
 				<File
-				   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\lookup.h">
+				   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\lookup.h">
 				</File>
 				<File
-				   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\lookup_data.h">
+				   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\lookup_data.h">
 				</File>
 				<File
-				   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\lpc.c">
+				   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\lpc.c">
 				</File>
 				<File
-				   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\lpc.h">
+				   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\lpc.h">
 				</File>
 				<File
-				   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\lsp.c">
+				   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\lsp.c">
 				</File>
 				<File
-				   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\lsp.h">
+				   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\lsp.h">
 				</File>
 				<File
-				   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\mapping0.c">
+				   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\mapping0.c">
 				</File>
 				<File
-				   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\masking.h">
+				   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\masking.h">
 				</File>
 				<File
-				   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\mdct.c">
+				   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\mdct.c">
 				</File>
 				<File
-				   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\mdct.h">
+				   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\mdct.h">
 				</File>
 				<File
-				   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\misc.h">
+				   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\misc.h">
 				</File>
 				<File
-				   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\os.h">
+				   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\os.h">
 				</File>
 				<File
-				   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\psy.c">
+				   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\psy.c">
 				</File>
 				<File
-				   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\psy.h">
+				   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\psy.h">
 				</File>
 				<File
-				   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\registry.c">
+				   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\registry.c">
 				</File>
 				<File
-				   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\registry.h">
+				   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\registry.h">
 				</File>
 				<File
-				   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\res0.c">
+				   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\res0.c">
 				</File>
 				<File
-				   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\scales.h">
+				   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\scales.h">
 				</File>
 				<File
-				   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\sharedbook.c">
+				   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\sharedbook.c">
 				</File>
 				<File
-				   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\smallft.c">
+				   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\smallft.c">
 				</File>
 				<File
-				   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\smallft.h">
+				   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\smallft.h">
 				</File>
 				<File
-				   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\synthesis.c">
+				   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\synthesis.c">
 				</File>
 				<File
-				   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\vorbisenc.c">
+				   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\vorbisenc.c">
 				</File>
 				<File
-				   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\vorbisfile.c">
+				   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\vorbisfile.c">
 				</File>
 				<File
-				   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\window.c">
+				   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\window.c">
 				</File>
 				<File
-				   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\window.h">
+				   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\window.h">
 				</File>
 				<Filter
 					Name="books"
@@ -409,24 +409,24 @@
 						Name="coupled"
 						Filter="">
 						<File
-						   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\books\coupled\res_books_51.h">
+						   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\books\coupled\res_books_51.h">
 						</File>
 						<File
-						   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\books\coupled\res_books_stereo.h">
+						   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\books\coupled\res_books_stereo.h">
 						</File>
 					</Filter>
 					<Filter
 						Name="floor"
 						Filter="">
 						<File
-						   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\books\floor\floor_books.h">
+						   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\books\floor\floor_books.h">
 						</File>
 					</Filter>
 					<Filter
 						Name="uncoupled"
 						Filter="">
 						<File
-						   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\books\uncoupled\res_books_uncoupled.h">
+						   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\books\uncoupled\res_books_uncoupled.h">
 						</File>
 					</Filter>
 				</Filter>
@@ -434,61 +434,61 @@
 					Name="modes"
 					Filter="">
 					<File
-					   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\modes\floor_all.h">
+					   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\modes\floor_all.h">
 					</File>
 					<File
-					   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\modes\psych_11.h">
+					   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\modes\psych_11.h">
 					</File>
 					<File
-					   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\modes\psych_16.h">
+					   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\modes\psych_16.h">
 					</File>
 					<File
-					   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\modes\psych_44.h">
+					   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\modes\psych_44.h">
 					</File>
 					<File
-					   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\modes\psych_8.h">
+					   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\modes\psych_8.h">
 					</File>
 					<File
-					   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\modes\residue_16.h">
+					   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\modes\residue_16.h">
 					</File>
 					<File
-					   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\modes\residue_44.h">
+					   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\modes\residue_44.h">
 					</File>
 					<File
-					   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\modes\residue_44p51.h">
+					   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\modes\residue_44p51.h">
 					</File>
 					<File
-					   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\modes\residue_44u.h">
+					   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\modes\residue_44u.h">
 					</File>
 					<File
-					   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\modes\residue_8.h">
+					   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\modes\residue_8.h">
 					</File>
 					<File
-					   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\modes\setup_11.h">
+					   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\modes\setup_11.h">
 					</File>
 					<File
-					   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\modes\setup_16.h">
+					   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\modes\setup_16.h">
 					</File>
 					<File
-					   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\modes\setup_22.h">
+					   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\modes\setup_22.h">
 					</File>
 					<File
-					   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\modes\setup_32.h">
+					   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\modes\setup_32.h">
 					</File>
 					<File
-					   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\modes\setup_44.h">
+					   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\modes\setup_44.h">
 					</File>
 					<File
-					   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\modes\setup_44p51.h">
+					   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\modes\setup_44p51.h">
 					</File>
 					<File
-					   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\modes\setup_44u.h">
+					   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\modes\setup_44u.h">
 					</File>
 					<File
-					   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\modes\setup_8.h">
+					   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\modes\setup_8.h">
 					</File>
 					<File
-					   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libvorbis\lib\modes\setup_X.h">
+					   RelativePath="..\..\..\..\..\Engine\lib\libvorbis\lib\modes\setup_X.h">
 					</File>
 				</Filter>
 			</Filter>

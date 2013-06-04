@@ -2,32 +2,32 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
    <ItemGroup>
       <Filter Include="Source Files">
-         <UniqueIdentifier>{59b1b42f-6849-488b-a213-7574c8acf476}</UniqueIdentifier>
+         <UniqueIdentifier>{b2b35c8f-fb91-497a-9c36-2e506a2499cb}</UniqueIdentifier>
          <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat;cc</Extensions>
       </Filter>
       <Filter Include="Source Files\lib">
-         <UniqueIdentifier>{2f4e14cc-2dff-42b3-9adf-b275d371f387}</UniqueIdentifier>
+         <UniqueIdentifier>{072a5f40-608b-47f0-a08a-cba61598c955}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\src">
-         <UniqueIdentifier>{dd8727f6-3ba1-491b-8714-37138e121fd8}</UniqueIdentifier>
+         <UniqueIdentifier>{3f1dbbef-9f18-4072-828c-294efa301440}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\src\1.4">
-         <UniqueIdentifier>{2e93aae6-0fd6-4b26-a593-8a1b667d41a9}</UniqueIdentifier>
+         <UniqueIdentifier>{8e186c59-f0e7-4298-82fb-8ebdb7c8b94a}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\src\dae">
-         <UniqueIdentifier>{b4c7de82-c059-4c66-a3e9-3e360df070b6}</UniqueIdentifier>
+         <UniqueIdentifier>{5c228583-ac68-40d4-90c4-dcbabc84da3c}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\src\modules">
-         <UniqueIdentifier>{1e269b0f-eb59-424e-a5c2-ce23db0f705d}</UniqueIdentifier>
+         <UniqueIdentifier>{e1286181-8d38-4b4a-a128-83b64da668c2}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\src\modules\LIBXMLPlugin">
-         <UniqueIdentifier>{e9b68283-231d-4b4b-abb3-a56bb2ead7a7}</UniqueIdentifier>
+         <UniqueIdentifier>{000e1ac8-c3dd-46a9-a265-70b21775b84e}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\src\modules\STLDatabase">
-         <UniqueIdentifier>{73073727-76ce-4e08-a413-0ddfdcb2fdc4}</UniqueIdentifier>
+         <UniqueIdentifier>{3018b3ed-a677-4775-a98c-e6c1daec32be}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\src\modules\stdErrPlugin">
-         <UniqueIdentifier>{1f7a97be-d234-40cf-8e67-9dc218d82572}</UniqueIdentifier>
+         <UniqueIdentifier>{4e235412-41df-4288-887d-0f3dae0ca939}</UniqueIdentifier>
       </Filter>
    </ItemGroup>
   <ItemGroup>
@@ -36,619 +36,619 @@
     </ResourceCompile>
   </ItemGroup>
    <ItemGroup>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domAccessor.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domAccessor.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domAnimation.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domAnimation.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domAnimation_clip.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domAnimation_clip.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domAsset.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domAsset.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domBind_material.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domBind_material.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domBool_array.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domBool_array.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domBox.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domBox.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domCamera.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domCamera.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domCapsule.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domCapsule.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domCg_connect_param.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domCg_connect_param.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domCg_newarray_type.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domCg_newarray_type.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domCg_newparam.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domCg_newparam.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domCg_param_type.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domCg_param_type.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domCg_sampler1D.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domCg_sampler1D.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domCg_sampler2D.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domCg_sampler2D.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domCg_sampler3D.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domCg_sampler3D.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domCg_samplerCUBE.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domCg_samplerCUBE.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domCg_samplerDEPTH.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domCg_samplerDEPTH.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domCg_samplerRECT.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domCg_samplerRECT.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domCg_setarray_type.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domCg_setarray_type.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domCg_setparam.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domCg_setparam.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domCg_setparam_simple.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domCg_setparam_simple.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domCg_setuser_type.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domCg_setuser_type.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domCg_surface_type.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domCg_surface_type.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domChannel.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domChannel.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domCOLLADA.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domCOLLADA.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domCommon_color_or_texture_type.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domCommon_color_or_texture_type.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domCommon_float_or_param_type.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domCommon_float_or_param_type.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domCommon_newparam_type.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domCommon_newparam_type.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domCommon_transparent_type.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domCommon_transparent_type.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domConstants.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domConstants.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domController.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domController.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domConvex_mesh.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domConvex_mesh.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domCylinder.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domCylinder.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domEffect.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domEffect.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domEllipsoid.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domEllipsoid.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domExtra.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domExtra.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domFloat_array.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domFloat_array.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domForce_field.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domForce_field.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domFx_annotate_common.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domFx_annotate_common.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domFx_annotate_type_common.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domFx_annotate_type_common.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domFx_basic_type_common.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domFx_basic_type_common.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domFx_clearcolor_common.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domFx_clearcolor_common.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domFx_cleardepth_common.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domFx_cleardepth_common.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domFx_clearstencil_common.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domFx_clearstencil_common.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domFx_code_profile.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domFx_code_profile.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domFx_colortarget_common.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domFx_colortarget_common.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domFx_depthtarget_common.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domFx_depthtarget_common.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domFx_include_common.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domFx_include_common.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domFx_newparam_common.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domFx_newparam_common.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domFx_profile_abstract.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domFx_profile_abstract.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domFx_sampler1D_common.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domFx_sampler1D_common.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domFx_sampler2D_common.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domFx_sampler2D_common.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domFx_sampler3D_common.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domFx_sampler3D_common.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domFx_samplerCUBE_common.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domFx_samplerCUBE_common.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domFx_samplerDEPTH_common.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domFx_samplerDEPTH_common.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domFx_samplerRECT_common.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domFx_samplerRECT_common.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domFx_stenciltarget_common.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domFx_stenciltarget_common.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domFx_surface_common.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domFx_surface_common.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domFx_surface_format_hint_common.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domFx_surface_format_hint_common.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domFx_surface_init_common.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domFx_surface_init_common.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domFx_surface_init_cube_common.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domFx_surface_init_cube_common.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domFx_surface_init_from_common.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domFx_surface_init_from_common.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domFx_surface_init_planar_common.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domFx_surface_init_planar_common.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domFx_surface_init_volume_common.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domFx_surface_init_volume_common.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domGeometry.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domGeometry.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domGles_basic_type_common.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domGles_basic_type_common.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domGles_newparam.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domGles_newparam.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domGles_pipeline_settings.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domGles_pipeline_settings.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domGles_sampler_state.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domGles_sampler_state.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domGles_texcombiner_argumentAlpha_type.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domGles_texcombiner_argumentAlpha_type.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domGles_texcombiner_argumentRGB_type.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domGles_texcombiner_argumentRGB_type.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domGles_texcombiner_commandAlpha_type.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domGles_texcombiner_commandAlpha_type.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domGles_texcombiner_commandRGB_type.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domGles_texcombiner_commandRGB_type.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domGles_texcombiner_command_type.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domGles_texcombiner_command_type.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domGles_texenv_command_type.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domGles_texenv_command_type.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domGles_texture_constant_type.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domGles_texture_constant_type.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domGles_texture_pipeline.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domGles_texture_pipeline.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domGles_texture_unit.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domGles_texture_unit.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domGlsl_newarray_type.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domGlsl_newarray_type.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domGlsl_newparam.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domGlsl_newparam.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domGlsl_param_type.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domGlsl_param_type.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domGlsl_setarray_type.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domGlsl_setarray_type.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domGlsl_setparam.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domGlsl_setparam.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domGlsl_setparam_simple.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domGlsl_setparam_simple.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domGlsl_surface_type.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domGlsl_surface_type.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domGl_hook_abstract.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domGl_hook_abstract.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domGl_pipeline_settings.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domGl_pipeline_settings.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domGl_sampler1D.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domGl_sampler1D.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domGl_sampler2D.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domGl_sampler2D.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domGl_sampler3D.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domGl_sampler3D.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domGl_samplerCUBE.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domGl_samplerCUBE.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domGl_samplerDEPTH.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domGl_samplerDEPTH.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domGl_samplerRECT.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domGl_samplerRECT.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domIDREF_array.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domIDREF_array.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domImage.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domImage.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domInputGlobal.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domInputGlobal.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domInputLocal.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domInputLocal.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domInputLocalOffset.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domInputLocalOffset.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domInstanceWithExtra.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domInstanceWithExtra.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domInstance_camera.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domInstance_camera.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domInstance_controller.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domInstance_controller.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domInstance_effect.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domInstance_effect.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domInstance_force_field.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domInstance_force_field.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domInstance_geometry.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domInstance_geometry.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domInstance_light.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domInstance_light.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domInstance_material.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domInstance_material.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domInstance_node.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domInstance_node.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domInstance_physics_material.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domInstance_physics_material.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domInstance_physics_model.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domInstance_physics_model.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domInstance_rigid_body.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domInstance_rigid_body.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domInstance_rigid_constraint.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domInstance_rigid_constraint.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domInt_array.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domInt_array.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domLibrary_animations.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domLibrary_animations.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domLibrary_animation_clips.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domLibrary_animation_clips.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domLibrary_cameras.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domLibrary_cameras.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domLibrary_controllers.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domLibrary_controllers.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domLibrary_effects.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domLibrary_effects.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domLibrary_force_fields.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domLibrary_force_fields.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domLibrary_geometries.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domLibrary_geometries.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domLibrary_images.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domLibrary_images.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domLibrary_lights.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domLibrary_lights.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domLibrary_materials.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domLibrary_materials.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domLibrary_nodes.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domLibrary_nodes.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domLibrary_physics_materials.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domLibrary_physics_materials.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domLibrary_physics_models.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domLibrary_physics_models.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domLibrary_physics_scenes.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domLibrary_physics_scenes.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domLibrary_visual_scenes.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domLibrary_visual_scenes.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domLight.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domLight.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domLines.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domLines.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domLinestrips.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domLinestrips.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domLookat.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domLookat.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domMaterial.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domMaterial.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domMatrix.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domMatrix.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domMesh.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domMesh.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domMorph.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domMorph.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domName_array.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domName_array.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domNode.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domNode.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domP.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domP.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domParam.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domParam.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domPhysics_material.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domPhysics_material.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domPhysics_model.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domPhysics_model.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domPhysics_scene.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domPhysics_scene.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domPlane.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domPlane.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domPolygons.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domPolygons.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domPolylist.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domPolylist.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domProfile_CG.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domProfile_CG.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domProfile_COMMON.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domProfile_COMMON.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domProfile_GLES.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domProfile_GLES.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domProfile_GLSL.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domProfile_GLSL.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domRigid_body.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domRigid_body.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domRigid_constraint.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domRigid_constraint.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domRotate.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domRotate.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domSampler.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domSampler.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domScale.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domScale.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domSkew.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domSkew.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domSkin.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domSkin.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domSource.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domSource.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domSphere.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domSphere.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domSpline.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domSpline.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domTapered_capsule.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domTapered_capsule.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domTapered_cylinder.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domTapered_cylinder.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domTargetableFloat.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domTargetableFloat.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domTargetableFloat3.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domTargetableFloat3.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domTechnique.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domTechnique.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domTranslate.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domTranslate.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domTriangles.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domTriangles.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domTrifans.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domTrifans.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domTristrips.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domTristrips.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domTypes.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domTypes.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domVertices.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domVertices.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\1.4\dom\domVisual_scene.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\1.4\dom\domVisual_scene.cpp">
          <Filter>Source Files\lib\src\1.4</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\dae\dae.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\dae\dae.cpp">
          <Filter>Source Files\lib\src\dae</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\dae\daeArray.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\dae\daeArray.cpp">
          <Filter>Source Files\lib\src\dae</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\dae\daeAtomicType.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\dae\daeAtomicType.cpp">
          <Filter>Source Files\lib\src\dae</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\dae\daeDatabase.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\dae\daeDatabase.cpp">
          <Filter>Source Files\lib\src\dae</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\dae\daeDocument.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\dae\daeDocument.cpp">
          <Filter>Source Files\lib\src\dae</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\dae\daeDom.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\dae\daeDom.cpp">
          <Filter>Source Files\lib\src\dae</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\dae\daeElement.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\dae\daeElement.cpp">
          <Filter>Source Files\lib\src\dae</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\dae\daeError.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\dae\daeError.cpp">
          <Filter>Source Files\lib\src\dae</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\dae\daeErrorHandler.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\dae\daeErrorHandler.cpp">
          <Filter>Source Files\lib\src\dae</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\dae\daeIDRef.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\dae\daeIDRef.cpp">
          <Filter>Source Files\lib\src\dae</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\dae\daeIOPluginCommon.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\dae\daeIOPluginCommon.cpp">
          <Filter>Source Files\lib\src\dae</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\dae\daeMemorySystem.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\dae\daeMemorySystem.cpp">
          <Filter>Source Files\lib\src\dae</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\dae\daeMetaAny.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\dae\daeMetaAny.cpp">
          <Filter>Source Files\lib\src\dae</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\dae\daeMetaAttribute.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\dae\daeMetaAttribute.cpp">
          <Filter>Source Files\lib\src\dae</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\dae\daeMetaChoice.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\dae\daeMetaChoice.cpp">
          <Filter>Source Files\lib\src\dae</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\dae\daeMetaCMPolicy.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\dae\daeMetaCMPolicy.cpp">
          <Filter>Source Files\lib\src\dae</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\dae\daeMetaElement.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\dae\daeMetaElement.cpp">
          <Filter>Source Files\lib\src\dae</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\dae\daeMetaElementAttribute.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\dae\daeMetaElementAttribute.cpp">
          <Filter>Source Files\lib\src\dae</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\dae\daeMetaGroup.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\dae\daeMetaGroup.cpp">
          <Filter>Source Files\lib\src\dae</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\dae\daeMetaSequence.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\dae\daeMetaSequence.cpp">
          <Filter>Source Files\lib\src\dae</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\dae\daeRawResolver.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\dae\daeRawResolver.cpp">
          <Filter>Source Files\lib\src\dae</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\dae\daeRefCountedObj.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\dae\daeRefCountedObj.cpp">
          <Filter>Source Files\lib\src\dae</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\dae\daeSIDResolver.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\dae\daeSIDResolver.cpp">
          <Filter>Source Files\lib\src\dae</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\dae\daeStandardURIResolver.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\dae\daeStandardURIResolver.cpp">
          <Filter>Source Files\lib\src\dae</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\dae\daeStringRef.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\dae\daeStringRef.cpp">
          <Filter>Source Files\lib\src\dae</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\dae\daeStringTable.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\dae\daeStringTable.cpp">
          <Filter>Source Files\lib\src\dae</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\dae\daeTinyXMLPlugin.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\dae\daeTinyXMLPlugin.cpp">
          <Filter>Source Files\lib\src\dae</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\dae\daeURI.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\dae\daeURI.cpp">
          <Filter>Source Files\lib\src\dae</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\dae\daeUtils.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\dae\daeUtils.cpp">
          <Filter>Source Files\lib\src\dae</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\dae\domAny.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\dae\domAny.cpp">
          <Filter>Source Files\lib\src\dae</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\modules\LIBXMLPlugin\daeLIBXMLPlugin.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\modules\LIBXMLPlugin\daeLIBXMLPlugin.cpp">
          <Filter>Source Files\lib\src\modules\LIBXMLPlugin</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\modules\STLDatabase\daeSTLDatabase.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\modules\STLDatabase\daeSTLDatabase.cpp">
          <Filter>Source Files\lib\src\modules\STLDatabase</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\collada\src\modules\stdErrPlugin\stdErrPlugin.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\collada\src\modules\stdErrPlugin\stdErrPlugin.cpp">
          <Filter>Source Files\lib\src\modules\stdErrPlugin</Filter>
       </ClCompile>
    </ItemGroup>

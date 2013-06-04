@@ -2,17 +2,17 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
    <ItemGroup>
       <Filter Include="Source Files">
-         <UniqueIdentifier>{daed30c1-4f02-465c-9b59-8253c906ed5f}</UniqueIdentifier>
+         <UniqueIdentifier>{6a72f478-5078-4700-b12b-3b2b850badc0}</UniqueIdentifier>
          <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat;cc</Extensions>
       </Filter>
       <Filter Include="Source Files\lib">
-         <UniqueIdentifier>{54943e60-ac27-4923-96f2-386c9e749d17}</UniqueIdentifier>
+         <UniqueIdentifier>{8d8c867f-b57f-404f-a093-b9e493ac912e}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\include">
-         <UniqueIdentifier>{b4d066c3-325a-43dd-a34b-4f7989171bb2}</UniqueIdentifier>
+         <UniqueIdentifier>{4d7bf4e8-9a4d-4e4a-a7d9-89ddde20414e}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\src">
-         <UniqueIdentifier>{98d224bd-08ca-4483-ba34-315401b7be77}</UniqueIdentifier>
+         <UniqueIdentifier>{f8234bdb-655a-4d29-aea6-c78c56d50c07}</UniqueIdentifier>
       </Filter>
    </ItemGroup>
   <ItemGroup>
@@ -21,18 +21,18 @@
     </ResourceCompile>
   </ItemGroup>
    <ItemGroup>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\libogg\src\bitwise.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\libogg\src\bitwise.c">
          <Filter>Source Files\lib\src</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\libogg\src\framing.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\libogg\src\framing.c">
          <Filter>Source Files\lib\src</Filter>
       </ClCompile>
    </ItemGroup>
    <ItemGroup>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\libogg\include\ogg\ogg.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\libogg\include\ogg\ogg.h">
          <Filter>Source Files\lib\include</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\libogg\include\ogg\os_types.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\libogg\include\ogg\os_types.h">
          <Filter>Source Files\lib\include</Filter>
       </ClInclude>
    </ItemGroup>

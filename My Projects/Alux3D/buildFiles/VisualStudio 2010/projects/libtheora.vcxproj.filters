@@ -2,29 +2,29 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
    <ItemGroup>
       <Filter Include="Source Files">
-         <UniqueIdentifier>{769ef333-30fd-4a19-a9b2-6d3b616dbc29}</UniqueIdentifier>
+         <UniqueIdentifier>{d34d3461-35ae-464e-b255-98a1d9e819c0}</UniqueIdentifier>
          <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat;cc</Extensions>
       </Filter>
       <Filter Include="Source Files\lib">
-         <UniqueIdentifier>{ac0d6f46-0f92-4153-b939-bbad28443d77}</UniqueIdentifier>
+         <UniqueIdentifier>{86ccce0d-210f-424f-9f2e-efa060025825}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\include">
-         <UniqueIdentifier>{785ed354-bb2e-4923-96c1-215569a0a701}</UniqueIdentifier>
+         <UniqueIdentifier>{c85ea739-4b10-492c-ba36-13909a846588}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\lib">
-         <UniqueIdentifier>{6a2d4135-6a00-4307-a49a-faccd70ea044}</UniqueIdentifier>
+         <UniqueIdentifier>{37a1cd6d-0dcf-4180-973b-7178e3369a7f}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\lib\dec">
-         <UniqueIdentifier>{4e612b18-d2f9-4cff-8f32-c41a80e5bfb7}</UniqueIdentifier>
+         <UniqueIdentifier>{93ec21ad-81a8-4955-b101-607267ddbeba}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\lib\dec\x86_vc">
-         <UniqueIdentifier>{4abe7a62-02e5-48f8-ad1c-05dc0d2d1050}</UniqueIdentifier>
+         <UniqueIdentifier>{36f707ea-9161-4965-a707-71a43f50a45a}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\lib\enc">
-         <UniqueIdentifier>{5e2eeaf3-4590-481a-ae49-657080aef429}</UniqueIdentifier>
+         <UniqueIdentifier>{8a666554-f6ca-4198-95a4-5201cc61f687}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\lib\enc\x86_32_vs">
-         <UniqueIdentifier>{b77e2ca0-9487-47e8-9df0-b80c51c31e37}</UniqueIdentifier>
+         <UniqueIdentifier>{f5b54442-2f5b-4381-b792-f2e91ff1a9c6}</UniqueIdentifier>
       </Filter>
    </ItemGroup>
   <ItemGroup>
@@ -33,207 +33,207 @@
     </ResourceCompile>
   </ItemGroup>
    <ItemGroup>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\cpu.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\libtheora\lib\cpu.c">
          <Filter>Source Files\lib\lib</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\dec\apiwrapper.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\libtheora\lib\dec\apiwrapper.c">
          <Filter>Source Files\lib\lib\dec</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\dec\bitpack.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\libtheora\lib\dec\bitpack.c">
          <Filter>Source Files\lib\lib\dec</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\dec\decapiwrapper.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\libtheora\lib\dec\decapiwrapper.c">
          <Filter>Source Files\lib\lib\dec</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\dec\decinfo.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\libtheora\lib\dec\decinfo.c">
          <Filter>Source Files\lib\lib\dec</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\dec\decode.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\libtheora\lib\dec\decode.c">
          <Filter>Source Files\lib\lib\dec</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\dec\dequant.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\libtheora\lib\dec\dequant.c">
          <Filter>Source Files\lib\lib\dec</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\dec\fragment.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\libtheora\lib\dec\fragment.c">
          <Filter>Source Files\lib\lib\dec</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\dec\huffdec.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\libtheora\lib\dec\huffdec.c">
          <Filter>Source Files\lib\lib\dec</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\dec\idct.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\libtheora\lib\dec\idct.c">
          <Filter>Source Files\lib\lib\dec</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\dec\info.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\libtheora\lib\dec\info.c">
          <Filter>Source Files\lib\lib\dec</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\dec\internal.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\libtheora\lib\dec\internal.c">
          <Filter>Source Files\lib\lib\dec</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\dec\quant.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\libtheora\lib\dec\quant.c">
          <Filter>Source Files\lib\lib\dec</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\dec\state.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\libtheora\lib\dec\state.c">
          <Filter>Source Files\lib\lib\dec</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\dec\x86_vc\mmxfrag.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\libtheora\lib\dec\x86_vc\mmxfrag.c">
          <Filter>Source Files\lib\lib\dec\x86_vc</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\dec\x86_vc\mmxidct.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\libtheora\lib\dec\x86_vc\mmxidct.c">
          <Filter>Source Files\lib\lib\dec\x86_vc</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\dec\x86_vc\mmxloopfilter.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\libtheora\lib\dec\x86_vc\mmxloopfilter.c">
          <Filter>Source Files\lib\lib\dec\x86_vc</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\dec\x86_vc\mmxstate.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\libtheora\lib\dec\x86_vc\mmxstate.c">
          <Filter>Source Files\lib\lib\dec\x86_vc</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\dec\x86_vc\x86state.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\libtheora\lib\dec\x86_vc\x86state.c">
          <Filter>Source Files\lib\lib\dec\x86_vc</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\enc\blockmap.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\libtheora\lib\enc\blockmap.c">
          <Filter>Source Files\lib\lib\enc</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\enc\dct.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\libtheora\lib\enc\dct.c">
          <Filter>Source Files\lib\lib\enc</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\enc\dct_decode.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\libtheora\lib\enc\dct_decode.c">
          <Filter>Source Files\lib\lib\enc</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\enc\dct_encode.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\libtheora\lib\enc\dct_encode.c">
          <Filter>Source Files\lib\lib\enc</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\enc\dsp.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\libtheora\lib\enc\dsp.c">
          <Filter>Source Files\lib\lib\enc</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\enc\encapiwrapper.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\libtheora\lib\enc\encapiwrapper.c">
          <Filter>Source Files\lib\lib\enc</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\enc\encode.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\libtheora\lib\enc\encode.c">
          <Filter>Source Files\lib\lib\enc</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\enc\encoder_huffman.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\libtheora\lib\enc\encoder_huffman.c">
          <Filter>Source Files\lib\lib\enc</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\enc\encoder_idct.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\libtheora\lib\enc\encoder_idct.c">
          <Filter>Source Files\lib\lib\enc</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\enc\encoder_quant.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\libtheora\lib\enc\encoder_quant.c">
          <Filter>Source Files\lib\lib\enc</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\enc\encoder_toplevel.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\libtheora\lib\enc\encoder_toplevel.c">
          <Filter>Source Files\lib\lib\enc</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\enc\frarray.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\libtheora\lib\enc\frarray.c">
          <Filter>Source Files\lib\lib\enc</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\enc\frinit.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\libtheora\lib\enc\frinit.c">
          <Filter>Source Files\lib\lib\enc</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\enc\mcomp.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\libtheora\lib\enc\mcomp.c">
          <Filter>Source Files\lib\lib\enc</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\enc\misc_common.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\libtheora\lib\enc\misc_common.c">
          <Filter>Source Files\lib\lib\enc</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\enc\pb.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\libtheora\lib\enc\pb.c">
          <Filter>Source Files\lib\lib\enc</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\enc\pp.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\libtheora\lib\enc\pp.c">
          <Filter>Source Files\lib\lib\enc</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\enc\reconstruct.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\libtheora\lib\enc\reconstruct.c">
          <Filter>Source Files\lib\lib\enc</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\enc\scan.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\libtheora\lib\enc\scan.c">
          <Filter>Source Files\lib\lib\enc</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\enc\x86_32_vs\dsp_mmx.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\libtheora\lib\enc\x86_32_vs\dsp_mmx.c">
          <Filter>Source Files\lib\lib\enc\x86_32_vs</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\enc\x86_32_vs\fdct_mmx.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\libtheora\lib\enc\x86_32_vs\fdct_mmx.c">
          <Filter>Source Files\lib\lib\enc\x86_32_vs</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\enc\x86_32_vs\recon_mmx.c">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\libtheora\lib\enc\x86_32_vs\recon_mmx.c">
          <Filter>Source Files\lib\lib\enc\x86_32_vs</Filter>
       </ClCompile>
    </ItemGroup>
    <ItemGroup>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\include\theora\codec.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\libtheora\include\theora\codec.h">
          <Filter>Source Files\lib\include</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\include\theora\theora.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\libtheora\include\theora\theora.h">
          <Filter>Source Files\lib\include</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\include\theora\theoradec.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\libtheora\include\theora\theoradec.h">
          <Filter>Source Files\lib\include</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\include\theora\theoraenc.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\libtheora\include\theora\theoraenc.h">
          <Filter>Source Files\lib\include</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\cpu.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\libtheora\lib\cpu.h">
          <Filter>Source Files\lib\lib</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\internal.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\libtheora\lib\internal.h">
          <Filter>Source Files\lib\lib</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\dec\apiwrapper.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\libtheora\lib\dec\apiwrapper.h">
          <Filter>Source Files\lib\lib\dec</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\dec\bitpack.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\libtheora\lib\dec\bitpack.h">
          <Filter>Source Files\lib\lib\dec</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\dec\dct.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\libtheora\lib\dec\dct.h">
          <Filter>Source Files\lib\lib\dec</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\dec\decint.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\libtheora\lib\dec\decint.h">
          <Filter>Source Files\lib\lib\dec</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\dec\dequant.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\libtheora\lib\dec\dequant.h">
          <Filter>Source Files\lib\lib\dec</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\dec\huffdec.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\libtheora\lib\dec\huffdec.h">
          <Filter>Source Files\lib\lib\dec</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\dec\huffman.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\libtheora\lib\dec\huffman.h">
          <Filter>Source Files\lib\lib\dec</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\dec\idct.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\libtheora\lib\dec\idct.h">
          <Filter>Source Files\lib\lib\dec</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\dec\ocintrin.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\libtheora\lib\dec\ocintrin.h">
          <Filter>Source Files\lib\lib\dec</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\dec\quant.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\libtheora\lib\dec\quant.h">
          <Filter>Source Files\lib\lib\dec</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\dec\x86_vc\x86int.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\libtheora\lib\dec\x86_vc\x86int.h">
          <Filter>Source Files\lib\lib\dec\x86_vc</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\enc\block_inline.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\libtheora\lib\enc\block_inline.h">
          <Filter>Source Files\lib\lib\enc</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\enc\codec_internal.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\libtheora\lib\enc\codec_internal.h">
          <Filter>Source Files\lib\lib\enc</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\enc\dsp.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\libtheora\lib\enc\dsp.h">
          <Filter>Source Files\lib\lib\enc</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\enc\encoder_huffman.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\libtheora\lib\enc\encoder_huffman.h">
          <Filter>Source Files\lib\lib\enc</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\enc\encoder_lookup.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\libtheora\lib\enc\encoder_lookup.h">
          <Filter>Source Files\lib\lib\enc</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\enc\hufftables.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\libtheora\lib\enc\hufftables.h">
          <Filter>Source Files\lib\lib\enc</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\enc\pp.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\libtheora\lib\enc\pp.h">
          <Filter>Source Files\lib\lib\enc</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\enc\quant_lookup.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\libtheora\lib\enc\quant_lookup.h">
          <Filter>Source Files\lib\lib\enc</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\libtheora\lib\enc\toplevel_lookup.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\libtheora\lib\enc\toplevel_lookup.h">
          <Filter>Source Files\lib\lib\enc</Filter>
       </ClInclude>
    </ItemGroup>

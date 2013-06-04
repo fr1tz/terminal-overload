@@ -15,7 +15,7 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="D:/Alux3D/Alux3D/Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
+			OutputDirectory="../../../../../Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
 			IntermediateDirectory="../../Link/Vc2k8.$(ConfigurationName).$(PlatformName)/$(ProjectName)"
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
@@ -42,7 +42,7 @@
 				AdditionalOptions="/MP"
 				Optimization="0"
 				EnableIntrinsicFunctions="1"
-				AdditionalIncludeDirectories="D:/Alux3D/Alux3D/Engine/lib/zlib;"
+				AdditionalIncludeDirectories="../../../../../Engine/lib/zlib;"
 				PreprocessorDefinitions="TORQUE_DEBUG;TORQUE_DEBUG_GUARD;D3D_DEBUG_INFO;TORQUE_NET_STATS;UNICODE;_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS"
 				ExceptionHandling="0"
 				BasicRuntimeChecks="0"
@@ -96,7 +96,7 @@
 		</Configuration>
       <Configuration
 			Name="Optimized Debug|Win32"
-			OutputDirectory="D:/Alux3D/Alux3D/Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
+			OutputDirectory="../../../../../Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
 			IntermediateDirectory="../../Link/Vc2k8.$(ConfigurationName).$(PlatformName)/$(ProjectName)"
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
@@ -124,7 +124,7 @@
 				Optimization="3"
 				InlineFunctionExpansion="2"
 				EnableIntrinsicFunctions="1"
-				AdditionalIncludeDirectories="D:/Alux3D/Alux3D/Engine/lib/zlib;"
+				AdditionalIncludeDirectories="../../../../../Engine/lib/zlib;"
 				PreprocessorDefinitions="TORQUE_DEBUG;TORQUE_DEBUG_GUARD;D3D_DEBUG_INFO;TORQUE_NET_STATS;UNICODE;_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS"
 				ExceptionHandling="0"
 				BasicRuntimeChecks="0"
@@ -178,7 +178,7 @@
       </Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="D:/Alux3D/Alux3D/Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
+			OutputDirectory="../../../../../Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
 			IntermediateDirectory="../../Link/Vc2k8.$(ConfigurationName).$(PlatformName)/$(ProjectName)"
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
@@ -205,7 +205,7 @@
 				AdditionalOptions="/MP"
 				Optimization="3"
 				InlineFunctionExpansion="2"
-				AdditionalIncludeDirectories="D:/Alux3D/Alux3D/Engine/lib/zlib;"
+				AdditionalIncludeDirectories="../../../../../Engine/lib/zlib;"
 				PreprocessorDefinitions="UNICODE;_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS"
 				ExceptionHandling="0"
 				BasicRuntimeChecks="0"
@@ -264,82 +264,82 @@
 			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 			>
 			<File
-			   RelativePath="D:\Alux3D\Alux3D\Engine\lib\zlib\adler32.c">
+			   RelativePath="..\..\..\..\..\Engine\lib\zlib\adler32.c">
 			</File>
 			<File
-			   RelativePath="D:\Alux3D\Alux3D\Engine\lib\zlib\compress.c">
+			   RelativePath="..\..\..\..\..\Engine\lib\zlib\compress.c">
 			</File>
 			<File
-			   RelativePath="D:\Alux3D\Alux3D\Engine\lib\zlib\crc32.c">
+			   RelativePath="..\..\..\..\..\Engine\lib\zlib\crc32.c">
 			</File>
 			<File
-			   RelativePath="D:\Alux3D\Alux3D\Engine\lib\zlib\crc32.h">
+			   RelativePath="..\..\..\..\..\Engine\lib\zlib\crc32.h">
 			</File>
 			<File
-			   RelativePath="D:\Alux3D\Alux3D\Engine\lib\zlib\deflate.c">
+			   RelativePath="..\..\..\..\..\Engine\lib\zlib\deflate.c">
 			</File>
 			<File
-			   RelativePath="D:\Alux3D\Alux3D\Engine\lib\zlib\deflate.h">
+			   RelativePath="..\..\..\..\..\Engine\lib\zlib\deflate.h">
 			</File>
 			<File
-			   RelativePath="D:\Alux3D\Alux3D\Engine\lib\zlib\gzclose.c">
+			   RelativePath="..\..\..\..\..\Engine\lib\zlib\gzclose.c">
 			</File>
 			<File
-			   RelativePath="D:\Alux3D\Alux3D\Engine\lib\zlib\gzguts.h">
+			   RelativePath="..\..\..\..\..\Engine\lib\zlib\gzguts.h">
 			</File>
 			<File
-			   RelativePath="D:\Alux3D\Alux3D\Engine\lib\zlib\gzlib.c">
+			   RelativePath="..\..\..\..\..\Engine\lib\zlib\gzlib.c">
 			</File>
 			<File
-			   RelativePath="D:\Alux3D\Alux3D\Engine\lib\zlib\gzread.c">
+			   RelativePath="..\..\..\..\..\Engine\lib\zlib\gzread.c">
 			</File>
 			<File
-			   RelativePath="D:\Alux3D\Alux3D\Engine\lib\zlib\gzwrite.c">
+			   RelativePath="..\..\..\..\..\Engine\lib\zlib\gzwrite.c">
 			</File>
 			<File
-			   RelativePath="D:\Alux3D\Alux3D\Engine\lib\zlib\infback.c">
+			   RelativePath="..\..\..\..\..\Engine\lib\zlib\infback.c">
 			</File>
 			<File
-			   RelativePath="D:\Alux3D\Alux3D\Engine\lib\zlib\inffast.c">
+			   RelativePath="..\..\..\..\..\Engine\lib\zlib\inffast.c">
 			</File>
 			<File
-			   RelativePath="D:\Alux3D\Alux3D\Engine\lib\zlib\inffast.h">
+			   RelativePath="..\..\..\..\..\Engine\lib\zlib\inffast.h">
 			</File>
 			<File
-			   RelativePath="D:\Alux3D\Alux3D\Engine\lib\zlib\inffixed.h">
+			   RelativePath="..\..\..\..\..\Engine\lib\zlib\inffixed.h">
 			</File>
 			<File
-			   RelativePath="D:\Alux3D\Alux3D\Engine\lib\zlib\inflate.c">
+			   RelativePath="..\..\..\..\..\Engine\lib\zlib\inflate.c">
 			</File>
 			<File
-			   RelativePath="D:\Alux3D\Alux3D\Engine\lib\zlib\inflate.h">
+			   RelativePath="..\..\..\..\..\Engine\lib\zlib\inflate.h">
 			</File>
 			<File
-			   RelativePath="D:\Alux3D\Alux3D\Engine\lib\zlib\inftrees.c">
+			   RelativePath="..\..\..\..\..\Engine\lib\zlib\inftrees.c">
 			</File>
 			<File
-			   RelativePath="D:\Alux3D\Alux3D\Engine\lib\zlib\inftrees.h">
+			   RelativePath="..\..\..\..\..\Engine\lib\zlib\inftrees.h">
 			</File>
 			<File
-			   RelativePath="D:\Alux3D\Alux3D\Engine\lib\zlib\trees.c">
+			   RelativePath="..\..\..\..\..\Engine\lib\zlib\trees.c">
 			</File>
 			<File
-			   RelativePath="D:\Alux3D\Alux3D\Engine\lib\zlib\trees.h">
+			   RelativePath="..\..\..\..\..\Engine\lib\zlib\trees.h">
 			</File>
 			<File
-			   RelativePath="D:\Alux3D\Alux3D\Engine\lib\zlib\uncompr.c">
+			   RelativePath="..\..\..\..\..\Engine\lib\zlib\uncompr.c">
 			</File>
 			<File
-			   RelativePath="D:\Alux3D\Alux3D\Engine\lib\zlib\zconf.h">
+			   RelativePath="..\..\..\..\..\Engine\lib\zlib\zconf.h">
 			</File>
 			<File
-			   RelativePath="D:\Alux3D\Alux3D\Engine\lib\zlib\zlib.h">
+			   RelativePath="..\..\..\..\..\Engine\lib\zlib\zlib.h">
 			</File>
 			<File
-			   RelativePath="D:\Alux3D\Alux3D\Engine\lib\zlib\zutil.c">
+			   RelativePath="..\..\..\..\..\Engine\lib\zlib\zutil.c">
 			</File>
 			<File
-			   RelativePath="D:\Alux3D\Alux3D\Engine\lib\zlib\zutil.h">
+			   RelativePath="..\..\..\..\..\Engine\lib\zlib\zutil.h">
 			</File>
 		</Filter>
 	</Files>

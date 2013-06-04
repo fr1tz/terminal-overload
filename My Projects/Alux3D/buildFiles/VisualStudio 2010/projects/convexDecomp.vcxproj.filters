@@ -2,11 +2,11 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
    <ItemGroup>
       <Filter Include="Source Files">
-         <UniqueIdentifier>{0dc736a4-a928-4607-bf51-c50aa1cad34d}</UniqueIdentifier>
+         <UniqueIdentifier>{7a2ab90a-82e1-4437-a045-a2ebc17fb4cb}</UniqueIdentifier>
          <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat;cc</Extensions>
       </Filter>
       <Filter Include="Source Files\lib">
-         <UniqueIdentifier>{662faf74-517c-429b-889d-c88659008ef6}</UniqueIdentifier>
+         <UniqueIdentifier>{72784029-c932-4258-a1e0-52bf4ee9cef8}</UniqueIdentifier>
       </Filter>
    </ItemGroup>
   <ItemGroup>
@@ -15,78 +15,78 @@
     </ResourceCompile>
   </ItemGroup>
    <ItemGroup>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\convexDecomp\NvConcavityVolume.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\convexDecomp\NvConcavityVolume.cpp">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\convexDecomp\NvConvexDecomposition.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\convexDecomp\NvConvexDecomposition.cpp">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\convexDecomp\NvFloatMath.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\convexDecomp\NvFloatMath.cpp">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\convexDecomp\NvMeshIslandGeneration.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\convexDecomp\NvMeshIslandGeneration.cpp">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\convexDecomp\NvRayCast.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\convexDecomp\NvRayCast.cpp">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\convexDecomp\NvRemoveTjunctions.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\convexDecomp\NvRemoveTjunctions.cpp">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\convexDecomp\NvSplitMesh.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\convexDecomp\NvSplitMesh.cpp">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\convexDecomp\NvStanHull.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\convexDecomp\NvStanHull.cpp">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\convexDecomp\NvThreadConfig.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\convexDecomp\NvThreadConfig.cpp">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="D:\Alux3D\Alux3D\Engine\lib\convexDecomp\wavefront.cpp">
+      <ClCompile Include="..\..\..\..\..\Engine\lib\convexDecomp\wavefront.cpp">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
    </ItemGroup>
    <ItemGroup>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\convexDecomp\NvConcavityVolume.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\convexDecomp\NvConcavityVolume.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\convexDecomp\NvConvexDecomposition.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\convexDecomp\NvConvexDecomposition.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\convexDecomp\NvFloatMath.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\convexDecomp\NvFloatMath.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\convexDecomp\NvFloatMath.inl">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\convexDecomp\NvFloatMath.inl">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\convexDecomp\NvHashMap.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\convexDecomp\NvHashMap.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\convexDecomp\NvMeshIslandGeneration.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\convexDecomp\NvMeshIslandGeneration.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\convexDecomp\NvRayCast.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\convexDecomp\NvRayCast.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\convexDecomp\NvRemoveTjunctions.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\convexDecomp\NvRemoveTjunctions.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\convexDecomp\NvSimpleTypes.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\convexDecomp\NvSimpleTypes.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\convexDecomp\NvSplitMesh.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\convexDecomp\NvSplitMesh.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\convexDecomp\NvStanHull.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\convexDecomp\NvStanHull.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\convexDecomp\NvThreadConfig.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\convexDecomp\NvThreadConfig.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\convexDecomp\NvUserMemAlloc.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\convexDecomp\NvUserMemAlloc.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="D:\Alux3D\Alux3D\Engine\lib\convexDecomp\wavefront.h">
+      <ClInclude Include="..\..\..\..\..\Engine\lib\convexDecomp\wavefront.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
    </ItemGroup>

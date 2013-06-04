@@ -1,0 +1,179 @@
+// Copyright information can be found in the file named COPYING
+// located in the root directory of this distribution.
+
+#if 0 // BORQUE_NEEDS_PORTING
+
+#ifndef _SHOTGUNPROJECTILE_H_
+#define _SHOTGUNPROJECTILE_H_
+
+#ifndef _GAMEBASE_H_
+#include "game/gameBase.h"
+#endif
+#ifndef _TSSHAPE_H_
+#include "ts/tsShape.h"
+#endif
+#ifndef _LIGHTMANAGER_H_
+#include "sceneGraph/lightManager.h"
+#endif
+#ifndef _PLATFORMAUDIO_H_
+#include "platform/platformAudio.h"
+#endif
+#ifndef _NETCONNECTION_H_
+#include "sim/netConnection.h"
+#endif
+
+#include "game/fx/particleEmitter.h"
+#include "game/fx/laserBeam.h"
+#include "game/fx/fxLight.h"
+#include "game/player.h"
+#include "game/projectile.h"
+
+class ShotgunProjectileData;
+class ExplosionData;
+class ShapeBase;
+class TSShapeInstance;
+class TSThread;
+
+//--------------------------------------------------------------------------
+
+class ShotgunProjectileData : public ProjectileData
+{
+   typedef ProjectileData Parent;
+
+protected:
+   bool onAdd();
+
+public:
+	bool noFake;
+
+	U32 energyDrain;
+
+	U32 numBullets;
+	U32 bulletDistMode;
+
+	F32 range;
+
+	F32 muzzleSpreadRadius;
+	F32 referenceSpreadRadius;
+	F32 referenceSpreadDistance;
+
+	ShotgunProjectileData();
+
+	void packData(BitStream*);
+	void unpackData(BitStream*);
+	bool preload(bool server, char errorBuffer[256]);
+
+	static void initPersistFields();
+	DECLARE_CONOBJECT(ShotgunProjectileData);
+};
+DECLARE_CONSOLETYPE(ShotgunProjectileData)
+
+//--------------------------------------------------------------------------
+
+class ShotgunProjectileTracer : public Projectile
+{
+	typedef Projectile Parent;
+	ShotgunProjectileData* mDataBlock;
+	Point3F mImpactPos;
+
+ public:
+	ShotgunProjectileTracer(const Point3F* impactPos = NULL);
+	~ShotgunProjectileTracer();
+	bool onAdd();
+	void processTick(const Move*);
+	bool onNewDataBlock(GameBaseData*);
+	DECLARE_CONOBJECT(ShotgunProjectileTracer);
+};
+
+//--------------------------------------------------------------------------
+
+struct ShotgunHit
+{
+	SimObjectPtr<SceneObject> object;
+	Point3F         objectPos;
+	int             numImpacts;
+	Point3F		    impactCenterVec; // relative to object position
+	Vector<Point3F> impactVecs;      // relative to object position
+	Vector<Point3F> impactNormals;
+
+	ShotgunHit();
+	ShotgunHit(const ShotgunHit& hit);
+	~ShotgunHit();
+
+	void pack(NetConnection* con, BitStream* stream);
+	void unpack(NetConnection* con, BitStream* stream);
+};
+
+typedef Vector<ShotgunHit*> ShotgunHits;
+
+class ShotgunProjectile : public Projectile
+{
+	typedef Projectile Parent;
+
+ private:
+	ShotgunProjectileData* mDataBlock;
+
+	bool mFindHits;
+	ShotgunHits mHits;
+	NetConnection* mHitsSource;
+
+ public:
+	ShotgunProjectile(bool onClient = true, bool findHits = false);
+	~ShotgunProjectile();
+
+	// ConsoleObject...
+	static void initPersistFields();
+	static void consoleInit();
+
+	// NetObject...
+	U32  packUpdate(NetConnection* con, U32 mask, BitStream* stream);
+	void unpackUpdate(NetConnection* con, BitStream* stream);
+
+	// SimObject...
+	bool onAdd();
+	void onRemove();
+	void onDeleteNotify(SimObject* obj);
+
+	// GameBase...
+	void processTick(const Move*);
+	void advanceTime(F32);
+	void interpolateTick(F32 delta);
+	bool onNewDataBlock(GameBaseData*);
+
+	// ShotgunProjectile...
+	void addHits(NetConnection* client, const ShotgunHits& hits);
+	void findHits();
+	void processHits();
+	void serverProcessHits();
+	void clientProcessHits();
+	void transmitHitsToServer();
+
+	DECLARE_CONOBJECT(ShotgunProjectile);
+};
+
+//--------------------------------------------------------------------------
+
+class ShotgunFireEvent : public NetEvent
+{
+  public:
+	ShotgunProjectileData* datablock;
+	ShapeBase* source;
+	S32 sourceId;    // source of shotgun blast
+	S32 sourceSlot;  // source slot of shotgun blast
+	ShotgunHits hits;
+
+	ShotgunFireEvent();
+	~ShotgunFireEvent();
+
+	void pack(NetConnection*, BitStream* bstream);
+	void write(NetConnection*, BitStream* bstream);
+	void unpack(NetConnection*, BitStream* bstream);
+	void process(NetConnection*);
+
+	DECLARE_CONOBJECT(ShotgunFireEvent);
+};
+
+#endif // _SHOTGUNPROJECTILE_H_
+
+#endif // BORQUE_NEEDS_PORTING
+

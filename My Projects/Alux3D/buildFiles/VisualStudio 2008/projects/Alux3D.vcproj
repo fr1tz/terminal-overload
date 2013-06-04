@@ -337,7 +337,7 @@
 				Name="source"
 				Filter="">
 				<File
-				   RelativePath="D:\Alux3D\Alux3D\Engine\source\main\main.cpp">
+				   RelativePath="..\..\..\..\..\Engine\source\main\main.cpp">
 				</File>
 			</Filter>
 		</Filter>

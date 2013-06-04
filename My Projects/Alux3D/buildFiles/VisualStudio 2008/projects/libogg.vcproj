@@ -15,7 +15,7 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="D:/Alux3D/Alux3D/Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
+			OutputDirectory="../../../../../Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
 			IntermediateDirectory="../../Link/Vc2k8.$(ConfigurationName).$(PlatformName)/$(ProjectName)"
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
@@ -42,7 +42,7 @@
 				AdditionalOptions="/MP"
 				Optimization="0"
 				EnableIntrinsicFunctions="1"
-				AdditionalIncludeDirectories="D:/Alux3D/Alux3D/Engine/lib/libogg/include;"
+				AdditionalIncludeDirectories="../../../../../Engine/lib/libogg/include;"
 				PreprocessorDefinitions="TORQUE_DEBUG;TORQUE_DEBUG_GUARD;D3D_DEBUG_INFO;TORQUE_NET_STATS;UNICODE;_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS"
 				ExceptionHandling="0"
 				BasicRuntimeChecks="0"
@@ -96,7 +96,7 @@
 		</Configuration>
       <Configuration
 			Name="Optimized Debug|Win32"
-			OutputDirectory="D:/Alux3D/Alux3D/Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
+			OutputDirectory="../../../../../Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
 			IntermediateDirectory="../../Link/Vc2k8.$(ConfigurationName).$(PlatformName)/$(ProjectName)"
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
@@ -124,7 +124,7 @@
 				Optimization="3"
 				InlineFunctionExpansion="2"
 				EnableIntrinsicFunctions="1"
-				AdditionalIncludeDirectories="D:/Alux3D/Alux3D/Engine/lib/libogg/include;"
+				AdditionalIncludeDirectories="../../../../../Engine/lib/libogg/include;"
 				PreprocessorDefinitions="TORQUE_DEBUG;TORQUE_DEBUG_GUARD;D3D_DEBUG_INFO;TORQUE_NET_STATS;UNICODE;_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS"
 				ExceptionHandling="0"
 				BasicRuntimeChecks="0"
@@ -178,7 +178,7 @@
       </Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="D:/Alux3D/Alux3D/Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
+			OutputDirectory="../../../../../Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
 			IntermediateDirectory="../../Link/Vc2k8.$(ConfigurationName).$(PlatformName)/$(ProjectName)"
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
@@ -205,7 +205,7 @@
 				AdditionalOptions="/MP"
 				Optimization="3"
 				InlineFunctionExpansion="2"
-				AdditionalIncludeDirectories="D:/Alux3D/Alux3D/Engine/lib/libogg/include;"
+				AdditionalIncludeDirectories="../../../../../Engine/lib/libogg/include;"
 				PreprocessorDefinitions="UNICODE;_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS"
 				ExceptionHandling="0"
 				BasicRuntimeChecks="0"
@@ -267,20 +267,20 @@
 				Name="include"
 				Filter="">
 				<File
-				   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libogg\include\ogg\ogg.h">
+				   RelativePath="..\..\..\..\..\Engine\lib\libogg\include\ogg\ogg.h">
 				</File>
 				<File
-				   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libogg\include\ogg\os_types.h">
+				   RelativePath="..\..\..\..\..\Engine\lib\libogg\include\ogg\os_types.h">
 				</File>
 			</Filter>
 			<Filter
 				Name="src"
 				Filter="">
 				<File
-				   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libogg\src\bitwise.c">
+				   RelativePath="..\..\..\..\..\Engine\lib\libogg\src\bitwise.c">
 				</File>
 				<File
-				   RelativePath="D:\Alux3D\Alux3D\Engine\lib\libogg\src\framing.c">
+				   RelativePath="..\..\..\..\..\Engine\lib\libogg\src\framing.c">
 				</File>
 			</Filter>
 		</Filter>
