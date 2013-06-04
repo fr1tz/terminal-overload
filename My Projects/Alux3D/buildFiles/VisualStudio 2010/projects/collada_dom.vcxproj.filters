@@ -2,32 +2,32 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
    <ItemGroup>
       <Filter Include="Source Files">
-         <UniqueIdentifier>{ea590b93-c6d9-40c6-8692-a7fdb0ad8715}</UniqueIdentifier>
+         <UniqueIdentifier>{59b1b42f-6849-488b-a213-7574c8acf476}</UniqueIdentifier>
          <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat;cc</Extensions>
       </Filter>
       <Filter Include="Source Files\lib">
-         <UniqueIdentifier>{ec8788c6-ba2e-4256-97fb-0500f825e8cf}</UniqueIdentifier>
+         <UniqueIdentifier>{2f4e14cc-2dff-42b3-9adf-b275d371f387}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\src">
-         <UniqueIdentifier>{f5fd56ac-4c9e-4e26-be36-14e355a9458f}</UniqueIdentifier>
+         <UniqueIdentifier>{dd8727f6-3ba1-491b-8714-37138e121fd8}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\src\1.4">
-         <UniqueIdentifier>{227fd608-e39f-4f11-8303-a033b37dd500}</UniqueIdentifier>
+         <UniqueIdentifier>{2e93aae6-0fd6-4b26-a593-8a1b667d41a9}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\src\dae">
-         <UniqueIdentifier>{f5eca004-2102-4f00-9ff1-1b38d096f3b9}</UniqueIdentifier>
+         <UniqueIdentifier>{b4c7de82-c059-4c66-a3e9-3e360df070b6}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\src\modules">
-         <UniqueIdentifier>{5177c9fe-20b3-4e6e-9208-c97c793201d5}</UniqueIdentifier>
+         <UniqueIdentifier>{1e269b0f-eb59-424e-a5c2-ce23db0f705d}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\src\modules\LIBXMLPlugin">
-         <UniqueIdentifier>{2ad518b3-0fb6-4a9e-aea5-4ce02db3c326}</UniqueIdentifier>
+         <UniqueIdentifier>{e9b68283-231d-4b4b-abb3-a56bb2ead7a7}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\src\modules\STLDatabase">
-         <UniqueIdentifier>{c589f781-a1fd-4919-b190-82c9cc11e03d}</UniqueIdentifier>
+         <UniqueIdentifier>{73073727-76ce-4e08-a413-0ddfdcb2fdc4}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\src\modules\stdErrPlugin">
-         <UniqueIdentifier>{60704a5a-de39-4866-9133-f0f895e13d36}</UniqueIdentifier>
+         <UniqueIdentifier>{1f7a97be-d234-40cf-8e67-9dc218d82572}</UniqueIdentifier>
       </Filter>
    </ItemGroup>
   <ItemGroup>

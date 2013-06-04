@@ -2,29 +2,29 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
    <ItemGroup>
       <Filter Include="Source Files">
-         <UniqueIdentifier>{4fbbcf29-77bf-49bd-98b5-c09e3f9fc35d}</UniqueIdentifier>
+         <UniqueIdentifier>{769ef333-30fd-4a19-a9b2-6d3b616dbc29}</UniqueIdentifier>
          <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat;cc</Extensions>
       </Filter>
       <Filter Include="Source Files\lib">
-         <UniqueIdentifier>{7acdc127-9b3c-48f1-a6a0-af566dd66185}</UniqueIdentifier>
+         <UniqueIdentifier>{ac0d6f46-0f92-4153-b939-bbad28443d77}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\include">
-         <UniqueIdentifier>{7ac1c382-8fac-4607-9e8f-a9eb1f1bd107}</UniqueIdentifier>
+         <UniqueIdentifier>{785ed354-bb2e-4923-96c1-215569a0a701}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\lib">
-         <UniqueIdentifier>{3e1858a4-aab0-4a90-89e9-ea13e8f13857}</UniqueIdentifier>
+         <UniqueIdentifier>{6a2d4135-6a00-4307-a49a-faccd70ea044}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\lib\dec">
-         <UniqueIdentifier>{16922b82-4053-4608-b0a3-c8b08b6ef4f3}</UniqueIdentifier>
+         <UniqueIdentifier>{4e612b18-d2f9-4cff-8f32-c41a80e5bfb7}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\lib\dec\x86_vc">
-         <UniqueIdentifier>{99c2f256-c007-4e80-8959-a9f0fc1a9e73}</UniqueIdentifier>
+         <UniqueIdentifier>{4abe7a62-02e5-48f8-ad1c-05dc0d2d1050}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\lib\enc">
-         <UniqueIdentifier>{4ee005df-5868-4048-b9f8-ebe03d9456bf}</UniqueIdentifier>
+         <UniqueIdentifier>{5e2eeaf3-4590-481a-ae49-657080aef429}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\lib\enc\x86_32_vs">
-         <UniqueIdentifier>{1f504021-b50d-485c-8f8a-aecb2ba7f2ff}</UniqueIdentifier>
+         <UniqueIdentifier>{b77e2ca0-9487-47e8-9df0-b80c51c31e37}</UniqueIdentifier>
       </Filter>
    </ItemGroup>
   <ItemGroup>

@@ -2,59 +2,59 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
    <ItemGroup>
       <Filter Include="Source Files">
-         <UniqueIdentifier>{3911bbae-d072-475e-9152-7ea36caebb81}</UniqueIdentifier>
+         <UniqueIdentifier>{f2d8e400-aef4-4958-bfce-8ced151de68c}</UniqueIdentifier>
          <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat;cc</Extensions>
       </Filter>
       <Filter Include="Source Files\lib">
-         <UniqueIdentifier>{308469b4-ba12-4d64-aa20-d2ab95609628}</UniqueIdentifier>
+         <UniqueIdentifier>{6006cce7-b081-4dbf-8a2e-f25ce67d3093}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\src">
-         <UniqueIdentifier>{9a73d270-e23a-4420-aa0e-20cb3714fe16}</UniqueIdentifier>
+         <UniqueIdentifier>{e8973397-6b06-46eb-a9a3-2edb0214fba2}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\src\BulletCollision">
-         <UniqueIdentifier>{9c0bcba5-e8d5-4953-a83d-217288e6a1fd}</UniqueIdentifier>
+         <UniqueIdentifier>{2e20238e-d800-4bad-a9cc-a8e5fcae003e}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\src\BulletCollision\BroadphaseCollision">
-         <UniqueIdentifier>{7f7189bc-5512-4f1f-9515-b58e0ff9f1cc}</UniqueIdentifier>
+         <UniqueIdentifier>{ac9706a0-cbac-42d6-b3dd-58949cf59838}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\src\BulletCollision\CollisionDispatch">
-         <UniqueIdentifier>{10b6ed2a-4c7c-45ec-b9df-6be113f4d1ca}</UniqueIdentifier>
+         <UniqueIdentifier>{ce1444f6-4789-4ef7-981b-74b1ecdd0c61}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\src\BulletCollision\CollisionShapes">
-         <UniqueIdentifier>{156c5ee9-8f7a-4b5e-8f69-1b0e6018f0ac}</UniqueIdentifier>
+         <UniqueIdentifier>{34aa558f-b83b-41a5-89fd-c9736d91cc32}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\src\BulletCollision\Gimpact">
-         <UniqueIdentifier>{63bc3a20-15b4-4c43-ba8c-81791de2f12f}</UniqueIdentifier>
+         <UniqueIdentifier>{465521a6-23bd-4d34-a646-9067d7026611}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\src\BulletCollision\NarrowPhaseCollision">
-         <UniqueIdentifier>{d3ddf468-8692-45e6-837c-fdd5c8c0373e}</UniqueIdentifier>
+         <UniqueIdentifier>{457924e2-11c5-4b41-ba1e-869a00a26cc8}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\src\BulletDynamics">
-         <UniqueIdentifier>{cd3da460-02f4-48e7-b62e-265b5e0d01b4}</UniqueIdentifier>
+         <UniqueIdentifier>{26cfa60c-117f-4a24-91e9-7ff3cef4bf38}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\src\BulletDynamics\Character">
-         <UniqueIdentifier>{1f2dd54d-1cde-444f-926b-4eab9ffbe0bd}</UniqueIdentifier>
+         <UniqueIdentifier>{a9878320-ae8e-4663-9c43-5725fdc88a8c}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\src\BulletDynamics\ConstraintSolver">
-         <UniqueIdentifier>{8064f060-aff8-471f-95aa-c8245a1f232b}</UniqueIdentifier>
+         <UniqueIdentifier>{5372351c-11a4-4e64-944d-997eefc4bfad}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\src\BulletDynamics\Dynamics">
-         <UniqueIdentifier>{dffca601-df9f-4de7-b28b-384a6851a049}</UniqueIdentifier>
+         <UniqueIdentifier>{ceee9209-fd5c-4f6f-a424-12f7f925fe89}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\src\BulletDynamics\Vehicle">
-         <UniqueIdentifier>{1579e766-62ad-4a95-8ead-4b66a6d9dab7}</UniqueIdentifier>
+         <UniqueIdentifier>{57bac064-0d24-475c-b695-d3cfd2d81c7e}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\src\BulletMultiThreaded">
-         <UniqueIdentifier>{36d22f46-67a9-4032-804e-338d24285205}</UniqueIdentifier>
+         <UniqueIdentifier>{64612379-004b-4e72-a871-4c831830491c}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\src\BulletMultiThreaded\MiniCLTask">
-         <UniqueIdentifier>{4c94ecc9-9fff-4a56-aa61-d42aee4adc0c}</UniqueIdentifier>
+         <UniqueIdentifier>{37b4b0e3-f8a2-434f-9b63-e7c18e8d6c2c}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\src\BulletMultiThreaded\SpuNarrowPhaseCollisionTask">
-         <UniqueIdentifier>{69d5bc59-7fce-4a31-9ec9-a1a2d4f5901f}</UniqueIdentifier>
+         <UniqueIdentifier>{468961d2-2cce-4fb9-830e-1fb9e57e0c23}</UniqueIdentifier>
       </Filter>
       <Filter Include="Source Files\lib\src\LinearMath">
-         <UniqueIdentifier>{745836a8-54de-4c3d-99ee-01d74ff8ab5d}</UniqueIdentifier>
+         <UniqueIdentifier>{135f5eef-1876-4f3e-a041-14464671b40b}</UniqueIdentifier>
       </Filter>
    </ItemGroup>
   <ItemGroup>
