@@ -60,6 +60,9 @@ class ShapeBase;
 class SFXSource;
 class SFXTrack;
 class SFXProfile;
+class ShotgunProjectileData;
+struct ShotgunHit;
+typedef Vector<ShotgunHit*> ShotgunHits;
 
 typedef void* Light;
 
@@ -163,6 +166,7 @@ struct ShapeBaseImageData: public GameBaseData {
       /// @name State attributes
       /// @{
 
+      ProjectileData* fireProjectile; ///< Fire projectile in this state? (added for Alux3D)
       bool fire;                    ///< Can only have one fire state
       bool altFire;                 ///< Can only have one alternate fire state
       bool reload;                  ///< Can only have one reload state
@@ -269,6 +273,7 @@ struct ShapeBaseImageData: public GameBaseData {
    F32                     stateTimeoutValue          [MaxStates];
    bool                    stateWaitForTimeout        [MaxStates];
 
+	ProjectileData*         stateFireProjectile        [MaxStates]; // Added for Alux3D
    bool                    stateFire                  [MaxStates];
    bool                    stateAlternateFire         [MaxStates];
    bool                    stateReload                [MaxStates];
@@ -300,7 +305,7 @@ struct ShapeBaseImageData: public GameBaseData {
    F32                     stateEmitterTime           [MaxStates];
    const char*             stateEmitterNode           [MaxStates];
    /// @}
-   
+ 
    /// @name Camera Shake ( while firing )
    /// @{
    bool              shakeCamera;
@@ -349,7 +354,7 @@ struct ShapeBaseImageData: public GameBaseData {
                                           ///  animation sequences played in 3rd person. [optional]
    StringTableEntry  imageAnimPrefixFP;   ///< Passed along to the mounting shape to modify
                                           ///  animation sequences played in first person. [optional]
-
+	                       
    U32               mountPoint;    ///< Mount point for the image.
    MatrixF           mountOffset;   ///< Mount point offset, so we know where the image is.
    MatrixF           eyeOffset;     ///< Offset from eye for first person.
@@ -763,6 +768,14 @@ protected:
       /// Variables tracking the state machine
       /// representing this specific mounted image.
       /// @{
+
+		enum Mode {           ///< Mode the image operates in (added for Alux3D -mag)
+			StandardMode,      ///  'StandardMode' is the mode known from stock torque
+			ClientFireMode,    ///  while the 'ClientFireMode' makes the image behave more
+		} mode;               ///  like the weapons in other games (ie. client controls fire) 
+
+		bool updateControllingClient; ///< Send image updates to the client that controls the shape 
+												///  this image is mounted on? (only used in ClientFireMode)
 
       bool loaded;                  ///< Is the image loaded?
       bool nextLoaded;              ///< Is the next state going to result in the image being loaded?
@@ -1363,6 +1376,10 @@ public:
    void advanceThreads(F32 dt);
    /// @}
 
+	/// Client fired shotgun (added for Alux3D)
+	void clientFiredShotgun(NetConnection* client,  int slot, const ShotgunHits& hits,
+		ShotgunProjectileData* datablock, const Point3F& pos, const Point3F& vel);
+
    /// @name Cloaking
    /// @{
 
@@ -1393,6 +1410,9 @@ public:
    ///
    /// @note Legacy code from Tribes 2, but still works
    Point3F getAIRepairPoint();
+
+   /// Updates image trigger state (added for Alux3D).
+	virtual void updateImageTrigger(const Move* move, U32 slot, bool trigger, bool alt);
 
    /// @name Mounted Images
    /// @{

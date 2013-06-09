@@ -176,6 +176,10 @@ class GameBase : public SceneObject
    // Control interface
    GameConnection* mControllingClient;
 
+   S32 mClient; ///< exposed to script under the name 'client' (added for Alux3D)
+
+   S32 mTeamId; ///< exposed to script under the name 'teamId' (added for Alux3D)
+
 public:
 
    static bool gShowBoundingBox;    ///< Should we render bounding boxes?
@@ -201,9 +205,10 @@ public:
    ~GameBase();
 
    enum GameBaseMasks {      
-      DataBlockMask     = Parent::NextFreeMask << 0,
-      ExtendedInfoMask  = Parent::NextFreeMask << 1,
-      NextFreeMask      = Parent::NextFreeMask << 2
+		RareStuffMask     = Parent::NextFreeMask << 0,
+      DataBlockMask     = Parent::NextFreeMask << 1,
+      ExtendedInfoMask  = Parent::NextFreeMask << 2,
+      NextFreeMask      = Parent::NextFreeMask << 3
    };
 
    // net flags added by game base
@@ -382,6 +387,13 @@ public:
    virtual GameBase * getControllingObject() { return NULL; }
    virtual GameBase * getControlObject() { return NULL; }
    virtual void setControlObject( GameBase * ) { }
+   /// @}
+
+   /// @name Team ID (added for Alux3D)
+   /// @{
+	void setTeamId(S32 id) { mTeamId = id; this->onNewTeamId(); }
+	S32 getTeamId() { return mTeamId; };
+	virtual void onNewTeamId() { /* this->setMaskBits(ColorizationMask); */ };
    /// @}
 
    virtual F32 getDefaultCameraFov() { return 90.f; }

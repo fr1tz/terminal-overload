@@ -680,22 +680,32 @@ bool Projectile::onAdd()
 
    if (isServerObject())
    {
-      ShapeBase* ptr;
-      if (Sim::findObject(mSourceObjectId, ptr))
-      {
-         mSourceObject = ptr;
+		mInitialPosition = mCurrPosition;
 
-         // Since we later do processAfter( mSourceObject ) we must clearProcessAfter
-         // if it is deleted. SceneObject already handles this in onDeleteNotify so
-         // all we need to do is register for the notification.
-         deleteNotify( ptr );
-      }
-      else
-      {
-         if (mSourceObjectId != -1)
-            Con::errorf(ConsoleLogEntry::General, "Projectile::onAdd: mSourceObjectId is invalid");
-         mSourceObject = NULL;
-      }
+		// no source object?
+		if(mSourceObject == NULL)
+		{
+			ShapeBase* ptr;
+			if (Sim::findObject(mSourceObjectId, ptr))
+			{
+				mSourceObject = ptr;
+
+				// Since we later do processAfter( mSourceObject ) we must clearProcessAfter
+				// if it is deleted. SceneObject already handles this in onDeleteNotify so
+				// all we need to do is register for the notification.
+				deleteNotify( ptr );
+			}
+			else
+			{
+				if (mSourceObjectId != -1)
+					Con::errorf(ConsoleLogEntry::General, "Projectile::onAdd: mSourceObjectId is invalid");
+				mSourceObject = NULL;
+			}
+		}
+		else
+		{			
+			mSourceObjectId = mSourceObject->getId();
+		}
 
       // If we're on the server, we need to inherit some of our parent's velocity
       //
@@ -740,8 +750,13 @@ bool Projectile::onAdd()
          mParticleWaterEmitter = pEmitter;
       }
    }
-   if (mSourceObject.isValid())
-      processAfter(mSourceObject);
+
+	if(mSourceObject.isValid())
+	{
+		processAfter(mSourceObject);
+		deleteNotify(mSourceObject);
+		this->setTeamId(mSourceObject->getTeamId());
+	}
 
    // Setup our bounding box
    if (bool(mDataBlock->projectileShape) == true)

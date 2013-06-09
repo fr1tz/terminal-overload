@@ -203,6 +203,16 @@ public:
    void setInitialPosition( const Point3F& pos );
    void setInitialVelocity( const Point3F& vel );
 
+public:
+   Point3F  mCurrPosition;
+   Point3F  mCurrVelocity;
+
+	SimObjectPtr<ShapeBase> mSourceObject; ///< Actual pointer to the source object
+	                                       ///  (never times out for Alux3D)
+
+   S32      mSourceObjectId;
+   S32      mSourceObjectSlot;
+
 protected:
 
    static const U32 csmStaticCollisionMask;
@@ -223,14 +233,9 @@ protected:
    Point3F  mInitialPosition;
    Point3F  mInitialVelocity;
 
-   Point3F  mCurrPosition;
-   Point3F  mCurrVelocity;
-   S32      mSourceObjectId;
-   S32      mSourceObjectSlot;
-
    // Time related variables common to all projectiles, managed by processTick
    U32 mCurrTick;                         ///< Current time in ticks
-   SimObjectPtr<ShapeBase> mSourceObject; ///< Actual pointer to the source object, times out after SourceIdTimeoutTicks
+
 
    // Rendering related variables
    TSShapeInstance* mProjectileShape;

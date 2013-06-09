@@ -215,6 +215,9 @@ GameBase::GameBase()
 
    // From ProcessObject   
    mIsGameBase = true;
+
+   mClient = -1;
+   mTeamId = 0;
    
 #ifdef TORQUE_DEBUG_NET_MOVES
    mLastMoveId = 0;
@@ -500,6 +503,13 @@ void GameBase::readPacketData(GameConnection*, BitStream*)
 U32 GameBase::packUpdate( NetConnection *connection, U32 mask, BitStream *stream )
 {
    U32 retMask = Parent::packUpdate( connection, mask, stream );
+
+	// Transmit rare stuff here.
+	if(stream->writeFlag(mask & RareStuffMask))
+	{
+		// Team ID
+		stream->writeInt(mTeamId, 2);
+	}
        
    if ( stream->writeFlag( mask & ScaleMask ) )  
    {
@@ -528,6 +538,13 @@ U32 GameBase::packUpdate( NetConnection *connection, U32 mask, BitStream *stream
 void GameBase::unpackUpdate(NetConnection *con, BitStream *stream)
 {
    Parent::unpackUpdate( con, stream );
+
+	// Rare stuff.
+	if(stream->readFlag())
+	{
+		// Team ID
+		mTeamId = stream->readInt(2);
+	}
    
    // ScaleMask
    if ( stream->readFlag() ) 
@@ -643,6 +660,9 @@ void GameBase::initPersistFields()
       addProtectedField( "dataBlock", TYPEID< GameBaseData >(), Offset(mDataBlock, GameBase),
          &setDataBlockProperty, &defaultProtectedGetFn, 
          "Script datablock used for game objects." );
+
+		addField("client",    TypeS32, Offset(mClient, GameBase)); 
+		addField("teamId",    TypeS32, Offset(mTeamId, GameBase)); 
 
    endGroup( "Game" );
 

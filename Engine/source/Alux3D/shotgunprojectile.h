@@ -1,38 +1,17 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
-#if 0 // BORQUE_NEEDS_PORTING
-
 #ifndef _SHOTGUNPROJECTILE_H_
 #define _SHOTGUNPROJECTILE_H_
 
-#ifndef _GAMEBASE_H_
-#include "game/gameBase.h"
-#endif
-#ifndef _TSSHAPE_H_
-#include "ts/tsShape.h"
-#endif
-#ifndef _LIGHTMANAGER_H_
-#include "sceneGraph/lightManager.h"
-#endif
-#ifndef _PLATFORMAUDIO_H_
-#include "platform/platformAudio.h"
+#ifndef _PROJECTILE_H_
+#include "T3D/projectile.h"
 #endif
 #ifndef _NETCONNECTION_H_
 #include "sim/netConnection.h"
 #endif
 
-#include "game/fx/particleEmitter.h"
-#include "game/fx/laserBeam.h"
-#include "game/fx/fxLight.h"
-#include "game/player.h"
-#include "game/projectile.h"
-
-class ShotgunProjectileData;
-class ExplosionData;
 class ShapeBase;
-class TSShapeInstance;
-class TSThread;
 
 //--------------------------------------------------------------------------
 
@@ -61,12 +40,11 @@ public:
 
 	void packData(BitStream*);
 	void unpackData(BitStream*);
-	bool preload(bool server, char errorBuffer[256]);
+	bool preload(bool server, String &errorStr);
 
 	static void initPersistFields();
 	DECLARE_CONOBJECT(ShotgunProjectileData);
 };
-DECLARE_CONSOLETYPE(ShotgunProjectileData)
 
 //--------------------------------------------------------------------------
 
@@ -81,7 +59,7 @@ class ShotgunProjectileTracer : public Projectile
 	~ShotgunProjectileTracer();
 	bool onAdd();
 	void processTick(const Move*);
-	bool onNewDataBlock(GameBaseData*);
+	bool onNewDataBlock(GameBaseData* dptr, bool reload);
 	DECLARE_CONOBJECT(ShotgunProjectileTracer);
 };
 
@@ -138,7 +116,7 @@ class ShotgunProjectile : public Projectile
 	void processTick(const Move*);
 	void advanceTime(F32);
 	void interpolateTick(F32 delta);
-	bool onNewDataBlock(GameBaseData*);
+	bool onNewDataBlock(GameBaseData* dptr, bool reload);
 
 	// ShotgunProjectile...
 	void addHits(NetConnection* client, const ShotgunHits& hits);
@@ -156,6 +134,8 @@ class ShotgunProjectile : public Projectile
 class ShotgunFireEvent : public NetEvent
 {
   public:
+	typedef NetEvent Parent;
+
 	ShotgunProjectileData* datablock;
 	ShapeBase* source;
 	S32 sourceId;    // source of shotgun blast
@@ -174,6 +154,4 @@ class ShotgunFireEvent : public NetEvent
 };
 
 #endif // _SHOTGUNPROJECTILE_H_
-
-#endif // BORQUE_NEEDS_PORTING
 

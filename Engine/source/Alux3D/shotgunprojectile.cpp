@@ -1,33 +1,38 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
-#if 0 // BORQUE_NEEDS_PORTING
+#include "platform/platform.h"
+#include "Alux3D/shotgunprojectile.h"
 
-#include "dgl/dgl.h"
-#include "sceneGraph/sceneState.h"
-#include "sceneGraph/sceneGraph.h"
-#include "sim/decalManager.h"
+#include "scene/sceneRenderState.h"
+#include "scene/sceneManager.h"
+#include "lighting/lightInfo.h"
+#include "lighting/lightManager.h"
 #include "console/consoleTypes.h"
 #include "console/typeValidators.h"
-#include "audio/audioDataBlock.h"
-#include "core/bitStream.h"
-#include "game/fx/explosion.h"
-#include "game/shapeBase.h"
-#include "game/player.h"
+#include "core/resourceManager.h"
+#include "core/stream/bitStream.h"
+#include "T3D/fx/explosion.h"
+#include "T3D/shapeBase.h"
 #include "ts/tsShapeInstance.h"
-#include "game/shotgunprojectile.h"
-#include "audio/audio.h"
-#include "math/mRandom.h"
+#include "sfx/sfxTrack.h"
+#include "sfx/sfxSource.h"
+#include "sfx/sfxSystem.h"
+#include "sfx/sfxTypes.h"
 #include "math/mathUtils.h"
 #include "math/mathIO.h"
 #include "sim/netConnection.h"
-#include "game/fx/particleEngine.h"
-#include "game/fx/laserBeam.h"
-#include "game/fx/fxLight.h"
-#include "game/deflector.h"
-#include "game/gameConnection.h"
-
-//-----
+#include "T3D/fx/particleEmitter.h"
+#include "T3D/fx/splash.h"
+#include "T3D/physics/physicsPlugin.h"
+#include "T3D/physics/physicsWorld.h"
+#include "gfx/gfxTransformSaver.h"
+#include "T3D/containerQuery.h"
+#include "T3D/decal/decalManager.h"
+#include "T3D/decal/decalData.h"
+#include "T3D/lightDescription.h"
+#include "console/engineAPI.h"
+#include "T3D/gameBase/gameConnection.h"
 
 static MRandomLCG sRandom(0x1);
 
@@ -54,10 +59,6 @@ ShotgunProjectileData::ShotgunProjectileData()
 
 //--------------------------------------------------------------------------
 
-IMPLEMENT_CONSOLETYPE(ShotgunProjectileData)
-IMPLEMENT_GETDATATYPE(ShotgunProjectileData)
-IMPLEMENT_SETDATATYPE(ShotgunProjectileData)
-
 void ShotgunProjectileData::initPersistFields()
 {
 	Parent::initPersistFields();
@@ -83,9 +84,9 @@ bool ShotgunProjectileData::onAdd()
 }
 
 
-bool ShotgunProjectileData::preload(bool server, char errorBuffer[256])
+bool ShotgunProjectileData::preload(bool server, String &errorStr)
 {
-   if (Parent::preload(server, errorBuffer) == false)
+   if (Parent::preload(server, errorStr) == false)
       return false;
 
    return true;
@@ -161,25 +162,28 @@ bool ShotgunProjectileTracer::onAdd()
 	return true;
 }
 
-bool ShotgunProjectileTracer::onNewDataBlock(GameBaseData* dptr)
+bool ShotgunProjectileTracer::onNewDataBlock(GameBaseData* dptr, bool reload)
 {
-   mDataBlock = dynamic_cast<ShotgunProjectileData*>(dptr);
-   if (!mDataBlock || !Parent::onNewDataBlock(dptr))
-      return false;
+	mDataBlock = dynamic_cast<ShotgunProjectileData*>(dptr);
+	if(!mDataBlock || !Parent::onNewDataBlock(dptr, reload))
+		return false;
 
-   return true;
+	return true;
 }
 
 void ShotgunProjectileTracer::processTick(const Move* move)
 {
 	AssertFatal(isClientObject(), "ShotgunProjectileTracer on the server? - Someone fucked up!");
 
+#if 0
 	mNumTicks++;
+#endif
 	mCurrTick++;
 
 	// HACK HACK HACK
 	if(mDataBlock->muzzleVelocity > 9000)
 	{
+#if 0
 		this->missedEnemiesCheck(mInitialPosition, mImpactPos);
 		if(mDataBlock->laserTail != NULL)
 		{
@@ -218,7 +222,7 @@ void ShotgunProjectileTracer::processTick(const Move* move)
 					mLaserTrailList[i]->smoothDist(2);
 			}
 		}
-		
+#endif
 
 		this->deleteObject();
 		return;
@@ -248,6 +252,7 @@ void ShotgunProjectileTracer::processTick(const Move* move)
 	mCurrDeltaBase = newPosition;
 	mCurrBackDelta = mCurrPosition - newPosition;
 
+#if 0
 	this->missedEnemiesCheck(oldPosition, newPosition);
 
 	//emitParticles(mCurrPosition, newPosition, mCurrVelocity, TickMs);
@@ -271,6 +276,7 @@ void ShotgunProjectileTracer::processTick(const Move* move)
 	addLaserTrailNode(newPosition,false);
 
 	mEmissionCount++;     
+#endif
 
 	if(newPosition == mImpactPos)
 	{
@@ -463,7 +469,7 @@ bool ShotgunProjectile::onAdd()
 		}
 		else
 		{
-			mHidden = true;
+			mHasExploded = true;
 		}
 	}
 	else
@@ -488,13 +494,13 @@ void ShotgunProjectile::onRemove()
 }
 
 
-bool ShotgunProjectile::onNewDataBlock(GameBaseData* dptr)
+bool ShotgunProjectile::onNewDataBlock(GameBaseData* dptr, bool reload)
 {
-   mDataBlock = dynamic_cast<ShotgunProjectileData*>(dptr);
-   if (!mDataBlock || !Parent::onNewDataBlock(dptr))
-      return false;
+	mDataBlock = dynamic_cast<ShotgunProjectileData*>( dptr );
+	if(!mDataBlock || !Parent::onNewDataBlock(dptr, reload))
+		return false;
 
-   return true;
+	return true;
 }
 
 
@@ -808,7 +814,9 @@ void ShotgunProjectile::serverProcessHits()
 
 			Point3F impactPos = objectPos + impactVec;
 
+#if 0
 			mTraveledDistance = (impactPos-mCurrPosition).len();
+#endif
 			Parent::onCollision(impactPos, impactNormal, hit->object);
 		}
 	}
@@ -851,8 +859,10 @@ void ShotgunProjectile::clientProcessHits()
 			prj->mSourceObject     = mSourceObject;
 			prj->mSourceObjectSlot = mSourceObjectSlot;
 
+#if 0
 			prj->setSceneObjectColorization(this->getSceneObjectColorization());
-			prj->onNewDataBlock(mDataBlock);
+#endif
+			prj->onNewDataBlock(mDataBlock, false);
 			if(!prj->registerObject())
 			{
 				Con::warnf(ConsoleLogEntry::General, "Could not register shotgun tracer projectile for image: %s", mDataBlock->getName());
@@ -862,11 +872,14 @@ void ShotgunProjectile::clientProcessHits()
 
 			if(hit->object.isNull())
 			{
+#if 0
 				prj->disableLaserTrail(1);
+#endif
 				continue;
 			}
 
 			SceneObject* sObj = hit->object.operator->();
+#if 0
 			if( sObj->getType() & Projectile::csmDynamicCollisionMask )
 			{
 				if( ((ShapeBase*)sObj)->getTeamId() == mTeamId )
@@ -885,18 +898,21 @@ void ShotgunProjectile::clientProcessHits()
 				mExplosionType = Projectile::StandardExplosion;
 				prj->disableLaserTrail(1);
 			}
+#endif
 			
 			ExplosionData* datablock = mDataBlock->explosion;
 
+#if 0
 			if( mExplosionType == HitEnemyExplosion && mDataBlock->hitEnemyExplosion != NULL )
 				datablock = mDataBlock->hitEnemyExplosion;
 			else if( mExplosionType == HitTeammateExplosion && mDataBlock->hitTeammateExplosion != NULL )
 				datablock = mDataBlock->hitTeammateExplosion;
+#endif
 
 			if(datablock != NULL)
 			{
 				Explosion* pExplosion = new Explosion;
-				pExplosion->onNewDataBlock(datablock);
+				pExplosion->onNewDataBlock(datablock, false);
 
 				Point3F expPos = impactPos + impactNormal*0.1;
 				
@@ -904,7 +920,7 @@ void ShotgunProjectile::clientProcessHits()
 				xform.setPosition(expPos);
 				pExplosion->setTransform(xform);
 				pExplosion->setInitialState(expPos, impactNormal);
-				pExplosion->setCollideType(hit->object->getType());
+				pExplosion->setCollideType(hit->object->getTypeMask());
 				if (pExplosion->registerObject() == false)
 				{
 					Con::errorf(ConsoleLogEntry::General, "ShotgunProjectile(%s)::explode: couldn't register explosion",
@@ -913,21 +929,10 @@ void ShotgunProjectile::clientProcessHits()
 					pExplosion = NULL;
 				}
 
-				if(mDataBlock->decalCount > 0
-				&& !(sObj->getType() & Projectile::csmDynamicCollisionMask)
-				&& (hit->object->getType() & Projectile::csmStaticCollisionMask))
-				{
-					// randomly choose a decal between 0 and (decal count - 1)
-					U32 decalidx = (U32)(mCeil(mDataBlock->decalCount * Platform::getRandom()) - 1.0f);
-
-					// this should never choose a NULL idx, but check anyway
-					if(mDataBlock->decals[decalidx] != NULL)
-					{
-						DecalManager *decalMngr = gClientSceneGraph->getCurrentDecalManager();
-						if(decalMngr)
-							decalMngr->addDecal(impactPos, impactNormal, mDataBlock->decals[decalidx]);
-					}
-				}
+				if(mDataBlock->decal
+				&& !(sObj->getTypeMask() & Projectile::csmDynamicCollisionMask)
+				&& (hit->object->getTypeMask() & Projectile::csmStaticCollisionMask))	
+					gDecalManager->addDecal(impactPos, impactNormal, 0.0f, mDataBlock->decal );
 			}
 		}
 	}
@@ -954,7 +959,7 @@ IMPLEMENT_CO_SERVEREVENT_V1(ShotgunFireEvent);
 
 ShotgunFireEvent::ShotgunFireEvent()
 {
-	mGuaranteeType = Guaranteed;
+	//mGuaranteeType = NetEvent::Guaranteed; // FIXME
 
 	datablock = NULL;
 	source = NULL;
@@ -1046,5 +1051,3 @@ void ShotgunFireEvent::process(NetConnection* conn)
 	if(source)
 		source->clientFiredShotgun(conn, sourceSlot, hits, datablock, pos, vel);
 }
-
-#endif // BORQUE_NEEDS_PORTING

@@ -1284,14 +1284,26 @@ void ShapeBase::processTick(const Move* move)
    }
 
    // Advance images
-   if (isServerObject())
+   GameConnection* conn = GameConnection::getConnectionToServer();
+   for (int i = 0; i < MaxMountedImages; i++)
    {
-      for (int i = 0; i < MaxMountedImages; i++)
-      {
-         if (mMountedImageList[i].dataBlock)
-            updateImageState(i, TickSec);
-      }
-   }
+      if(mMountedImageList[i].dataBlock == NULL)
+		  continue;
+
+		if(this->isClientObject()
+		&& conn && this == conn->getControlObject()
+      && this->getImageStruct(i)->mode == MountedImage::ClientFireMode)
+		{
+			// Ignore unless move is brand new!
+			if(move && move->sendCount == 0)
+				updateImageState(i, TickSec);
+		}
+		if(this->getImageStruct(i)->mode != MountedImage::ClientFireMode)
+		{
+			if(this->isServerObject())
+				updateImageState(i, TickSec);
+		}         
+	}
 
    // Call script on trigger state changes
    if (move && mDataBlock && isServerObject()) 
@@ -1331,7 +1343,7 @@ void ShapeBase::advanceTime(F32 dt)
    for (int i = 0; i < MaxMountedImages; i++)
       if (mMountedImageList[i].dataBlock)
       {
-         updateImageState(i, dt);
+         //updateImageState(i, dt);
          updateImageAnimation(i, dt);
       }
 
@@ -3116,10 +3128,34 @@ U32 ShapeBase::packUpdate(NetConnection *con, U32 mask, BitStream *stream)
       }
    }
 
-   if (stream->writeFlag(mask & ImageMask)) {
-      for (int i = 0; i < MaxMountedImages; i++)
-         if (stream->writeFlag(mask & (ImageMaskN << i))) {
-            MountedImage& image = mMountedImageList[i];
+	if(stream->writeFlag(mask & ImageMask))
+	{
+		for(int i = 0; i < MaxMountedImages; i++)
+		{
+			bool update = mask & (ImageMaskN << i);
+			if(!update)
+			{
+				stream->writeFlag(false);
+				continue;
+			}
+
+			MountedImage& image = mMountedImageList[i];
+
+			GameConnection* gc = dynamic_cast<GameConnection*>(con);
+			if(gc && this == gc->getControlObject())
+			{
+				if(image.mode == MountedImage::ClientFireMode)
+				{
+					if(image.updateControllingClient)
+						image.updateControllingClient = false;
+					else
+						update = false;
+				}
+			}
+
+			if(stream->writeFlag(update))
+			{
+				MountedImage& image = mMountedImageList[i];
             if (stream->writeFlag(image.dataBlock))
                stream->writeInt(image.dataBlock->getId() - DataBlockObjectIdFirst,
                                 DataBlockObjectIdBitSize);
@@ -3151,7 +3187,8 @@ U32 ShapeBase::packUpdate(NetConnection *con, U32 mask, BitStream *stream)
             stream->writeFlag(isImageAltFiring(i));
             stream->writeFlag(isImageReloading(i));
          }
-   }
+		}
+	}
 
    // Group some of the uncommon stuff together.
    if (stream->writeFlag(mask & (NameMask | ShieldMask | CloakMask | InvincibleMask | SkinMask | MeshHiddenMask ))) {
@@ -3251,151 +3288,158 @@ void ShapeBase::unpackUpdate(NetConnection *con, BitStream *stream)
    }
 
    // Mounted Images
-   if (stream->readFlag()) {
-      for (int i = 0; i < MaxMountedImages; i++) {
-         if (stream->readFlag()) {
-            MountedImage& image = mMountedImageList[i];
-            ShapeBaseImageData* imageData = 0;
-            if (stream->readFlag()) {
-               SimObjectId id = stream->readInt(DataBlockObjectIdBitSize) +
-                  DataBlockObjectIdFirst;
-               if (!Sim::findObject(id,imageData)) {
-                  con->setLastError("Invalid packet (mounted images).");
-                  return;
-               }
-            }
+   if(stream->readFlag()) 
+	{
+		for (int i = 0; i < MaxMountedImages; i++)
+		{
+			if(stream->readFlag())
+			{
+				MountedImage imageUpdate;
+				MountedImage& image = mMountedImageList[i];
+				ShapeBaseImageData* imageData = 0;
 
-            NetStringHandle skinDesiredNameHandle = con->unpackNetStringHandleU(stream);
+				if (stream->readFlag())
+				{
+					SimObjectId id = stream->readInt(DataBlockObjectIdBitSize) +
+						DataBlockObjectIdFirst;
+					if(!Sim::findObject(id,imageData))
+					{
+						con->setLastError("Invalid packet (mounted images).");
+						return;
+					}
+				}
 
-            NetStringHandle scriptDesiredAnimPrefix = con->unpackNetStringHandleU(stream);
+				NetStringHandle skinDesiredNameHandle = con->unpackNetStringHandleU(stream);
 
-            image.forceAnimateAllShapes = stream->readFlag();
+				NetStringHandle scriptDesiredAnimPrefix = con->unpackNetStringHandleU(stream);
 
-            image.wet = stream->readFlag();
+				image.forceAnimateAllShapes = stream->readFlag();
 
-            image.motion = stream->readFlag();
+				image.wet = stream->readFlag();
 
-            image.ammo = stream->readFlag();
+				image.motion = stream->readFlag();
 
-            image.loaded = stream->readFlag();
+				image.ammo = stream->readFlag();
 
-            image.target = stream->readFlag();
+				image.loaded = stream->readFlag();
 
-            image.triggerDown = stream->readFlag();
-            image.altTriggerDown = stream->readFlag();
+				image.target = stream->readFlag();
 
-            for (U32 i=0; i<ShapeBaseImageData::MaxGenericTriggers; ++i)
-            {
-               image.genericTrigger[i] = stream->readFlag();
-            }
+				image.triggerDown = stream->readFlag();
+				image.altTriggerDown = stream->readFlag();
 
-            int count = stream->readInt(3);
-            int altCount = stream->readInt(3);
-            int reloadCount = stream->readInt(3);
+				for (U32 i=0; i<ShapeBaseImageData::MaxGenericTriggers; ++i)
+				{
+					imageUpdate.genericTrigger[i] = stream->readFlag();
+				}
 
-            bool datablockChange = image.dataBlock != imageData;
-            if (datablockChange || (image.skinNameHandle != skinDesiredNameHandle))
-            {
-               MountedImage& image = mMountedImageList[i];
-               image.scriptAnimPrefix = scriptDesiredAnimPrefix;
+				int count = stream->readInt(3);
+				int altCount = stream->readInt(3);
+				int reloadCount = stream->readInt(3);
 
-               setImage(   i, imageData, 
-                           skinDesiredNameHandle, image.loaded, 
-                           image.ammo, image.triggerDown, image.altTriggerDown,
-                           image.motion, image.genericTrigger[0], image.genericTrigger[1], image.genericTrigger[2], image.genericTrigger[3],
-                           image.target);
-            }
+				bool datablockChange = image.dataBlock != imageData;
+				if (datablockChange || (image.skinNameHandle != skinDesiredNameHandle))
+				{
+					MountedImage& image = mMountedImageList[i];
+					image.scriptAnimPrefix = scriptDesiredAnimPrefix;
+
+					setImage(   i, imageData, 
+									skinDesiredNameHandle, image.loaded, 
+									image.ammo, image.triggerDown, image.altTriggerDown,
+									image.motion, image.genericTrigger[0], image.genericTrigger[1], image.genericTrigger[2], image.genericTrigger[3],
+									image.target);
+				}
             
-            if (!datablockChange && image.scriptAnimPrefix != scriptDesiredAnimPrefix)
-            {
-               // We don't have a new image, but we do have a new script anim prefix to work with.
-               // Notify the image of this change.
-               MountedImage& image = mMountedImageList[i];
-               image.scriptAnimPrefix = scriptDesiredAnimPrefix;
-               updateAnimThread(i, getImageShapeIndex(image));
-            }
+				if (!datablockChange && image.scriptAnimPrefix != scriptDesiredAnimPrefix)
+				{
+					// We don't have a new image, but we do have a new script anim prefix to work with.
+					// Notify the image of this change.
+					MountedImage& image = mMountedImageList[i];
+					image.scriptAnimPrefix = scriptDesiredAnimPrefix;
+					updateAnimThread(i, getImageShapeIndex(image));
+				}
 
-            bool isFiring = stream->readFlag();
-            bool isAltFiring = stream->readFlag();
-            bool isReloading = stream->readFlag();
+				bool isFiring = stream->readFlag();
+				bool isAltFiring = stream->readFlag();
+				bool isReloading = stream->readFlag();
 
-            if (isProperlyAdded()) {
-               // Normal processing
-               bool processFiring = false;
-               if (count != image.fireCount)
-               {
-                  image.fireCount = count;
-                  setImageState(i,getImageFireState(i),true);
-                  processFiring = true;
-               }
-               else if (altCount != image.altFireCount)
-               {
-                  image.altFireCount = altCount;
-                  setImageState(i,getImageAltFireState(i),true);
-                  processFiring = true;
-               }
-               else if (reloadCount != image.reloadCount)
-               {
-                  image.reloadCount = reloadCount;
-                  setImageState(i,getImageReloadState(i),true);
-               }
+				if (isProperlyAdded()) {
+					// Normal processing
+					bool processFiring = false;
+					if (count != image.fireCount)
+					{
+						image.fireCount = count;
+						setImageState(i,getImageFireState(i),true);
+						processFiring = true;
+					}
+					else if (altCount != image.altFireCount)
+					{
+						image.altFireCount = altCount;
+						setImageState(i,getImageAltFireState(i),true);
+						processFiring = true;
+					}
+					else if (reloadCount != image.reloadCount)
+					{
+						image.reloadCount = reloadCount;
+						setImageState(i,getImageReloadState(i),true);
+					}
 
-               if (processFiring && imageData)
-               {
-                  if ( imageData->lightType == ShapeBaseImageData::WeaponFireLight )                     
-                     image.lightStart = Sim::getCurrentTime();                     
+					if (processFiring && imageData)
+					{
+						if ( imageData->lightType == ShapeBaseImageData::WeaponFireLight )                     
+							image.lightStart = Sim::getCurrentTime();                     
                   
-                  // HACK: Only works properly if you are in control
-                  // of the one and only shapeBase object in the scene
-                  // which fires an image that uses camera shake.
-                  if ( imageData->shakeCamera )
-                  {
-                     if ( !mWeaponCamShake )
-                     {
-                        mWeaponCamShake = new CameraShake();
-                        mWeaponCamShake->remoteControlled = true;
-                     }
+						// HACK: Only works properly if you are in control
+						// of the one and only shapeBase object in the scene
+						// which fires an image that uses camera shake.
+						if ( imageData->shakeCamera )
+						{
+							if ( !mWeaponCamShake )
+							{
+								mWeaponCamShake = new CameraShake();
+								mWeaponCamShake->remoteControlled = true;
+							}
 
-                     mWeaponCamShake->init();
-                     mWeaponCamShake->setFrequency( imageData->camShakeFreq );
-                     mWeaponCamShake->setAmplitude( imageData->camShakeAmp );  
+							mWeaponCamShake->init();
+							mWeaponCamShake->setFrequency( imageData->camShakeFreq );
+							mWeaponCamShake->setAmplitude( imageData->camShakeAmp );  
                      
-                     if ( !mWeaponCamShake->isAdded )
-                     {
-                        gCamFXMgr.addFX( mWeaponCamShake );
-                        mWeaponCamShake->isAdded = true;
-                     }
-                  }
-               }
+							if ( !mWeaponCamShake->isAdded )
+							{
+								gCamFXMgr.addFX( mWeaponCamShake );
+								mWeaponCamShake->isAdded = true;
+							}
+						}
+					}
                
-               updateImageState(i,0);
+					updateImageState(i,0);
 
-               if ( !image.triggerDown && !image.altTriggerDown )
-               {
-                  if ( mWeaponCamShake && mWeaponCamShake->isAdded )
-                  {
-                     gCamFXMgr.removeFX( mWeaponCamShake );
-                     mWeaponCamShake->isAdded = false;
-                  }
-               }
-            }
-            else
-            {               
-               if(imageData)
-               {
-                  // Initial state
-                  image.fireCount = count;
-                  image.altFireCount = altCount;
-                  image.reloadCount = reloadCount;
-                  if (isFiring)
-                     setImageState(i,getImageFireState(i),true);
-                  else if (isAltFiring)
-                     setImageState(i,getImageAltFireState(i),true);
-                  else if (isReloading)
-                     setImageState(i,getImageReloadState(i),true);
-               }
-            }
-         }
+					if ( !image.triggerDown && !image.altTriggerDown )
+					{
+						if ( mWeaponCamShake && mWeaponCamShake->isAdded )
+						{
+							gCamFXMgr.removeFX( mWeaponCamShake );
+							mWeaponCamShake->isAdded = false;
+						}
+					}
+				}
+				else
+				{               
+					if(imageData)
+					{
+						// Initial state
+						image.fireCount = count;
+						image.altFireCount = altCount;
+						image.reloadCount = reloadCount;
+						if (isFiring)
+							setImageState(i,getImageFireState(i),true);
+						else if (isAltFiring)
+							setImageState(i,getImageAltFireState(i),true);
+						else if (isReloading)
+							setImageState(i,getImageReloadState(i),true);
+					}
+				}
+			}
       }
    }
 
@@ -3461,8 +3505,6 @@ void ShapeBase::unpackUpdate(NetConnection *con, BitStream *stream)
       }
    }
 }
-
-
 //--------------------------------------------------------------------------
 
 void ShapeBase::forceUncloak(const char * reason)

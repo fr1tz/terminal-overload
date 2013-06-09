@@ -2496,15 +2496,15 @@ void Player::updateMove(const Move* move)
    // Trigger images
    if (mDamageState == Enabled) 
    {
-      setImageTriggerState( 0, move->trigger[sImageTrigger0] );
+		this->updateImageTrigger(move, 0, move->trigger[sImageTrigger0], false);
 
       // If you have a secondary mounted image then
       // send the second trigger to it.  Else give it
       // to the first image as an alt fire.
-      if ( getMountedImage( 1 ) )
-         setImageTriggerState( 1, move->trigger[sImageTrigger1] );
+      if(this->getMountedImage(1))
+			this->updateImageTrigger(move, 1, move->trigger[sImageTrigger1], false);
       else
-         setImageAltTriggerState( 0, move->trigger[sImageTrigger1] );
+			this->updateImageTrigger(move, 0, move->trigger[sImageTrigger1], true);
    }
 
    // Update current orientation

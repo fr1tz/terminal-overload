@@ -25,6 +25,7 @@
 #include "sfx/sfxTypes.h"
 #include "scene/sceneManager.h"
 #include "core/stream/fileStream.h"
+#include "Alux3D/shotgunprojectile.h"
 
 //----------------------------------------------------------------------------
 
@@ -214,6 +215,7 @@ ShapeBaseImageData::ShapeBaseImageData()
 
       stateWaitForTimeout[i] = true;
       stateTimeoutValue[i] = 0;
+		stateFireProjectile[i] = NULL;
       stateFire[i] = false;
       stateAlternateFire[i] = false;
       stateReload[i] = false;
@@ -323,6 +325,7 @@ bool ShapeBaseImageData::onAdd()
 
          s.waitForTimeout = stateWaitForTimeout[i];
          s.timeoutValue = stateTimeoutValue[i];
+			s.fireProjectile = stateFireProjectile[i];
          s.fire = stateFire[i];
          s.altFire = stateAlternateFire[i];
          s.reload = stateReload[i];
@@ -389,15 +392,20 @@ bool ShapeBaseImageData::preload(bool server, String &errorStr)
          if (Sim::findObject(SimObjectId(projectile), projectile) == false)
             Con::errorf(ConsoleLogEntry::General, "Error, unable to load projectile for shapebaseimagedata");
 
-      for (U32 i = 0; i < MaxStates; i++) {
-         if (state[i].emitter)
-            if (!Sim::findObject(SimObjectId(state[i].emitter), state[i].emitter))
-               Con::errorf(ConsoleLogEntry::General, "Error, unable to load emitter for image datablock");
+		for (U32 i = 0; i < MaxStates; i++) 
+		{
+         if (state[i].fireProjectile)
+            if (!Sim::findObject(SimObjectId(state[i].fireProjectile), state[i].fireProjectile))
+               Con::errorf(ConsoleLogEntry::General, "Error, unable to load fireProjectile for image datablock");
+
+			if (state[i].emitter)
+				if (!Sim::findObject(SimObjectId(state[i].emitter), state[i].emitter))
+					Con::errorf(ConsoleLogEntry::General, "Error, unable to load emitter for image datablock");
                
-         String str;
-         if( !sfxResolve( &state[ i ].sound, str ) )
-            Con::errorf( ConsoleLogEntry::General, str.c_str() );
-      }
+			String str;
+			if( !sfxResolve( &state[ i ].sound, str ) )
+				Con::errorf( ConsoleLogEntry::General, str.c_str() );
+		}
    }
 
    // Use the first person eye offset if it's set.
@@ -826,6 +834,8 @@ void ShapeBaseImageData::initPersistFields()
       addField( "stateWaitForTimeout", TypeBool, Offset(stateWaitForTimeout, ShapeBaseImageData), MaxStates,
          "If false, this state ignores stateTimeoutValue and transitions "
          "immediately if other transition conditions are met." );
+		addField("stateFireProjectile", TYPEID<ProjectileData>(), Offset(stateFireProjectile, ShapeBaseImageData), MaxStates,
+			"The projectile to fire on entering this state" );
       addField( "stateFire", TypeBool, Offset(stateFire, ShapeBaseImageData), MaxStates,
          "The first state with this set to true is the state entered by the "
          "client when it receives the 'fire' event." );
@@ -1068,6 +1078,11 @@ void ShapeBaseImageData::packData(BitStream* stream)
             stream->write(s.timeoutValue);
 
          stream->writeFlag(s.waitForTimeout);
+			if(stream->writeFlag(s.fireProjectile))
+			{
+				stream->writeRangedU32(packed? SimObjectId(s.fireProjectile):
+					s.fireProjectile->getId(),DataBlockObjectIdFirst,DataBlockObjectIdLast);
+			}
          stream->writeFlag(s.fire);
          stream->writeFlag(s.altFire);
          stream->writeFlag(s.reload);
@@ -1258,6 +1273,13 @@ void ShapeBaseImageData::unpackData(BitStream* stream)
             s.timeoutValue = gDefaultStateData.timeoutValue;
 
          s.waitForTimeout = stream->readFlag();
+			if(stream->readFlag())
+			{
+            s.fireProjectile = (ProjectileData*) stream->readRangedU32(DataBlockObjectIdFirst,
+					DataBlockObjectIdLast);
+			}
+			else
+				s.fireProjectile = NULL;
          s.fire = stream->readFlag();
          s.altFire = stream->readFlag();
          s.reload = stream->readFlag();
@@ -1343,6 +1365,9 @@ void ShapeBaseImageData::inspectPostApply()
 
 ShapeBase::MountedImage::MountedImage()
 {
+	mode = StandardMode;
+	updateControllingClient = false;
+
    for (U32 i=0; i<ShapeBaseImageData::MaxShapes; ++i)
    {
       shapeInstance[i] = 0;
@@ -1635,6 +1660,7 @@ void ShapeBase::setImageGenericTriggerState(U32 imageSlot, U32 trigger, bool sta
    if (image.dataBlock && image.genericTrigger[trigger] != state) {
       setMaskBits(ImageMaskN << imageSlot);
       image.genericTrigger[trigger] = state;
+		image.updateControllingClient = true;
    }
 }
 
@@ -1652,6 +1678,7 @@ void ShapeBase::setImageAmmoState(U32 imageSlot,bool ammo)
    if (image.dataBlock && !image.dataBlock->usesEnergy && image.ammo != ammo) {
       setMaskBits(ImageMaskN << imageSlot);
       image.ammo = ammo;
+		image.updateControllingClient = true;
    }
 }
 
@@ -1669,6 +1696,7 @@ void ShapeBase::setImageWetState(U32 imageSlot,bool wet)
    if (image.dataBlock && image.wet != wet) {
       setMaskBits(ImageMaskN << imageSlot);
       image.wet = wet;
+		image.updateControllingClient = true;
    }
 }
 
@@ -1686,6 +1714,7 @@ void ShapeBase::setImageMotionState(U32 imageSlot,bool motion)
    if (image.dataBlock && image.motion != motion) {
       setMaskBits(ImageMaskN << imageSlot);
       image.motion = motion;
+		image.updateControllingClient = true;
    }
 }
 
@@ -1703,6 +1732,7 @@ void ShapeBase::setImageTargetState(U32 imageSlot,bool target)
    if (image.dataBlock && image.target != target) {
       setMaskBits(ImageMaskN << imageSlot);
       image.target = target;
+		image.updateControllingClient = true;
    }
 }
 
@@ -1720,6 +1750,7 @@ void ShapeBase::setImageLoadedState(U32 imageSlot,bool loaded)
    if (image.dataBlock && image.loaded != loaded) {
       setMaskBits(ImageMaskN << imageSlot);
       image.loaded = loaded;
+		image.updateControllingClient = true;
    }
 }
 
@@ -2223,6 +2254,7 @@ void ShapeBase::setImage(  U32 imageSlot,
             // Serverside, note the skin handle and tell the client.
             image.skinNameHandle = skinNameHandle;
             setMaskBits(ImageMaskN << imageSlot);
+				image.updateControllingClient = true;
          }
          else {
             // Clientside, do the reskin.
@@ -2253,6 +2285,7 @@ void ShapeBase::setImage(  U32 imageSlot,
 
    // Mark that updates are happenin'.
    setMaskBits(ImageMaskN << imageSlot);
+	image.updateControllingClient = true;
 
    // Notify script unmount since we're swapping datablocks.
    if (image.dataBlock && !isGhost()) {
@@ -2270,7 +2303,18 @@ void ShapeBase::setImage(  U32 imageSlot,
       return;
    }
 
-   // Otherwise, init the new shape.
+	//
+   // Otherwise, init the new image...
+	//
+
+	// Determine in which mode the image will operate.
+	image.mode = MountedImage::StandardMode;
+	if(imageData->projectile)
+	{
+		if(dynamic_cast<ShotgunProjectileData*>(imageData->projectile))
+			image.mode = MountedImage::ClientFireMode;
+	}
+
    image.dataBlock = imageData;
    image.state = &image.dataBlock->state[0];
    image.skinNameHandle = skinNameHandle;
@@ -2426,6 +2470,32 @@ void ShapeBase::resetImageSlot(U32 imageSlot)
    updateMass();
 }
 
+//----------------------------------------------------------------------------
+
+void ShapeBase::updateImageTrigger(const Move* move, U32 slot, bool trigger, bool alt)
+{
+	GameConnection* conn = GameConnection::getConnectionToServer();
+	if(this->isClientObject()
+	&& conn && this == conn->getControlObject()
+	&& this->getImageStruct(slot)->mode == MountedImage::ClientFireMode)
+	{
+		// Ignore unless move is brand new!
+		if(move && move->sendCount == 0)
+		{
+			if(alt)
+				this->setImageAltTriggerState(slot, trigger);
+			else
+				this->setImageTriggerState(slot, trigger);
+		}
+	}
+	else
+	{
+		if(alt)
+			this->setImageAltTriggerState(slot, trigger);
+		else
+			this->setImageTriggerState(slot, trigger);
+	}
+}
 
 //----------------------------------------------------------------------------
 
@@ -2438,27 +2508,30 @@ bool ShapeBase::getImageTriggerState(U32 imageSlot)
 
 void ShapeBase::setImageTriggerState(U32 imageSlot,bool trigger)
 {
-   if (isGhost() || !mMountedImageList[imageSlot].dataBlock)
-      return;
+	if(!mMountedImageList[imageSlot].dataBlock)
+		return;
+
    MountedImage& image = mMountedImageList[imageSlot];
 
-   if (trigger) {
-      if (!image.triggerDown && image.dataBlock) {
-         image.triggerDown = true;
-         if (!isGhost()) {
-            setMaskBits(ImageMaskN << imageSlot);
-            updateImageState(imageSlot,0);
-         }
-      }
-   }
-   else
-      if (image.triggerDown) {
-         image.triggerDown = false;
-         if (!isGhost()) {
-            setMaskBits(ImageMaskN << imageSlot);
-            updateImageState(imageSlot,0);
-         }
-      }
+	// Never process triggers on the client in standard mode.
+	if(isClientObject() && image.mode == MountedImage::StandardMode)
+		return;
+
+	if(trigger)
+	{
+		if(!image.triggerDown && image.dataBlock)
+		{
+			image.triggerDown = true;
+			setMaskBits(ImageMaskN << imageSlot);
+		}
+	}
+	else if(image.triggerDown)
+	{
+		image.triggerDown = false;
+		setMaskBits(ImageMaskN << imageSlot);
+	}
+
+	updateImageState(imageSlot, 0);
 }
 
 bool ShapeBase::getImageAltTriggerState(U32 imageSlot)
@@ -2470,27 +2543,30 @@ bool ShapeBase::getImageAltTriggerState(U32 imageSlot)
 
 void ShapeBase::setImageAltTriggerState(U32 imageSlot,bool trigger)
 {
-   if (isGhost() || !mMountedImageList[imageSlot].dataBlock)
+   if(!mMountedImageList[imageSlot].dataBlock)
       return;
+
    MountedImage& image = mMountedImageList[imageSlot];
 
-   if (trigger) {
-      if (!image.altTriggerDown && image.dataBlock) {
-         image.altTriggerDown = true;
-         if (!isGhost()) {
-            setMaskBits(ImageMaskN << imageSlot);
-            updateImageState(imageSlot,0);
-         }
-      }
-   }
-   else
-      if (image.altTriggerDown) {
-         image.altTriggerDown = false;
-         if (!isGhost()) {
-            setMaskBits(ImageMaskN << imageSlot);
-            updateImageState(imageSlot,0);
-         }
-      }
+	// Never process triggers on the client in standard mode.
+	if(isClientObject() && image.mode == MountedImage::StandardMode)
+		return;
+
+	if(trigger)
+	{
+		if(!image.altTriggerDown && image.dataBlock)
+		{
+			image.altTriggerDown = true;
+			setMaskBits(ImageMaskN << imageSlot);
+		}
+	}
+	else if(image.altTriggerDown)
+	{
+		image.altTriggerDown = false;
+		setMaskBits(ImageMaskN << imageSlot);
+	}
+
+	updateImageState(imageSlot, 0);
 }
 
 //----------------------------------------------------------------------------
@@ -2550,20 +2626,39 @@ void ShapeBase::setImageState(U32 imageSlot, U32 newState,bool force)
       return;
    MountedImage& image = mMountedImageList[imageSlot];
 
+	// The client never enters the initial fire state on its own 
+	// unless he's in ClientFireMode, but he will always re-enter it.
+   if(isGhost() && !force && newState == image.dataBlock->fireState)
+	{
+		bool enterState = false;
 
-   // The client never enters the initial fire state on its own, but it
-   //  will continue to set that state...
-   if (isGhost() && !force && newState == image.dataBlock->fireState) {
-      if (image.state != &image.dataBlock->state[newState])
-         return;
-   }
+		// in ClientFireMode?
+		if(image.mode == MountedImage::ClientFireMode)
+			enterState = true;
 
-   // The client never enters the initial alternate fire state on its own, but it
-   //  will continue to set that state...
-   if (isGhost() && !force && newState == image.dataBlock->altFireState) {
-      if (image.state != &image.dataBlock->state[newState])
-         return;
-   }
+		// re-entering fire state?
+		if(image.state == &image.dataBlock->state[newState])
+			enterState = true;
+
+		if(!enterState) return;
+	}
+
+	// The client never enters the initial alternate fire state on its own 
+	// unless he's in ClientFireMode, but he will always re-enter it.
+   if(isGhost() && !force && newState == image.dataBlock->altFireState)
+	{
+		bool enterState = false;
+
+		// in ClientFireMode?
+		if(image.mode == MountedImage::ClientFireMode)
+			enterState = true;
+
+		// re-entering fire state?
+		if(image.state == &image.dataBlock->state[newState])
+			enterState = true;
+
+		if(!enterState) return;
+	}
 
    // The client never enters the initial reload state on its own, but it
    //  will continue to set that state...
@@ -2571,6 +2666,8 @@ void ShapeBase::setImageState(U32 imageSlot, U32 newState,bool force)
       if (image.state != &image.dataBlock->state[newState])
          return;
    }
+
+	//Con::printf("%s: slot %i entering %i", isGhost()?"CLNT":"SRVR", imageSlot, newState);
 
    // Eject shell casing on every state change (client side only)
    ShapeBaseImageData::StateData& nextStateData = image.dataBlock->state[newState];
@@ -2620,6 +2717,7 @@ void ShapeBase::setImageState(U32 imageSlot, U32 newState,bool force)
    //
    // Do state cleanup first...
    //
+   ShapeBaseImageData& imageData = *image.dataBlock;
    ShapeBaseImageData::StateData& stateData = *image.state;
    image.delayTime = stateData.timeoutValue;
 
@@ -2695,20 +2793,163 @@ void ShapeBase::setImageState(U32 imageSlot, U32 newState,bool force)
    //
    // Initialize the new state...
    //
+
    if (stateData.loaded != ShapeBaseImageData::StateData::IgnoreLoaded)
       image.loaded = stateData.loaded == ShapeBaseImageData::StateData::Loaded;
-   if (!isGhost() && image.dataBlock->state[newState].fire) {
-      setMaskBits(ImageMaskN << imageSlot);
-      image.fireCount = (image.fireCount + 1) & 0x7;
-   }
-   if (!isGhost() && image.dataBlock->state[newState].altFire) {
-      setMaskBits(ImageMaskN << imageSlot);
-      image.altFireCount = (image.altFireCount + 1) & 0x7;
-   }
+
+	if(image.mode != MountedImage::ClientFireMode)
+	{
+		if (!isGhost() && image.dataBlock->state[newState].fire) {
+			setMaskBits(ImageMaskN << imageSlot);
+			image.fireCount = (image.fireCount + 1) & 0x7;
+		}
+		if (!isGhost() && image.dataBlock->state[newState].altFire) {
+			setMaskBits(ImageMaskN << imageSlot);
+			image.altFireCount = (image.altFireCount + 1) & 0x7;
+		}
+	}
+
    if (!isGhost() && image.dataBlock->state[newState].reload) {
       setMaskBits(ImageMaskN << imageSlot);
       image.reloadCount = (image.reloadCount + 1) & 0x7;
    }
+
+	// Fire projectile? (note: this is experimental code -mag)
+	if(stateData.fireProjectile && image.ammo)
+	{
+		bool createProjectile = true;
+		if(image.mode == MountedImage::ClientFireMode)
+		{
+			createProjectile = false;
+			if(this->isClientObject())
+			{
+				GameConnection* conn = GameConnection::getConnectionToServer();
+				if(conn && this == conn->getControlObject())
+					createProjectile = true;
+			}
+			else // on the server: create projectile only if shape is not 
+			{    //                being controlled by a client...
+				if(this->getControllingClient() == NULL)
+					createProjectile = true;
+			}
+		}
+
+		if(createProjectile)
+		{
+			Point3F muzzlePoint, muzzleVector;
+			this->getRenderMuzzlePoint(imageSlot,&muzzlePoint);
+			this->getRenderMuzzleVector(imageSlot,&muzzleVector);
+
+#if 0
+			if(image.inaccuracy.enabled)
+			{
+				Point3F pos = muzzlePoint;
+				Point3F dir = muzzleVector;
+
+				dir.normalize();
+				MatrixF transform = MathUtils::createOrientFromDir(dir);
+
+				Point3F zv; transform.getColumn(2, &zv);
+				zv.normalize();
+
+				Point3F spreadcenter = pos + dir * image.inaccuracy.distance;
+				Point3F spreadedge = spreadcenter + zv*Platform::getRandom()*image.inaccuracy.radius;
+				Point3F spreadvec = spreadedge - spreadcenter;
+
+				MatrixF rotmat(EulerF(0, Platform::getRandom()*6.28, 0));
+				rotmat.mulV(spreadvec);
+				transform.mulV(spreadvec);
+
+				Point3F p = spreadcenter + spreadvec;
+
+				muzzleVector = p - muzzlePoint;
+				muzzleVector.normalize();
+			}
+#endif
+
+			if(image.mode == MountedImage::ClientFireMode)
+			{
+				// Fire ShotgunProjectile?
+				if(dynamic_cast<ShotgunProjectileData*>(stateData.fireProjectile))
+				{
+					// Fire ShotgunProjectile!
+
+					ShotgunProjectileData* shotgunData = dynamic_cast<ShotgunProjectileData*>(stateData.fireProjectile);
+
+					mShapeInstance->animate();
+
+					Point3F pos = muzzlePoint;
+					pos += this->getVelocity() * TickSec;
+
+					Point3F vel = muzzleVector;
+					vel.normalize();
+					vel *= shotgunData->muzzleVelocity;
+					vel += this->getVelocity()*shotgunData->velInheritFactor;
+
+					ShotgunProjectile* prj  = new ShotgunProjectile(isClientObject(), true);
+					prj->setTeamId(this->getTeamId());
+					prj->mCurrPosition     = pos;
+					prj->mCurrVelocity     = vel;
+					prj->mSourceObject     = this;
+					prj->mSourceObjectSlot = imageSlot;
+
+#if 0
+					prj->setSceneObjectColorization(this->getSceneObjectColorization());
+#endif
+					prj->onNewDataBlock(shotgunData, false);
+					if(!prj->registerObject())
+					{
+						Con::warnf(ConsoleLogEntry::General, "Could not register projectile for image: %s", image.dataBlock->projectile->getName());
+						delete prj;
+						prj = NULL;
+					}
+					else
+					{	
+						// drain energy...
+						if(shotgunData->energyDrain > 0)
+							this->setEnergyLevel(this->getEnergyLevel() - shotgunData->energyDrain * shotgunData->numBullets);
+					}
+				}
+			}
+			else // normal firing mode...
+			{
+				if(isServerObject())
+				{
+					Point3F pos = muzzlePoint;
+
+					Point3F vec = muzzleVector;
+					vec.normalize();
+					vec *= imageData.projectile->muzzleVelocity;
+					vec += this->getVelocity()*imageData.projectile->velInheritFactor;
+
+					Projectile* prj = new Projectile();
+					prj->setTeamId(this->getTeamId());
+					prj->mCurrPosition     = pos;
+					prj->mCurrVelocity     = vec;
+					prj->mSourceObject     = this;
+					prj->mSourceObjectSlot = imageSlot;
+
+					prj->onNewDataBlock(stateData.fireProjectile, false);
+					if(!prj->registerObject())
+					{
+						Con::warnf(ConsoleLogEntry::General, "Could not register projectile for image: %s", image.dataBlock->projectile->getName());
+						delete prj;
+						prj = NULL;
+					}
+				}
+			}
+
+			// Post-fire inaccuracy update...
+#if 0
+			if(image.inaccuracy.enabled)
+			{
+				image.inaccuracy.muzzleMovement =
+					image.inaccuracy.muzzleMovement * image.inaccuracy.f1
+					+ image.inaccuracy.f2;
+			}
+#endif
+		}
+	}
 
    // Apply recoil
    if (stateData.recoil != ShapeBaseImageData::StateData::NoRecoil)
@@ -2985,20 +3226,30 @@ TICKAGAIN:
    // Energy management
    if (imageData.usesEnergy) 
    {
-      F32 newEnergy = getEnergyLevel() - stateData.energyDrain * dt;
-      if (newEnergy < 0)
-         newEnergy = 0;
-      setEnergyLevel(newEnergy);
+		F32 oldEnergy = this->getEnergyLevel();
+		F32 newEnergy = this->getEnergyLevel() - stateData.energyDrain * dt;
+		if(newEnergy < 0)
+			newEnergy = 0;
 
-      if (!isGhost()) 
-      {
-         bool ammo = newEnergy > imageData.minEnergy;
-         if (ammo != image.ammo) 
-         {
-            setMaskBits(ImageMaskN << imageSlot);
-            image.ammo = ammo;
-         }
-      }
+		if(newEnergy != oldEnergy)
+			this->setEnergyLevel(newEnergy);
+
+		if(image.mode == MountedImage::ClientFireMode)
+		{
+			image.ammo = newEnergy > imageData.minEnergy;
+		}
+		else if(image.mode == MountedImage::StandardMode)
+		{
+			if(isServerObject())
+			{
+				bool ammo = newEnergy > imageData.minEnergy;
+				if (ammo != image.ammo)
+				{
+					setMaskBits(ImageMaskN << imageSlot);
+					image.ammo = ammo;
+				}
+			}
+		}
    }
 
    // Check for transitions. On some states we must wait for the
@@ -3321,3 +3572,39 @@ void ShapeBase::ejectShellCasing( U32 imageSlot )
 
    casing->init( shellPos, shellVel );
 }
+
+//----------------------------------------------------------------------------
+
+void ShapeBase::clientFiredShotgun(
+	NetConnection* client,
+	int slot,
+	const ShotgunHits& hits, 
+	ShotgunProjectileData* datablock,
+	const Point3F& pos,
+	const Point3F& vel)
+{
+	// This must only get called on the server!
+	AssertFatal(!isClientObject(), "ShapeBase::clientFiredShotgun() called on client!");
+
+	// Drain energy.
+	if(datablock->energyDrain > 0)
+		this->setEnergyLevel(this->getEnergyLevel() - datablock->energyDrain * datablock->numBullets);
+
+	// Create the ghosting projectile.
+	ShotgunProjectile* prj = new ShotgunProjectile(false, false);
+	prj->setTeamId(this->getTeamId());
+	prj->mCurrPosition     = pos;
+	prj->mCurrVelocity     = vel;
+	prj->mSourceObject     = this;
+	prj->mSourceObjectSlot = slot;
+	prj->addHits(client, hits);
+	prj->onNewDataBlock(datablock, false);
+	if(!prj->registerObject())
+	{
+		Con::warnf(ConsoleLogEntry::General, "ShapeBase::clientFiredShotgun(): Could not register projectile: %s", datablock->getName());
+		delete prj;
+		prj = NULL;
+	}
+}
+
+//----------------------------------------------------------------------------
