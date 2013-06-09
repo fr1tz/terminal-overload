@@ -1368,6 +1368,17 @@ ShapeBase::MountedImage::MountedImage()
 	mode = StandardMode;
 	updateControllingClient = false;
 
+	inaccuracy.enabled = false;
+	inaccuracy.distance = 100;
+	inaccuracy.radius = 0;
+	inaccuracy.muzzleMovement = 0;
+	inaccuracy.recoil = 0;
+	recoilEnabled = false;
+	currentRecoil = 0;
+	maxRecoil = 0;
+	recoilAdd = 0;
+	recoilDelta = 0;
+
    for (U32 i=0; i<ShapeBaseImageData::MaxShapes; ++i)
    {
       shapeInstance[i] = 0;
@@ -1760,6 +1771,144 @@ bool ShapeBase::getImageLoadedState(U32 imageSlot)
    if (!image.dataBlock)
       return false;
    return image.loaded;
+}
+
+// Added for Alux3D
+void ShapeBase::setImageInaccuracy(U32 imageSlot, const char* constant, const char* value)
+{
+	MountedImage& image = mMountedImageList[imageSlot];
+	if(image.dataBlock)
+	{
+		if(dStrcmp(constant, "enabled") == 0)
+			image.inaccuracy.enabled = dAtob(value);
+		else if(dStrcmp(constant, "radiusmin") == 0)
+			image.inaccuracy.radiusmin = dAtof(value);
+		else if(dStrcmp(constant, "radiusmax") == 0)
+			image.inaccuracy.radiusmax = dAtof(value);
+		else if(dStrcmp(constant, "a1") == 0)
+			image.inaccuracy.a1 = dAtof(value);
+		else if(dStrcmp(constant, "a2") == 0)
+			image.inaccuracy.a2 = dAtof(value);
+		else if(dStrcmp(constant, "b1") == 0)
+			image.inaccuracy.b1 = dAtof(value);
+		else if(dStrcmp(constant, "b2") == 0)
+			image.inaccuracy.b2 = dAtof(value);
+		else if(dStrcmp(constant, "c") == 0)
+			image.inaccuracy.c = dAtof(value);
+		else if(dStrcmp(constant, "d") == 0)
+			image.inaccuracy.d = dAtof(value);
+		else if(dStrcmp(constant, "f1") == 0)
+			image.inaccuracy.f1 = dAtof(value);
+		else if(dStrcmp(constant, "f2") == 0)
+			image.inaccuracy.f2 = dAtof(value);
+		setMaskBits(ImageRecoilMask);
+	}
+}
+
+// Added for Alux3D
+const char* ShapeBase::getImageInaccuracy(U32 imageSlot, const char* constant)
+{
+	return "TODO";
+}
+
+// Added for Alux3D
+void ShapeBase::setImageRecoilEnabled(U32 imageSlot, bool enabled)
+{
+	MountedImage& image = mMountedImageList[imageSlot];
+	if(image.dataBlock && image.recoilEnabled != enabled)
+	{
+		image.recoilEnabled = enabled;
+		setMaskBits(ImageRecoilMask);
+	}
+}
+
+// Added for Alux3D
+void ShapeBase::setImageCurrentRecoil(U32 imageSlot, U32 r)
+{
+	MountedImage& image = mMountedImageList[imageSlot];
+	if(image.dataBlock && image.currentRecoil != r)
+	{
+		image.currentRecoil = r;
+		setMaskBits(ImageRecoilMask);
+	}
+}
+
+// Added for Alux3D
+void ShapeBase::setImageMaxRecoil(U32 imageSlot, U32 r)
+{
+	MountedImage& image = mMountedImageList[imageSlot];
+	if(image.dataBlock && image.maxRecoil != r)
+	{
+		image.maxRecoil = r;
+		setMaskBits(ImageRecoilMask);
+	}
+}
+
+// Added for Alux3D
+void ShapeBase::setImageRecoilAdd(U32 imageSlot, S32 r)
+{
+	MountedImage& image = mMountedImageList[imageSlot];
+	if(image.dataBlock && image.recoilAdd != r)
+	{
+		image.recoilAdd = r;
+		setMaskBits(ImageRecoilMask);
+	}
+}
+
+// Added for Alux3D
+void ShapeBase::setImageRecoilDelta(U32 imageSlot, S32 r)
+{
+	MountedImage& image = mMountedImageList[imageSlot];
+	if(image.dataBlock && image.recoilDelta != r)
+	{
+		image.recoilDelta = r;
+		setMaskBits(ImageRecoilMask);
+	}
+}
+ 
+// Added for Alux3D
+bool ShapeBase::getImageRecoilEnabled(U32 imageSlot)
+{
+   MountedImage& image = mMountedImageList[imageSlot];
+   if(!image.dataBlock)
+      return false;
+   return image.recoilEnabled;
+}
+
+// Added for Alux3D
+U32 ShapeBase::getImageCurrentRecoil(U32 imageSlot)
+{
+   MountedImage& image = mMountedImageList[imageSlot];
+   if(!image.dataBlock)
+      return 0;
+   return image.currentRecoil;
+}
+
+// Added for Alux3D
+U32 ShapeBase::getImageMaxRecoil(U32 imageSlot)
+{
+   MountedImage& image = mMountedImageList[imageSlot];
+   if(!image.dataBlock)
+      return 0;
+   return image.maxRecoil;
+}
+
+// Added for Alux3D
+S32 ShapeBase::getImageRecoilAdd(U32 imageSlot)
+{
+   MountedImage& image = mMountedImageList[imageSlot];
+   if(!image.dataBlock)
+      return 0;
+   return image.recoilAdd;
+}
+
+// Added for Alux3D
+S32 ShapeBase::getImageRecoilDelta(U32 imageSlot)
+{
+   MountedImage& image = mMountedImageList[imageSlot];
+   if(!image.dataBlock)
+      return 0;
+   return image.recoilDelta;
 }
 
 void ShapeBase::getMuzzleVector(U32 imageSlot,VectorF* vec)
@@ -2320,6 +2469,9 @@ void ShapeBase::setImage(  U32 imageSlot,
    image.skinNameHandle = skinNameHandle;
    image.updateDoAnimateAllShapes(this);
 
+   image.inaccuracy.enabled = false;
+   image.recoilEnabled = false;
+
    for (U32 i=0; i<ShapeBaseImageData::MaxShapes; ++i)
    {
       if (image.dataBlock->shapeIsValid[i])
@@ -2531,7 +2683,7 @@ void ShapeBase::setImageTriggerState(U32 imageSlot,bool trigger)
 		setMaskBits(ImageMaskN << imageSlot);
 	}
 
-	updateImageState(imageSlot, 0);
+	updateImageState(imageSlot, NULL, 0);
 }
 
 bool ShapeBase::getImageAltTriggerState(U32 imageSlot)
@@ -2566,7 +2718,7 @@ void ShapeBase::setImageAltTriggerState(U32 imageSlot,bool trigger)
 		setMaskBits(ImageMaskN << imageSlot);
 	}
 
-	updateImageState(imageSlot, 0);
+	updateImageState(imageSlot, NULL, 0);
 }
 
 //----------------------------------------------------------------------------
@@ -2840,9 +2992,10 @@ void ShapeBase::setImageState(U32 imageSlot, U32 newState,bool force)
 			this->getRenderMuzzlePoint(imageSlot,&muzzlePoint);
 			this->getRenderMuzzleVector(imageSlot,&muzzleVector);
 
-#if 0
 			if(image.inaccuracy.enabled)
 			{
+				//Con::printf("inaccuracy radius: %f", image.inaccuracy.radius);
+
 				Point3F pos = muzzlePoint;
 				Point3F dir = muzzleVector;
 
@@ -2865,7 +3018,6 @@ void ShapeBase::setImageState(U32 imageSlot, U32 newState,bool force)
 				muzzleVector = p - muzzlePoint;
 				muzzleVector.normalize();
 			}
-#endif
 
 			if(image.mode == MountedImage::ClientFireMode)
 			{
@@ -2939,21 +3091,62 @@ void ShapeBase::setImageState(U32 imageSlot, U32 newState,bool force)
 				}
 			}
 
-			// Post-fire inaccuracy update...
-#if 0
+			// Post-fire inaccuracy update.
 			if(image.inaccuracy.enabled)
 			{
 				image.inaccuracy.muzzleMovement =
 					image.inaccuracy.muzzleMovement * image.inaccuracy.f1
 					+ image.inaccuracy.f2;
 			}
-#endif
 		}
 	}
 
    // Apply recoil
-   if (stateData.recoil != ShapeBaseImageData::StateData::NoRecoil)
-      onImageRecoil(imageSlot,stateData.recoil);
+   if(stateData.recoil != ShapeBaseImageData::StateData::NoRecoil)
+   {
+		if(image.recoilEnabled)
+		{
+			image.currentRecoil += image.recoilAdd;
+			if(image.currentRecoil > image.maxRecoil) 
+				image.currentRecoil = image.maxRecoil;
+
+			GameConnection* conn = GameConnection::getConnectionToServer();
+			if(conn && this == conn->getControlObject())
+			{
+				F32 recoil = F32(image.currentRecoil)/5;
+
+				if(recoil > 0)
+				{
+					// displace aim...
+					F32 maxDist = 0.01*recoil;
+					F32 halfMaxDist = maxDist/2;
+					F32 vRand = gRandGen.randF(0,maxDist);
+					F32 hRand = gRandGen.randF(-halfMaxDist,halfMaxDist);
+
+					MoveManager::mPitch -= vRand;
+					MoveManager::mYaw += hRand;
+
+#if 0
+					// shake cam...
+					Point3F freq(10,6,9);
+					Point3F amp(0.01,0.01,0.01);
+
+					amp *= recoil;
+
+					CameraShake* camShake = new CameraShake;
+					camShake->setDuration(0.2);
+					camShake->setFrequency(freq);
+					camShake->setAmplitude(amp);
+					camShake->setFalloff(1);
+					camShake->init();
+					gCamFXMgr.addFX( camShake );
+#endif
+				}
+			}
+		}
+
+		onImageRecoil(imageSlot,stateData.recoil);
+	}
 
    // Apply image state animation on mounting shape
    if (stateData.shapeSequence && stateData.shapeSequence[0])
@@ -3199,7 +3392,7 @@ void ShapeBase::updateAnimThread(U32 imageSlot, S32 imageShapeIndex, ShapeBaseIm
 
 //----------------------------------------------------------------------------
 
-void ShapeBase::updateImageState(U32 imageSlot,F32 dt)
+void ShapeBase::updateImageState(U32 imageSlot, const Move* move, F32 dt)
 {
    if (!mMountedImageList[imageSlot].dataBlock)
       return;
@@ -3222,6 +3415,52 @@ TICKAGAIN:
    image.rDT -= elapsed;
 
    image.delayTime -= dt;
+
+	// Update inaccuracy.
+	if(image.inaccuracy.enabled && dt > 0)
+	{
+		if(move)
+		{
+			image.inaccuracy.muzzleMovement += mFabs(move->pitch)*image.inaccuracy.a1;
+			image.inaccuracy.muzzleMovement += mFabs(move->yaw)*image.inaccuracy.a2;
+		}
+		/*
+		if(this->getVelocity().len() > 0.1)
+		{
+			image.inaccuracy.radius = this->getVelocity().len()/2;
+		}
+		else
+		{
+			image.inaccuracy.radius -= 0.05;
+		}
+		*/
+		image.inaccuracy.muzzleMovement =
+			image.inaccuracy.muzzleMovement * image.inaccuracy.b1
+			+ image.inaccuracy.b2;
+		image.inaccuracy.muzzleMovement = mClampF(image.inaccuracy.muzzleMovement,
+			0, image.inaccuracy.c);
+		//image.inaccuracy.recoil -= 0.4;
+		//image.inaccuracy.recoil = mClampF(image.inaccuracy.recoil, 0, 10);
+
+		image.inaccuracy.radius = this->getVelocity().len()*image.inaccuracy.d
+			+ image.inaccuracy.muzzleMovement;
+			//+ image.inaccuracy.recoil;
+
+		image.inaccuracy.radius = mClampF(image.inaccuracy.radius, 
+			image.inaccuracy.radiusmin, image.inaccuracy.radiusmax);
+	}
+
+	// Update recoil.
+	if(image.recoilEnabled)
+	{
+		F32 newRecoil = image.currentRecoil + image.recoilDelta*dt;
+		if(newRecoil < 0)
+			image.currentRecoil = 0;
+		else if(newRecoil > image.maxRecoil)
+			image.currentRecoil = image.maxRecoil;
+		else
+			image.currentRecoil = newRecoil;
+	}
 
    // Energy management
    if (imageData.usesEnergy) 
@@ -3323,8 +3562,16 @@ TICKAGAIN:
       }
    }
 
+#if 1
    if ( image.rDT > 0.0f && image.delayTime > 0.0f && imageData.useRemainderDT && dt != 0.0f )
       goto TICKAGAIN;
+#else
+	if(imageData.useRemainderDT && image.rDT > 0.0f && image.delayTime > 0.0f && dt != 0.0f )  
+	{  
+		dt = image.rDT;  
+		goto TICKAGAIN;  
+   }  
+#endif
 }
 
 

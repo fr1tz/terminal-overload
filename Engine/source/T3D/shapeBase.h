@@ -755,6 +755,22 @@ protected:
 
    /// An image mounted on a shapebase.
    struct MountedImage {
+		struct Inaccuracy {
+			bool enabled;
+			F32  distance;
+			F32  radius;
+			// factors...
+			F32 muzzleMovement;
+			F32 recoil;
+			// constants...
+			F32 radiusmin, radiusmax;
+			F32 a1, a2;
+			F32 b1, b2;
+			F32 c;
+			F32 d;
+			F32 f1, f2;
+		};
+
       ShapeBaseImageData* dataBlock;
       ShapeBaseImageData::StateData *state;
       ShapeBaseImageData* nextImage;
@@ -776,6 +792,20 @@ protected:
 
 		bool updateControllingClient; ///< Send image updates to the client that controls the shape 
 												///  this image is mounted on? (only used in ClientFireMode)
+
+		Inaccuracy inaccuracy; ///< Firing inaccuracy (added for Alux3D)
+
+		/// @name Recoil (added for Alux3D)
+		///
+		/// Variables to control the recoil mechanic.
+		/// @{
+		bool recoilEnabled;
+		U32  currentRecoil;
+		U32  maxRecoil; ///< Max value for currentRecoil
+		S32  recoilAdd; ///< How much gets added to currentRecoil upon entering
+		                ///  a state where stateRecoil != NoRecoil
+		S32  recoilDelta; ///< How much gets added to currentRecoil every second
+		/// @}
 
       bool loaded;                  ///< Is the image loaded?
       bool nextLoaded;              ///< Is the next state going to result in the image being loaded?
@@ -1072,8 +1102,9 @@ protected:
 
    /// Advance state of image
    /// @param   imageSlot   Image slot id
+   /// @param   move        (might be NULL)
    /// @param   dt          Change in time since last state update
-   void updateImageState(U32 imageSlot,F32 dt);
+   void updateImageState(U32 imageSlot, const Move* move, F32 dt);
 
    /// Start up the particle emitter for the this shapebase
    /// @param   image   Mounted image
@@ -1155,7 +1186,8 @@ public:
       InvincibleMask  = Parent::NextFreeMask << 5,
       SkinMask        = Parent::NextFreeMask << 6,
       MeshHiddenMask  = Parent::NextFreeMask << 7,
-      SoundMaskN      = Parent::NextFreeMask << 8,       ///< Extends + MaxSoundThreads bits
+		ImageRecoilMask = Parent::NextFreeMask << 8,
+      SoundMaskN      = Parent::NextFreeMask << 9,       ///< Extends + MaxSoundThreads bits
       ThreadMaskN     = SoundMaskN  << MaxSoundThreads,  ///< Extends + MaxScriptThreads bits
       ImageMaskN      = ThreadMaskN << MaxScriptThreads, ///< Extends + MaxMountedImage bits
       NextFreeMask    = ImageMaskN  << MaxMountedImages
@@ -1573,6 +1605,26 @@ public:
    /// @param   imageSlot        Image slot id
    /// @param   imageShapeIndex  Shape index (1st person, etc.) used to look up the prefix text
    NetStringHandle getImageScriptAnimPrefix(U32 imageSlot);
+
+   /// @name Mounted image inaccuracy mechanic (added for Alux3D)
+   /// @{
+   void setImageInaccuracy(U32 imageSlot, const char* constant, const char* value);
+   const char* getImageInaccuracy(U32 imageSlot, const char* constant);
+   /// @}
+
+   /// @name Mounted image recoil mechanic (added for Alux3D)
+   /// @{
+   void setImageRecoilEnabled(U32 imageSlot, bool enabled);
+   void setImageCurrentRecoil(U32 imageSlot, U32 r);
+   void setImageMaxRecoil(U32 imageSlot, U32 r);
+   void setImageRecoilAdd(U32 imageSlot, S32 r);
+   void setImageRecoilDelta(U32 imageSlot, S32 r);
+   bool getImageRecoilEnabled(U32 imageSlot);
+   U32  getImageCurrentRecoil(U32 imageSlot);
+   U32  getImageMaxRecoil(U32 imageSlot);
+   S32  getImageRecoilAdd(U32 imageSlot);
+   S32  getImageRecoilDelta(U32 imageSlot);
+   /// @}
 
    /// Modify muzzle, if needed, to aim at whatever is straight in front of eye.
    /// Returns true if result is actually modified.

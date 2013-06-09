@@ -1296,12 +1296,12 @@ void ShapeBase::processTick(const Move* move)
 		{
 			// Ignore unless move is brand new!
 			if(move && move->sendCount == 0)
-				updateImageState(i, TickSec);
+				updateImageState(i, move, TickSec);
 		}
 		if(this->getImageStruct(i)->mode != MountedImage::ClientFireMode)
 		{
 			if(this->isServerObject())
-				updateImageState(i, TickSec);
+				updateImageState(i, move, TickSec);
 		}         
 	}
 
@@ -3190,6 +3190,41 @@ U32 ShapeBase::packUpdate(NetConnection *con, U32 mask, BitStream *stream)
 		}
 	}
 
+	if(stream->writeFlag((mask & ImageRecoilMask)))
+	{
+		for(int i = 0; i < MaxMountedImages; i++)
+		{
+			MountedImage& image = mMountedImageList[i];
+
+			if(stream->writeFlag(image.inaccuracy.enabled))
+			{
+				stream->write(image.inaccuracy.radiusmin);
+				stream->write(image.inaccuracy.radiusmax);
+				stream->write(image.inaccuracy.a1);
+				stream->write(image.inaccuracy.a2);
+				stream->write(image.inaccuracy.b1);
+				stream->write(image.inaccuracy.b2);
+				stream->write(image.inaccuracy.c);
+				stream->write(image.inaccuracy.d);
+				stream->write(image.inaccuracy.f1);
+				stream->write(image.inaccuracy.f2);
+			}
+
+			bool enabled = image.recoilEnabled;
+			if(!enabled)
+			{
+				stream->writeFlag(false);
+				continue;
+			}
+
+			stream->writeFlag(true);
+			stream->write(image.currentRecoil);
+			stream->write(image.maxRecoil);
+			stream->write(image.recoilAdd);
+			stream->write(image.recoilDelta);
+		}
+	}
+
    // Group some of the uncommon stuff together.
    if (stream->writeFlag(mask & (NameMask | ShieldMask | CloakMask | InvincibleMask | SkinMask | MeshHiddenMask ))) {
          
@@ -3412,7 +3447,7 @@ void ShapeBase::unpackUpdate(NetConnection *con, BitStream *stream)
 						}
 					}
                
-					updateImageState(i,0);
+					updateImageState(i, NULL, 0);
 
 					if ( !image.triggerDown && !image.altTriggerDown )
 					{
@@ -3442,6 +3477,39 @@ void ShapeBase::unpackUpdate(NetConnection *con, BitStream *stream)
 			}
       }
    }
+
+	// Image recoil & inaccuracy
+	if(stream->readFlag())
+	{
+		for(int i = 0; i < MaxMountedImages; i++)
+		{
+			MountedImage& image = mMountedImageList[i];
+
+			image.inaccuracy.enabled = stream->readFlag();
+			if(image.inaccuracy.enabled)
+			{
+				stream->read(&image.inaccuracy.radiusmin);
+				stream->read(&image.inaccuracy.radiusmax);
+				stream->read(&image.inaccuracy.a1);
+				stream->read(&image.inaccuracy.a2);
+				stream->read(&image.inaccuracy.b1);
+				stream->read(&image.inaccuracy.b2);
+				stream->read(&image.inaccuracy.c);
+				stream->read(&image.inaccuracy.d);				
+				stream->read(&image.inaccuracy.f1);
+				stream->read(&image.inaccuracy.f2);
+			}
+
+			image.recoilEnabled = stream->readFlag();
+			if(!image.recoilEnabled)
+				continue;
+
+			stream->read(&image.currentRecoil);
+			stream->read(&image.maxRecoil);
+			stream->read(&image.recoilAdd);
+			stream->read(&image.recoilDelta);
+		}
+	}
 
    if (stream->readFlag())
    {
@@ -4253,6 +4321,141 @@ DefineEngineMethod( ShapeBase, setImageLoaded, bool, ( S32 slot, bool state ),,
       return state;
    }
    return false;
+}
+
+// Added for Alux3D
+ConsoleMethod( ShapeBase, setImageInaccuracy, bool, 5, 5, "(int slot, string constant, string value)")
+{
+	int slot = dAtoi(argv[2]);
+	if(slot >= 0 && slot < ShapeBase::MaxMountedImages)
+	{
+		object->setImageInaccuracy(slot, argv[3], argv[4]);
+		return true;
+	}
+	return false;
+}
+
+// Added for Alux3D
+ConsoleMethod( ShapeBase, getImageInaccuracy, const char*, 4, 4, "(int slot, string constant)")
+{
+	int slot = dAtoi(argv[2]);
+	if(slot >= 0 && slot < ShapeBase::MaxMountedImages)
+	{
+		char* buff = Con::getReturnBuffer(100);
+		dSprintf(buff,100,"%s",object->getImageInaccuracy(slot, argv[3]));
+		return buff;
+	}
+	return "";
+}
+
+// Added for Alux3D
+ConsoleMethod( ShapeBase, setImageRecoilEnabled, bool, 4, 4, "(int slot, bool enabled)")
+{
+	int slot = dAtoi(argv[2]);
+	if(slot >= 0 && slot < ShapeBase::MaxMountedImages)
+	{
+		bool enabled = dAtob(argv[3]);
+		object->setImageRecoilEnabled(slot, enabled);
+		return true;
+	}
+	return false;
+}
+
+// Added for Alux3D 
+ConsoleMethod( ShapeBase, getImageRecoilEnabled, bool, 3, 3, "(int slot)")
+{
+   int slot = dAtoi(argv[2]);
+   if (slot >= 0 && slot < ShapeBase::MaxMountedImages)
+      return object->getImageRecoilEnabled(slot);
+   return false;
+}
+
+// Added for Alux3D
+ConsoleMethod( ShapeBase, setImageCurrentRecoil, bool, 4, 4, "(int slot, int r)")
+{
+	int slot = dAtoi(argv[2]);
+	if(slot >= 0 && slot < ShapeBase::MaxMountedImages)
+	{
+		U32 r = dAtoi(argv[3]);
+		object->setImageCurrentRecoil(slot, r);
+		return true;
+	}
+	return false;
+}
+
+// Added for Alux3D 
+ConsoleMethod( ShapeBase, getImageCurrentRecoil, S32, 3, 3, "(int slot)")
+{
+   int slot = dAtoi(argv[2]);
+   if (slot >= 0 && slot < ShapeBase::MaxMountedImages)
+      return object->getImageCurrentRecoil(slot);
+   return 0;
+}
+
+// Added for Alux3D
+ConsoleMethod( ShapeBase, setImageMaxRecoil, bool, 4, 4, "(int slot, int r)")
+{
+	int slot = dAtoi(argv[2]);
+	if(slot >= 0 && slot < ShapeBase::MaxMountedImages)
+	{
+		U32 r = dAtoi(argv[3]);
+		object->setImageMaxRecoil(slot, r);
+		return true;
+	}
+	return false;
+}
+
+// Added for Alux3D 
+ConsoleMethod( ShapeBase, getImageMaxRecoil, S32, 3, 3, "(int slot)")
+{
+   int slot = dAtoi(argv[2]);
+   if (slot >= 0 && slot < ShapeBase::MaxMountedImages)
+      return object->getImageMaxRecoil(slot);
+   return 0;
+}
+
+// Added for Alux3D
+ConsoleMethod( ShapeBase, setImageRecoilAdd, bool, 4, 4, "(int slot, int r)")
+{
+	int slot = dAtoi(argv[2]);
+	if(slot >= 0 && slot < ShapeBase::MaxMountedImages)
+	{
+		U32 r = dAtoi(argv[3]);
+		object->setImageRecoilAdd(slot, r);
+		return true;
+	}
+	return false;
+}
+
+// Added for Alux3D 
+ConsoleMethod( ShapeBase, getImageRecoilAdd, S32, 3, 3, "(int slot)")
+{
+   int slot = dAtoi(argv[2]);
+   if (slot >= 0 && slot < ShapeBase::MaxMountedImages)
+      return object->getImageRecoilAdd(slot);
+   return 0;
+}
+
+// Added for Alux3D
+ConsoleMethod( ShapeBase, setImageRecoilDelta, bool, 4, 4, "(int slot, int r)")
+{
+	int slot = dAtoi(argv[2]);
+	if(slot >= 0 && slot < ShapeBase::MaxMountedImages)
+	{
+		U32 r = dAtoi(argv[3]);
+		object->setImageRecoilDelta(slot, r);
+		return true;
+	}
+	return false;
+}
+
+// Added for Alux3D
+ConsoleMethod( ShapeBase, getImageRecoilDelta, S32, 3, 3, "(int slot)")
+{
+   int slot = dAtoi(argv[2]);
+   if (slot >= 0 && slot < ShapeBase::MaxMountedImages)
+      return object->getImageRecoilDelta(slot);
+   return 0;
 }
 
 DefineEngineMethod( ShapeBase, getImageTarget, bool, ( S32 slot ),,
