@@ -2949,12 +2949,12 @@ void ShapeBase::setImageState(U32 imageSlot, U32 newState,bool force)
    if (stateData.loaded != ShapeBaseImageData::StateData::IgnoreLoaded)
       image.loaded = stateData.loaded == ShapeBaseImageData::StateData::Loaded;
 
-	if (!isGhost() && image.dataBlock->state[newState].fire) {
+	if(!isGhost() && image.dataBlock->state[newState].fire) {
 		setMaskBits(ImageMaskN << imageSlot);
 		image.fireCount = (image.fireCount + 1) & 0x7;
 	}
 
-	if (!isGhost() && image.dataBlock->state[newState].altFire) {
+	if(!isGhost() && image.dataBlock->state[newState].altFire) {
 		setMaskBits(ImageMaskN << imageSlot);
 		image.altFireCount = (image.altFireCount + 1) & 0x7;
 	}

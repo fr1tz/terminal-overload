@@ -3272,6 +3272,8 @@ U32 ShapeBase::packUpdate(NetConnection *con, U32 mask, BitStream *stream)
 
 void ShapeBase::unpackUpdate(NetConnection *con, BitStream *stream)
 {
+	GameConnection* gc = dynamic_cast<GameConnection*>(con);
+
    Parent::unpackUpdate(con, stream);
    mLastRenderFrame = sLastRenderFrame; // make sure we get a process after the event...
 
@@ -3405,22 +3407,31 @@ void ShapeBase::unpackUpdate(NetConnection *con, BitStream *stream)
 				if (isProperlyAdded()) {
 					// Normal processing
 					bool processFiring = false;
-					if (count != image.fireCount)
+
+					bool processCounts = true;
+					if(image.mode == MountedImage::ClientFireMode
+					&& gc && this == gc->getControlObject())
+						processCounts = false;
+
+					if(processCounts)
 					{
-						image.fireCount = count;
-						setImageState(i,getImageFireState(i),true);
-						processFiring = true;
-					}
-					else if (altCount != image.altFireCount)
-					{
-						image.altFireCount = altCount;
-						setImageState(i,getImageAltFireState(i),true);
-						processFiring = true;
-					}
-					else if (reloadCount != image.reloadCount)
-					{
-						image.reloadCount = reloadCount;
-						setImageState(i,getImageReloadState(i),true);
+						if (count != image.fireCount)
+						{
+							image.fireCount = count;
+							setImageState(i,getImageFireState(i),true);
+							processFiring = true;
+						}
+						else if (altCount != image.altFireCount)
+						{
+							image.altFireCount = altCount;
+							setImageState(i,getImageAltFireState(i),true);
+							processFiring = true;
+						}
+						else if (reloadCount != image.reloadCount)
+						{
+							image.reloadCount = reloadCount;
+							setImageState(i,getImageReloadState(i),true);
+						}
 					}
 
 					if (processFiring && imageData)
