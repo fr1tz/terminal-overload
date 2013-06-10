@@ -1290,19 +1290,23 @@ void ShapeBase::processTick(const Move* move)
       if(mMountedImageList[i].dataBlock == NULL)
 		  continue;
 
-		if(this->isClientObject()
-		&& conn && this == conn->getControlObject()
+#if 1
+      if(this->isClientObject()
+      && conn && this == conn->getControlObject()
       && this->getImageStruct(i)->mode == MountedImage::ClientFireMode)
-		{
-			// Ignore unless move is brand new!
-			if(move && move->sendCount == 0)
-				updateImageState(i, move, TickSec);
-		}
-		if(this->getImageStruct(i)->mode != MountedImage::ClientFireMode)
-		{
-			if(this->isServerObject())
-				updateImageState(i, move, TickSec);
-		}         
+      {
+	     // ignore unless move is brand new!
+         if(move && move->sendCount == 0)
+            updateImageState(i, move, TickSec);
+      }
+      else
+      {
+         updateImageState(i, move, TickSec);
+      }     
+#else
+		if(isServerObject())
+			updateImageState(i, move, TickSec);
+#endif
 	}
 
    // Call script on trigger state changes
@@ -1343,7 +1347,7 @@ void ShapeBase::advanceTime(F32 dt)
    for (int i = 0; i < MaxMountedImages; i++)
       if (mMountedImageList[i].dataBlock)
       {
-         //updateImageState(i, dt);
+         //updateImageState(i, NULL, dt);
          updateImageAnimation(i, dt);
       }
 

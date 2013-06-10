@@ -2949,16 +2949,14 @@ void ShapeBase::setImageState(U32 imageSlot, U32 newState,bool force)
    if (stateData.loaded != ShapeBaseImageData::StateData::IgnoreLoaded)
       image.loaded = stateData.loaded == ShapeBaseImageData::StateData::Loaded;
 
-	if(image.mode != MountedImage::ClientFireMode)
-	{
-		if (!isGhost() && image.dataBlock->state[newState].fire) {
-			setMaskBits(ImageMaskN << imageSlot);
-			image.fireCount = (image.fireCount + 1) & 0x7;
-		}
-		if (!isGhost() && image.dataBlock->state[newState].altFire) {
-			setMaskBits(ImageMaskN << imageSlot);
-			image.altFireCount = (image.altFireCount + 1) & 0x7;
-		}
+	if (!isGhost() && image.dataBlock->state[newState].fire) {
+		setMaskBits(ImageMaskN << imageSlot);
+		image.fireCount = (image.fireCount + 1) & 0x7;
+	}
+
+	if (!isGhost() && image.dataBlock->state[newState].altFire) {
+		setMaskBits(ImageMaskN << imageSlot);
+		image.altFireCount = (image.altFireCount + 1) & 0x7;
 	}
 
    if (!isGhost() && image.dataBlock->state[newState].reload) {
@@ -3414,7 +3412,7 @@ TICKAGAIN:
    dt = elapsed;
    image.rDT -= elapsed;
 
-   image.delayTime -= dt;
+	image.delayTime -= dt;
 
 	// Update inaccuracy.
 	if(image.inaccuracy.enabled && dt > 0)
@@ -3562,7 +3560,7 @@ TICKAGAIN:
       }
    }
 
-#if 1
+#if 0
    if ( image.rDT > 0.0f && image.delayTime > 0.0f && imageData.useRemainderDT && dt != 0.0f )
       goto TICKAGAIN;
 #else
