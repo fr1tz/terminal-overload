@@ -401,7 +401,7 @@ void SceneManager::_renderScene( SceneRenderState* state, U32 objectMask, SceneZ
    // Gather all objects that intersect the scene render box.
 
    mBatchQueryList.clear();
-   getContainer()->findObjectList( queryBox, objectMask, &mBatchQueryList );
+	getContainer()->renderFindObjectList(queryBox, objectMask, &mBatchQueryList);
 
    // Cull the list.
 

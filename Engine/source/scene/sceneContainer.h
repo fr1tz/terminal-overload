@@ -197,6 +197,10 @@ class SceneContainer
 
       void polyhedronFindObjects( const Polyhedron& polyhedron, U32 mask, FindCallback, void *key = NULL );
 
+      /// Identical to findObjectList() except that it checks the objects'
+		/// render world boxes. Used in SceneManager::_renderScene().
+		void renderFindObjectList( const Box3F& box, U32 mask, Vector< SceneObject* >* outFound );
+
       /// Find all objects of the given type(s) and add them to the given vector.
       /// @param mask Object type mask (@see SimObjectTypes).
       /// @param outFound Vector to add found objects to.

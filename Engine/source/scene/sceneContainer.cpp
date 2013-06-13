@@ -645,6 +645,78 @@ void SceneContainer::polyhedronFindObjects(const Polyhedron& polyhedron, U32 mas
 
 //-----------------------------------------------------------------------------
 
+void SceneContainer::renderFindObjectList( const Box3F& searchBox, U32 mask, Vector<SceneObject*> *outFound )
+{
+   PROFILE_SCOPE( Container_FindObjectList_Box );
+
+   AssertFatal( !mSearchInProgress, "SceneContainer::renderFindObjectList - Container queries are not re-entrant" );
+   mSearchInProgress = true;
+
+   // TODO: Optimize for water and zones?
+
+   U32 minX, maxX, minY, maxY;
+   getBinRange(searchBox.minExtents.x, searchBox.maxExtents.x, minX, maxX);
+   getBinRange(searchBox.minExtents.y, searchBox.maxExtents.y, minY, maxY);
+   mCurrSeqKey++;
+
+   for (U32 i = minY; i <= maxY; i++)
+   {
+      U32 insertY = i % csmNumBins;
+      U32 base    = insertY * csmNumBins;
+      for (U32 j = minX; j <= maxX; j++)
+      {
+         U32 insertX = j % csmNumBins;
+
+         SceneObjectRef* chain = mBinArray[base + insertX].nextInBin;
+         while (chain)
+         {
+            SceneObject *object = chain->object;
+
+            if (object->getContainerSeqKey() != mCurrSeqKey)
+            {
+               object->setContainerSeqKey(mCurrSeqKey);
+
+               if ((object->getTypeMask() & mask) != 0 &&
+                  object->isCollisionEnabled())
+               {
+                  const Box3F &worldBox = object->getRenderWorldBox();
+                  if ( object->isGlobalBounds() || worldBox.isOverlapped( searchBox ) )
+                  {
+                     outFound->push_back( object );
+                  }
+               }
+            }
+            chain = chain->nextInBin;
+         }
+      }
+   }
+
+   SceneObjectRef* chain = mOverflowBin.nextInBin;
+   while (chain)
+   {
+      SceneObject *object = chain->object;
+
+      if (object->getContainerSeqKey() != mCurrSeqKey)
+      {
+         object->setContainerSeqKey(mCurrSeqKey);
+
+         if ((object->getTypeMask() & mask) != 0 &&
+            object->isCollisionEnabled())
+         {
+            const Box3F &worldBox = object->getRenderWorldBox();
+
+            if ( object->isGlobalBounds() || worldBox.isOverlapped( searchBox ) )
+            {
+               outFound->push_back( object );
+            }
+         }
+      }
+      chain = chain->nextInBin;
+   }
+
+   mSearchInProgress = false;
+}
+
 void SceneContainer::findObjectList( const Box3F& searchBox, U32 mask, Vector<SceneObject*> *outFound )
 {
    PROFILE_SCOPE( Container_FindObjectList_Box );

@@ -733,7 +733,7 @@ U32 SceneCullingState::cullObjects( SceneObject** objects, U32 numObjects, U32 c
       // If terrain occlusion checks are enabled, run them now.
 
       else if( !mDisableTerrainOcclusion &&
-               object->getWorldBox().minExtents.x > -1e5 &&
+               object->getRenderWorldBox().minExtents.x > -1e5 &&
                isOccludedByTerrain( object ) )
       {
          // Occluded by terrain.
@@ -747,7 +747,7 @@ U32 SceneCullingState::cullObjects( SceneObject** objects, U32 numObjects, U32 c
                ( object->getTypeMask() & CULLING_EXCLUDE_TYPEMASK ) ||
                disableZoneCulling() )
       {
-         isCulled = getFrustum().isCulled( object->getWorldBox() );
+         isCulled = getFrustum().isCulled( object->getRenderWorldBox() );
       }
 
       // Go through the zones that the object is assigned to and
@@ -756,7 +756,7 @@ U32 SceneCullingState::cullObjects( SceneObject** objects, U32 numObjects, U32 c
       else
       {
          CullingTestResult result = _test(
-            object->getWorldBox(),
+            object->getRenderWorldBox(),
             SceneObject::ObjectZonesIterator( object ),
             nearPlane,
             farPlane
