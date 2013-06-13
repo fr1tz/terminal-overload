@@ -229,7 +229,6 @@ protected:
 
    SFXSource* mSound;
 
-   // These two are server-side only
    Point3F  mInitialPosition;
    Point3F  mInitialVelocity;
 

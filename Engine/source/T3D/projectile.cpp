@@ -1277,6 +1277,9 @@ U32 Projectile::packUpdate( NetConnection *con, U32 mask, BitStream *stream )
    {
       stream->writeRangedU32( mCurrTick, 0, MaxLivingTicks );
 
+		mathWrite(*stream, mInitialPosition);
+		mathWrite(*stream, mInitialVelocity);
+
       if ( mSourceObject.isValid() )
       {
          // Potentially have to write this to the client, let's make sure it has a
@@ -1329,6 +1332,10 @@ void Projectile::unpackUpdate(NetConnection* con, BitStream* stream)
    if ( stream->readFlag() ) // InitialUpdateMask
    {
       mCurrTick = stream->readRangedU32( 0, MaxLivingTicks );
+
+		mathRead(*stream, &mInitialPosition);
+		mathRead(*stream, &mInitialVelocity);
+
       if ( stream->readFlag() )
       {
          mSourceObjectId   = stream->readRangedU32( 0, NetConnection::MaxGhostCount );
