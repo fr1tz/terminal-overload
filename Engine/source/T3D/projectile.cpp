@@ -1409,6 +1409,9 @@ void Projectile::prepBatchRender( SceneRenderState *state )
    if ( !mProjectileShape )
       return;
 
+	if(this->getRenderWorldBox().isContained(mInitialPosition))
+		return;
+
    GFXTransformSaver saver;
 
    // Set up our TS render state.
