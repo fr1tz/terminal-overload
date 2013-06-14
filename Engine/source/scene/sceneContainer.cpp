@@ -647,7 +647,7 @@ void SceneContainer::polyhedronFindObjects(const Polyhedron& polyhedron, U32 mas
 
 void SceneContainer::renderFindObjectList( const Box3F& searchBox, U32 mask, Vector<SceneObject*> *outFound )
 {
-   PROFILE_SCOPE( Container_FindObjectList_Box );
+   PROFILE_SCOPE( Container_RenderFindObjectList_Box );
 
    AssertFatal( !mSearchInProgress, "SceneContainer::renderFindObjectList - Container queries are not re-entrant" );
    mSearchInProgress = true;
