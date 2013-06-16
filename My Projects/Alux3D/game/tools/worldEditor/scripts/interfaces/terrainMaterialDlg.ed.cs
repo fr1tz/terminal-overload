@@ -286,10 +286,10 @@ function TerrainMaterialDlg::newMat( %this )
       internalName = %matName;
       parentGroup = TerrainMaterialDlgNewGroup;
    };
-   %newMat.setFileName( "art/terrains/materials.cs" );
+   %newMat.setFileName( "library/cleanup/materials.cs" );
    
    // Mark it as dirty and to be saved in the default location.
-   ETerrainMaterialPersistMan.setDirty( %newMat, "art/terrains/materials.cs" );
+   ETerrainMaterialPersistMan.setDirty( %newMat, "library/cleanup/materials.cs" );
             
    %matLibTree = %this-->matLibTree;
    %matLibTree.buildVisibleTree( true );
@@ -495,7 +495,7 @@ function TerrainMaterialDlg::saveDirtyMaterial( %this, %mat )
    
    %fileName = %mat.getFileName();
    if( %fileName $= "" )
-      %fileName = "art/terrains/materials.cs";
+      %fileName = "library/cleanup/materials.cs";
       
    ETerrainMaterialPersistMan.setDirty( %mat, %fileName ); 
 }
