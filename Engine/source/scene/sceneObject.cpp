@@ -424,6 +424,8 @@ void SceneObject::resetWorldBox()
    for( SceneObjectLink* link = mSceneObjectLinks; link != NULL; 
         link = link->getNextLink() )
       link->update();
+
+	resetRenderWorldBox();
 }
 
 //-----------------------------------------------------------------------------
