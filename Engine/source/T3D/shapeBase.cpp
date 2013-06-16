@@ -3171,6 +3171,8 @@ U32 ShapeBase::packUpdate(NetConnection *con, U32 mask, BitStream *stream)
             // being set.  Therefore there is a network tick when the object is in limbo...
             stream->writeFlag(image.dataBlock && image.dataBlock->animateAllShapes && getControllingClient() == con);
 
+				stream->writeInt(image.magazineRounds, 16);
+
             stream->writeFlag(image.wet);
             stream->writeFlag(image.motion);
             stream->writeFlag(image.ammo);
@@ -3335,7 +3337,6 @@ void ShapeBase::unpackUpdate(NetConnection *con, BitStream *stream)
 		{
 			if(stream->readFlag())
 			{
-				MountedImage imageUpdate;
 				MountedImage& image = mMountedImageList[i];
 				ShapeBaseImageData* imageData = 0;
 
@@ -3356,6 +3357,8 @@ void ShapeBase::unpackUpdate(NetConnection *con, BitStream *stream)
 
 				image.forceAnimateAllShapes = stream->readFlag();
 
+				image.magazineRounds = stream->readInt(16);
+
 				image.wet = stream->readFlag();
 
 				image.motion = stream->readFlag();
@@ -3371,7 +3374,7 @@ void ShapeBase::unpackUpdate(NetConnection *con, BitStream *stream)
 
 				for (U32 i=0; i<ShapeBaseImageData::MaxGenericTriggers; ++i)
 				{
-					imageUpdate.genericTrigger[i] = stream->readFlag();
+					image.genericTrigger[i] = stream->readFlag();
 				}
 
 				int count = stream->readInt(3);
@@ -3388,7 +3391,7 @@ void ShapeBase::unpackUpdate(NetConnection *con, BitStream *stream)
 									skinDesiredNameHandle, image.loaded, 
 									image.ammo, image.triggerDown, image.altTriggerDown,
 									image.motion, image.genericTrigger[0], image.genericTrigger[1], image.genericTrigger[2], image.genericTrigger[3],
-									image.target);
+									image.target, image.magazineRounds);
 				}
             
 				if (!datablockChange && image.scriptAnimPrefix != scriptDesiredAnimPrefix)
@@ -3408,12 +3411,12 @@ void ShapeBase::unpackUpdate(NetConnection *con, BitStream *stream)
 					// Normal processing
 					bool processFiring = false;
 
-					bool processCounts = true;
+					bool processFireCounts = true;
 					if(image.mode == MountedImage::ClientFireMode
 					&& gc && this == gc->getControlObject())
-						processCounts = false;
+						processFireCounts = false;
 
-					if(processCounts)
+					if(processFireCounts)
 					{
 						if (count != image.fireCount)
 						{
@@ -3427,11 +3430,12 @@ void ShapeBase::unpackUpdate(NetConnection *con, BitStream *stream)
 							setImageState(i,getImageAltFireState(i),true);
 							processFiring = true;
 						}
-						else if (reloadCount != image.reloadCount)
-						{
-							image.reloadCount = reloadCount;
-							setImageState(i,getImageReloadState(i),true);
-						}
+					}
+
+					if (reloadCount != image.reloadCount)
+					{
+						image.reloadCount = reloadCount;
+						setImageState(i,getImageReloadState(i),true);
 					}
 
 					if (processFiring && imageData)
@@ -4284,6 +4288,31 @@ DefineEngineMethod( ShapeBase, setImageAltTrigger, bool, ( S32 slot, bool state 
    if (slot >= 0 && slot < ShapeBase::MaxMountedImages) {
       object->setImageAltTriggerState(slot,state);
       return object->getImageAltTriggerState(slot);
+   }
+   return false;
+}
+
+DefineEngineMethod( ShapeBase, getImageMagazineRounds, S32, ( S32 slot ),,
+   "@brief Returns the amount of rounds in the magazine of the Image mounted in the specified slot.\n\n"
+
+	"@param slot Image slot to query\n"
+   "@return the Image's current amount of rounds in its magazine\n\n" )
+{
+   if (slot >= 0 && slot < ShapeBase::MaxMountedImages)
+      return object->getImageMagazineRounds(slot);
+   return false;
+}
+
+DefineEngineMethod( ShapeBase, setImageMagazineRounds, bool, ( S32 slot, S32 rounds ),,
+   "@brief Set the amount of rounds in the magazine of the Image mounted in the specified slot.\n\n"
+
+   "@param slot Image slot to modify\n"
+   "@param rounds amount of rounds in the magazine\n"
+   "@return whether the call succeeded\n\n" )
+{
+   if (slot >= 0 && slot < ShapeBase::MaxMountedImages) {
+      object->setImageMagazineRounds(slot, rounds);
+      return true;
    }
    return false;
 }

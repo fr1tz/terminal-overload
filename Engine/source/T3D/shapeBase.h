@@ -131,6 +131,12 @@ struct ShapeBaseImageData: public GameBaseData {
 
       NumStateBits = 5,
    };
+	enum AmmoSource {
+		Manual = 0,
+		Energy,
+		Magazine,
+		NumAmmoSources
+	};
    enum LightType {
       NoLight = 0,
       ConstantLight,
@@ -362,8 +368,11 @@ struct ShapeBaseImageData: public GameBaseData {
    ProjectileData* projectile;      ///< Information about what projectile this
                                     ///  image fires.
 
+	S32 ammoSource;                  ///< How does the image know whether is has ammo?
+                                    ///
+                                    ///  One of: Manual, Energy, Magazine.
+
    F32   mass;                      ///< Mass!
-   bool  usesEnergy;                ///< Does this use energy instead of ammo?
    F32   minEnergy;                 ///< Minimum energy for the weapon to be operable.
    bool  accuFire;                  ///< Should we automatically make image's aim converge with the crosshair?
    bool  cloakable;                 ///< Is this image cloakable when mounted?
@@ -479,11 +488,13 @@ struct ShapeBaseImageData: public GameBaseData {
    /// @}
 };
 
+typedef ShapeBaseImageData::AmmoSource ShapeBaseImageAmmoSource;
 typedef ShapeBaseImageData::LightType ShapeBaseImageLightType;
 typedef ShapeBaseImageData::StateData::LoadedState ShapeBaseImageLoadedState;
 typedef ShapeBaseImageData::StateData::SpinState ShapeBaseImageSpinState;
 typedef ShapeBaseImageData::StateData::RecoilState ShapeBaseImageRecoilState;
 
+DefineEnumType( ShapeBaseImageAmmoSource );
 DefineEnumType( ShapeBaseImageLightType );
 DefineEnumType( ShapeBaseImageLoadedState );
 DefineEnumType( ShapeBaseImageSpinState );
@@ -832,7 +843,10 @@ protected:
 
       bool ammo;                    ///< Do we have ammo?
                                     ///
-                                    /// May be true based on either energy OR ammo.
+                                    /// Depends on the ammoSource the image uses.
+
+		S32 magazineRounds;           ///< How many rounds in the image's magazine?
+		                              ///  (Only used if ammoSource is "magazine".)
 
       bool target;                  ///< Have we acquired a targer?
       bool wet;                     ///< Is the weapon wet?
@@ -1064,7 +1078,8 @@ protected:
                            bool genericTrigger1 = false,
                            bool genericTrigger2 = false,
                            bool genericTrigger3 = false,
-                           bool target = false );
+                           bool target = false,
+									S32 magazineRounds = 0);
 
    /// Clear out an image slot
    /// @param   imageSlot   Image slot id
@@ -1550,6 +1565,15 @@ public:
    /// Returns the alt trigger state of the image
    /// @param   imageSlot   Image slot
    bool getImageAltTriggerState( U32 imageSlot );
+
+   /// Sets the amount of rounds in the image's magazine.
+   /// @param   imageSlot   Image slot
+   /// @param   rounds      Amount of rounds
+   void setImageMagazineRounds(U32 imageSlot, U32 rounds);
+
+   /// Returns the number of rounds in the image's magazine.
+   /// @param   imageSlot   Image slot
+   U32 getImageMagazineRounds(U32 imageSlot);
 
    /// Sets the flag if the image uses ammo or energy
    /// @param   imageSlot   Image slot

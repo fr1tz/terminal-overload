@@ -31,6 +31,14 @@
 
 ShapeBaseImageData* InvalidImagePtr = (ShapeBaseImageData*) 1;
 
+ImplementEnumType( ShapeBaseImageAmmoSource,
+   "@brief How does the ShapeBaseImage know whether is has ammo?\n\n"
+   "@ingroup gameObjects\n\n")
+	{ ShapeBaseImageData::Manual,   "Manual",   "Image must be told manually whether it has ammo.\n" },
+   { ShapeBaseImageData::Energy,   "Energy",   "Image has ammo if energy >= image's minEnergy.\n" },
+   { ShapeBaseImageData::Magazine, "Magazine", "Image has ammo as long as its magazine isn't empty.\n" },
+EndImplementEnumType;
+
 ImplementEnumType( ShapeBaseImageLoadedState,
    "@brief The loaded state of this ShapeBaseImage.\n\n"
    "@ingroup gameObjects\n\n")
@@ -154,9 +162,11 @@ ShapeBaseImageData::ShapeBaseImageData()
    useFirstPersonShape = false;
    useEyeOffset = false;
    useEyeNode = false;
+
+	ammoSource = ShapeBaseImageData::Manual;
+
    mass = 0;
 
-   usesEnergy = false;
    minEnergy = 2;
    accuFire = false;
 
@@ -694,13 +704,13 @@ void ShapeBaseImageData::initPersistFields()
       "@brief Mass of this Image.\n\n"
       "This is added to the total mass of the ShapeBase object." );
 
-   addField( "usesEnergy", TypeBool, Offset(usesEnergy,ShapeBaseImageData),
-      "@brief Flag indicating whether this Image uses energy instead of ammo.  The energy level comes from the ShapeBase object we're mounted to.\n\n"
-      "@see ShapeBase::setEnergyLevel()");
+   addField( "ammoSource", TYPEID<ShapeBaseImageData::AmmoSource>(), Offset(ammoSource, ShapeBaseImageData),
+      "@brief How the image knows whether it has ammo.\n\n"
+      "@see ShapeBaseImageDataAmmoSource");
 
    addField( "minEnergy", TypeF32, Offset(minEnergy, ShapeBaseImageData),
       "@brief Minimum Image energy for it to be operable.\n\n"
-      "@see usesEnergy");
+      "@see ammoSource");
 
    addField( "accuFire", TypeBool, Offset(accuFire, ShapeBaseImageData),
       "@brief Flag to control whether the Image's aim is automatically converged with "
@@ -850,8 +860,7 @@ void ShapeBaseImageData::initPersistFields()
       addField( "stateEnergyDrain", TypeF32, Offset(stateEnergyDrain, ShapeBaseImageData), MaxStates,
          "@brief Amount of energy to subtract from the Image in this state.\n\n"
          "Energy is drained at stateEnergyDrain units/tick as long as we are in "
-         "this state.\n"
-         "@see usesEnergy");
+         "this state.\n");
       addField( "stateAllowImageChange", TypeBool, Offset(stateAllowImageChange, ShapeBaseImageData), MaxStates,
          "@brief If false, other Images will temporarily be blocked from mounting "
          "while the state machine is executing the tasks in this state.\n\n"
@@ -987,8 +996,11 @@ void ShapeBaseImageData::packData(BitStream* stream)
    stream->writeFlag(correctMuzzleVector);
    stream->writeFlag(correctMuzzleVectorTP);
    stream->writeFlag(firstPerson);
+
+	stream->writeRangedU32(ammoSource, 0, NumAmmoSources-1);
+
    stream->write(mass);
-   stream->writeFlag(usesEnergy);
+
    stream->write(minEnergy);
 
    for( U32 j=0; j<MaxShapes; ++j)
@@ -1175,8 +1187,11 @@ void ShapeBaseImageData::unpackData(BitStream* stream)
    correctMuzzleVector = stream->readFlag();
    correctMuzzleVectorTP = stream->readFlag();
    firstPerson = stream->readFlag();
+
+	ammoSource = stream->readRangedU32(0, NumAmmoSources-1);
+
    stream->read(&mass);
-   usesEnergy = stream->readFlag();
+   
    stream->read(&minEnergy);
 
    for( U32 j=0; j<MaxShapes; ++j )
@@ -1683,10 +1698,32 @@ bool ShapeBase::getImageGenericTriggerState(U32 imageSlot, U32 trigger)
    return image.genericTrigger[trigger];
 }
 
+void ShapeBase::setImageMagazineRounds(U32 imageSlot, U32 rounds)
+{
+   MountedImage& image = mMountedImageList[imageSlot];
+   if(image.dataBlock && image.magazineRounds != rounds) 
+	{
+      setMaskBits(ImageMaskN << imageSlot);
+      image.magazineRounds = rounds;
+		image.updateControllingClient = true;
+   }
+}
+
+U32 ShapeBase::getImageMagazineRounds(U32 imageSlot)
+{
+	MountedImage& image = mMountedImageList[imageSlot];
+	if(!image.dataBlock)
+		return 0;
+	return image.magazineRounds;
+}
+
 void ShapeBase::setImageAmmoState(U32 imageSlot,bool ammo)
 {
    MountedImage& image = mMountedImageList[imageSlot];
-   if (image.dataBlock && !image.dataBlock->usesEnergy && image.ammo != ammo) {
+   if(image.dataBlock 
+	&& image.dataBlock->ammoSource == ShapeBaseImageData::Manual 
+	&& image.ammo != ammo) 
+	{
       setMaskBits(ImageMaskN << imageSlot);
       image.ammo = ammo;
 		image.updateControllingClient = true;
@@ -2387,7 +2424,8 @@ void ShapeBase::setImage(  U32 imageSlot,
                            bool genericTrigger1,
                            bool genericTrigger2,
                            bool genericTrigger3,
-                           bool target)
+                           bool target,
+									S32 magazineRounds)
 {
    AssertFatal(imageSlot<MaxMountedImages,"Out of range image slot");
 
@@ -2493,6 +2531,7 @@ void ShapeBase::setImage(  U32 imageSlot,
    }
    image.loaded = loaded;
    image.ammo = ammo;
+	image.magazineRounds = magazineRounds;
    image.triggerDown = triggerDown;
    image.altTriggerDown = altTriggerDown;
    image.target = target;
@@ -2605,10 +2644,16 @@ void ShapeBase::resetImageSlot(U32 imageSlot)
    image.delayTime = 0;
    image.rDT = 0;
    image.ammo = false;
+	image.magazineRounds = 0;
+	image.fireCount = 0;
+	image.altFireCount = 0;
+	image.reloadCount = 0;
    image.triggerDown = false;
    image.altTriggerDown = false;
    image.loaded = false;
    image.motion = false;
+
+
 
    for (U32 i=0; i<ShapeBaseImageData::MaxGenericTriggers; ++i)
    {
@@ -2836,6 +2881,7 @@ void ShapeBase::setImageState(U32 imageSlot, U32 newState,bool force)
    U32 imageShapeIndex = getImageShapeIndex(image);
    image.lastShapeIndex = imageShapeIndex;
 
+#if 0
    // If going back into the same state, just reset the timer
    // and invoke the script callback
    if (!force && image.state == &image.dataBlock->state[newState]) {
@@ -2861,6 +2907,7 @@ void ShapeBase::setImageState(U32 imageSlot, U32 newState,bool force)
 
       return;
    }
+#endif
 
    F32 lastDelay = image.delayTime;
    ShapeBaseImageData::StateData* lastState = image.state;
@@ -2902,7 +2949,7 @@ void ShapeBase::setImageState(U32 imageSlot, U32 newState,bool force)
    // Check for immediate transitions, but only if we don't need to wait for
    // a time out.  Only perform this wait if we're not forced to change.
    S32 ns;
-   if (image.delayTime <= 0 || !stateData.waitForTimeout) 
+   if(stateData.timeoutValue <= 0 || !stateData.waitForTimeout) 
    {
       if ((ns = stateData.transition.loaded[image.loaded]) != -1) {
          setImageState(imageSlot,ns);
@@ -2967,6 +3014,9 @@ void ShapeBase::setImageState(U32 imageSlot, U32 newState,bool force)
 	// Fire projectile? (note: this is experimental code -mag)
 	if(stateData.fireProjectile && image.ammo)
 	{
+		if(imageData.ammoSource == ShapeBaseImageData::Magazine)
+			image.magazineRounds--;
+
 		bool createProjectile = true;
 		if(image.mode == MountedImage::ClientFireMode)
 		{
@@ -3461,16 +3511,16 @@ TICKAGAIN:
 	}
 
    // Energy management
-   if (imageData.usesEnergy) 
+	F32 oldEnergy = this->getEnergyLevel();
+	F32 newEnergy = this->getEnergyLevel() - stateData.energyDrain * dt;
+	if(newEnergy < 0)
+		newEnergy = 0;
+	if(newEnergy != oldEnergy)
+		this->setEnergyLevel(newEnergy);
+
+	// Ammo
+   if(imageData.ammoSource == ShapeBaseImageData::Energy) 
    {
-		F32 oldEnergy = this->getEnergyLevel();
-		F32 newEnergy = this->getEnergyLevel() - stateData.energyDrain * dt;
-		if(newEnergy < 0)
-			newEnergy = 0;
-
-		if(newEnergy != oldEnergy)
-			this->setEnergyLevel(newEnergy);
-
 		if(image.mode == MountedImage::ClientFireMode)
 		{
 			image.ammo = newEnergy > imageData.minEnergy;
@@ -3480,6 +3530,25 @@ TICKAGAIN:
 			if(isServerObject())
 			{
 				bool ammo = newEnergy > imageData.minEnergy;
+				if (ammo != image.ammo)
+				{
+					setMaskBits(ImageMaskN << imageSlot);
+					image.ammo = ammo;
+				}
+			}
+		}
+   }
+	else if(imageData.ammoSource == ShapeBaseImageData::Magazine) 
+   {
+		if(image.mode == MountedImage::ClientFireMode)
+		{
+			image.ammo = image.magazineRounds > 0;
+		}
+		else if(image.mode == MountedImage::StandardMode)
+		{
+			if(isServerObject())
+			{
+				bool ammo = image.magazineRounds > 0;
 				if (ammo != image.ammo)
 				{
 					setMaskBits(ImageMaskN << imageSlot);
