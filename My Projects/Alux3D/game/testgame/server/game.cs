@@ -28,7 +28,7 @@ function onServerCreated()
 
    // Create the server physics world.
    physicsInitWorld( "server" );
-
+   
    // Load up any objects or datablocks saved to the editor managed scripts
    %datablockFiles = new ArrayObject();
    %datablockFiles.add( "art/particles/managedParticleData.cs" );
@@ -38,6 +38,9 @@ function onServerCreated()
    %datablockFiles.add( "art/forest/managedItemData.cs" );
    %datablockFiles.add( "art/datablocks/datablockExec.cs" );   
    loadDatablockFiles( %datablockFiles, true );
+   
+   exec("alux3d/server/exec.cs");
+   executeServerScripts();
 
    // Run the other gameplay scripts in this folder
    exec("./scriptExec.cs");

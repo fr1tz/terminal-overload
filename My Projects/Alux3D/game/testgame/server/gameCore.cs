@@ -614,6 +614,9 @@ function GameCore::loadOut(%game, %player)
    %player.setInventory(DeployableTurret, %player.maxInventory(DeployableTurret));
    %player.addToWeaponCycle(DeployableTurret);
    
+   %player.setInventory(WpnRaptor, 1);
+   %player.addToWeaponCycle(WpnRaptor);
+   
    if (%player.getDatablock().mainWeapon.image !$= "")
    {
       %player.mountImage(%player.getDatablock().mainWeapon.image, 0);

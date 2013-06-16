@@ -463,13 +463,19 @@ moveMap.bindCmd(keyboard, "ctrl k", "commandToServer('suicide');", "");
 //------------------------------------------------------------------------------
 // Item manipulation
 //------------------------------------------------------------------------------
-moveMap.bindCmd(keyboard, "1", "commandToServer('use',\"Ryder\");", "");
-moveMap.bindCmd(keyboard, "2", "commandToServer('use',\"Lurker\");", "");
-moveMap.bindCmd(keyboard, "3", "commandToServer('use',\"LurkerGrenadeLauncher\");", "");
-moveMap.bindCmd(keyboard, "4", "commandToServer('use',\"ProxMine\");", "");
-moveMap.bindCmd(keyboard, "5", "commandToServer('use',\"DeployableTurret\");", "");
 
-moveMap.bindCmd(keyboard, "r", "commandToServer('reloadWeapon');", "");
+moveMap.bindCmd(keyboard, "0", "commandToServer('action', 0);", "");
+moveMap.bindCmd(keyboard, "1", "commandToServer('action', 1);", "");
+moveMap.bindCmd(keyboard, "2", "commandToServer('action', 2);", "");
+moveMap.bindCmd(keyboard, "3", "commandToServer('action', 3);", "");
+moveMap.bindCmd(keyboard, "4", "commandToServer('action', 4);", "");
+moveMap.bindCmd(keyboard, "5", "commandToServer('action', 5);", "");
+moveMap.bindCmd(keyboard, "6", "commandToServer('action', 6);", "");
+moveMap.bindCmd(keyboard, "7", "commandToServer('action', 7);", "");
+moveMap.bindCmd(keyboard, "8", "commandToServer('action', 8);", "");
+moveMap.bindCmd(keyboard, "9", "commandToServer('action', 9);", "");
+
+moveMap.bindCmd(keyboard, "r", "commandToServer('action', 20);", "");
 
 function unmountWeapon(%val)
 {
