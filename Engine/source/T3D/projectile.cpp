@@ -375,6 +375,8 @@ void ProjectileData::packData(BitStream* stream)
       stream->writeRangedU32(lightDesc->getId(), DataBlockObjectIdFirst,
                                                  DataBlockObjectIdLast);
 
+	stream->write(velInheritFactor);
+	stream->write(muzzleVelocity);
    stream->write(impactForce);
    
 //    stream->writeRangedU32(lifetime, 0, Projectile::MaxLivingTicks);
@@ -440,6 +442,8 @@ void ProjectileData::unpackData(BitStream* stream)
 //    armingDelay = stream->readRangedU32(0, Projectile::MaxLivingTicks);
 //    fadeDelay = stream->readRangedU32(0, Projectile::MaxLivingTicks);
 
+	stream->read(&velInheritFactor);
+	stream->read(&muzzleVelocity);
    stream->read(&impactForce);
 
    stream->read(&lifetime);
