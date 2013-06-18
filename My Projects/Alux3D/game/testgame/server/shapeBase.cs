@@ -79,6 +79,23 @@ function ShapeBase::clearDamageDt(%this)
 }
 
 //-----------------------------------------------------------------------------
+
+function ShapeBase::reloadWeapon(%this)
+{
+   %player = %this;
+   %image = %player.getMountedImage($WeaponSlot);
+
+   if(%image == 0)
+      return;
+
+   // Bail out if we're already reloading.
+   if(%image.fireImage !$= "")
+      return;
+
+   %player.setImageMagazineRounds($WeaponSlot, 0);
+}
+
+//-----------------------------------------------------------------------------
 // ShapeBase datablock
 //-----------------------------------------------------------------------------
 

@@ -27,19 +27,10 @@ datablock ShapeBaseImageData(WpnRaptorImage)
    class = "WeaponImage";
    className = "WeaponImage";
 
-   ammoSource = "Energy";
-   minEnergy = 0;
-
-   item = Lurker;
-   ammo = LurkerAmmo;
-   clip = LurkerClip;
+   ammoSource = "Magazine";
+   //minEnergy = 0;
 
    projectile = WpnRaptorProjectile;
-   projectileType = Projectile;
-   projectileSpread = "0.005";
-
-   altProjectile = GrenadeLauncherProjectile;
-   altProjectileSpread = "0.02";
 
    casing = WpnRaptorProjectileShell;
    shellExitDir        = "1.0 0.3 1.0";
@@ -59,19 +50,18 @@ datablock ShapeBaseImageData(WpnRaptorImage)
    camShakeFreq = "10.0 11.0 9.0";
    camShakeAmp = "15.0 15.0 15.0";
 
-   // Images have a state system which controls how the animations
-   // are run, which sounds are played, script callbacks, etc. This
-   // state system is downloaded to the client so that clients can
-   // predict state changes and animate accordingly.  The following
-   // system supports basic ready->fire->reload transitions as
-   // well as a no-ammo->dryfire idle state.
-
    useRemainderDT = false;
+   
+   // Script fields
+   reloadImage = WpnRaptorReloadImage;
+   item = Lurker;
+   ammo = LurkerAmmo;
+   clip = LurkerClip;
 
    // Initial start up state
    stateName[0]                     = "Preactivate";
-   stateTransitionOnLoaded[0]       = "Activate";
-   stateTransitionOnNoAmmo[0]       = "NoAmmo";
+   stateTransitionGeneric3In[0]     = "Ready";
+   stateTransitionGeneric3Out[0]    = "Activate";
 
    // Activating the gun.  Called when the weapon is first
    // mounted and there is ammo.
@@ -146,9 +136,9 @@ datablock ShapeBaseImageData(WpnRaptorImage)
    stateName[6]                     = "NoAmmo";
    stateTransitionGeneric0In[6]     = "SprintEnter";
    stateTransitionOnMotion[6]       = "NoAmmoMotion";
-   stateTransitionOnAmmo[6]         = "ReloadClip";
+   stateTransitionOnAmmo[6]         = "Ready";
    stateTimeoutValue[6]             = 0.1;   // Slight pause to allow script to run when trigger is still held down from Fire state
-   stateScript[6]                   = "onClipEmpty";
+   stateScript[6]                   = "onMagazineEmpty";
    stateSequence[6]                 = "idle";
    stateScaleAnimation[6]           = false;
    stateScaleAnimationFP[6]         = false;
@@ -163,7 +153,7 @@ datablock ShapeBaseImageData(WpnRaptorImage)
    stateSequenceTransitionIn[7]     = true;
    stateSequenceTransitionOut[7]    = true;
    stateTransitionOnTriggerDown[7]  = "DryFire";
-   stateTransitionOnAmmo[7]         = "ReloadClip";
+   stateTransitionOnAmmo[7]         = "Ready";
    stateSequence[7]                 = "run";
 
    // No ammo dry fire

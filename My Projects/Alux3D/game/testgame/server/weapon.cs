@@ -92,37 +92,15 @@ function Weapon::onInventory(%this, %obj, %amount)
 
 function WeaponImage::onMount(%this, %obj, %slot)
 {
-   // Images assume a false ammo state on load.  We need to
-   // set the state according to the current inventory.
    if(%this.isField("clip"))
    {
-      // Use the clip system for this weapon.  Check if the player already has
-      // some ammo in a clip.
-      if (%obj.getInventory(%this.ammo))
-      {
-         %obj.setImageAmmo(%slot, true);
-         %currentAmmo = %obj.getInventory(%this.ammo);
-      }
-      else if(%obj.getInventory(%this.clip) > 0)
-      {
-         // Fill the weapon up from the first clip
-         %obj.setInventory(%this.ammo, %this.ammo.maxInventory);
-         %obj.setImageAmmo(%slot, true);
-         
-         // Add any spare ammo that may be "in the player's pocket"
-         %currentAmmo = %this.ammo.maxInventory;
-         %amountInClips += %obj.getFieldValue( "remaining" @ %this.ammo.getName());
-      }
+      // Use the clip system for this weapon.
+      // Check if there's already some ammo in the weapon.
+      %magazine = %obj.magazine[%this];
+      if(%magazine !$= "")
+         %obj.setImageMagazineRounds(%slot, %magazine);
       else
-      {
-         %currentAmmo = 0 + %obj.getFieldValue( "remaining" @ %this.ammo.getName());
-      }
-      
-      %amountInClips = %obj.getInventory(%this.clip);
-      %amountInClips *= %this.ammo.maxInventory;
-      
-      if (%obj.client !$= "" && !%obj.isAiControlled)
-         %obj.client.RefreshWeaponHud(%currentAmmo, %this.item.previewImage, %this.item.reticle, %this.item.zoomReticle, %amountInClips);
+         %obj.setImageMagazineRounds(%slot, 0);
    }
    else if(%this.ammo !$= "")
    {
@@ -356,13 +334,34 @@ function WeaponImage::onWetFire(%this, %obj, %slot)
 }
 
 //-----------------------------------------------------------------------------
+// Magazine Management
+//-----------------------------------------------------------------------------
+
+function WeaponImage::onMagazineEmpty(%this, %obj, %slot)
+{
+   //echo("WeaponImage::onMagazineEmpty: " SPC %this SPC %obj SPC %slot);
+   
+   %obj.mountImage(%this.reloadImage, $WeaponSlot);
+}
+
+function WeaponImage::onReloadDone(%this, %obj, %slot)
+{
+   //echo("WeaponImage::onReloadDone: " SPC %this SPC %obj SPC %slot);
+
+   %fireImage = %this.fireImage;
+   %obj.magazine[%fireImage.getId()] = %fireImage.ammo.maxInventory;
+   %obj.mountImage(%fireImage, $WeaponSlot, true);
+   %obj.setImageGenericTrigger($WeaponSlot, 3, true);
+}
+
+//-----------------------------------------------------------------------------
 // Clip Management
 //-----------------------------------------------------------------------------
 
 function WeaponImage::onClipEmpty(%this, %obj, %slot)
 {
    //echo("WeaponImage::onClipEmpty: " SPC %this SPC %obj SPC %slot);
-
+   
    // Attempt to automatically reload.  Schedule this so it occurs
    // outside of the current state that called this method
    %this.schedule(0, "reloadAmmoClip", %obj, %slot);

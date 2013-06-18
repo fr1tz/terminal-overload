@@ -86,19 +86,4 @@ function serverCmdUnmountWeapon(%client)
    %client.getControlObject().unmountImage($WeaponSlot);
 }
 
-// ----------------------------------------------------------------------------
-// Weapon reloading
-// ----------------------------------------------------------------------------
 
-function serverCmdReloadWeapon(%client)
-{
-   %player = %client.getControlObject();
-   %image = %player.getMountedImage($WeaponSlot);
-   
-   // Don't reload if the weapon's full.
-   if (%player.getInventory(%image.ammo) == %image.ammo.maxInventory)
-      return;
-      
-   if (%image > 0)
-      %image.clearAmmoClip(%player, $WeaponSlot);
-}

@@ -6,4 +6,5 @@ exec("./raptor.gfx.cs");
 exec("./raptor.item.cs");
 exec("./raptor.projectile.cs");
 exec("./raptor.image.cs");
+exec("./raptor.reloadimage.cs");
 

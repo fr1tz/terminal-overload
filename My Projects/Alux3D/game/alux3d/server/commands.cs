@@ -8,4 +8,7 @@ function serverCmdAction(%client, %nr)
       %obj.use(WpnRaptor);
    else if(%nr == 2)
       %obj.use(WpnRaptor);
+   else if(%nr == 20)
+      %obj.reloadWeapon();
 }
+
