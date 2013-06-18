@@ -127,7 +127,7 @@ function initClient()
    else {
       // Otherwise go to the splash screen.
       Canvas.setCursor("DefaultCursor");
-      loadStartup();
+      loadMainMenu();
    }   
 }
 
