@@ -594,26 +594,6 @@ function GameCore::loadOut(%game, %player)
 
    %player.clearWeaponCycle();
    
-   %player.setInventory(Ryder, 1);
-   %player.setInventory(RyderClip, %player.maxInventory(RyderClip));
-   %player.setInventory(RyderAmmo, %player.maxInventory(RyderAmmo));    // Start the gun loaded
-   %player.addToWeaponCycle(Ryder);
-
-   %player.setInventory(Lurker, 1);
-   %player.setInventory(LurkerClip, %player.maxInventory(LurkerClip));
-   %player.setInventory(LurkerAmmo, %player.maxInventory(LurkerAmmo));  // Start the gun loaded
-   %player.addToWeaponCycle(Lurker);
-
-   %player.setInventory(LurkerGrenadeLauncher, 1);
-   %player.setInventory(LurkerGrenadeAmmo, %player.maxInventory(LurkerGrenadeAmmo));
-   %player.addToWeaponCycle(LurkerGrenadeLauncher);
-
-   %player.setInventory(ProxMine, %player.maxInventory(ProxMine));
-   %player.addToWeaponCycle(ProxMine);
-
-   %player.setInventory(DeployableTurret, %player.maxInventory(DeployableTurret));
-   %player.addToWeaponCycle(DeployableTurret);
-   
    %player.setInventory(WpnRaptor, 1);
    %player.addToWeaponCycle(WpnRaptor);
    
