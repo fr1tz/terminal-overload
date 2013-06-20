@@ -3,7 +3,7 @@
 
 datablock SFXProfile(WpnRaptorFireSound)
 {
-   filename = "art/sound/weapons/wpn_lurker_fire";
+   filename = "library/sound/cat5/gunshot1";
    description = AudioClose3D;
    preload = true;
 };
