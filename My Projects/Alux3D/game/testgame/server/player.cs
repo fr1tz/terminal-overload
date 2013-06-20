@@ -312,12 +312,12 @@ function PlayerData::onPoseChange(%this, %obj, %oldPose, %newPose)
 
 function PlayerData::onStartSprintMotion(%this, %obj)
 {
-   %obj.setImageGenericTrigger($WeaponSlot, 0, true);
+   //%obj.setImageGenericTrigger($WeaponSlot, 0, true);
 }
 
 function PlayerData::onStopSprintMotion(%this, %obj)
 {
-   %obj.setImageGenericTrigger($WeaponSlot, 0, false);
+   //%obj.setImageGenericTrigger($WeaponSlot, 0, false);
 }
 
 //-----------------------------------------------------------------------------
