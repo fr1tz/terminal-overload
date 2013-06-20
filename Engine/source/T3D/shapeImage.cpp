@@ -1381,7 +1381,8 @@ void ShapeBaseImageData::inspectPostApply()
 ShapeBase::MountedImage::MountedImage()
 {
 	mode = StandardMode;
-	updateControllingClient = false;
+	controllingClientUpdate.enabled = false;
+	controllingClientUpdate.sendMagazineRounds = false;
 
 	inaccuracy.enabled = false;
 	inaccuracy.distance = 100;
@@ -1686,7 +1687,7 @@ void ShapeBase::setImageGenericTriggerState(U32 imageSlot, U32 trigger, bool sta
    if (image.dataBlock && image.genericTrigger[trigger] != state) {
       setMaskBits(ImageMaskN << imageSlot);
       image.genericTrigger[trigger] = state;
-		image.updateControllingClient = true;
+		image.controllingClientUpdate.enabled = true;
    }
 }
 
@@ -1705,7 +1706,8 @@ void ShapeBase::setImageMagazineRounds(U32 imageSlot, U32 rounds)
 	{
       setMaskBits(ImageMaskN << imageSlot);
       image.magazineRounds = rounds;
-		image.updateControllingClient = true;
+		image.controllingClientUpdate.enabled = true;
+		image.controllingClientUpdate.sendMagazineRounds = true;
    }
 }
 
@@ -1726,7 +1728,7 @@ void ShapeBase::setImageAmmoState(U32 imageSlot,bool ammo)
 	{
       setMaskBits(ImageMaskN << imageSlot);
       image.ammo = ammo;
-		image.updateControllingClient = true;
+		image.controllingClientUpdate.enabled = true;
    }
 }
 
@@ -1744,7 +1746,7 @@ void ShapeBase::setImageWetState(U32 imageSlot,bool wet)
    if (image.dataBlock && image.wet != wet) {
       setMaskBits(ImageMaskN << imageSlot);
       image.wet = wet;
-		image.updateControllingClient = true;
+		image.controllingClientUpdate.enabled = true;
    }
 }
 
@@ -1762,7 +1764,7 @@ void ShapeBase::setImageMotionState(U32 imageSlot,bool motion)
    if (image.dataBlock && image.motion != motion) {
       setMaskBits(ImageMaskN << imageSlot);
       image.motion = motion;
-		image.updateControllingClient = true;
+		image.controllingClientUpdate.enabled = true;
    }
 }
 
@@ -1780,7 +1782,7 @@ void ShapeBase::setImageTargetState(U32 imageSlot,bool target)
    if (image.dataBlock && image.target != target) {
       setMaskBits(ImageMaskN << imageSlot);
       image.target = target;
-		image.updateControllingClient = true;
+		image.controllingClientUpdate.enabled = true;
    }
 }
 
@@ -1798,7 +1800,7 @@ void ShapeBase::setImageLoadedState(U32 imageSlot,bool loaded)
    if (image.dataBlock && image.loaded != loaded) {
       setMaskBits(ImageMaskN << imageSlot);
       image.loaded = loaded;
-		image.updateControllingClient = true;
+		image.controllingClientUpdate.enabled = true;
    }
 }
 
@@ -2441,7 +2443,7 @@ void ShapeBase::setImage(  U32 imageSlot,
             // Serverside, note the skin handle and tell the client.
             image.skinNameHandle = skinNameHandle;
             setMaskBits(ImageMaskN << imageSlot);
-				image.updateControllingClient = true;
+				image.controllingClientUpdate.enabled = true;
          }
          else {
             // Clientside, do the reskin.
@@ -2472,7 +2474,7 @@ void ShapeBase::setImage(  U32 imageSlot,
 
    // Mark that updates are happenin'.
    setMaskBits(ImageMaskN << imageSlot);
-	image.updateControllingClient = true;
+	image.controllingClientUpdate.enabled = true;
 
    // Notify script unmount since we're swapping datablocks.
    if (image.dataBlock && !isGhost()) {
@@ -3903,6 +3905,9 @@ void ShapeBase::clientFiredShotgun(
 	// Drain energy.
 	if(datablock->energyDrain > 0)
 		this->setEnergyLevel(this->getEnergyLevel() - datablock->energyDrain * datablock->numBullets);
+
+	// Set image fire state.
+	this->setImageState(slot, getImageFireState(slot), true);
 
 	// Create the ghosting projectile.
 	ShotgunProjectile* prj = new ShotgunProjectile(false, false);

@@ -3145,13 +3145,22 @@ U32 ShapeBase::packUpdate(NetConnection *con, U32 mask, BitStream *stream)
 
 			MountedImage& image = mMountedImageList[i];
 
+			bool sendMagazineRounds = true;
+
 			GameConnection* gc = dynamic_cast<GameConnection*>(con);
 			if(gc && this == gc->getControlObject())
 			{
 				if(image.mode == MountedImage::ClientFireMode)
 				{
-					if(image.updateControllingClient)
-						image.updateControllingClient = false;
+					if(image.controllingClientUpdate.enabled)
+					{				
+						sendMagazineRounds = false;
+						if(image.controllingClientUpdate.sendMagazineRounds)
+							sendMagazineRounds = true;
+
+						image.controllingClientUpdate.enabled = false;
+						image.controllingClientUpdate.sendMagazineRounds = false;						 
+					}
 					else
 						update = false;
 				}
@@ -3171,7 +3180,8 @@ U32 ShapeBase::packUpdate(NetConnection *con, U32 mask, BitStream *stream)
             // being set.  Therefore there is a network tick when the object is in limbo...
             stream->writeFlag(image.dataBlock && image.dataBlock->animateAllShapes && getControllingClient() == con);
 
-				stream->writeInt(image.magazineRounds, 16);
+				if(stream->writeFlag(sendMagazineRounds))
+					stream->writeInt(image.magazineRounds, 16);
 
             stream->writeFlag(image.wet);
             stream->writeFlag(image.motion);
@@ -3357,7 +3367,8 @@ void ShapeBase::unpackUpdate(NetConnection *con, BitStream *stream)
 
 				image.forceAnimateAllShapes = stream->readFlag();
 
-				image.magazineRounds = stream->readInt(16);
+				if(stream->readFlag())
+					image.magazineRounds = stream->readInt(16);
 
 				image.wet = stream->readFlag();
 

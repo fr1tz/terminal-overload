@@ -801,8 +801,12 @@ protected:
 			ClientFireMode,    ///  while the 'ClientFireMode' makes the image behave more
 		} mode;               ///  like the weapons in other games (ie. client controls fire) 
 
-		bool updateControllingClient; ///< Send image updates to the client that controls the shape 
-												///  this image is mounted on? (only used in ClientFireMode)
+		/// In ClientFireMode we have to filter some updates to the client
+		/// that's controlling the image.
+		struct ControllingClientUpdate {
+			bool enabled;
+			bool sendMagazineRounds;
+		} controllingClientUpdate;
 
 		Inaccuracy inaccuracy; ///< Firing inaccuracy (added for Alux3D)
 
