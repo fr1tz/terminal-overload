@@ -477,9 +477,9 @@ datablock PlayerData(DefaultPlayerData)
    canObserve = 1;
    cmdCategory = "Clients";
 
-   cameraDefaultFov = 55.0;
+   cameraDefaultFov = "75";
    cameraMinFov = 5.0;
-   cameraMaxFov = 65.0;
+   cameraMaxFov = "130";
 
    debrisShapeName = "art/shapes/actors/common/debris_player.dts";
    debris = playerDebris;
@@ -515,8 +515,8 @@ datablock PlayerData(DefaultPlayerData)
    maxSprintBackwardSpeed = 8;
    maxSprintSideSpeed = 6;
    sprintStrafeScale = 0.25;
-   sprintYawScale = 0.05;
-   sprintPitchScale = 0.05;
+   sprintYawScale = "0.4";
+   sprintPitchScale = "1";
    sprintCanJump = true;
 
    crouchForce = 405;
@@ -581,7 +581,7 @@ datablock PlayerData(DefaultPlayerData)
    exitSplashSoundVelocity = 5.0;
 
    // Controls over slope of runnable/jumpable surfaces
-   runSurfaceAngle  = 38;
+   runSurfaceAngle  = "18";
    jumpSurfaceAngle = 80;
    maxStepHeight = 0.35;  //two meters
    minJumpSpeed = 20;
