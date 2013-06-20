@@ -16,12 +16,12 @@ datablock ParticleData(WpnBadgerProjectileExplosionPlasmaParticles)
    useInvAlpha   = "1";
 
    colors[0]     = "0.992126 0.992126 0.992126 1";
-   colors[1]     = "0.32549 0.996078 0.964706 0.543307";
-   colors[2]     = "0 0.976471 1 0";
+   colors[1]     = "0.322835 0.992126 0.96063 0.535433";
+   colors[2]     = "0 0.976378 1 0";
 
-   sizes[0]      = "0.497467";
-   sizes[1]      = "0.497467";
-   sizes[2]      = "0.0976622";
+   sizes[0]      = "0.5";
+   sizes[1]      = "0.5";
+   sizes[2]      = "0";
 
    times[0]      = 0.0;
    times[1]      = "0.494118";
@@ -33,7 +33,7 @@ datablock ParticleData(WpnBadgerProjectileExplosionPlasmaParticles)
 datablock ParticleEmitterData(WpnBadgerProjectileExplosionPlasmaEmitter)
 {
    ejectionPeriodMS = "1";
-   ejectionVelocity = "8.333";
+   ejectionVelocity = "8.33";
    velocityVariance = "5";
    thetaMax = "180";
    softnessDistance = "1";
@@ -85,9 +85,9 @@ datablock ExplosionData(WpnBadgerProjectileExplosion)
 {
    lifetimeMS = "192";
    lightStartRadius = "4";
-   lightStartColor = "0 0.92126 1 1";
+   lightStartColor = "0 0.889764 1 1";
    lightEndColor = "0 0.976378 1 1";
-   lightStartBrightness = "4.94118";
+   lightStartBrightness = "0.862745";
    lightEndBrightness = "0";
    particleRadius = "0.1";
    particleDensity = "2";
