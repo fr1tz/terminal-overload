@@ -54,9 +54,9 @@ datablock ShapeBaseImageData(WpnRaptorImage)
    
    // Script fields
    reloadImage = WpnRaptorReloadImage;
-   item = Lurker;
-   ammo = LurkerAmmo;
-   clip = LurkerClip;
+   item = WpnRaptor;
+   ammo = WpnRaptorAmmo;
+   clip = WpnRaptorClip;
 
    // Initial start up state
    stateName[0]                     = "Preactivate";
