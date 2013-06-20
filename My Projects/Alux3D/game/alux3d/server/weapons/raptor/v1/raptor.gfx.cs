@@ -87,7 +87,7 @@ datablock ExplosionData(WpnRaptorProjectileExplosion)
    lightStartRadius = "4";
    lightStartColor = "0.992126 0.992126 0.992126 1";
    lightEndColor = "0.992126 0.992126 0.992126 1";
-   lightStartBrightness = "4.94118";
+   lightStartBrightness = "0.862745";
    lightEndBrightness = "0";
    particleRadius = "0.1";
    particleDensity = "2";
