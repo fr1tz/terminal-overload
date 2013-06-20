@@ -3,7 +3,7 @@
 
 datablock SFXProfile(WpnBadgerFireSound)
 {
-   filename = "art/sound/weapons/wpn_ryder_fire";
+   filename = "library/sound/rotc/fire2";
    description = AudioClose3D;
    preload = true;
 };
