@@ -8,7 +8,7 @@ new SimGroup(MissionGroup) {
       nearClip = "0.1";
       visibleDistance = "2000";
       decalBias = "0.0015";
-      fogColor = "0.223529 0.223529 0.223529 1";
+      fogColor = "0.14902 0.164706 0.25098 1";
       fogDensity = "0.01";
       fogDensityOffset = "100";
       fogAtmosphereHeight = "400";
@@ -52,7 +52,7 @@ new SimGroup(MissionGroup) {
    new Sun() {
       azimuth = "0";
       elevation = "60";
-      color = "0.227451 0.227451 0.227451 1";
+      color = "0.556863 0.556863 0.556863 1";
       ambient = "0.0196078 0.0196078 0.0196078 1";
       brightness = "1";
       castShadows = "1";
@@ -61,7 +61,6 @@ new SimGroup(MissionGroup) {
       coronaScale = "0.5";
       coronaTint = "1 1 1 1";
       coronaUseLightColor = "1";
-      flareType = "SunFlareExample";
       flareScale = "1";
       attenuationRatio = "0 1 1";
       shadowType = "PSSM";
@@ -93,7 +92,7 @@ new SimGroup(MissionGroup) {
          type = "Normal";
          msToNext = "1000";
          smoothingType = "Spline";
-         position = "0 27.5635 40";
+         position = "1.75015 18.6878 39.1615";
          rotation = "1 0 0 0";
          scale = "1 1 1";
          canSave = "1";
@@ -104,7 +103,7 @@ new SimGroup(MissionGroup) {
          type = "Normal";
          msToNext = "1000";
          smoothingType = "Spline";
-         position = "36.6907 0 40";
+         position = "1.32862 32.3386 38.8709";
          rotation = "1 0 0 0";
          scale = "1 1 1";
          canSave = "1";
@@ -115,7 +114,29 @@ new SimGroup(MissionGroup) {
          type = "Normal";
          msToNext = "1000";
          smoothingType = "Spline";
-         position = "0 -10.3122 40";
+         position = "23.0086 32.1105 39.0701";
+         rotation = "1 0 0 0";
+         scale = "1 1 1";
+         canSave = "1";
+         canSaveDynamicFields = "1";
+      };
+      new Marker() {
+         seqNum = "3";
+         type = "Normal";
+         msToNext = "1000";
+         smoothingType = "Spline";
+         position = "23.8481 -32.6028 41.9097";
+         rotation = "1 0 0 0";
+         scale = "1 1 1";
+         canSave = "1";
+         canSaveDynamicFields = "1";
+      };
+      new Marker() {
+         seqNum = "4";
+         type = "Normal";
+         msToNext = "1000";
+         smoothingType = "Spline";
+         position = "1.09094 -32.6467 41.93";
          rotation = "1 0 0 0";
          scale = "1 1 1";
          canSave = "1";
@@ -131,6 +152,16 @@ new SimGroup(MissionGroup) {
       screenError = "16";
       position = "-128 -128 -474.278";
       rotation = "1 0 0 0";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+   };
+   new SkyBox() {
+      Material = "NightSkyMat";
+      drawBottom = "1";
+      fogBandHeight = "0";
+      position = "15.852 73.8721 56.0683";
+      rotation = "1 0 0 0";
+      scale = "1 1 1";
       canSave = "1";
       canSaveDynamicFields = "1";
    };
