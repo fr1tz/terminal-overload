@@ -594,6 +594,9 @@ function GameCore::loadOut(%game, %player)
 
    %player.clearWeaponCycle();
    
+   %player.setInventory(WpnBadger, 1);
+   %player.addToWeaponCycle(WpnBadger);
+   
    %player.setInventory(WpnRaptor, 1);
    %player.addToWeaponCycle(WpnRaptor);
    

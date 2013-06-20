@@ -5,7 +5,7 @@ function serverCmdAction(%client, %nr)
 {
    %obj = %client.getControlObject();
    if(%nr == 1)
-      %obj.use(WpnRaptor);
+      %obj.use(WpnBadger);
    else if(%nr == 2)
       %obj.use(WpnRaptor);
    else if(%nr == 20)
