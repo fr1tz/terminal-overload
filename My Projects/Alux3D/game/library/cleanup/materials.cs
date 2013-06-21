@@ -18,6 +18,7 @@ new TerrainMaterial()
    detailMap = "library/texture/alux3d/dm2/grid1";
    detailSize = "4";
    detailDistance = "500";
+   normalMap = "library/texture/alux3d/dm2/grid1_n";
 };
 
 
