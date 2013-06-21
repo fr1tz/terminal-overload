@@ -3,7 +3,7 @@
 
 datablock ParticleData(WpnBulldogProjectileParticles : DefaultParticle)
 {
-   sizes[0] = "0.0976622";
+   sizes[0] = "0.0946103";
    sizes[1] = "0.497467";
    sizes[2] = "0";
    sizes[3] = "0";
@@ -32,8 +32,10 @@ datablock ParticleEmitterData(WpnBulldogProjectileEmitter : DefaultEmitter)
    ejectionPeriodMS = "2";
    periodVarianceMS = "0";
    softnessDistance = "1";
-   ejectionVelocity = "0";
+   ejectionVelocity = "1";
    ejectionOffset = "0";
+   thetaMin = "180";
+   thetaMax = "90";
 };
 
 datablock ParticleData(WpnBulldogProjectileExplosionPlasmaParticles)
