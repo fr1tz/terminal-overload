@@ -54,7 +54,7 @@ datablock ItemData(WpnBulldog)
    className = "Weapon";
 
    // Basic Item properties
-   shapeFile = "art/shapes/weapons/Lurker/TP_Lurker.DAE";
+   shapeFile = "library/shape/alux3d/bulldog/image/p1/TP_Bulldog.DAE";
    mass = 1;
    elasticity = 0.2;
    friction = 0.6;

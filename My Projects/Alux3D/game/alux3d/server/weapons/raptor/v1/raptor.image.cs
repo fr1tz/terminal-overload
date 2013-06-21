@@ -4,8 +4,8 @@
 datablock ShapeBaseImageData(WpnRaptorImage)
 {
    // Basic Item properties
-   shapeFile = "art/shapes/weapons/Lurker/TP_Lurker.DAE";
-   shapeFileFP = "art/shapes/weapons/Lurker/FP_Lurker.DAE";
+   shapeFile = "library/shape/alux3d/raptor/image/p1/TP_Raptor.DAE";
+   shapeFileFP = "library/shape/alux3d/raptor/image/p1/FP_Raptor.DAE";
    emap = true;
 
    imageAnimPrefix = "Rifle";

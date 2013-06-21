@@ -4,8 +4,8 @@
 datablock ShapeBaseImageData(WpnBulldogReloadImage)
 {
    // Basic Item properties
-   shapeFile = "art/shapes/weapons/Lurker/TP_Lurker.DAE";
-   shapeFileFP = "art/shapes/weapons/Lurker/FP_Lurker.DAE";
+   shapeFile = "library/shape/alux3d/bulldog/image/p1/TP_Bulldog.DAE";
+   shapeFileFP = "library/shape/alux3d/bulldog/image/p1/FP_Bulldog.DAE";
    emap = true;
 
    imageAnimPrefix = "Rifle";
