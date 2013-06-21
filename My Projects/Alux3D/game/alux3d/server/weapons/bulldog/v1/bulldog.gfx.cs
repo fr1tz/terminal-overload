@@ -1,22 +1,22 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
-datablock ParticleData(WpnBulldogProjectileEmitter : DefaultParticle)
+datablock ParticleData(WpnBulldogProjectileParticles : DefaultParticle)
 {
-   sizes[0] = "0.1";
-   sizes[1] = "0.5";
+   sizes[0] = "0.0976622";
+   sizes[1] = "0.497467";
    sizes[2] = "0";
    sizes[3] = "0";
    times[1] = "1";
    times[2] = "1";
    inheritedVelFactor = "0";
-   lifetimeMS = "0";
+   lifetimeMS = "1000";
    lifetimeVarianceMS = "0";
    dragCoefficient = "0";
    spinSpeed = "0";
    textureName = "library/texture/alux3d/ring.png";
    animTexName = "library/texture/alux3d/ring.png";
-   colors[1] = "0.992157 0.0862745 0.0156863 0";
+   colors[1] = "0.992126 0.0787402 0.00787402 0";
    colors[2] = "0.996078 0.0784314 0.00784314 0.330709";
    colors[3] = "1 0.0705882 0 0";
    ejectionPeriodMS = "2";
@@ -28,11 +28,12 @@ datablock ParticleData(WpnBulldogProjectileEmitter : DefaultParticle)
 
 datablock ParticleEmitterData(WpnBulldogProjectileEmitter : DefaultEmitter)
 {
-   particles = "WpnBulldogProjectileParticle";
-   ejectionPeriodMS = "10";
+   particles = "WpnBulldogProjectileParticles";
+   ejectionPeriodMS = "2";
    periodVarianceMS = "0";
    softnessDistance = "1";
    ejectionVelocity = "0";
+   ejectionOffset = "0";
 };
 
 datablock ParticleData(WpnBulldogProjectileExplosionPlasmaParticles)
