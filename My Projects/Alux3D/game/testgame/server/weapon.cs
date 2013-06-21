@@ -128,8 +128,8 @@ function WeaponImage::onMount(%this, %obj, %slot)
 
 function WeaponImage::onUnmount(%this, %obj, %slot)
 {
-   if(%this.reloadImage $= "")
-      %obj.magazine[%this] = %obj.getImageMagazineRounds(%slot);
+   if(%this.reloadImage !$= "")
+      %obj.magazine[%this.getId()] = %obj.getImageMagazineRounds(%slot);
 
    if (%obj.client !$= "" && !%obj.isAiControlled)
       %obj.client.RefreshWeaponHud(0, "", "");
