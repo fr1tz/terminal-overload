@@ -2444,6 +2444,7 @@ void ShapeBase::setImage(  U32 imageSlot,
             image.skinNameHandle = skinNameHandle;
             setMaskBits(ImageMaskN << imageSlot);
 				image.controllingClientUpdate.enabled = true;
+				image.controllingClientUpdate.sendMagazineRounds = true;
          }
          else {
             // Clientside, do the reskin.
@@ -2824,6 +2825,17 @@ void ShapeBase::setImageState(U32 imageSlot, U32 newState,bool force)
    if (!mMountedImageList[imageSlot].dataBlock)
       return;
    MountedImage& image = mMountedImageList[imageSlot];
+
+	// In ClientFireMode, the server only enters the fire states
+	// from ShapeBase::clientFiredShotgun().
+	if(this->isServerObject() && image.mode == MountedImage::ClientFireMode)
+	{
+		if(newState == image.dataBlock->fireState && !force)
+			return;
+
+		if(newState == image.dataBlock->altFireState && !force)
+			return;
+	}
 
 	// The client never enters the initial fire state on its own 
 	// unless he's in ClientFireMode, but he will always re-enter it.
