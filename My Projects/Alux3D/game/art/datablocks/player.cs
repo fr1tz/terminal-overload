@@ -651,7 +651,10 @@ datablock PlayerData(DefaultPlayerData)
    maxInv[DeployableTurret] = 5;
 
    maxInv[WpnBadger] = 1;
+   maxInv[WpnBadgerClip] = 8;
+   
    maxInv[WpnRaptor] = 1;
+   maxInv[WpnRaptorClip] = 4;
 
    // available skins (see materials.cs in model folder)
    availableSkins =  "base	DarkBlue	DarkGreen	LightGreen	Orange	Red	Teal	Violet	Yellow";

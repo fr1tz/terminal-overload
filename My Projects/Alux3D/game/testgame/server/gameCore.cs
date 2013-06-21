@@ -592,22 +592,18 @@ function GameCore::loadOut(%game, %player)
 {
    //echo (%game @"\c4 -> "@ %game.class @" -> GameCore::loadOut");
 
-   %player.clearWeaponCycle();
-   
    %player.setInventory(WpnBadger, 1);
-   %player.addToWeaponCycle(WpnBadger);
-   
+   %player.setInventory(WpnBadgerClip, 8);
    %player.setInventory(WpnRaptor, 1);
+
+   %player.clearWeaponCycle();
+   %player.addToWeaponCycle(WpnBadger);
    %player.addToWeaponCycle(WpnRaptor);
    
    if (%player.getDatablock().mainWeapon.image !$= "")
-   {
       %player.mountImage(%player.getDatablock().mainWeapon.image, 0);
-   }
    else
-   {
-      %player.mountImage(Ryder, 0);
-   }
+      %player.mountImage(WpnBadger, 0);
 }
 
 // Customized kill message for falling deaths

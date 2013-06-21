@@ -65,8 +65,11 @@ function clientCmdPlayTeleportEffect(%position, %effectDataBlock)
 // Update the Ammo Counter with current ammo, if not any then hide the counter.
 function clientCmdSetAmmoAmountHud(%amount, %amountInClips)
 {
-   if (!%amount)
-      AmmoAmount.setVisible(false);
+   if(%amount $= "")
+   {
+      AmmoAmount.setVisible(true);
+      AmmoAmount.setText("Clips: " @ %amountInClips);
+   }
    else
    {
       AmmoAmount.setVisible(true);
@@ -80,13 +83,7 @@ function clientCmdSetAmmoAmountHud(%amount, %amountInClips)
 
 function clientCmdRefreshWeaponHUD(%amount, %preview, %ret, %zoomRet, %amountInClips)
 {
-   if (!%amount)
-      AmmoAmount.setVisible(false);
-   else
-   {
-      AmmoAmount.setVisible(true);
-      AmmoAmount.setText("Ammo: " @ %amount @ "/" @ %amountInClips);
-   }
+   clientCmdSetAmmoAmountHud(%amount, %amountInClips);
 
    if (%preview $= "")
       WeaponHUD.setVisible(false);//PreviewImage.setVisible(false);

@@ -101,6 +101,14 @@ function WeaponImage::onMount(%this, %obj, %slot)
          %obj.setImageMagazineRounds(%slot, %magazine);
       else
          %obj.setImageMagazineRounds(%slot, 0);
+         
+      if (%obj.client !$= "" && !%obj.isAiControlled)
+      {
+         %numClips = %obj.getInventory(%this.clip);
+         if(%numClips $= "")
+            %numClips = 0;
+         %obj.client.RefreshWeaponHud("", %this.item.previewImage, %this.item.reticle, %this.item.zoomReticle, %numClips);
+      }
    }
    else if(%this.ammo !$= "")
    {
@@ -120,6 +128,9 @@ function WeaponImage::onMount(%this, %obj, %slot)
 
 function WeaponImage::onUnmount(%this, %obj, %slot)
 {
+   if(%this.reloadImage $= "")
+      %obj.magazine[%this] = %obj.getImageMagazineRounds(%slot);
+
    if (%obj.client !$= "" && !%obj.isAiControlled)
       %obj.client.RefreshWeaponHud(0, "", "");
 }
@@ -341,7 +352,7 @@ function WeaponImage::onMagazineEmpty(%this, %obj, %slot)
 {
    //echo("WeaponImage::onMagazineEmpty: " SPC %this SPC %obj SPC %slot);
    
-   %obj.mountImage(%this.reloadImage, $WeaponSlot);
+   %obj.reloadWeapon();
 }
 
 function WeaponImage::onReloadDone(%this, %obj, %slot)
@@ -349,6 +360,7 @@ function WeaponImage::onReloadDone(%this, %obj, %slot)
    //echo("WeaponImage::onReloadDone: " SPC %this SPC %obj SPC %slot);
 
    %fireImage = %this.fireImage;
+   %obj.decInventory(%fireImage.clip, 1);
    %obj.magazine[%fireImage.getId()] = %fireImage.ammo.maxInventory;
    %obj.mountImage(%fireImage, $WeaponSlot, true);
    %obj.setImageGenericTrigger($WeaponSlot, 3, true);
@@ -466,21 +478,17 @@ function AmmoClip::onPickup(%this, %obj, %shape, %amount)
       if (%image.isField("clip") && %image.clip.getId() == %this.getId())
       {
          %outOfAmmo = !%shape.getImageAmmo($WeaponSlot);
-         
-         %currentAmmo = %shape.getInventory(%image.ammo);
 
          if ( isObject( %image.clip ) )
             %amountInClips = %shape.getInventory(%image.clip);
             
-         %amountInClips *= %image.ammo.maxInventory;
-         %amountInClips += %obj.getFieldValue( "remaining" @ %this.ammo.getName() );
+         //%amountInClips *= %image.ammo.maxInventory;
+         //%amountInClips += %shape.getInventory(%image.ammo);
          
-         %shape.client.setAmmoAmountHud(%currentAmmo, %amountInClips );
+         %shape.client.setAmmoAmountHud("", %amountInClips);
          
-         if (%outOfAmmo)
-         {
-            %image.onClipEmpty(%shape, $WeaponSlot);
-         }
+         if(%outOfAmmo)
+            %image.onMagazineEmpty(%shape, $WeaponSlot);
       }
    }
 }
@@ -498,6 +506,8 @@ function Ammo::onPickup(%this, %obj, %shape, %amount)
 
 function Ammo::onInventory(%this, %obj, %amount)
 {
+   //echo("Ammo::onInventory: " SPC %this SPC %obj SPC %amount);
+
    // The ammo inventory state has changed, we need to update any
    // mounted images using this ammo to reflect the new state.
    for (%i = 0; %i < 8; %i++)

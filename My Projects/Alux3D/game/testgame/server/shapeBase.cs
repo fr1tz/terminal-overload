@@ -91,8 +91,12 @@ function ShapeBase::reloadWeapon(%this)
    // Bail out if we're already reloading.
    if(%image.fireImage !$= "")
       return;
-
-   %player.setImageMagazineRounds($WeaponSlot, 0);
+      
+   if(%image.isField("clip"))
+   {
+      if(%this.getInventory(%image.clip) > 0)
+         %this.mountImage(%image.reloadImage, $WeaponSlot);
+   }
 }
 
 //-----------------------------------------------------------------------------
