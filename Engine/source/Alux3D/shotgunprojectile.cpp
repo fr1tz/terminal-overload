@@ -153,6 +153,8 @@ bool ShotgunProjectileTracer::onAdd()
 	AssertFatal(isClientObject(), "ShotgunProjectileTracer on the server? - Someone fucked up!");
 
 	mInitialPosition = mCurrPosition;
+	mInitialVelocity = mCurrVelocity;
+
 	mCurrDeltaBase = mCurrPosition;
 	mCurrBackDelta = -mCurrVelocity;
 
@@ -242,7 +244,7 @@ void ShotgunProjectileTracer::processTick(const Move* move)
 
 	oldPosition = mCurrPosition;
 
-	newPosition = oldPosition + mCurrVelocity * (F32(TickMs) / 1000.0f);
+	newPosition = oldPosition + mCurrVelocity * TickSec;
 
 	F32 oldDist = (oldPosition-mImpactPos).len();
 	F32 newDist = (newPosition-mImpactPos).len();
@@ -251,6 +253,8 @@ void ShotgunProjectileTracer::processTick(const Move* move)
 
 	mCurrDeltaBase = newPosition;
 	mCurrBackDelta = mCurrPosition - newPosition;
+
+	this->emitParticles(oldPosition, newPosition, mCurrVelocity, TickMs);
 
 #if 0
 	this->missedEnemiesCheck(oldPosition, newPosition);
