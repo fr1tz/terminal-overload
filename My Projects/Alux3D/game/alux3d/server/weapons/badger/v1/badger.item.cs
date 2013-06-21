@@ -61,7 +61,7 @@ datablock ItemData(WpnBadger)
    emap = true;
 
    // Dynamic properties defined by the scripts
-   PreviewImage = 'lurker.png';
+   PreviewImage = 'ryder.png';
    pickUpName = "Badger Pistol";
    description = "Badger";
    image = WpnBadgerImage;
