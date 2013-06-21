@@ -129,6 +129,7 @@ datablock ShapeBaseImageData(WpnRaptorImage)
    stateSound[5]                    = WpnRaptorFireSoundList;
    //stateEmitter[5]                  = WpnRaptorFireSmokeEmitter;
    //stateEmitterTime[5]              = 0.025;
+   stateEjectShell[5]               = true;
 
    // No ammo in the weapon, just idle until something
    // shows up. Play the dry fire sound if the trigger is

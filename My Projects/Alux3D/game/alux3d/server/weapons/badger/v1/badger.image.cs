@@ -114,6 +114,7 @@ datablock ShapeBaseImageData(WpnBadgerImage)
    stateSound[5]                    = WpnBadgerFireSoundList;
    //stateEmitter[5]                  = WpnBadgerFireSmokeEmitter;
    //stateEmitterTime[5]              = 0.025;
+   stateEjectShell[5]               = true;
 
    // Wait for the player to release the trigger
    stateName[12]                     = "WaitForRelease";
