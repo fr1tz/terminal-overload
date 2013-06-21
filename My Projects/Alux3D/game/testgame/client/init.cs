@@ -33,6 +33,10 @@
 function initClient()
 {
    echo("\n--------- Initializing " @ $appName @ ": Client Scripts ---------");
+   
+   // Set actual window title.
+   if(isObject(Canvas))
+      Canvas.setWindowTitle($appName @ " (" @ $GameVersionString @ ")");
 
    // Make sure this variable reflects the correct state.
    $Server::Dedicated = false;

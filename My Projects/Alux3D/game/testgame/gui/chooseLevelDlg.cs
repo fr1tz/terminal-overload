@@ -76,7 +76,7 @@ function ChooseLevelDlg::onWake( %this )
       %preview = new GuiBitmapButtonCtrl() {
          internalName = "SmallPreview" @ %i;
          Extent = "108 81";
-         bitmap = "art/gui/no-preview";
+         bitmap = "alux3d/client/graphics/no-preview";
          command = "ChooseLevelWindow.previewSelected(ChooseLevelWindow->SmallPreviews->SmallPreview" @ %i @ ");";
       };
 
@@ -221,7 +221,7 @@ function ChooseLevelWindow::previewSelected(%this, %preview)
    if (isObject(%preview) && %preview.bitmap !$= "")
       %this->CurrentPreview.setBitmap(%preview.bitmap);
    else
-      %this->CurrentPreview.setBitmap("art/gui/no-preview");
+      %this->CurrentPreview.setBitmap("alux3d/client/graphics/no-preview");
 
    // Set the current level name
    if (isObject(%preview) && %preview.levelName !$= "")

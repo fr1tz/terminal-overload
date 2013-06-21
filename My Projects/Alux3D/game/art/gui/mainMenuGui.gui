@@ -1,10 +1,10 @@
 //--- OBJECT WRITE BEGIN ---
 %guiContent = new GuiChunkedBitmapCtrl(MainMenuGui) {
-   bitmap = "art/gui/background";
+   bitmap = "alux3d/client/graphics/background.png";
    useVariable = "0";
    tile = "0";
    position = "0 0";
-   extent = "1024 768";
+   extent = "640 480";
    minExtent = "8 8";
    horizSizing = "width";
    vertSizing = "height";
@@ -20,12 +20,12 @@
       isDecoy = "0";
 
    new GuiBitmapCtrl(MainMenuAppLogo) {
-      bitmap = "art/gui/Torque-3D-logo.png";
+      bitmap = "alux3d/client/graphics/logo.png";
       wrap = "0";
-      position = "540 30";
-      extent = "443 139";
+      position = "30 30";
+      extent = "394 87";
       minExtent = "8 2";
-      horizSizing = "left";
+      horizSizing = "right";
       vertSizing = "bottom";
       profile = "GuiDefaultProfile";
       visible = "1";
@@ -38,8 +38,31 @@
          enabled = "1";
          isDecoy = "0";
    };
+   new GuiTextCtrl(MainMenuVersionString) {
+      text = "Pre-Alpha 0.1";
+      maxLength = "1024";
+      margin = "0 0 0 0";
+      padding = "0 0 0 0";
+      anchorTop = "1";
+      anchorBottom = "0";
+      anchorLeft = "1";
+      anchorRight = "0";
+      position = "54 115";
+      extent = "116 17";
+      minExtent = "8 2";
+      horizSizing = "right";
+      vertSizing = "bottom";
+      profile = "HudTextBoldProfile";
+      visible = "1";
+      active = "1";
+      tooltipProfile = "GuiToolTipProfile";
+      hovertime = "1000";
+      isContainer = "1";
+      canSave = "1";
+      canSaveDynamicFields = "0";
+   };
    new GuiControl() {
-      position = "359 157";
+      position = "167 13";
       extent = "306 454";
       minExtent = "8 2";
       horizSizing = "center";
@@ -184,6 +207,8 @@
 
 function MainMenuGui::onWake(%this)
 {
+   MainMenuVersionString.setText($GameVersionString);
+
    if (isFunction("getWebDeployment") &&
        getWebDeployment() &&
        isObject(%this-->ExitButton))
