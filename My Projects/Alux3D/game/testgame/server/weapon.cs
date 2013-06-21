@@ -608,7 +608,7 @@ function ShapeBase::cycleWeapon(%this, %direction)
    for (%i=0; %i<%this.totalCycledWeapons; %i++)
    {
       %weapon = %this.cycleWeapon[%nextIndex];
-      if (%weapon !$= "" && %this.hasInventory(%weapon) && %this.hasAmmo(%weapon))
+      if (%weapon !$= "" && %this.hasInventory(%weapon)) // && %this.hasAmmo(%weapon))
       {
          // We've found out weapon
          %found = true;
