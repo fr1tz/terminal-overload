@@ -591,14 +591,16 @@ function GameCore::preparePlayer(%game, %client)
 function GameCore::loadOut(%game, %player)
 {
    //echo (%game @"\c4 -> "@ %game.class @" -> GameCore::loadOut");
-
-   %player.setInventory(WpnBadger, 1);
-   %player.setInventory(WpnBadgerClip, 8);
-   %player.setInventory(WpnRaptor, 1);
-
+   
    %player.clearWeaponCycle();
    %player.addToWeaponCycle(WpnBadger);
    %player.addToWeaponCycle(WpnRaptor);
+
+   %player.setInventory(WpnBadger, 1);
+   %player.setInventory(WpnBadgerClip, 8);
+   %player.magazine[WpnBadgerImage.getId()] = WpnBadgerImage.ammo.maxInventory;
+
+   %player.setInventory(WpnRaptor, 1);
    
    if (%player.getDatablock().mainWeapon.image !$= "")
       %player.mountImage(%player.getDatablock().mainWeapon.image, 0);
