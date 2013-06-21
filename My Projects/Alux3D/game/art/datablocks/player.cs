@@ -635,7 +635,7 @@ datablock PlayerData(DefaultPlayerData)
    DecalData = "PlayerFootprint";
 
    // Allowable Inventory Items
-   mainWeapon = WpnBadger;
+   mainWeapon = WpnBulldog;
 
    maxInv[Lurker] = 1;
    maxInv[LurkerClip] = 20;
@@ -655,6 +655,9 @@ datablock PlayerData(DefaultPlayerData)
    
    maxInv[WpnRaptor] = 1;
    maxInv[WpnRaptorClip] = 4;
+   
+   maxInv[WpnBulldog] = 1;
+   maxInv[WpnBulldogClip] = 4;
 
    // available skins (see materials.cs in model folder)
    availableSkins =  "base	DarkBlue	DarkGreen	LightGreen	Orange	Red	Teal	Violet	Yellow";

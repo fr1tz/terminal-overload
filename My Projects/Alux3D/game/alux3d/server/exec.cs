@@ -6,4 +6,5 @@ function executeServerScripts()
    exec("./commands.cs");
    exec("./weapons/badger/v1/exec.cs");
    exec("./weapons/raptor/v1/exec.cs");
+   exec("./weapons/bulldog/v1/exec.cs");
 }

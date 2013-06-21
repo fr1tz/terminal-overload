@@ -595,13 +595,17 @@ function GameCore::loadOut(%game, %player)
    %player.clearWeaponCycle();
    %player.addToWeaponCycle(WpnBadger);
    %player.addToWeaponCycle(WpnRaptor);
+   %player.addToWeaponCycle(WpnBulldog);
 
    %player.setInventory(WpnBadger, 1);
    %player.setInventory(WpnBadgerClip, 8);
    %player.magazine[WpnBadgerImage.getId()] = WpnBadgerImage.ammo.maxInventory;
+   
+   %player.setInventory(WpnBulldog, 1);
+   %player.magazine[WpnBulldogImage.getId()] = WpnBulldogImage.ammo.maxInventory;
 
    %player.setInventory(WpnRaptor, 1);
-   
+
    if (%player.getDatablock().mainWeapon.image !$= "")
       %player.mountImage(%player.getDatablock().mainWeapon.image, 0);
    else
