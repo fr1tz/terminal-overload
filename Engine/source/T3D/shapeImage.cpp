@@ -2476,6 +2476,7 @@ void ShapeBase::setImage(  U32 imageSlot,
    // Mark that updates are happenin'.
    setMaskBits(ImageMaskN << imageSlot);
 	image.controllingClientUpdate.enabled = true;
+	image.controllingClientUpdate.sendMagazineRounds = true;
 
    // Notify script unmount since we're swapping datablocks.
    if (image.dataBlock && !isGhost()) {
