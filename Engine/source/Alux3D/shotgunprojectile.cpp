@@ -37,6 +37,106 @@
 static MRandomLCG sRandom(0x1);
 
 //--------------------------------------------------------------------------
+
+IMPLEMENT_CO_CLIENTEVENT_V1(CreateExplosionEvent);
+
+CreateExplosionEvent::CreateExplosionEvent()
+{
+	//mGuaranteeType = Guaranteed;
+	mData = NULL;
+}
+
+CreateExplosionEvent::CreateExplosionEvent(ExplosionData* data,
+	const Point3F& p, const Point3F &n)
+{
+	mData = data;
+	mPos = p;
+	mNorm = n;
+}
+
+void CreateExplosionEvent::pack(NetConnection* conn, BitStream* bstream)
+{
+	if(bstream->writeFlag(mData))
+	{
+		bstream->writeRangedU32(mData->getId(), DataBlockObjectIdFirst, DataBlockObjectIdLast);
+		mathWrite(*bstream, mPos);
+		mathWrite(*bstream, mNorm);
+	}
+}
+
+void CreateExplosionEvent::unpack(NetConnection* conn, BitStream* bstream)
+{
+	if(bstream->readFlag())
+	{
+		SimObject* ptr = NULL;
+		U32 id = bstream->readRangedU32(DataBlockObjectIdFirst, DataBlockObjectIdLast);
+		if(id != 0 && (ptr = Sim::findObject(id)))
+			mData = dynamic_cast<ExplosionData*>(ptr);
+
+		mathRead(*bstream, &mPos);
+		mathRead(*bstream, &mNorm);
+	}
+}
+
+void CreateExplosionEvent::write(NetConnection* conn, BitStream* bstream)
+{
+	this->pack(conn,bstream);
+}
+
+void CreateExplosionEvent::process(NetConnection* conn)
+{
+	if(!mData)
+		return;
+
+	Explosion* pExplosion = new Explosion;
+	pExplosion->onNewDataBlock(mData, false);
+   if( pExplosion )
+   {
+      MatrixF xform(true);
+      xform.setPosition(mPos);
+      pExplosion->setTransform(xform);
+      pExplosion->setInitialState(mPos, mNorm);
+      if (pExplosion->registerObject() == false)
+      {
+         Con::errorf(ConsoleLogEntry::General, "CreateExplosionEvent(): couldn't register explosion (%s)",
+                     mData->getName() );
+         delete pExplosion;
+         pExplosion = NULL;
+      }
+   }
+}
+
+ConsoleFunction( createExplosionOnClient, bool, 5, 5, "(NetConnection conn, DataBlock datablock, Point3F pos, Point3F norm)")
+{
+	NetConnection* nc = NULL;
+	if(Sim::findObject(argv[1], nc) == false)
+	{
+		Con::warnf(ConsoleLogEntry::General, "createExplosionOnClient: couldn't find object: %s", argv[1]);
+		return false;
+	}
+
+	ExplosionData* datablock = NULL;
+	if(Sim::findObject(argv[2], datablock) == false)
+	{
+		Con::warnf(ConsoleLogEntry::General, "createExplosionOnClient: couldn't find object: %s", argv[2]);
+		return false;
+	}
+
+	Point3F pos, norm;
+
+	dSscanf(argv[3], "%f %f %f", &pos.x, &pos.y, &pos.z);
+	dSscanf(argv[4], "%f %f %f", &norm.x, &norm.y, &norm.z);
+
+	if(datablock)
+	{
+		CreateExplosionEvent* event = new CreateExplosionEvent(datablock,pos,norm);
+		nc->postNetEvent(event);
+	}
+
+	return true;
+}
+
+//--------------------------------------------------------------------------
 //
 
 IMPLEMENT_CO_DATABLOCK_V1(ShotgunProjectileData);

@@ -15,6 +15,28 @@ class ShapeBase;
 
 //--------------------------------------------------------------------------
 
+// A useful little NetEvent instructing client
+// to create specified explosion at specified position.
+class CreateExplosionEvent: public NetEvent
+{
+	ExplosionData* mData;
+	Point3F mPos;
+	Point3F mNorm;
+
+  public:
+   CreateExplosionEvent(ExplosionData* data, const Point3F& p, const Point3F &n);
+	CreateExplosionEvent();
+
+   void pack(NetConnection*, BitStream* bstream);
+   void write(NetConnection*, BitStream* bstream);
+   void unpack(NetConnection*, BitStream* bstream);
+   void process(NetConnection*);
+
+   DECLARE_CONOBJECT(CreateExplosionEvent);
+};
+
+//--------------------------------------------------------------------------
+
 class ShotgunProjectileData : public ProjectileData
 {
    typedef ProjectileData Parent;
