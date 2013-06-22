@@ -1,7 +1,7 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
-$GameVersionString = "Pre-Alpha 0.1";
+$GameVersionString = "Pre-Alpha 0.1+dev";
 
 // Load up core script base
 loadDir("core"); // Should be loaded at a higher level, but for now leave -- SRZ 11/29/07
