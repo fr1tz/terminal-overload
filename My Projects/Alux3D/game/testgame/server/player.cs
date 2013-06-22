@@ -180,9 +180,11 @@ function PlayerData::damage(%this, %obj, %sourceObject, %position, %damage, %dam
 {
    if (!isObject(%obj) || %obj.getState() $= "Dead" || !%damage)
       return;
+      
+   Parent::damage(%this, %obj, %sourceObject, %position, %damage, %damageType);
 
    %obj.applyDamage(%damage);
-
+   
    %location = "Body";
 
    // Deal with client callbacks here because we don't have this
@@ -205,15 +207,23 @@ function PlayerData::onDamage(%this, %obj, %delta)
 {
    // This method is invoked by the ShapeBase code whenever the
    // object's damage level changes.
+   Parent::onDamage(%this, %obj, %delta);
+
    if (%delta > 0 && %obj.getState() !$= "Dead")
    {
       // Apply a damage flash
       %obj.setDamageFlash(1);
 
       // If the pain is excessive, let's hear about it.
-      if (%delta > 10)
-         %obj.playPain();
+      //if (%delta > 10)
+      //   %obj.playPain();
    }
+}
+
+// Called by ShapeBase script code.
+function PlayerData::getBleed(%this, %obj, %dmg)
+{
+   return BloodExplosion;
 }
 
 // ----------------------------------------------------------------------------

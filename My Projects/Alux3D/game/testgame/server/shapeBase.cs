@@ -103,8 +103,23 @@ function ShapeBase::reloadWeapon(%this)
 // ShapeBase datablock
 //-----------------------------------------------------------------------------
 
-function ShapeBaseData::damage(%this, %obj, %position, %source, %amount, %damageType)
+function ShapeBaseData::damage(%this, %obj, %source, %position, %amount, %damageType)
 {
-   // Ignore damage by default. This empty method is here to
-   // avoid console warnings.
+   %obj.lastDamagePos = %position;
+   %obj.lastDamageSourcePos = %source.getPosition();
 }
+
+function ShapeBaseData::onDamage(%this, %obj, %delta)
+{
+   %bleed = %this.getBleed(%obj, %delta);
+   if(isObject(%bleed))
+   {
+      %dpos = %obj.lastDamagePos;
+      %spos = %obj.lastDamageSourcePos;
+      %norm = VectorNormalize(VectorSub(%dpos, %obj.getWorldBoxCenter()));
+      if(getWord(%norm, 2) < 0)
+         %norm = VectorNormalize(VectorSub(%spos, %dpos));
+      createExplosion(%bleed, %dpos, %norm);
+   }
+}
+
