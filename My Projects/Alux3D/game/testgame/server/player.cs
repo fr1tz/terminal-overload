@@ -183,8 +183,6 @@ function PlayerData::damage(%this, %obj, %sourceObject, %position, %damage, %dam
       
    Parent::damage(%this, %obj, %sourceObject, %position, %damage, %damageType);
 
-   %obj.applyDamage(%damage);
-   
    %location = "Body";
 
    // Deal with client callbacks here because we don't have this

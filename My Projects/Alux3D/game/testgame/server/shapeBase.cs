@@ -105,21 +105,18 @@ function ShapeBase::reloadWeapon(%this)
 
 function ShapeBaseData::damage(%this, %obj, %source, %position, %amount, %damageType)
 {
-   %obj.lastDamagePos = %position;
-   %obj.lastDamageSourcePos = %source.getPosition();
-}
+   %obj.applyDamage(%amount);
 
-function ShapeBaseData::onDamage(%this, %obj, %delta)
-{
    %bleed = %this.getBleed(%obj, %delta);
    if(isObject(%bleed))
    {
-      %dpos = %obj.lastDamagePos;
-      %spos = %obj.lastDamageSourcePos;
+      %dpos = %position;
+      %spos = %source.getPosition();
       %norm = VectorNormalize(VectorSub(%dpos, %obj.getWorldBoxCenter()));
       if(getWord(%norm, 2) < 0)
          %norm = VectorNormalize(VectorSub(%spos, %dpos));
       createExplosion(%bleed, %dpos, %norm);
    }
 }
+
 
