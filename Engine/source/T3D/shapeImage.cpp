@@ -2827,17 +2827,6 @@ void ShapeBase::setImageState(U32 imageSlot, U32 newState,bool force)
       return;
    MountedImage& image = mMountedImageList[imageSlot];
 
-	// In ClientFireMode, the server only enters the fire states
-	// from ShapeBase::clientFiredShotgun().
-	if(this->isServerObject() && image.mode == MountedImage::ClientFireMode)
-	{
-		if(newState == image.dataBlock->fireState && !force)
-			return;
-
-		if(newState == image.dataBlock->altFireState && !force)
-			return;
-	}
-
 	// The client never enters the initial fire state on its own 
 	// unless he's in ClientFireMode, but he will always re-enter it.
    if(isGhost() && !force && newState == image.dataBlock->fireState)
@@ -3029,9 +3018,6 @@ void ShapeBase::setImageState(U32 imageSlot, U32 newState,bool force)
 	// Fire projectile? (note: this is experimental code -mag)
 	if(stateData.fireProjectile && image.ammo)
 	{
-		if(imageData.ammoSource == ShapeBaseImageData::Magazine)
-			image.magazineRounds--;
-
 		bool createProjectile = true;
 		if(image.mode == MountedImage::ClientFireMode)
 		{
@@ -3051,6 +3037,9 @@ void ShapeBase::setImageState(U32 imageSlot, U32 newState,bool force)
 
 		if(createProjectile)
 		{
+			if(imageData.ammoSource == ShapeBaseImageData::Magazine)
+				image.magazineRounds--;
+
 			Point3F muzzlePoint, muzzleVector;
 			this->getRenderMuzzlePoint(imageSlot,&muzzlePoint);
 			this->getRenderMuzzleVector(imageSlot,&muzzleVector);
@@ -3915,12 +3904,21 @@ void ShapeBase::clientFiredShotgun(
 	// This must only get called on the server!
 	AssertFatal(!isClientObject(), "ShapeBase::clientFiredShotgun() called on client!");
 
+	MountedImage* image = this->getImageStruct(slot);
+	if(image->dataBlock == NULL)
+		return;
+
+	// Update magazine rounds count.
+	if(image->dataBlock->ammoSource == ShapeBaseImageData::Magazine)
+	{
+		this->setImageMagazineRounds(slot, image->magazineRounds-1);
+		image->controllingClientUpdate.enabled = false;
+		image->controllingClientUpdate.sendMagazineRounds = false;
+	}
+
 	// Drain energy.
 	if(datablock->energyDrain > 0)
 		this->setEnergyLevel(this->getEnergyLevel() - datablock->energyDrain * datablock->numBullets);
-
-	// Set image fire state.
-	this->setImageState(slot, getImageFireState(slot), true);
 
 	// Create the ghosting projectile.
 	ShotgunProjectile* prj = new ShotgunProjectile(false, false);
