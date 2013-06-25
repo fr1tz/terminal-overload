@@ -119,4 +119,9 @@ function ShapeBaseData::damage(%this, %obj, %source, %position, %amount, %damage
    }
 }
 
+// Called by engine whenever the object's damage level changes.
+function ShapeBaseData::onDamage(%this, %obj, %delta)
+{
+   // Avoid console error spam.
+}
 
