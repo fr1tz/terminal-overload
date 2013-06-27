@@ -132,7 +132,7 @@ new SimGroup(MissionGroup) {
    new Sun() {
       azimuth = "0";
       elevation = "90";
-      color = "0.0941177 0.0941177 0.0941177 1";
+      color = "0.552941 0.54902 0.552941 1";
       ambient = "0.0196078 0.0196078 0.0196078 1";
       brightness = "1";
       castShadows = "1";
