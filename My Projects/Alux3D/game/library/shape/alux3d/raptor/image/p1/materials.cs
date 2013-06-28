@@ -57,9 +57,9 @@ singleton Material(TP_Raptor_Raptor_Base)
    specular[0] = "0.9 0.9 0.9 1";
    specularPower[0] = "10";
    translucentBlendOp = "None";
-   diffuseColor[0] = "1 0.976471 0 1";
-   glow[0] = "1";
-   emissive[0] = "1";
+   diffuseColor[0] = "0.996078 0.996078 0.992157 1";
+   glow[0] = "0";
+   emissive[0] = "0";
 };
 
 singleton Material(TP_Raptor_Raptor_ScopeScreen_Base)

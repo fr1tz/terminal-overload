@@ -55,9 +55,9 @@ singleton Material(TP_Badger_FP_Badger_Base)
    specularPower[0] = "10";
    specularMap[0] = "library/shape/alux3d/badger/image/p1/FP_Badger_S";
    translucentBlendOp = "None";
-   diffuseColor[0] = "0.0313726 0.972549 0.996078 1";
-   glow[0] = "1";
-   emissive[0] = "1";
+   diffuseColor[0] = "0.992157 0.996078 0.996078 1";
+   glow[0] = "0";
+   emissive[0] = "0";
 };
 
 singleton Material(TP_Badger_Base)
