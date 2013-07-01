@@ -1,34 +1,28 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
-#if 0 // BORQUE_NEEDS_PORTING
-
-#include "game/etherform.h"
-
 #include "platform/platform.h"
-#include "platform/profiler.h"
-#include "dgl/dgl.h"
-#include "game/game.h"
+#include "Alux3D/etherform.h"
+
 #include "math/mMath.h"
+#include "core/stream/bitStream.h"
+#include "T3D/fx/cameraFXMgr.h"
+#include "T3D/gameBase/gameConnection.h"
+#include "math/mathIO.h"
+#include "gui/worldEditor/editor.h"
+#include "console/engineAPI.h"
+#include "console/consoleTypes.h"
+#include "console/engineAPI.h"
+#include "math/mathUtils.h"
+#include "math/mTransform.h"
 #include "collision/extrudedPolyList.h"
 #include "collision/clippedPolyList.h"
 #include "collision/earlyOutPolyList.h"
-#include "console/simBase.h"
-#include "console/console.h"
-#include "console/consoleTypes.h"
-#include "core/bitStream.h"
-#include "core/dnet.h"
-#include "game/gameConnection.h"
-#include "game/trigger.h"
-#include "game/physicalZone.h"
-#include "game/tacticalzone.h"
-#include "game/tacticalsurface.h"
-#include "game/fx/laserBeam.h"
-#include "game/fx/particleEngine.h"
-#include "game/fx/cameraFXMgr.h"
-#include "game/item.h"
-#include "math/mathIO.h"
-#include "editor/editor.h"
+#include "T3D/trigger.h"
+#include "T3D/physicalZone.h"
+#include "T3D/fx/particleEmitter.h"
+#include "T3D/item.h"
+#include "ts/tsShapeInstance.h"
 
 #define MaxPitch 1.3962
 #define EtherformRadius    0.05;
@@ -44,21 +38,20 @@ static S32 sMaxWarpTicks = 3;          // Max warp duration in ticks
 static S32 sMaxPredictionTicks = 30;   // Number of ticks to predict
 
 //
-static U32 sCollisionMoveMask = (TerrainObjectType      | InteriorObjectType   |
-                                 WaterObjectType        | PlayerObjectType     |
-                                 StaticShapeObjectType  | VehicleObjectType    |
-                                 PhysicalZoneObjectType | StaticTSObjectType   |
-											TurretObjectType);
+static U32 sCollisionMoveMask =  TerrainObjectType       |
+                                 WaterObjectType         | 
+                                 PlayerObjectType        |
+                                 StaticShapeObjectType   | 
+                                 VehicleObjectType       |
+                                 PhysicalZoneObjectType;
 
-static U32 sServerCollisionContactMask = (sCollisionMoveMask |
-                                          (ItemObjectType    |
-                                           TriggerObjectType |
-                                           TacticalZoneObjectType |
-										   TacticalSurfaceObjectType |
-                                           CorpseObjectType));
+static U32 sServerCollisionContactMask = sCollisionMoveMask |
+                                         ItemObjectType     |
+                                         TriggerObjectType  |
+                                         CorpseObjectType;
 
-static U32 sClientCollisionContactMask = sCollisionMoveMask | PhysicalZoneObjectType;
-
+static U32 sClientCollisionContactMask = sCollisionMoveMask |
+                                         TriggerObjectType;
 
 //----------------------------------------------------------------------------
 
@@ -70,8 +63,10 @@ EtherformData::EtherformData()
 
 	accelerationForce = 200;
 
+#if 0 // BORQUE_NEEDS_PORTING
 	dMemset( laserTrailList, 0, sizeof( laserTrailList ) );
 	dMemset( laserTrailIdList, 0, sizeof( laserTrailIdList ) );
+#endif
 
    for (S32 j = 0; j < MaxJetEmitters; j++)
       jetEmitter[j] = 0;
@@ -86,13 +81,15 @@ bool EtherformData::onAdd()
    return true;
 }
 
-bool EtherformData::preload(bool server, char errorBuffer[256])
+bool EtherformData::preload(bool server, String &errorStr)
 {
-   if (!Parent::preload(server, errorBuffer))
+   if (!Parent::preload(server, errorStr))
       return false;
 
-   // Resolve objects transmitted from server
-   if (!server) {
+   // Resolve objects transmitted from server.
+   if(!server)
+	{
+#if 0 // BORQUE_NEEDS_PORTING
 		for( S32 i=0; i<NUM_LASERTRAILS; i++ )
 		{
 			if( !laserTrailList[i] && laserTrailIdList[i] != 0 )
@@ -103,6 +100,7 @@ bool EtherformData::preload(bool server, char errorBuffer[256])
 				}
 			}
 		}
+#endif
 
 		for (S32 j = 0; j < MaxJetEmitters; j++)
 		{
@@ -126,6 +124,7 @@ void EtherformData::packData(BitStream* stream)
 
    stream->write(accelerationForce);
 
+#if 0 // BORQUE_NEEDS_PORTING
    for( S32 i=0; i<NUM_LASERTRAILS; i++ )
    {
       if( stream->writeFlag( laserTrailList[i] != NULL ) )
@@ -133,6 +132,7 @@ void EtherformData::packData(BitStream* stream)
          stream->writeRangedU32( laserTrailList[i]->getId(), DataBlockObjectIdFirst,  DataBlockObjectIdLast );
       }
    }
+#endif
 
    for (S32 j = 0; j < MaxJetEmitters; j++)
    {
@@ -155,6 +155,7 @@ void EtherformData::unpackData(BitStream* stream)
 
    stream->read(&accelerationForce);
 
+#if 0 // BORQUE_NEEDS_PORTING
    for( S32 i=0; i<NUM_LASERTRAILS; i++ )
    {
       if( stream->readFlag() )
@@ -162,6 +163,7 @@ void EtherformData::unpackData(BitStream* stream)
          laserTrailIdList[i] = stream->readRangedU32( DataBlockObjectIdFirst, DataBlockObjectIdLast );
       }
    }
+#endif
 
    for (S32 j = 0; j < MaxJetEmitters; j++) {
       jetEmitter[j] = NULL;
@@ -178,13 +180,14 @@ void EtherformData::initPersistFields()
 
 	addField("boundingBox", TypePoint3F, Offset(boxSize, EtherformData));
 	addField("accelerationForce", TypeF32, Offset(accelerationForce, EtherformData));
-	addField("laserTrail", TypeMultiNodeLaserBeamDataPtr, Offset(laserTrailList, EtherformData), NUM_LASERTRAILS );
-   addField("particleTrail",TypeParticleEmitterDataPtr, Offset(jetEmitter[TrailEmitter], EtherformData));
+#if 0 // BORQUE_NEEDS_PORTING
+	addField("laserTrail", TYPEID<MultiNodeLaserBeamData>(), Offset(laserTrailList, EtherformData), NUM_LASERTRAILS );
+#endif
+   addField("particleTrail", TYPEID<ParticleEmitterData>(), Offset(jetEmitter[TrailEmitter], EtherformData));
    addField("minTrailSpeed", TypeF32, Offset(minTrailSpeed, EtherformData));
 }
 
-
-//----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 
 IMPLEMENT_CO_NETOBJECT_V1(Etherform);
 
@@ -205,20 +208,21 @@ Etherform::Etherform()
 	mRot.set(0, 0, 0);
 	mVelocity.set(0.0f, 0.0f, 0.0f);
 
+#if 0 // BORQUE_NEEDS_PORTING
 	dMemset( mLaserTrailList, 0, sizeof( mLaserTrailList ) );
+#endif
 
    for (S32 j = 0; j < EtherformData::MaxJetEmitters; j++)
       mJetEmitter[j] = 0;
 
 	mConvex.init(this);
-	mWorkingQueryBox.min.set(-1e9f, -1e9f, -1e9f);
-	mWorkingQueryBox.max.set(-1e9f, -1e9f, -1e9f);
+	mWorkingQueryBox.minExtents.set(-1e9f, -1e9f, -1e9f);
+	mWorkingQueryBox.maxExtents.set(-1e9f, -1e9f, -1e9f);
 }
 
 Etherform::~Etherform()
 {
 }
-
 
 //----------------------------------------------------------------------------
 
@@ -241,6 +245,7 @@ bool Etherform::onAdd()
 
 void Etherform::onRemove()
 {
+#if 0 // BORQUE_NEEDS_PORTING
 	for( S32 i = 0; i < NUM_LASERTRAILS; i++ )
 	{
 		if(mLaserTrailList[i])
@@ -249,6 +254,7 @@ void Etherform::onRemove()
 			mLaserTrailList[i] = NULL;
 		}
 	}
+#endif
 
 	scriptOnRemove();
 	removeFromScene();
@@ -265,8 +271,8 @@ void Etherform::onScaleChanged()
 {
    const Point3F& scale = getScale();
    mScaledBox = mObjBox;
-   mScaledBox.min.convolve( scale );
-   mScaledBox.max.convolve( scale );
+   mScaledBox.minExtents.convolve( scale );
+   mScaledBox.maxExtents.convolve( scale );
 }
 
 //----------------------------------------------------------------------------
@@ -326,6 +332,7 @@ void Etherform::processTick(const Move* move)
 		}
 	}
 
+#if 0 // BORQUE_NEEDS_PORTING
 	// Add node to lasertrails.
 	if(this->isClientObject())
 	{
@@ -348,6 +355,7 @@ void Etherform::processTick(const Move* move)
 		}
 #endif
 	}
+#endif
 }
 
 
@@ -362,18 +370,20 @@ void Etherform::interpolateTick(F32 dt)
 
 		this->setRenderPosition(pos, rot, dt);
 
+#if 0 // BORQUE_NEEDS_PORTING
 		// update laser trails...
 		for( S32 i=0; i < NUM_LASERTRAILS; i++ )
 		{
 			if(mLaserTrailList[i])
 				mLaserTrailList[i]->setLastNodePos(pos);
 		}
+#endif
 
 		// apply camera effects - is this the best place? - bramage
 		GameConnection* connection = GameConnection::getConnectionToServer();
-		if( connection->isFirstPerson() )
+		if(connection->isFirstPerson())
 		{
-			ShapeBase *obj = connection->getControlObject();
+			GameBase* obj = connection->getControlObject();
 			if( obj == this )
 			{
 				MatrixF curTrans = this->getRenderTransform();
@@ -400,19 +410,19 @@ void Etherform::advanceTime(F32 delta)
 	this->updateCameraPos(delta);
 }
 
-bool Etherform::onNewDataBlock(GameBaseData* dptr)
+bool Etherform::onNewDataBlock(GameBaseData* dptr, bool reload)
 {
 	mDataBlock = dynamic_cast<EtherformData*>(dptr);
-	if (!mDataBlock || !Parent::onNewDataBlock(dptr))
+	if (!mDataBlock || !Parent::onNewDataBlock(dptr, reload))
 		return false;
 
 	// set up bounding box...
-	mObjBox.max.x = mDataBlock->boxSize.x * 0.5f;
-	mObjBox.max.y = mDataBlock->boxSize.y * 0.5f;
-	mObjBox.max.z = mDataBlock->boxSize.z * 0.5f;
-	mObjBox.min.x = -mObjBox.max.x;
-	mObjBox.min.y = -mObjBox.max.y;
-	mObjBox.min.z = -mObjBox.max.z;
+	mObjBox.maxExtents.x = mDataBlock->boxSize.x * 0.5f;
+	mObjBox.maxExtents.y = mDataBlock->boxSize.y * 0.5f;
+	mObjBox.maxExtents.z = mDataBlock->boxSize.z * 0.5f;
+	mObjBox.minExtents.x = -mObjBox.maxExtents.x;
+	mObjBox.minExtents.y = -mObjBox.maxExtents.y;
+	mObjBox.minExtents.z = -mObjBox.maxExtents.z;
 	this->resetWorldBox();
 
 	// Setup the box for our convex object...
@@ -461,6 +471,7 @@ void Etherform::addLaserTrailNode(const Point3F& pos)
 	if( isServerObject() )
 		return;
 
+#if 0 // BORQUE_NEEDS_PORTING
 	for(S32 i = 0; i < NUM_LASERTRAILS; i++)
 	{
 		if( mLaserTrailList[i] == NULL )
@@ -490,6 +501,7 @@ void Etherform::addLaserTrailNode(const Point3F& pos)
 			mLaserTrailList[i]->addNodes(pos);
 		}
 	}
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -511,7 +523,7 @@ void Etherform::updateTrailEmitter(F32 dt)
 		if(!bool(emitter))
 		{
 			emitter = new ParticleEmitter;
-			emitter->onNewDataBlock(mDataBlock->jetEmitter[EtherformData::TrailEmitter]);
+			emitter->onNewDataBlock(mDataBlock->jetEmitter[EtherformData::TrailEmitter], false);
 			emitter->registerObject();
 			mJetEmitter[EtherformData::TrailEmitter] = emitter;
 		}
@@ -554,11 +566,11 @@ void Etherform::updateWorkingCollisionSet()
    Box3F convexBox = mConvex.getBoundingBox(getTransform(), getScale());
    F32 l = (newLen * 1.1f) + 0.1f;  // from Convex::updateWorkingList
    const Point3F  lPoint( l, l, l );
-   convexBox.min -= lPoint;
-   convexBox.max += lPoint;
+   convexBox.minExtents -= lPoint;
+   convexBox.maxExtents += lPoint;
 
    // Check containment
-   if (mWorkingQueryBox.min.x != -1e9f)
+   if (mWorkingQueryBox.minExtents.x != -1e9f)
    {
       if (mWorkingQueryBox.isContained(convexBox) == false)
          // Needed region is outside the cached region.  Update it.
@@ -575,8 +587,8 @@ void Etherform::updateWorkingCollisionSet()
    {
       const Point3F  twolPoint( 2.0f * l, 2.0f * l, 2.0f * l );
       mWorkingQueryBox = convexBox;
-      mWorkingQueryBox.min -= twolPoint;
-      mWorkingQueryBox.max += twolPoint;
+      mWorkingQueryBox.minExtents -= twolPoint;
+      mWorkingQueryBox.maxExtents += twolPoint;
 
       disableCollision();
       mConvex.updateWorkingList(mWorkingQueryBox,
@@ -592,10 +604,10 @@ void Etherform::findContacts()
 
    Box3F wBox;
    Point3F exp(0,0,sTractionDistance);
-   wBox.min = pos + mScaledBox.min - exp;
-   wBox.max.x = pos.x + mScaledBox.max.x;
-   wBox.max.y = pos.y + mScaledBox.max.y;
-   wBox.max.z = pos.z + mScaledBox.min.z + sTractionDistance;
+   wBox.minExtents = pos + mScaledBox.minExtents - exp;
+   wBox.maxExtents.x = pos.x + mScaledBox.maxExtents.x;
+   wBox.maxExtents.y = pos.y + mScaledBox.maxExtents.y;
+   wBox.maxExtents.z = pos.z + mScaledBox.minExtents.z + sTractionDistance;
 
    static ClippedPolyList polyList;
    polyList.clear();
@@ -604,20 +616,20 @@ void Etherform::findContacts()
    polyList.setInterestNormal(Point3F(0.0f, 0.0f, -1.0f));
 
    polyList.mPlaneList.setSize(6);
-   polyList.mPlaneList[0].setYZ(wBox.min, -1.0f);
-   polyList.mPlaneList[1].setXZ(wBox.max, 1.0f);
-   polyList.mPlaneList[2].setYZ(wBox.max, 1.0f);
-   polyList.mPlaneList[3].setXZ(wBox.min, -1.0f);
-   polyList.mPlaneList[4].setXY(wBox.min, -1.0f);
-   polyList.mPlaneList[5].setXY(wBox.max, 1.0f);
+   polyList.mPlaneList[0].setYZ(wBox.minExtents, -1.0f);
+   polyList.mPlaneList[1].setXZ(wBox.maxExtents, 1.0f);
+   polyList.mPlaneList[2].setYZ(wBox.maxExtents, 1.0f);
+   polyList.mPlaneList[3].setXZ(wBox.minExtents, -1.0f);
+   polyList.mPlaneList[4].setXY(wBox.minExtents, -1.0f);
+   polyList.mPlaneList[5].setXY(wBox.maxExtents, 1.0f);
    Box3F plistBox = wBox;
 
    // Expand build box as it will be used to collide with items.
    // PickupRadius will be at least the size of the box.
    F32 pd = 0; //mDataBlock->pickupDelta;
-   wBox.min.x -= pd; wBox.min.y -= pd;
-   wBox.max.x += pd; wBox.max.y += pd;
-   wBox.max.z = pos.z + mScaledBox.max.z;
+   wBox.minExtents.x -= pd; wBox.minExtents.y -= pd;
+   wBox.maxExtents.x += pd; wBox.maxExtents.y += pd;
+   wBox.maxExtents.z = pos.z + mScaledBox.maxExtents.z;
 
    // Build list from convex states here...
    CollisionWorkingList& rList = mConvex.getWorkingList();
@@ -636,6 +648,7 @@ void Etherform::findContacts()
          Trigger* pTrigger = static_cast<Trigger*>(pConvex->getObject());
          pTrigger->potentialEnterObject(this);
       }
+#if 0 // BORQUE_NEEDS_PORTING
       else if (objectMask & TacticalZoneObjectType)
 		{
 			TacticalZone* pTZone = static_cast<TacticalZone*>(pConvex->getObject());
@@ -646,6 +659,7 @@ void Etherform::findContacts()
 			TacticalSurface* pTSurface = static_cast<TacticalSurface*>(pConvex->getObject());
 			pTSurface->potentialEnterObject(this);
 		}
+#endif
       else if (objectMask & CorpseObjectType)
       {
          // If we've overlapped the worldbounding boxes, then that's it...
@@ -720,7 +734,7 @@ void Etherform::updateVelocity(const Move* move)
 		mObjToWorld.getColumn(2,&vec);
 		acc += vec * move->trigger[2] * TickSec * scale;
 		vec.neg();
-		acc += vec * move->trigger[5] * TickSec * scale;
+		acc += vec * move->trigger[3] * TickSec * scale;
 
 		// Ignore force from physical zones...
 		// acc += (mAppliedForce / mMass) * TickSec;
@@ -786,20 +800,20 @@ bool Etherform::updatePos(const F32 travelTime)
          // We can potentially early out of this.  If there are no polys in the clipped polylist at our
          //  end position, then we can bail, and just set start = end;
          Box3F wBox = mScaledBox;
-         wBox.min += end;
-         wBox.max += end;
+         wBox.minExtents += end;
+         wBox.maxExtents += end;
 
          static EarlyOutPolyList eaPolyList;
          eaPolyList.clear();
          eaPolyList.mNormal.set(0.0f, 0.0f, 0.0f);
          eaPolyList.mPlaneList.clear();
          eaPolyList.mPlaneList.setSize(6);
-         eaPolyList.mPlaneList[0].set(wBox.min,VectorF(-1.0f, 0.0f, 0.0f));
-         eaPolyList.mPlaneList[1].set(wBox.max,VectorF(0.0f, 1.0f, 0.0f));
-         eaPolyList.mPlaneList[2].set(wBox.max,VectorF(1.0f, 0.0f, 0.0f));
-         eaPolyList.mPlaneList[3].set(wBox.min,VectorF(0.0f, -1.0f, 0.0f));
-         eaPolyList.mPlaneList[4].set(wBox.min,VectorF(0.0f, 0.0f, -1.0f));
-         eaPolyList.mPlaneList[5].set(wBox.max,VectorF(0.0f, 0.0f, 1.0f));
+         eaPolyList.mPlaneList[0].set(wBox.minExtents,VectorF(-1.0f, 0.0f, 0.0f));
+         eaPolyList.mPlaneList[1].set(wBox.maxExtents,VectorF(0.0f, 1.0f, 0.0f));
+         eaPolyList.mPlaneList[2].set(wBox.maxExtents,VectorF(1.0f, 0.0f, 0.0f));
+         eaPolyList.mPlaneList[3].set(wBox.minExtents,VectorF(0.0f, -1.0f, 0.0f));
+         eaPolyList.mPlaneList[4].set(wBox.minExtents,VectorF(0.0f, 0.0f, -1.0f));
+         eaPolyList.mPlaneList[5].set(wBox.maxExtents,VectorF(0.0f, 0.0f, 1.0f));
 
          // Build list from convex states here...
          CollisionWorkingList& rList = mConvex.getWorkingList();
@@ -833,10 +847,10 @@ bool Etherform::updatePos(const F32 travelTime)
       // Setup the bounding box for the extrudedPolyList
       Box3F plistBox = mScaledBox;
       collisionMatrix.mul(plistBox);
-      Point3F oldMin = plistBox.min;
-      Point3F oldMax = plistBox.max;
-      plistBox.min.setMin(oldMin + (mVelocity * time) - Point3F(0.1f, 0.1f, 0.1f));
-      plistBox.max.setMax(oldMax + (mVelocity * time) + Point3F(0.1f, 0.1f, 0.1f));
+      Point3F oldMin = plistBox.minExtents;
+      Point3F oldMax = plistBox.maxExtents;
+      plistBox.minExtents.setMin(oldMin + (mVelocity * time) - Point3F(0.1f, 0.1f, 0.1f));
+      plistBox.maxExtents.setMax(oldMax + (mVelocity * time) + Point3F(0.1f, 0.1f, 0.1f));
 
       // Build extruded polyList...
       VectorF vector = end - start;
@@ -867,18 +881,18 @@ bool Etherform::updatePos(const F32 travelTime)
       }
 
       // Take into account any physical zones...
-      for (U32 j = 0; j < physZoneCollisionList.count; j++) {
-         AssertFatal(dynamic_cast<PhysicalZone*>(physZoneCollisionList.collision[j].object), "Bad phys zone!");
-         PhysicalZone* pZone = (PhysicalZone*)physZoneCollisionList.collision[j].object;
+      for (U32 j = 0; j < physZoneCollisionList.getCount(); j++) {
+         AssertFatal(dynamic_cast<PhysicalZone*>(physZoneCollisionList[j].object), "Bad phys zone!");
+         PhysicalZone* pZone = (PhysicalZone*)physZoneCollisionList[j].object;
          if (pZone->isActive())
             mVelocity *= pZone->getVelocityMod();
       }
 
-      if (collisionList.count != 0 && collisionList.t < 1.0f) {
+      if(collisionList.getCount() != 0 && collisionList.getTime() < 1.0f) {
          // Set to collision point
          F32 velLen = mVelocity.len();
 
-         F32 dt = time * getMin(collisionList.t, 1.0f);
+         F32 dt = time * getMin(collisionList.getTime(), 1.0f);
          start += mVelocity * dt;
          time -= dt;
 
@@ -892,9 +906,9 @@ bool Etherform::updatePos(const F32 travelTime)
          }
 
           // Pick the surface most parallel to the face that was hit.
-         Collision* collision = &collisionList.collision[0];
+         Collision* collision = &collisionList[0];
          Collision* cp = collision + 1;
-         Collision *ep = collision + collisionList.count;
+         Collision *ep = collision + collisionList.getCount();
          for (; cp != ep; cp++)
          {
             if (cp->faceDot > collision->faceDot)
@@ -1066,7 +1080,7 @@ void Etherform::updateCameraPos(F32 delta)
 		mCameraPos += vec * speed * delta;
 #else
 		//F32 speedScale = this->getVelocity().len() / mDataBlock->accelerationForce;
-		F32 speedScale = 1; //mDataBlock->accelerationForce / 2;
+		F32 speedScale = 4; //mDataBlock->accelerationForce / 2;
 		F32 distScale = 1 - (1/vec.lenSquared());
 		vec *= speedScale * distScale * delta;
 		if(vec.len() > dist)
@@ -1288,7 +1302,7 @@ Point3F &Etherform::getPosition()
 }
 
 ConsoleMethod( Etherform, getPosition, const char *, 2, 2, "()"
-              "Get the position of the camera.\n\n"
+              "Get the position of the object.\n\n"
               "@returns A string of form \"x y z\".")
 {
    static char buffer[100];
@@ -1319,7 +1333,7 @@ void Etherform::setTransform(const MatrixF& mat)
    Point3F pos,vec;
    mat.getColumn(1,&vec);
    mat.getColumn(3,&pos);
-   Point3F rot(-mAtan(vec.z, mSqrt(vec.x*vec.x + vec.y*vec.y)),0,-mAtan(-vec.x,vec.y));
+   Point3F rot(-mAtan2(vec.z, mSqrt(vec.x*vec.x + vec.y*vec.y)),0,-mAtan2(-vec.x,vec.y));
    this->setPosition(pos,rot);
 
    this->setMaskBits(MoveMask | NoWarpMask); // don't warp to new transform on clients
@@ -1429,5 +1443,3 @@ void Etherform::getCameraTransform(F32* pos, MatrixF* mat)
 		getRenderEyeTransform(mat);
 	}
 }
-
-#endif // BORQUE_NEEDS_PORTING

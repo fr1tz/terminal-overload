@@ -1,39 +1,51 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
-#if 0 // BORQUE_NEEDS_PORTING
-
 #ifndef _ETHERFORM_H_
 #define _ETHERFORM_H_
 
 #ifndef _SHAPEBASE_H_
-#include "game/shapeBase.h"
+#include "T3D/shapeBase.h"
 #endif
+
+#ifndef _DYNAMIC_CONSOLETYPES_H_
+#include "console/dynamicTypes.h"
+#endif
+
 #ifndef _BOXCONVEX_H_
 #include "collision/boxConvex.h"
 #endif
 
-#define NUM_LASERTRAILS 3
+#define NUM_ETHERFORM_LASERTRAILS 3
 
+#if 0 // BORQUE_NEEDS_PORTING
 class MultiNodeLaserBeam;
 class MultiNodeLaserBeamData;
+#endif
 
-//----------------------------------------------------------------------------
-
-class EtherformData : public ShapeBaseData
+class EtherformData: public ShapeBaseData 
 {
-   typedef ShapeBaseData Parent;
+	typedef ShapeBaseData Parent;
 
 protected:
-   bool onAdd();
+	bool onAdd();
 
 public:
+	EtherformData();
+
+   bool preload(bool server, String &errorStr);
+	static void initPersistFields();
+	virtual void packData(BitStream* stream);
+	virtual void unpackData(BitStream* stream);
+
 	Point3F boxSize;        ///< Collision box width, depth, height
 	F32 accelerationForce;
 
 	// laser trail list...
-	MultiNodeLaserBeamData* laserTrailList[NUM_LASERTRAILS];
-	S32 laserTrailIdList[NUM_LASERTRAILS];
+#if 0 // BORQUE_NEEDS_PORTING
+	MultiNodeLaserBeamData* laserTrailList[NUM_ETHERFORM_LASERTRAILS];
+	S32 laserTrailIdList[NUM_ETHERFORM_LASERTRAILS];
+#endif
 
 	// Particle trail
    enum Jets {
@@ -43,20 +55,12 @@ public:
    ParticleEmitterData* jetEmitter[MaxJetEmitters];
    F32 minTrailSpeed;
 
-	EtherformData();
-   
-   virtual bool preload(bool server, char errorBuffer[256]);
-	virtual void packData(BitStream* stream);
-	virtual void unpackData(BitStream* stream);
-
-	static void initPersistFields();
 	DECLARE_CONOBJECT(EtherformData);
+	DECLARE_CATEGORY("Game");
+	DECLARE_DESCRIPTION("A datablock that describes an etherform.");
 };
 
-
-//----------------------------------------------------------------------------
-/// Implements a basic camera object.
-class Etherform: public ShapeBase
+class Etherform : public ShapeBase
 {
 	typedef ShapeBase Parent;
 	EtherformData* mDataBlock;
@@ -100,7 +104,9 @@ class Etherform: public ShapeBase
 	Point3F mRot;
 	Point3F mVelocity;
 
+#if 0 // BORQUE_NEEDS_PORTING
 	MultiNodeLaserBeam* mLaserTrailList[NUM_LASERTRAILS];
+#endif
 	SimObjectPtr<ParticleEmitter> mJetEmitter[EtherformData::MaxJetEmitters];
 
 public:
@@ -131,8 +137,6 @@ protected:
 	void applyImpulse(const Point3F& pos,const VectorF& vec);
 
 public:
-	DECLARE_CONOBJECT(Etherform);
-
 	Etherform();
 	~Etherform();
 	static void initPersistFields();
@@ -145,18 +149,20 @@ public:
 	void onScaleChanged();
 
 	// GameBase...
-	void processTick(const Move *move);
+	void processTick(const Move* move);
 	void interpolateTick(F32 delta);
 	void advanceTime(F32 delta);
-	bool onNewDataBlock(GameBaseData *dptr);
+	bool onNewDataBlock(GameBaseData *dptr, bool reload);
 
 	void writePacketData(GameConnection *conn, BitStream *stream);
 	void readPacketData(GameConnection *conn, BitStream *stream);
 	U32  packUpdate(NetConnection *conn, U32 mask, BitStream *stream);
 	void unpackUpdate(NetConnection *conn, BitStream *stream);
-	Point3F &getPosition();
+	Point3F& getPosition();
+
+	DECLARE_CONOBJECT(Etherform);
+	DECLARE_CATEGORY("Game");
+	DECLARE_DESCRIPTION("TODO");
 };
 
 #endif
-
-#endif // BORQUE_NEEDS_PORTING
