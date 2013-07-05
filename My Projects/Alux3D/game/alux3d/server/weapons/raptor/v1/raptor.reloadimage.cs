@@ -5,7 +5,7 @@ datablock ShapeBaseImageData(WpnRaptorReloadImage)
 {
    // Basic Item properties
    shapeFile = "library/shape/alux3d/raptor/image/p1/TP_Raptor.DAE";
-   shapeFileFP = "library/shape/alux3d/raptor/image/p1/FP_Raptor.DAE";
+   shapeFileFP = "library/shape/alux3d/raptor/image/p2/shape.fp.dae";
    emap = true;
 
    imageAnimPrefix = "Rifle";
@@ -15,8 +15,9 @@ datablock ShapeBaseImageData(WpnRaptorReloadImage)
    // for first person rendering.
    mountPoint = 0;
    firstPerson = true;
-   useEyeNode = true;
    animateOnServer = true;
+   useEyeNode = false;
+   eyeOffset = "-0.05 0.1 -0.4";
 
    // When firing from a point offset from the eye, muzzle correction
    // will adjust the muzzle vector to point to the eye LOS point.

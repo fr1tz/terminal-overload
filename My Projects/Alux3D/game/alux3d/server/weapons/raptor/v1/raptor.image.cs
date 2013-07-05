@@ -5,7 +5,7 @@ datablock ShapeBaseImageData(WpnRaptorImage)
 {
    // Basic Item properties
    shapeFile = "library/shape/alux3d/raptor/image/p1/TP_Raptor.DAE";
-   shapeFileFP = "library/shape/alux3d/raptor/image/p1/FP_Raptor.DAE";
+   shapeFileFP = "library/shape/alux3d/raptor/image/p2/shape.fp.dae";
    emap = true;
 
    imageAnimPrefix = "Rifle";
@@ -15,8 +15,9 @@ datablock ShapeBaseImageData(WpnRaptorImage)
    // for first person rendering.
    mountPoint = 0;
    firstPerson = true;
-   useEyeNode = true;
    animateOnServer = true;
+   useEyeNode = false;
+   eyeOffset = "-0.05 0.1 -0.4";
 
    // When firing from a point offset from the eye, muzzle correction
    // will adjust the muzzle vector to point to the eye LOS point.
@@ -79,8 +80,8 @@ datablock ShapeBaseImageData(WpnRaptorImage)
    //stateTransitionOnTimeout[2]      = "ReadyFidget";
    stateTimeoutValue[2]             = 10;
    stateWaitForTimeout[2]           = false;
-   stateScaleAnimation[2]           = false;
-   stateScaleAnimationFP[2]         = false;
+   stateScaleAnimation[2]           = true;
+   stateScaleAnimationFP[2]         = true;
    stateTransitionOnNoAmmo[2]       = "NoAmmo";
    stateTransitionOnTriggerDown[2]  = "Fire";
    stateSequence[2]                 = "idle";
@@ -138,11 +139,11 @@ datablock ShapeBaseImageData(WpnRaptorImage)
    stateTransitionGeneric0In[6]     = "SprintEnter";
    stateTransitionOnMotion[6]       = "NoAmmoMotion";
    stateTransitionOnAmmo[6]         = "Ready";
-   stateTimeoutValue[6]             = 0.1;   // Slight pause to allow script to run when trigger is still held down from Fire state
+   stateTimeoutValue[6]             = 10;
    stateScript[6]                   = "onMagazineEmpty";
    stateSequence[6]                 = "idle";
-   stateScaleAnimation[6]           = false;
-   stateScaleAnimationFP[6]         = false;
+   stateScaleAnimation[6]           = true;
+   stateScaleAnimationFP[6]         = true;
    stateTransitionOnTriggerDown[6]  = "DryFire";
 
    stateName[7]                     = "NoAmmoMotion";
