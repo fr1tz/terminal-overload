@@ -477,7 +477,7 @@ datablock PlayerData(DefaultPlayerData)
    canObserve = 1;
    cmdCategory = "Clients";
 
-   cameraDefaultFov = "75";
+   cameraDefaultFov = "80";
    cameraMinFov = 5.0;
    cameraMaxFov = "130";
 
