@@ -472,7 +472,7 @@ datablock PlayerData(DefaultPlayerData)
 
    // First person arms
    imageAnimPrefixFP = "soldier";
-   shapeNameFP[0] = "art/shapes/actors/Soldier/FP/FP_SoldierArms.DAE";
+   //shapeNameFP[0] = "art/shapes/actors/Soldier/FP/FP_SoldierArms.DAE";
 
    canObserve = 1;
    cmdCategory = "Clients";
