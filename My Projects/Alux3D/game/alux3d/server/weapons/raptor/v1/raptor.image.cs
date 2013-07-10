@@ -5,7 +5,7 @@ datablock ShapeBaseImageData(WpnRaptorImage)
 {
    // Basic Item properties
    shapeFile = "library/shape/alux3d/raptor/image/p1/TP_Raptor.DAE";
-   shapeFileFP = "library/shape/alux3d/raptor/image/p2/shape.fp.dae";
+   shapeFileFP = "library/shape/alux3d/raptor/image/p3/shape.fp.dae";
    emap = true;
 
    imageAnimPrefix = "Rifle";
@@ -17,7 +17,7 @@ datablock ShapeBaseImageData(WpnRaptorImage)
    firstPerson = true;
    animateOnServer = true;
    useEyeNode = false;
-   eyeOffset = "-0.05 0.1 -0.4";
+   eyeOffset = "-0.05 0.1 -0.375";
 
    // When firing from a point offset from the eye, muzzle correction
    // will adjust the muzzle vector to point to the eye LOS point.
@@ -84,7 +84,21 @@ datablock ShapeBaseImageData(WpnRaptorImage)
    stateScaleAnimationFP[2]         = true;
    stateTransitionOnNoAmmo[2]       = "NoAmmo";
    stateTransitionOnTriggerDown[2]  = "Fire";
-   stateSequence[2]                 = "idle";
+   stateSequence[2]                 = "ready";
+   
+   // Ready to fire with player moving
+   stateName[4]                     = "ReadyMotion";
+   stateTransitionGeneric0In[4]     = "SprintEnter";
+   stateTransitionOnNoMotion[4]     = "Ready";
+   stateTimeoutValue[4]             = 0.15;
+   stateWaitForTimeout[4]           = false;
+   stateScaleAnimation[4]           = true;
+   stateScaleAnimationFP[4]         = true;
+   stateSequenceTransitionIn[4]     = true;
+   stateSequenceTransitionOut[4]    = true;
+   stateTransitionOnNoAmmo[4]       = "NoAmmo";
+   stateTransitionOnTriggerDown[4]  = "Fire";
+   stateSequence[4]                 = "ready_moving";
 
    // Same as Ready state but plays a fidget sequence
    stateName[3]                     = "ReadyFidget";
@@ -97,19 +111,6 @@ datablock ShapeBaseImageData(WpnRaptorImage)
    stateTransitionOnTriggerDown[3]  = "Fire";
    stateSequence[3]                 = "idle_fidget1";
    stateSound[3]                    = WpnRaptorIdleSound;
-
-   // Ready to fire with player moving
-   stateName[4]                     = "ReadyMotion";
-   stateTransitionGeneric0In[4]     = "SprintEnter";
-   stateTransitionOnNoMotion[4]     = "Ready";
-   stateWaitForTimeout[4]           = false;
-   stateScaleAnimation[4]           = false;
-   stateScaleAnimationFP[4]         = false;
-   stateSequenceTransitionIn[4]     = true;
-   stateSequenceTransitionOut[4]    = true;
-   stateTransitionOnNoAmmo[4]       = "NoAmmo";
-   stateTransitionOnTriggerDown[4]  = "Fire";
-   stateSequence[4]                 = "run";
 
    // Fire the weapon.
    stateName[5]                     = "Fire";
@@ -140,8 +141,9 @@ datablock ShapeBaseImageData(WpnRaptorImage)
    stateTransitionOnMotion[6]       = "NoAmmoMotion";
    stateTransitionOnAmmo[6]         = "Ready";
    stateTimeoutValue[6]             = 10;
+   stateWaitForTimeout[6]           = false;
    stateScript[6]                   = "onMagazineEmpty";
-   stateSequence[6]                 = "idle";
+   stateSequence[6]                 = "empty";
    stateScaleAnimation[6]           = true;
    stateScaleAnimationFP[6]         = true;
    stateTransitionOnTriggerDown[6]  = "DryFire";
@@ -149,14 +151,15 @@ datablock ShapeBaseImageData(WpnRaptorImage)
    stateName[7]                     = "NoAmmoMotion";
    stateTransitionGeneric0In[7]     = "SprintEnter";
    stateTransitionOnNoMotion[7]     = "NoAmmo";
+   stateTimeoutValue[7]             = 0.15;
    stateWaitForTimeout[7]           = false;
-   stateScaleAnimation[7]           = false;
-   stateScaleAnimationFP[7]         = false;
+   stateScaleAnimation[7]           = true;
+   stateScaleAnimationFP[7]         = true;
    stateSequenceTransitionIn[7]     = true;
    stateSequenceTransitionOut[7]    = true;
    stateTransitionOnTriggerDown[7]  = "DryFire";
    stateTransitionOnAmmo[7]         = "Ready";
-   stateSequence[7]                 = "run";
+   stateSequence[7]                 = "empty_moving";
 
    // No ammo dry fire
    stateName[8]                     = "DryFire";
