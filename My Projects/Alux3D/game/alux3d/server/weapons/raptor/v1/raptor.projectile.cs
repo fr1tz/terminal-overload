@@ -1,6 +1,24 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
+datablock DecalData(WpnRaptorProjectileDecal)
+{
+   Material = "DECAL_RBlast";
+   size = "0.25";
+   lifeSpan = "5000";
+   randomize = "1";
+   texRows = "2";
+   texCols = "2";
+   screenStartRadius = "20";
+   screenEndRadius = "5";
+   clippingAngle = "180";
+   textureCoordCount = "3";
+   textureCoords[0] = "0 0 0.5 0.5";
+   textureCoords[1] = "0.5 0 0.5 0.5";
+   textureCoords[2] = "0 0.5 0.5 0.5";
+   textureCoords[3] = "0.5 0.5 0.5 0.5";
+};
+
 datablock ShotgunProjectileData(WpnRaptorProjectile)
 {
    projectileShapeName = "library/shape/alux3d/raptor/projectile/p1/shape.dae";
@@ -21,9 +39,9 @@ datablock ShotgunProjectileData(WpnRaptorProjectile)
    impactForce         = 600;
 
    explosion           = "WpnRaptorProjectileExplosion";
-   decal               = "bulletHoleDecal";
+   decal               = "WpnRaptorProjectileDecal";
 
-   muzzleVelocity      = "600"; // 900
+   muzzleVelocity      = "400"; // 900
    velInheritFactor    = 0;
 
    armingDelay         = 0;
