@@ -3,7 +3,7 @@
 
 datablock DecalData(WpnRaptorProjectileDecal)
 {
-   Material = "DECAL_RBlast";
+   Material = "DECAL_WpnRaptorProjectile";
    size = "0.25";
    lifeSpan = "5000";
    randomize = "1";
