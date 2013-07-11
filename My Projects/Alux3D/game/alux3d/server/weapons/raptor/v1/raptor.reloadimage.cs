@@ -17,7 +17,7 @@ datablock ShapeBaseImageData(WpnRaptorReloadImage)
    firstPerson = true;
    animateOnServer = true;
    useEyeNode = false;
-   eyeOffset = "-0.05 0.1 -0.375";
+   eyeOffset = "-0.0 0.1 -0.375";
 
    // When firing from a point offset from the eye, muzzle correction
    // will adjust the muzzle vector to point to the eye LOS point.
@@ -35,18 +35,40 @@ datablock ShapeBaseImageData(WpnRaptorReloadImage)
 
    // Initial start up state
    stateName[0]                     = "ReloadStart";
-   stateTransitionOnTimeout[0]      = "ReloadDone";
+   stateTransitionOnTimeout[0]      = "ReleaseMagazine";
    stateWaitForTimeout[0]           = true;
-   stateTimeoutValue[0]             = 3.0;
+   stateTimeoutValue[0]             = 0.18;
    stateReload[0]                   = true;
-   stateSequence[0]                 = "reload";
+   stateSequence[0]                 = "reload_start";
    stateShapeSequence[0]            = "Reload";
-   stateScaleShapeSequence[0]       = true;
-   stateSound[0]                    = WpnRaptorReloadSound;
+   //stateScaleShapeSequence[0]       = true;
+   //stateSound[0]                    = WpnRaptorReloadSound;
+   
+   stateName[2]                     = "ReleaseMagazine";
+   stateTransitionOnTimeout[2]      = "InsertMagazine";
+   stateWaitForTimeout[2]           = true;
+   stateTimeoutValue[2]             = 0.72;
+   stateSequence[2]                 = "reload_releasemagazine";
+   stateSound[2]                    = WpnRaptorReleaseMagazineSound;
+   
+   stateName[3]                     = "InsertMagazine";
+   stateTransitionOnTimeout[3]      = "Chamber";
+   stateWaitForTimeout[3]           = true;
+   stateTimeoutValue[3]             = 0.90;
+   stateSequence[3]                 = "reload_insertmagazine";
+   stateSound[3]                    = WpnRaptorInsertMagazineSound;
+   
+   stateName[4]                     = "Chamber";
+   stateTransitionOnTimeout[4]      = "ReloadDone";
+   stateWaitForTimeout[4]           = true;
+   stateTimeoutValue[4]             = 1.19;
+   stateSequence[4]                 = "reload_chamber";
+   stateSound[4]                    = WpnRaptorChamberSound;
    
    // Reload done
    stateName[1]                     = "ReloadDone";
    stateScript[1]                   = "onReloadDone";
+   stateSequence[1]                 = "ready";
 };
 
 

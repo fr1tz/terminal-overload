@@ -17,7 +17,7 @@ datablock ShapeBaseImageData(WpnRaptorImage)
    firstPerson = true;
    animateOnServer = true;
    useEyeNode = false;
-   eyeOffset = "-0.05 0.1 -0.375";
+   eyeOffset = "-0.0 0.1 -0.375";
 
    // When firing from a point offset from the eye, muzzle correction
    // will adjust the muzzle vector to point to the eye LOS point.
@@ -59,13 +59,10 @@ datablock ShapeBaseImageData(WpnRaptorImage)
    ammo = WpnRaptorAmmo;
    clip = WpnRaptorClip;
 
-   // Initial start up state
    stateName[0]                     = "Preactivate";
    stateTransitionGeneric3In[0]     = "Ready";
    stateTransitionGeneric3Out[0]    = "Activate";
 
-   // Activating the gun.  Called when the weapon is first
-   // mounted and there is ammo.
    stateName[1]                     = "Activate";
    stateTransitionGeneric0In[1]     = "SprintEnter";
    stateTransitionOnTimeout[1]      = "Ready";
@@ -73,34 +70,27 @@ datablock ShapeBaseImageData(WpnRaptorImage)
    stateSequence[1]                 = "switch_in";
    stateSound[1]                    = WpnRaptorSwitchinSound;
 
-   // Ready to fire, just waiting for the trigger
    stateName[2]                     = "Ready";
    stateTransitionGeneric0In[2]     = "SprintEnter";
    stateTransitionOnMotion[2]       = "ReadyMotion";
    //stateTransitionOnTimeout[2]      = "ReadyFidget";
    stateTimeoutValue[2]             = 10;
    stateWaitForTimeout[2]           = false;
-   stateScaleAnimation[2]           = true;
-   stateScaleAnimationFP[2]         = true;
    stateTransitionOnNoAmmo[2]       = "NoAmmo";
    stateTransitionOnTriggerDown[2]  = "Fire";
    stateSequence[2]                 = "ready";
    
-   // Ready to fire with player moving
    stateName[4]                     = "ReadyMotion";
    stateTransitionGeneric0In[4]     = "SprintEnter";
    stateTransitionOnNoMotion[4]     = "Ready";
    stateTimeoutValue[4]             = 0.15;
    stateWaitForTimeout[4]           = false;
-   stateScaleAnimation[4]           = true;
-   stateScaleAnimationFP[4]         = true;
    stateSequenceTransitionIn[4]     = true;
    stateSequenceTransitionOut[4]    = true;
    stateTransitionOnNoAmmo[4]       = "NoAmmo";
    stateTransitionOnTriggerDown[4]  = "Fire";
    stateSequence[4]                 = "ready_moving";
 
-   // Same as Ready state but plays a fidget sequence
    stateName[3]                     = "ReadyFidget";
    stateTransitionGeneric0In[3]     = "SprintEnter";
    stateTransitionOnMotion[3]       = "ReadyMotion";
@@ -112,10 +102,9 @@ datablock ShapeBaseImageData(WpnRaptorImage)
    stateSequence[3]                 = "idle_fidget1";
    stateSound[3]                    = WpnRaptorIdleSound;
 
-   // Fire the weapon.
    stateName[5]                     = "Fire";
    stateTransitionOnTriggerUp[5]    = "Ready";
-   stateTransitionOnNoAmmo[5]       = "NoAmmo";
+   stateTransitionOnNoAmmo[5]       = "LockedSound";
    stateTransitionGeneric0In[5]     = "SprintEnter";
    stateTransitionOnTimeout[5]      = "Fire";
    stateTimeoutValue[5]             = 0.128;
@@ -133,19 +122,39 @@ datablock ShapeBaseImageData(WpnRaptorImage)
    //stateEmitterTime[5]              = 0.025;
    stateEjectShell[5]               = true;
 
-   // No ammo in the weapon, just idle until something
-   // shows up. Play the dry fire sound if the trigger is
-   // pulled.
+   stateName[12]                    = "LockedSound";
+   stateTransitionOnTimeout[12]     = "Locked";
+   stateTimeoutValue[12]            = 0.032;
+   stateSound[12]                   = WpnRaptorReleaseMagazineSound;
+   
+   stateName[13]                    = "Locked";
+   stateTransitionOnMotion[13]      = "LockedMotion";
+   stateTimeoutValue[13]            = 10;
+   stateWaitForTimeout[13]          = false;
+   stateSequence[13]                = "empty";
+   stateTransitionOnTriggerUp[13]   = "CheckReload";
+   
+   stateName[14]                    = "LockedMotion";
+   stateTransitionOnNoMotion[14]    = "Locked";
+   stateTimeoutValue[14]            = 0.15;
+   stateWaitForTimeout[14]          = false;
+   stateSequence[14]                = "empty_moving";
+   stateSequenceTransitionIn[14]    = true;
+   stateSequenceTransitionOut[14]   = true;
+   stateTransitionOnTriggerUp[14]   = "CheckReload";
+   
+   stateName[15]                    = "CheckReload";
+   stateTransitionOnTimeout[15]     = "NoAmmo";
+   stateTimeoutValue[15]            = 0.032;
+   stateScript[15]                  = "onMagazineEmpty";
+
    stateName[6]                     = "NoAmmo";
    stateTransitionGeneric0In[6]     = "SprintEnter";
    stateTransitionOnMotion[6]       = "NoAmmoMotion";
    stateTransitionOnAmmo[6]         = "Ready";
    stateTimeoutValue[6]             = 10;
    stateWaitForTimeout[6]           = false;
-   stateScript[6]                   = "onMagazineEmpty";
    stateSequence[6]                 = "empty";
-   stateScaleAnimation[6]           = true;
-   stateScaleAnimationFP[6]         = true;
    stateTransitionOnTriggerDown[6]  = "DryFire";
 
    stateName[7]                     = "NoAmmoMotion";
@@ -153,59 +162,19 @@ datablock ShapeBaseImageData(WpnRaptorImage)
    stateTransitionOnNoMotion[7]     = "NoAmmo";
    stateTimeoutValue[7]             = 0.15;
    stateWaitForTimeout[7]           = false;
-   stateScaleAnimation[7]           = true;
-   stateScaleAnimationFP[7]         = true;
    stateSequenceTransitionIn[7]     = true;
    stateSequenceTransitionOut[7]    = true;
    stateTransitionOnTriggerDown[7]  = "DryFire";
    stateTransitionOnAmmo[7]         = "Ready";
    stateSequence[7]                 = "empty_moving";
 
-   // No ammo dry fire
    stateName[8]                     = "DryFire";
    stateTransitionGeneric0In[8]     = "SprintEnter";
-   stateTransitionOnAmmo[8]         = "ReloadClip";
-   stateWaitForTimeout[8]           = "0";
+   stateWaitForTimeout[8]           = false;
    stateTimeoutValue[8]             = 0.7;
    stateTransitionOnTimeout[8]      = "NoAmmo";
    stateScript[8]                   = "onDryFire";
    stateSound[8]                    = WpnRaptorDryFireSound;
-
-   // Start Sprinting
-   stateName[9]                    = "SprintEnter";
-   stateTransitionGeneric0Out[9]   = "SprintExit";
-   stateTransitionOnTimeout[9]     = "Sprinting";
-   stateWaitForTimeout[9]          = false;
-   stateTimeoutValue[9]            = 0.5;
-   stateWaitForTimeout[9]          = false;
-   stateScaleAnimation[9]          = false;
-   stateScaleAnimationFP[9]        = false;
-   stateSequenceTransitionIn[9]    = true;
-   stateSequenceTransitionOut[9]   = true;
-   stateAllowImageChange[9]        = false;
-   stateSequence[9]                = "sprint";
-
-   // Sprinting
-   stateName[10]                    = "Sprinting";
-   stateTransitionGeneric0Out[10]   = "SprintExit";
-   stateWaitForTimeout[10]          = false;
-   stateScaleAnimation[10]          = false;
-   stateScaleAnimationFP[10]        = false;
-   stateSequenceTransitionIn[10]    = true;
-   stateSequenceTransitionOut[10]   = true;
-   stateAllowImageChange[10]        = false;
-   stateSequence[10]                = "sprint";
-
-   // Stop Sprinting
-   stateName[11]                    = "SprintExit";
-   stateTransitionGeneric0In[11]    = "SprintEnter";
-   stateTransitionOnTimeout[11]     = "Ready";
-   stateWaitForTimeout[11]          = false;
-   stateTimeoutValue[11]            = 0.5;
-   stateSequenceTransitionIn[11]    = true;
-   stateSequenceTransitionOut[11]   = true;
-   stateAllowImageChange[11]        = false;
-   stateSequence[11]                = "sprint";
 };
 
 function WpnRaptorImage::onMount(%this, %obj, %slot)

@@ -48,7 +48,28 @@ datablock SFXPlayList(WpnRaptorFireSoundList)
    // Use a looped description so the list playback will loop.
    description = AudioClose3D;
 
-   track[ 0 ] = WpnRaptorFireSound;
+   track[0] = WpnRaptorFireSound;
+};
+
+datablock SFXProfile(WpnRaptorReleaseMagazineSound)
+{
+   filename = "library/sound/t3d/snap1";
+   description = AudioClose3D;
+   preload = true;
+};
+
+datablock SFXProfile(WpnRaptorInsertMagazineSound)
+{
+   filename = "library/sound/t3d/snap2";
+   description = AudioClose3D;
+   preload = true;
+};
+
+datablock SFXProfile(WpnRaptorChamberSound)
+{
+   filename = "library/sound/t3d/chamber2";
+   description = AudioClose3D;
+   preload = true;
 };
 
 
