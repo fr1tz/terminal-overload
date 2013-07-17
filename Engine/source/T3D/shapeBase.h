@@ -764,6 +764,7 @@ protected:
    /// @name Mounted Images
    /// @{
 
+public:
    /// An image mounted on a shapebase.
    struct MountedImage {
 		struct Inaccuracy {
@@ -910,6 +911,8 @@ protected:
 
       void updateDoAnimateAllShapes(const ShapeBase* owner);
    };
+
+protected:
    MountedImage mMountedImageList[MaxMountedImages];
 
    /// @}
