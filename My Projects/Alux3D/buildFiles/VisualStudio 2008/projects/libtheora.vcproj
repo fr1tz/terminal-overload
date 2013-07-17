@@ -15,7 +15,7 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="../../../../../Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
+			OutputDirectory="D:/Alux3D/Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
 			IntermediateDirectory="../../Link/Vc2k8.$(ConfigurationName).$(PlatformName)/$(ProjectName)"
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
@@ -42,7 +42,7 @@
 				AdditionalOptions="/MP"
 				Optimization="0"
 				EnableIntrinsicFunctions="1"
-				AdditionalIncludeDirectories="../../../../../Engine/lib/libtheora/include;../../../../../Engine/lib/libogg/include;"
+				AdditionalIncludeDirectories="D:/Alux3D/Engine/lib/libtheora/include;D:/Alux3D/Engine/lib/libogg/include;"
 				PreprocessorDefinitions="TORQUE_DEBUG;TORQUE_DEBUG_GUARD;D3D_DEBUG_INFO;TORQUE_NET_STATS;UNICODE;_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS"
 				ExceptionHandling="0"
 				BasicRuntimeChecks="0"
@@ -96,7 +96,7 @@
 		</Configuration>
       <Configuration
 			Name="Optimized Debug|Win32"
-			OutputDirectory="../../../../../Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
+			OutputDirectory="D:/Alux3D/Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
 			IntermediateDirectory="../../Link/Vc2k8.$(ConfigurationName).$(PlatformName)/$(ProjectName)"
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
@@ -124,7 +124,7 @@
 				Optimization="3"
 				InlineFunctionExpansion="2"
 				EnableIntrinsicFunctions="1"
-				AdditionalIncludeDirectories="../../../../../Engine/lib/libtheora/include;../../../../../Engine/lib/libogg/include;"
+				AdditionalIncludeDirectories="D:/Alux3D/Engine/lib/libtheora/include;D:/Alux3D/Engine/lib/libogg/include;"
 				PreprocessorDefinitions="TORQUE_DEBUG;TORQUE_DEBUG_GUARD;D3D_DEBUG_INFO;TORQUE_NET_STATS;UNICODE;_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS"
 				ExceptionHandling="0"
 				BasicRuntimeChecks="0"
@@ -178,7 +178,7 @@
       </Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="../../../../../Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
+			OutputDirectory="D:/Alux3D/Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
 			IntermediateDirectory="../../Link/Vc2k8.$(ConfigurationName).$(PlatformName)/$(ProjectName)"
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
@@ -205,7 +205,7 @@
 				AdditionalOptions="/MP"
 				Optimization="3"
 				InlineFunctionExpansion="2"
-				AdditionalIncludeDirectories="../../../../../Engine/lib/libtheora/include;../../../../../Engine/lib/libogg/include;"
+				AdditionalIncludeDirectories="D:/Alux3D/Engine/lib/libtheora/include;D:/Alux3D/Engine/lib/libogg/include;"
 				PreprocessorDefinitions="UNICODE;_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS"
 				ExceptionHandling="0"
 				BasicRuntimeChecks="0"
@@ -267,122 +267,122 @@
 				Name="include"
 				Filter="">
 				<File
-				   RelativePath="..\..\..\..\..\Engine\lib\libtheora\include\theora\codec.h">
+				   RelativePath="D:\Alux3D\Engine\lib\libtheora\include\theora\codec.h">
 				</File>
 				<File
-				   RelativePath="..\..\..\..\..\Engine\lib\libtheora\include\theora\theora.h">
+				   RelativePath="D:\Alux3D\Engine\lib\libtheora\include\theora\theora.h">
 				</File>
 				<File
-				   RelativePath="..\..\..\..\..\Engine\lib\libtheora\include\theora\theoradec.h">
+				   RelativePath="D:\Alux3D\Engine\lib\libtheora\include\theora\theoradec.h">
 				</File>
 				<File
-				   RelativePath="..\..\..\..\..\Engine\lib\libtheora\include\theora\theoraenc.h">
+				   RelativePath="D:\Alux3D\Engine\lib\libtheora\include\theora\theoraenc.h">
 				</File>
 			</Filter>
 			<Filter
 				Name="lib"
 				Filter="">
 				<File
-				   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\cpu.c">
+				   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\cpu.c">
 				</File>
 				<File
-				   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\cpu.h">
+				   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\cpu.h">
 				</File>
 				<File
-				   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\internal.h">
+				   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\internal.h">
 				</File>
 				<Filter
 					Name="dec"
 					Filter="">
 					<File
-					   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\dec\apiwrapper.c">
+					   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\dec\apiwrapper.c">
 					</File>
 					<File
-					   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\dec\apiwrapper.h">
+					   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\dec\apiwrapper.h">
 					</File>
 					<File
-					   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\dec\bitpack.c">
+					   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\dec\bitpack.c">
 					</File>
 					<File
-					   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\dec\bitpack.h">
+					   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\dec\bitpack.h">
 					</File>
 					<File
-					   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\dec\dct.h">
+					   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\dec\dct.h">
 					</File>
 					<File
-					   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\dec\decapiwrapper.c">
+					   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\dec\decapiwrapper.c">
 					</File>
 					<File
-					   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\dec\decinfo.c">
+					   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\dec\decinfo.c">
 					</File>
 					<File
-					   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\dec\decint.h">
+					   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\dec\decint.h">
 					</File>
 					<File
-					   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\dec\decode.c">
+					   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\dec\decode.c">
 					</File>
 					<File
-					   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\dec\dequant.c">
+					   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\dec\dequant.c">
 					</File>
 					<File
-					   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\dec\dequant.h">
+					   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\dec\dequant.h">
 					</File>
 					<File
-					   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\dec\fragment.c">
+					   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\dec\fragment.c">
 					</File>
 					<File
-					   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\dec\huffdec.c">
+					   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\dec\huffdec.c">
 					</File>
 					<File
-					   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\dec\huffdec.h">
+					   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\dec\huffdec.h">
 					</File>
 					<File
-					   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\dec\huffman.h">
+					   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\dec\huffman.h">
 					</File>
 					<File
-					   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\dec\idct.c">
+					   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\dec\idct.c">
 					</File>
 					<File
-					   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\dec\idct.h">
+					   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\dec\idct.h">
 					</File>
 					<File
-					   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\dec\info.c">
+					   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\dec\info.c">
 					</File>
 					<File
-					   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\dec\internal.c">
+					   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\dec\internal.c">
 					</File>
 					<File
-					   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\dec\ocintrin.h">
+					   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\dec\ocintrin.h">
 					</File>
 					<File
-					   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\dec\quant.c">
+					   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\dec\quant.c">
 					</File>
 					<File
-					   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\dec\quant.h">
+					   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\dec\quant.h">
 					</File>
 					<File
-					   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\dec\state.c">
+					   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\dec\state.c">
 					</File>
 					<Filter
 						Name="x86_vc"
 						Filter="">
 						<File
-						   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\dec\x86_vc\mmxfrag.c">
+						   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\dec\x86_vc\mmxfrag.c">
 						</File>
 						<File
-						   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\dec\x86_vc\mmxidct.c">
+						   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\dec\x86_vc\mmxidct.c">
 						</File>
 						<File
-						   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\dec\x86_vc\mmxloopfilter.c">
+						   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\dec\x86_vc\mmxloopfilter.c">
 						</File>
 						<File
-						   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\dec\x86_vc\mmxstate.c">
+						   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\dec\x86_vc\mmxstate.c">
 						</File>
 						<File
-						   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\dec\x86_vc\x86int.h">
+						   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\dec\x86_vc\x86int.h">
 						</File>
 						<File
-						   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\dec\x86_vc\x86state.c">
+						   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\dec\x86_vc\x86state.c">
 						</File>
 					</Filter>
 				</Filter>
@@ -390,100 +390,100 @@
 					Name="enc"
 					Filter="">
 					<File
-					   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\enc\blockmap.c">
+					   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\enc\blockmap.c">
 					</File>
 					<File
-					   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\enc\block_inline.h">
+					   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\enc\block_inline.h">
 					</File>
 					<File
-					   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\enc\codec_internal.h">
+					   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\enc\codec_internal.h">
 					</File>
 					<File
-					   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\enc\dct.c">
+					   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\enc\dct.c">
 					</File>
 					<File
-					   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\enc\dct_decode.c">
+					   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\enc\dct_decode.c">
 					</File>
 					<File
-					   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\enc\dct_encode.c">
+					   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\enc\dct_encode.c">
 					</File>
 					<File
-					   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\enc\dsp.c">
+					   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\enc\dsp.c">
 					</File>
 					<File
-					   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\enc\dsp.h">
+					   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\enc\dsp.h">
 					</File>
 					<File
-					   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\enc\encapiwrapper.c">
+					   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\enc\encapiwrapper.c">
 					</File>
 					<File
-					   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\enc\encode.c">
+					   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\enc\encode.c">
 					</File>
 					<File
-					   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\enc\encoder_huffman.c">
+					   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\enc\encoder_huffman.c">
 					</File>
 					<File
-					   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\enc\encoder_huffman.h">
+					   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\enc\encoder_huffman.h">
 					</File>
 					<File
-					   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\enc\encoder_idct.c">
+					   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\enc\encoder_idct.c">
 					</File>
 					<File
-					   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\enc\encoder_lookup.h">
+					   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\enc\encoder_lookup.h">
 					</File>
 					<File
-					   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\enc\encoder_quant.c">
+					   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\enc\encoder_quant.c">
 					</File>
 					<File
-					   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\enc\encoder_toplevel.c">
+					   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\enc\encoder_toplevel.c">
 					</File>
 					<File
-					   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\enc\frarray.c">
+					   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\enc\frarray.c">
 					</File>
 					<File
-					   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\enc\frinit.c">
+					   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\enc\frinit.c">
 					</File>
 					<File
-					   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\enc\hufftables.h">
+					   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\enc\hufftables.h">
 					</File>
 					<File
-					   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\enc\mcomp.c">
+					   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\enc\mcomp.c">
 					</File>
 					<File
-					   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\enc\misc_common.c">
+					   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\enc\misc_common.c">
 					</File>
 					<File
-					   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\enc\pb.c">
+					   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\enc\pb.c">
 					</File>
 					<File
-					   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\enc\pp.c">
+					   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\enc\pp.c">
 					</File>
 					<File
-					   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\enc\pp.h">
+					   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\enc\pp.h">
 					</File>
 					<File
-					   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\enc\quant_lookup.h">
+					   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\enc\quant_lookup.h">
 					</File>
 					<File
-					   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\enc\reconstruct.c">
+					   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\enc\reconstruct.c">
 					</File>
 					<File
-					   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\enc\scan.c">
+					   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\enc\scan.c">
 					</File>
 					<File
-					   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\enc\toplevel_lookup.h">
+					   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\enc\toplevel_lookup.h">
 					</File>
 					<Filter
 						Name="x86_32_vs"
 						Filter="">
 						<File
-						   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\enc\x86_32_vs\dsp_mmx.c">
+						   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\enc\x86_32_vs\dsp_mmx.c">
 						</File>
 						<File
-						   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\enc\x86_32_vs\fdct_mmx.c">
+						   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\enc\x86_32_vs\fdct_mmx.c">
 						</File>
 						<File
-						   RelativePath="..\..\..\..\..\Engine\lib\libtheora\lib\enc\x86_32_vs\recon_mmx.c">
+						   RelativePath="D:\Alux3D\Engine\lib\libtheora\lib\enc\x86_32_vs\recon_mmx.c">
 						</File>
 					</Filter>
 				</Filter>

@@ -46,13 +46,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../../../../Engine/lib//compiled/$(Configuration).$(Platform)/</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:/Alux3D/Engine/lib//compiled/$(Configuration).$(Platform)/</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../Link/VC2010.$(Configuration).$(PlatformName)/$(ProjectName)/</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">lmng_DEBUG</TargetName>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Optimized Debug|Win32'">../../../../../Engine/lib//compiled/$(Configuration).$(Platform)/</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Optimized Debug|Win32'">D:/Alux3D/Engine/lib//compiled/$(Configuration).$(Platform)/</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Optimized Debug|Win32'">../../Link/VC2010.$(Configuration).$(PlatformName)/$(ProjectName)/</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Optimized Debug|Win32'">lmng_OPTIMIZEDDEBUG</TargetName>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../../../../Engine/lib//compiled/$(Configuration).$(Platform)/</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:/Alux3D/Engine/lib//compiled/$(Configuration).$(Platform)/</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../Link/VC2010.$(Configuration).$(PlatformName)/$(ProjectName)/</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">lmng</TargetName>
   </PropertyGroup>
@@ -61,7 +61,7 @@
       <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
       <Optimization>Disabled</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>../../../../../Engine/lib/lmng;../../../../../Engine/lib/lpng;../../../../../Engine/lib/zlib;../../../../../Engine/lib/ljpeg;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:/Alux3D/Engine/lib/lmng;D:/Alux3D/Engine/lib/lpng;D:/Alux3D/Engine/lib/zlib;D:/Alux3D/Engine/lib/ljpeg;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>MNG_OPTIMIZE_OBJCLEANUP;TORQUE_DEBUG;TORQUE_DEBUG_GUARD;D3D_DEBUG_INFO;TORQUE_NET_STATS;UNICODE;_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>
       </ExceptionHandling>
@@ -98,7 +98,7 @@
       <Optimization>Full</Optimization>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>../../../../../Engine/lib/lmng;../../../../../Engine/lib/lpng;../../../../../Engine/lib/zlib;../../../../../Engine/lib/ljpeg;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:/Alux3D/Engine/lib/lmng;D:/Alux3D/Engine/lib/lpng;D:/Alux3D/Engine/lib/zlib;D:/Alux3D/Engine/lib/ljpeg;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>MNG_OPTIMIZE_OBJCLEANUP;TORQUE_DEBUG;TORQUE_DEBUG_GUARD;D3D_DEBUG_INFO;TORQUE_NET_STATS;UNICODE;_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>
       </ExceptionHandling>
@@ -134,7 +134,7 @@
       <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
       <Optimization>Full</Optimization>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>../../../../../Engine/lib/lmng;../../../../../Engine/lib/lpng;../../../../../Engine/lib/zlib;../../../../../Engine/lib/ljpeg;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:/Alux3D/Engine/lib/lmng;D:/Alux3D/Engine/lib/lpng;D:/Alux3D/Engine/lib/zlib;D:/Alux3D/Engine/lib/ljpeg;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>MNG_OPTIMIZE_OBJCLEANUP;UNICODE;_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>
       </ExceptionHandling>
@@ -167,207 +167,207 @@
 
                
                
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\lmng\libmng.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\lmng\libmng.h" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\lmng\libmng_callback_xs.c" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\lmng\libmng_callback_xs.c" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\lmng\libmng_chunks.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\lmng\libmng_chunks.h" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\lmng\libmng_chunk_descr.c" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\lmng\libmng_chunk_descr.c" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\lmng\libmng_chunk_descr.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\lmng\libmng_chunk_descr.h" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\lmng\libmng_chunk_io.c" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\lmng\libmng_chunk_io.c" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\lmng\libmng_chunk_io.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\lmng\libmng_chunk_io.h" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\lmng\libmng_chunk_prc.c" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\lmng\libmng_chunk_prc.c" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\lmng\libmng_chunk_prc.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\lmng\libmng_chunk_prc.h" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\lmng\libmng_chunk_xs.c" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\lmng\libmng_chunk_xs.c" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\lmng\libmng_cms.c" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\lmng\libmng_cms.c" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\lmng\libmng_cms.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\lmng\libmng_cms.h" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\lmng\libmng_conf.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\lmng\libmng_conf.h" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\lmng\libmng_data.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\lmng\libmng_data.h" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\lmng\libmng_display.c" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\lmng\libmng_display.c" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\lmng\libmng_display.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\lmng\libmng_display.h" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\lmng\libmng_dither.c" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\lmng\libmng_dither.c" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\lmng\libmng_dither.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\lmng\libmng_dither.h" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\lmng\libmng_error.c" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\lmng\libmng_error.c" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\lmng\libmng_error.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\lmng\libmng_error.h" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\lmng\libmng_filter.c" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\lmng\libmng_filter.c" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\lmng\libmng_filter.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\lmng\libmng_filter.h" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\lmng\libmng_hlapi.c" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\lmng\libmng_hlapi.c" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\lmng\libmng_jpeg.c" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\lmng\libmng_jpeg.c" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\lmng\libmng_jpeg.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\lmng\libmng_jpeg.h" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\lmng\libmng_memory.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\lmng\libmng_memory.h" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\lmng\libmng_objects.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\lmng\libmng_objects.h" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\lmng\libmng_object_prc.c" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\lmng\libmng_object_prc.c" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\lmng\libmng_object_prc.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\lmng\libmng_object_prc.h" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\lmng\libmng_pixels.c" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\lmng\libmng_pixels.c" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\lmng\libmng_pixels.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\lmng\libmng_pixels.h" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\lmng\libmng_prop_xs.c" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\lmng\libmng_prop_xs.c" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\lmng\libmng_read.c" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\lmng\libmng_read.c" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\lmng\libmng_read.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\lmng\libmng_read.h" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\lmng\libmng_trace.c" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\lmng\libmng_trace.c" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\lmng\libmng_trace.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\lmng\libmng_trace.h" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\lmng\libmng_types.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\lmng\libmng_types.h" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\lmng\libmng_write.c" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\lmng\libmng_write.c" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\lmng\libmng_write.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\lmng\libmng_write.h" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\lmng\libmng_zlib.c" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\lmng\libmng_zlib.c" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\lmng\libmng_zlib.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\lmng\libmng_zlib.h" />      
 			         
 			      
    

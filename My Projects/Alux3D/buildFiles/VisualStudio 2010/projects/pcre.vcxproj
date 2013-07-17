@@ -46,13 +46,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../../../../Engine/lib//compiled/$(Configuration).$(Platform)/</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:/Alux3D/Engine/lib//compiled/$(Configuration).$(Platform)/</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../Link/VC2010.$(Configuration).$(PlatformName)/$(ProjectName)/</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pcre_DEBUG</TargetName>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Optimized Debug|Win32'">../../../../../Engine/lib//compiled/$(Configuration).$(Platform)/</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Optimized Debug|Win32'">D:/Alux3D/Engine/lib//compiled/$(Configuration).$(Platform)/</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Optimized Debug|Win32'">../../Link/VC2010.$(Configuration).$(PlatformName)/$(ProjectName)/</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Optimized Debug|Win32'">pcre_OPTIMIZEDDEBUG</TargetName>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../../../../Engine/lib//compiled/$(Configuration).$(Platform)/</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:/Alux3D/Engine/lib//compiled/$(Configuration).$(Platform)/</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../Link/VC2010.$(Configuration).$(PlatformName)/$(ProjectName)/</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">pcre</TargetName>
   </PropertyGroup>
@@ -61,7 +61,7 @@
       <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
       <Optimization>Disabled</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>../../../../../Engine/lib/pcre;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:/Alux3D/Engine/lib/pcre;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>PCRE_STATIC;HAVE_CONFIG_H;TORQUE_DEBUG;TORQUE_DEBUG_GUARD;D3D_DEBUG_INFO;TORQUE_NET_STATS;UNICODE;_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>
       </ExceptionHandling>
@@ -98,7 +98,7 @@
       <Optimization>Full</Optimization>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>../../../../../Engine/lib/pcre;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:/Alux3D/Engine/lib/pcre;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>PCRE_STATIC;HAVE_CONFIG_H;TORQUE_DEBUG;TORQUE_DEBUG_GUARD;D3D_DEBUG_INFO;TORQUE_NET_STATS;UNICODE;_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>
       </ExceptionHandling>
@@ -134,7 +134,7 @@
       <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
       <Optimization>Full</Optimization>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>../../../../../Engine/lib/pcre;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:/Alux3D/Engine/lib/pcre;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>PCRE_STATIC;HAVE_CONFIG_H;UNICODE;_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>
       </ExceptionHandling>
@@ -167,177 +167,177 @@
 
                
                
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\pcre\config.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\pcre\config.h" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\pcre\pcre.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\pcre\pcre.h" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\pcre\pcrecpp.cc" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\pcre\pcrecpp.cc" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\pcre\pcrecpp.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\pcre\pcrecpp.h" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\pcre\pcrecpparg.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\pcre\pcrecpparg.h" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\pcre\pcrecpp_internal.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\pcre\pcrecpp_internal.h" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\pcre\pcreposix.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\pcre\pcreposix.h" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\pcre\pcre_chartables.c" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\pcre\pcre_chartables.c" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\pcre\pcre_compile.c" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\pcre\pcre_compile.c" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\pcre\pcre_config.c" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\pcre\pcre_config.c" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\pcre\pcre_dfa_exec.c" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\pcre\pcre_dfa_exec.c" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\pcre\pcre_exec.c" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\pcre\pcre_exec.c" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\pcre\pcre_fullinfo.c" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\pcre\pcre_fullinfo.c" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\pcre\pcre_get.c" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\pcre\pcre_get.c" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\pcre\pcre_globals.c" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\pcre\pcre_globals.c" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\pcre\pcre_info.c" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\pcre\pcre_info.c" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\pcre\pcre_internal.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\pcre\pcre_internal.h" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\pcre\pcre_maketables.c" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\pcre\pcre_maketables.c" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\pcre\pcre_newline.c" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\pcre\pcre_newline.c" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\pcre\pcre_ord2utf8.c" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\pcre\pcre_ord2utf8.c" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\pcre\pcre_refcount.c" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\pcre\pcre_refcount.c" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\pcre\pcre_scanner.cc" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\pcre\pcre_scanner.cc" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\pcre\pcre_scanner.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\pcre\pcre_scanner.h" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\pcre\pcre_stringpiece.cc" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\pcre\pcre_stringpiece.cc" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\pcre\pcre_stringpiece.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\pcre\pcre_stringpiece.h" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\pcre\pcre_study.c" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\pcre\pcre_study.c" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\pcre\pcre_tables.c" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\pcre\pcre_tables.c" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\pcre\pcre_try_flipped.c" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\pcre\pcre_try_flipped.c" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\pcre\pcre_ucp_searchfuncs.c" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\pcre\pcre_ucp_searchfuncs.c" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\pcre\pcre_valid_utf8.c" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\pcre\pcre_valid_utf8.c" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\pcre\pcre_version.c" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\pcre\pcre_version.c" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\pcre\pcre_xclass.c" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\pcre\pcre_xclass.c" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\pcre\ucp.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\pcre\ucp.h" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\pcre\ucpinternal.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\pcre\ucpinternal.h" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\pcre\ucptable.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\pcre\ucptable.h" />      
 			         
 			      
    

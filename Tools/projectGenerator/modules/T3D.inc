@@ -40,6 +40,7 @@ addEngineSrcDir('T3D/gameBase');
 addEngineSrcDir('T3D/turret');
 addEngineSrcDir('Alux3D');
 addEngineSrcDir('Alux3D/fx');
+addEngineSrcDir('Alux3D/gui');
 
 global $TORQUE_HIFI_NET;
 global $TORQUE_EXTENDED_MOVE;

@@ -46,13 +46,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../../../../Engine/lib//compiled/$(Configuration).$(Platform)/</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:/Alux3D/Engine/lib//compiled/$(Configuration).$(Platform)/</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../Link/VC2010.$(Configuration).$(PlatformName)/$(ProjectName)/</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">opcode_DEBUG</TargetName>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Optimized Debug|Win32'">../../../../../Engine/lib//compiled/$(Configuration).$(Platform)/</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Optimized Debug|Win32'">D:/Alux3D/Engine/lib//compiled/$(Configuration).$(Platform)/</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Optimized Debug|Win32'">../../Link/VC2010.$(Configuration).$(PlatformName)/$(ProjectName)/</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Optimized Debug|Win32'">opcode_OPTIMIZEDDEBUG</TargetName>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../../../../Engine/lib//compiled/$(Configuration).$(Platform)/</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:/Alux3D/Engine/lib//compiled/$(Configuration).$(Platform)/</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../Link/VC2010.$(Configuration).$(PlatformName)/$(ProjectName)/</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">opcode</TargetName>
   </PropertyGroup>
@@ -61,7 +61,7 @@
       <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
       <Optimization>Disabled</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>../../../../../Engine/lib/opcode;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:/Alux3D/Engine/lib/opcode;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>TORQUE_OPCODE;ICE_NO_DLL;TORQUE_OPCODE;ICE_NO_DLL;TORQUE_DEBUG;TORQUE_DEBUG_GUARD;D3D_DEBUG_INFO;TORQUE_NET_STATS;UNICODE;_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>
       </ExceptionHandling>
@@ -98,7 +98,7 @@
       <Optimization>Full</Optimization>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>../../../../../Engine/lib/opcode;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:/Alux3D/Engine/lib/opcode;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>TORQUE_OPCODE;ICE_NO_DLL;TORQUE_OPCODE;ICE_NO_DLL;TORQUE_DEBUG;TORQUE_DEBUG_GUARD;D3D_DEBUG_INFO;TORQUE_NET_STATS;UNICODE;_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>
       </ExceptionHandling>
@@ -134,7 +134,7 @@
       <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
       <Optimization>Full</Optimization>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>../../../../../Engine/lib/opcode;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:/Alux3D/Engine/lib/opcode;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>TORQUE_OPCODE;ICE_NO_DLL;TORQUE_OPCODE;ICE_NO_DLL;UNICODE;_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>
       </ExceptionHandling>
@@ -167,473 +167,473 @@
 
                
                
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\opcode\Opcode.cpp" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\opcode\Opcode.cpp" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\Opcode.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\Opcode.h" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\opcode\OPC_AABBCollider.cpp" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\opcode\OPC_AABBCollider.cpp" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\OPC_AABBCollider.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\OPC_AABBCollider.h" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\opcode\OPC_AABBTree.cpp" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\opcode\OPC_AABBTree.cpp" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\OPC_AABBTree.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\OPC_AABBTree.h" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\opcode\OPC_BaseModel.cpp" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\opcode\OPC_BaseModel.cpp" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\OPC_BaseModel.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\OPC_BaseModel.h" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\OPC_BoxBoxOverlap.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\OPC_BoxBoxOverlap.h" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\opcode\OPC_BoxPruning.cpp" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\opcode\OPC_BoxPruning.cpp" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\OPC_BoxPruning.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\OPC_BoxPruning.h" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\opcode\OPC_Collider.cpp" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\opcode\OPC_Collider.cpp" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\OPC_Collider.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\OPC_Collider.h" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\opcode\OPC_Common.cpp" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\opcode\OPC_Common.cpp" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\OPC_Common.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\OPC_Common.h" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\opcode\OPC_HybridModel.cpp" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\opcode\OPC_HybridModel.cpp" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\OPC_HybridModel.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\OPC_HybridModel.h" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\OPC_IceHook.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\OPC_IceHook.h" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\OPC_LSSAABBOverlap.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\OPC_LSSAABBOverlap.h" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\opcode\OPC_LSSCollider.cpp" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\opcode\OPC_LSSCollider.cpp" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\OPC_LSSCollider.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\OPC_LSSCollider.h" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\OPC_LSSTriOverlap.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\OPC_LSSTriOverlap.h" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\opcode\OPC_MeshInterface.cpp" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\opcode\OPC_MeshInterface.cpp" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\OPC_MeshInterface.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\OPC_MeshInterface.h" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\opcode\OPC_Model.cpp" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\opcode\OPC_Model.cpp" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\OPC_Model.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\OPC_Model.h" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\opcode\OPC_OBBCollider.cpp" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\opcode\OPC_OBBCollider.cpp" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\OPC_OBBCollider.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\OPC_OBBCollider.h" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\opcode\OPC_OptimizedTree.cpp" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\opcode\OPC_OptimizedTree.cpp" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\OPC_OptimizedTree.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\OPC_OptimizedTree.h" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\opcode\OPC_Picking.cpp" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\opcode\OPC_Picking.cpp" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\OPC_Picking.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\OPC_Picking.h" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\OPC_PlanesAABBOverlap.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\OPC_PlanesAABBOverlap.h" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\opcode\OPC_PlanesCollider.cpp" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\opcode\OPC_PlanesCollider.cpp" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\OPC_PlanesCollider.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\OPC_PlanesCollider.h" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\OPC_PlanesTriOverlap.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\OPC_PlanesTriOverlap.h" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\OPC_RayAABBOverlap.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\OPC_RayAABBOverlap.h" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\opcode\OPC_RayCollider.cpp" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\opcode\OPC_RayCollider.cpp" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\OPC_RayCollider.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\OPC_RayCollider.h" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\OPC_RayTriOverlap.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\OPC_RayTriOverlap.h" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\OPC_Settings.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\OPC_Settings.h" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\OPC_SphereAABBOverlap.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\OPC_SphereAABBOverlap.h" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\opcode\OPC_SphereCollider.cpp" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\opcode\OPC_SphereCollider.cpp" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\OPC_SphereCollider.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\OPC_SphereCollider.h" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\OPC_SphereTriOverlap.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\OPC_SphereTriOverlap.h" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\opcode\OPC_SweepAndPrune.cpp" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\opcode\OPC_SweepAndPrune.cpp" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\OPC_SweepAndPrune.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\OPC_SweepAndPrune.h" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\opcode\OPC_TreeBuilders.cpp" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\opcode\OPC_TreeBuilders.cpp" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\OPC_TreeBuilders.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\OPC_TreeBuilders.h" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\opcode\OPC_TreeCollider.cpp" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\opcode\OPC_TreeCollider.cpp" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\OPC_TreeCollider.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\OPC_TreeCollider.h" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\OPC_TriBoxOverlap.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\OPC_TriBoxOverlap.h" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\OPC_TriTriOverlap.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\OPC_TriTriOverlap.h" />      
 			         
 			      
    
       
-               			                     <ClCompile Include="..\..\..\..\..\Engine\lib\opcode\OPC_VolumeCollider.cpp" />      
+               			                     <ClCompile Include="D:\Alux3D\Engine\lib\opcode\OPC_VolumeCollider.cpp" />      
 			         
 			      
    
       
-               			                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\OPC_VolumeCollider.h" />      
+               			                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\OPC_VolumeCollider.h" />      
 			         
 			      
    
       
                
-               				                     <ClCompile Include="..\..\..\..\..\Engine\lib\opcode\Ice\IceAABB.cpp" />      
+               				                     <ClCompile Include="D:\Alux3D\Engine\lib\opcode\Ice\IceAABB.cpp" />      
 				         
 				      
    
       
-               				                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\Ice\IceAABB.h" />      
+               				                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\Ice\IceAABB.h" />      
 				         
 				      
    
       
-               				                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\Ice\IceAxes.h" />      
+               				                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\Ice\IceAxes.h" />      
 				         
 				      
    
       
-               				                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\Ice\IceBoundingSphere.h" />      
+               				                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\Ice\IceBoundingSphere.h" />      
 				         
 				      
    
       
-               				                     <ClCompile Include="..\..\..\..\..\Engine\lib\opcode\Ice\IceContainer.cpp" />      
+               				                     <ClCompile Include="D:\Alux3D\Engine\lib\opcode\Ice\IceContainer.cpp" />      
 				         
 				      
    
       
-               				                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\Ice\IceContainer.h" />      
+               				                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\Ice\IceContainer.h" />      
 				         
 				      
    
       
-               				                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\Ice\IceFPU.h" />      
+               				                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\Ice\IceFPU.h" />      
 				         
 				      
    
       
-               				                     <ClCompile Include="..\..\..\..\..\Engine\lib\opcode\Ice\IceHPoint.cpp" />      
+               				                     <ClCompile Include="D:\Alux3D\Engine\lib\opcode\Ice\IceHPoint.cpp" />      
 				         
 				      
    
       
-               				                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\Ice\IceHPoint.h" />      
+               				                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\Ice\IceHPoint.h" />      
 				         
 				      
    
       
-               				                     <ClCompile Include="..\..\..\..\..\Engine\lib\opcode\Ice\IceIndexedTriangle.cpp" />      
+               				                     <ClCompile Include="D:\Alux3D\Engine\lib\opcode\Ice\IceIndexedTriangle.cpp" />      
 				         
 				      
    
       
-               				                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\Ice\IceIndexedTriangle.h" />      
+               				                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\Ice\IceIndexedTriangle.h" />      
 				         
 				      
    
       
-               				                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\Ice\IceLSS.h" />      
+               				                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\Ice\IceLSS.h" />      
 				         
 				      
    
       
-               				                     <ClCompile Include="..\..\..\..\..\Engine\lib\opcode\Ice\IceMatrix3x3.cpp" />      
+               				                     <ClCompile Include="D:\Alux3D\Engine\lib\opcode\Ice\IceMatrix3x3.cpp" />      
 				         
 				      
    
       
-               				                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\Ice\IceMatrix3x3.h" />      
+               				                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\Ice\IceMatrix3x3.h" />      
 				         
 				      
    
       
-               				                     <ClCompile Include="..\..\..\..\..\Engine\lib\opcode\Ice\IceMatrix4x4.cpp" />      
+               				                     <ClCompile Include="D:\Alux3D\Engine\lib\opcode\Ice\IceMatrix4x4.cpp" />      
 				         
 				      
    
       
-               				                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\Ice\IceMatrix4x4.h" />      
+               				                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\Ice\IceMatrix4x4.h" />      
 				         
 				      
    
       
-               				                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\Ice\IceMemoryMacros.h" />      
+               				                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\Ice\IceMemoryMacros.h" />      
 				         
 				      
    
       
-               				                     <ClCompile Include="..\..\..\..\..\Engine\lib\opcode\Ice\IceOBB.cpp" />      
+               				                     <ClCompile Include="D:\Alux3D\Engine\lib\opcode\Ice\IceOBB.cpp" />      
 				         
 				      
    
       
-               				                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\Ice\IceOBB.h" />      
+               				                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\Ice\IceOBB.h" />      
 				         
 				      
    
       
-               				                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\Ice\IcePairs.h" />      
+               				                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\Ice\IcePairs.h" />      
 				         
 				      
    
       
-               				                     <ClCompile Include="..\..\..\..\..\Engine\lib\opcode\Ice\IcePlane.cpp" />      
+               				                     <ClCompile Include="D:\Alux3D\Engine\lib\opcode\Ice\IcePlane.cpp" />      
 				         
 				      
    
       
-               				                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\Ice\IcePlane.h" />      
+               				                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\Ice\IcePlane.h" />      
 				         
 				      
    
       
-               				                     <ClCompile Include="..\..\..\..\..\Engine\lib\opcode\Ice\IcePoint.cpp" />      
+               				                     <ClCompile Include="D:\Alux3D\Engine\lib\opcode\Ice\IcePoint.cpp" />      
 				         
 				      
    
       
-               				                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\Ice\IcePoint.h" />      
+               				                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\Ice\IcePoint.h" />      
 				         
 				      
    
       
-               				                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\Ice\IcePreprocessor.h" />      
+               				                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\Ice\IcePreprocessor.h" />      
 				         
 				      
    
       
-               				                     <ClCompile Include="..\..\..\..\..\Engine\lib\opcode\Ice\IceRandom.cpp" />      
+               				                     <ClCompile Include="D:\Alux3D\Engine\lib\opcode\Ice\IceRandom.cpp" />      
 				         
 				      
    
       
-               				                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\Ice\IceRandom.h" />      
+               				                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\Ice\IceRandom.h" />      
 				         
 				      
    
       
-               				                     <ClCompile Include="..\..\..\..\..\Engine\lib\opcode\Ice\IceRay.cpp" />      
+               				                     <ClCompile Include="D:\Alux3D\Engine\lib\opcode\Ice\IceRay.cpp" />      
 				         
 				      
    
       
-               				                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\Ice\IceRay.h" />      
+               				                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\Ice\IceRay.h" />      
 				         
 				      
    
       
-               				                     <ClCompile Include="..\..\..\..\..\Engine\lib\opcode\Ice\IceRevisitedRadix.cpp" />      
+               				                     <ClCompile Include="D:\Alux3D\Engine\lib\opcode\Ice\IceRevisitedRadix.cpp" />      
 				         
 				      
    
       
-               				                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\Ice\IceRevisitedRadix.h" />      
+               				                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\Ice\IceRevisitedRadix.h" />      
 				         
 				      
    
       
-               				                     <ClCompile Include="..\..\..\..\..\Engine\lib\opcode\Ice\IceSegment.cpp" />      
+               				                     <ClCompile Include="D:\Alux3D\Engine\lib\opcode\Ice\IceSegment.cpp" />      
 				         
 				      
    
       
-               				                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\Ice\IceSegment.h" />      
+               				                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\Ice\IceSegment.h" />      
 				         
 				      
    
       
-               				                     <ClCompile Include="..\..\..\..\..\Engine\lib\opcode\Ice\IceTriangle.cpp" />      
+               				                     <ClCompile Include="D:\Alux3D\Engine\lib\opcode\Ice\IceTriangle.cpp" />      
 				         
 				      
    
       
-               				                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\Ice\IceTriangle.h" />      
+               				                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\Ice\IceTriangle.h" />      
 				         
 				      
    
       
-               				                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\Ice\IceTriList.h" />      
+               				                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\Ice\IceTriList.h" />      
 				         
 				      
    
       
-               				                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\Ice\IceTypes.h" />      
+               				                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\Ice\IceTypes.h" />      
 				         
 				      
    
       
-               				                     <ClCompile Include="..\..\..\..\..\Engine\lib\opcode\Ice\IceUtils.cpp" />      
+               				                     <ClCompile Include="D:\Alux3D\Engine\lib\opcode\Ice\IceUtils.cpp" />      
 				         
 				      
    
       
-               				                     <ClInclude Include="..\..\..\..\..\Engine\lib\opcode\Ice\IceUtils.h" />      
+               				                     <ClInclude Include="D:\Alux3D\Engine\lib\opcode\Ice\IceUtils.h" />      
 				         
 				      
    

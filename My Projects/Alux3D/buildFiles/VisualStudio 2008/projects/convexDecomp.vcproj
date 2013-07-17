@@ -15,7 +15,7 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="../../../../../Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
+			OutputDirectory="D:/Alux3D/Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
 			IntermediateDirectory="../../Link/Vc2k8.$(ConfigurationName).$(PlatformName)/$(ProjectName)"
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
@@ -42,7 +42,7 @@
 				AdditionalOptions="/MP"
 				Optimization="0"
 				EnableIntrinsicFunctions="1"
-				AdditionalIncludeDirectories="../../../../../Engine/lib/convexDecomp;"
+				AdditionalIncludeDirectories="D:/Alux3D/Engine/lib/convexDecomp;"
 				PreprocessorDefinitions="WIN32;TORQUE_DEBUG;TORQUE_DEBUG_GUARD;D3D_DEBUG_INFO;TORQUE_NET_STATS;UNICODE;_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS"
 				ExceptionHandling="0"
 				BasicRuntimeChecks="0"
@@ -96,7 +96,7 @@
 		</Configuration>
       <Configuration
 			Name="Optimized Debug|Win32"
-			OutputDirectory="../../../../../Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
+			OutputDirectory="D:/Alux3D/Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
 			IntermediateDirectory="../../Link/Vc2k8.$(ConfigurationName).$(PlatformName)/$(ProjectName)"
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
@@ -124,7 +124,7 @@
 				Optimization="3"
 				InlineFunctionExpansion="2"
 				EnableIntrinsicFunctions="1"
-				AdditionalIncludeDirectories="../../../../../Engine/lib/convexDecomp;"
+				AdditionalIncludeDirectories="D:/Alux3D/Engine/lib/convexDecomp;"
 				PreprocessorDefinitions="WIN32;TORQUE_DEBUG;TORQUE_DEBUG_GUARD;D3D_DEBUG_INFO;TORQUE_NET_STATS;UNICODE;_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS"
 				ExceptionHandling="0"
 				BasicRuntimeChecks="0"
@@ -178,7 +178,7 @@
       </Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="../../../../../Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
+			OutputDirectory="D:/Alux3D/Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
 			IntermediateDirectory="../../Link/Vc2k8.$(ConfigurationName).$(PlatformName)/$(ProjectName)"
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
@@ -205,7 +205,7 @@
 				AdditionalOptions="/MP"
 				Optimization="3"
 				InlineFunctionExpansion="2"
-				AdditionalIncludeDirectories="../../../../../Engine/lib/convexDecomp;"
+				AdditionalIncludeDirectories="D:/Alux3D/Engine/lib/convexDecomp;"
 				PreprocessorDefinitions="WIN32;UNICODE;_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS"
 				ExceptionHandling="0"
 				BasicRuntimeChecks="0"
@@ -264,76 +264,76 @@
 			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 			>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\convexDecomp\NvConcavityVolume.cpp">
+			   RelativePath="D:\Alux3D\Engine\lib\convexDecomp\NvConcavityVolume.cpp">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\convexDecomp\NvConcavityVolume.h">
+			   RelativePath="D:\Alux3D\Engine\lib\convexDecomp\NvConcavityVolume.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\convexDecomp\NvConvexDecomposition.cpp">
+			   RelativePath="D:\Alux3D\Engine\lib\convexDecomp\NvConvexDecomposition.cpp">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\convexDecomp\NvConvexDecomposition.h">
+			   RelativePath="D:\Alux3D\Engine\lib\convexDecomp\NvConvexDecomposition.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\convexDecomp\NvFloatMath.cpp">
+			   RelativePath="D:\Alux3D\Engine\lib\convexDecomp\NvFloatMath.cpp">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\convexDecomp\NvFloatMath.h">
+			   RelativePath="D:\Alux3D\Engine\lib\convexDecomp\NvFloatMath.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\convexDecomp\NvFloatMath.inl">
+			   RelativePath="D:\Alux3D\Engine\lib\convexDecomp\NvFloatMath.inl">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\convexDecomp\NvHashMap.h">
+			   RelativePath="D:\Alux3D\Engine\lib\convexDecomp\NvHashMap.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\convexDecomp\NvMeshIslandGeneration.cpp">
+			   RelativePath="D:\Alux3D\Engine\lib\convexDecomp\NvMeshIslandGeneration.cpp">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\convexDecomp\NvMeshIslandGeneration.h">
+			   RelativePath="D:\Alux3D\Engine\lib\convexDecomp\NvMeshIslandGeneration.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\convexDecomp\NvRayCast.cpp">
+			   RelativePath="D:\Alux3D\Engine\lib\convexDecomp\NvRayCast.cpp">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\convexDecomp\NvRayCast.h">
+			   RelativePath="D:\Alux3D\Engine\lib\convexDecomp\NvRayCast.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\convexDecomp\NvRemoveTjunctions.cpp">
+			   RelativePath="D:\Alux3D\Engine\lib\convexDecomp\NvRemoveTjunctions.cpp">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\convexDecomp\NvRemoveTjunctions.h">
+			   RelativePath="D:\Alux3D\Engine\lib\convexDecomp\NvRemoveTjunctions.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\convexDecomp\NvSimpleTypes.h">
+			   RelativePath="D:\Alux3D\Engine\lib\convexDecomp\NvSimpleTypes.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\convexDecomp\NvSplitMesh.cpp">
+			   RelativePath="D:\Alux3D\Engine\lib\convexDecomp\NvSplitMesh.cpp">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\convexDecomp\NvSplitMesh.h">
+			   RelativePath="D:\Alux3D\Engine\lib\convexDecomp\NvSplitMesh.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\convexDecomp\NvStanHull.cpp">
+			   RelativePath="D:\Alux3D\Engine\lib\convexDecomp\NvStanHull.cpp">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\convexDecomp\NvStanHull.h">
+			   RelativePath="D:\Alux3D\Engine\lib\convexDecomp\NvStanHull.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\convexDecomp\NvThreadConfig.cpp">
+			   RelativePath="D:\Alux3D\Engine\lib\convexDecomp\NvThreadConfig.cpp">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\convexDecomp\NvThreadConfig.h">
+			   RelativePath="D:\Alux3D\Engine\lib\convexDecomp\NvThreadConfig.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\convexDecomp\NvUserMemAlloc.h">
+			   RelativePath="D:\Alux3D\Engine\lib\convexDecomp\NvUserMemAlloc.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\convexDecomp\wavefront.cpp">
+			   RelativePath="D:\Alux3D\Engine\lib\convexDecomp\wavefront.cpp">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\convexDecomp\wavefront.h">
+			   RelativePath="D:\Alux3D\Engine\lib\convexDecomp\wavefront.h">
 			</File>
 		</Filter>
 	</Files>

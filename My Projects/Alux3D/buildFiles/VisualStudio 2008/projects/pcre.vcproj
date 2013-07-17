@@ -15,7 +15,7 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="../../../../../Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
+			OutputDirectory="D:/Alux3D/Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
 			IntermediateDirectory="../../Link/Vc2k8.$(ConfigurationName).$(PlatformName)/$(ProjectName)"
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
@@ -42,7 +42,7 @@
 				AdditionalOptions="/MP"
 				Optimization="0"
 				EnableIntrinsicFunctions="1"
-				AdditionalIncludeDirectories="../../../../../Engine/lib/pcre;"
+				AdditionalIncludeDirectories="D:/Alux3D/Engine/lib/pcre;"
 				PreprocessorDefinitions="PCRE_STATIC;HAVE_CONFIG_H;TORQUE_DEBUG;TORQUE_DEBUG_GUARD;D3D_DEBUG_INFO;TORQUE_NET_STATS;UNICODE;_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS"
 				ExceptionHandling="0"
 				BasicRuntimeChecks="0"
@@ -96,7 +96,7 @@
 		</Configuration>
       <Configuration
 			Name="Optimized Debug|Win32"
-			OutputDirectory="../../../../../Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
+			OutputDirectory="D:/Alux3D/Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
 			IntermediateDirectory="../../Link/Vc2k8.$(ConfigurationName).$(PlatformName)/$(ProjectName)"
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
@@ -124,7 +124,7 @@
 				Optimization="3"
 				InlineFunctionExpansion="2"
 				EnableIntrinsicFunctions="1"
-				AdditionalIncludeDirectories="../../../../../Engine/lib/pcre;"
+				AdditionalIncludeDirectories="D:/Alux3D/Engine/lib/pcre;"
 				PreprocessorDefinitions="PCRE_STATIC;HAVE_CONFIG_H;TORQUE_DEBUG;TORQUE_DEBUG_GUARD;D3D_DEBUG_INFO;TORQUE_NET_STATS;UNICODE;_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS"
 				ExceptionHandling="0"
 				BasicRuntimeChecks="0"
@@ -178,7 +178,7 @@
       </Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="../../../../../Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
+			OutputDirectory="D:/Alux3D/Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
 			IntermediateDirectory="../../Link/Vc2k8.$(ConfigurationName).$(PlatformName)/$(ProjectName)"
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
@@ -205,7 +205,7 @@
 				AdditionalOptions="/MP"
 				Optimization="3"
 				InlineFunctionExpansion="2"
-				AdditionalIncludeDirectories="../../../../../Engine/lib/pcre;"
+				AdditionalIncludeDirectories="D:/Alux3D/Engine/lib/pcre;"
 				PreprocessorDefinitions="PCRE_STATIC;HAVE_CONFIG_H;UNICODE;_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS"
 				ExceptionHandling="0"
 				BasicRuntimeChecks="0"
@@ -264,109 +264,109 @@
 			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 			>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\pcre\config.h">
+			   RelativePath="D:\Alux3D\Engine\lib\pcre\config.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\pcre\pcre.h">
+			   RelativePath="D:\Alux3D\Engine\lib\pcre\pcre.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\pcre\pcrecpp.cc">
+			   RelativePath="D:\Alux3D\Engine\lib\pcre\pcrecpp.cc">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\pcre\pcrecpp.h">
+			   RelativePath="D:\Alux3D\Engine\lib\pcre\pcrecpp.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\pcre\pcrecpparg.h">
+			   RelativePath="D:\Alux3D\Engine\lib\pcre\pcrecpparg.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\pcre\pcrecpp_internal.h">
+			   RelativePath="D:\Alux3D\Engine\lib\pcre\pcrecpp_internal.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\pcre\pcreposix.h">
+			   RelativePath="D:\Alux3D\Engine\lib\pcre\pcreposix.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\pcre\pcre_chartables.c">
+			   RelativePath="D:\Alux3D\Engine\lib\pcre\pcre_chartables.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\pcre\pcre_compile.c">
+			   RelativePath="D:\Alux3D\Engine\lib\pcre\pcre_compile.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\pcre\pcre_config.c">
+			   RelativePath="D:\Alux3D\Engine\lib\pcre\pcre_config.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\pcre\pcre_dfa_exec.c">
+			   RelativePath="D:\Alux3D\Engine\lib\pcre\pcre_dfa_exec.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\pcre\pcre_exec.c">
+			   RelativePath="D:\Alux3D\Engine\lib\pcre\pcre_exec.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\pcre\pcre_fullinfo.c">
+			   RelativePath="D:\Alux3D\Engine\lib\pcre\pcre_fullinfo.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\pcre\pcre_get.c">
+			   RelativePath="D:\Alux3D\Engine\lib\pcre\pcre_get.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\pcre\pcre_globals.c">
+			   RelativePath="D:\Alux3D\Engine\lib\pcre\pcre_globals.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\pcre\pcre_info.c">
+			   RelativePath="D:\Alux3D\Engine\lib\pcre\pcre_info.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\pcre\pcre_internal.h">
+			   RelativePath="D:\Alux3D\Engine\lib\pcre\pcre_internal.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\pcre\pcre_maketables.c">
+			   RelativePath="D:\Alux3D\Engine\lib\pcre\pcre_maketables.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\pcre\pcre_newline.c">
+			   RelativePath="D:\Alux3D\Engine\lib\pcre\pcre_newline.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\pcre\pcre_ord2utf8.c">
+			   RelativePath="D:\Alux3D\Engine\lib\pcre\pcre_ord2utf8.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\pcre\pcre_refcount.c">
+			   RelativePath="D:\Alux3D\Engine\lib\pcre\pcre_refcount.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\pcre\pcre_scanner.cc">
+			   RelativePath="D:\Alux3D\Engine\lib\pcre\pcre_scanner.cc">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\pcre\pcre_scanner.h">
+			   RelativePath="D:\Alux3D\Engine\lib\pcre\pcre_scanner.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\pcre\pcre_stringpiece.cc">
+			   RelativePath="D:\Alux3D\Engine\lib\pcre\pcre_stringpiece.cc">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\pcre\pcre_stringpiece.h">
+			   RelativePath="D:\Alux3D\Engine\lib\pcre\pcre_stringpiece.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\pcre\pcre_study.c">
+			   RelativePath="D:\Alux3D\Engine\lib\pcre\pcre_study.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\pcre\pcre_tables.c">
+			   RelativePath="D:\Alux3D\Engine\lib\pcre\pcre_tables.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\pcre\pcre_try_flipped.c">
+			   RelativePath="D:\Alux3D\Engine\lib\pcre\pcre_try_flipped.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\pcre\pcre_ucp_searchfuncs.c">
+			   RelativePath="D:\Alux3D\Engine\lib\pcre\pcre_ucp_searchfuncs.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\pcre\pcre_valid_utf8.c">
+			   RelativePath="D:\Alux3D\Engine\lib\pcre\pcre_valid_utf8.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\pcre\pcre_version.c">
+			   RelativePath="D:\Alux3D\Engine\lib\pcre\pcre_version.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\pcre\pcre_xclass.c">
+			   RelativePath="D:\Alux3D\Engine\lib\pcre\pcre_xclass.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\pcre\ucp.h">
+			   RelativePath="D:\Alux3D\Engine\lib\pcre\ucp.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\pcre\ucpinternal.h">
+			   RelativePath="D:\Alux3D\Engine\lib\pcre\ucpinternal.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\pcre\ucptable.h">
+			   RelativePath="D:\Alux3D\Engine\lib\pcre\ucptable.h">
 			</File>
 		</Filter>
 	</Files>

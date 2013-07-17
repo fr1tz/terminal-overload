@@ -15,7 +15,7 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="../../../../../Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
+			OutputDirectory="D:/Alux3D/Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
 			IntermediateDirectory="../../Link/Vc2k8.$(ConfigurationName).$(PlatformName)/$(ProjectName)"
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
@@ -42,7 +42,7 @@
 				AdditionalOptions="/MP"
 				Optimization="0"
 				EnableIntrinsicFunctions="1"
-				AdditionalIncludeDirectories="../../../../../Engine/lib/tinyxml;"
+				AdditionalIncludeDirectories="D:/Alux3D/Engine/lib/tinyxml;"
 				PreprocessorDefinitions="TORQUE_DEBUG;TORQUE_DEBUG_GUARD;D3D_DEBUG_INFO;TORQUE_NET_STATS;UNICODE;_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS"
 				ExceptionHandling="0"
 				BasicRuntimeChecks="0"
@@ -96,7 +96,7 @@
 		</Configuration>
       <Configuration
 			Name="Optimized Debug|Win32"
-			OutputDirectory="../../../../../Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
+			OutputDirectory="D:/Alux3D/Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
 			IntermediateDirectory="../../Link/Vc2k8.$(ConfigurationName).$(PlatformName)/$(ProjectName)"
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
@@ -124,7 +124,7 @@
 				Optimization="3"
 				InlineFunctionExpansion="2"
 				EnableIntrinsicFunctions="1"
-				AdditionalIncludeDirectories="../../../../../Engine/lib/tinyxml;"
+				AdditionalIncludeDirectories="D:/Alux3D/Engine/lib/tinyxml;"
 				PreprocessorDefinitions="TORQUE_DEBUG;TORQUE_DEBUG_GUARD;D3D_DEBUG_INFO;TORQUE_NET_STATS;UNICODE;_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS"
 				ExceptionHandling="0"
 				BasicRuntimeChecks="0"
@@ -178,7 +178,7 @@
       </Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="../../../../../Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
+			OutputDirectory="D:/Alux3D/Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
 			IntermediateDirectory="../../Link/Vc2k8.$(ConfigurationName).$(PlatformName)/$(ProjectName)"
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
@@ -205,7 +205,7 @@
 				AdditionalOptions="/MP"
 				Optimization="3"
 				InlineFunctionExpansion="2"
-				AdditionalIncludeDirectories="../../../../../Engine/lib/tinyxml;"
+				AdditionalIncludeDirectories="D:/Alux3D/Engine/lib/tinyxml;"
 				PreprocessorDefinitions="UNICODE;_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS"
 				ExceptionHandling="0"
 				BasicRuntimeChecks="0"
@@ -264,22 +264,22 @@
 			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 			>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\tinyxml\tinystr.cpp">
+			   RelativePath="D:\Alux3D\Engine\lib\tinyxml\tinystr.cpp">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\tinyxml\tinystr.h">
+			   RelativePath="D:\Alux3D\Engine\lib\tinyxml\tinystr.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\tinyxml\tinyxml.cpp">
+			   RelativePath="D:\Alux3D\Engine\lib\tinyxml\tinyxml.cpp">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\tinyxml\tinyxml.h">
+			   RelativePath="D:\Alux3D\Engine\lib\tinyxml\tinyxml.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\tinyxml\tinyxmlerror.cpp">
+			   RelativePath="D:\Alux3D\Engine\lib\tinyxml\tinyxmlerror.cpp">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\tinyxml\tinyxmlparser.cpp">
+			   RelativePath="D:\Alux3D\Engine\lib\tinyxml\tinyxmlparser.cpp">
 			</File>
 		</Filter>
 	</Files>

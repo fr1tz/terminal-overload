@@ -2,11 +2,11 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
    <ItemGroup>
       <Filter Include="Source Files">
-         <UniqueIdentifier>{742d4d9f-3ebc-4cdc-881c-cc0c4b395aa6}</UniqueIdentifier>
+         <UniqueIdentifier>{26eca02a-69d8-4900-8e7c-78dbc3c34810}</UniqueIdentifier>
          <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat;cc</Extensions>
       </Filter>
       <Filter Include="Source Files\lib">
-         <UniqueIdentifier>{0fda0e20-e7ef-46d3-a9a3-f597cb932fa2}</UniqueIdentifier>
+         <UniqueIdentifier>{71c40d8a-5cb5-4d20-af1e-b7c194d1e9d0}</UniqueIdentifier>
       </Filter>
    </ItemGroup>
   <ItemGroup>
@@ -15,111 +15,111 @@
     </ResourceCompile>
   </ItemGroup>
    <ItemGroup>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\pcre\pcrecpp.cc">
+      <ClCompile Include="D:\Alux3D\Engine\lib\pcre\pcrecpp.cc">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\pcre\pcre_chartables.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\pcre\pcre_chartables.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\pcre\pcre_compile.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\pcre\pcre_compile.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\pcre\pcre_config.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\pcre\pcre_config.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\pcre\pcre_dfa_exec.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\pcre\pcre_dfa_exec.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\pcre\pcre_exec.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\pcre\pcre_exec.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\pcre\pcre_fullinfo.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\pcre\pcre_fullinfo.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\pcre\pcre_get.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\pcre\pcre_get.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\pcre\pcre_globals.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\pcre\pcre_globals.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\pcre\pcre_info.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\pcre\pcre_info.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\pcre\pcre_maketables.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\pcre\pcre_maketables.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\pcre\pcre_newline.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\pcre\pcre_newline.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\pcre\pcre_ord2utf8.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\pcre\pcre_ord2utf8.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\pcre\pcre_refcount.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\pcre\pcre_refcount.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\pcre\pcre_scanner.cc">
+      <ClCompile Include="D:\Alux3D\Engine\lib\pcre\pcre_scanner.cc">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\pcre\pcre_stringpiece.cc">
+      <ClCompile Include="D:\Alux3D\Engine\lib\pcre\pcre_stringpiece.cc">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\pcre\pcre_study.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\pcre\pcre_study.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\pcre\pcre_tables.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\pcre\pcre_tables.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\pcre\pcre_try_flipped.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\pcre\pcre_try_flipped.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\pcre\pcre_ucp_searchfuncs.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\pcre\pcre_ucp_searchfuncs.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\pcre\pcre_valid_utf8.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\pcre\pcre_valid_utf8.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\pcre\pcre_version.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\pcre\pcre_version.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\pcre\pcre_xclass.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\pcre\pcre_xclass.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
    </ItemGroup>
    <ItemGroup>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\pcre\config.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\pcre\config.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\pcre\pcre.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\pcre\pcre.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\pcre\pcrecpp.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\pcre\pcrecpp.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\pcre\pcrecpparg.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\pcre\pcrecpparg.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\pcre\pcrecpp_internal.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\pcre\pcrecpp_internal.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\pcre\pcreposix.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\pcre\pcreposix.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\pcre\pcre_internal.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\pcre\pcre_internal.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\pcre\pcre_scanner.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\pcre\pcre_scanner.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\pcre\pcre_stringpiece.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\pcre\pcre_stringpiece.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\pcre\ucp.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\pcre\ucp.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\pcre\ucpinternal.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\pcre\ucpinternal.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\pcre\ucptable.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\pcre\ucptable.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
    </ItemGroup>

@@ -15,7 +15,7 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="../../../../../Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
+			OutputDirectory="D:/Alux3D/Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
 			IntermediateDirectory="../../Link/Vc2k8.$(ConfigurationName).$(PlatformName)/$(ProjectName)"
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
@@ -42,7 +42,7 @@
 				AdditionalOptions="/MP"
 				Optimization="0"
 				EnableIntrinsicFunctions="1"
-				AdditionalIncludeDirectories="../../../../../Engine/lib/opcode;"
+				AdditionalIncludeDirectories="D:/Alux3D/Engine/lib/opcode;"
 				PreprocessorDefinitions="TORQUE_OPCODE;ICE_NO_DLL;TORQUE_OPCODE;ICE_NO_DLL;TORQUE_DEBUG;TORQUE_DEBUG_GUARD;D3D_DEBUG_INFO;TORQUE_NET_STATS;UNICODE;_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS"
 				ExceptionHandling="0"
 				BasicRuntimeChecks="0"
@@ -96,7 +96,7 @@
 		</Configuration>
       <Configuration
 			Name="Optimized Debug|Win32"
-			OutputDirectory="../../../../../Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
+			OutputDirectory="D:/Alux3D/Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
 			IntermediateDirectory="../../Link/Vc2k8.$(ConfigurationName).$(PlatformName)/$(ProjectName)"
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
@@ -124,7 +124,7 @@
 				Optimization="3"
 				InlineFunctionExpansion="2"
 				EnableIntrinsicFunctions="1"
-				AdditionalIncludeDirectories="../../../../../Engine/lib/opcode;"
+				AdditionalIncludeDirectories="D:/Alux3D/Engine/lib/opcode;"
 				PreprocessorDefinitions="TORQUE_OPCODE;ICE_NO_DLL;TORQUE_OPCODE;ICE_NO_DLL;TORQUE_DEBUG;TORQUE_DEBUG_GUARD;D3D_DEBUG_INFO;TORQUE_NET_STATS;UNICODE;_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS"
 				ExceptionHandling="0"
 				BasicRuntimeChecks="0"
@@ -178,7 +178,7 @@
       </Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="../../../../../Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
+			OutputDirectory="D:/Alux3D/Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
 			IntermediateDirectory="../../Link/Vc2k8.$(ConfigurationName).$(PlatformName)/$(ProjectName)"
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
@@ -205,7 +205,7 @@
 				AdditionalOptions="/MP"
 				Optimization="3"
 				InlineFunctionExpansion="2"
-				AdditionalIncludeDirectories="../../../../../Engine/lib/opcode;"
+				AdditionalIncludeDirectories="D:/Alux3D/Engine/lib/opcode;"
 				PreprocessorDefinitions="TORQUE_OPCODE;ICE_NO_DLL;TORQUE_OPCODE;ICE_NO_DLL;UNICODE;_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS"
 				ExceptionHandling="0"
 				BasicRuntimeChecks="0"
@@ -264,289 +264,289 @@
 			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 			>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\Opcode.cpp">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\Opcode.cpp">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\Opcode.h">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\Opcode.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\OPC_AABBCollider.cpp">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\OPC_AABBCollider.cpp">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\OPC_AABBCollider.h">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\OPC_AABBCollider.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\OPC_AABBTree.cpp">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\OPC_AABBTree.cpp">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\OPC_AABBTree.h">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\OPC_AABBTree.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\OPC_BaseModel.cpp">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\OPC_BaseModel.cpp">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\OPC_BaseModel.h">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\OPC_BaseModel.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\OPC_BoxBoxOverlap.h">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\OPC_BoxBoxOverlap.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\OPC_BoxPruning.cpp">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\OPC_BoxPruning.cpp">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\OPC_BoxPruning.h">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\OPC_BoxPruning.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\OPC_Collider.cpp">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\OPC_Collider.cpp">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\OPC_Collider.h">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\OPC_Collider.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\OPC_Common.cpp">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\OPC_Common.cpp">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\OPC_Common.h">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\OPC_Common.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\OPC_HybridModel.cpp">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\OPC_HybridModel.cpp">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\OPC_HybridModel.h">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\OPC_HybridModel.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\OPC_IceHook.h">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\OPC_IceHook.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\OPC_LSSAABBOverlap.h">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\OPC_LSSAABBOverlap.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\OPC_LSSCollider.cpp">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\OPC_LSSCollider.cpp">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\OPC_LSSCollider.h">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\OPC_LSSCollider.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\OPC_LSSTriOverlap.h">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\OPC_LSSTriOverlap.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\OPC_MeshInterface.cpp">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\OPC_MeshInterface.cpp">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\OPC_MeshInterface.h">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\OPC_MeshInterface.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\OPC_Model.cpp">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\OPC_Model.cpp">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\OPC_Model.h">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\OPC_Model.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\OPC_OBBCollider.cpp">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\OPC_OBBCollider.cpp">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\OPC_OBBCollider.h">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\OPC_OBBCollider.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\OPC_OptimizedTree.cpp">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\OPC_OptimizedTree.cpp">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\OPC_OptimizedTree.h">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\OPC_OptimizedTree.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\OPC_Picking.cpp">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\OPC_Picking.cpp">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\OPC_Picking.h">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\OPC_Picking.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\OPC_PlanesAABBOverlap.h">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\OPC_PlanesAABBOverlap.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\OPC_PlanesCollider.cpp">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\OPC_PlanesCollider.cpp">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\OPC_PlanesCollider.h">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\OPC_PlanesCollider.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\OPC_PlanesTriOverlap.h">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\OPC_PlanesTriOverlap.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\OPC_RayAABBOverlap.h">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\OPC_RayAABBOverlap.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\OPC_RayCollider.cpp">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\OPC_RayCollider.cpp">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\OPC_RayCollider.h">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\OPC_RayCollider.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\OPC_RayTriOverlap.h">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\OPC_RayTriOverlap.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\OPC_Settings.h">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\OPC_Settings.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\OPC_SphereAABBOverlap.h">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\OPC_SphereAABBOverlap.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\OPC_SphereCollider.cpp">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\OPC_SphereCollider.cpp">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\OPC_SphereCollider.h">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\OPC_SphereCollider.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\OPC_SphereTriOverlap.h">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\OPC_SphereTriOverlap.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\OPC_SweepAndPrune.cpp">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\OPC_SweepAndPrune.cpp">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\OPC_SweepAndPrune.h">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\OPC_SweepAndPrune.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\OPC_TreeBuilders.cpp">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\OPC_TreeBuilders.cpp">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\OPC_TreeBuilders.h">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\OPC_TreeBuilders.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\OPC_TreeCollider.cpp">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\OPC_TreeCollider.cpp">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\OPC_TreeCollider.h">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\OPC_TreeCollider.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\OPC_TriBoxOverlap.h">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\OPC_TriBoxOverlap.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\OPC_TriTriOverlap.h">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\OPC_TriTriOverlap.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\OPC_VolumeCollider.cpp">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\OPC_VolumeCollider.cpp">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\opcode\OPC_VolumeCollider.h">
+			   RelativePath="D:\Alux3D\Engine\lib\opcode\OPC_VolumeCollider.h">
 			</File>
 			<Filter
 				Name="Ice"
 				Filter="">
 				<File
-				   RelativePath="..\..\..\..\..\Engine\lib\opcode\Ice\IceAABB.cpp">
+				   RelativePath="D:\Alux3D\Engine\lib\opcode\Ice\IceAABB.cpp">
 				</File>
 				<File
-				   RelativePath="..\..\..\..\..\Engine\lib\opcode\Ice\IceAABB.h">
+				   RelativePath="D:\Alux3D\Engine\lib\opcode\Ice\IceAABB.h">
 				</File>
 				<File
-				   RelativePath="..\..\..\..\..\Engine\lib\opcode\Ice\IceAxes.h">
+				   RelativePath="D:\Alux3D\Engine\lib\opcode\Ice\IceAxes.h">
 				</File>
 				<File
-				   RelativePath="..\..\..\..\..\Engine\lib\opcode\Ice\IceBoundingSphere.h">
+				   RelativePath="D:\Alux3D\Engine\lib\opcode\Ice\IceBoundingSphere.h">
 				</File>
 				<File
-				   RelativePath="..\..\..\..\..\Engine\lib\opcode\Ice\IceContainer.cpp">
+				   RelativePath="D:\Alux3D\Engine\lib\opcode\Ice\IceContainer.cpp">
 				</File>
 				<File
-				   RelativePath="..\..\..\..\..\Engine\lib\opcode\Ice\IceContainer.h">
+				   RelativePath="D:\Alux3D\Engine\lib\opcode\Ice\IceContainer.h">
 				</File>
 				<File
-				   RelativePath="..\..\..\..\..\Engine\lib\opcode\Ice\IceFPU.h">
+				   RelativePath="D:\Alux3D\Engine\lib\opcode\Ice\IceFPU.h">
 				</File>
 				<File
-				   RelativePath="..\..\..\..\..\Engine\lib\opcode\Ice\IceHPoint.cpp">
+				   RelativePath="D:\Alux3D\Engine\lib\opcode\Ice\IceHPoint.cpp">
 				</File>
 				<File
-				   RelativePath="..\..\..\..\..\Engine\lib\opcode\Ice\IceHPoint.h">
+				   RelativePath="D:\Alux3D\Engine\lib\opcode\Ice\IceHPoint.h">
 				</File>
 				<File
-				   RelativePath="..\..\..\..\..\Engine\lib\opcode\Ice\IceIndexedTriangle.cpp">
+				   RelativePath="D:\Alux3D\Engine\lib\opcode\Ice\IceIndexedTriangle.cpp">
 				</File>
 				<File
-				   RelativePath="..\..\..\..\..\Engine\lib\opcode\Ice\IceIndexedTriangle.h">
+				   RelativePath="D:\Alux3D\Engine\lib\opcode\Ice\IceIndexedTriangle.h">
 				</File>
 				<File
-				   RelativePath="..\..\..\..\..\Engine\lib\opcode\Ice\IceLSS.h">
+				   RelativePath="D:\Alux3D\Engine\lib\opcode\Ice\IceLSS.h">
 				</File>
 				<File
-				   RelativePath="..\..\..\..\..\Engine\lib\opcode\Ice\IceMatrix3x3.cpp">
+				   RelativePath="D:\Alux3D\Engine\lib\opcode\Ice\IceMatrix3x3.cpp">
 				</File>
 				<File
-				   RelativePath="..\..\..\..\..\Engine\lib\opcode\Ice\IceMatrix3x3.h">
+				   RelativePath="D:\Alux3D\Engine\lib\opcode\Ice\IceMatrix3x3.h">
 				</File>
 				<File
-				   RelativePath="..\..\..\..\..\Engine\lib\opcode\Ice\IceMatrix4x4.cpp">
+				   RelativePath="D:\Alux3D\Engine\lib\opcode\Ice\IceMatrix4x4.cpp">
 				</File>
 				<File
-				   RelativePath="..\..\..\..\..\Engine\lib\opcode\Ice\IceMatrix4x4.h">
+				   RelativePath="D:\Alux3D\Engine\lib\opcode\Ice\IceMatrix4x4.h">
 				</File>
 				<File
-				   RelativePath="..\..\..\..\..\Engine\lib\opcode\Ice\IceMemoryMacros.h">
+				   RelativePath="D:\Alux3D\Engine\lib\opcode\Ice\IceMemoryMacros.h">
 				</File>
 				<File
-				   RelativePath="..\..\..\..\..\Engine\lib\opcode\Ice\IceOBB.cpp">
+				   RelativePath="D:\Alux3D\Engine\lib\opcode\Ice\IceOBB.cpp">
 				</File>
 				<File
-				   RelativePath="..\..\..\..\..\Engine\lib\opcode\Ice\IceOBB.h">
+				   RelativePath="D:\Alux3D\Engine\lib\opcode\Ice\IceOBB.h">
 				</File>
 				<File
-				   RelativePath="..\..\..\..\..\Engine\lib\opcode\Ice\IcePairs.h">
+				   RelativePath="D:\Alux3D\Engine\lib\opcode\Ice\IcePairs.h">
 				</File>
 				<File
-				   RelativePath="..\..\..\..\..\Engine\lib\opcode\Ice\IcePlane.cpp">
+				   RelativePath="D:\Alux3D\Engine\lib\opcode\Ice\IcePlane.cpp">
 				</File>
 				<File
-				   RelativePath="..\..\..\..\..\Engine\lib\opcode\Ice\IcePlane.h">
+				   RelativePath="D:\Alux3D\Engine\lib\opcode\Ice\IcePlane.h">
 				</File>
 				<File
-				   RelativePath="..\..\..\..\..\Engine\lib\opcode\Ice\IcePoint.cpp">
+				   RelativePath="D:\Alux3D\Engine\lib\opcode\Ice\IcePoint.cpp">
 				</File>
 				<File
-				   RelativePath="..\..\..\..\..\Engine\lib\opcode\Ice\IcePoint.h">
+				   RelativePath="D:\Alux3D\Engine\lib\opcode\Ice\IcePoint.h">
 				</File>
 				<File
-				   RelativePath="..\..\..\..\..\Engine\lib\opcode\Ice\IcePreprocessor.h">
+				   RelativePath="D:\Alux3D\Engine\lib\opcode\Ice\IcePreprocessor.h">
 				</File>
 				<File
-				   RelativePath="..\..\..\..\..\Engine\lib\opcode\Ice\IceRandom.cpp">
+				   RelativePath="D:\Alux3D\Engine\lib\opcode\Ice\IceRandom.cpp">
 				</File>
 				<File
-				   RelativePath="..\..\..\..\..\Engine\lib\opcode\Ice\IceRandom.h">
+				   RelativePath="D:\Alux3D\Engine\lib\opcode\Ice\IceRandom.h">
 				</File>
 				<File
-				   RelativePath="..\..\..\..\..\Engine\lib\opcode\Ice\IceRay.cpp">
+				   RelativePath="D:\Alux3D\Engine\lib\opcode\Ice\IceRay.cpp">
 				</File>
 				<File
-				   RelativePath="..\..\..\..\..\Engine\lib\opcode\Ice\IceRay.h">
+				   RelativePath="D:\Alux3D\Engine\lib\opcode\Ice\IceRay.h">
 				</File>
 				<File
-				   RelativePath="..\..\..\..\..\Engine\lib\opcode\Ice\IceRevisitedRadix.cpp">
+				   RelativePath="D:\Alux3D\Engine\lib\opcode\Ice\IceRevisitedRadix.cpp">
 				</File>
 				<File
-				   RelativePath="..\..\..\..\..\Engine\lib\opcode\Ice\IceRevisitedRadix.h">
+				   RelativePath="D:\Alux3D\Engine\lib\opcode\Ice\IceRevisitedRadix.h">
 				</File>
 				<File
-				   RelativePath="..\..\..\..\..\Engine\lib\opcode\Ice\IceSegment.cpp">
+				   RelativePath="D:\Alux3D\Engine\lib\opcode\Ice\IceSegment.cpp">
 				</File>
 				<File
-				   RelativePath="..\..\..\..\..\Engine\lib\opcode\Ice\IceSegment.h">
+				   RelativePath="D:\Alux3D\Engine\lib\opcode\Ice\IceSegment.h">
 				</File>
 				<File
-				   RelativePath="..\..\..\..\..\Engine\lib\opcode\Ice\IceTriangle.cpp">
+				   RelativePath="D:\Alux3D\Engine\lib\opcode\Ice\IceTriangle.cpp">
 				</File>
 				<File
-				   RelativePath="..\..\..\..\..\Engine\lib\opcode\Ice\IceTriangle.h">
+				   RelativePath="D:\Alux3D\Engine\lib\opcode\Ice\IceTriangle.h">
 				</File>
 				<File
-				   RelativePath="..\..\..\..\..\Engine\lib\opcode\Ice\IceTriList.h">
+				   RelativePath="D:\Alux3D\Engine\lib\opcode\Ice\IceTriList.h">
 				</File>
 				<File
-				   RelativePath="..\..\..\..\..\Engine\lib\opcode\Ice\IceTypes.h">
+				   RelativePath="D:\Alux3D\Engine\lib\opcode\Ice\IceTypes.h">
 				</File>
 				<File
-				   RelativePath="..\..\..\..\..\Engine\lib\opcode\Ice\IceUtils.cpp">
+				   RelativePath="D:\Alux3D\Engine\lib\opcode\Ice\IceUtils.cpp">
 				</File>
 				<File
-				   RelativePath="..\..\..\..\..\Engine\lib\opcode\Ice\IceUtils.h">
+				   RelativePath="D:\Alux3D\Engine\lib\opcode\Ice\IceUtils.h">
 				</File>
 			</Filter>
 		</Filter>

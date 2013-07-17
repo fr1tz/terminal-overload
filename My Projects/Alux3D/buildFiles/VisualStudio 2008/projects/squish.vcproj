@@ -15,7 +15,7 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="../../../../../Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
+			OutputDirectory="D:/Alux3D/Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
 			IntermediateDirectory="../../Link/Vc2k8.$(ConfigurationName).$(PlatformName)/$(ProjectName)"
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
@@ -42,7 +42,7 @@
 				AdditionalOptions="/MP"
 				Optimization="0"
 				EnableIntrinsicFunctions="1"
-				AdditionalIncludeDirectories="../../../../../Engine/lib/squish;"
+				AdditionalIncludeDirectories="D:/Alux3D/Engine/lib/squish;"
 				PreprocessorDefinitions="TORQUE_DEBUG;TORQUE_DEBUG_GUARD;D3D_DEBUG_INFO;TORQUE_NET_STATS;UNICODE;_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS"
 				ExceptionHandling="0"
 				BasicRuntimeChecks="0"
@@ -96,7 +96,7 @@
 		</Configuration>
       <Configuration
 			Name="Optimized Debug|Win32"
-			OutputDirectory="../../../../../Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
+			OutputDirectory="D:/Alux3D/Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
 			IntermediateDirectory="../../Link/Vc2k8.$(ConfigurationName).$(PlatformName)/$(ProjectName)"
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
@@ -124,7 +124,7 @@
 				Optimization="3"
 				InlineFunctionExpansion="2"
 				EnableIntrinsicFunctions="1"
-				AdditionalIncludeDirectories="../../../../../Engine/lib/squish;"
+				AdditionalIncludeDirectories="D:/Alux3D/Engine/lib/squish;"
 				PreprocessorDefinitions="TORQUE_DEBUG;TORQUE_DEBUG_GUARD;D3D_DEBUG_INFO;TORQUE_NET_STATS;UNICODE;_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS"
 				ExceptionHandling="0"
 				BasicRuntimeChecks="0"
@@ -178,7 +178,7 @@
       </Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="../../../../../Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
+			OutputDirectory="D:/Alux3D/Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
 			IntermediateDirectory="../../Link/Vc2k8.$(ConfigurationName).$(PlatformName)/$(ProjectName)"
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
@@ -205,7 +205,7 @@
 				AdditionalOptions="/MP"
 				Optimization="3"
 				InlineFunctionExpansion="2"
-				AdditionalIncludeDirectories="../../../../../Engine/lib/squish;"
+				AdditionalIncludeDirectories="D:/Alux3D/Engine/lib/squish;"
 				PreprocessorDefinitions="UNICODE;_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS"
 				ExceptionHandling="0"
 				BasicRuntimeChecks="0"
@@ -264,76 +264,76 @@
 			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 			>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\squish\alpha.cpp">
+			   RelativePath="D:\Alux3D\Engine\lib\squish\alpha.cpp">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\squish\alpha.h">
+			   RelativePath="D:\Alux3D\Engine\lib\squish\alpha.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\squish\clusterfit.cpp">
+			   RelativePath="D:\Alux3D\Engine\lib\squish\clusterfit.cpp">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\squish\clusterfit.h">
+			   RelativePath="D:\Alux3D\Engine\lib\squish\clusterfit.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\squish\colourblock.cpp">
+			   RelativePath="D:\Alux3D\Engine\lib\squish\colourblock.cpp">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\squish\colourblock.h">
+			   RelativePath="D:\Alux3D\Engine\lib\squish\colourblock.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\squish\colourfit.cpp">
+			   RelativePath="D:\Alux3D\Engine\lib\squish\colourfit.cpp">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\squish\colourfit.h">
+			   RelativePath="D:\Alux3D\Engine\lib\squish\colourfit.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\squish\colourset.cpp">
+			   RelativePath="D:\Alux3D\Engine\lib\squish\colourset.cpp">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\squish\colourset.h">
+			   RelativePath="D:\Alux3D\Engine\lib\squish\colourset.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\squish\config.h">
+			   RelativePath="D:\Alux3D\Engine\lib\squish\config.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\squish\maths.cpp">
+			   RelativePath="D:\Alux3D\Engine\lib\squish\maths.cpp">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\squish\maths.h">
+			   RelativePath="D:\Alux3D\Engine\lib\squish\maths.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\squish\rangefit.cpp">
+			   RelativePath="D:\Alux3D\Engine\lib\squish\rangefit.cpp">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\squish\rangefit.h">
+			   RelativePath="D:\Alux3D\Engine\lib\squish\rangefit.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\squish\simd.h">
+			   RelativePath="D:\Alux3D\Engine\lib\squish\simd.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\squish\simd_float.h">
+			   RelativePath="D:\Alux3D\Engine\lib\squish\simd_float.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\squish\simd_sse.h">
+			   RelativePath="D:\Alux3D\Engine\lib\squish\simd_sse.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\squish\simd_ve.h">
+			   RelativePath="D:\Alux3D\Engine\lib\squish\simd_ve.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\squish\singlecolourfit.cpp">
+			   RelativePath="D:\Alux3D\Engine\lib\squish\singlecolourfit.cpp">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\squish\singlecolourfit.h">
+			   RelativePath="D:\Alux3D\Engine\lib\squish\singlecolourfit.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\squish\singlecolourlookup.inl">
+			   RelativePath="D:\Alux3D\Engine\lib\squish\singlecolourlookup.inl">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\squish\squish.cpp">
+			   RelativePath="D:\Alux3D\Engine\lib\squish\squish.cpp">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\squish\squish.h">
+			   RelativePath="D:\Alux3D\Engine\lib\squish\squish.h">
 			</File>
 		</Filter>
 	</Files>

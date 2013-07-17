@@ -15,7 +15,7 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="../../../../../Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
+			OutputDirectory="D:/Alux3D/Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
 			IntermediateDirectory="../../Link/Vc2k8.$(ConfigurationName).$(PlatformName)/$(ProjectName)"
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
@@ -42,7 +42,7 @@
 				AdditionalOptions="/MP"
 				Optimization="0"
 				EnableIntrinsicFunctions="1"
-				AdditionalIncludeDirectories="../../../../../Engine/lib/zlib;../../../../../Engine/lib/lpng;"
+				AdditionalIncludeDirectories="D:/Alux3D/Engine/lib/zlib;D:/Alux3D/Engine/lib/lpng;"
 				PreprocessorDefinitions="TORQUE_DEBUG;TORQUE_DEBUG_GUARD;D3D_DEBUG_INFO;TORQUE_NET_STATS;UNICODE;_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS"
 				ExceptionHandling="0"
 				BasicRuntimeChecks="0"
@@ -96,7 +96,7 @@
 		</Configuration>
       <Configuration
 			Name="Optimized Debug|Win32"
-			OutputDirectory="../../../../../Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
+			OutputDirectory="D:/Alux3D/Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
 			IntermediateDirectory="../../Link/Vc2k8.$(ConfigurationName).$(PlatformName)/$(ProjectName)"
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
@@ -124,7 +124,7 @@
 				Optimization="3"
 				InlineFunctionExpansion="2"
 				EnableIntrinsicFunctions="1"
-				AdditionalIncludeDirectories="../../../../../Engine/lib/zlib;../../../../../Engine/lib/lpng;"
+				AdditionalIncludeDirectories="D:/Alux3D/Engine/lib/zlib;D:/Alux3D/Engine/lib/lpng;"
 				PreprocessorDefinitions="TORQUE_DEBUG;TORQUE_DEBUG_GUARD;D3D_DEBUG_INFO;TORQUE_NET_STATS;UNICODE;_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS"
 				ExceptionHandling="0"
 				BasicRuntimeChecks="0"
@@ -178,7 +178,7 @@
       </Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="../../../../../Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
+			OutputDirectory="D:/Alux3D/Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
 			IntermediateDirectory="../../Link/Vc2k8.$(ConfigurationName).$(PlatformName)/$(ProjectName)"
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
@@ -205,7 +205,7 @@
 				AdditionalOptions="/MP"
 				Optimization="3"
 				InlineFunctionExpansion="2"
-				AdditionalIncludeDirectories="../../../../../Engine/lib/zlib;../../../../../Engine/lib/lpng;"
+				AdditionalIncludeDirectories="D:/Alux3D/Engine/lib/zlib;D:/Alux3D/Engine/lib/lpng;"
 				PreprocessorDefinitions="UNICODE;_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS"
 				ExceptionHandling="0"
 				BasicRuntimeChecks="0"
@@ -264,76 +264,76 @@
 			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 			>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\lpng\example.c">
+			   RelativePath="D:\Alux3D\Engine\lib\lpng\example.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\lpng\png.c">
+			   RelativePath="D:\Alux3D\Engine\lib\lpng\png.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\lpng\png.h">
+			   RelativePath="D:\Alux3D\Engine\lib\lpng\png.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\lpng\pngconf.h">
+			   RelativePath="D:\Alux3D\Engine\lib\lpng\pngconf.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\lpng\pngdebug.h">
+			   RelativePath="D:\Alux3D\Engine\lib\lpng\pngdebug.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\lpng\pngerror.c">
+			   RelativePath="D:\Alux3D\Engine\lib\lpng\pngerror.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\lpng\pngget.c">
+			   RelativePath="D:\Alux3D\Engine\lib\lpng\pngget.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\lpng\pnginfo.h">
+			   RelativePath="D:\Alux3D\Engine\lib\lpng\pnginfo.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\lpng\pnglibconf.h">
+			   RelativePath="D:\Alux3D\Engine\lib\lpng\pnglibconf.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\lpng\pngmem.c">
+			   RelativePath="D:\Alux3D\Engine\lib\lpng\pngmem.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\lpng\pngpread.c">
+			   RelativePath="D:\Alux3D\Engine\lib\lpng\pngpread.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\lpng\pngpriv.h">
+			   RelativePath="D:\Alux3D\Engine\lib\lpng\pngpriv.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\lpng\pngread.c">
+			   RelativePath="D:\Alux3D\Engine\lib\lpng\pngread.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\lpng\pngrio.c">
+			   RelativePath="D:\Alux3D\Engine\lib\lpng\pngrio.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\lpng\pngrtran.c">
+			   RelativePath="D:\Alux3D\Engine\lib\lpng\pngrtran.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\lpng\pngrutil.c">
+			   RelativePath="D:\Alux3D\Engine\lib\lpng\pngrutil.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\lpng\pngset.c">
+			   RelativePath="D:\Alux3D\Engine\lib\lpng\pngset.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\lpng\pngstruct.h">
+			   RelativePath="D:\Alux3D\Engine\lib\lpng\pngstruct.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\lpng\pngtest.c">
+			   RelativePath="D:\Alux3D\Engine\lib\lpng\pngtest.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\lpng\pngtrans.c">
+			   RelativePath="D:\Alux3D\Engine\lib\lpng\pngtrans.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\lpng\pngwio.c">
+			   RelativePath="D:\Alux3D\Engine\lib\lpng\pngwio.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\lpng\pngwrite.c">
+			   RelativePath="D:\Alux3D\Engine\lib\lpng\pngwrite.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\lpng\pngwtran.c">
+			   RelativePath="D:\Alux3D\Engine\lib\lpng\pngwtran.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\lpng\pngwutil.c">
+			   RelativePath="D:\Alux3D\Engine\lib\lpng\pngwutil.c">
 			</File>
 		</Filter>
 	</Files>

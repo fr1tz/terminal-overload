@@ -2,11 +2,11 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
    <ItemGroup>
       <Filter Include="Source Files">
-         <UniqueIdentifier>{981c55c9-4d4e-4b1a-a657-c08c8b7971f6}</UniqueIdentifier>
+         <UniqueIdentifier>{f1f0c3e7-9d96-4f33-8732-8b84e684b094}</UniqueIdentifier>
          <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat;cc</Extensions>
       </Filter>
       <Filter Include="Source Files\source">
-         <UniqueIdentifier>{36a29ba2-edbb-4095-9267-bdfb31555e64}</UniqueIdentifier>
+         <UniqueIdentifier>{53ca08e2-5216-4064-829a-381610d31b15}</UniqueIdentifier>
       </Filter>
    </ItemGroup>
   <ItemGroup>
@@ -15,7 +15,7 @@
     </ResourceCompile>
   </ItemGroup>
    <ItemGroup>
-      <ClCompile Include="..\..\..\..\..\Engine\source\main\main.cpp">
+      <ClCompile Include="D:\Alux3D\Engine\source\main\main.cpp">
          <Filter>Source Files\source</Filter>
       </ClCompile>
    </ItemGroup>

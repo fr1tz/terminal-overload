@@ -2,11 +2,11 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
    <ItemGroup>
       <Filter Include="Source Files">
-         <UniqueIdentifier>{70290122-b180-475e-9a07-be2d0dc9096c}</UniqueIdentifier>
+         <UniqueIdentifier>{b0e3e210-c4a0-4149-b6a4-221720a76db7}</UniqueIdentifier>
          <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat;cc</Extensions>
       </Filter>
       <Filter Include="Source Files\lib">
-         <UniqueIdentifier>{9884f3c2-607f-44d4-a412-54d4fbaa2556}</UniqueIdentifier>
+         <UniqueIdentifier>{b67c71b4-0c52-4380-931d-e969ee0d1442}</UniqueIdentifier>
       </Filter>
    </ItemGroup>
   <ItemGroup>
@@ -15,24 +15,24 @@
     </ResourceCompile>
   </ItemGroup>
    <ItemGroup>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\tinyxml\tinystr.cpp">
+      <ClCompile Include="D:\Alux3D\Engine\lib\tinyxml\tinystr.cpp">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\tinyxml\tinyxml.cpp">
+      <ClCompile Include="D:\Alux3D\Engine\lib\tinyxml\tinyxml.cpp">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\tinyxml\tinyxmlerror.cpp">
+      <ClCompile Include="D:\Alux3D\Engine\lib\tinyxml\tinyxmlerror.cpp">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\tinyxml\tinyxmlparser.cpp">
+      <ClCompile Include="D:\Alux3D\Engine\lib\tinyxml\tinyxmlparser.cpp">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
    </ItemGroup>
    <ItemGroup>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\tinyxml\tinystr.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\tinyxml\tinystr.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\tinyxml\tinyxml.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\tinyxml\tinyxml.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
    </ItemGroup>

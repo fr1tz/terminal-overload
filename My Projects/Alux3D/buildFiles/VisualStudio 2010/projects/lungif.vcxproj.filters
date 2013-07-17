@@ -2,11 +2,11 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
    <ItemGroup>
       <Filter Include="Source Files">
-         <UniqueIdentifier>{1662b66d-62ec-4cbb-ab41-9a7e3d59cdb5}</UniqueIdentifier>
+         <UniqueIdentifier>{5324730e-5344-48d7-a2f0-485d62a19dc8}</UniqueIdentifier>
          <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat;cc</Extensions>
       </Filter>
       <Filter Include="Source Files\lib">
-         <UniqueIdentifier>{cea6f5d9-f377-420a-ae6a-bfa299bd151e}</UniqueIdentifier>
+         <UniqueIdentifier>{b691447e-1beb-4d15-a83a-ab6398676bce}</UniqueIdentifier>
       </Filter>
    </ItemGroup>
   <ItemGroup>
@@ -15,21 +15,21 @@
     </ResourceCompile>
   </ItemGroup>
    <ItemGroup>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\lungif\dgif_lib.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\lungif\dgif_lib.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\lungif\gifalloc.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\lungif\gifalloc.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\lungif\gif_err.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\lungif\gif_err.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
    </ItemGroup>
    <ItemGroup>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\lungif\gif_lib.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\lungif\gif_lib.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\lungif\gif_lib_private.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\lungif\gif_lib_private.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
    </ItemGroup>

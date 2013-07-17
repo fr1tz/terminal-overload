@@ -15,7 +15,7 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="../../../../../Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
+			OutputDirectory="D:/Alux3D/Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
 			IntermediateDirectory="../../Link/Vc2k8.$(ConfigurationName).$(PlatformName)/$(ProjectName)"
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
@@ -42,7 +42,7 @@
 				AdditionalOptions="/MP"
 				Optimization="0"
 				EnableIntrinsicFunctions="1"
-				AdditionalIncludeDirectories="../../../../../Engine/lib/ljpeg;"
+				AdditionalIncludeDirectories="D:/Alux3D/Engine/lib/ljpeg;"
 				PreprocessorDefinitions="TORQUE_DEBUG;TORQUE_DEBUG_GUARD;D3D_DEBUG_INFO;TORQUE_NET_STATS;UNICODE;_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS"
 				ExceptionHandling="0"
 				BasicRuntimeChecks="0"
@@ -96,7 +96,7 @@
 		</Configuration>
       <Configuration
 			Name="Optimized Debug|Win32"
-			OutputDirectory="../../../../../Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
+			OutputDirectory="D:/Alux3D/Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
 			IntermediateDirectory="../../Link/Vc2k8.$(ConfigurationName).$(PlatformName)/$(ProjectName)"
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
@@ -124,7 +124,7 @@
 				Optimization="3"
 				InlineFunctionExpansion="2"
 				EnableIntrinsicFunctions="1"
-				AdditionalIncludeDirectories="../../../../../Engine/lib/ljpeg;"
+				AdditionalIncludeDirectories="D:/Alux3D/Engine/lib/ljpeg;"
 				PreprocessorDefinitions="TORQUE_DEBUG;TORQUE_DEBUG_GUARD;D3D_DEBUG_INFO;TORQUE_NET_STATS;UNICODE;_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS"
 				ExceptionHandling="0"
 				BasicRuntimeChecks="0"
@@ -178,7 +178,7 @@
       </Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="../../../../../Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
+			OutputDirectory="D:/Alux3D/Engine/lib//compiled/$(ConfigurationName).$(PlatformName)"
 			IntermediateDirectory="../../Link/Vc2k8.$(ConfigurationName).$(PlatformName)/$(ProjectName)"
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
@@ -205,7 +205,7 @@
 				AdditionalOptions="/MP"
 				Optimization="3"
 				InlineFunctionExpansion="2"
-				AdditionalIncludeDirectories="../../../../../Engine/lib/ljpeg;"
+				AdditionalIncludeDirectories="D:/Alux3D/Engine/lib/ljpeg;"
 				PreprocessorDefinitions="UNICODE;_CRT_SECURE_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS"
 				ExceptionHandling="0"
 				BasicRuntimeChecks="0"
@@ -264,187 +264,187 @@
 			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 			>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jcapimin.c">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jcapimin.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jcapistd.c">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jcapistd.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jccoefct.c">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jccoefct.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jccolor.c">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jccolor.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jcdctmgr.c">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jcdctmgr.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jchuff.c">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jchuff.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jchuff.h">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jchuff.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jcinit.c">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jcinit.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jcmainct.c">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jcmainct.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jcmarker.c">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jcmarker.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jcmaster.c">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jcmaster.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jcomapi.c">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jcomapi.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jconfig.cw.mac.h">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jconfig.cw.mac.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jconfig.cw.win.h">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jconfig.cw.win.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jconfig.gcc.linux.h">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jconfig.gcc.linux.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jconfig.h">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jconfig.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jconfig.vc.win.h">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jconfig.vc.win.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jcparam.c">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jcparam.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jcphuff.c">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jcphuff.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jcprepct.c">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jcprepct.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jcsample.c">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jcsample.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jctrans.c">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jctrans.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jdapimin.c">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jdapimin.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jdapistd.c">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jdapistd.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jdatadst.c">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jdatadst.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jdatasrc.c">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jdatasrc.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jdcoefct.c">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jdcoefct.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jdcolor.c">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jdcolor.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jdct.h">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jdct.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jddctmgr.c">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jddctmgr.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jdhuff.c">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jdhuff.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jdhuff.h">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jdhuff.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jdinput.c">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jdinput.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jdmainct.c">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jdmainct.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jdmarker.c">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jdmarker.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jdmaster.c">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jdmaster.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jdmerge.c">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jdmerge.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jdphuff.c">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jdphuff.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jdpostct.c">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jdpostct.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jdsample.c">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jdsample.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jdtrans.c">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jdtrans.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jerror.c">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jerror.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jerror.h">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jerror.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jfdctflt.c">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jfdctflt.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jfdctfst.c">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jfdctfst.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jfdctint.c">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jfdctint.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jidctflt.c">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jidctflt.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jidctfst.c">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jidctfst.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jidctint.c">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jidctint.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jidctred.c">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jidctred.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jinclude.h">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jinclude.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jmemmgr.c">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jmemmgr.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jmemnobs.c">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jmemnobs.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jmemsys.h">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jmemsys.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jmorecfg.h">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jmorecfg.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jpegint.h">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jpegint.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jpeglib.h">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jpeglib.h">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jquant1.c">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jquant1.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jquant2.c">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jquant2.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jutils.c">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jutils.c">
 			</File>
 			<File
-			   RelativePath="..\..\..\..\..\Engine\lib\ljpeg\jversion.h">
+			   RelativePath="D:\Alux3D\Engine\lib\ljpeg\jversion.h">
 			</File>
 		</Filter>
 	</Files>

@@ -2,11 +2,11 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
    <ItemGroup>
       <Filter Include="Source Files">
-         <UniqueIdentifier>{3fc29dbe-1129-4c4d-bca9-f1356378689e}</UniqueIdentifier>
+         <UniqueIdentifier>{736bac14-0e9b-462e-a646-e219f47e114f}</UniqueIdentifier>
          <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat;cc</Extensions>
       </Filter>
       <Filter Include="Source Files\lib">
-         <UniqueIdentifier>{d18d1143-65b5-4295-acef-d7585badd217}</UniqueIdentifier>
+         <UniqueIdentifier>{1ab8105a-53be-49b4-b136-785fc1949eba}</UniqueIdentifier>
       </Filter>
    </ItemGroup>
   <ItemGroup>
@@ -15,84 +15,84 @@
     </ResourceCompile>
   </ItemGroup>
    <ItemGroup>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\zlib\adler32.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\zlib\adler32.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\zlib\compress.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\zlib\compress.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\zlib\crc32.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\zlib\crc32.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\zlib\deflate.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\zlib\deflate.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\zlib\gzclose.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\zlib\gzclose.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\zlib\gzlib.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\zlib\gzlib.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\zlib\gzread.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\zlib\gzread.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\zlib\gzwrite.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\zlib\gzwrite.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\zlib\infback.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\zlib\infback.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\zlib\inffast.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\zlib\inffast.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\zlib\inflate.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\zlib\inflate.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\zlib\inftrees.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\zlib\inftrees.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\zlib\trees.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\zlib\trees.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\zlib\uncompr.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\zlib\uncompr.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\zlib\zutil.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\zlib\zutil.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
    </ItemGroup>
    <ItemGroup>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\zlib\crc32.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\zlib\crc32.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\zlib\deflate.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\zlib\deflate.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\zlib\gzguts.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\zlib\gzguts.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\zlib\inffast.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\zlib\inffast.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\zlib\inffixed.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\zlib\inffixed.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\zlib\inflate.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\zlib\inflate.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\zlib\inftrees.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\zlib\inftrees.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\zlib\trees.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\zlib\trees.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\zlib\zconf.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\zlib\zconf.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\zlib\zlib.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\zlib\zlib.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\zlib\zutil.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\zlib\zutil.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
    </ItemGroup>

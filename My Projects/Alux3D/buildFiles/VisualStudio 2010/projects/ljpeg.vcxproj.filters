@@ -2,11 +2,11 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
    <ItemGroup>
       <Filter Include="Source Files">
-         <UniqueIdentifier>{35b71b72-481c-4bd4-a542-15e16293f4c4}</UniqueIdentifier>
+         <UniqueIdentifier>{ab6b9903-0bee-41e5-b82b-f97633020c2d}</UniqueIdentifier>
          <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat;cc</Extensions>
       </Filter>
       <Filter Include="Source Files\lib">
-         <UniqueIdentifier>{791e1dca-aa46-4f34-912a-82b6a0ff1918}</UniqueIdentifier>
+         <UniqueIdentifier>{c092e6b4-816f-456a-8d43-5899237f3045}</UniqueIdentifier>
       </Filter>
    </ItemGroup>
   <ItemGroup>
@@ -15,189 +15,189 @@
     </ResourceCompile>
   </ItemGroup>
    <ItemGroup>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\ljpeg\jcapimin.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\ljpeg\jcapimin.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\ljpeg\jcapistd.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\ljpeg\jcapistd.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\ljpeg\jccoefct.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\ljpeg\jccoefct.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\ljpeg\jccolor.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\ljpeg\jccolor.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\ljpeg\jcdctmgr.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\ljpeg\jcdctmgr.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\ljpeg\jchuff.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\ljpeg\jchuff.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\ljpeg\jcinit.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\ljpeg\jcinit.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\ljpeg\jcmainct.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\ljpeg\jcmainct.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\ljpeg\jcmarker.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\ljpeg\jcmarker.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\ljpeg\jcmaster.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\ljpeg\jcmaster.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\ljpeg\jcomapi.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\ljpeg\jcomapi.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\ljpeg\jcparam.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\ljpeg\jcparam.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\ljpeg\jcphuff.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\ljpeg\jcphuff.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\ljpeg\jcprepct.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\ljpeg\jcprepct.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\ljpeg\jcsample.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\ljpeg\jcsample.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\ljpeg\jctrans.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\ljpeg\jctrans.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\ljpeg\jdapimin.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\ljpeg\jdapimin.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\ljpeg\jdapistd.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\ljpeg\jdapistd.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\ljpeg\jdatadst.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\ljpeg\jdatadst.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\ljpeg\jdatasrc.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\ljpeg\jdatasrc.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\ljpeg\jdcoefct.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\ljpeg\jdcoefct.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\ljpeg\jdcolor.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\ljpeg\jdcolor.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\ljpeg\jddctmgr.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\ljpeg\jddctmgr.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\ljpeg\jdhuff.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\ljpeg\jdhuff.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\ljpeg\jdinput.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\ljpeg\jdinput.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\ljpeg\jdmainct.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\ljpeg\jdmainct.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\ljpeg\jdmarker.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\ljpeg\jdmarker.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\ljpeg\jdmaster.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\ljpeg\jdmaster.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\ljpeg\jdmerge.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\ljpeg\jdmerge.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\ljpeg\jdphuff.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\ljpeg\jdphuff.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\ljpeg\jdpostct.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\ljpeg\jdpostct.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\ljpeg\jdsample.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\ljpeg\jdsample.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\ljpeg\jdtrans.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\ljpeg\jdtrans.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\ljpeg\jerror.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\ljpeg\jerror.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\ljpeg\jfdctflt.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\ljpeg\jfdctflt.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\ljpeg\jfdctfst.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\ljpeg\jfdctfst.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\ljpeg\jfdctint.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\ljpeg\jfdctint.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\ljpeg\jidctflt.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\ljpeg\jidctflt.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\ljpeg\jidctfst.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\ljpeg\jidctfst.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\ljpeg\jidctint.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\ljpeg\jidctint.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\ljpeg\jidctred.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\ljpeg\jidctred.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\ljpeg\jmemmgr.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\ljpeg\jmemmgr.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\ljpeg\jmemnobs.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\ljpeg\jmemnobs.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\ljpeg\jquant1.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\ljpeg\jquant1.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\ljpeg\jquant2.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\ljpeg\jquant2.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\ljpeg\jutils.c">
+      <ClCompile Include="D:\Alux3D\Engine\lib\ljpeg\jutils.c">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
    </ItemGroup>
    <ItemGroup>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\ljpeg\jchuff.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\ljpeg\jchuff.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\ljpeg\jconfig.cw.mac.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\ljpeg\jconfig.cw.mac.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\ljpeg\jconfig.cw.win.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\ljpeg\jconfig.cw.win.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\ljpeg\jconfig.gcc.linux.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\ljpeg\jconfig.gcc.linux.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\ljpeg\jconfig.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\ljpeg\jconfig.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\ljpeg\jconfig.vc.win.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\ljpeg\jconfig.vc.win.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\ljpeg\jdct.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\ljpeg\jdct.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\ljpeg\jdhuff.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\ljpeg\jdhuff.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\ljpeg\jerror.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\ljpeg\jerror.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\ljpeg\jinclude.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\ljpeg\jinclude.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\ljpeg\jmemsys.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\ljpeg\jmemsys.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\ljpeg\jmorecfg.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\ljpeg\jmorecfg.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\ljpeg\jpegint.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\ljpeg\jpegint.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\ljpeg\jpeglib.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\ljpeg\jpeglib.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\ljpeg\jversion.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\ljpeg\jversion.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
    </ItemGroup>

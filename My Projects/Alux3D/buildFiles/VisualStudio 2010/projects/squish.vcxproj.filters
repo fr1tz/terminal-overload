@@ -2,11 +2,11 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
    <ItemGroup>
       <Filter Include="Source Files">
-         <UniqueIdentifier>{6b85e2dc-eb0c-4363-ae6f-6c04105d68ae}</UniqueIdentifier>
+         <UniqueIdentifier>{ab6cf229-4a4d-424e-ae1c-08b0434ec426}</UniqueIdentifier>
          <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat;cc</Extensions>
       </Filter>
       <Filter Include="Source Files\lib">
-         <UniqueIdentifier>{1cd57977-011e-416b-ba48-a2bdf2653c89}</UniqueIdentifier>
+         <UniqueIdentifier>{479275ba-6a46-4440-91d5-7bb9879ec63c}</UniqueIdentifier>
       </Filter>
    </ItemGroup>
   <ItemGroup>
@@ -15,78 +15,78 @@
     </ResourceCompile>
   </ItemGroup>
    <ItemGroup>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\squish\alpha.cpp">
+      <ClCompile Include="D:\Alux3D\Engine\lib\squish\alpha.cpp">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\squish\clusterfit.cpp">
+      <ClCompile Include="D:\Alux3D\Engine\lib\squish\clusterfit.cpp">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\squish\colourblock.cpp">
+      <ClCompile Include="D:\Alux3D\Engine\lib\squish\colourblock.cpp">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\squish\colourfit.cpp">
+      <ClCompile Include="D:\Alux3D\Engine\lib\squish\colourfit.cpp">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\squish\colourset.cpp">
+      <ClCompile Include="D:\Alux3D\Engine\lib\squish\colourset.cpp">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\squish\maths.cpp">
+      <ClCompile Include="D:\Alux3D\Engine\lib\squish\maths.cpp">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\squish\rangefit.cpp">
+      <ClCompile Include="D:\Alux3D\Engine\lib\squish\rangefit.cpp">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\squish\singlecolourfit.cpp">
+      <ClCompile Include="D:\Alux3D\Engine\lib\squish\singlecolourfit.cpp">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
-      <ClCompile Include="..\..\..\..\..\Engine\lib\squish\squish.cpp">
+      <ClCompile Include="D:\Alux3D\Engine\lib\squish\squish.cpp">
          <Filter>Source Files\lib</Filter>
       </ClCompile>
    </ItemGroup>
    <ItemGroup>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\squish\alpha.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\squish\alpha.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\squish\clusterfit.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\squish\clusterfit.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\squish\colourblock.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\squish\colourblock.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\squish\colourfit.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\squish\colourfit.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\squish\colourset.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\squish\colourset.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\squish\config.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\squish\config.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\squish\maths.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\squish\maths.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\squish\rangefit.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\squish\rangefit.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\squish\simd.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\squish\simd.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\squish\simd_float.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\squish\simd_float.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\squish\simd_sse.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\squish\simd_sse.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\squish\simd_ve.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\squish\simd_ve.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\squish\singlecolourfit.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\squish\singlecolourfit.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\squish\singlecolourlookup.inl">
+      <ClInclude Include="D:\Alux3D\Engine\lib\squish\singlecolourlookup.inl">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
-      <ClInclude Include="..\..\..\..\..\Engine\lib\squish\squish.h">
+      <ClInclude Include="D:\Alux3D\Engine\lib\squish\squish.h">
          <Filter>Source Files\lib</Filter>
       </ClInclude>
    </ItemGroup>
