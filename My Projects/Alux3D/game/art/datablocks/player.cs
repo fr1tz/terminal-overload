@@ -635,7 +635,7 @@ datablock PlayerData(DefaultPlayerData)
    DecalData = "PlayerFootprint";
 
    // Allowable Inventory Items
-   mainWeapon = WpnBulldog;
+   mainWeapon = WpnRaptor;
 
    maxInv[Lurker] = 1;
    maxInv[LurkerClip] = 20;
@@ -661,4 +661,19 @@ datablock PlayerData(DefaultPlayerData)
 
    // available skins (see materials.cs in model folder)
    availableSkins =  "base	DarkBlue	DarkGreen	LightGreen	Orange	Red	Teal	Violet	Yellow";
+   useEyePoint = "0";
+   maxInvLurkerGrenadeLauncher = "1";
+   maxInvRyderClip = "10";
+   maxInvWpnRaptorClip = "4";
+   maxInvWpnBadger = "1";
+   maxInvLurker = "1";
+   maxInvProxMine = "5";
+   maxInvLurkerGrenadeAmmo = "20";
+   maxInvWpnBadgerClip = "8";
+   maxInvWpnBulldog = "1";
+   maxInvLurkerClip = "20";
+   maxInvDeployableTurret = "5";
+   maxInvWpnRaptor = "1";
+   maxInvRyder = "1";
+   maxInvWpnBulldogClip = "4";
 };
