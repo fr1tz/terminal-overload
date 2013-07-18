@@ -11,6 +11,13 @@ singleton Material(Bulldog_ScopeScreen_Base)
    glow[0] = "1";
    emissive[0] = "1";
    diffuseColor[0] = "1 0.0705882 0 1";
+   animFlags[0] = "0x00000008";
+   scrollDir[0] = "1 1";
+   scrollSpeed[0] = "0.118";
+   rotSpeed[0] = "0.588";
+   waveFreq[0] = "8.281";
+   waveAmp[0] = "1";
+   materialTag0 = "Miscellaneous";
 };
 
 singleton Material(Bulldog_Base)
@@ -20,13 +27,15 @@ singleton Material(Bulldog_Base)
    normalMap[0] = "library/shape/alux3d/bulldog/image/p1/Bulldog_N.dds";
    specularMap[0] = "library/shape/alux3d/bulldog/image/p1/Bulldog_S.dds";
    specular[0] = "1 1 1 1";
-   specularPower[0] = "16";
+   specularPower[0] = "1";
    translucentBlendOp = "None";
-   useAnisotropic[0] = "1";
-   diffuseColor[0] = "1 0 0.0235294 1";
-   diffuseColor[1] = "0.454902 0.454902 0.454902 1";
-   glow[0] = "1";
-   emissive[0] = "1";
+   useAnisotropic[0] = "0";
+   diffuseColor[0] = "0.996078 0.992157 0.992157 1";
+   diffuseColor[1] = "0.992157 0.992157 0.992157 0";
+   glow[0] = "0";
+   emissive[0] = "0";
+   materialTag0 = "Miscellaneous";
+   pixelSpecular[0] = "1";
 };
 
 singleton Material(Bulldog_MuzzleFlash_Base)
