@@ -47,7 +47,6 @@
 #include "lighting/shadowMap/shadowMatHook.h"
 #include "materials/materialManager.h"
 #include "lighting/shadowMap/lightShadowMap.h"
-#include "gfx/gfxDebugEvent.h"
 
 
 SimObjectPtr<RenderPassManager> ProjectedShadow::smRenderPass = NULL;
@@ -432,8 +431,6 @@ void ProjectedShadow::render( F32 camDist, const TSRenderState &rdata )
 {
    if ( !mUpdateTexture )
       return;
-
-   GFXDEBUGEVENT_SCOPE_EX( ProjectedShadow_render, ColorI::GREEN, avar("ProjectedShadow_render") );
             
    // Do the render to texture,
    // DecalManager handles rendering

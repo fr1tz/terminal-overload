@@ -194,7 +194,7 @@ private:
 
    U32 mAdapterIndex;
    
-   StrongRefPtr<GFXGLVertexBuffer> mCurrentVB[4];
+   StrongRefPtr<GFXGLVertexBuffer> mCurrentVB;
    StrongRefPtr<GFXGLPrimitiveBuffer> mCurrentPB;
    
    /// Since GL does not have separate world and view matrices we need to track them
@@ -232,9 +232,6 @@ private:
    GFXFence* _createPlatformSpecificFence(); ///< If our platform (e.g. OS X) supports a fence extenstion (e.g. GL_APPLE_fence) this will create one, otherwise returns NULL
    
    void setPB(GFXGLPrimitiveBuffer* pb); ///< Sets mCurrentPB
-      
-   virtual CGprofile getCGVertexProfile() const;
-   virtual CGprofile getCGPixelProfile() const;
 };
 
 #endif

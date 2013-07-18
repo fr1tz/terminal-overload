@@ -42,9 +42,6 @@
 #include "gfx/primBuilder.h"
 #include "console/console.h"
 #include "gfx/gl/gfxGLOcclusionQuery.h"
-#include "gfx/gfxCGShader.h"
-
-#include "cgGL.h"
 
 GFXAdapter::CreateDeviceInstanceDelegate GFXGLDevice::mCreateDeviceInstance(GFXGLDevice::createInstance); 
 
@@ -93,43 +90,26 @@ void GFXGLDevice::initGLState()
    glGetIntegerv(GL_MAX_TEXTURE_UNITS, (GLint*)&mMaxFFTextures);
    
    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-
-   const char* shaderVersion = (const char*)glGetString(GL_SHADING_LANGUAGE_VERSION);
-   Con::printf("GFXGLDevice shaderVersion = %s", shaderVersion);
-   if( shaderVersion )
-   {
-       mPixelShaderVersion = (float)atof(shaderVersion);
-   }
+   
+   // Apple's drivers lie and claim that everything supports fragment shaders.  Conveniently they don't lie about the number
+   // of supported image units.  Checking for 16 or more image units ensures that we don't try and use pixel shaders on
+   // cards which don't support them.
+   if(mCardProfiler->queryProfile("GL::suppFragmentShader") && mMaxShaderTextures >= 16)
+      mPixelShaderVersion = 2.0f;
    else
-   {
-       mPixelShaderVersion = 0.0f;
-   }  
+      mPixelShaderVersion = 0.0f;
+   
+   // MACHAX - Setting mPixelShaderVersion to 3.0 will allow Advanced Lighting
+   // to run.  At the time of writing (6/18) it doesn't quite work yet.
+   if(Con::getBoolVariable("$pref::machax::enableAdvancedLighting", false))
+      mPixelShaderVersion = 3.0f;
       
    mSupportsAnisotropic = mCardProfiler->queryProfile( "GL::suppAnisotropic" );
-
-   /*
-   {
-       CGprofile profile;
-       int nProfiles;
-       int ii;
-       nProfiles = cgGetNumSupportedProfiles();
-       Con::printf("NumSupportedProfiles: %i\n", nProfiles);
-       
-       for (ii=0; ii<nProfiles; ++ii) 
-       {
-           profile = cgGetSupportedProfile(ii);
-           if( cgGLIsProfileSupported(profile) )
-               Con::printf("SupportedProfile %i: %s %i", ii, cgGetProfileString(profile), profile);
-       }
-   }
-   */
-
-   cgGLEnableProfile(GFX->getCGVertexProfile());
-   cgGLEnableProfile(GFX->getCGPixelProfile());
 }
 
 GFXGLDevice::GFXGLDevice(U32 adapterIndex) :
    mAdapterIndex(adapterIndex),
+   mCurrentVB(NULL),
    mCurrentPB(NULL),
    m_mCurrentWorld(true),
    m_mCurrentView(true),
@@ -153,15 +133,13 @@ GFXGLDevice::GFXGLDevice(U32 adapterIndex) :
 
    for(U32 i = 0; i < TEXTURE_STAGE_COUNT; i++)
       mActiveTextureType[i] = GL_ZERO;
-
-   for(U32 i = 0; i < 4; i++)
-       mCurrentVB[i] = 0;
 }
 
 GFXGLDevice::~GFXGLDevice()
 {
    mCurrentStateBlock = NULL;
    mCurrentPB = NULL;
+   mCurrentVB = NULL;
    for(U32 i = 0; i < mVolatileVBs.size(); i++)
       mVolatileVBs[i] = NULL;
    for(U32 i = 0; i < mVolatilePBs.size(); i++)
@@ -182,12 +160,9 @@ GFXGLDevice::~GFXGLDevice()
 
 void GFXGLDevice::zombify()
 {
-    mTextureManager->zombify();
-    for( int i = 0; i < 4; i++ )
-    {
-        if(mCurrentVB[i])
-            mCurrentVB[i]->finish();
-    }
+   mTextureManager->zombify();
+   if(mCurrentVB)
+      mCurrentVB->finish();
    if(mCurrentPB)
       mCurrentPB->finish();
    //mVolatileVBs.clear();
@@ -208,11 +183,8 @@ void GFXGLDevice::resurrect()
       walk->resurrect();
       walk = walk->getNextResource();
    }
-    for( int i = 0; i < 4; i++ )
-    {
-        if(mCurrentVB[i])
-            mCurrentVB[i]->prepare();
-    }
+   if(mCurrentVB)
+      mCurrentVB->prepare();
    if(mCurrentPB)
       mCurrentPB->prepare();
    mTextureManager->resurrect();
@@ -272,15 +244,15 @@ GFXPrimitiveBuffer *GFXGLDevice::allocPrimitiveBuffer( U32 numIndices, U32 numPr
 
 void GFXGLDevice::setVertexStream( U32 stream, GFXVertexBuffer *buffer )
 {
-   AssertFatal( stream >= 0 && stream < 4, "GFXGLDevice::setVertexStream - We don't support multiple vertex streams!" );
+   AssertFatal( stream == 0, "GFXGLDevice::setVertexStream - We don't support multiple vertex streams!" );
 
    // Reset the state the old VB required, then set the state the new VB requires.
-   if ( mCurrentVB[stream] ) 
-      mCurrentVB[stream]->finish();
+   if ( mCurrentVB ) 
+      mCurrentVB->finish();
 
-   mCurrentVB[stream] = static_cast<GFXGLVertexBuffer*>( buffer );
-   if ( mCurrentVB[stream] )
-      mCurrentVB[stream]->prepare();
+   mCurrentVB = static_cast<GFXGLVertexBuffer*>( buffer );
+   if ( mCurrentVB )
+      mCurrentVB->prepare();
 }
 
 void GFXGLDevice::setVertexStreamFrequency( U32 stream, U32 frequency )
@@ -360,7 +332,7 @@ GLsizei GFXGLDevice::primCountToIndexCount(GFXPrimitiveType primType, U32 primit
    return 0;
 }
 
-void GFXGLDevice::preDrawPrimitive()
+inline void GFXGLDevice::preDrawPrimitive()
 {
    if( mStateDirty )
    {
@@ -371,7 +343,7 @@ void GFXGLDevice::preDrawPrimitive()
       setShaderConstBufferInternal(mCurrentShaderConstBuffer);
 }
 
-void GFXGLDevice::postDrawPrimitive(U32 primitiveCount)
+inline void GFXGLDevice::postDrawPrimitive(U32 primitiveCount)
 {
    mDeviceStatistics.mDrawCalls++;
    mDeviceStatistics.mPolyCount += primitiveCount;
@@ -532,10 +504,8 @@ void GFXGLDevice::setMatrix( GFXMatrixType mtype, const MatrixF &mat )
          {
             glMatrixMode(GL_MODELVIEW);
             m_mCurrentWorld = mat;
-            modelview = m_mCurrentView;
-            modelview *= m_mCurrentWorld;
-            //modelview = m_mCurrentWorld;
-            //modelview *= m_mCurrentView;
+            modelview = m_mCurrentWorld;
+            modelview *= m_mCurrentView;
             modelview.transpose();
             glLoadMatrixf((F32*) modelview);
          }
@@ -544,8 +514,8 @@ void GFXGLDevice::setMatrix( GFXMatrixType mtype, const MatrixF &mat )
          {
             glMatrixMode(GL_MODELVIEW);
             m_mCurrentView = mat;
-            modelview = m_mCurrentWorld;
-            modelview *= m_mCurrentView;
+            modelview = m_mCurrentView;
+            modelview *= m_mCurrentWorld;
             modelview.transpose();
             glLoadMatrixf((F32*) modelview);
          }
@@ -579,8 +549,8 @@ void GFXGLDevice::setClipRect( const RectI &inRect )
    // Create projection matrix.  See http://www.opengl.org/documentation/specs/man_pages/hardcopy/GL/html/gl/ortho.html
    const F32 left = mClip.point.x;
    const F32 right = mClip.point.x + mClip.extent.x;
-   const F32 bottom = mClip.point.y + mClip.extent.y;
-   const F32 top = mClip.point.y;
+   const F32 bottom = mClip.extent.y;
+   const F32 top = 0.0f;
    const F32 near = 0.0f;
    const F32 far = 1.0f;
    
@@ -600,15 +570,23 @@ void GFXGLDevice::setClipRect( const RectI &inRect )
    
    pt.set(tx, ty, tz, 1.0f);
    mProjectionMatrix.setColumn(3, pt);
-      
+   
+   // Translate projection matrix.
+   static MatrixF translate(true);
+   pt.set(0.0f, -mClip.point.y, 0.0f, 1.0f);
+   translate.setColumn(3, pt);
+   
+   mProjectionMatrix *= translate;
+   
    setMatrix(GFXMatrixProjection, mProjectionMatrix);
    
    MatrixF mTempMatrix(true);
    setViewMatrix( mTempMatrix );
    setWorldMatrix( mTempMatrix );
 
-   // Set the viewport to the clip rect
-   setViewport(mClip);
+   // Set the viewport to the clip rect (with y flip)
+   RectI viewport(mClip.point.x, size.y - (mClip.point.y + mClip.extent.y), mClip.extent.x, mClip.extent.y);
+   setViewport(viewport);
 }
 
 /// Creates a state block object based on the desc passed in.  This object
@@ -675,22 +653,11 @@ void GFXGLDevice::setShader( GFXShader *shader )
 {
    if ( shader )
    {
-       GFXCGShader* cgShader = dynamic_cast<GFXCGShader*>(shader);
-       if( cgShader )
-       {
-           glUseProgram(0);
-           cgShader->bind();
-       }
-       else
-       {
-           GFXGLShader *glShader = static_cast<GFXGLShader*>( shader );
-           glShader->useProgram();
-       }
+      GFXGLShader *glShader = static_cast<GFXGLShader*>( shader );
+      glShader->useProgram();
    }
    else
-   {
       glUseProgram(0);
-   }
 }
 
 void GFXGLDevice::disableShaders()
@@ -701,16 +668,12 @@ void GFXGLDevice::disableShaders()
 
 void GFXGLDevice::setShaderConstBufferInternal(GFXShaderConstBuffer* buffer)
 {
-    GFXGLShaderConstBuffer* glBuffer = dynamic_cast<GFXGLShaderConstBuffer*>(buffer);
-    if( glBuffer )
-        glBuffer->activate();
+   static_cast<GFXGLShaderConstBuffer*>(buffer)->activate();
 }
 
 U32 GFXGLDevice::getNumSamplers() const
 {
-    U32 samplerCount = mPixelShaderVersion > 0.001f ? mMaxShaderTextures : mMaxFFTextures;
-    AssertFatal(samplerCount <= TEXTURE_STAGE_COUNT, "To many samplers!");
-    return samplerCount;
+   return mPixelShaderVersion > 0.001f ? mMaxShaderTextures : mMaxFFTextures;
 }
 
 U32 GFXGLDevice::getNumRenderTargets() const 
@@ -760,10 +723,8 @@ void GFXGLDevice::_updateRenderTargets()
    
    if ( mViewportDirty )
    {
-       GLint y = mCurrentRT->getSize().y - (mViewport.point.y + mViewport.extent.y);
-       //Con::printf("glViewport(%d, %d, %d, %d)", mViewport.point.x, y, mViewport.extent.x, mViewport.extent.y);
-       glViewport( mViewport.point.x, y, mViewport.extent.x, mViewport.extent.y ); 
-       mViewportDirty = false;
+      glViewport( mViewport.point.x, mViewport.point.y, mViewport.extent.x, mViewport.extent.y ); 
+      mViewportDirty = false;
    }
 }
 
@@ -785,17 +746,6 @@ GFXFormat GFXGLDevice::selectSupportedFormat(   GFXTextureProfile* profile,
    }
    
    return GFXFormatR8G8B8A8;
-}
-
-
-CGprofile GFXGLDevice::getCGVertexProfile() const
-{
-    return CG_PROFILE_GLSLV;
-}
-
-CGprofile GFXGLDevice::getCGPixelProfile() const
-{
-    return CG_PROFILE_GLSLF;
 }
 
 //

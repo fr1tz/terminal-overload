@@ -54,10 +54,6 @@ protected:
    bool mUseDevicePixVersion;
 
    F32 mPixVersion;
-   
-   FileName mCGVertexShaderName;
-
-   FileName mCGPixelShaderName;
 
    FileName mDXVertexShaderName;
 

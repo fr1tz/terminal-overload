@@ -54,8 +54,6 @@
 #include "math/util/frustum.h"
 #endif
 
-#include "cg.h"
-
 
 class FontRenderBatcher;
 class GFont;
@@ -259,9 +257,6 @@ protected:
    /// This will allow querying to see if a device is initialized and ready to
    /// have operations performed on it.
    bool mInitialized;
-
-   /// CG context
-   CGcontext mCGContext;
 
    /// This is called before this, or any other device, is deleted in the global destroy()
    /// method. It allows the device to clean up anything while everything is still valid.
@@ -971,10 +966,6 @@ public:
 
    /// Get access to this device's drawing utility class.
    GFXDrawUtil *getDrawUtil();
-
-   CGcontext getCGContext()                 { return mCGContext; }
-   virtual CGprofile getCGVertexProfile() const = 0;
-   virtual CGprofile getCGPixelProfile() const = 0;
 
 #ifndef TORQUE_SHIPPING
    /// This is a method designed for debugging. It will allow you to dump the states

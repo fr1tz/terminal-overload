@@ -46,34 +46,6 @@ public:
                            GFXShaderConstBuffer *buffer );
 };
 
-class WindDeformation : public ShaderFeature
-{
-protected:
-
-   ShaderIncludeDependency mDep;
-
-public:
-
-   WindDeformation();
-
-   virtual void processVert( Vector<ShaderComponent*> &componentList,
-                             const MaterialFeatureData &fd );
-
-   virtual String getName()
-   {
-      return "Wind Effect";
-   }
-
-   virtual void determineFeature(   Material *material,
-                                    const GFXVertexFormat *vertexFormat,
-                                    U32 stageNum,
-                                    const FeatureType &type,
-                                    const FeatureSet &features,
-                                    MaterialFeatureData *outFeatureData );
-
-   virtual ShaderFeatureConstHandles* createConstHandles( GFXShader *shader, SimObject *userObject );
-};
-
 
 DeclareFeatureType( MFT_WindEffect );
 

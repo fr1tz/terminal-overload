@@ -56,17 +56,13 @@ static inline GLenum minificationFilter(U32 minFilter, U32 mipFilter, U32 mipLev
    }
 }
 
-#ifndef _MSC_VER
-#define __stdcall
-#endif
-
 /// Simple class which preserves a given GL integer.
 /// This class determines the integer to preserve on construction and restores 
 /// it on destruction.
 class GFXGLPreserveInteger
 {
 public:
-   typedef void (__stdcall *BindFn)(GLenum, GLuint);
+   typedef void(*BindFn)(GLenum, GLuint);
 
    /// Preserve the integer.
    /// @param binding The binding which should be set on destruction.
@@ -98,7 +94,7 @@ GFXGLPreserveInteger TORQUE_CONCAT(preserve_, __LINE__) (GL_ARRAY_BUFFER, GL_ARR
 
 /// Helper macro to preserve the current element array binding.
 #define PRESERVE_INDEX_BUFFER() \
-GFXGLPreserveInteger TORQUE_CONCAT(preserve_, __LINE__) (GL_ELEMENT_ARRAY_BUFFER, GL_ELEMENT_ARRAY_BUFFER_BINDING, glBindBuffer)
+GFXGLPreserveInteger TORQUE_CONCAT(preserve_, __LINE__) (GL_ELEMENT_ARRAY_BUFFER, GL_ELEMENT_ARRAY_BUFFER_BINDING, (GFXGLPreserveInteger::BindFn)glBindBuffer)
 
 /// Helper macro to preserve the current 2D texture binding.
 #define PRESERVE_2D_TEXTURE() \

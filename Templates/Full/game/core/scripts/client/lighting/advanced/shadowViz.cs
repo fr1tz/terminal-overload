@@ -22,9 +22,12 @@
 
 new ShaderData( AL_ShadowVisualizeShader )
 {
-   CGVertexShaderFile = "shaders/common/guiMaterialV.cg";
-   CGPixelShaderFile  = "shaders/common/lighting/advanced/dbgShadowVisualizeP.cg";
-      
+   DXVertexShaderFile = "shaders/common/guiMaterialV.hlsl";
+   DXPixelShaderFile  = "shaders/common/lighting/advanced/dbgShadowVisualizeP.hlsl";
+   
+   OGLVertexShaderFile = "shaders/common/gl/guiMaterialV.glsl";
+   OGLPixelShaderFile  = "shaders/common/lighting/advanced/gl/dbgShadowVisualizeP.glsl";
+   
    pixVersion = 2.0;
 };
 

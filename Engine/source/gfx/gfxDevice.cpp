@@ -89,14 +89,6 @@ GFXDevice::DeviceEventSignal& GFXDevice::getDeviceEventSignal()
    return theSignal;
 }
 
-void CGErrorCallback(void)
-{
-    const char* errorString = cgGetErrorString(cgGetError());
-    const char* listing = cgGetLastListing(GFX->getCGContext());
-    Con::printf("cg error (%s)\r\n%s", errorString, listing);
-    AssertFatal(0, "CG Error");
-}
-
 GFXDevice::GFXDevice() 
 {    
    VECTOR_SET_ASSOCIATION( mVideoModes );
@@ -202,9 +194,6 @@ GFXDevice::GFXDevice()
    #elif defined TORQUE_OS_PS3
       GFXShader::addGlobalMacro( "TORQUE_OS_PS3" );            
    #endif
-
-   cgSetErrorCallback(CGErrorCallback);
-   mCGContext = cgCreateContext();
 }
 
 GFXDrawUtil* GFXDevice::getDrawUtil()
@@ -544,7 +533,6 @@ void GFXDevice::updateStates(bool forceSetAll /*=false*/)
             }
             break;
          default:
-             Con::printf("Unknown texture type: mTexType[%d] = 0x%x", i, mTexType[i]);
             AssertFatal(false, "Unknown texture type!");
             break;
          }

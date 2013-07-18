@@ -410,5 +410,4 @@ bool gglSetPbufferTarget(GLSurface sp,U32 mip,U32 face)
 }
 
 } // Namespace
-
-#endif //0
+#endif

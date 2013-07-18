@@ -30,7 +30,7 @@
 #include "math/mRandom.h"
 #include "platformX86UNIX/platformX86UNIX.h"
 #include "platformX86UNIX/x86UNIXStdConsole.h"
-#include "platform/event.h"
+#include "platform/input/event.h"
 //#include "platform/gameInterface.h"
 #include "platform/platform.h"
 //#include "platform/platformAL.h"
@@ -255,7 +255,8 @@ static void SetAppState()
       state & SDL_APPINPUTFOCUS)
    {
       x86UNIXState->setWindowActive(true);
-      Input::reactivate();
+      Input::deactivate();
+      Input::activate(); 
    }
    // if we are active, but we don't have appactive or input focus,
    // deactivate input (if window not locked) and clear windowActive
@@ -632,14 +633,14 @@ void Platform::process()
       // there are no players connected.
       // JMQ: recent kernels (such as RH 8.0 2.4.18) reduce the latency
       // to 2-4 ms on average.
-      if (!Game->isJournalReading() && (x86UNIXState->getDSleep() || 
+      /*if (!Game->isJournalReading() && (x86UNIXState->getDSleep() || 
              Con::getIntVariable("Server::PlayerCount") - 
              Con::getIntVariable("Server::BotCount") <= 0))
       {
          PROFILE_START(XUX_Sleep);
          Sleep(0, getBackgroundSleepTime() * 1000000);
          PROFILE_END();
-      }
+      }*/
    }
 
 #ifndef DEDICATED
@@ -743,7 +744,7 @@ ConsoleFunction( isKoreanBuild, bool, 1, 1, "isKoreanBuild()" )
    return false;
 }
 
-bool Platform::displaySplashWindow()
+bool Platform::displaySplashWindow(String path)
 {
     X11WindowManager* mgr = (X11WindowManager*)PlatformWindowManager::get();
     return mgr->displaySplashWindow();

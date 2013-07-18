@@ -162,7 +162,6 @@ protected:
 
    U32  mAdapterIndex;            ///< Adapter index because D3D supports multiple adapters
 
-   F32 mVertVersion;
    F32 mPixVersion;
    U32 mNumSamplers;               ///< Profiled (via caps)
    U32 mNumRenderTargets;          ///< Profiled (via caps)
@@ -351,10 +350,6 @@ public:
 
    // Get the backbuffer, currently only access for WPF support
    virtual IDirect3DSurface9* getBackBuffer() { return mDeviceBackbuffer; }
-
-   
-   virtual CGprofile getCGVertexProfile() const = 0;
-   virtual CGprofile getCGPixelProfile() const = 0;
 
 };
 

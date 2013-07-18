@@ -2069,7 +2069,7 @@ void Interior::createZoneVBs()
             }
             else
             {
-               node.baseTexIndex = 0;
+               node.baseTexIndex = NULL;
             }
 
 

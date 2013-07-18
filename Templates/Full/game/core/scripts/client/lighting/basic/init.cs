@@ -40,9 +40,12 @@ singleton GFXStateBlockData( BL_ProjectedShadowSBData )
 
 singleton ShaderData( BL_ProjectedShadowShaderData )
 {
-   CGVertexShaderFile     = "shaders/common/projectedShadowV.cg";
-   CGPixelShaderFile      = "shaders/common/projectedShadowP.cg";   
-         
+   DXVertexShaderFile     = "shaders/common/projectedShadowV.hlsl";
+   DXPixelShaderFile      = "shaders/common/projectedShadowP.hlsl";   
+   
+   OGLVertexShaderFile     = "shaders/common/gl/projectedShadowV.glsl";
+   OGLPixelShaderFile      = "shaders/common/gl/projectedShadowP.glsl";   
+      
    pixVersion = 2.0;
 };
 

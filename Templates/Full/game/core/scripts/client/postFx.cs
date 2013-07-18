@@ -33,9 +33,12 @@ singleton GFXStateBlockData( PFX_DefaultStateBlock )
 
 singleton ShaderData( PFX_PassthruShader )
 {   
-   CGVertexShaderFile 	= "shaders/common/postFx/postFxV.cg";
-   CGPixelShaderFile 	= "shaders/common/postFx/passthruP.cg";
-               
+   DXVertexShaderFile 	= "shaders/common/postFx/postFxV.hlsl";
+   DXPixelShaderFile 	= "shaders/common/postFx/passthruP.hlsl";
+         
+//   OGLVertexShaderFile  = "shaders/common/postFx/gl//postFxV.glsl";
+//   OGLPixelShaderFile   = "shaders/common/postFx/gl/passthruP.glsl";
+      
    samplerNames[0] = "$inputTex";
    
    pixVersion = 2.0;

@@ -45,8 +45,8 @@ singleton GFXStateBlockData( PFX_DefaultChromaticLensStateBlock )
 
 singleton ShaderData( PFX_ChromaticLensShader )
 {   
-   CGVertexShaderFile 	= "shaders/common/postFx/postFxV.cg";
-   CGPixelShaderFile 	= "shaders/common/postFx/chromaticLens.cg"; 
+   DXVertexShaderFile 	= "shaders/common/postFx/postFxV.hlsl";
+   DXPixelShaderFile 	= "shaders/common/postFx/chromaticLens.hlsl"; 
    pixVersion = 3.0;
 };
 

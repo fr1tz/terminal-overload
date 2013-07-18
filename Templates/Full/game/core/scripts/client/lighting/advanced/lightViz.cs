@@ -50,8 +50,11 @@ new GFXStateBlockData( AL_DefaultVisualizeState )
 
 new ShaderData( AL_DepthVisualizeShader )
 {
-   CGVertexShaderFile = "shaders/common/postFx/postFxV.cg";
-   CGPixelShaderFile  = "shaders/common/lighting/advanced/dbgDepthVisualizeP.cg";
+   DXVertexShaderFile = "shaders/common/postFx/postFxV.hlsl";
+   DXPixelShaderFile  = "shaders/common/lighting/advanced/dbgDepthVisualizeP.hlsl";
+
+   OGLVertexShaderFile = "shaders/common/postFx/postFxV.glsl";
+   OGLPixelShaderFile  = "shaders/common/lighting/advanced/gl/dbgDepthVisualizeP.glsl";
 
    samplerNames[0] = "prepassBuffer";
    samplerNames[1] = "depthViz";
@@ -84,8 +87,11 @@ function AL_DepthVisualize::onEnabled( %this )
 
 new ShaderData( AL_NormalsVisualizeShader )
 {
-   CGVertexShaderFile = "shaders/common/postFx/postFxV.cg";
-   CGPixelShaderFile  = "shaders/common/lighting/advanced/dbgNormalVisualizeP.cg";
+   DXVertexShaderFile = "shaders/common/postFx/postFxV.hlsl";
+   DXPixelShaderFile  = "shaders/common/lighting/advanced/dbgNormalVisualizeP.hlsl";
+
+   OGLVertexShaderFile = "shaders/common/postFx/postFxV.glsl";
+   OGLPixelShaderFile  = "shaders/common/lighting/advanced/gl/dbgNormalVisualizeP.glsl";
    
    samplerNames[0] = "prepassTex";
    
@@ -117,8 +123,11 @@ function AL_NormalsVisualize::onEnabled( %this )
 
 new ShaderData( AL_LightColorVisualizeShader )
 {
-   CGVertexShaderFile = "shaders/common/postFx/postFxV.cg";
-   CGPixelShaderFile  = "shaders/common/lighting/advanced/dbgLightColorVisualizeP.cg";
+   DXVertexShaderFile = "shaders/common/postFx/postFxV.hlsl";
+   DXPixelShaderFile  = "shaders/common/lighting/advanced/dbgLightColorVisualizeP.hlsl";
+
+   OGLVertexShaderFile = "shaders/common/postFx/postFxV.glsl";
+   OGLPixelShaderFile  = "shaders/common/lighting/advanced/dl/dbgLightColorVisualizeP.glsl";
    
    samplerNames[0] = "lightInfoBuffer";
    
@@ -149,8 +158,11 @@ function AL_LightColorVisualize::onEnabled( %this )
 
 new ShaderData( AL_LightSpecularVisualizeShader )
 {
-   CGVertexShaderFile = "shaders/common/postFx/postFxV.cg";
-   CGPixelShaderFile  = "shaders/common/lighting/advanced/dbgLightSpecularVisualizeP.cg";
+   DXVertexShaderFile = "shaders/common/postFx/postFxV.hlsl";
+   DXPixelShaderFile  = "shaders/common/lighting/advanced/dbgLightSpecularVisualizeP.hlsl";
+
+   OGLVertexShaderFile = "shaders/common/postFx/postFxV.glsl";
+   OGLPixelShaderFile  = "shaders/common/lighting/advanced/dl/dbgLightSpecularVisualizeP.glsl";
    
    samplerNames[0] = "lightInfoBuffer";
    

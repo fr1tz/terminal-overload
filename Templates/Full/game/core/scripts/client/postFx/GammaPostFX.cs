@@ -22,8 +22,8 @@
 
 singleton ShaderData( GammaShader )
 {
-   CGVertexShaderFile 	= "shaders/common/postFx/postFxV.cg";
-   CGPixelShaderFile 	= "shaders/common/postFx/gammaP.cg";
+   DXVertexShaderFile 	= "shaders/common/postFx/postFxV.hlsl";
+   DXPixelShaderFile 	= "shaders/common/postFx/gammaP.hlsl";
 
    pixVersion = 2.0;   
 };

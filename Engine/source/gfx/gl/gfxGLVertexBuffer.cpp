@@ -109,12 +109,7 @@ void GFXGLVertexBuffer::prepare()
       }
       else // Everything else is a texture coordinate.
       {
-          U32 texUnit = GL_TEXTURE0 + element.getSemanticIndex();
-          if( element.isSemantic( GFXSemantic::TANGENT ) )
-              texUnit = GL_TEXTURE6;
-          else if( element.isSemantic(GFXSemantic::BINORMAL) )
-              texUnit = GL_TEXTURE7;
-         glClientActiveTexture( texUnit );
+         glClientActiveTexture( GL_TEXTURE0 + texCoordIndex );
          glEnableClientState( GL_TEXTURE_COORD_ARRAY );
          glTexCoordPointer( element.getSizeInBytes() / 4, GL_FLOAT, mVertexSize, buffer );
          buffer += element.getSizeInBytes();
@@ -141,12 +136,7 @@ void GFXGLVertexBuffer::finish()
          glDisableClientState( GL_COLOR_ARRAY );
       else
       {
-          U32 texUnit = GL_TEXTURE0 + element.getSemanticIndex();
-          if( element.isSemantic( GFXSemantic::TANGENT ) )
-              texUnit = GL_TEXTURE6;
-          else if( element.isSemantic(GFXSemantic::BINORMAL) )
-              texUnit = GL_TEXTURE7;
-         glClientActiveTexture( texUnit );
+         glClientActiveTexture( GL_TEXTURE0 + texCoordIndex );
          glDisableClientState(GL_TEXTURE_COORD_ARRAY);
          ++texCoordIndex;
       }

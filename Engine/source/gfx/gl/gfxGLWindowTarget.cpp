@@ -70,7 +70,8 @@ void GFXGLWindowTarget::resolveTo(GFXTextureObject* obj)
    
    glBindFramebufferEXT(GL_READ_FRAMEBUFFER_EXT, 0);
    
-   glBlitFramebufferEXT(0, 0, getSize().x, getSize().y, 0, glTexture->getHeight(), glTexture->getWidth(), 0, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+   glBlitFramebufferEXT(0, 0, getSize().x, getSize().y,
+      0, 0, glTexture->getWidth(), glTexture->getHeight(), GL_COLOR_BUFFER_BIT, GL_NEAREST);
    
    glBindFramebufferEXT(GL_DRAW_FRAMEBUFFER_EXT, 0);
    

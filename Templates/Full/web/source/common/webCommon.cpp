@@ -312,7 +312,7 @@ informativeTextWithFormat:nsMessage];
          return false;
 
 #ifdef WIN32
-      return (SetCurrentDirectoryA(gameDir) == TRUE);
+      return SetCurrentDirectoryA(gameDir);
 #else
       return (chdir(gameDir) == 0);
 #endif

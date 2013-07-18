@@ -76,57 +76,57 @@ $HDRPostFX::colorCorrectionRamp = "core/scripts/client/postFx/null_color_ramp.pn
 
 singleton ShaderData( HDR_BrightPassShader )
 {
-   CGVertexShaderFile 	= "shaders/common/postFx/postFxV.cg";
-   CGPixelShaderFile 	= "shaders/common/postFx/hdr/brightPassFilterP.cg";
+   DXVertexShaderFile 	= "shaders/common/postFx/postFxV.hlsl";
+   DXPixelShaderFile 	= "shaders/common/postFx/hdr/brightPassFilterP.hlsl";
    pixVersion = 3.0;
 };
 
 singleton ShaderData( HDR_DownScale4x4Shader )
 {
-   CGVertexShaderFile 	= "shaders/common/postFx/hdr/downScale4x4V.cg";
-   CGPixelShaderFile 	= "shaders/common/postFx/hdr/downScale4x4P.cg";
+   DXVertexShaderFile 	= "shaders/common/postFx/hdr/downScale4x4V.hlsl";
+   DXPixelShaderFile 	= "shaders/common/postFx/hdr/downScale4x4P.hlsl";
    pixVersion = 2.0;
 };
 
 singleton ShaderData( HDR_BloomGaussBlurHShader )
 {
-   CGVertexShaderFile 	= "shaders/common/postFx/postFxV.cg";
-   CGPixelShaderFile 	= "shaders/common/postFx/hdr/bloomGaussBlurHP.cg";
+   DXVertexShaderFile 	= "shaders/common/postFx/postFxV.hlsl";
+   DXPixelShaderFile 	= "shaders/common/postFx/hdr/bloomGaussBlurHP.hlsl";
    pixVersion = 3.0;
 };
 
 singleton ShaderData( HDR_BloomGaussBlurVShader )
 {
-   CGVertexShaderFile 	= "shaders/common/postFx/postFxV.cg";
-   CGPixelShaderFile 	= "shaders/common/postFx/hdr/bloomGaussBlurVP.cg";
+   DXVertexShaderFile 	= "shaders/common/postFx/postFxV.hlsl";
+   DXPixelShaderFile 	= "shaders/common/postFx/hdr/bloomGaussBlurVP.hlsl";
    pixVersion = 3.0;
 };
 
 singleton ShaderData( HDR_SampleLumShader )
 {
-   CGVertexShaderFile 	= "shaders/common/postFx/postFxV.cg";
-   CGPixelShaderFile 	= "shaders/common/postFx/hdr/sampleLumInitialP.cg";
+   DXVertexShaderFile 	= "shaders/common/postFx/postFxV.hlsl";
+   DXPixelShaderFile 	= "shaders/common/postFx/hdr/sampleLumInitialP.hlsl";
    pixVersion = 3.0;
 };
 
 singleton ShaderData( HDR_DownSampleLumShader )
 {
-   CGVertexShaderFile 	= "shaders/common/postFx/postFxV.cg";
-   CGPixelShaderFile 	= "shaders/common/postFx/hdr/sampleLumIterativeP.cg";
+   DXVertexShaderFile 	= "shaders/common/postFx/postFxV.hlsl";
+   DXPixelShaderFile 	= "shaders/common/postFx/hdr/sampleLumIterativeP.hlsl";
    pixVersion = 3.0;
 };
 
 singleton ShaderData( HDR_CalcAdaptedLumShader )
 {
-   CGVertexShaderFile 	= "shaders/common/postFx/postFxV.cg";
-   CGPixelShaderFile 	= "shaders/common/postFx/hdr/calculateAdaptedLumP.cg";
+   DXVertexShaderFile 	= "shaders/common/postFx/postFxV.hlsl";
+   DXPixelShaderFile 	= "shaders/common/postFx/hdr/calculateAdaptedLumP.hlsl";
    pixVersion = 3.0;
 };
 
 singleton ShaderData( HDR_CombineShader )
 {
-   CGVertexShaderFile 	= "shaders/common/postFx/postFxV.cg";
-   CGPixelShaderFile 	= "shaders/common/postFx/hdr/finalPassCombineP.cg";
+   DXVertexShaderFile 	= "shaders/common/postFx/postFxV.hlsl";
+   DXPixelShaderFile 	= "shaders/common/postFx/hdr/finalPassCombineP.hlsl";
    pixVersion = 3.0;
 };
 
@@ -419,8 +419,8 @@ singleton PostEffect( HDRPostFX )
 
 singleton ShaderData( LuminanceVisShader )
 {
-   CGVertexShaderFile 	= "shaders/common/postFx/postFxV.cg";
-   CGPixelShaderFile 	= "shaders/common/postFx/hdr/luminanceVisP.cg";
+   DXVertexShaderFile 	= "shaders/common/postFx/postFxV.hlsl";
+   DXPixelShaderFile 	= "shaders/common/postFx/hdr/luminanceVisP.hlsl";
    pixVersion = 3.0;
 };
 

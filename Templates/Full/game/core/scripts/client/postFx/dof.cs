@@ -318,15 +318,15 @@ singleton GFXStateBlockData( PFX_DOFFinalStateBlock )
 
 singleton ShaderData( PFX_DOFDownSampleShader )
 {      
-   CGVertexShaderFile 	= "shaders/common/postFx/dof/DOF_DownSample_V.cg";   
-   CGPixelShaderFile 	= "shaders/common/postFx/dof/DOF_DownSample_P.cg";            
+   DXVertexShaderFile 	= "shaders/common/postFx/dof/DOF_DownSample_V.hlsl";   
+   DXPixelShaderFile 	= "shaders/common/postFx/dof/DOF_DownSample_P.hlsl";            
    pixVersion = 3.0;
 };
 
 singleton ShaderData( PFX_DOFBlurYShader )
 {
-   CGVertexShaderFile 	= "shaders/common/postFx/dof/DOF_Gausian_V.cg";
-   CGPixelShaderFile 	= "shaders/common/postFx/dof/DOF_Gausian_P.cg";
+   DXVertexShaderFile 	= "shaders/common/postFx/dof/DOF_Gausian_V.hlsl";
+   DXPixelShaderFile 	= "shaders/common/postFx/dof/DOF_Gausian_P.hlsl";
    pixVersion = 2.0;      
    defines = "BLUR_DIR=float2(0.0,1.0)";         
 };
@@ -338,22 +338,22 @@ singleton ShaderData( PFX_DOFBlurXShader : PFX_DOFBlurYShader )
 
 singleton ShaderData( PFX_DOFCalcCoCShader )
 {   
-   CGVertexShaderFile 	= "shaders/common/postFx/dof/DOF_CalcCoC_V.cg";
-   CGPixelShaderFile 	= "shaders/common/postFx/dof/DOF_CalcCoC_P.cg";         
+   DXVertexShaderFile 	= "shaders/common/postFx/dof/DOF_CalcCoC_V.hlsl";
+   DXPixelShaderFile 	= "shaders/common/postFx/dof/DOF_CalcCoC_P.hlsl";         
    pixVersion = 3.0;
 };
 
 singleton ShaderData( PFX_DOFSmallBlurShader )
 {   
-   CGVertexShaderFile 	= "shaders/common/postFx/dof/DOF_SmallBlur_V.cg";
-   CGPixelShaderFile 	= "shaders/common/postFx/dof/DOF_SmallBlur_P.cg";            
+   DXVertexShaderFile 	= "shaders/common/postFx/dof/DOF_SmallBlur_V.hlsl";
+   DXPixelShaderFile 	= "shaders/common/postFx/dof/DOF_SmallBlur_P.hlsl";            
    pixVersion = 3.0;
 };
 
 singleton ShaderData( PFX_DOFFinalShader )
 {   
-   CGVertexShaderFile 	= "shaders/common/postFx/dof/DOF_Final_V.cg";
-   CGPixelShaderFile 	= "shaders/common/postFx/dof/DOF_Final_P.cg";
+   DXVertexShaderFile 	= "shaders/common/postFx/dof/DOF_Final_V.hlsl";
+   DXPixelShaderFile 	= "shaders/common/postFx/dof/DOF_Final_P.hlsl";
    pixVersion = 3.0;
 };
 

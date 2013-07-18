@@ -177,9 +177,6 @@ public:
    GFXFence *createFence() { return new GFXGeneralFence( this ); }
    GFXOcclusionQuery* createOcclusionQuery() { return NULL; }
    
-   virtual CGprofile getCGVertexProfile() const   { return CG_PROFILE_GENERIC; }
-   virtual CGprofile getCGPixelProfile() const    { return CG_PROFILE_GENERIC; }
-   
 private:
    typedef GFXDevice Parent;
    RectI clip;

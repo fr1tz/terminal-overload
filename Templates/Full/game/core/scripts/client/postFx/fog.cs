@@ -26,8 +26,8 @@
 
 singleton ShaderData( FogPassShader )
 {   
-   CGVertexShaderFile 	= "shaders/common/postFx/postFxV.cg";
-   CGPixelShaderFile 	= "shaders/common/postFx/fogP.cg";
+   DXVertexShaderFile 	= "shaders/common/postFx/postFxV.hlsl";
+   DXPixelShaderFile 	= "shaders/common/postFx/fogP.hlsl";
          
 //   OGLVertexShaderFile  = "shaders/common/postFx/gl//postFxV.glsl";
 //   OGLPixelShaderFile   = "shaders/common/postFx/gl/fogP.glsl";
@@ -72,8 +72,8 @@ singleton PostEffect( FogPostFx )
 
 singleton ShaderData( UnderwaterFogPassShader )
 {   
-   CGVertexShaderFile 	= "shaders/common/postFx/postFxV.cg";
-   CGPixelShaderFile 	= "shaders/common/postFx/underwaterFogP.cg";
+   DXVertexShaderFile 	= "shaders/common/postFx/postFxV.hlsl";
+   DXPixelShaderFile 	= "shaders/common/postFx/underwaterFogP.hlsl";
          
 //   OGLVertexShaderFile  = "shaders/common/postFx/gl/postFxV.glsl";
 //   OGLPixelShaderFile   = "shaders/common/postFx/gl/fogP.glsl";

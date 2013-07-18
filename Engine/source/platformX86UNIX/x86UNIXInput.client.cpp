@@ -22,7 +22,7 @@
 
 #include "platformX86UNIX/platformX86UNIX.h"
 #include "platform/platformInput.h"
-#include "platform/event.h"
+#include "platform/input/event.h"
 #include "console/console.h"
 #include "platformX86UNIX/x86UNIXState.h"
 #include "platformX86UNIX/x86UNIXInputManager.h"

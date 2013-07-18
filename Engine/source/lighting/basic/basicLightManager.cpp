@@ -41,14 +41,20 @@
 #include "scene/sceneObject.h"
 #include "renderInstance/renderPrePassMgr.h"
 #include "shaderGen/featureMgr.h"
+#include "shaderGen/HLSL/shaderFeatureHLSL.h"
+#include "shaderGen/HLSL/bumpHLSL.h"
+#include "shaderGen/HLSL/pixSpecularHLSL.h"
 #include "lighting/basic/blInteriorSystem.h"
 #include "lighting/basic/blTerrainSystem.h"
 #include "lighting/common/projectedShadow.h"
 
 
-#include "shaderGen/shaderFeature.h"
-#include "shaderGen/bump.h"
-#include "shaderGen/pixSpecular.h"
+#if defined( TORQUE_OS_MAC ) || defined( TORQUE_OS_LINUX )
+#include "shaderGen/GLSL/shaderFeatureGLSL.h"
+#include "shaderGen/GLSL/bumpGLSL.h"
+#include "shaderGen/GLSL/pixSpecularGLSL.h"
+#endif
+
 
 MODULE_BEGIN( BasicLightManager )
 
@@ -158,12 +164,27 @@ bool BasicLightManager::isCompatible() const
 void BasicLightManager::activate( SceneManager *sceneManager )
 {
    Parent::activate( sceneManager );
-   
-   FEATUREMGR->registerFeature( MFT_LightMap, new LightmapFeat );
-   FEATUREMGR->registerFeature( MFT_ToneMap, new TonemapFeat );
-   FEATUREMGR->registerFeature( MFT_NormalMap, new BumpFeat );
-   FEATUREMGR->registerFeature( MFT_RTLighting, new RTLightingFeat );
-   FEATUREMGR->registerFeature( MFT_PixSpecular, new PixelSpecular );
+
+   if( GFX->getAdapterType() == OpenGL )
+   {
+      #if defined( TORQUE_OS_MAC ) || defined( TORQUE_OS_LINUX )
+         FEATUREMGR->registerFeature( MFT_LightMap, new LightmapFeatGLSL );
+         FEATUREMGR->registerFeature( MFT_ToneMap, new TonemapFeatGLSL );
+         FEATUREMGR->registerFeature( MFT_NormalMap, new BumpFeatGLSL );
+         FEATUREMGR->registerFeature( MFT_RTLighting, new RTLightingFeatGLSL );
+         FEATUREMGR->registerFeature( MFT_PixSpecular, new PixelSpecularGLSL );
+      #endif
+   }
+   else
+   {
+      #if !defined( TORQUE_OS_MAC ) && !defined( TORQUE_OS_LINUX )
+         FEATUREMGR->registerFeature( MFT_LightMap, new LightmapFeatHLSL );
+         FEATUREMGR->registerFeature( MFT_ToneMap, new TonemapFeatHLSL );
+         FEATUREMGR->registerFeature( MFT_NormalMap, new BumpFeatHLSL );
+         FEATUREMGR->registerFeature( MFT_RTLighting, new RTLightingFeatHLSL );
+         FEATUREMGR->registerFeature( MFT_PixSpecular, new PixelSpecularHLSL );
+      #endif
+   }
 
    FEATUREMGR->unregisterFeature( MFT_MinnaertShading );
    FEATUREMGR->unregisterFeature( MFT_SubSurface );

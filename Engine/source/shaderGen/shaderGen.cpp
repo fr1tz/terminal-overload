@@ -28,97 +28,24 @@
 #include "shaderGen/featureMgr.h"
 #include "shaderGen/shaderOp.h"
 #include "gfx/gfxDevice.h"
-#include "gfx/gfxCGShader.h"
 #include "core/memVolume.h"
 #include "core/module.h"
-#include "shaderGen/shaderGen.h"
-#include "shaderGen/shaderFeature.h"
-#include "shaderGen/bump.h"
-#include "shaderGen/pixSpecular.h"
-#include "shaderGen/depth.h"
-#include "shaderGen/paraboloid.h"
-#include "materials/materialFeatureTypes.h"
-
-static ShaderGen::ShaderGenInitDelegate sInitDelegate;
-
-void _initShaderGen( ShaderGen *shaderGen )
-{
-    shaderGen->setPrinter( new ShaderGenPrinter );
-    shaderGen->setComponentFactory( new ShaderGenComponentFactory );
-    shaderGen->setFileEnding( "cg" );
-    //shaderGen->setFileEnding( "hlsl" );
-
-    FEATUREMGR->registerFeature( MFT_VertTransform, new VertPosition );
-    FEATUREMGR->registerFeature( MFT_RTLighting, new RTLightingFeat );
-    FEATUREMGR->registerFeature( MFT_IsDXTnm, new NamedFeature( "DXTnm" ) );
-    FEATUREMGR->registerFeature( MFT_TexAnim, new TexAnim );
-    FEATUREMGR->registerFeature( MFT_DiffuseMap, new DiffuseMapFeat );
-    FEATUREMGR->registerFeature( MFT_OverlayMap, new OverlayTexFeat );
-    FEATUREMGR->registerFeature( MFT_DiffuseColor, new DiffuseFeature );
-    FEATUREMGR->registerFeature( MFT_DiffuseVertColor, new DiffuseVertColorFeature );
-    FEATUREMGR->registerFeature( MFT_AlphaTest, new AlphaTest );
-    FEATUREMGR->registerFeature( MFT_GlowMask, new GlowMask );
-    FEATUREMGR->registerFeature( MFT_LightMap, new LightmapFeat );
-    FEATUREMGR->registerFeature( MFT_ToneMap, new TonemapFeat );
-    FEATUREMGR->registerFeature( MFT_VertLit, new VertLit );
-    FEATUREMGR->registerFeature( MFT_Parallax, new ParallaxFeat );
-    FEATUREMGR->registerFeature( MFT_NormalMap, new BumpFeat );
-    FEATUREMGR->registerFeature( MFT_DetailNormalMap, new NamedFeature( "Detail Normal Map" ) );
-    FEATUREMGR->registerFeature( MFT_DetailMap, new DetailFeat );
-    FEATUREMGR->registerFeature( MFT_CubeMap, new ReflectCubeFeat );
-    FEATUREMGR->registerFeature( MFT_PixSpecular, new PixelSpecular );
-    FEATUREMGR->registerFeature( MFT_IsTranslucent, new NamedFeature( "Translucent" ) );
-    FEATUREMGR->registerFeature( MFT_IsTranslucentZWrite, new NamedFeature( "Translucent ZWrite" ) );
-    FEATUREMGR->registerFeature( MFT_Visibility, new VisibilityFeat );
-    FEATUREMGR->registerFeature( MFT_Fog, new FogFeat );
-    FEATUREMGR->registerFeature( MFT_SpecularMap, new SpecularMap );
-    FEATUREMGR->registerFeature( MFT_GlossMap, new NamedFeature( "Gloss Map" ) );
-    FEATUREMGR->registerFeature( MFT_LightbufferMRT, new NamedFeature( "Lightbuffer MRT" ) );
-    FEATUREMGR->registerFeature( MFT_RenderTarget1_Zero, new RenderTargetZero( ShaderFeature::RenderTarget1 ) );
-
-    FEATUREMGR->registerFeature( MFT_DiffuseMapAtlas, new NamedFeature( "Diffuse Map Atlas" ) );
-    FEATUREMGR->registerFeature( MFT_NormalMapAtlas, new NamedFeature( "Normal Map Atlas" ) );
-
-    FEATUREMGR->registerFeature( MFT_NormalsOut, new NormalsOutFeat );
-
-    FEATUREMGR->registerFeature( MFT_DepthOut, new DepthOut );
-    FEATUREMGR->registerFeature( MFT_EyeSpaceDepthOut, new EyeSpaceDepthOut() );
-
-    FEATUREMGR->registerFeature( MFT_HDROut, new HDROut );
-
-    FEATUREMGR->registerFeature( MFT_ParaboloidVertTransform, new ParaboloidVertTransform );
-    FEATUREMGR->registerFeature( MFT_IsSinglePassParaboloid, new NamedFeature( "Single Pass Paraboloid" ) );
-    //FEATUREMGR->registerFeature( MFT_UseInstancing, new NamedFeature( "Hardware Instancing" ) );
-
-    FEATUREMGR->registerFeature( MFT_Foliage, new FoliageFeature );
-
-    FEATUREMGR->registerFeature( MFT_ParticleNormal, new ParticleNormalFeature );
-
-    FEATUREMGR->registerFeature( MFT_InterlacedPrePass, new NamedFeature( "Interlaced Pre Pass" ) );
-
-    FEATUREMGR->registerFeature( MFT_ForwardShading, new NamedFeature( "Forward Shaded Material" ) );
-
-    FEATUREMGR->registerFeature( MFT_ImposterVert, new ImposterVertFeature );
-}
 
 
 MODULE_BEGIN( ShaderGen )
-    MODULE_INIT_BEFORE( GFX )
-    MODULE_SHUTDOWN_AFTER( GFX )
-    
-    MODULE_INIT
-    {
-        ManagedSingleton< ShaderGen >::createSingleton();
-        sInitDelegate.bind(_initShaderGen);
-        SHADERGEN->registerInitDelegate(Direct3D9, sInitDelegate);
-        SHADERGEN->registerInitDelegate(Direct3D9_360, sInitDelegate);
-        SHADERGEN->registerInitDelegate(OpenGL, sInitDelegate);     
-    }
 
-    MODULE_SHUTDOWN
-    {
-        ManagedSingleton< ShaderGen >::deleteSingleton();
-    }
+   MODULE_INIT_BEFORE( GFX )
+   MODULE_SHUTDOWN_AFTER( GFX )
+
+   MODULE_INIT
+   {
+      ManagedSingleton< ShaderGen >::createSingleton();
+   }
+   
+   MODULE_SHUTDOWN
+   {
+      ManagedSingleton< ShaderGen >::deleteSingleton();
+   }
 
 MODULE_END;
 
@@ -559,12 +486,9 @@ GFXShader* ShaderGen::getShader( const MaterialFeatureData &featureData, const G
       shaderMacros.merge( *macros );
    generateShader( featureData, vertFile, pixFile, &pixVersion, vertexFormat, cacheKey, shaderMacros );
 
-   //GFXShader *shader = GFX->createShader();
-   GFXShader *shader = new GFXCGShader();
+   GFXShader *shader = GFX->createShader();
    shader->mInstancingFormat.copy( mInstancingFormat ); // TODO: Move to init() below!
    if ( !shader->init( vertFile, pixFile, pixVersion, shaderMacros ) )
-   //if ( !shader->init( "shaders/litV.cg", "shaders/litP.cg", pixVersion, shaderMacros ) )
-   //if ( !shader->init( "shaders/defaultV.cg", "shaders/defaultP.cg", pixVersion, shaderMacros ) )
    {
       delete shader;
       return NULL;

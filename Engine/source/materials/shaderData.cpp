@@ -25,7 +25,6 @@
 
 #include "console/consoleTypes.h"
 #include "gfx/gfxDevice.h"
-#include "gfx/gfxCGShader.h"
 #include "core/strings/stringUnit.h"
 #include "lighting/lightManager.h"
 #include "console/engineAPI.h"
@@ -49,10 +48,10 @@ ConsoleDocClass( ShaderData,
 	"// Used for the procedural clould system\n"
 	"singleton ShaderData( CloudLayerShader )\n"
 	"{\n"
-	"	DXVertexShaderFile   = \"shaders/common/cloudLayerV.cg\";\n"
-	"	DXPixelShaderFile    = \"shaders/common/cloudLayerP.cg\";\n"
-	"	OGLVertexShaderFile = \"shaders/common/gl/cloudLayerV.cg\";\n"
-	"	OGLPixelShaderFile = \"shaders/common/gl/cloudLayerP.cg\";\n"
+	"	DXVertexShaderFile   = \"shaders/common/cloudLayerV.hlsl\";\n"
+	"	DXPixelShaderFile    = \"shaders/common/cloudLayerP.hlsl\";\n"
+	"	OGLVertexShaderFile = \"shaders/common/gl/cloudLayerV.glsl\";\n"
+	"	OGLPixelShaderFile = \"shaders/common/gl/cloudLayerP.glsl\";\n"
 	"	pixVersion = 2.0;\n"
 	"};\n"
 	"@endtsexample\n\n"
@@ -69,14 +68,6 @@ ShaderData::ShaderData()
 
 void ShaderData::initPersistFields()
 {
-   addField("CGVertexShaderFile",   TypeStringFilename,  Offset(mCGVertexShaderName,   ShaderData),
-	   "@brief %Path to the CG vertex shader file to use for this ShaderData.\n\n"
-	   "It must contain only one program and no pixel shader, just the vertex shader.");
-
-   addField("CGPixelShaderFile",    TypeStringFilename,  Offset(mCGPixelShaderName,  ShaderData),
-	   "@brief %Path to the CG pixel shader file to use for this ShaderData.\n\n"
-	   "It must contain only one program and no vertex shader, just the pixel shader");
-
    addField("DXVertexShaderFile",   TypeStringFilename,  Offset(mDXVertexShaderName,   ShaderData),
 	   "@brief %Path to the DirectX vertex shader file to use for this ShaderData.\n\n"
 	   "It must contain only one program and no pixel shader, just the vertex shader."
@@ -213,39 +204,35 @@ GFXShader* ShaderData::_createShader( const Vector<GFXShaderMacro> &macros )
    // Enable shader error logging.
    GFXShader::setLogging( true, true );
 
-   
+   GFXShader *shader = GFX->createShader();
    bool success = false;
-   GFXShader *shader;
-   if( !mCGVertexShaderName.isEmpty() )
+
+   // Initialize the right shader type.
+   switch( GFX->getAdapterType() )
    {
-       shader = new GFXCGShader();
-       success = shader->init( mCGVertexShaderName, mCGPixelShaderName, pixver, macros );
-   }
-   else
-   {
-       shader = GFX->createShader();
-       
-       // Initialize the right shader type.
-       switch( GFX->getAdapterType() )
-       {
-           case Direct3D9_360:
-           case Direct3D9:
-               {
-                   success = shader->init( mDXVertexShaderName, mDXPixelShaderName, pixver, macros );
-                   break;
-               }
-           
-           case OpenGL:
-               {
-                   success = shader->init( mOGLVertexShaderName, mOGLPixelShaderName, pixver, macros );
-                   break;
-               }
-           
-           default:
-               // Other device types are assumed to not support shaders.
-               success = false;
-               break;
-       }
+      case Direct3D9_360:
+      case Direct3D9:
+      {
+         success = shader->init( mDXVertexShaderName, 
+                                 mDXPixelShaderName, 
+                                 pixver,
+                                 macros );
+         break;
+      }
+
+      case OpenGL:
+      {
+         success = shader->init( mOGLVertexShaderName,
+                                 mOGLPixelShaderName,
+                                 pixver,
+                                 macros );
+         break;
+      }
+         
+      default:
+         // Other device types are assumed to not support shaders.
+         success = false;
+         break;
    }
 
    // If we failed to load the shader then

@@ -280,7 +280,6 @@ void GFXGLDevice::init( const GFXVideoMode &mode, PlatformWindow *window )
 
 bool GFXGLDevice::beginSceneInternal() 
 {
-    mCanCurrentlyRender = true;
    glGetError();
    return true;
 }
@@ -333,7 +332,7 @@ GFXWindowTarget *GFXGLDevice::allocWindowTarget( PlatformWindow *window )
    return ggwt;
 }
 
-/*  This currently conflicts with the implementation in gfxGLDevice.cpp
+#if 0 //TODO OPENGL
 void GFXGLDevice::_updateRenderTargets()
 {
    if ( mRTDirty || mCurrentRT->isPendingState() )
@@ -376,7 +375,7 @@ void GFXGLDevice::_updateRenderTargets()
       mViewportDirty = false;
    }
 }
-*/
+#endif
 
 GFXFence* GFXGLDevice::_createPlatformSpecificFence()
 {

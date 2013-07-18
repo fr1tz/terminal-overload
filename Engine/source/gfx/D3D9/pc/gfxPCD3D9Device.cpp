@@ -31,8 +31,6 @@
 #include "gfx/D3D9/videoCaptureD3D9.h"
 #include "core/util/journal/process.h"
 
-#include "cgD3D9.h"
-
 
 bool GFXPCD3D9Device::mEnableNVPerfHUD = false;
 
@@ -161,8 +159,6 @@ HRESULT GFXPCD3D9Device::createDevice(U32 adapter, D3DDEVTYPE deviceType, HWND h
          behaviorFlags, 
          pPresentationParameters, &mD3DDevice ); 
    }   
-
-   cgD3D9SetDevice(mD3DDevice);
 
    return hres;
 
@@ -477,8 +473,8 @@ void GFXPCD3D9Device::init( const GFXVideoMode &mode, PlatformWindow *window /* 
    }
 
    U8 *vertPtr = (U8*) &caps.VertexShaderVersion;
-   mVertVersion = vertPtr[1] + vertPtr[0] * 0.1;
-   Con::printf( "   Vert version detected: %f", mVertVersion );
+   F32 vertVersion = vertPtr[1] + vertPtr[0] * 0.1;
+   Con::printf( "   Vert version detected: %f", vertVersion );
 
    // The sampler count is based on the shader model and
    // not found in the caps.
@@ -1127,62 +1123,6 @@ void GFXPCD3D9Device::reset( D3DPRESENT_PARAMETERS &d3dpp )
 
    // Mark everything dirty and flush to card, for sanity.
    updateStates(true);
-}
-
-CGprofile GFXPCD3D9Device::getCGVertexProfile() const
-{
-    CGprofile prof = CG_PROFILE_GENERIC;
-
-    U32 version = (U32)floorf(mVertVersion);
-    switch( version )
-    {
-        case 1:
-            prof = CG_PROFILE_VS_1_1;
-            break;
-        case 2:
-            prof = (mVertVersion > 2.0f) ? CG_PROFILE_VS_2_X : CG_PROFILE_VS_2_0;
-            break;
-        case 3:
-            prof = CG_PROFILE_VS_3_0;
-            break;
-    }
-    
-    AssertWarn(prof != CG_PROFILE_GENERIC, "Highest vertex shader version supported by the video card is not supported by the engine");
-    return prof;
-}
-
-CGprofile GFXPCD3D9Device::getCGPixelProfile() const
-{    
-    CGprofile prof = CG_PROFILE_GENERIC;
-
-    U32 version = (U32)floorf(mPixVersion);
-    U32 subVersion = (U32)((mPixVersion - floorf(mPixVersion)) * 10.0f);
-    switch( version )
-    {
-        case 1:
-            switch( subVersion )
-            {
-                case 1:
-                    prof = CG_PROFILE_PS_1_1;
-                    break;
-                case 2:
-                    prof = CG_PROFILE_PS_1_2;
-                    break;
-                case 3:
-                    prof = CG_PROFILE_PS_1_3;
-                    break;
-            }
-            break;
-        case 2:
-            prof = (mPixVersion > 2.0f) ? CG_PROFILE_PS_2_X : CG_PROFILE_PS_2_0;
-            break;
-        case 3:
-            prof = CG_PROFILE_PS_3_0;
-            break;
-    }
-
-    AssertWarn(prof != CG_PROFILE_GENERIC, "Highest pixel shader version supported by the video card is not supported by the engine");
-    return prof;
 }
 
 //

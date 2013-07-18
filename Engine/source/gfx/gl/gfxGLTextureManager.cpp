@@ -152,8 +152,16 @@ void GFXGLTextureManager::innerCreateTexture( GFXGLTextureObject *retTex,
    glTexParameteri(binding, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
    if(binding == GL_TEXTURE_3D)
       glTexParameteri(binding, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-            
-   retTex->mTextureSize.set(width, height, (binding == GL_TEXTURE_3D) ? depth : 0);
+   
+   // Get the size from GL (you never know...)
+   GLint texHeight, texWidth, texDepth = 0;
+   
+   glGetTexLevelParameteriv(binding, 0, GL_TEXTURE_WIDTH, &texWidth);
+   glGetTexLevelParameteriv(binding, 0, GL_TEXTURE_HEIGHT, &texHeight);
+   if(binding == GL_TEXTURE_3D)
+      glGetTexLevelParameteriv(binding, 0, GL_TEXTURE_DEPTH, &texDepth);
+   
+   retTex->mTextureSize.set(texWidth, texHeight, texDepth);
 }
 
 //-----------------------------------------------------------------------------
@@ -162,30 +170,15 @@ void GFXGLTextureManager::innerCreateTexture( GFXGLTextureObject *retTex,
 
 static void _fastTextureLoad(GFXGLTextureObject* texture, GBitmap* pDL)
 {
-    glBindBuffer(GL_PIXEL_UNPACK_BUFFER_ARB, texture->getBuffer());
-    U32 bufSize = pDL->getWidth(0) * pDL->getHeight(0) * pDL->getBytesPerPixel();
-
-    if(pDL->getFormat() == GFXFormatR8G8B8A8 || pDL->getFormat() == GFXFormatR8G8B8X8)
-    {
-        void* temp = malloc(bufSize);
-        GFX->getDeviceSwizzle32()->ToBuffer(temp, pDL->getBits(0), bufSize);
-        glBufferData(GL_PIXEL_UNPACK_BUFFER_ARB, bufSize, temp, GL_STREAM_DRAW);
-        free(temp);
-    }
-    else
-        glBufferData(GL_PIXEL_UNPACK_BUFFER_ARB, bufSize, pDL->getBits(0), GL_STREAM_DRAW);
-
-   //glBufferData(GL_PIXEL_UNPACK_BUFFER_ARB, bufSize, NULL, GL_DYNAMIC_DRAW);
-   //Con::printf("glBufferData(%d): 0x%x", bufSize, glGetError());
-   //U8* pboMemory = (U8*)glMapBuffer(GL_PIXEL_UNPACK_BUFFER_ARB, GL_WRITE_ONLY);
-   //if( !pboMemory )
-   //    Con::printf("glMapBuffer failed: %d", glGetError());
-   //AssertFatal(pboMemory, "glMapBuffer(GL_PIXEL_UNPACK_BUFFER_ARB, GL_WRITE_ONLY) failed");
+   glBindBuffer(GL_PIXEL_UNPACK_BUFFER_ARB, texture->getBuffer());
+   U32 bufSize = pDL->getWidth(0) * pDL->getHeight(0) * pDL->getBytesPerPixel();
+   glBufferData(GL_PIXEL_UNPACK_BUFFER_ARB, bufSize, NULL, GL_STREAM_DRAW);
+   U8* pboMemory = (U8*)glMapBuffer(GL_PIXEL_UNPACK_BUFFER_ARB, GL_WRITE_ONLY);
    
-   //if(pDL->getFormat() == GFXFormatR8G8B8A8 || pDL->getFormat() == GFXFormatR8G8B8X8)
-   //   GFX->getDeviceSwizzle32()->ToBuffer(pboMemory, pDL->getBits(0), bufSize);
-   //else
-   //   dMemcpy(pboMemory, pDL->getBits(0), bufSize);
+   if(pDL->getFormat() == GFXFormatR8G8B8A8 || pDL->getFormat() == GFXFormatR8G8B8X8)
+      GFX->getDeviceSwizzle32()->ToBuffer(pboMemory, pDL->getBits(0), bufSize);
+   else
+      dMemcpy(pboMemory, pDL->getBits(0), bufSize);
    
    glUnmapBuffer(GL_PIXEL_UNPACK_BUFFER_ARB);
    
@@ -268,13 +261,7 @@ bool GFXGLTextureManager::_loadTexture(GFXTextureObject *aTexture, DDSFile *dds)
             delete[] uncompressedTex;
          }
          else
-         {
-             U32 width = dds->getWidth(i);
-             U32 height = dds->getHeight(i);
-             U32 surfaceSize = dds->getSurfaceSize(dds->getHeight(), dds->getWidth(), i);
-            //glCompressedTexSubImage2D(texture->getBinding(), i, 0, 0, width, height, GFXGLTextureInternalFormat[dds->mFormat], surfaceSize, dds->mSurfaces[0]->mMips[i]);
-            glCompressedTexImage2DARB(texture->getBinding(), i, GFXGLTextureInternalFormat[dds->mFormat], width, height, 0, surfaceSize, dds->mSurfaces[0]->mMips[i]);
-         }
+            glCompressedTexSubImage2D(texture->getBinding(), i, 0, 0, dds->getWidth(i), dds->getHeight(i), GFXGLTextureInternalFormat[dds->mFormat], dds->getSurfaceSize(dds->getHeight(), dds->getWidth(), i), dds->mSurfaces[0]->mMips[i]);
       }
       else
          glTexSubImage2D(texture->getBinding(), i, 0, 0, dds->getWidth(i), dds->getHeight(i), GFXGLTextureFormat[dds->mFormat], GFXGLTextureType[dds->mFormat], dds->mSurfaces[0]->mMips[i]);
