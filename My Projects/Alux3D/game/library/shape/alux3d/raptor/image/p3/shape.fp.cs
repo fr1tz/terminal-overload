@@ -7,7 +7,8 @@ singleton TSShapeConstructor(Shape_Alux3D_Raptor_Image_P3_FP)
 function Shape_Alux3D_Raptor_Image_P3_FP::onLoad(%this)
 {
    %this.renameSequence("ambient", "timeline");
-   %this.addSequence("timeline", "root", "25", "35");
+   %this.addSequence("timeline", "switch_in", "0", "25");
+   %this.setSequenceCyclic("switch_in", "0");
    %this.addSequence("timeline", "ready", "25", "35");
    %this.addSequence("timeline", "empty", "60", "70");
    %this.addSequence("timeline", "ready_moving", "190", "230");
