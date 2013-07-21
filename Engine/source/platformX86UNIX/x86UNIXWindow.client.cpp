@@ -41,7 +41,7 @@
 //#include "platformX86UNIX/x86UNIXOGLVideo.h"
 #include "platformX86UNIX/x86UNIXState.h"
 
-#ifndef DEDICATED
+#ifndef TORQUE_DEDICATED
 #include "platformX86UNIX/x86UNIXMessageBox.h"
 #include "platformX86UNIX/x86UNIXInputManager.h"
 #endif
@@ -52,7 +52,7 @@
 #include <unistd.h> // fork, execvp, chdir
 #include <time.h> // nanosleep
 
-#ifndef DEDICATED
+#ifndef TORQUE_DEDICATED
 #include <X11/Xlib.h>
 #include <X11/Xos.h>
 
@@ -71,7 +71,7 @@ LockFunc_t DisplayPtrManager::sgUnlockFunc = NULL;
 static U32 lastTimeTick;
 static MRandomLCG sgPlatRandom;
 
-#ifndef DEDICATED
+#ifndef TORQUE_DEDICATED
 extern void InstallRedBookDevices();
 extern void PollRedbookDevices();
 extern bool InitOpenGL();
@@ -139,7 +139,7 @@ static S32 ParseCommandLine(S32 argc, const char **argv,
       newCommandLine.push_back(argBuf);
    }
    x86UNIXState->setDedicated(foundDedicated);
-#if defined(DEDICATED) && !defined(TORQUE_ENGINE)
+#if defined(TORQUE_DEDICATED) && !defined(TORQUE_ENGINE)
    if (!foundDedicated)
    {
       dPrintf("This is a dedicated server build.  You must supply the -dedicated command line parameter.\n");
@@ -159,7 +159,7 @@ int XLocalErrorHandler(Display* display, XErrorEvent* error)
 
 void InitWindowingSystem()
 {
-#ifndef DEDICATED
+#ifndef TORQUE_DEDICATED
     if( !x86UNIXState->isXWindowsRunning() )
     {
         Display* dpy = XOpenDisplay(NULL);
@@ -182,7 +182,7 @@ static void InitWindow(const Point2I &initialSize, const char *name)
    x86UNIXState->setWindowName(name);
 }
 
-#ifndef DEDICATED
+#ifndef TORQUE_DEDICATED
 /*
 //------------------------------------------------------------------------------
 bool InitSDL()
@@ -384,7 +384,7 @@ void SendQuitEvent()
    quitevent.type = SDL_QUIT;
    SDL_PushEvent(&quitevent);
 }
-#endif // DEDICATED
+#endif // TORQUE_DEDICATED
 
 //------------------------------------------------------------------------------
 static inline void Sleep(int secs, int nanoSecs)
@@ -395,7 +395,7 @@ static inline void Sleep(int secs, int nanoSecs)
    nanosleep(&sleeptime, NULL);
 }
 
-#ifndef DEDICATED
+#ifndef TORQUE_DEDICATED
 struct AlertWinState
 {
       bool fullScreen;
@@ -453,12 +453,12 @@ static inline void AlertEnableVideo(AlertWinState& state)
       SDL_WM_GrabInput(SDL_GRAB_ON);
       */
 }
-#endif // DEDICATED
+#endif // TORQUE_DEDICATED
 
 //------------------------------------------------------------------------------
 void Platform::AlertOK(const char *windowTitle, const char *message)
 {
-#ifndef DEDICATED
+#ifndef TORQUE_DEDICATED
    if (x86UNIXState->isXWindowsRunning())
    {
       AlertWinState state;
@@ -483,7 +483,7 @@ void Platform::AlertOK(const char *windowTitle, const char *message)
 //------------------------------------------------------------------------------
 bool Platform::AlertOKCancel(const char *windowTitle, const char *message)
 {
-#ifndef DEDICATED
+#ifndef TORQUE_DEDICATED
    if (x86UNIXState->isXWindowsRunning())
    {
       AlertWinState state;
@@ -511,7 +511,7 @@ bool Platform::AlertOKCancel(const char *windowTitle, const char *message)
 //------------------------------------------------------------------------------
 bool Platform::AlertRetry(const char *windowTitle, const char *message)
 {
-#ifndef DEDICATED
+#ifndef TORQUE_DEDICATED
    if (x86UNIXState->isXWindowsRunning())
    {
       AlertWinState state;
@@ -539,7 +539,7 @@ bool Platform::AlertRetry(const char *windowTitle, const char *message)
 //------------------------------------------------------------------------------
 Platform::ALERT_ASSERT_RESULT Platform::AlertAssert(const char *windowTitle, const char *message)
 {
-#ifndef DEDICATED
+#ifndef TORQUE_DEDICATED
     if (x86UNIXState->isXWindowsRunning())
     {
         AlertWinState state;
@@ -597,7 +597,7 @@ void Platform::process()
 
    if (x86UNIXState->windowCreated())
    {
-#ifndef DEDICATED
+#ifndef TORQUE_DEDICATED
       // process window events
       PROFILE_START(XUX_ProcessMessages);
       bool quit = !ProcessMessages();
@@ -643,7 +643,7 @@ void Platform::process()
       }*/
    }
 
-#ifndef DEDICATED
+#ifndef TORQUE_DEDICATED
 #if 0 
 // JMQ: disabled this because it may fire mistakenly in some configurations.
 // sdl's default event handling scheme should be enough.

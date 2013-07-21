@@ -52,7 +52,7 @@ void Platform::init()
 
    //installRedBookDevices();
 
-#ifndef DEDICATED
+#ifndef TORQUE_DEDICATED
    // if we're not dedicated do more initialization
    if (!x86UNIXState->isDedicated())
    {
