@@ -224,6 +224,8 @@ bool X11WindowManager::removeWindow(X11Window* window)
 
 bool X11WindowManager::displaySplashWindow()
 {
+	return false; // TODO LINUX
+#if 0
     if( !mSplashWindow )
     {
         // Load the splash image
@@ -267,6 +269,7 @@ bool X11WindowManager::displaySplashWindow()
     }
     
     return (mSplashWindow != 0);
+#endif
 }
 
 void X11WindowManager::closeSplashWindow()
