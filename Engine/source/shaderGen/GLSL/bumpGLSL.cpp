@@ -102,10 +102,10 @@ void BumpFeatGLSL::processPix(   Vector<ShaderComponent*> &componentList,
 		if(is_sm3)
       {
          // Figure out the mip level
-         meta->addStatement(new GenOp("   vec2 _dx_bump = dFdx(@ * @.z);\r\n", texCoord, atParams));
-         meta->addStatement(new GenOp("   vec2 _dy_bump = dFdy(@ * @.z);\r\n", texCoord, atParams));
-         meta->addStatement(new GenOp("   float mipLod_bump = 0.5 * log2(max(dot(_dx_bump, _dx_bump), dot(_dy_bump, _dy_bump)));\r\n"));
-         meta->addStatement(new GenOp("   mipLod_bump = clamp(mipLod_bump, 0.0, @.w);\r\n", atParams));
+         meta->addStatement( new GenOp( "   vec2 _dx_bump = dFdx(@ * @.z);\r\n", texCoord, atParams));
+         meta->addStatement( new GenOp( "   vec2 _dy_bump = dFdy(@ * @.z);\r\n", texCoord, atParams));
+         meta->addStatement( new GenOp( "   float mipLod_bump = 0.5 * log2(max(dot(_dx_bump, _dx_bump), dot(_dy_bump, _dy_bump)));\r\n"));
+         meta->addStatement( new GenOp( "   mipLod_bump = clamp(mipLod_bump, 0.0, @.w);\r\n", atParams));
 			
          // And the size of the mip level
          meta->addStatement(new GenOp("   float mipPixSz_bump = pow(2.0, @.w - mipLod_bump);\r\n", atParams));
@@ -124,7 +124,7 @@ void BumpFeatGLSL::processPix(   Vector<ShaderComponent*> &componentList,
          meta->addStatement(new GenOp("   @ = saturate(@);\r\n", atDecl, texCoord));
 		
       // Finally scale/offset, and correct for filtering
-      meta->addStatement(new GenOp("   @ = @ * ((mipSz_bump * @.xy - 1.0) / mipSz_bump) + 0.5 / mipSz_bump + @.xy * @.xy;\r\n", 
+      meta->addStatement( new GenOp( "   @ = @ * ((mipSz_bump * @.xy - 1.0) / mipSz_bump) + 0.5 / mipSz_bump + @.xy * @.xy;\r\n", 
 											  atlasedTex, atlasedTex, atParams, atParams, tileParams));
 		
       // Add a newline
@@ -227,6 +227,7 @@ void BumpFeatGLSL::setTexData(   Material::StageData &stageDat,
    if ( fd.features[MFT_NormalMap] )
    {
       passData.mTexType[ texIndex ] = Material::Bump;
+      passData.mSamplerNames[ texIndex ] = "bumpMap";
       passData.mTexSlot[ texIndex++ ].texObject = stageDat.getTex( MFT_NormalMap );
    }
 	
@@ -234,6 +235,7 @@ void BumpFeatGLSL::setTexData(   Material::StageData &stageDat,
    if ( fd.features[ MFT_DetailNormalMap ] )
    {
       passData.mTexType[ texIndex ] = Material::DetailBump;
+      passData.mSamplerNames[ texIndex ] = "detailBumpMap";
       passData.mTexSlot[ texIndex++ ].texObject = stageDat.getTex( MFT_DetailNormalMap );
    }
 }

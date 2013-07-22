@@ -32,6 +32,7 @@ beginModule( 'advancedLighting' );
    {
       case "win32":
          addEngineSrcDir( 'lighting/advanced/hlsl' );
+		 addEngineSrcDir( 'lighting/advanced/glsl' );
          break;
       case "360":
          addEngineSrcDir( 'lighting/advanced/hlsl' );

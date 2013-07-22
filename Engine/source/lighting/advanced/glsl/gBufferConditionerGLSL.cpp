@@ -250,7 +250,7 @@ Var* GBufferConditionerGLSL::_conditionOutput( Var *unconditionedOutput, MultiLi
       case Spherical:
          meta->addStatement( new GenOp( "   // g-buffer conditioner: vec4(normal.theta, normal.phi, depth Hi, depth Lo)\r\n" ) );
          meta->addStatement( new GenOp( "   @ = vec4(@, 0.0, @.a);\r\n", outputDecl, 
-            _posnegEncode(new GenOp("vec2(atan2(@.y, @.x) / 3.14159265358979323846f, @.z)", unconditionedOutput, unconditionedOutput, unconditionedOutput ) ), 
+            _posnegEncode(new GenOp("vec2(atan(@.y, @.x) / 3.14159265358979323846f, @.z)", unconditionedOutput, unconditionedOutput, unconditionedOutput ) ), 
             unconditionedOutput ) );
          break;
    }

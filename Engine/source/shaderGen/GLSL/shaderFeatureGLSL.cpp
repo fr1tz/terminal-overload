@@ -767,7 +767,10 @@ void DiffuseMapFeatGLSL::setTexData(   Material::StageData &stageDat,
 {
    GFXTextureObject *tex = stageDat.getTex( MFT_DiffuseMap );
    if ( tex )
+   {
+      passData.mSamplerNames[ texIndex ] = "diffuseMap";
       passData.mTexSlot[ texIndex++ ].texObject = tex;
+   }
 }
 
 
@@ -1027,6 +1030,7 @@ void LightmapFeatGLSL::setTexData(  Material::StageData &stageDat,
                                     U32 &texIndex )
 {
    GFXTextureObject *tex = stageDat.getTex( MFT_LightMap );
+   passData.mSamplerNames[ texIndex ] = "lightMap";
    if ( tex )
       passData.mTexSlot[ texIndex++ ].texObject = tex;
    else
@@ -1151,6 +1155,7 @@ void TonemapFeatGLSL::setTexData(  Material::StageData &stageDat,
    if ( tex )
    {
       passData.mTexType[ texIndex ] = Material::ToneMapTex;
+      passData.mSamplerNames[ texIndex ] = "toneMap";
       passData.mTexSlot[ texIndex++ ].texObject = tex;
    }
 }
@@ -1583,22 +1588,27 @@ void ReflectCubeFeatGLSL::setTexData(  Material::StageData &stageDat,
        !passData.mFeatureData.features[MFT_NormalMap] )
    {
       GFXTextureObject *tex = stageDat.getTex( MFT_DetailMap );
-      if (  tex &&
-            stageFeatures.features[MFT_DiffuseMap] )
+      if (  tex && stageFeatures.features[MFT_DiffuseMap] )
+      {
+         passData.mSamplerNames[ texIndex ] = "diffuseMap";
          passData.mTexSlot[ texIndex++ ].texObject = tex;
+      }
       else
       {
          tex = stageDat.getTex( MFT_NormalMap );
 
-         if (  tex &&
-               stageFeatures.features[ MFT_NormalMap ] )
+         if (  tex && stageFeatures.features[ MFT_NormalMap ] )
+         {
+            passData.mSamplerNames[ texIndex ] = "bumpMap";
             passData.mTexSlot[ texIndex++ ].texObject = tex;
+         }
       }
    }
    
    if( stageDat.getCubemap() )
    {
       passData.mCubeMap = stageDat.getCubemap();
+      passData.mSamplerNames[texIndex] = "cubeMap";
       passData.mTexType[texIndex++] = Material::Cube;
    }
    else
@@ -1606,6 +1616,7 @@ void ReflectCubeFeatGLSL::setTexData(  Material::StageData &stageDat,
       if( stageFeatures.features[MFT_CubeMap] )
       {
          // assuming here that it is a scenegraph cubemap
+         passData.mSamplerNames[texIndex] = "cubeMap";
          passData.mTexType[texIndex++] = Material::SGCube;
       }
    }
@@ -1675,10 +1686,7 @@ void RTLightingFeatGLSL::processVert(  Vector<ShaderComponent*> &componentList,
          fd.features[MFT_LightMap] || 
          fd.features[MFT_ToneMap] || 
          fd.features[MFT_VertLit] )
-      return;
-
-   // Get the transform to world space.
-   Var *objTrans = getObjTrans( componentList, fd.features[MFT_UseInstancing], meta );
+      return;   
 	
    // If there isn't a normal map then we need to pass
    // the world space normal to the pixel shader ourselves.
@@ -1686,17 +1694,16 @@ void RTLightingFeatGLSL::processVert(  Vector<ShaderComponent*> &componentList,
    {
       Var *outNormal = connectComp->getElement( RT_TEXCOORD );
       outNormal->setName( "outWsNormal" );
+      
       outNormal->setType( "vec3" );
       outNormal->mapsToSampler = false;
+
+      // Get the transform to world space.
+      Var *objTrans = getObjTrans( componentList, fd.features[MFT_UseInstancing], meta );
    
       // Transform the normal to world space.
 		meta->addStatement( new GenOp( "   @ = ( @ * vec4( normalize( @ ), 0.0 ) ).xyz;\r\n", outNormal, objTrans, inNormal ) );
    }
-
-   // Get the input position.
-   Var *inPosition = (Var*)LangElement::find( "inPosition" );
-   if ( !inPosition )
-      inPosition = (Var*)LangElement::find( "position" );
 
 	addOutWsPosition( componentList, fd.features[MFT_UseInstancing], meta );
 	
@@ -1735,48 +1742,76 @@ void RTLightingFeatGLSL::processPix(   Vector<ShaderComponent*> &componentList,
          new DecOp( wsNormal ), outWsNormal ) );
    }
 
-	Var *wsPosition = getInWsPosition( componentList );
-
-   // If we have a specular feature then we need to
-   // get the world space view vector to pass to the
-   // lighting calculation.
-   Var *wsView = new Var( "wsView", "vec3" );
-   if ( fd.features[MFT_PixSpecular] )
-   {
-      Var *eyePos = (Var*)LangElement::find( "eyePosWorld" );
-      if ( !eyePos )
-      {
-         eyePos = new Var;
-         eyePos->setType( "vec3" );
-         eyePos->setName( "eyePosWorld" );
-         eyePos->uniform = true;
-         eyePos->constSortPos = cspPass;
-      }
-
-      meta->addStatement( new GenOp( "   @ = normalize( @ - @ );\r\n", 
-         new DecOp( wsView ), eyePos, wsPosition ) );
-   }
-   else
-      meta->addStatement( new GenOp( "   @ = vec3( 0 );\r\n", new DecOp( wsView ) ) );
+	// Now the wsPosition and wsView.
+   Var *wsPosition = getInWsPosition( componentList );
+   Var *wsView = getWsView( wsPosition, meta );
 
    // Create temporaries to hold results of lighting.
-   Var *rtShading = new Var( "rtShading", "vec4" );
+   Var *rtShading = new Var( "rtShading", "float4" );
    Var *specular = new Var( "specular", "vec4" );
    meta->addStatement( new GenOp( "   @; @;\r\n", 
       new DecOp( rtShading ), new DecOp( specular ) ) );   
 
-   // Calculate the diffuse shading and specular powers.
-   meta->addStatement( new GenOp( "   compute4Lights( @, @, @, @, @ );\r\n", 
-      wsView, wsPosition, wsNormal, rtShading, specular ) );
-
    // Look for a light mask generated from a previous
    // feature (this is done for BL terrain lightmaps).
-   Var *lightMask = (Var*)LangElement::find( "lightMask" );
-   if ( lightMask )
-      meta->addStatement( new GenOp( "   @.rgb *= @;\r\n", rtShading, lightMask ) );
+   LangElement *lightMask = LangElement::find( "lightMask" );
+   if ( !lightMask )
+      lightMask = new GenOp( "vec4( 1, 1, 1, 1 )" );
+
+   // Get all the light constants.
+   Var *inLightPos  = new Var( "inLightPos", "float4" );
+   inLightPos->uniform = true;
+   inLightPos->arraySize = 3;
+   inLightPos->constSortPos = cspPotentialPrimitive;
+
+   Var *inLightInvRadiusSq  = new Var( "inLightInvRadiusSq", "vec4" );
+   inLightInvRadiusSq->uniform = true;
+   inLightInvRadiusSq->constSortPos = cspPotentialPrimitive;
+
+   Var *inLightColor  = new Var( "inLightColor", "vec4" );
+   inLightColor->uniform = true;
+   inLightColor->arraySize = 4;
+   inLightColor->constSortPos = cspPotentialPrimitive;
+
+   Var *inLightSpotDir  = new Var( "inLightSpotDir", "vec4" );
+   inLightSpotDir->uniform = true;
+   inLightSpotDir->arraySize = 3;
+   inLightSpotDir->constSortPos = cspPotentialPrimitive;
+
+   Var *inLightSpotAngle  = new Var( "inLightSpotAngle", "vec4" );
+   inLightSpotAngle->uniform = true;
+   inLightSpotAngle->constSortPos = cspPotentialPrimitive;
+
+   Var *lightSpotFalloff  = new Var( "inLightSpotFalloff", "vec4" );
+   lightSpotFalloff->uniform = true;
+   lightSpotFalloff->constSortPos = cspPotentialPrimitive;
+
+   Var *specularPower  = new Var( "specularPower", "float" );
+   specularPower->uniform = true;
+   specularPower->constSortPos = cspPotentialPrimitive;
+
+   Var *specularColor = (Var*)LangElement::find( "specularColor" );
+   if ( !specularColor )
+   {
+      specularColor  = new Var( "specularColor", "vec4" );
+      specularColor->uniform = true;
+      specularColor->constSortPos = cspPotentialPrimitive;
+   }
+
+   Var *ambient  = new Var( "ambient", "vec4" );
+   ambient->uniform = true;
+   ambient->constSortPos = cspPass;
+
+   // Calculate the diffuse shading and specular powers.
+   meta->addStatement( new GenOp( "   compute4Lights( @, @, @, @,\r\n"
+                                  "      @, @, @, @, @, @, @, @,\r\n"
+                                  "      @, @ );\r\n", 
+      wsView, wsPosition, wsNormal, lightMask,
+      inLightPos, inLightInvRadiusSq, inLightColor, inLightSpotDir, inLightSpotAngle, lightSpotFalloff, specularPower, specularColor,
+      rtShading, specular ) );
 
    // Apply the lighting to the diffuse color.
-   LangElement *lighting = new GenOp( "vec4( @.rgb + ambient.rgb, 1 )", rtShading );
+   LangElement *lighting = new GenOp( "vec4( @.rgb + @.rgb, 1 )", rtShading, ambient );
    meta->addStatement( new GenOp( "   @;\r\n", assignColor( lighting, Material::Mul ) ) );
    output = meta;  
 }
@@ -2062,7 +2097,10 @@ void VisibilityFeatGLSL::setTexData( Material::StageData &stageDat,
 
       GFXTextureObject *tex = stageDat.getTex( MFT_Visibility );
       if ( tex )
+      {
+         passData.mSamplerNames[ texIndex ] = "fizzMap";
          passData.mTexSlot[ texIndex++ ].texObject = tex;
+      }
    }
 }
 

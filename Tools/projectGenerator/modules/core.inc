@@ -140,6 +140,13 @@ switch( Generator::$platform )
       addEngineSrcDir( 'gfx/D3D9' );
       addEngineSrcDir( 'gfx/D3D9/pc' );
       addEngineSrcDir( 'shaderGen/HLSL' );
+	  
+	  // GFX - GGL
+     addEngineSrcDir( 'gfx/gl' );
+     addEngineSrcDir( 'gfx/gl/ggl' );
+     addEngineSrcDir( 'gfx/gl/ggl/generated' );
+     addEngineSrcDir( 'shaderGen/GLSL' );
+	 addEngineSrcDir( 'gfx/gl/ggl/win32' );
       break;
    case "360":
       addEngineSrcDir( 'gfx/D3D9' );

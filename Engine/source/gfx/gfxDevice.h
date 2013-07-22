@@ -587,6 +587,8 @@ protected:
    /// may be more than the device supports.
    static const U32 VERTEX_STREAM_COUNT = 4;
 
+   const U32 getVertexStreamSupported() const { return mVertexStreamSupported; }
+
    StrongRefPtr<GFXVertexBuffer> mCurrentVertexBuffer[VERTEX_STREAM_COUNT];
    bool mVertexBufferDirty[VERTEX_STREAM_COUNT];
    U32 mVertexBufferFrequency[VERTEX_STREAM_COUNT];
@@ -649,12 +651,16 @@ protected:
    /// it must be updated on the next draw/clear.
    bool mViewportDirty;
 
+   U32 mVertexStreamSupported;
+
 public:
 
    /// @name Texture functions
    /// @{
 protected:
    GFXTextureManager * mTextureManager;
+
+   bool mTextureCoordStartTop;
 
 public:   
    virtual GFXCubemap * createCubemap() = 0;
@@ -723,6 +729,8 @@ public:
    /// and deleted by the caller.
    /// @see GFXShader::init
    virtual GFXShader* createShader() = 0;
+
+   bool isTextureCoordStartTop() const { return mTextureCoordStartTop; }
    
    /// @}
  
@@ -901,6 +909,8 @@ public:
    /// Gets the projection matrix
    inline const MatrixF &getProjectionMatrix() const { return mProjectionMatrix; }
 
+   void invertFrustumProjectionMatrixTopBottom( const bool doRotate = true);
+
    /// Sets the view matrix
    /// @param   newView   New view matrix to set
    void setViewMatrix( const MatrixF &newView );
@@ -1051,6 +1061,13 @@ inline void GFXDevice::setProjectionMatrix( const MatrixF &newProj )
    mProjectionMatrixDirty = true;
    mStateDirty = true;
    mProjectionMatrix = newProj;
+}
+
+inline void GFXDevice::invertFrustumProjectionMatrixTopBottom(const bool doRotate)
+{
+   mProjectionMatrixDirty = true;
+   mStateDirty = true;   
+   mFrustum.getProjectionMatrixInvertedTopBottom( &mProjectionMatrix, doRotate );
 }
 
 inline void GFXDevice::setViewMatrix( const MatrixF &newView )

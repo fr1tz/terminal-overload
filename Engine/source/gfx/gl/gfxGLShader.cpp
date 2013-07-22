@@ -552,7 +552,9 @@ void GFXGLShader::initHandles()
       GFXShaderConstDesc &desc = mConstants[i];            
 
       // Index element 1 of the name to skip the '$' we inserted earier.
-      U32 loc = glGetUniformLocation(mProgram, &desc.name.c_str()[1]);
+      GLint loc = glGetUniformLocation(mProgram, &desc.name.c_str()[1]);
+
+      AssertFatal(loc != -1, "");
 
       HandleMap::Iterator handle = mHandles.find(desc.name);
       S32 sampler = (desc.constType == GFXSCT_Sampler || desc.constType == GFXSCT_SamplerCube) ?

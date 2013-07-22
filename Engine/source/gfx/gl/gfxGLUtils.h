@@ -62,7 +62,7 @@ static inline GLenum minificationFilter(U32 minFilter, U32 mipFilter, U32 mipLev
 class GFXGLPreserveInteger
 {
 public:
-   typedef void(*BindFn)(GLenum, GLuint);
+   typedef void(STDCALL *BindFn)(GLenum, GLuint);
 
    /// Preserve the integer.
    /// @param binding The binding which should be set on destruction.

@@ -476,6 +476,12 @@ void ProjectedShadow::_renderToTexture( F32 camDist, const TSRenderState &rdata 
    // generated based on our shape.
    GFX->setOrtho( -mRadius, mRadius, -mRadius, mRadius, 0.001f, (mRadius * 2) * smDepthAdjust, true );
 
+   if( !GFX->isTextureCoordStartTop() )
+   {
+      // render to OpenGL RTT must by upside down // TODO OPENGL
+      GFX->invertFrustumProjectionMatrixTopBottom();
+   }
+
    // Set the world to light space
    // matrix set up in shouldRender().
    GFX->setWorldMatrix( mWorldToLight );

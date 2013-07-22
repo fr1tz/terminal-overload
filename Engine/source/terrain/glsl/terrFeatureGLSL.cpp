@@ -26,26 +26,39 @@
 #include "terrain/terrFeatureTypes.h"
 #include "materials/materialFeatureTypes.h"
 #include "materials/materialFeatureData.h"
+#include "materials/processedMaterial.h"
 #include "gfx/gfxDevice.h"
 #include "shaderGen/langElement.h"
 #include "shaderGen/shaderOp.h"
 #include "shaderGen/featureMgr.h"
+#include "shaderGen/shaderGen.h"
 #include "core/module.h"
 
-
-MODULE_BEGIN( TerrainFeatGLSL )
-
-   MODULE_INIT_AFTER( ShaderGenFeatureMgr )
-
-   MODULE_INIT
+namespace 
+{
+   void register_glsl_shader_features_for_terrain(GFXAdapterType type)
    {
+      if(type != OpenGL)
+         return;
+
       FEATUREMGR->registerFeature( MFT_TerrainBaseMap, new TerrainBaseMapFeatGLSL );
       FEATUREMGR->registerFeature( MFT_TerrainParallaxMap, new TerrainParallaxMapFeatGLSL );   
       FEATUREMGR->registerFeature( MFT_TerrainDetailMap, new TerrainDetailMapFeatGLSL );
       FEATUREMGR->registerFeature( MFT_TerrainNormalMap, new TerrainNormalMapFeatGLSL );
       FEATUREMGR->registerFeature( MFT_TerrainLightMap, new TerrainLightMapFeatGLSL );
       FEATUREMGR->registerFeature( MFT_TerrainSideProject, new NamedFeatureGLSL( "Terrain Side Projection" ) );
-      FEATUREMGR->registerFeature( MFT_TerrainAdditive, new TerrainAdditiveFeatGLSL );
+      FEATUREMGR->registerFeature( MFT_TerrainAdditive, new TerrainAdditiveFeatGLSL );   
+   }
+
+};
+
+MODULE_BEGIN( TerrainFeatGLSL )
+
+   MODULE_INIT_AFTER( ShaderGen )
+
+   MODULE_INIT
+   {      
+      SHADERGEN->getFeatureInitSignal().notify(&register_glsl_shader_features_for_terrain);         
    }
 
 MODULE_END;
@@ -697,10 +710,10 @@ void TerrainLightMapFeatGLSL::processPix( Vector<ShaderComponent*> &componentLis
    // Create a 'lightMask' value which is read by
    // RTLighting to mask out the directional lighting.
    Var *lightMask = new Var;
-   lightMask->setType( "vec3" );
+   lightMask->setType( "vec4" );
    lightMask->setName( "lightMask" );
 
-   output = new GenOp( "   @ = texture2D( @, @.xy ).rgb;\r\n", new DecOp( lightMask ), lightMap, inTex );
+   output = new GenOp( "   @ = vec4( texture2D( @, @.xy ).r, 1, 1, 1 );\r\n", new DecOp( lightMask ), lightMap, inTex );
 }
 
 ShaderFeature::Resources TerrainLightMapFeatGLSL::getResources( const MaterialFeatureData &fd )

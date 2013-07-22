@@ -137,6 +137,9 @@ GFXDevice::GFXDevice()
       mTextureMatrixDirty[i] = false;
    }
 
+   mTextureCoordStartTop = true;
+   mVertexStreamSupported = VERTEX_STREAM_COUNT;
+
    mLightsDirty = false;
    for(U32 i = 0; i < LIGHT_STAGE_COUNT; i++)
    {
@@ -365,7 +368,7 @@ void GFXDevice::updateStates(bool forceSetAll /*=false*/)
 
       setVertexDecl( mCurrVertexDecl );
 
-      for ( U32 i=0; i < VERTEX_STREAM_COUNT; i++ )
+      for ( U32 i=0; i < getVertexStreamSupported(); i++ )
       {
          setVertexStream( i, mCurrentVertexBuffer[i] );
          setVertexStreamFrequency( i, mVertexBufferFrequency[i] );

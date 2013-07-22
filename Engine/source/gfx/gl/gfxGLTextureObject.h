@@ -32,9 +32,10 @@ class GFXGLTextureObject : public GFXTextureObject
 {
 public:
    GFXGLTextureObject(GFXDevice * aDevice, GFXTextureProfile *profile); 
-   virtual ~GFXGLTextureObject();
+   ~GFXGLTextureObject();
    
    void release();
+   void reInit();
    
    inline GLuint getHandle() const { return mHandle; }
    inline GLenum getBinding() const { return mBinding; }

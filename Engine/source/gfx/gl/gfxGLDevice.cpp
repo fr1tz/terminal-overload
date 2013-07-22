@@ -101,7 +101,7 @@ void GFXGLDevice::initGLState()
    
    // MACHAX - Setting mPixelShaderVersion to 3.0 will allow Advanced Lighting
    // to run.  At the time of writing (6/18) it doesn't quite work yet.
-   if(Con::getBoolVariable("$pref::machax::enableAdvancedLighting", false))
+   if(Con::getBoolVariable("$pref::machax::enableAdvancedLighting", false) || dAtof(reinterpret_cast<const char*>(glGetString( GL_SHADING_LANGUAGE_VERSION))) >= 3.0f) //TODO OPENGL
       mPixelShaderVersion = 3.0f;
       
    mSupportsAnisotropic = mCardProfiler->queryProfile( "GL::suppAnisotropic" );
@@ -118,7 +118,8 @@ GFXGLDevice::GFXGLDevice(U32 adapterIndex) :
    mPixelShaderVersion(0.0f),
    mMaxShaderTextures(2),
    mMaxFFTextures(2),
-   mClip(0, 0, 0, 0)
+   mClip(0, 0, 0, 0),
+   mCurrentShader( NULL )
 {
    loadGLCore();
 
@@ -133,6 +134,9 @@ GFXGLDevice::GFXGLDevice(U32 adapterIndex) :
 
    for(U32 i = 0; i < TEXTURE_STAGE_COUNT; i++)
       mActiveTextureType[i] = GL_ZERO;
+
+   mTextureCoordStartTop = false;
+   mVertexStreamSupported = 1;
 }
 
 GFXGLDevice::~GFXGLDevice()
@@ -144,6 +148,9 @@ GFXGLDevice::~GFXGLDevice()
       mVolatileVBs[i] = NULL;
    for(U32 i = 0; i < mVolatilePBs.size(); i++)
       mVolatilePBs[i] = NULL;
+
+   if( mTextureManager ) 
+      mTextureManager->zombify();
 
    GFXResource* walk = mResourceListHead;
    while(walk)
@@ -655,9 +662,13 @@ void GFXGLDevice::setShader( GFXShader *shader )
    {
       GFXGLShader *glShader = static_cast<GFXGLShader*>( shader );
       glShader->useProgram();
+      mCurrentShader = shader;
    }
    else
+   {
       glUseProgram(0);
+      mCurrentShader = NULL;
+   }
 }
 
 void GFXGLDevice::disableShaders()
@@ -673,7 +684,7 @@ void GFXGLDevice::setShaderConstBufferInternal(GFXShaderConstBuffer* buffer)
 
 U32 GFXGLDevice::getNumSamplers() const
 {
-   return mPixelShaderVersion > 0.001f ? mMaxShaderTextures : mMaxFFTextures;
+   return getMin((U32)TEXTURE_STAGE_COUNT,mPixelShaderVersion > 0.001f ? mMaxShaderTextures : mMaxFFTextures);
 }
 
 U32 GFXGLDevice::getNumRenderTargets() const 

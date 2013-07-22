@@ -183,6 +183,8 @@ class Torque3D
             addProjectLibInput('shell32.lib');
             addProjectLibInput('oleaut32.lib');
             addProjectLibInput('version.lib');
+			
+			addProjectLibInput( 'OpenGL32.lib' );
         }
         
         // Include project specific sources in the project/buildFiles/config/projectCode.conf

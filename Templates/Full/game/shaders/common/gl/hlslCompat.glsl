@@ -41,3 +41,5 @@ float round( float n ) { return sign( n ) * floor( abs( n ) + 0.5 ); }
 vec2 round( vec2 n ) { return sign( n ) * floor( abs( n ) + 0.5 ); }
 vec3 round( vec3 n ) { return sign( n ) * floor( abs( n ) + 0.5 ); }
 vec4 round( vec4 n ) { return sign( n ) * floor( abs( n ) + 0.5 ); }
+
+vec4 rsqrt( vec4 n ){ return inversesqrt( n ); }

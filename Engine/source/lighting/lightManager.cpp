@@ -304,22 +304,17 @@ void LightManager::_update4LightConsts(   const SceneData &sgData,
 
    // Skip over gathering lights if we don't have to!
    if (  lightPositionSC->isValid() || 
-         lightDiffuseSC->isValid() ||
+         lightDiffuseSC->isValid() /*||
          lightInvRadiusSqSC->isValid() ||
          lightSpotDirSC->isValid() ||
          lightSpotAngleSC->isValid() ||
-		 lightSpotFalloffSC->isValid() )
+		   lightSpotFalloffSC->isValid()*/
+         )
    {
       PROFILE_SCOPE( LightManager_Update4LightConsts_setLights );
 
-      // NOTE: We haven't ported the lighting shaders on OSX
-      // to the optimized HLSL versions.
-      #if defined( TORQUE_OS_MAC ) || defined( TORQUE_OS_LINUX )
-         static AlignedArray<Point3F> lightPositions( 4, sizeof( Point4F ) );
-      #else
-         static AlignedArray<Point4F> lightPositions( 3, sizeof( Point4F ) );
-         static AlignedArray<Point4F> lightSpotDirs( 3, sizeof( Point4F ) );
-      #endif               
+      static AlignedArray<Point4F> lightPositions( 3, sizeof( Point4F ) );
+      static AlignedArray<Point4F> lightSpotDirs( 3, sizeof( Point4F ) );                    
       static AlignedArray<Point4F> lightColors( 4, sizeof( Point4F ) );
       static Point4F lightInvRadiusSq;
       static Point4F lightSpotAngle;
@@ -329,6 +324,7 @@ void LightManager::_update4LightConsts(   const SceneData &sgData,
       // Need to clear the buffers so that we don't leak
       // lights from previous passes or have NaNs.
       dMemset( lightPositions.getBuffer(), 0, lightPositions.getBufferSize() );
+      dMemset( lightSpotDirs.getBuffer(), 0, lightSpotDirs.getBufferSize() );
       dMemset( lightColors.getBuffer(), 0, lightColors.getBufferSize() );
       lightInvRadiusSq = Point4F::Zero;
       lightSpotAngle.set( -1.0f, -1.0f, -1.0f, -1.0f );
@@ -340,13 +336,7 @@ void LightManager::_update4LightConsts(   const SceneData &sgData,
       {
          light = sgData.lights[i];
          if ( !light )            
-            break;
-
-         #if defined( TORQUE_OS_MAC ) || defined( TORQUE_OS_LINUX )
-
-            lightPositions[i] = light->getPosition();
-
-         #else
+            break;        
       
             // The light positions and spot directions are 
             // in SoA order to make optimal use of the GPU.
@@ -361,12 +351,10 @@ void LightManager::_update4LightConsts(   const SceneData &sgData,
             lightSpotDirs[2][i] = lightDir.z;
             
             if ( light->getType() == LightInfo::Spot )
-			{
-               lightSpotAngle[i] = mCos( mDegToRad( light->getOuterConeAngle() / 2.0f ) ); 
-			   lightSpotFalloff[i] = 1.0f / getMax( F32_MIN, mCos( mDegToRad( light->getInnerConeAngle() / 2.0f ) ) - lightSpotAngle[i] );
-			}
-
-         #endif            
+			   {
+                  lightSpotAngle[i] = mCos( mDegToRad( light->getOuterConeAngle() / 2.0f ) ); 
+			      lightSpotFalloff[i] = 1.0f / getMax( F32_MIN, mCos( mDegToRad( light->getInnerConeAngle() / 2.0f ) ) - lightSpotAngle[i] );
+			   }                    
 
          // Prescale the light color by the brightness to 
          // avoid doing this in the shader.
@@ -380,14 +368,12 @@ void LightManager::_update4LightConsts(   const SceneData &sgData,
       shaderConsts->setSafe( lightPositionSC, lightPositions );   
       shaderConsts->setSafe( lightDiffuseSC, lightColors );
       shaderConsts->setSafe( lightInvRadiusSqSC, lightInvRadiusSq );
+      
+      shaderConsts->setSafe( lightSpotDirSC, lightSpotDirs ); 
+      shaderConsts->setSafe( lightSpotAngleSC, lightSpotAngle );
+		shaderConsts->setSafe( lightSpotFalloffSC, lightSpotFalloff );
 
-      #if !defined( TORQUE_OS_MAC ) && !defined( TORQUE_OS_LINUX )
-
-         shaderConsts->setSafe( lightSpotDirSC, lightSpotDirs );
-         shaderConsts->setSafe( lightSpotAngleSC, lightSpotAngle );
-		 shaderConsts->setSafe( lightSpotFalloffSC, lightSpotFalloff );
-
-      #endif
+      
    }
 
    // Setup the ambient lighting from the first 

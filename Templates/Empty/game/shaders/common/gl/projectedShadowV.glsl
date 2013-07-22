@@ -20,9 +20,6 @@
 // IN THE SOFTWARE.
 //-----------------------------------------------------------------------------
 
-//*****************************************************************************
-// Precipitation vertex shader
-//*****************************************************************************
 
 varying vec2 texCoord;
 varying vec4 color;
@@ -40,5 +37,5 @@ void main()
    texCoord = gl_MultiTexCoord1.st;
    
    float fromCasterDist = length(gl_Vertex.xyz - shadowCasterPosition) - shadowLength;
-   fade = 1.0 - clamp(fromCasterDist/shadowLength, 0.0, 1.0);
+   fade = 1.0 - clamp( fromCasterDist / shadowLength , 0.0, 1.0 );
 }

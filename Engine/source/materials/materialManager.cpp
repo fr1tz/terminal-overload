@@ -416,6 +416,9 @@ void MaterialManager::recalcFeaturesFromPrefs()
    mExclusionFeatures.setFeature(   MFT_NormalMap, 
                                     Con::getBoolVariable( "$pref::Video::disableNormalMapping", false ) );
 
+   mExclusionFeatures.setFeature(   MFT_SpecularMap,
+                                    Con::getBoolVariable( "$pref::Video::disablePixSpecular", false ) );
+
    mExclusionFeatures.setFeature(   MFT_PixSpecular,
                                     Con::getBoolVariable( "$pref::Video::disablePixSpecular", false ) );
 

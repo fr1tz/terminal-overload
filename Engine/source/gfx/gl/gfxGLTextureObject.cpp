@@ -46,6 +46,7 @@ GFXGLTextureObject::GFXGLTextureObject(GFXDevice * aDevice, GFXTextureProfile *p
 
 GFXGLTextureObject::~GFXGLTextureObject() 
 { 
+   glDeleteTextures(1, &mHandle);
    glDeleteBuffers(1, &mBuffer);
    delete[] mZombieCache;
    kill();
@@ -111,6 +112,13 @@ void GFXGLTextureObject::release()
    
    mHandle = 0;
    mBuffer = 0;
+}
+
+void GFXGLTextureObject::reInit()
+{
+   AssertFatal(!mHandle && !mBuffer,"Must release before reInit");
+   glGenTextures(1, &mHandle);
+   glGenBuffers(1, &mBuffer);
 }
 
 bool GFXGLTextureObject::copyToBmp(GBitmap * bmp)

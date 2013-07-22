@@ -197,6 +197,8 @@ private:
    StrongRefPtr<GFXGLVertexBuffer> mCurrentVB;
    StrongRefPtr<GFXGLPrimitiveBuffer> mCurrentPB;
    
+   GFXShader* mCurrentShader;
+   
    /// Since GL does not have separate world and view matrices we need to track them
    MatrixF m_mCurrentWorld;
    MatrixF m_mCurrentView;

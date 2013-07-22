@@ -220,6 +220,7 @@ bool ProcessedShaderMaterial::init( const FeatureSet &features,
          {
             rpd->mTexSlot[0].texTarget = texTarget;
             rpd->mTexType[0] = Material::TexTarget;
+            rpd->mSamplerNames[0] = "diffuseMap";
          }
       }
 
@@ -514,7 +515,17 @@ bool ProcessedShaderMaterial::_createPasses( MaterialFeatureData &stageFeatures,
 
       passData.mNumTexReg += numTexReg;
       passData.mFeatureData.features.addFeature( *info.type );
+
+      U32 oldTexNumber = texIndex;
       info.feature->setTexData( mStages[stageNum], stageFeatures, passData, texIndex );
+
+#if defined(TORQUE_DEBUG) && defined( TORQUE_OPENGL)
+      if(oldTexNumber != texIndex)
+      {
+         for(int i = oldTexNumber; i < texIndex; i++)
+            AssertFatal(passData.mSamplerNames[ oldTexNumber ].isNotEmpty(),"");
+      }
+#endif
 
       // Add pass if tex units are maxed out
       if( texIndex > GFX->getNumSamplers() )
@@ -524,6 +535,9 @@ bool ProcessedShaderMaterial::_createPasses( MaterialFeatureData &stageFeatures,
          _setPassBlendOp( info.feature, passData, texIndex, stageFeatures, stageNum, features );
       }
    }
+
+   for(int i = 0; i < texIndex; i++)
+      AssertFatal(passData.mSamplerNames[ i ].isNotEmpty(),"");
 
    const FeatureSet &passFeatures = passData.mFeatureData.codify();
    if ( passFeatures.isNotEmpty() )
@@ -598,6 +612,21 @@ bool ProcessedShaderMaterial::_addPass( ShaderRenderPassData &rpd,
  
    ShaderRenderPassData *newPass = new ShaderRenderPassData( rpd );
    mPasses.push_back( newPass );
+
+   //initSamplerHandles
+   ShaderConstHandles *handles = _getShaderConstHandles( mPasses.size()-1 );
+   AssertFatal(handles,"");
+   for(int i = 0; i < rpd.mNumTex; i++)
+   { 
+      if(rpd.mSamplerNames[i].isEmpty())
+         continue;
+
+      String samplerName = rpd.mSamplerNames[i].startsWith("$") ? rpd.mSamplerNames[i] : String("$") + rpd.mSamplerNames[i];
+      GFXShaderConstHandle *handle = newPass->shader->getShaderConstHandle( samplerName ); 
+      handles->mTexHandlesSC[i] = handle;
+      
+      AssertFatal( handle,"");
+   }
 
    // Give each active feature a chance to create specialized shader consts.
    for( U32 i=0; i < FEATUREMGR->getFeatureCount(); i++ )
@@ -703,6 +732,7 @@ void ProcessedShaderMaterial::setTextureStages( SceneRenderState *state, const S
    PROFILE_SCOPE( ProcessedShaderMaterial_SetTextureStages );
 
    ShaderConstHandles *handles = _getShaderConstHandles(pass);
+   AssertFatal(handles,"");
 
    // Set all of the textures we need to render the give pass.
 #ifdef TORQUE_DEBUG
@@ -718,39 +748,48 @@ void ProcessedShaderMaterial::setTextureStages( SceneRenderState *state, const S
    {
       U32 currTexFlag = rpd->mTexType[i];
       if (!LIGHTMGR || !LIGHTMGR->setTextureStage(sgData, currTexFlag, i, shaderConsts, handles))
-      {
+      {         
+         S32 samplerRegister = i;  
+
+         AssertFatal(handles->mTexHandlesSC[i],"");
+
+         if ( handles->mTexHandlesSC[i]->isValid() )
+         	samplerRegister = handles->mTexHandlesSC[i]->getSamplerRegister();
+         else
+            continue;
+
          switch( currTexFlag )
          {
          // If the flag is unset then assume its just
          // a regular texture to set... nothing special.
          case 0:
          default:
-            GFX->setTexture(i, rpd->mTexSlot[i].texObject);
+            GFX->setTexture(samplerRegister, rpd->mTexSlot[i].texObject);
             break;
 
          case Material::NormalizeCube:
-            GFX->setCubeTexture(i, Material::GetNormalizeCube());
+            GFX->setCubeTexture(samplerRegister, Material::GetNormalizeCube());
             break;
 
          case Material::Lightmap:
-            GFX->setTexture( i, sgData.lightmap );
+            GFX->setTexture( samplerRegister, sgData.lightmap );
             break;
 
          case Material::ToneMapTex:
             shaderConsts->setSafe(handles->mToneMapTexSC, (S32)i);
-            GFX->setTexture(i, rpd->mTexSlot[i].texObject);
+            GFX->setTexture(samplerRegister, rpd->mTexSlot[i].texObject);
             break;
 
          case Material::Cube:
-            GFX->setCubeTexture( i, rpd->mCubeMap );
+            GFX->setCubeTexture( samplerRegister, rpd->mCubeMap );
             break;
 
          case Material::SGCube:
-            GFX->setCubeTexture( i, sgData.cubemap );
+            GFX->setCubeTexture( samplerRegister, sgData.cubemap );
             break;
 
          case Material::BackBuff:
-            GFX->setTexture( i, sgData.backBuffTex );
+            GFX->setTexture( samplerRegister, sgData.backBuffTex );
             break;
             
          case Material::TexTarget:
@@ -758,7 +797,7 @@ void ProcessedShaderMaterial::setTextureStages( SceneRenderState *state, const S
                texTarget = rpd->mTexSlot[i].texTarget;
                if ( !texTarget )
                {
-                  GFX->setTexture( i, NULL );
+                  GFX->setTexture( samplerRegister, NULL );
                   break;
                }
             
@@ -781,7 +820,7 @@ void ProcessedShaderMaterial::setTextureStages( SceneRenderState *state, const S
                   shaderConsts->set(handles->mRTParamsSC[i], rtParams);
                }
 
-               GFX->setTexture( i, texObject );
+               GFX->setTexture( samplerRegister, texObject );
                break;
             }
          }

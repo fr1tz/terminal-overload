@@ -296,7 +296,7 @@ const Point2I GFXGLTextureTarget::getSize()
 
 GFXFormat GFXGLTextureTarget::getFormat()
 {
-   // TODO: Fix me!
+   // TODO OPENGL: Fix me!
    return GFXFormatR8G8B8A8;
 }
 
