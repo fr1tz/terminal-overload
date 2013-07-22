@@ -225,6 +225,8 @@ void RenderTranslucentMgr::render( SceneRenderState *state )
                if ( newPassNeeded( ri, passRI ) )
                   break;
 
+               GFXDEBUGEVENT_SCOPE_EX( RenderTranslucentMgr_RenderLoop, ColorI::GREEN, avar("%s", passRI->meshName) );
+
                // Z sorting and stuff is still not working in this mgr...
                setupSGData( passRI, sgData );
                mat->setSceneInfo(state, sgData);
@@ -260,6 +262,8 @@ void RenderTranslucentMgr::render( SceneRenderState *state )
             // Draw the instanced batch.
             if ( mat->isInstanced() )
             {
+                GFXDEBUGEVENT_SCOPE_EX( RenderTranslucentMgr_RenderInst, ColorI::GREEN, avar("Instanced: %s", ri->meshName) );
+
                // Sets the buffers including the instancing stream.
                mat->setBuffers( ri->vertBuff, ri->primBuff );
 

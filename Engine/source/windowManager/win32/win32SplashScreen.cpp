@@ -148,4 +148,9 @@ bool Platform::displaySplashWindow( String path )
 	return true;
 }
 
+void Platform::closeSplashWindow()
+{
+
+}
+
 

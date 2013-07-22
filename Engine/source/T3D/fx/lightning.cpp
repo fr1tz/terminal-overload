@@ -929,7 +929,7 @@ DefineEngineMethod(Lightning, strikeRandomPoint, void, (),,
       object->strikeRandomPoint();
 }
 
-DefineEngineMethod(Lightning, strikeObject, void, (S32 id), (NULL),
+DefineEngineMethod(Lightning, strikeObject, void, (S32 id), (0),
    "Creates a LightningStrikeEvent which strikes a specific object.\n"
    "@note This method is currently unimplemented.\n" )
 {

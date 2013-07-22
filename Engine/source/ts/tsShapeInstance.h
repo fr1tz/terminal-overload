@@ -168,7 +168,7 @@ class TSShapeInstance
       MeshObjectInstance();
       virtual ~MeshObjectInstance() {}
 
-      void render( S32 objectDetail, TSMaterialList *, const TSRenderState &rdata, F32 alpha );
+      void render( S32 objectDetail, TSMaterialList *, const TSRenderState &rdata, F32 alpha, const char* meshName = 0 );
 
       /// Gets the mesh with specified detail level
       TSMesh * getMesh(S32 num) const { return num<object->numMeshes ? *(meshList+num) : NULL; }

@@ -19,11 +19,29 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 // IN THE SOFTWARE.
 //-----------------------------------------------------------------------------
+#ifndef _X11_IMAGE_H_
+#define _X11_IMAGE_H_
 
-#include "windowManager/dedicated/dedicatedWindowStub.h"
+#include <X11/Xlib.h>
 
-
-PlatformWindowManager *CreatePlatformWindowManager()
+class X11Image
 {
-   return new DedicatedWindowMgr;
-}
+    int     mWidth;
+    int     mHeight;
+    XImage* mImage;
+
+public:
+    X11Image();
+    ~X11Image();
+
+    bool loadFile(const char* fileName);
+
+    int getWidth()      { return mWidth; }
+    int getHeight()     { return mHeight; }
+    XImage* getXImage() { return mImage; }
+
+private:
+    void cleanup();
+};
+
+#endif // _X11_PIXMAP_H_

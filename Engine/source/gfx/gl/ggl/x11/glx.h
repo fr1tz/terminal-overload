@@ -47,7 +47,10 @@
 #endif
 
 #include <X11/Xlib.h>
+#include <X11/Xlibint.h>
 #include <X11/Xutil.h>
+
+typedef struct __GLXcontextRec *GLXContext;
 
 namespace GL
 {
@@ -114,7 +117,7 @@ struct GLXExtensionPtrs: public GLExtensionPtrs {
    #undef GL_GROUP_END
 };
 
-struct GLXExtensionFlags {
+struct GLXExtensionFlags: public GLExtensionFlags {
    // Define extension "has" variables
    #define GL_GROUP_BEGIN(name) bool has_##name;
    #define GL_FUNCTION(name, type, args)
@@ -129,13 +132,10 @@ struct GLXExtensionFlags {
 
 //-----------------------------------------------------------------------------
 
-GLDisplay gglCreateDisplay(::Display*,int screen);
-GLSurface gglCreateSurface(GLDisplay,Window,GLFormat);
-XVisualInfo* gglGetFormatVisual(GLDisplay dp,GLFormat format);
-
 #undef XGL_FUNCPTR
 #define XGL_FUNCPTR(name) (((GLXExtensionPtrs*)GL::_GGLptr)->_##name)
 
 } // Namespace
 #endif
+
 

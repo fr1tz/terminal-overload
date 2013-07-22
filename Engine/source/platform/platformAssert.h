@@ -23,9 +23,7 @@
 #ifndef _PLATFORMASSERT_H_
 #define _PLATFORMASSERT_H_
 
-#ifndef _PLATFORM_H_
 #include "platform/platform.h"
-#endif
 
 class PlatformAssert
 {
@@ -40,12 +38,10 @@ public:
 private:
    static PlatformAssert *platformAssert;
    bool processing;
+   bool ignoreAll;
 
    virtual bool displayMessageBox(const char *title, const char *message, bool retry);
-   virtual bool process(Type         assertType,
-                const char*  filename,
-                U32          lineNumber,
-                const char*  message);
+   virtual bool process(Type assertType, const char* filename, U32 lineNumber, const char* message);
 
    PlatformAssert();
    virtual ~PlatformAssert();
@@ -53,10 +49,7 @@ private:
 public:
    static void create( PlatformAssert* newAssertClass = NULL );
    static void destroy();
-   static bool processAssert(Type         assertType,
-                             const char*  filename,
-                             U32          lineNumber,
-                             const char*  message);
+   static bool processAssert(Type assertType, const char*  filename, U32 lineNumber, const char* message);
    static char *message(const char *message, ...);
    static bool processingAssert();
 };
@@ -73,9 +66,7 @@ public:
 
       These asserts are only present in DEBUG builds.
     */
-   #define AssertWarn(x, y)      \
-         { if ((x)==0) \
-            ::PlatformAssert::processAssert(::PlatformAssert::Warning, __FILE__, __LINE__,  y); }
+    #define AssertWarn(x, y)  { if ((x) == 0) {::PlatformAssert::processAssert(::PlatformAssert::Warning, __FILE__, __LINE__,  y);} }   
 
    /*!
       Assert that the statement x is true, otherwise halt.
@@ -91,9 +82,7 @@ public:
       This assert is very useful for verifying data as well as function entry and
       exit conditions.
     */
-   #define AssertFatal(x, y)         \
-         { if (((bool)(x))==(bool)0) \
-            { if ( ::PlatformAssert::processAssert(::PlatformAssert::Fatal, __FILE__, __LINE__,  y) ) { ::Platform::debugBreak(); } } }
+   #define AssertFatal(x, y) { if ( ((bool)(x)) == (bool)0 ) { if( ::PlatformAssert::processAssert(::PlatformAssert::Fatal, __FILE__, __LINE__,  y) ) { TORQUE_DEBUGBREAK(); } } }
 
 #else
    #define AssertFatal(x, y)   { (void)sizeof(x); (void)sizeof(y); }
@@ -112,9 +101,7 @@ public:
    This assert should only be used for rare conditions where the application cannot continue
    execution without seg-faulting and you want to display a nice exit message.
  */
-#define AssertISV(x, y)  \
-   { if ((x)==0)         \
-{ if ( ::PlatformAssert::processAssert(::PlatformAssert::Fatal_ISV, __FILE__, __LINE__,  y) ) { ::Platform::debugBreak(); } } }
+    #define AssertISV(x, y) { if ( (x) == 0)  { if ( ::PlatformAssert::processAssert(::PlatformAssert::Fatal_ISV, __FILE__, __LINE__,  y) ) { TORQUE_DEBUGBREAK(); } } }
 
 
 /*!

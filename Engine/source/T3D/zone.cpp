@@ -25,8 +25,6 @@
 
 #include "console/consoleTypes.h"
 #include "console/engineAPI.h"
-#include "scene/mixin/sceneAmbientSoundObject.impl.h"
-#include "scene/mixin/scenePolyhedralObject.impl.h"
 
 
 IMPLEMENT_CO_NETOBJECT_V1( Zone );

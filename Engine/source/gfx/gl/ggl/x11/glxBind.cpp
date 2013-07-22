@@ -22,12 +22,11 @@
 
 #include "glx.h"
 
-#include "util/utilAssert.h"
-#include "util/utilStr.h"
-#include "util/utilString.h"
-#include "util/utilMemory.h"
-#include "os/osLog.h"
-#include "os/osDlibrary.h"
+#include "core/strings/stringFunctions.h"
+#include "platform/platformDlibrary.h"
+#include "platform/platformAssert.h"
+
+#include <ctype.h>
 
 //-----------------------------------------------------------------------------
 // Instantiation of GL function pointers in global namespace.
@@ -43,7 +42,6 @@
 
 namespace GL
 {
-using namespace Torque;
 
 bool bindFunction(DLibrary* dll,void *&fnAddress, const char *name);
 bool hasExtension(const char *name,const char* extensions);
@@ -75,7 +73,7 @@ bool bindFunction(DLibrary* dll,GLFunction (*gproc)(const GLubyte*),
 
 //-----------------------------------------------------------------------------
 
-bool gglBindCoreFunctions(DLibrary* dll,GLXExtensionPtrs* glp)
+bool gglBindCoreFunctions(DLibrary* dll)
 {
    bool bound = true;
 
@@ -91,9 +89,24 @@ bool gglBindCoreFunctions(DLibrary* dll,GLXExtensionPtrs* glp)
    #undef GL_GROUP_BEGIN
    #undef GL_GROUP_END
 
+   return bound;
+}
+
+bool gglBindExtensions(DLibrary* dll,GLXExtensionPtrs* glp, GLExtensionFlags* glf)
+{
+    bool bound = true;
+
+   dMemset(glp,0,sizeof(GLXExtensionPtrs));
+   dMemset(glf,0,sizeof(GLExtensionFlags));
+
+   // Get GL version and extensions
+   const char* glExtensions = (const char*)glGetString(GL_EXTENSIONS);
+   const char* glVersion = (const char*) glGetString(GL_VERSION);
+   if (!glExtensions || !glVersion)
+      return false;
+
    // Check for the getProcAddress first, otherwise we'll expect everything
    // to be in the DLL.
-   memset(glp,0,sizeof(GLXExtensionPtrs));
    glp->_glXGetProcAddressARB = (GLFunction (*)(const GLubyte*))dll->bind("glXGetProcAddressARB");
 
    // Try and bind all known extension functions. We'll check later to
@@ -107,6 +120,27 @@ bool gglBindCoreFunctions(DLibrary* dll,GLXExtensionPtrs* glp)
    #undef GL_FUNCTION
    #undef GL_GROUP_BEGIN
    #undef GL_GROUP_END
+      
+   // Parse the GL version string "major.minor"
+   const char *itr = glVersion;
+   int glMajor = atoi(itr);
+   while (dIsdigit(*itr))
+      *itr++;
+   int glMinor = atoi(++itr);
+
+   // Check which extensions are available on the active context.
+   // GL and GLX versions ubove 1.0 are also tested here.
+   #define GL_GROUP_BEGIN(name) \
+         glf->has_##name = hasVersion(#name,"GL_VERSION",glMajor,glMinor) || \
+            hasExtension(#name,glExtensions);
+   #define GL_FUNCTION(fn_name, fn_return, fn_args)
+   #define GL_GROUP_END()
+   #include "../generated/glefn.h"
+   #undef GL_FUNCTION
+   #undef GL_GROUP_BEGIN
+   #undef GL_GROUP_END
+
+   glf->bound = true;
 
    return bound;
 }
@@ -121,9 +155,7 @@ void gglBindGLX(::Display* display,int screen,GLXExtensionFlags* glx)
    glXQueryVersion(display,&glxMajor,&glxMinor);
    const char* glxExtensions = glXQueryExtensionsString(display,screen);
 
-   static LogCategory log("/Gfx/Device/GL");
-   log.print(format("GLX Version: %d.%d",glxMajor,glxMinor));
-   Assert(glxMajor == 1 && glxMinor >= 1,"GLXBind: Need GLX version 1.1 or greater");
+   AssertFatal(glxMajor == 1 && glxMinor >= 1,"GLXBind: Need GLX version 1.1 or greater");
 
    #define GL_GROUP_BEGIN(name) \
          glx->has_##name = hasVersion(#name,"GLX_VERSION",glxMajor,glxMinor) || \
@@ -136,41 +168,35 @@ void gglBindGLX(::Display* display,int screen,GLXExtensionFlags* glx)
    #undef GL_GROUP_END
 }
 
+static DLibraryRef _hGL = NULL;
 
-//-----------------------------------------------------------------------------
-
-bool gglBindExtensions(GLExtensionFlags* gl)
+void gglPerformBinds()
 {
-   memset(gl,0,sizeof(GLExtensionFlags));
+    if(!_hGL)
+    {
+        _hGL = OsLoadLibrary("libGL.so.1");
+        gglBindCoreFunctions(_hGL);
+    }
+}
 
-   // Get GL version and extensions
-   const char* glExtensions = (const char*)glGetString(GL_EXTENSIONS);
-   const char* glVersion = (const char*) glGetString(GL_VERSION);
-   if (!glExtensions || !glVersion)
-      return false;
+void gglPerformExtensionBinds(void *context)
+{
+	if(!_hGL)
+	{
+		_hGL = OsLoadLibrary("libGL.so.1");
+	}
+	if(!_GGLptr)
+	{
+      static GLXExtensionPtrs ptrs;
+      static GLXExtensionFlags flags;
 
-   // Parse the GL version string "major.minor"
-   const char *itr = glVersion;
-   int glMajor = atoi(itr);
-   while (isDigit(*itr))
-      *itr++;
-   int glMinor = atoi(++itr);
+		_GGLptr = &ptrs;
+		_GGLflag = &flags;
+	}
 
-   // Check which extensions are available on the active context.
-   // GL and GLX versions ubove 1.0 are also tested here.
-   #define GL_GROUP_BEGIN(name) \
-         gl->has_##name = hasVersion(#name,"GL_VERSION",glMajor,glMinor) || \
-            hasExtension(#name,glExtensions);
-   #define GL_FUNCTION(fn_name, fn_return, fn_args)
-   #define GL_GROUP_END()
-   #include "../generated/glefn.h"
-   #undef GL_FUNCTION
-   #undef GL_GROUP_BEGIN
-   #undef GL_GROUP_END
-
-   gl->bound = true;
-   return true;
+	 gglBindExtensions(_hGL, (GLXExtensionPtrs*)_GGLptr, (GLXExtensionFlags*)_GGLflag);
 }
 
 } // Namespace
+
 

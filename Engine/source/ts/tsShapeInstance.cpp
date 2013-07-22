@@ -534,8 +534,8 @@ void TSShapeInstance::render( const TSRenderState &rdata, S32 dl, F32 intraDL )
    for (i=start; i<end; i++)
    {
       // following line is handy for debugging, to see what part of the shape that it is rendering
-      // const char *name = mShape->names[ mMeshObjects[i].object->nameIndex ];
-      mMeshObjects[i].render( od, mMaterialList, rdata, mAlphaAlways ? mAlphaAlwaysValue : 1.0f );
+      const char *name = mShape->names[ mMeshObjects[i].object->nameIndex ];
+      mMeshObjects[i].render( od, mMaterialList, rdata, mAlphaAlways ? mAlphaAlwaysValue : 1.0f, name );
    }
 }
 
@@ -715,7 +715,8 @@ void TSShapeInstance::ObjectInstance::render( S32, TSMaterialList *, const TSRen
 void TSShapeInstance::MeshObjectInstance::render(  S32 objectDetail, 
                                                    TSMaterialList *materials, 
                                                    const TSRenderState &rdata, 
-                                                   F32 alpha )
+                                                   F32 alpha,
+                                                   const char* meshName )
 {
    PROFILE_SCOPE( TSShapeInstance_MeshObjectInstance_render );
 
@@ -752,7 +753,8 @@ void TSShapeInstance::MeshObjectInstance::render(  S32 objectDetail,
                   isSkinDirty,
                   *mTransforms, 
                   mVertexBuffer,
-                  mPrimitiveBuffer );
+                  mPrimitiveBuffer,
+                  meshName );
 
    // Update the last render time.
    mLastTime = currTime;

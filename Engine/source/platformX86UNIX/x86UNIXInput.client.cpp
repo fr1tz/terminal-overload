@@ -22,9 +22,7 @@
 
 #include "platformX86UNIX/platformX86UNIX.h"
 #include "platform/platformInput.h"
-#include "platform/platformVideo.h"
-#include "platform/event.h"
-#include "platform/gameInterface.h"
+#include "platform/input/event.h"
 #include "console/console.h"
 #include "platformX86UNIX/x86UNIXState.h"
 #include "platformX86UNIX/x86UNIXInputManager.h"
@@ -72,10 +70,12 @@ class XClipboard
 
 // Static class variables:
 InputManager*  Input::smManager;
-
-// smActive is not maintained under unix.  Use Input::isActive()
-// instead
-bool           Input::smActive = false;
+bool           Input::smActive = false;     // smActive is not maintained under unix.  Use Input::isActive() instead
+U8             Input::smModifierKeys;
+bool           Input::smLastKeyboardActivated;
+bool           Input::smLastMouseActivated;
+bool           Input::smLastJoystickActivated;
+InputEvent     Input::smInputEvent;
 
 // unix platform state
 extern x86UNIXPlatformState * x86UNIXState;
@@ -276,13 +276,6 @@ void Input::deactivate()
       if ( uInputManager )
          uInputManager->deactivate();
    }
-}
-
-//------------------------------------------------------------------------------
-void Input::reactivate()
-{
-   Input::deactivate();
-   Input::activate();
 }
 
 //------------------------------------------------------------------------------
@@ -602,3 +595,11 @@ void XClipboard::handleSelectionRequest(XSelectionRequestEvent& request)
    // flush the output buffer to send the event now
    XFlush(display);
 }
+
+extern U8 keysymRemap[];
+S32 TranslateOSKeyCode(XKeyEvent* evt)  
+{
+    KeySym key = XLookupKeysym(evt, 0);
+    U8 torqueKey = keysymRemap[key];
+    return (S32)torqueKey;
+}       

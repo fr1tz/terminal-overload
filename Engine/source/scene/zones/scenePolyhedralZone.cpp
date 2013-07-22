@@ -23,7 +23,6 @@
 #include "platform/platform.h"
 #include "scene/zones/scenePolyhedralZone.h"
 
-#include "scene/mixin/scenePolyhedralObject.impl.h"
 
 
 //-----------------------------------------------------------------------------

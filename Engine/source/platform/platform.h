@@ -130,9 +130,11 @@ struct Processor
 };
 
 #if defined(TORQUE_SUPPORTS_GCC_INLINE_X86_ASM)
-#define TORQUE_DEBUGBREAK() { asm ( "int 3"); }
+#define TORQUE_DEBUGBREAK() { asm ( "int $3"); }
 #elif defined (TORQUE_SUPPORTS_VC_INLINE_X86_ASM) // put this test second so that the __asm syntax doesn't break the Visual Studio Intellisense parser
 #define TORQUE_DEBUGBREAK() { __asm { int 3 }; } 
+#elif defined(_MSC_VER)
+#define TORQUE_DEBUGBREAK()	{__debugbreak();}
 #else
 /// Macro to do in-line debug breaks, used for asserts.  Does inline assembly when possible.
 #define TORQUE_DEBUGBREAK() Platform::debugBreak();
@@ -170,6 +172,15 @@ namespace Platform
       U16 yearday;    ///< Day of year (0-365)
       bool isdst;     ///< True if daylight savings time is active
    };
+
+	enum ALERT_ASSERT_RESULT
+	{
+		ALERT_ASSERT_DEBUG,
+		ALERT_ASSERT_IGNORE,
+		ALERT_ASSERT_IGNORE_ALL,
+		ALERT_ASSERT_EXIT
+	};
+
 
    void getLocalTime(LocalTime &);
    
@@ -297,6 +308,7 @@ namespace Platform
    void AlertOK(const char *windowTitle, const char *message);
    bool AlertOKCancel(const char *windowTitle, const char *message);
    bool AlertRetry(const char *windowTitle, const char *message);
+   ALERT_ASSERT_RESULT AlertAssert(const char *windowTitle, const char *message);
 
    // Volumes
    struct VolumeInformation
@@ -337,6 +349,7 @@ namespace Platform
 
    // display Splash Window
    bool displaySplashWindow( String path );
+   void closeSplashWindow();
 
    void openFolder( const char* path );
 

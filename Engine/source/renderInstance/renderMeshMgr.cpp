@@ -125,6 +125,8 @@ void RenderMeshMgr::render(SceneRenderState * state)
    {
       MeshRenderInst *ri = static_cast<MeshRenderInst*>(mElementList[j].inst);
 
+      GFXDEBUGEVENT_SCOPE_EX(RenderMeshMgr_renderElement, ColorI::GREEN, ri->meshName);
+
       setupSGData( ri, sgData );
       BaseMatInstance *mat = ri->matInst;
 

@@ -21,23 +21,24 @@
 //-----------------------------------------------------------------------------
 
 
+#include "windowManager/x11/x11WindowMgr.h"
 
 #include "console/console.h"
-#include "core/fileStream.h"
-#include "game/resource.h"
-#include "game/version.h"
+#include "core/stream/fileStream.h"
+//#include "game/resource.h"
+//#include "game/version.h"
 #include "math/mRandom.h"
 #include "platformX86UNIX/platformX86UNIX.h"
 #include "platformX86UNIX/x86UNIXStdConsole.h"
-#include "platform/event.h"
-#include "platform/gameInterface.h"
+#include "platform/input/event.h"
+//#include "platform/gameInterface.h"
 #include "platform/platform.h"
-#include "platform/platformAL.h"
+//#include "platform/platformAL.h"
 #include "platform/platformInput.h"
-#include "platform/platformVideo.h"
+//#include "platform/platformVideo.h"
 #include "platform/profiler.h"
-#include "platformX86UNIX/platformGL.h"
-#include "platformX86UNIX/x86UNIXOGLVideo.h"
+//#include "platformX86UNIX/platformGL.h"
+//#include "platformX86UNIX/x86UNIXOGLVideo.h"
 #include "platformX86UNIX/x86UNIXState.h"
 
 #ifndef TORQUE_DEDICATED
@@ -60,7 +61,8 @@
 #include <SDL/SDL_version.h>
 #endif
 
-x86UNIXPlatformState *x86UNIXState;
+static x86UNIXPlatformState _x86UNIXState_Obj;
+x86UNIXPlatformState *x86UNIXState = &_x86UNIXState_Obj;
 
 bool DisplayPtrManager::sgDisplayLocked = false;
 LockFunc_t DisplayPtrManager::sgLockFunc = NULL;
@@ -137,7 +139,7 @@ static S32 ParseCommandLine(S32 argc, const char **argv,
       newCommandLine.push_back(argBuf);
    }
    x86UNIXState->setDedicated(foundDedicated);
-#if defined(DEDICATED) && !defined(TORQUE_ENGINE)
+#if defined(TORQUE_DEDICATED) && !defined(TORQUE_ENGINE)
    if (!foundDedicated)
    {
       dPrintf("This is a dedicated server build.  You must supply the -dedicated command line parameter.\n");
@@ -147,15 +149,29 @@ static S32 ParseCommandLine(S32 argc, const char **argv,
    return 0;
 }
 
-static void DetectWindowingSystem()
+int XLocalErrorHandler(Display* display, XErrorEvent* error)
+{
+    char errorBuffer[4096];
+    XGetErrorText(display, error->error_code, errorBuffer, sizeof(errorBuffer));
+    Con::printf(errorBuffer);
+    AssertFatal(0, "X Error");
+}
+
+void InitWindowingSystem()
 {
 #ifndef TORQUE_DEDICATED
-   Display* dpy = XOpenDisplay(NULL);
-   if (dpy != NULL)
-   {
-      x86UNIXState->setXWindowsRunning(true);
-      XCloseDisplay(dpy);
-   }
+    if( !x86UNIXState->isXWindowsRunning() )
+    {
+        Display* dpy = XOpenDisplay(NULL);
+        AssertFatal(dpy, "Failed to connect to X Server");
+        if (dpy != NULL)
+        {
+            x86UNIXState->setXWindowsRunning(true);
+            x86UNIXState->setDisplayPointer(dpy);
+
+            XSetErrorHandler(XLocalErrorHandler);
+        }
+    }
 #endif
 }
 
@@ -167,8 +183,9 @@ static void InitWindow(const Point2I &initialSize, const char *name)
 }
 
 #ifndef TORQUE_DEDICATED
+/*
 //------------------------------------------------------------------------------
-static bool InitSDL()
+bool InitSDL()
 {
    if (SDL_Init(SDL_INIT_VIDEO) != 0)
       return false;
@@ -210,6 +227,7 @@ static bool InitSDL()
 
    return true;
 }
+*/
 
 //------------------------------------------------------------------------------
 static void ProcessSYSWMEvent(const SDL_Event& event)
@@ -237,7 +255,8 @@ static void SetAppState()
       state & SDL_APPINPUTFOCUS)
    {
       x86UNIXState->setWindowActive(true);
-      Input::reactivate();
+      Input::deactivate();
+      Input::activate(); 
    }
    // if we are active, but we don't have appactive or input focus,
    // deactivate input (if window not locked) and clear windowActive
@@ -329,7 +348,7 @@ static bool ProcessMessages()
             break;
          case SDL_VIDEORESIZE:
          case SDL_VIDEOEXPOSE:
-            Game->refreshWindow();
+            //Game->refreshWindow();
             break;
          case SDL_USEREVENT:
             if (event.user.code == TORQUE_SETVIDEOMODE)
@@ -365,7 +384,7 @@ void SendQuitEvent()
    quitevent.type = SDL_QUIT;
    SDL_PushEvent(&quitevent);
 }
-#endif // DEDICATED
+#endif // TORQUE_DEDICATED
 
 //------------------------------------------------------------------------------
 static inline void Sleep(int secs, int nanoSecs)
@@ -408,7 +427,7 @@ void DisplayErrorAlert(const char* errMsg, bool showSDLError)
 //------------------------------------------------------------------------------
 static inline void AlertDisableVideo(AlertWinState& state)
 {
-
+    /* RKO-TODO: Possibly re-implement this functionality?
    state.fullScreen = Video::isFullScreen();
    state.cursorHidden = (SDL_ShowCursor(SDL_QUERY) == SDL_DISABLE);
    state.inputGrabbed = (SDL_WM_GrabInput(SDL_GRAB_QUERY) == SDL_GRAB_ON);
@@ -419,19 +438,22 @@ static inline void AlertDisableVideo(AlertWinState& state)
       SDL_ShowCursor(SDL_ENABLE);
    if (state.inputGrabbed)
       SDL_WM_GrabInput(SDL_GRAB_OFF);
+      */
 }
 
 //------------------------------------------------------------------------------
 static inline void AlertEnableVideo(AlertWinState& state)
 {
+    /* RKO-TODO: Possibly re-implement this functionality?
    if (state.fullScreen)
       SDL_WM_ToggleFullScreen(SDL_GetVideoSurface());
    if (state.cursorHidden)
       SDL_ShowCursor(SDL_DISABLE);
    if (state.inputGrabbed)
       SDL_WM_GrabInput(SDL_GRAB_ON);
+      */
 }
-#endif // DEDICATED
+#endif // TORQUE_DEDICATED
 
 //------------------------------------------------------------------------------
 void Platform::AlertOK(const char *windowTitle, const char *message)
@@ -515,55 +537,56 @@ bool Platform::AlertRetry(const char *windowTitle, const char *message)
 }
 
 //------------------------------------------------------------------------------
+Platform::ALERT_ASSERT_RESULT Platform::AlertAssert(const char *windowTitle, const char *message)
+{
+#ifndef TORQUE_DEDICATED
+    if (x86UNIXState->isXWindowsRunning())
+    {
+        AlertWinState state;
+        AlertDisableVideo(state);
+        
+        DisplayPtrManager xdisplay;
+        XMessageBox mBox(xdisplay.getDisplayPointer());
+        int val = mBox.alertAssert(windowTitle, message);
+
+        ALERT_ASSERT_RESULT result = ALERT_ASSERT_IGNORE;
+        switch( val )
+        {
+            case XMessageBox::OK:
+                result = ALERT_ASSERT_EXIT;
+                break;
+            default:
+            case XMessageBox::Cancel:
+                result = ALERT_ASSERT_IGNORE;
+                break;
+            case XMessageBox::Retry:
+                result = ALERT_ASSERT_DEBUG;
+                break;
+            case XMessageBox::IgnoreAll:
+                result = ALERT_ASSERT_IGNORE_ALL;
+                break;
+        }
+        
+        AlertEnableVideo(state);
+        return result;
+    }
+    else
+#endif
+    {
+        if (Con::isActive() && StdConsole::isEnabled())
+            Con::printf("AlertAssert: %s %s", windowTitle, message);
+        else
+            dPrintf("AlertAssert: %s %s\n", windowTitle, message);
+
+        return ALERT_ASSERT_DEBUG;
+   }
+}
+
+//------------------------------------------------------------------------------
 bool Platform::excludeOtherInstances(const char *mutexName)
 {
-   return AcquireProcessMutex(mutexName);
-}
-
-
-//------------------------------------------------------------------------------
-void Platform::enableKeyboardTranslation(void)
-{
-#ifndef TORQUE_DEDICATED
-   // JMQ: not sure if this is needed for i18n keyboards
-   //SDL_EnableUNICODE( 1 );
-//    SDL_EnableKeyRepeat(
-//       SDL_DEFAULT_REPEAT_DELAY, 
-//       SDL_DEFAULT_REPEAT_INTERVAL);
-#endif
-}
-
-//------------------------------------------------------------------------------
-void Platform::disableKeyboardTranslation(void)
-{
-#ifndef TORQUE_DEDICATED
-   //SDL_EnableUNICODE( 0 );
-   //   SDL_EnableKeyRepeat(0, 0);
-#endif
-}
-
-//------------------------------------------------------------------------------
-void Platform::setWindowLocked(bool locked)
-{
-#ifndef TORQUE_DEDICATED
-   x86UNIXState->setWindowLocked(locked);
-
-   UInputManager* uInputManager = 
-      dynamic_cast<UInputManager*>( Input::getManager() );
-
-   if ( uInputManager && uInputManager->isEnabled() && 
-      Input::isActive() )
-      uInputManager->setWindowLocked(locked);
-#endif
-}
-
-//------------------------------------------------------------------------------
-void Platform::minimizeWindow()
-{
-#ifndef TORQUE_DEDICATED
-   if (x86UNIXState->windowCreated())
-      SDL_WM_IconifyWindow();
-#endif
+    AssertFatal(0, "Not Implemented");
+    return false;
 }
 
 //------------------------------------------------------------------------------
@@ -582,9 +605,7 @@ void Platform::process()
       if(quit)
       {
          // generate a quit event
-         Event quitEvent;
-         quitEvent.type = QuitEventType;
-         Game->postEvent(quitEvent);
+          Platform::postQuitMessage(0);
       }
 
       // process input events
@@ -605,21 +626,21 @@ void Platform::process()
    else
    {
       // no window
-      // if we're not in journal mode, sleep for 1 ms
+      // sleep for 1 ms
       // JMQ: since linux's minimum sleep latency seems to be 20ms, this can
       // increase player pings by 10-20ms in the dedicated server.  So 
       // you have to use -dsleep to enable it.  the server sleeps anyway when
       // there are no players connected.
       // JMQ: recent kernels (such as RH 8.0 2.4.18) reduce the latency
       // to 2-4 ms on average.
-      if (!Game->isJournalReading() && (x86UNIXState->getDSleep() || 
+      /*if (!Game->isJournalReading() && (x86UNIXState->getDSleep() || 
              Con::getIntVariable("Server::PlayerCount") - 
              Con::getIntVariable("Server::BotCount") <= 0))
       {
          PROFILE_START(XUX_Sleep);
          Sleep(0, getBackgroundSleepTime() * 1000000);
          PROFILE_END();
-      }
+      }*/
    }
 
 #ifndef TORQUE_DEDICATED
@@ -639,40 +660,6 @@ void Platform::process()
 #endif
    PROFILE_END();
 }
-
-// extern U32 calculateCRC(void * buffer, S32 len, U32 crcVal );
-
-// #if defined(DEBUG) || defined(INTERNAL_RELEASE)
-// static U32 stubCRC = 0;
-// #else
-// static U32 stubCRC = 0xEA63F56C;
-// #endif
-
-//------------------------------------------------------------------------------
-const Point2I &Platform::getWindowSize()
-{
-   return x86UNIXState->getWindowSize();
-}
-
-
-//------------------------------------------------------------------------------
-void Platform::setWindowSize( U32 newWidth, U32 newHeight )
-{
-   x86UNIXState->setWindowSize( (S32) newWidth, (S32) newHeight );
-}
-
-
-//------------------------------------------------------------------------------
-void Platform::initWindow(const Point2I &initialSize, const char *name)
-{
-#ifndef TORQUE_DEDICATED
-   // initialize window
-   InitWindow(initialSize, name);
-   if (!InitOpenGL())
-      ImmediateShutdown(1);
-#endif
-}
-
 
 //------------------------------------------------------------------------------
 // Web browser function:
@@ -697,8 +684,8 @@ bool Platform::openWebBrowser( const char* webAddress )
    else if (pid != 0)
    {
       // parent
-      if (Video::isFullScreen())
-         Video::toggleFullScreen();
+      //if (Video::isFullScreen())
+      //   Video::toggleFullScreen();
 
       return true;
    }
@@ -707,7 +694,7 @@ bool Platform::openWebBrowser( const char* webAddress )
       // child
       // try to exec konqueror, then netscape
       char* argv[3];
-      argv[0] = "";
+      argv[0] = const_cast<char*>("");
       argv[1] = const_cast<char*>(webAddress);
       argv[2] = 0;
 
@@ -748,37 +735,6 @@ bool Platform::setLoginPassword( const char* password )
    return false;
 }
 
-//-------------------------------------------------------------------------------
-void TimeManager::process()
-{
-   U32 curTime = Platform::getRealMilliseconds();
-   TimeEvent event;
-   event.elapsedTime = curTime - lastTimeTick;
-   if(event.elapsedTime > sgTimeManagerProcessInterval)
-   {
-      lastTimeTick = curTime;
-      Game->postEvent(event);
-   }
-}
-
-//------------------------------------------------------------------------------
-ConsoleFunction( getDesktopResolution, const char*, 1, 1, 
-   "getDesktopResolution()" )
-{
-   if (!x86UNIXState->windowCreated())
-      return "0 0 0";
-
-   char buffer[256];
-   char* returnString = Con::getReturnBuffer( dStrlen( buffer ) + 1 );
-
-   dSprintf( buffer, sizeof( buffer ), "%d %d %d", 
-      x86UNIXState->getDesktopSize().x,
-      x86UNIXState->getDesktopSize().y, 
-      x86UNIXState->getDesktopBpp() );
-   dStrcpy( returnString, buffer );
-   return( returnString );
-}
-
 //------------------------------------------------------------------------------
 // Silly Korean registry key checker:
 //------------------------------------------------------------------------------
@@ -788,72 +744,25 @@ ConsoleFunction( isKoreanBuild, bool, 1, 1, "isKoreanBuild()" )
    return false;
 }
 
-//------------------------------------------------------------------------------
-int main(S32 argc, const char **argv)
+bool Platform::displaySplashWindow(String path)
 {
-   // init platform state
-   x86UNIXState = new x86UNIXPlatformState;
-
-   // parse the command line for unix-specific params
-   Vector<char *> newCommandLine;
-   S32 returnVal = ParseCommandLine(argc, argv, newCommandLine);
-   if (returnVal != 0)
-      return returnVal;
-
-   // init lastTimeTick for TimeManager::process()
-   lastTimeTick = Platform::getRealMilliseconds();
-
-   // init process control stuff 
-   ProcessControlInit();
-
-   // check to see if X is running
-   DetectWindowingSystem();
-  
-   // run the game
-   returnVal = Game->main(newCommandLine.size(), 
-      const_cast<const char**>(newCommandLine.address()));
-
-   // dispose of command line
-   for(U32 i = 0; i < newCommandLine.size(); i++)
-      delete [] newCommandLine[i];
-
-   // dispose of state
-   delete x86UNIXState;
-
-   return returnVal;
+    X11WindowManager* mgr = (X11WindowManager*)PlatformWindowManager::get();
+    return mgr->displaySplashWindow();
 }
 
-void Platform::setWindowTitle( const char* title )
+void Platform::closeSplashWindow()
 {
-#ifndef TORQUE_DEDICATED
-   x86UNIXState->setWindowName(title);
-   SDL_WM_SetCaption(x86UNIXState->getWindowName(), NULL);
-#endif
+    X11WindowManager* mgr = (X11WindowManager*)PlatformWindowManager::get();
+    return mgr->closeSplashWindow();
 }
 
-Resolution Video::getDesktopResolution()
+void Platform::openFolder(const char* path )
 {
-   Resolution  Result;
-   Result.h   = x86UNIXState->getDesktopSize().x;
-   Result.w   = x86UNIXState->getDesktopSize().y;
-   Result.bpp = x86UNIXState->getDesktopBpp();
-
-  return Result;
+    AssertFatal(0, "Not Implemented");
 }
 
-
-//-----------------------------------------------------------------------------
-void Platform::restartInstance()
+void Platform::openFile(const char* path )
 {
-
-   if (Game->isRunning() )
-   {
-      //Con::errorf( "Error restarting Instance. Game is Still running!");
-      return;
-   }
-
-   char cmd[2048];
-   sprintf(cmd, "%s &", x86UNIXState->getExePathName());
-   system(cmd);
-   exit(0);
+    AssertFatal(0, "Not Implemented");
 }
+
