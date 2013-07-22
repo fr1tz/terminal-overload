@@ -145,6 +145,7 @@ switch( Generator::$platform )
       addEngineSrcDir( 'shaderGen/HLSL' );
 	  
 	  // GFX - GGL
+	 addProjectDefines( 'TORQUE_OPENGL' ); 
      addEngineSrcDir( 'gfx/gl' );
      addEngineSrcDir( 'gfx/gl/ggl' );
      addEngineSrcDir( 'gfx/gl/ggl/generated' );
@@ -161,6 +162,7 @@ switch( Generator::$platform )
       addEngineSrcDir( 'gfx/gl/ggl/mac' );
 
       // GFX - GGL
+	  addProjectDefines( 'TORQUE_OPENGL' );
       addEngineSrcDir( 'gfx/gl' );
       addEngineSrcDir( 'gfx/gl/ggl' );
       addEngineSrcDir( 'gfx/gl/ggl/generated' );
@@ -169,6 +171,7 @@ switch( Generator::$platform )
    case "linux":
    case "linux_dedicated":
       // GFX - GGL
+	  addProjectDefines( 'TORQUE_OPENGL' );
       addEngineSrcDir( 'gfx/gl' );
       addEngineSrcDir( 'gfx/gl/x11' );
       addEngineSrcDir( 'gfx/gl/ggl' );
@@ -180,6 +183,7 @@ switch( Generator::$platform )
       addEngineSrcDir( 'gfx/gl/ggl/ps3' );
 
       // GFX - GGL
+	  addProjectDefines( 'TORQUE_OPENGL' );
       addEngineSrcDir( 'gfx/gl' );
       addEngineSrcDir( 'gfx/gl/ggl' );
       addEngineSrcDir( 'gfx/gl/ggl/generated' );

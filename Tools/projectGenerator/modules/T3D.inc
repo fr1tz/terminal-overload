@@ -82,12 +82,8 @@ switch( Generator::$platform )
       
    case "win32":
       addEngineSrcDir( 'terrain/hlsl' );
-      addEngineSrcDir( 'forest/hlsl' );
+      addEngineSrcDir( 'forest/hlsl' );	  
 	  
-	  addProjectDefines( 'TORQUE_OPENGL' );
-	  addEngineSrcDir( 'gfx/gl/ggl/' );
-	  addEngineSrcDir( 'gfx/gl/ggl/generated' );
-	  addEngineSrcDir( 'gfx/gl/ggl/win32' );
 	  addEngineSrcDir( 'terrain/glsl' );
       addEngineSrcDir( 'forest/glsl' );
       break;
@@ -98,11 +94,7 @@ switch( Generator::$platform )
       
    case "mac":
    case "linux":
-   case "linux_dedicated":
-	  addProjectDefines( 'TORQUE_OPENGL' );
-	  addEngineSrcDir( 'gfx/gl/ggl/' );
-	  addEngineSrcDir( 'gfx/gl/ggl/generated' );
-	  addEngineSrcDir( 'gfx/gl/ggl/x11' );
+   case "linux_dedicated":	  
       addEngineSrcDir( 'terrain/glsl' );
       addEngineSrcDir( 'forest/glsl' );
       break;
