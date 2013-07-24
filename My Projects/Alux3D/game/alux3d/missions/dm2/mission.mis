@@ -20,9 +20,9 @@ new SimGroup(MissionGroup) {
       soundDistanceModel = "Linear";
       canSave = "1";
       canSaveDynamicFields = "1";
-			missionScript = "alux3d/server/dm.cs";
          desc0 = "TODO";
          levelName = "DM2";
+         missionScript = "alux3d/server/dm.cs";
    };
    new SimGroup(PlayerDropPoints) {
       canSave = "1";
@@ -133,7 +133,7 @@ new SimGroup(MissionGroup) {
    new Sun() {
       azimuth = "0";
       elevation = "90";
-      color = "0.552941 0.54902 0.552941 1";
+      color = "0.180392 0.180392 0.180392 1";
       ambient = "0.0196078 0.0196078 0.0196078 1";
       brightness = "1";
       castShadows = "1";
