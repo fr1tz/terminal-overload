@@ -50,10 +50,6 @@ function initServer()
 
    // The common module provides the basic server functionality
    initBaseServer();
-
-   // Load up game server support scripts
-   exec("./commands.cs");
-   exec("./game.cs");
 }
 
 

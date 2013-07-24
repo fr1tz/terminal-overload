@@ -77,11 +77,11 @@ function initClient()
    exec("./playerList.cs");
    exec("./chatHud.cs");
    exec("./messageHud.cs");
-   exec("testgame/gui/playGui.cs");
-   exec("testgame/gui/startupGui.cs");
-   exec("testgame/gui/chooseLevelDlg.cs");
-   exec("testgame/gui/loadingGui.cs");
-   exec("testgame/gui/optionsDlg.cs");
+   exec("alux3d/gui/playGui.cs");
+   exec("alux3d/gui/startupGui.cs");
+   exec("alux3d/gui/chooseLevelDlg.cs");
+   exec("alux3d/gui/loadingGui.cs");
+   exec("alux3d/gui/optionsDlg.cs");
 
    // Client scripts
    exec("./client.cs");

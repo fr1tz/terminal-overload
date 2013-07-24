@@ -5,7 +5,7 @@
 $appName = "Alux3D";
 
 // The directory it is run from
-$defaultGame = "testgame";
+$defaultGame = "alux3d";
 
 // Set profile directory
 $Pref::Video::ProfilePath = "core/profile";

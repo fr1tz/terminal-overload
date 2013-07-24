@@ -73,7 +73,24 @@ function createServer(%serverType, %level)
    // Make sure our level name is relative so that it can send
    // across the network correctly
    %level = makeRelativePath(%level, getWorkingDirectory());
+   
+   // Extract mission info from the mission file,
+   // including the display name and stuff to send
+   // to the client.
+   buildLoadInfo(%level);
+   
+   if(!isObject(theLevelInfo))
+   {
+      error("createServer(): no level info");
+      return false;
+   }
 
+   if(!exec(theLevelInfo.missionScript))
+   {
+      error("createServer(): could not execute mission script");
+      return false;
+   }
+   
    destroyServer();
 
    $missionSequence = 0;
@@ -100,10 +117,7 @@ function createServer(%serverType, %level)
 
    // Create the ServerGroup that will persist for the lifetime of the server.
    new SimGroup(ServerGroup);
-
-   // Load up any core datablocks
-   exec("core/art/datablocks/datablockExec.cs");
-
+   
    // Let the game initialize some things now that the
    // the server has been created
    onServerCreated();

@@ -90,7 +90,7 @@ function onStart()
    initServer();
 
    // Start up in either client, or dedicated server mode
-   if ($Server::Dedicated)
+   if($Server::Dedicated)
       initDedicated();
    else
       initClient();

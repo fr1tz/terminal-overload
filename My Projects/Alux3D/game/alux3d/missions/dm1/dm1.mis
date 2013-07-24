@@ -20,6 +20,7 @@ new SimGroup(MissionGroup) {
       soundDistanceModel = "Linear";
       canSave = "1";
       canSaveDynamicFields = "1";
+			missionScript = "alux3d/server/dm.cs";      
          desc0 = "TODO";
          levelName = "DM1";
    };
@@ -160,7 +161,7 @@ new SimGroup(MissionGroup) {
       };
    };
    new TerrainBlock() {
-      terrainFile = "testgame/missions/dm1/dm1.ter";
+      terrainFile = "alux3d/missions/dm1/dm1.ter";
       castShadows = "1";
       squareSize = "1";
       baseTexSize = "1024";

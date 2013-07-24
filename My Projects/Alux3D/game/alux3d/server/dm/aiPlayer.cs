@@ -186,9 +186,11 @@ function AIPlayer::executeTask(%this,%index)
 function AIPlayer::singleShot(%this)
 {
    // The shooting delay is used to pulse the trigger
+   %this.trigger = %this.schedule(%this.shootingDelay, singleShot);
+   if(%this.getDamageState() !$= "Enabled")
+      return;
    %this.setImageTrigger(0, true);
    %this.setImageTrigger(0, false);
-   %this.trigger = %this.schedule(%this.shootingDelay, singleShot);
 }
 
 //-----------------------------------------------------------------------------
@@ -276,12 +278,48 @@ function AIPlayer::getNearestPlayerTarget(%this)
    return %index;
 }
 
+function AIPlayer::getNearestTarget(%this)
+{
+	%target = 0;
+
+	%position = %this.getPosition();
+	%radius = 500;
+
+   %typeMask = $TypeMasks::PlayerObjectType | $TypeMasks::VehicleObjectType;
+	InitContainerRadiusSearch(%position, %radius, %typeMask);
+	while ((%targetObject = containerSearchNext()) != 0)
+	{
+		//if(%targetObject.teamId > 0
+		//&& %targetObject.getDamageState() $= "Enabled"
+		//&& %targetObject.teamId != %this.teamId )
+      if(%targetObject == %this)
+         continue;
+  
+  		if(%targetObject.getDamageState() !$= "Enabled")
+         continue;
+
+      %target = %targetObject;
+		break;
+	}
+ 
+   return %target;
+}
+
 //-----------------------------------------------------------------------------
 
 function AIPlayer::think(%player)
 {
    // Thinking allows us to consider other things...
    %player.schedule(500, think);
+   
+   if(%player.getDamageState() !$= "Enabled")
+      return;
+
+   %targ = %player.getNearestTarget();
+   if(isObject(%targ))
+   {
+      %player.aimAt(%targ);
+   }
 }
 
 function AIPlayer::spawn(%path)
@@ -295,9 +333,16 @@ function AIPlayer::spawn(%path)
       // slow this sucker down, I'm tired of chasing him!
       %player.setMoveSpeed(0.5);
 
-      //%player.mountImage(xxxImage, 0);
-      //%player.setInventory(xxxAmmo, 1000);
-      //%player.think();
+      //%player.mountImage(WpnBadgerImage, 0);
+      %player.mountImage(WpnRaptorImage, 0);
+      //%player.mountImage(WpnBulldogImage, 0);
+      %player.setInventory(WpnBadgerClip, 1000);
+      %player.setInventory(WpnRaptorClip, 1000);
+      %player.setInventory(WpnBulldogClip, 1000);
+      %player.think();
+      
+      %player.shootingDelay = 200;
+      %player.singleShot();
 
       return %player;
    }
