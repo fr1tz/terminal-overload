@@ -2,7 +2,7 @@
 singleton Material(shape_alux3d_raptor_projectile_p1_mat1)
 {
    mapTo = "shape_alux3d_raptor_projectile_p1_mat1";
-   diffuseColor[0] = "1 0.792157 0 1";
+   diffuseColor[0] = "0 1 1 1";
    doubleSided = "0";
    translucentBlendOp = "AddAlpha";
    glow[0] = "1";

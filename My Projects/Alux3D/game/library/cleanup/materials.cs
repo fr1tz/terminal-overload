@@ -9,7 +9,7 @@ singleton Material(DECAL_WpnRaptorProjectile)
    translucentBlendOp = "LerpAlpha";
    translucentZWrite = true;
    mapTo = "rBlast";
-   diffuseColor[0] = "1 0.811765 0 1";
+   diffuseColor[0] = "0 1 1 1";
    diffuseMap[0] = "library/texture/alux3d/rBlastInv.png";
    glow[0] = "1";
    emissive[0] = "1";

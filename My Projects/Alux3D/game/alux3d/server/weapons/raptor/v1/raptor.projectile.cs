@@ -1,6 +1,13 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
+datablock LightDescription(WpnRaptorProjectileLightDesc : BulletProjectileLightDesc)
+{
+   color = "0 1 0.952941 1";
+   range = "10";
+   brightness = "1";
+};
+
 datablock DecalData(WpnRaptorProjectileDecal)
 {
    Material = "DECAL_WpnRaptorProjectile";
@@ -51,6 +58,7 @@ datablock ShotgunProjectileData(WpnRaptorProjectile)
    bounceFriction      = 0;
    isBallistic         = false;
    gravityMod          = 1;
+   lightDesc = "WpnRaptorProjectileLightDesc";
 };
 
 function WpnRaptorProjectile::onCollision(%this,%obj,%col,%fade,%pos,%normal)

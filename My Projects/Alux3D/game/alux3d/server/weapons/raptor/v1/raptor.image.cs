@@ -26,7 +26,6 @@ datablock ShapeBaseImageData(WpnRaptorImage)
    // Add the WeaponImage namespace as a parent, WeaponImage namespace
    // provides some hooks into the inventory system.
    class = "WeaponImage";
-   className = "WeaponImage";
 
    ammoSource = "Magazine";
    //minEnergy = 0;
@@ -40,8 +39,8 @@ datablock ShapeBaseImageData(WpnRaptorImage)
    shellVelocity       = 3.0;
 
    // Weapon lights up while firing
-   lightType = "WeaponFireLight";
-   lightColor = "0.992126 0.968504 0.708661 1";
+   lightType = "NoLight";
+   lightColor = "0 1 0.952756 1";
    lightRadius = "4";
    lightDuration = "100";
    lightBrightness = 2;

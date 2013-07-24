@@ -24,7 +24,7 @@ singleton Material(shape_fp_shape_alux3d_raptor_image_p3_mat2)
 singleton Material(shape_fp_shape_alux3d_raptor_image_p3_mat3)
 {
    mapTo = "shape_alux3d_raptor_image_p3_mat3";
-   diffuseColor[0] = "0.64 0.52692 0 1";
+   diffuseColor[0] = "0 0.905882 1 1";
    specular[0] = "0.5 0.5 0.5 1";
    specularPower[0] = "50";
    doubleSided = "1";

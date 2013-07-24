@@ -3,7 +3,7 @@
 
 datablock SFXProfile(WpnRaptorFireSound)
 {
-   filename = "library/sound/cat5/gunshot1";
+   filename = "library/sound/rotc/fire2";
    description = AudioClose3D;
    preload = true;
 };
@@ -36,19 +36,19 @@ datablock SFXProfile(WpnRaptorSwitchinSound)
    preload = true;
 };
 
-datablock SFXProfile(WpnRaptorGrenadeFireSound)
-{
-   filename = "art/sound/weapons/wpn_lurker_grenadelaunch";
-   description = AudioClose3D;
-   preload = true;
-};
-
 datablock SFXPlayList(WpnRaptorFireSoundList)
 {
    // Use a looped description so the list playback will loop.
    description = AudioClose3D;
 
    track[0] = WpnRaptorFireSound;
+};
+
+datablock SFXProfile(WpnRaptorProjectileExplosionSound)
+{
+   filename = "library/sound/cat5/impact3";
+   description = AudioClose3D;
+   preload = true;
 };
 
 datablock SFXProfile(WpnRaptorReleaseMagazineSound)

@@ -47,26 +47,26 @@ datablock ParticleEmitterData(WpnRaptorProjectileExplosionPlasmaEmitter)
 
 datablock ParticleData(WpnRaptorProjectileExplosionCloudParticle : DefaultParticle)
 {
-   sizes[0] = "0.5";
-   sizes[1] = "1";
-   sizes[2] = "1.5";
+   sizes[0] = "1";
+   sizes[1] = "1.5";
+   sizes[2] = "2";
    sizes[3] = "0";
-   times[1] = "0.498039";
+   times[1] = "0.494118";
    times[2] = "1";
    textureName = "art/particles/dustParticle.png";
    animTexName = "art/particles/dustParticle.png";
-   lifetimeMS = "150";
+   lifetimeMS = "100";
    lifetimeVarianceMS = "0";
    spinSpeed = "0";
    spinRandomMin = "-573";
    spinRandomMax = "541";
    colors[0] = "0.992126 0.992126 0.992126 1";
-   colors[2] = "1 0.952756 0 0";
+   colors[2] = "0 1 0.905882 0";
    colors[3] = "0.94902 0.00784314 0.996078 1";
    inheritedVelFactor = "0";
    constantAcceleration = "0";
    useInvAlpha = "0";
-   colors[1] = "1 0.721569 0 0.502";
+   colors[1] = "0 1 0.952941 0.496063";
 };
 
 datablock ParticleEmitterData(WpnRaptorProjectileExplosionCloudEmitter : DefaultEmitter)
@@ -84,16 +84,16 @@ datablock ParticleEmitterData(WpnRaptorProjectileExplosionCloudEmitter : Default
 datablock ExplosionData(WpnRaptorProjectileExplosion)
 {
    lifetimeMS = "192";
-   lightStartRadius = "4";
-   lightStartColor = "0.992126 0.992126 0.992126 1";
-   lightEndColor = "0.992126 0.992126 0.992126 1";
-   lightStartBrightness = "0.784314";
+   lightStartRadius = "9.96078";
+   lightStartColor = "0 1 0.889764 1";
+   lightEndColor = "0 1 0.874016 1";
+   lightStartBrightness = "1.96078";
    lightEndBrightness = "0";
    particleRadius = "0.1";
    particleDensity = "2";
-   emitter[0] = "WpnRaptorProjectileExplosionPlasmaEmitter";
    ParticleEmitter = "BulletDirtDustEmitter";
    emitter[1] = "WpnRaptorProjectileExplosionCloudEmitter";
+   soundProfile = "WpnRaptorProjectileExplosionSound";
 };
 
 datablock DebrisData(WpnRaptorProjectileShell)
