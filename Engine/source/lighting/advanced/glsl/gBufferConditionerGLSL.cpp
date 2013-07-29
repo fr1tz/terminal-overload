@@ -21,7 +21,7 @@
 //-----------------------------------------------------------------------------
 
 #include "platform/platform.h"
-#include "lighting/advanced/GLSL/gBufferConditionerGLSL.h"
+#include "lighting/advanced/glsl/gBufferConditionerGLSL.h"
 
 #include "shaderGen/featureMgr.h"
 #include "gfx/gfxStringEnumTranslate.h"
