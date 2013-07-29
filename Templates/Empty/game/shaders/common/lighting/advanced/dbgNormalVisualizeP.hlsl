@@ -25,8 +25,8 @@
 
 
 float4 main( PFXVertToPix IN,
-             uniform sampler2D prepassTex : register(S0) ) : COLOR0
+             uniform sampler2D prepassBuffer  ) : COLOR0
 {   
-   float3 normal = prepassUncondition( prepassTex, IN.uv0 ).xyz;   
+   float3 normal = prepassUncondition( prepassBuffer, IN.uv0 ).xyz;   
    return float4( ( normal + 1.0 ) * 0.5, 1.0 );
 }

@@ -1370,7 +1370,7 @@ void VertPositionGLSL::processVert( Vector<ShaderComponent*> &componentList,
 	
 	Var *modelview = getModelView( componentList, fd.features[MFT_UseInstancing], meta );
    
-	meta->addStatement( new GenOp( "   @ = @ * vec4(@.xyz,1);\r\n", outPosition, modelview, inPosition ) );
+	meta->addStatement( new GenOp( "   @ = @ * vec4(@.xyz,1);\r\n", outPosition, modelview, inPosition ) );   
    
 	output = meta;
 }

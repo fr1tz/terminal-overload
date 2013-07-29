@@ -91,14 +91,21 @@ void ShaderConstHandles::init( GFXShader *shader, CustomMaterial* mat /*=NULL*/ 
    mImposterLimits = shader->getShaderConstHandle( "$imposterLimits" );
 
    for (S32 i = 0; i < TEXTURE_STAGE_COUNT; ++i)
-      mRTParamsSC[i] = shader->getShaderConstHandle( String::ToString( "$rtParams%d", i ) );
+      mRTParamsSC[i] = shader->getShaderConstHandle( String::EmptyString );
 
    // Clear any existing texture handles.
    dMemset( mTexHandlesSC, 0, sizeof( mTexHandlesSC ) );
    if(mat)
    {
       for (S32 i = 0; i < Material::MAX_TEX_PER_PASS; ++i)
-         mTexHandlesSC[i] = shader->getShaderConstHandle(mat->mSamplerNames[i]);
+      {
+         mTexHandlesSC[i] = shader->getShaderConstHandle(mat->mSamplerNames[i]);         
+
+         if( mat->mRTParams[i] != -1)
+         {
+            mRTParamsSC[i] = shader->getShaderConstHandle( String::ToString( "$rtParams%d", mat->mRTParams[i] ) );
+         }
+      }
    }
 }
 
@@ -619,11 +626,20 @@ bool ProcessedShaderMaterial::_addPass( ShaderRenderPassData &rpd,
    for(int i = 0; i < rpd.mNumTex; i++)
    { 
       if(rpd.mSamplerNames[i].isEmpty())
+      {
+         handles->mTexHandlesSC[i] = newPass->shader->getShaderConstHandle( String::EmptyString );
+         handles->mRTParamsSC[i] = newPass->shader->getShaderConstHandle( String::EmptyString );
          continue;
+      }
 
-      String samplerName = rpd.mSamplerNames[i].startsWith("$") ? rpd.mSamplerNames[i] : String("$") + rpd.mSamplerNames[i];
+      String samplerName = rpd.mSamplerNames[i];
+      if( !samplerName.startsWith("$"))
+         samplerName.insert(0, "$");
+
       GFXShaderConstHandle *handle = newPass->shader->getShaderConstHandle( samplerName ); 
+
       handles->mTexHandlesSC[i] = handle;
+      handles->mRTParamsSC[i] = newPass->shader->getShaderConstHandle( String::ToString( "$rtParams%s", samplerName.c_str()+1 ) ); 
       
       AssertFatal( handle,"");
    }
@@ -818,6 +834,11 @@ void ProcessedShaderMaterial::setTextureStages( SceneRenderState *state, const S
                   ScreenSpace::RenderTargetParameters(targetSz, targetVp, rtParams);
 
                   shaderConsts->set(handles->mRTParamsSC[i], rtParams);
+               }
+               else
+               {  // TODO OPENGL CLEAN
+                  const char *samplerName = handles->mTexHandlesSC[i]->getName();
+                  AssertFatal(0, "");
                }
 
                GFX->setTexture( samplerRegister, texObject );

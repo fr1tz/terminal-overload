@@ -53,7 +53,7 @@ new ShaderData( AL_DepthVisualizeShader )
    DXVertexShaderFile = "shaders/common/postFx/postFxV.hlsl";
    DXPixelShaderFile  = "shaders/common/lighting/advanced/dbgDepthVisualizeP.hlsl";
 
-   OGLVertexShaderFile = "shaders/common/postFx/postFxV.glsl";
+   OGLVertexShaderFile = "shaders/common/postFx/gl/postFxV_BackBuffer.glsl";
    OGLPixelShaderFile  = "shaders/common/lighting/advanced/gl/dbgDepthVisualizeP.glsl";
 
    samplerNames[0] = "prepassBuffer";
@@ -67,7 +67,10 @@ singleton PostEffect( AL_DepthVisualize )
    shader = AL_DepthVisualizeShader;
    stateBlock = AL_DefaultVisualizeState;
    texture[0] = "#prepass";
-   texture[1] = "depthviz";   
+   samplerNames[0] = "prepassBuffer";
+   rtParams[0] = "prepassBuffer";
+   texture[1] = "depthviz";  
+   samplerNames[1] = "depthViz";   
    target = "$backBuffer";
    renderPriority = 9999;
 };
@@ -90,7 +93,7 @@ new ShaderData( AL_NormalsVisualizeShader )
    DXVertexShaderFile = "shaders/common/postFx/postFxV.hlsl";
    DXPixelShaderFile  = "shaders/common/lighting/advanced/dbgNormalVisualizeP.hlsl";
 
-   OGLVertexShaderFile = "shaders/common/postFx/postFxV.glsl";
+   OGLVertexShaderFile = "shaders/common/postFx/gl/postFxV_BackBuffer.glsl";
    OGLPixelShaderFile  = "shaders/common/lighting/advanced/gl/dbgNormalVisualizeP.glsl";
    
    samplerNames[0] = "prepassTex";
@@ -103,6 +106,9 @@ singleton PostEffect( AL_NormalsVisualize )
    shader = AL_NormalsVisualizeShader;
    stateBlock = AL_DefaultVisualizeState;
    texture[0] = "#prepass";
+   samplerNames[0] = "prepassBuffer";
+   rtParams[0] = "prepassBuffer";
+   
    target = "$backBuffer";
    renderPriority = 9999;
 };
@@ -126,8 +132,8 @@ new ShaderData( AL_LightColorVisualizeShader )
    DXVertexShaderFile = "shaders/common/postFx/postFxV.hlsl";
    DXPixelShaderFile  = "shaders/common/lighting/advanced/dbgLightColorVisualizeP.hlsl";
 
-   OGLVertexShaderFile = "shaders/common/postFx/postFxV.glsl";
-   OGLPixelShaderFile  = "shaders/common/lighting/advanced/dl/dbgLightColorVisualizeP.glsl";
+   OGLVertexShaderFile = "shaders/common/postFx/gl/postFxV_BackBuffer.glsl";
+   OGLPixelShaderFile  = "shaders/common/lighting/advanced/gl/dbgLightColorVisualizeP.glsl";
    
    samplerNames[0] = "lightInfoBuffer";
    
@@ -139,6 +145,8 @@ singleton PostEffect( AL_LightColorVisualize )
    shader = AL_LightColorVisualizeShader;
    stateBlock = AL_DefaultVisualizeState;
    texture[0] = "#lightinfo";
+   samplerNames[0] = "lightInfoBuffer";
+   rtParams[0] = "lightInfoBuffer";
    target = "$backBuffer";
    renderPriority = 9999;
 };
@@ -161,8 +169,8 @@ new ShaderData( AL_LightSpecularVisualizeShader )
    DXVertexShaderFile = "shaders/common/postFx/postFxV.hlsl";
    DXPixelShaderFile  = "shaders/common/lighting/advanced/dbgLightSpecularVisualizeP.hlsl";
 
-   OGLVertexShaderFile = "shaders/common/postFx/postFxV.glsl";
-   OGLPixelShaderFile  = "shaders/common/lighting/advanced/dl/dbgLightSpecularVisualizeP.glsl";
+   OGLVertexShaderFile = "shaders/common/postFx/gl/postFxV_BackBuffer.glsl";
+   OGLPixelShaderFile  = "shaders/common/lighting/advanced/gl/dbgLightSpecularVisualizeP.glsl";
    
    samplerNames[0] = "lightInfoBuffer";
    

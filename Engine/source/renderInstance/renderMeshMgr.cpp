@@ -124,7 +124,7 @@ void RenderMeshMgr::render(SceneRenderState * state)
    for( U32 j=0; j<binSize; )
    {
       MeshRenderInst *ri = static_cast<MeshRenderInst*>(mElementList[j].inst);
-
+      
       GFXDEBUGEVENT_SCOPE_EX(RenderMeshMgr_renderElement, ColorI::GREEN, ri->meshName);
 
       setupSGData( ri, sgData );
@@ -162,7 +162,7 @@ void RenderMeshMgr::render(SceneRenderState * state)
             {
                lastLM = NULL;
                break;
-            }
+            }            
 
             matrixSet.setWorld(*passRI->objectToWorld);
             matrixSet.setView(*passRI->worldToCamera);

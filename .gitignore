@@ -173,3 +173,11 @@ My Projects/
 Project Manager.exe
 projects.xml
 Qt*.dll
+/Dev Project/OpenGL/buildFiles/Link/VC2010.Debug.Win32
+/Dev Project/OpenGL/web
+/Dev Project/OpenGL/game/OpenGL_DEBUG.exp
+/Dev Project/OpenGL/game/OpenGL_DEBUG.ilk
+/Dev Project/OpenGL/game/OpenGL_DEBUG.lib
+/Dev Project/OpenGL/game/OpenGL_DEBUG.dll
+/Dev Project/OpenGL/game/OpenGL_DEBUG.exe
+/Dev Project/OpenGL/game/shaders/procedural

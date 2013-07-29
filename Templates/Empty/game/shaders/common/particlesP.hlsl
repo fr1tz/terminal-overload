@@ -33,7 +33,7 @@
    
    uniform float oneOverSoftness;
    uniform float oneOverFar;
-   uniform sampler2D prepassTex : register(S1);   
+   uniform sampler2D prepassTex ;   
    //uniform float3 vEye;
    uniform float4 prePassTargetParams;
 #endif
@@ -47,9 +47,9 @@ struct Conn
 	float4 pos : TEXCOORD2;
 };
 
-uniform sampler2D diffuseMap : register(S0);
+uniform sampler2D diffuseMap ;
 
-uniform sampler2D paraboloidLightMap : register(S2);
+uniform sampler2D paraboloidLightMap ;
 
 float4 lmSample( float3 nrm )
 {

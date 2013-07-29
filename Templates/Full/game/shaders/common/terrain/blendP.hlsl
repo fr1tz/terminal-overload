@@ -30,8 +30,8 @@ struct ConnectData
 };
 
 float4 main(   ConnectData IN,
-               uniform sampler2D layerTex : register(S0),
-               uniform sampler2D textureMap : register(S1),
+               uniform sampler2D layerTex ,
+               uniform sampler2D textureMap ,
                uniform float texId,
                uniform float layerSize ) : COLOR
 {

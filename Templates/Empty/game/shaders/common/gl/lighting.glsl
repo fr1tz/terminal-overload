@@ -20,53 +20,48 @@
 // IN THE SOFTWARE.
 //-----------------------------------------------------------------------------
 
+
 #ifndef TORQUE_SHADERGEN
 
 // These are the uniforms used by most lighting shaders.
 
-uniform vec4 inLightPos[3];
-uniform vec4 inLightInvRadiusSq;
-uniform vec4 inLightColor[4];
+uniform float4 inLightPos[3];
+uniform float4 inLightInvRadiusSq;
+uniform float4 inLightColor[4];
 
 #ifndef TORQUE_BL_NOSPOTLIGHT
-   uniform vec4 inLightSpotDir[3];
-   uniform vec4 inLightSpotAngle;
-   uniform vec4 inLightSpotFalloff;
+   uniform float4 inLightSpotDir[3];
+   uniform float4 inLightSpotAngle;
+   uniform float4 inLightSpotFalloff;
 #endif
 
-uniform vec4 ambient;
+uniform float4 ambient;
 uniform float specularPower;
-uniform vec4 specularColor;
+uniform float4 specularColor;
 
 #endif // !TORQUE_SHADERGEN
 
-// This is used to limit the maximum processed
-// lights in the compute4Lights down for really
-// low end GPUs.
-//
-// NOTE: If you want to support 10.5.x, this needs to be changed to 2.
-#define C4L_MAX_LIGHTS 4
 
+void compute4Lights( float3 wsView, 
+                     float3 wsPosition, 
+                     float3 wsNormal,
+                     float4 shadowMask,
 
-void compute4Lights( vec3 wsView, 
-                     vec3 wsPosition, 
-                     vec3 wsNormal, 					 
-                     vec4 shadowMask,
-					 
-					 #ifdef TORQUE_SHADERGEN
+                     #ifdef TORQUE_SHADERGEN
                      
-                        vec4 inLightPos[3],
-                        vec4 inLightInvRadiusSq,
-                        vec4 inLightColor[4],
-                        vec4 inLightSpotDir[3],
-                        vec4 inLightSpotAngle,
-                        vec4 inLightSpotFalloff,
+                        float4 inLightPos[3],
+                        float4 inLightInvRadiusSq,
+                        float4 inLightColor[4],
+                        float4 inLightSpotDir[3],
+                        float4 inLightSpotAngle,
+                        float4 inLightSpotFalloff,
                         float specularPower,
-                        vec4 specularColor,
+                        float4 specularColor,
 
                      #endif // TORQUE_SHADERGEN
-                     out vec4 outDiffuse,
-                     out vec4 outSpecular )
+                     
+                     out float4 outDiffuse,
+                     out float4 outSpecular )
 {
    // NOTE: The light positions and spotlight directions
    // are stored in SoA order, so inLightPos[0] is the
@@ -80,11 +75,11 @@ void compute4Lights( vec3 wsView,
    
    int i;
 
-   vec4 lightVectors[3];
+   float4 lightVectors[3];
    for ( i = 0; i < 3; i++ )
       lightVectors[i] = wsPosition[i] - inLightPos[i];
 
-   vec4 squareDists = vec4(0);
+   float4 squareDists = float4(0);
    for ( i = 0; i < 3; i++ )
       squareDists += lightVectors[i] * lightVectors[i];
 
@@ -99,11 +94,11 @@ void compute4Lights( vec3 wsView,
    //
    // We normalize the result a little later.
    //
-   vec4 nDotL = vec4(0);
+   float4 nDotL = float4(0);
    for ( i = 0; i < 3; i++ )
       nDotL += lightVectors[i] * -wsNormal[i];
 
-   vec4 rDotL = vec4(0);
+   float4 rDotL = float4(0);
    #ifndef TORQUE_BL_NOSPECULAR
 
       // We're using the Phong specular reflection model
@@ -117,7 +112,7 @@ void compute4Lights( vec3 wsView,
       // specular reconstruction it does looks fairly similar
       // to this.
       //
-      vec3 R = reflect( wsView, -wsNormal );
+      float3 R = reflect( wsView, -wsNormal );
 
       for ( i = 0; i < 3; i++ )
          rDotL += lightVectors[i] * R[i];
@@ -133,7 +128,7 @@ void compute4Lights( vec3 wsView,
    // Unless we have some extremely large point lights
    // i don't believe the precision loss will matter.
    //
-   vec4 correction = rsqrt( squareDists );
+   half4 correction = half4(rsqrt( squareDists ));
    nDotL = saturate( nDotL * correction );
    rDotL = clamp( rDotL * correction, 0.00001, 1.0 );
 
@@ -144,50 +139,46 @@ void compute4Lights( vec3 wsView,
    // radius should be greater than the distance
    // causing the attenuation to have no affect.
    //
-   vec4 atten = saturate( 1.0 - ( squareDists * inLightInvRadiusSq ) ); 
+   float4 atten = saturate( 1.0 - ( squareDists * inLightInvRadiusSq ) );
 
    #ifndef TORQUE_BL_NOSPOTLIGHT
-   
+
       // The spotlight attenuation factor.  This is really
       // fast for what it does... 6 instructions for 4 spots.
 
-      vec4 spotAtten = vec4(0);
+      float4 spotAtten = float4(0);
       for ( i = 0; i < 3; i++ )
          spotAtten += lightVectors[i] * inLightSpotDir[i];
-		 
-	  
 
-      vec4 cosAngle = ( spotAtten * correction ) - inLightSpotAngle;
+      float4 cosAngle = ( spotAtten * correction ) - inLightSpotAngle;
       atten *= saturate( cosAngle * inLightSpotFalloff );
 
    #endif
 
    // Finally apply the shadow masking on the attenuation.
-   atten *= shadowMask; 
-   
+   atten *= shadowMask;
+
    // Get the final light intensity.
-   vec4 intensity = nDotL * atten;
+   float4 intensity = nDotL * atten;
 
    // Combine the light colors for output.
-   outDiffuse = vec4(0);
+   outDiffuse = float4(0);
    for ( i = 0; i < 4; i++ )
       outDiffuse += intensity[i] * inLightColor[i];
-   
+
    // Output the specular power.
-   vec4 specularIntensity = pow( rDotL, vec4(specularPower) ) * atten;
+   float4 specularIntensity = pow( rDotL, float4(specularPower) ) * atten;
    
    // Apply the per-light specular attenuation.
-   vec4 specular = vec4(0,0,0,1);
+   float4 specular = float4(0,0,0,1);
    for ( i = 0; i < 4; i++ )
-      specular += vec4( inLightColor[i].rgb * inLightColor[i].a * specularIntensity[i], 1 );
+      specular += float4( inLightColor[i].rgb * inLightColor[i].a * specularIntensity[i], 1 );
 
    // Add the final specular intensity values together
    // using a single dot product operation then get the
    // final specular lighting color.
    outSpecular = specularColor * specular;
-   outSpecular = vec4(0);
 }
-
 
 
 // This value is used in AL as a constant power to raise specular values
@@ -201,7 +192,7 @@ void compute4Lights( vec3 wsView,
 //
 //    (specular^constSpecular)^(matSpecular/constSpecular) = specular^(matSpecular*constSpecular)   
 //
-#define AL_ConstantSpecularPower 12.0
+#define AL_ConstantSpecularPower 12.0f
 
 /// The specular calculation used in Advanced Lighting.
 ///
@@ -213,7 +204,7 @@ void compute4Lights( vec3 wsView,
 ///   @param toEye   The normalized vector representing direction from the pixel 
 ///                  being lit to the camera.
 ///
-float AL_CalcSpecular( vec3 toLight, vec3 normal, vec3 toEye )
+float AL_CalcSpecular( float3 toLight, float3 normal, float3 toEye )
 {
    #ifdef PHONG_SPECULAR 
       // (R.V)^c
@@ -224,5 +215,5 @@ float AL_CalcSpecular( vec3 toLight, vec3 normal, vec3 toEye )
    #endif
 
    // Return the specular factor.
-   return pow( max( specVal, 0.00001 ), AL_ConstantSpecularPower );
+   return pow( max( specVal, 0.00001f ), AL_ConstantSpecularPower );
 }

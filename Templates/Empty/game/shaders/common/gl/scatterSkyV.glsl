@@ -20,6 +20,8 @@
 // IN THE SOFTWARE.
 //-----------------------------------------------------------------------------
 
+#include "./hlslCompat.glsl"
+
 const int nSamples = 4;
 const float fSamples = 4.0;
 
@@ -161,5 +163,7 @@ void main()
    // along the horizon.
    zPosition = position.z + 4000.0;
    pos = position.xyz;
+   
+   correctSSP(gl_Position);
 }
 

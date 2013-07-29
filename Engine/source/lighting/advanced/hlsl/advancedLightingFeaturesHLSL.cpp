@@ -98,7 +98,7 @@ void DeferredRTLightingFeatHLSL::processPix( Vector<ShaderComponent*> &component
    uvScene->setName( "uvScene" );
    LangElement *uvSceneDecl = new DecOp( uvScene );
 
-   String rtParamName = String::ToString( "rtParams%d", mLastTexIndex );
+   String rtParamName = String::ToString( "rtParams%s", "lightInfoBuffer" );
    Var *rtParams = (Var*) LangElement::find( rtParamName );
    if( !rtParams )
    {
@@ -206,7 +206,8 @@ void DeferredRTLightingFeatHLSL::setTexData( Material::StageData &stageDat,
       // which cannot deduce the texture unit itself.
       mLastTexIndex = texIndex;
 
-      passData.mTexType[ texIndex ] = Material::TexTarget;
+      passData.mTexType[ texIndex ] = Material::TexTarget;      
+      passData.mSamplerNames[ texIndex ]= "lightInfoBuffer";
       passData.mTexSlot[ texIndex++ ].texTarget = texTarget;
    }
 }

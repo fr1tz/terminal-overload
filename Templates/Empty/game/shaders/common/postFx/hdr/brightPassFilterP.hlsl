@@ -25,8 +25,8 @@
 #include "../../torque.hlsl"
 
 
-uniform sampler2D inputTex : register(S0);
-uniform sampler2D luminanceTex  : register(S1);
+uniform sampler2D inputTex ;
+uniform sampler2D luminanceTex  ;
 uniform float2 oneOverTargetSize;
 uniform float brightPassThreshold;
 uniform float g_fMiddleGray;

@@ -229,6 +229,11 @@ void GFXStateBlockData::initPersistFields()
          "@note Not all graphics devices support 16 samplers.  In general "
          "all systems support 4 samplers with most modern cards doing 8." );
 
+      addField( "samplerNames", TYPEID<String>(), Offset(mSamplerNames, GFXStateBlockData), TEXTURE_STAGE_COUNT,
+         "The array of texture sampler names.\n"
+         "@note Not all graphics devices support 16 samplers.  In general "
+         "all systems support 4 samplers with most modern cards doing 8." );
+
       addField( "textureFactor", TypeColorI, Offset(mState.textureFactor, GFXStateBlockData),
          "The color used for multiple-texture blending with the GFXTATFactor texture-blending argument or "
          "the GFXTOPBlendFactorAlpha texture-blending operation.  The default is opaque white (255, 255, 255, 255)." );
@@ -246,7 +251,10 @@ bool GFXStateBlockData::onAdd()
    for (U32 i = 0; i < TEXTURE_STAGE_COUNT; i++)
    {  
       if (mSamplerStates[i])
+      {
          mSamplerStates[i]->setSamplerState(mState.samplers[i]);
+         mState._samplerNames[i] = StringTable->insert(mSamplerNames[i]);
+      }
    }
    return true;
 }

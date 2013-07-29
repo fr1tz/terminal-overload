@@ -25,7 +25,7 @@
 #include "shadergen:/autogenConditioners.h"
 
 
-uniform sampler2D inputTex : register(S0);
+uniform sampler2D inputTex ;
 uniform float brightPassThreshold;
 
 float4 main( PFXVertToPix IN ) : COLOR

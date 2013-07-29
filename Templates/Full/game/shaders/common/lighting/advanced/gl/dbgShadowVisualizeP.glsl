@@ -19,13 +19,14 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 // IN THE SOFTWARE.
 //-----------------------------------------------------------------------------
+#include "../../../gl/hlslCompat.glsl"
 
 varying vec2 uv0;
 uniform sampler2D shadowMap;
-uniform sampler1D depthViz;
+uniform sampler2D depthViz;
 
 void main()
 {
-   float depth = clamp( texture2DLod( shadowMap, uv0, 0 ).r, 0.0, 1.0 );
-   gl_FragColor = vec4( texture1D( depthViz, depth ).rgb, 1.0 );
+   float depth = saturate( tex2D( shadowMap, uv0 ).r );
+   gl_FragColor = float4( tex2D( depthViz, vec2(0.0,depth) ).rgb, 1 );
 }

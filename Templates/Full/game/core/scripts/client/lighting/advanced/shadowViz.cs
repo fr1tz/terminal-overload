@@ -37,6 +37,7 @@ new CustomMaterial( AL_ShadowVisualizeMaterial )
    stateBlock = AL_DepthVisualizeState;
    
    sampler["shadowMap"] = "#AL_ShadowVizTexture";
+   rtParams[0] = "shadowMap";
    sampler["depthViz"] = "depthviz";
 
    pixVersion = 2.0;

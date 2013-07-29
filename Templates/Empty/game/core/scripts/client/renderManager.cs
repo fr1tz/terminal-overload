@@ -106,5 +106,7 @@ singleton PostEffect( AL_FormatCopy )
    stateBlock = AL_FormatTokenState;
    
    texture[0] = "$inTex";
+   samplerNames[0] = "inputTex";
+   rtParams[0] = "inputTex";
    target = "$backbuffer";
 };

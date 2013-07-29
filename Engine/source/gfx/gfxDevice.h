@@ -909,8 +909,6 @@ public:
    /// Gets the projection matrix
    inline const MatrixF &getProjectionMatrix() const { return mProjectionMatrix; }
 
-   void invertFrustumProjectionMatrixTopBottom( const bool doRotate = true);
-
    /// Sets the view matrix
    /// @param   newView   New view matrix to set
    void setViewMatrix( const MatrixF &newView );
@@ -1061,13 +1059,6 @@ inline void GFXDevice::setProjectionMatrix( const MatrixF &newProj )
    mProjectionMatrixDirty = true;
    mStateDirty = true;
    mProjectionMatrix = newProj;
-}
-
-inline void GFXDevice::invertFrustumProjectionMatrixTopBottom(const bool doRotate)
-{
-   mProjectionMatrixDirty = true;
-   mStateDirty = true;   
-   mFrustum.getProjectionMatrixInvertedTopBottom( &mProjectionMatrix, doRotate );
 }
 
 inline void GFXDevice::setViewMatrix( const MatrixF &newView )

@@ -49,9 +49,9 @@ struct Fragout
 // Main
 //-----------------------------------------------------------------------------
 Fragout main(v2f IN,
-				uniform sampler2D    diffMap  : register(S0),
-				uniform sampler2D    bumpMap  : register(S2),
-            uniform samplerCUBE  cubeMap  : register(S1),
+				uniform sampler2D    diffMap  ,
+				uniform sampler2D    bumpMap  ,
+            uniform samplerCUBE  cubeMap  ,
             uniform float4    specularColor   : register(PC_MAT_SPECCOLOR),
             uniform float     specularPower   : register(PC_MAT_SPECPOWER),
             uniform float4    ambient         : register(PC_AMBIENT_COLOR),

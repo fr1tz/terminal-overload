@@ -22,7 +22,7 @@
 
 #include "shaders/common/postFx/postFx.hlsl"
 
-uniform sampler2D diffuseMap : register(S0);
+uniform sampler2D diffuseMap ;
 
 struct VertToPix
 {

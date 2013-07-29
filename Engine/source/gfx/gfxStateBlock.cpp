@@ -97,6 +97,9 @@ GFXStateBlockDesc::GFXStateBlockDesc()
 
    samplersDefined = false;
    textureFactor.set( 255, 255, 255, 255 );
+
+   for(int i = 0; i < TEXTURE_STAGE_COUNT; ++i)
+      _samplerNames[i] = StringTable->insert("");
 }
 
 // This method just needs to return a unique value based on its contents.
@@ -186,6 +189,7 @@ void GFXStateBlockDesc::addDesc(const GFXStateBlockDesc& desc)
       for (U32 i = 0; i < TEXTURE_STAGE_COUNT; i++)
       {
          samplers[i] = desc.samplers[i];
+         _samplerNames[i] = desc._samplerNames[i];
       }
       textureFactor = desc.textureFactor;
    }

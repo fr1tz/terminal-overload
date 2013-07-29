@@ -68,7 +68,7 @@ void RenderObjectMgr::render( SceneRenderState *state )
 
    for( U32 i=0; i<mElementList.size(); i++ )
    {
-      ObjectRenderInst *ri = static_cast<ObjectRenderInst*>(mElementList[i].inst);
+      ObjectRenderInst *ri = static_cast<ObjectRenderInst*>(mElementList[i].inst);      
       if ( ri->renderDelegate )
          ri->renderDelegate( ri, state, mOverrideMat );      
    }

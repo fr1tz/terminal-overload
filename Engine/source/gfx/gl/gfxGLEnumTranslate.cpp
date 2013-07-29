@@ -199,10 +199,10 @@ void GFXGLEnumTranslate::init()
    GFXGLTextureType[GFXFormatDXT4] = GL_ZERO;
    GFXGLTextureType[GFXFormatDXT5] = GL_UNSIGNED_BYTE;
 
-   // Cull
-   GFXGLCullMode[GFXCullNone] = GL_BACK;
-   GFXGLCullMode[GFXCullCW] = GL_BACK;
-   GFXGLCullMode[GFXCullCCW] = GL_FRONT;
+   // Cull - Opengl render upside down need to invert cull
+   GFXGLCullMode[GFXCullNone] = GL_FRONT;
+   GFXGLCullMode[GFXCullCW] = GL_FRONT;
+   GFXGLCullMode[GFXCullCCW] = GL_BACK;
    
    // Fill
    GFXGLFillMode[GFXFillPoint] = GL_POINT;

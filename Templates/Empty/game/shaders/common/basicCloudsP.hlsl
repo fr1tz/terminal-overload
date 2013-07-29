@@ -28,7 +28,7 @@ struct ConnectData
    float2 texCoord : TEXCOORD0;
 };
 
-uniform sampler2D diffuseMap        : register(S0);
+uniform sampler2D diffuseMap        ;
 
 float4 main( ConnectData IN ) : COLOR
 {
