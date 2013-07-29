@@ -271,6 +271,8 @@ PostEffect::PostEffect()
    dMemset( mActiveTextureViewport, 0, sizeof( RectI ) * NumTextures );
    dMemset( mTexSizeSC, 0, sizeof( GFXShaderConstHandle* ) * NumTextures );
    dMemset( mRenderTargetParamsSC, 0, sizeof( GFXShaderConstHandle* ) * NumTextures );
+   //mSamplerHandles
+   dMemset( mSamplerHandles, 0, sizeof( GFXShaderConstHandle* ) * NumTextures );
 }
 
 PostEffect::~PostEffect()
@@ -465,22 +467,22 @@ void PostEffect::_updateScreenGeometry(   const Frustum &frustum,
    PFXVertex *vert = outVB->lock();
 
    vert->point.set( -1.0, -1.0, 0.0 );
-   vert->texCoord.set( 0.0f, 1.0f );
+      vert->texCoord.set( 0.0f, 1.0f );
    vert->wsEyeRay = frustumPoints[Frustum::FarBottomLeft] - cameraOffsetPos;
    vert++;
 
    vert->point.set( -1.0, 1.0, 0.0 );
-   vert->texCoord.set( 0.0f, 0.0f );
+      vert->texCoord.set( 0.0f, 0.0f );
    vert->wsEyeRay = frustumPoints[Frustum::FarTopLeft] - cameraOffsetPos;
    vert++;
 
    vert->point.set( 1.0, 1.0, 0.0 );
-   vert->texCoord.set( 1.0f, 0.0f );
+      vert->texCoord.set( 1.0f, 0.0f );
    vert->wsEyeRay = frustumPoints[Frustum::FarTopRight] - cameraOffsetPos;
    vert++;
 
-   vert->point.set( 1.0, -1.0, 0.0 );
-   vert->texCoord.set( 1.0f, 1.0f );
+    vert->point.set( 1.0, -1.0, 0.0 );
+      vert->texCoord.set( 1.0f, 1.0f );
    vert->wsEyeRay = frustumPoints[Frustum::FarBottomRight] - cameraOffsetPos;
    vert++;
 
@@ -495,9 +497,12 @@ void PostEffect::_setupStateBlock( const SceneRenderState *state )
       if ( mStateBlockData )
          desc = mStateBlockData->getState();
 
+      if(!GFX->isTextureCoordStartTop())
+         desc.setCullMode(GFXCullNone); // TODO OPENGL
+
       mStateBlock = GFX->createStateBlock( desc );
    }
-
+   
    GFX->setStateBlock( mStateBlock );
 }
 
@@ -825,7 +830,15 @@ void PostEffect::_setupConstants( const SceneRenderState *state )
 
 void PostEffect::_setupTexture( U32 stage, GFXTexHandle &inputTex, const RectI *inTexViewport )
 {
-   const String &texFilename = mTexFilename[ stage ];
+   S32 samplerReg = stage;
+
+   if(!mSamplerHandles[stage] || !mSamplerHandles[stage]->isValid())
+      return;
+   
+   samplerReg = mSamplerHandles[stage]->getSamplerRegister();
+   AssertFatal(samplerReg >= 0, "");
+
+   const String &texFilename = mTexFilename[ stage ];      
 
    GFXTexHandle theTex;
    NamedTexTarget *namedTarget = NULL;
@@ -872,7 +885,7 @@ void PostEffect::_setupTexture( U32 stage, GFXTexHandle &inputTex, const RectI *
    mActiveTextureViewport[ stage ] = viewport;
 
    if ( theTex.isValid() )
-      GFX->setTexture( stage, theTex );
+      GFX->setTexture( samplerReg, theTex );
 }
 
 void PostEffect::_setupTransforms()
@@ -1307,8 +1320,61 @@ void PostEffect::_checkRequirements()
    // Finally find and load the shader.
    ShaderData *shaderData;
    if ( Sim::findObject( mShaderName, shaderData ) )   
+   {
       if ( shaderData->getPixVersion() <= GFX->getPixelShaderVersion() )
          mShader = shaderData->getShader( macros );
+
+      if(mShader)
+      {
+         const char* samplerDecl = "samplerNames";      
+         for (SimFieldDictionaryIterator itr(getFieldDictionary()); *itr; ++itr)
+         {
+   	      SimFieldDictionary::Entry* entry = *itr;
+            if (dStrStartsWith(entry->slotName, samplerDecl))
+            {
+               S32 i = atoi( entry->slotName + dStrlen(samplerDecl) );
+      	      if (i >= NumTextures)
+               {
+                  logError("Too many sampler declarations, you may only have %i", NumTextures);
+               }
+         
+               if (dStrlen(entry->slotName) == dStrlen(samplerDecl))
+               {
+         	      logError("sampler declarations must have a sampler name, e.g. sampler[\"diffuseMap\"]");
+               }        
+            
+               String handleName = entry->value;
+               mSamplerHandles[i] = mShader->getShaderConstHandle( handleName.startsWith("$") ? handleName : String("$")+handleName );            
+            }
+         }
+
+         const char* rtParams = "rtParams";
+         for (SimFieldDictionaryIterator itr(getFieldDictionary()); *itr; ++itr)
+         {
+   	      SimFieldDictionary::Entry* entry = *itr;
+            if (dStrStartsWith(entry->slotName, rtParams))
+            {
+               S32 i = atoi( entry->slotName + dStrlen(rtParams) );
+               if (i >= NumTextures)
+               {
+                  logError("Too many rtParams declarations, you may only have %i", NumTextures);
+               }
+         
+               if (dStrlen(entry->slotName) == dStrlen(rtParams))
+               {
+         	      logError("rtParams declarations must have a id, e.g. rtParams[0]");
+               }
+
+               String sampler = String("$") + String(entry->value); 
+      	      
+               mRenderTargetParamsSC[i] =  mShader->getShaderConstHandle( String::ToString("$rtParams%d", i) );    
+               AssertFatal(mRenderTargetParamsSC[i]->isValid(), "");               
+               AssertFatal(mSamplerHandles[i]->getName() == sampler, "");
+               AssertFatal(mTexFilename[i].startsWith("#") || mTexFilename[i].startsWith("$"), "");
+            }
+         }
+      }
+   }
 
    // If we didn't get a shader... we're done.
    if ( !mShader )

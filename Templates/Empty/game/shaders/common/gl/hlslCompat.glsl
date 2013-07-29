@@ -27,8 +27,21 @@
 #define float3 vec3
 #define float2 vec2
 
+#define half float
+#define half2 vec2
+#define half3 vec3
+#define half4 vec4
+
+#define float4x4 mat4
+#define float3x3 mat3
+#define float2x2 mat2
+
 #define texCUBE textureCube
 #define tex2D texture2D
+
+#define frac fract
+
+vec4 tex2Dlod(sampler2D sampler, vec4 texCoord) { return texture2DLod(sampler, texCoord.xy, texCoord.w); }
 
 #define lerp mix
 
@@ -42,4 +55,18 @@ vec2 round( vec2 n ) { return sign( n ) * floor( abs( n ) + 0.5 ); }
 vec3 round( vec3 n ) { return sign( n ) * floor( abs( n ) + 0.5 ); }
 vec4 round( vec4 n ) { return sign( n ) * floor( abs( n ) + 0.5 ); }
 
+vec4 mul( mat4 m, vec4 v) { return m*v; }
+vec4 mul( vec4 v, mat4 m) { return v*m; }
+vec3 mul( vec3 v, mat3 m) { return v*m; }
+
 vec4 rsqrt( vec4 n ){ return inversesqrt( n ); }
+
+void clip(float a) { if(a < 0) discard;}
+
+//vec2 invertY(vec2 uv) { return vec2(uv.x, 1 - uv.y); }
+#define invertY vec2
+
+void correctSSP(inout vec4 vec) 
+{ 
+	vec.y *= -1;
+}

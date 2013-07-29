@@ -86,6 +86,7 @@ public:
 protected:
 
    FileName mTexFilename[NumTextures];
+   GFXShaderConstHandle* mSamplerHandles[NumTextures];
 
    GFXTexHandle mTextures[NumTextures];
 

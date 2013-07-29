@@ -105,7 +105,7 @@ void GFXGLDevice::enumerateAdapters( Vector<GFXAdapter*> &adapterList )
 
    // Create pixel format descriptor...
    PIXELFORMATDESCRIPTOR pfd;
-   CreatePixelFormat( &pfd, 16, 16, 8, false ); // 16 bit color, 16 bit depth, 8 bit stencil...everyone can do this
+   CreatePixelFormat( &pfd, 16, 24, 8, false ); // 16 bit color, 16 bit depth, 8 bit stencil...everyone can do this // TODO OPENGL
    if( !SetPixelFormat( tempDC, ChoosePixelFormat( tempDC, &pfd ), &pfd ) )
       AssertFatal( false, "I don't know who's responcible for this, but I want caught..." );
 

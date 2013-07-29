@@ -24,7 +24,7 @@
 #include "./postFx.hlsl"  
 #include "../torque.hlsl"
 
-uniform sampler2D backBuffer : register(S0);
+uniform sampler2D backBuffer ;
 uniform sampler1D colorCorrectionTex : register( s1 );
 
 uniform float OneOverGamma;

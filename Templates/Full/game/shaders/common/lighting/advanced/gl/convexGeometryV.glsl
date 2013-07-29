@@ -20,16 +20,24 @@
 // IN THE SOFTWARE.
 //-----------------------------------------------------------------------------
 
-varying vec4 wsEyeDir;
+#include "../../../gl/hlslCompat.glsl"
+
+varying vec4 hpos;
+varying vec3 wsEyeDir;
+varying vec3 vsEyeDir;
 varying vec4 ssPos;
 
 uniform mat4 modelview;
+uniform mat4 worldViewOnly;
 uniform mat4 objTrans;
 uniform vec3 eyePosWorld;
 
 void main()
 {
-   gl_Position = modelview * gl_Vertex;
-   wsEyeDir = objTrans * gl_Vertex - vec4( eyePosWorld, 0.0 );
-   ssPos = gl_Position;
+   hpos = mul( modelview, gl_Vertex );
+   gl_Position = hpos;
+   wsEyeDir = vec3( mul( objTrans, hpos ) - float4( eyePosWorld, 0.0 ) );
+   vsEyeDir = vec3( mul( worldViewOnly, hpos ) );
+   ssPos = hpos;
+   correctSSP(gl_Position);
 }

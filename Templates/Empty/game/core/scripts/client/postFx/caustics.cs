@@ -20,7 +20,6 @@
 // IN THE SOFTWARE.
 //-----------------------------------------------------------------------------
 
-
 singleton GFXStateBlockData( PFX_CausticsStateBlock : PFX_DefaultStateBlock )
 {
    blendDefined = true;
@@ -39,7 +38,7 @@ singleton ShaderData( PFX_CausticsShader )
    DXVertexShaderFile 	= "shaders/common/postFx/postFxV.hlsl";
    DXPixelShaderFile 	= "shaders/common/postFx/caustics/causticsP.hlsl";
          
-   //OGLVertexShaderFile  = "shaders/common/postFx/gl//postFxV.glsl";
+   //OGLVertexShaderFile  = "shaders/common/postFx/gl/postFxV_BackBuffer.glsl";
    //OGLPixelShaderFile   = "shaders/common/postFx/gl/passthruP.glsl";
       
    samplerNames[0] = "$prepassTex";

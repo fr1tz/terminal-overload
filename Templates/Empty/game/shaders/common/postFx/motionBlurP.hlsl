@@ -30,8 +30,8 @@ uniform float4x4 matWorldToScreen;
 // Passed in from setShaderConsts()
 uniform float velocityMultiplier;
 
-uniform sampler2D backBuffer  : register(S0);
-uniform sampler2D prepassTex  : register(S1);
+uniform sampler2D backBuffer  ;
+uniform sampler2D prepassTex  ;
 
 float4 main(PFXVertToPix IN) : COLOR0
 {

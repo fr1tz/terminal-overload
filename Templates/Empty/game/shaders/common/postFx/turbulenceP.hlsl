@@ -24,7 +24,7 @@
 
 uniform float  accumTime;
 
-float4 main( PFXVertToPix IN, uniform sampler2D inputTex : register(S0) ) : COLOR
+float4 main( PFXVertToPix IN, uniform sampler2D inputTex  ) : COLOR
 {
 	float reduction = 128;	
 	float power = 1.0;

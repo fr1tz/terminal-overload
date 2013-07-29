@@ -124,7 +124,7 @@ void RenderMeshMgr::render(SceneRenderState * state)
    for( U32 j=0; j<binSize; )
    {
       MeshRenderInst *ri = static_cast<MeshRenderInst*>(mElementList[j].inst);
-
+      
       setupSGData( ri, sgData );
       BaseMatInstance *mat = ri->matInst;
 
@@ -160,7 +160,7 @@ void RenderMeshMgr::render(SceneRenderState * state)
             {
                lastLM = NULL;
                break;
-            }
+            }            
 
             matrixSet.setWorld(*passRI->objectToWorld);
             matrixSet.setView(*passRI->worldToCamera);

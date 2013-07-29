@@ -37,7 +37,7 @@ struct VertIn
 // Main
 //-----------------------------------------------------------------------------
 float4 main(  VertIn IN,
-              uniform sampler2D inputTex : register(S0) ) : COLOR
+              uniform sampler2D inputTex  ) : COLOR
 {
    // We calculate the texture coords
    // in the vertex shader as an optimization.

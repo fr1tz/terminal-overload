@@ -310,8 +310,8 @@ void GFXGLShaderConstBuffer::set(GFXShaderConstHandle* handle, const MatrixF* ma
    AssertFatal(handle->isValid(), "GFXGLShaderConstBuffer::set - Handle is not valid!" );
 
    GFXGLShaderConstHandle* _glHandle = static_cast<GFXGLShaderConstHandle*>(handle);
-   AssertFatal(mShader == _glHandle->mShader, "GFXGLShaderConstBuffer::set - Should only set handles which are owned by our shader");
-   
+   AssertFatal(mShader == _glHandle->mShader, "GFXGLShaderConstBuffer::set - Should only set handles which are owned by our shader");  
+
    switch (matrixType) {
       case GFXSCT_Float4x4:
          dMemcpy(mBuffer + _glHandle->mOffset, (F32*)mat, _glHandle->getSize());
@@ -671,8 +671,11 @@ void GFXGLShader::setConstantsFromBuffer(GFXGLShaderConstBuffer* buffer)
          case GFXSCT_Float4x4:
             glUniformMatrix4fv(handle->mLocation, handle->mDesc.arraySize, true, (GLfloat*)(mConstBuffer + handle->mOffset));
             break;
+         default:
+            AssertFatal(0,"");
+            break;
       }
-   }
+   }   
 }
 
 GFXShaderConstBufferRef GFXGLShader::allocConstBuffer()
@@ -822,6 +825,9 @@ bool GFXGLShader::_loadShaderFromStream(  GLuint shader,
    // Now add all the macros.
    for( U32 i = 0; i < macros.size(); i++ )
    {
+      if(macros[i].name.isEmpty())  //TODO OPENGL
+         continue;
+
       String define = String::ToString( "#define %s %s\n", macros[i].name.c_str(), macros[i].value.c_str() );
       buffers.push_back( dStrdup( define.c_str() ) );
       lengths.push_back( define.length() );
@@ -837,6 +843,17 @@ bool GFXGLShader::_loadShaderFromStream(  GLuint shader,
    lengths.push_back(shaderLen);
    
    glShaderSource(shader, buffers.size(), (const GLchar**)const_cast<const char**>(buffers.address()), NULL);
+
+#if defined(TORQUE_DEBUG_GFX)
+   FileStream stream;
+   if ( !stream.open( path.getFullPath()+"_DEBUG", Torque::FS::File::Write ) )
+   {
+      AssertISV(false, avar("GFXGLShader::initShader - failed to write debug shader '%s'.", path.getFullPath().c_str()));
+   }
+
+   for(int i = 0; i < buffers.size(); ++i)
+         stream.writeText(buffers[i]);
+#endif
 
    // Cleanup the shader source buffer.
    for ( U32 i=0; i < buffers.size(); i++ )

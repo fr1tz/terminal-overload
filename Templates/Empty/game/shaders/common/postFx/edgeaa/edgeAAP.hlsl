@@ -24,8 +24,8 @@
 #include "shadergen:/autogenConditioners.h"
 
 float4 main( PFXVertToPix IN, 
-             uniform sampler2D edgeBuffer : register(S0),
-             uniform sampler2D backBuffer : register(S1),
+             uniform sampler2D edgeBuffer ,
+             uniform sampler2D backBuffer ,
              uniform float2 targetSize : register(C0) ) : COLOR0
 {
    float2 pixelSize = 1.0 / targetSize;

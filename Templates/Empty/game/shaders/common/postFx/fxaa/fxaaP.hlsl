@@ -34,7 +34,7 @@ struct VertToPix
    float2 uv0        : TEXCOORD0;
 };
 
-uniform sampler2D colorTex : register(S0);
+uniform sampler2D colorTex ;
 
 uniform float2 oneOverTargetSize;
 

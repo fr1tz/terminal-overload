@@ -24,8 +24,8 @@
 
 // These are set by the game engine.  
 // The render target size is one-quarter the scene rendering size.  
-uniform sampler2D colorSampler : register(S0);  
-uniform sampler2D depthSampler : register(S1);  
+uniform sampler2D colorSampler ;  
+uniform sampler2D depthSampler ;  
 uniform float2 dofEqWorld;  
 uniform float depthOffset;
 uniform float2 targetSize;

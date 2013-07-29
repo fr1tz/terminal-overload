@@ -75,10 +75,6 @@ AdvancedLightManager::~AdvancedLightManager()
 
 bool AdvancedLightManager::isCompatible() const
 {
-   // TODO OPENGL implement advanced lighting
-   if( GFX->getAdapterType() == OpenGL)
-      return false;
-
    // TODO: We need at least 3.0 shaders at the moment
    // but this should be relaxed to 2.0 soon.
    if ( GFX->getPixelShaderVersion() < 3.0 )

@@ -55,9 +55,9 @@ float fadeAxis( float val )
 // Main                                                                        
 //-----------------------------------------------------------------------------
 Fragout main( ConnectData IN,
-              uniform sampler2D refractMap      : register(S1),
-              uniform sampler2D texMap          : register(S0),
-              uniform sampler2D bumpMap         : register(S2)
+              uniform sampler2D refractMap      ,
+              uniform sampler2D texMap          ,
+              uniform sampler2D bumpMap         
 )
 {
    Fragout OUT;

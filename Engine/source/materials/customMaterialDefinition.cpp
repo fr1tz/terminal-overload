@@ -74,6 +74,9 @@ CustomMaterial::CustomMaterial()
    mRefract = false;
    mStateBlockData = NULL;
    mForwardLit = false;
+
+   for(int i = 0; i< MAX_TEX_PER_PASS; ++i)
+      mRTParams[i] = -1;
 }
 
 //--------------------------------------------------------------------------
@@ -117,10 +120,11 @@ bool CustomMaterial::onAdd()
    {
       logError("Failed to find ShaderData %s", mShaderDataName.c_str());
       return false;
-   }
+   }   
    
-   const char* samplerDecl = "sampler";
    S32 i = 0;
+   const char *samplerDecl = "sampler";
+   const char *rtParams = "rtParams";
    for (SimFieldDictionaryIterator itr(getFieldDictionary()); *itr; ++itr)
    {
    	SimFieldDictionary::Entry* entry = *itr;
@@ -142,6 +146,37 @@ bool CustomMaterial::onAdd()
          mSamplerNames[i].insert(0, '$');
          mTexFilename[i] = entry->value;
          ++i;
+      }
+   }
+
+   for (SimFieldDictionaryIterator itr(getFieldDictionary()); *itr; ++itr)
+   {
+   	SimFieldDictionary::Entry* entry = *itr;
+      if (dStrStartsWith(entry->slotName, rtParams))
+      {
+      	if (i >= MAX_TEX_PER_PASS)
+         {
+            logError("Too many rtParams declarations, you may only have %i", MAX_TEX_PER_PASS);
+            return false;
+         }
+         
+         if (dStrlen(entry->slotName) == dStrlen(rtParams))
+         {
+         	logError("rtParams declarations must have a id, e.g. sampler[0]");
+            return false;
+         }       
+
+         String sampler = String("$") + String(entry->value); 
+      	
+         for(int s = 0; s < MAX_TEX_PER_PASS; ++s)
+         {
+            if( mSamplerNames[s].equal(sampler) )
+            {
+               mRTParams[s] = dAtoi( entry->slotName + dStrlen(rtParams) );
+               AssertFatal(mRTParams[s] > -1 && mRTParams[s] < MAX_TEX_PER_PASS, "");
+               break;
+            }
+         }
       }
    }
 

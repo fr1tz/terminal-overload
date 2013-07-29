@@ -34,7 +34,7 @@ struct ConvexConnectP
 };
 
 float4 main(   ConvexConnectP IN,
-               uniform sampler2D prePassBuffer : register(S0),
+               uniform sampler2D prePassBuffer ,
                
                uniform float4 lightPosition,
                uniform float4 lightColor,

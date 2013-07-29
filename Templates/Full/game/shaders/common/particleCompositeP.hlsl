@@ -21,12 +21,12 @@
 //-----------------------------------------------------------------------------
 #include "torque.hlsl"
 
-uniform sampler2D colorSource : register(S0);
+uniform sampler2D colorSource ;
 uniform float4 offscreenTargetParams;
 
 #ifdef TORQUE_LINEAR_DEPTH
 #define REJECT_EDGES
-uniform sampler2D edgeSource : register(S1);
+uniform sampler2D edgeSource ;
 uniform float4 edgeTargetParams;
 #endif
 
