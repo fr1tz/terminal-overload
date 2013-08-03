@@ -99,11 +99,12 @@ protected:
    String mSamplerNames[NumTextures]; 
    bool mRTParams[NumTextures];
 
-   bool _checkDefinition(GFXShader *shader);
-   bool _hasSamplerDef(const String &samplerName, int &pos);
+   bool _checkDefinition(GFXShader *shader);   
 
 public:
 
+   bool hasSamplerDef(const String &samplerName, int &pos) const;
+   bool hasRTParamsDef(const int pos) const { return mRTParams[pos]; }
 
    ShaderData();
 

@@ -289,7 +289,7 @@ void ShaderData::_onLMActivate( const char *lm, bool activate )
    reloadAllShaders();
 }
 
-bool ShaderData::_hasSamplerDef(const String &_samplerName, int &pos)
+bool ShaderData::hasSamplerDef(const String &_samplerName, int &pos) const
 {
    String samplerName = _samplerName.startsWith("$") ? _samplerName : "$"+_samplerName;   
    for(int i = 0; i < NumTextures; ++i)
@@ -328,7 +328,7 @@ bool ShaderData::_checkDefinition(GFXShader *shader)
    for(int i = 0; i < samplers.size(); ++i)
    {
       int pos;
-      bool find = _hasSamplerDef(samplers[i], pos);
+      bool find = hasSamplerDef(samplers[i], pos);
 
       if(find && pos >= 0 && mRTParams[pos])
       {              

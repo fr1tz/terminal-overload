@@ -44,7 +44,6 @@ public:
    
    FileName mTexFilename[MAX_TEX_PER_PASS];
    String mSamplerNames[MAX_TEX_PER_PASS];
-   S32 mRTParams[MAX_TEX_PER_PASS];
    String mOutputTarget;
    Material* mFallback;
    bool mForwardLit;
