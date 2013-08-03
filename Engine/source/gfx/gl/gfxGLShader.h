@@ -43,6 +43,7 @@ public:
    /// @name GFXShader interface
    /// @{
    virtual GFXShaderConstHandle* getShaderConstHandle(const String& name);
+   virtual GFXShaderConstHandle* findShaderConstHandle(const String& name);
 
    /// Returns our list of shader constants, the material can get this and just set the constants it knows about
    virtual const Vector<GFXShaderConstDesc>& getShaderConstDesc() const;

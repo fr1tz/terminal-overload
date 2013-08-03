@@ -1113,4 +1113,10 @@ inline void GFXDevice::setVertexFormat( const GFXVertexFormat *vertexFormat )
 }
 
 
+#ifdef TORQUE_DEBUG_GFX
+#define GFXAssertFatal(x, error) AssertFatal(x, error)
+#else
+#define GFXAssertFatal(x, error)
+#endif
+
 #endif // _GFXDEVICE_H_

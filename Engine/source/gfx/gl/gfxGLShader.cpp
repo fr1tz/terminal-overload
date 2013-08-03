@@ -626,6 +626,17 @@ GFXShaderConstHandle* GFXGLShader::getShaderConstHandle(const String& name)
    }
 }
 
+GFXShaderConstHandle* GFXGLShader::findShaderConstHandle(const String& name)
+{
+   HandleMap::Iterator i = mHandles.find(name);
+   if(i != mHandles.end())
+      return i->value;
+   else
+   {
+      return NULL;
+   }
+}
+
 void GFXGLShader::setConstantsFromBuffer(GFXGLShaderConstBuffer* buffer)
 {
    for(Vector<GFXGLShaderConstHandle*>::iterator i = mValidHandles.begin(); i != mValidHandles.end(); ++i)

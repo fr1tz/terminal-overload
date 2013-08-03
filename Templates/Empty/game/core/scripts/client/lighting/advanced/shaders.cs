@@ -64,6 +64,11 @@ new ShaderData( AL_VectorLightShader )
    OGLVertexShaderFile = "shaders/common/lighting/advanced/gl/farFrustumQuadV.glsl";
    OGLPixelShaderFile  = "shaders/common/lighting/advanced/gl/vectorLightP.glsl";
    
+   samplerNames[0] = "$prePassBuffer";
+   rtParams[0] = true;
+   samplerNames[1] = "$ShadowMap";
+   samplerNames[2] = "$gTapRotationTex";
+   
    pixVersion = 3.0;
 };
 

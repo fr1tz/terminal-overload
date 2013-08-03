@@ -91,6 +91,17 @@ protected:
    /// @see LightManager::smActivateSignal
    static void _onLMActivate( const char *lm, bool activate );
 
+   enum
+   {
+      NumTextures = 6 // TODO OPENGL NUM_TEXTURES?
+   };
+
+   String mSamplerNames[NumTextures]; 
+   bool mRTParams[NumTextures];
+
+   bool _checkDefinition(GFXShader *shader);
+   bool _hasSamplerDef(const String &samplerName, int &pos);
+
 public:
 
 
@@ -116,7 +127,7 @@ public:
 
    // ConsoleObject
    static void initPersistFields();
-   DECLARE_CONOBJECT(ShaderData);
+   DECLARE_CONOBJECT(ShaderData);   
 };
 
 #endif // _SHADERTDATA_H_
