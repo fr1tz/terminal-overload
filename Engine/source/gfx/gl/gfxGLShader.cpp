@@ -393,6 +393,9 @@ bool GFXGLShader::_init()
    macros.increment();
    macros.last().name = "TORQUE_SM";
    macros.last().value = String::ToString( mjVer * 10 + mnVer );
+   macros.increment();
+   macros.last().name = "TORQUE_VERTEX_SHADER";
+   macros.last().value = "";
 
    // Default to true so we're "successful" if a vertex/pixel shader wasn't specified.
    bool compiledVertexShader = true;
@@ -401,6 +404,8 @@ bool GFXGLShader::_init()
    // Compile the vertex and pixel shaders if specified.
    if(!mVertexFile.isEmpty())
       compiledVertexShader = initShader(mVertexFile, true, macros);
+
+   macros.last().name = "TORQUE_PIXEL_SHADER";
    if(!mPixelFile.isEmpty())
       compiledPixelShader = initShader(mPixelFile, false, macros);
       
