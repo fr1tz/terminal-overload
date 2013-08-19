@@ -106,6 +106,10 @@ function ShapeBase::reloadWeapon(%this)
 function ShapeBaseData::damage(%this, %obj, %source, %position, %amount, %damageType)
 {
    %obj.applyDamage(%amount);
+   
+   %z = getWord(%obj.getVelocity(), 2);
+   %obj.setVelocity("0" SPC "0" SPC %z);
+   
 
    %bleed = %this.getBleed(%obj, %delta);
    if(isObject(%bleed))
