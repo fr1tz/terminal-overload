@@ -106,7 +106,7 @@ datablock ShapeBaseImageData(WpnRaptorImage)
    stateTransitionOnNoAmmo[5]       = "LockedSound";
    stateTransitionGeneric0In[5]     = "SprintEnter";
    stateTransitionOnTimeout[5]      = "Fire";
-   stateTimeoutValue[5]             = 0.128;
+   stateTimeoutValue[5]             = 0.096;
    stateFire[5]                     = true;
    stateFireProjectile[5]           = WpnRaptorProjectile;
    stateRecoil[5]                   = "LightRecoil";
@@ -190,7 +190,7 @@ function WpnRaptorImage::onMount(%this, %obj, %slot)
    %obj.setImageInaccuracy(%slot, "c", 10.0);
    %obj.setImageInaccuracy(%slot, "d", 0.3);
    %obj.setImageInaccuracy(%slot, "f1", 1.00);
-   %obj.setImageInaccuracy(%slot, "f2", 0.40);
+   %obj.setImageInaccuracy(%slot, "f2", 0.80);
    %obj.setImageInaccuracy(%slot, "enabled", true);
 
    // Set up recoil.

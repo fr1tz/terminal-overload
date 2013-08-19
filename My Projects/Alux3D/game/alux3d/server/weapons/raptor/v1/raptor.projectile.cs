@@ -48,7 +48,7 @@ datablock ShotgunProjectileData(WpnRaptorProjectile)
    explosion           = "WpnRaptorProjectileExplosion";
    decal               = "WpnRaptorProjectileDecal";
 
-   muzzleVelocity      = "400"; // 900
+   muzzleVelocity      = 900;
    velInheritFactor    = 0;
 
    armingDelay         = 0;

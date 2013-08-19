@@ -3,7 +3,7 @@
 
 datablock SFXProfile(WpnRaptorFireSound)
 {
-   filename = "library/sound/rotc/fire2";
+   filename = "library/sound/cat5/gunshot1";
    description = AudioClose3D;
    preload = true;
 };

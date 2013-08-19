@@ -84,15 +84,14 @@ datablock ParticleEmitterData(WpnRaptorProjectileExplosionCloudEmitter : Default
 datablock ExplosionData(WpnRaptorProjectileExplosion)
 {
    lifetimeMS = "192";
-   lightStartRadius = "9.96078";
-   lightStartColor = "0 1 0.889764 1";
+   lightStartRadius = "9.88235";
+   lightStartColor = "0 1 0.88189 1";
    lightEndColor = "0 1 0.874016 1";
-   lightStartBrightness = "1.96078";
+   lightStartBrightness = "1.88235";
    lightEndBrightness = "0";
    particleRadius = "0.1";
    particleDensity = "2";
    ParticleEmitter = "BulletDirtDustEmitter";
-   emitter[1] = "WpnRaptorProjectileExplosionCloudEmitter";
    soundProfile = "WpnRaptorProjectileExplosionSound";
 };
 
