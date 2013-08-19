@@ -599,6 +599,7 @@ function GameCore::loadOut(%game, %player)
    %player.addToWeaponCycle(WpnBulldog);
 
    %player.setInventory(WpnRaptor, 1);
+   %player.setInventory(WpnRaptorClip, 4);
    %player.magazine[WpnRaptorImage.getId()] = WpnRaptorImage.ammo.maxInventory;
    
    %player.setInventory(WpnBulldog, 1);
