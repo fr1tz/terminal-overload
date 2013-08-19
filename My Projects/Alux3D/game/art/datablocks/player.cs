@@ -581,7 +581,7 @@ datablock PlayerData(DefaultPlayerData)
    exitSplashSoundVelocity = 5.0;
 
    // Controls over slope of runnable/jumpable surfaces
-   runSurfaceAngle  = "18";
+   runSurfaceAngle  = "25";
    jumpSurfaceAngle = 80;
    maxStepHeight = 0.35;  //two meters
    minJumpSpeed = 20;
