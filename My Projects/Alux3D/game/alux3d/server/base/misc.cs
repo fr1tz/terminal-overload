@@ -1,6 +1,18 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
+datablock PrecipitationData(Precipitation_Snow)
+{
+   //soundProfile = "HeavyRainSound";
+
+   dropTexture = "library/texture/nat/snowflakes";
+   splashTexture = "art/environment/precipitation/water_splash";
+   dropSize = 0.35;
+   splashSize = 0.1;
+   useTrueBillboards = false;
+   splashMS = 500;
+};
+
 function createExplosion(%data, %pos, %norm)
 {
 	%visibleDistance = 1000; // getVisibleDistance(); FIXME
