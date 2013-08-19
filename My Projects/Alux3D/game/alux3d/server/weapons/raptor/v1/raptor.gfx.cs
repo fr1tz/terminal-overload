@@ -84,10 +84,10 @@ datablock ParticleEmitterData(WpnRaptorProjectileExplosionCloudEmitter : Default
 datablock ExplosionData(WpnRaptorProjectileExplosion)
 {
    lifetimeMS = "192";
-   lightStartRadius = "9.88235";
-   lightStartColor = "0 1 0.88189 1";
+   lightStartRadius = "0.941176";
+   lightStartColor = "0 1 0.874016 1";
    lightEndColor = "0 1 0.874016 1";
-   lightStartBrightness = "1.88235";
+   lightStartBrightness = "1.96078";
    lightEndBrightness = "0";
    particleRadius = "0.1";
    particleDensity = "2";

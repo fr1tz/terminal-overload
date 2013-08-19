@@ -58,7 +58,7 @@ datablock ShotgunProjectileData(WpnRaptorProjectile)
    bounceFriction      = 0;
    isBallistic         = false;
    gravityMod          = 1;
-   lightDesc = "WpnRaptorProjectileLightDesc";
+   //lightDesc = "WpnRaptorProjectileLightDesc";
 };
 
 function WpnRaptorProjectile::onCollision(%this,%obj,%col,%fade,%pos,%normal)
