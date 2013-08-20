@@ -145,7 +145,7 @@
    };
    new GuiDynamicCrossHairHud(CrosshairSharp) {
       size = "0";
-      alphaFactor = "4";
+      alphaFactor = "6";
       bitmap = "alux3d/client/graphics/crossHairSharp.png";
       wrap = "0";
       position = "0 0";
