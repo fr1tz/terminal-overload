@@ -1,6 +1,41 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
+datablock ParticleData(WpnRaptorProjectileExplosionSparkParticle : DefaultParticle)
+{
+   sizes[0] = "0.25";
+   sizes[1] = "0.5";
+   sizes[2] = "0";
+   sizes[3] = "0";
+   times[1] = "0.5";
+   times[2] = "1";
+   spinSpeed = "0";
+   textureName = "art/particles/droplet.png";
+   animTexName = "art/particles/droplet.png";
+   inheritedVelFactor = "0";
+   lifetimeMS = "100";
+   lifetimeVarianceMS = "25";
+   useInvAlpha = "0";
+   colors[0] = "0.996078 0.992157 0.992157 1";
+   colors[1] = "0.00784314 0.996078 0.92549 0.552";
+   colors[2] = "0 1 0.929412 0";
+   colors[3] = "1 0 1 1";
+};
+
+datablock ParticleEmitterData(WpnRaptorProjectileExplosionSparkEmitter : DefaultEmitter)
+{
+   particles = "WpnRaptorProjectileExplosionSparkParticle";
+   ejectionPeriodMS = "1";
+   thetaMax = "90";
+   phiVariance = "360";
+   orientParticles = "1";
+   lifetimeMS = "25";
+   softnessDistance = "1";
+   ejectionVelocity = "10";
+   ejectionOffset = "0";
+   thetaMin = "90";
+};
+
 datablock ParticleData(WpnRaptorProjectileExplosionPlasmaParticles)
 {
    textureName          = "art/particles/ricochet.png";
@@ -47,26 +82,26 @@ datablock ParticleEmitterData(WpnRaptorProjectileExplosionPlasmaEmitter)
 
 datablock ParticleData(WpnRaptorProjectileExplosionCloudParticle : DefaultParticle)
 {
-   sizes[0] = "1";
+   sizes[0] = "0";
    sizes[1] = "1.5";
-   sizes[2] = "2";
+   sizes[2] = "0";
    sizes[3] = "0";
-   times[1] = "0.494118";
+   times[1] = "1";
    times[2] = "1";
-   textureName = "art/particles/dustParticle.png";
-   animTexName = "art/particles/dustParticle.png";
-   lifetimeMS = "100";
+   textureName = "library/texture/alux3d/particle1.png";
+   animTexName = "library/texture/alux3d/particle1.png";
+   lifetimeMS = "50";
    lifetimeVarianceMS = "0";
    spinSpeed = "0";
    spinRandomMin = "-573";
    spinRandomMax = "541";
-   colors[0] = "0.992126 0.992126 0.992126 1";
-   colors[2] = "0 1 0.905882 0";
+   colors[0] = "0 1 0.88189 1";
+   colors[2] = "0.996078 0.00784314 0.878431 1";
    colors[3] = "0.94902 0.00784314 0.996078 1";
    inheritedVelFactor = "0";
    constantAcceleration = "0";
    useInvAlpha = "0";
-   colors[1] = "0 1 0.952941 0.496063";
+   colors[1] = "0 1 0.858268 0";
 };
 
 datablock ParticleEmitterData(WpnRaptorProjectileExplosionCloudEmitter : DefaultEmitter)
@@ -77,13 +112,13 @@ datablock ParticleEmitterData(WpnRaptorProjectileExplosionCloudEmitter : Default
    ejectionPeriodMS = "1";
    lifetimeMS = "1";
    originalName = "WpnRaptorProjectileExplosionCloudEmitter";
-   thetaMax = "180";
+   thetaMax = "153";
    softnessDistance = "1";
 };
 
 datablock ExplosionData(WpnRaptorProjectileExplosion)
 {
-   lifetimeMS = "192";
+   lifetimeMS = "96";
    lightStartRadius = "0.941176";
    lightStartColor = "0 1 0.874016 1";
    lightEndColor = "0 1 0.874016 1";
@@ -93,6 +128,8 @@ datablock ExplosionData(WpnRaptorProjectileExplosion)
    particleDensity = "2";
    ParticleEmitter = "BulletDirtDustEmitter";
    soundProfile = "WpnRaptorProjectileExplosionSound";
+   lightEndRadius = "0";
+   emitter[0] = "WpnRaptorProjectileExplosionCloudEmitter";
 };
 
 datablock DebrisData(WpnRaptorProjectileShell)
