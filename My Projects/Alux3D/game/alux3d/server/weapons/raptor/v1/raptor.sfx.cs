@@ -1,9 +1,15 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
+datablock SFXPlayList(WpnRaptorFireSoundList)
+{
+   description = AudioClose3D;
+   track[0] = WpnRaptorFireSound;
+};
+
 datablock SFXProfile(WpnRaptorFireSound)
 {
-   filename = "library/sound/cat5/gunshot1";
+   filename = "library/sound/rotc/fire3";
    description = AudioClose3D;
    preload = true;
 };
@@ -34,14 +40,6 @@ datablock SFXProfile(WpnRaptorSwitchinSound)
    filename = "art/sound/weapons/wpn_lurker_switchin";
    description = AudioClose3D;
    preload = true;
-};
-
-datablock SFXPlayList(WpnRaptorFireSoundList)
-{
-   // Use a looped description so the list playback will loop.
-   description = AudioClose3D;
-
-   track[0] = WpnRaptorFireSound;
 };
 
 datablock SFXProfile(WpnRaptorProjectileExplosionSound)

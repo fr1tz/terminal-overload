@@ -51,6 +51,7 @@ datablock ShapeBaseImageData(WpnRaptorImage)
    camShakeAmp = "15.0 15.0 15.0";
 
    useRemainderDT = false;
+   maxConcurrentSounds = 1;
    
    // Script fields
    reloadImage = WpnRaptorReloadImage;
@@ -116,7 +117,7 @@ datablock ShapeBaseImageData(WpnRaptorImage)
    stateSequenceNeverTransition[5]  = true;
    stateSequenceRandomFlash[5]      = true;        // use muzzle flash sequence
    //stateScript[5]                   = "onFire";
-   stateSound[5]                    = WpnRaptorFireSoundList;
+   stateSound[5]                    = WpnRaptorFireSound;
    //stateEmitter[5]                  = WpnRaptorFireSmokeEmitter;
    //stateEmitterTime[5]              = 0.025;
    stateEjectShell[5]               = true;
