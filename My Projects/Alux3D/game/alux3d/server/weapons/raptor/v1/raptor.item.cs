@@ -39,7 +39,7 @@ datablock ItemData(WpnRaptorAmmo)
 
    // Dynamic properties defined by the scripts
    pickUpName = "Badger bullet";
-   maxInventory = 20;
+   maxInventory = 30;
    clip = WpnRaptorClip;
 };
 
