@@ -52,11 +52,11 @@ datablock ExplosionData(BloodExplosion)
 {
    soundProfile = BloodExplosionSound;
    lifetimeMS = "96";
-   lightStartRadius = "0";
-   lightStartColor = "0.992126 0.992126 0.992126 1";
-   lightEndColor = "0.992126 0.992126 0.992126 1";
+   lightStartRadius = "4.94118";
+   lightStartColor = "1 0 0 1";
+   lightEndColor = "0.992126 0 0.00787402 1";
    lightStartBrightness = "0.784314";
-   lightEndBrightness = "0";
+   lightEndBrightness = "1.96078";
    particleRadius = "0.1";
    particleDensity = "2";
    emitter[0] = "BloodExplosionSprayEmitter";
