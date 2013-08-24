@@ -210,7 +210,7 @@ function PlayerData::onDamage(%this, %obj, %delta)
    if (%delta > 0 && %obj.getState() !$= "Dead")
    {
       // Apply a damage flash
-      %obj.setDamageFlash(1);
+      %obj.setDamageFlash(%obj.getDamagePercent());
 
       // If the pain is excessive, let's hear about it.
       //if (%delta > 10)
