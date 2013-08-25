@@ -642,12 +642,19 @@ function GameCore::onDeath(%game, %client, %sourceObject, %sourceClient, %damage
 
    // Clear out the name on the corpse
    %client.player.setShapeName("");
+   
+   // Schedule corpse removal
+   cancelAll(%client.player);
+   %client.player.schedule(5000, "startFade", 1000, 0, true);
+   %client.player.schedule(6000, "delete");
 
    // Switch the client over to the death cam and unhook the player object.
    if (isObject(%client.camera) && isObject(%client.player))
    {
       %client.camera.setMode("Corpse", %client.player);
+      %client.player.mountObject(%client.camera, 4);
       %client.setControlObject(%client.camera);
+      %client.camera.setDamageFlash(1);
    }
    %client.player = 0;
 

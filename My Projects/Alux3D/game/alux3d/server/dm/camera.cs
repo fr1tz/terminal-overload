@@ -12,21 +12,17 @@ function Observer::onTrigger(%this,%obj,%trigger,%state)
       return;
 
    // Default player triggers: 0=fire 1=altFire 2=jump
-   %client = %obj.getControllingClient();
+   %client = %obj.client;
    switch$ (%obj.mode)
    {
       case "Observer":
          // Do something interesting.
 
       case "Corpse":
-         // Fade out the corpse
-         if (isObject(%obj.orbitObj))
-         {
-            cancelAll(%obj.orbitObj);
-            %obj.orbitObj.schedule(0, "startFade", 1000, 0, true);
-            %obj.orbitObj.schedule(1000, "delete");
-         }
-
+         %dt = getSimTime() - %client.timeOfDeath;
+         if(%dt < 2000)
+            return;
+      
          // Viewing dead corpse, so we probably want to respawn.
          game.preparePlayer(%client);
 
@@ -38,6 +34,7 @@ function Observer::onTrigger(%this,%obj,%trigger,%state)
 
 function Observer::setMode(%this,%obj,%mode,%arg1,%arg2,%arg3)
 {
+   %client = %obj.client;
    switch$ (%mode)
    {
       case "Observer":
@@ -45,12 +42,13 @@ function Observer::setMode(%this,%obj,%mode,%arg1,%arg2,%arg3)
          %obj.setFlyMode();
 
       case "Corpse":
+         %client.timeOfDeath = getSimTime();
          // Lock the camera down in orbit around the corpse,
          // which should be arg1
-         %transform = %arg1.getTransform();
-         %obj.setOrbitMode(%arg1, %transform, 0.5, 4.5, 4.5);
-         %obj.orbitObj = %arg1;
-
+         //%transform = %arg1.getTransform();
+         //%obj.setOrbitMode(%arg1, %transform, 0.5, 4.5, 4.5);
+         //%obj.orbitObj = %arg1;
+         %obj.controlMode = "Stationary";
    }
    %obj.mode = %mode;
 }

@@ -16,6 +16,7 @@ singleton TSShapeConstructor(SoldierDAE)
 
 function SoldierDAE::onLoad(%this)
 {
+   %this.renameNode("AltEye", "mount4");
    %this.addSequence("./Anims/PlayerAnim_Lurker_Back.dae Back", "Back", "0", "-1", "1", "0");
    %this.addSequence("./Anims/PlayerAnim_Lurker_Celebrate_01.dae Celebrate_01", "Celebrate_01", "0", "-1", "1", "0");
    %this.addSequence("./Anims/PlayerAnim_Lurker_Crouch_Backward.dae Crouch_Backward", "Crouch_Backward", "0", "-1", "1", "0");
