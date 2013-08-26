@@ -20,7 +20,7 @@ function Observer::onTrigger(%this,%obj,%trigger,%state)
 
       case "Corpse":
          %dt = getSimTime() - %client.timeOfDeath;
-         if(%dt < 2000)
+         if(%dt < 5000)
             return;
       
          // Viewing dead corpse, so we probably want to respawn.
