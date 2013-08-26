@@ -8,4 +8,7 @@
 datablock CameraData(Observer)
 {
    mode = "Observer";
+   cameraDefaultFov = "80";
+   cameraMinFov = "80";
+   cameraMaxFov = "180";
 };

@@ -231,7 +231,7 @@
          canSaveDynamicFields = "0";
       };
       new GuiTextCtrl(AmmoAmount) {
-         text = "Clips: 3";
+         text = "Clips: 4";
          maxLength = "255";
          margin = "0 0 0 0";
          padding = "0 0 0 0";
@@ -272,6 +272,25 @@
       horizSizing = "right";
       vertSizing = "top";
       profile = "GuiBigTextProfile";
+      visible = "1";
+      active = "1";
+      tooltipProfile = "GuiToolTipProfile";
+      hovertime = "1000";
+      isContainer = "0";
+      canSave = "1";
+      canSaveDynamicFields = "0";
+   };
+   new GuiIrisHud(Iris) {
+      size = "1";
+      alphaFactor = "0";
+      bitmap = "alux3d/client/graphics/iris.png";
+      wrap = "0";
+      position = "0 0";
+      extent = "640 480";
+      minExtent = "8 2";
+      horizSizing = "width";
+      vertSizing = "height";
+      profile = "GuiDefaultProfile";
       visible = "1";
       active = "1";
       tooltipProfile = "GuiToolTipProfile";

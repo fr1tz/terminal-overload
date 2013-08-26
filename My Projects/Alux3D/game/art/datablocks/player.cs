@@ -478,8 +478,8 @@ datablock PlayerData(DefaultPlayerData)
    cmdCategory = "Clients";
 
    cameraDefaultFov = "80";
-   cameraMinFov = 5.0;
-   cameraMaxFov = "130";
+   cameraMinFov = "80";
+   cameraMaxFov = "180";
 
    debrisShapeName = "art/shapes/actors/common/debris_player.dts";
    debris = playerDebris;

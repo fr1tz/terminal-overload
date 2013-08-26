@@ -652,9 +652,12 @@ function GameCore::onDeath(%game, %client, %sourceObject, %sourceClient, %damage
    if (isObject(%client.camera) && isObject(%client.player))
    {
       %client.camera.setMode("Corpse", %client.player);
-      %client.player.mountObject(%client.camera, 4);
-      %client.setControlObject(%client.camera);
       %client.camera.setDamageFlash(1);
+      %client.camera.fovDelta = 0.5;
+      %client.camera.guiIrisSize = 8;
+      %client.camera.guiIrisDt = -0.05;
+      %client.player.mountObject(%client.camera, 4);
+      %client.control(%client.camera);
    }
    %client.player = 0;
 
@@ -861,6 +864,10 @@ function GameCore::spawnPlayer(%game, %client, %spawnPoint, %noControl)
 
    if (%player.isMethod("setEnergyLevel"))
       %player.setEnergyLevel(%player.getDataBlock().maxEnergy);
+      
+   %player.fovDelta = 0;
+   %player.guiIrisSize = 8;
+   %player.guiIrisDt = 0;
 
    if (!isDefined("%client.skin"))
    {
@@ -900,7 +907,7 @@ function GameCore::spawnPlayer(%game, %client, %spawnPoint, %noControl)
    // Allow the player/camera to receive move data from the GameConnection.  Without this
    // the user is unable to control the player/camera.
    if (!isDefined("%noControl"))
-      %client.setControlObject(%control);
+      %client.control(%control);
 }
 
 function GameCore::pickPointInSpawnSphere(%objectToSpawn, %spawnSphere)

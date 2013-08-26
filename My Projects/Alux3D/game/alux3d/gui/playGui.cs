@@ -59,3 +59,60 @@ function refreshCenterTextCtrl()
 {
    CenterPrintText.position = "0 0";
 }
+
+//-----------------------------------------------------------------------------
+
+function Iris::setDelta(%this, %dt)
+{
+   %this.zSizeDelta = %dt;
+   %this.animationThread();
+}
+
+function Iris::animationThread(%this)
+{
+   if(%this.zAnimationThread !$= "")
+   {
+      cancel(%this.zAnimationThread);
+      %this.zAnimationThread = "";
+   }
+      
+   %this.size += %this.zSizeDelta;
+   
+   if(%this.size <= 0)
+      %this.size = 0;
+   //else if(%this.size >= 1)
+   //   %this.size = 1;
+   else
+      %this.zAnimationThread = %this.schedule(32, "animationThread");
+}
+
+//-----------------------------------------------------------------------------
+
+function setFovDelta(%dt)
+{
+   $fovDelta = %dt;
+   fovDeltaThread();
+}
+
+function fovDeltaThread(%this)
+{
+   if($fovDeltaThread !$= "")
+   {
+      cancel($fovDeltaThread);
+      $fovDeltaThread = "";
+   }
+   
+   if($fovDelta == 0)
+      return;
+
+   %newFov = ServerConnection.getControlCameraFov() + $fovDelta;
+   setFov(%newFov);
+
+   if(%newFov < 1 || %newFov > 179)
+      return;
+      
+   $fovDeltaThread = schedule(32, ServerConnection, "fovDeltaThread");
+}
+
+
+//-----------------------------------------------------------------------------

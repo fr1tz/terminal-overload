@@ -155,3 +155,21 @@ function turretMountCallback(%turret, %player, %mounted)
       turretMap.pop();
    }
 }
+
+//------------------------------------------------------------------------------
+
+function clientCmdSetFovDelta(%dt)
+{
+   setFovDelta(%dt);
+}
+
+function clientCmdGuiSetIris(%size, %dt)
+{
+   if(%size !$= "")
+      Iris.size = %size;
+      
+   if(%dt !$= "")
+      Iris.setDelta(%dt);
+}
+
+//------------------------------------------------------------------------------

@@ -119,3 +119,14 @@ function GameConnection::RefreshWeaponHud(%client, %amount, %preview, %ret, %zoo
 {
    commandToClient(%client, 'RefreshWeaponHud', %amount, %preview, %ret, %zoomRet, %amountInClips);
 }
+
+//-----------------------------------------------------------------------------
+
+function GameConnection::control(%client, %obj)
+{
+   %client.setControlObject(%obj);
+   if(%obj.fovDelta !$= "")
+      commandToClient(%client, 'SetFovDelta', %obj.fovDelta);
+   if(%obj.guiIrisSize !$= "" || %obj.guiIrisDt !$= "" )
+      commandToClient(%client, 'GuiSetIris', %obj.guiIrisSize, %obj.guiIrisDt);
+}
