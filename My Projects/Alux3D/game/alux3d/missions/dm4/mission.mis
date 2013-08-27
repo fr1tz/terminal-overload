@@ -394,6 +394,7 @@ new SimGroup(MissionGroup) {
       useTrackDescriptionOnly = "0";
       isLooping = "1";
       isStreaming = "0";
+      sourceGroup = "AudioChannelEffects";
       volume = "0.4";
       pitch = "1";
       fadeInTime = "0";
@@ -2185,6 +2186,7 @@ new SimGroup(MissionGroup) {
       useTrackDescriptionOnly = "0";
       isLooping = "1";
       isStreaming = "0";
+      sourceGroup = "AudioChannelEffects";
       volume = "1";
       pitch = "1";
       fadeInTime = "0";
