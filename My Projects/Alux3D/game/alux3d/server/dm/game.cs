@@ -125,8 +125,19 @@ function GameConnection::RefreshWeaponHud(%client, %amount, %preview, %ret, %zoo
 function GameConnection::control(%client, %obj)
 {
    %client.setControlObject(%obj);
+   
    if(%obj.fovDelta !$= "")
       commandToClient(%client, 'SetFovDelta', %obj.fovDelta);
+      
    if(%obj.guiIrisSize !$= "" || %obj.guiIrisDt !$= "" )
       commandToClient(%client, 'GuiSetIris', %obj.guiIrisSize, %obj.guiIrisDt);
+      
+   if(%obj.viewMotionBlurActive !$= ""
+   || %obj.viewMotionBlurVelMul !$= "")
+   {
+      commandToClient(%client, 'ViewSetMotionBlur',
+         %obj.viewMotionBlurActive,
+         %obj.viewMotionBlurVelMul
+      );
+   }
 }

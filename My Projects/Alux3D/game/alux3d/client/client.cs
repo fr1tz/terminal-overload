@@ -157,6 +157,8 @@ function turretMountCallback(%turret, %player, %mounted)
 }
 
 //------------------------------------------------------------------------------
+// Server -> Client commands to manipulate player's view
+//------------------------------------------------------------------------------
 
 function clientCmdSetFovDelta(%dt)
 {
@@ -166,10 +168,28 @@ function clientCmdSetFovDelta(%dt)
 function clientCmdGuiSetIris(%size, %dt)
 {
    if(%size !$= "")
+   {
       Iris.size = %size;
+      $CAPostFx::cubeDistortionFactor = 0;
+      $CAPostFx::colorDistortionFactor = "0 0 0";
+   }
       
    if(%dt !$= "")
       Iris.setDelta(%dt);
+}
+
+function clientCmdViewSetMotionBlur(%enabled, %velmul)
+{
+   if(%enabled !$= "")
+   {
+      if(%enabled)
+         MotionBlurFX.enable();
+      else
+         MotionBlurFX.disable();
+   }
+   
+   if(%velmul !$= "")
+      $PostFX::MotionBlur::VelMul = %velmul;
 }
 
 //------------------------------------------------------------------------------

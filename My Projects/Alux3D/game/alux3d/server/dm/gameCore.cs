@@ -656,6 +656,8 @@ function GameCore::onDeath(%game, %client, %sourceObject, %sourceClient, %damage
       %client.camera.fovDelta = 0.5;
       %client.camera.guiIrisSize = 8;
       %client.camera.guiIrisDt = -0.05;
+      %client.camera.viewMotionBlurActive = true;
+      %client.camera.viewMotionBlurVelMul = 5;
       %client.player.mountObject(%client.camera, 4);
       %client.control(%client.camera);
    }
@@ -868,6 +870,7 @@ function GameCore::spawnPlayer(%game, %client, %spawnPoint, %noControl)
    %player.fovDelta = 0;
    %player.guiIrisSize = 8;
    %player.guiIrisDt = 0;
+   %player.viewMotionBlurActive = false;
 
    if (!isDefined("%client.skin"))
    {
