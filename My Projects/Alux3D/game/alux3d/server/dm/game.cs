@@ -140,4 +140,24 @@ function GameConnection::control(%client, %obj)
          %obj.viewMotionBlurVelMul
       );
    }
+   
+   if(%obj.hearingDeafness !$= ""
+   || %obj.hearingDeafnessDt !$= "")
+   {
+      commandToClient(%client, 'HearingSetDeafness',
+         %obj.hearingDeafness,
+         %obj.hearingDeafnessDt
+      );
+   }
+   
+   if(%obj.hearingTinnitusEnabled !$= ""
+   || %obj.hearingTinnitusVolume !$= ""
+   || %obj.hearingTinnitusVolumeDt !$= "")
+   {
+      commandToClient(%client, 'HearingSetTinnitus',
+         %obj.hearingTinnitusEnabled,
+         %obj.hearingTinnitusVolume,
+         %obj.hearingTinnitusVolumeDt
+      );
+   }
 }

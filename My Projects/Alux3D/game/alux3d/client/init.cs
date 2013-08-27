@@ -84,6 +84,7 @@ function initClient()
    exec("alux3d/gui/optionsDlg.cs");
 
    // Client scripts
+   exec("./hearing.cs");
    exec("./client.cs");
    exec("./game.cs");
    exec("./missionDownload.cs");

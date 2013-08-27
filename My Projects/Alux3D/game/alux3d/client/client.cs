@@ -168,12 +168,8 @@ function clientCmdSetFovDelta(%dt)
 function clientCmdGuiSetIris(%size, %dt)
 {
    if(%size !$= "")
-   {
       Iris.size = %size;
-      $CAPostFx::cubeDistortionFactor = 0;
-      $CAPostFx::colorDistortionFactor = "0 0 0";
-   }
-      
+
    if(%dt !$= "")
       Iris.setDelta(%dt);
 }
@@ -190,6 +186,28 @@ function clientCmdViewSetMotionBlur(%enabled, %velmul)
    
    if(%velmul !$= "")
       $PostFX::MotionBlur::VelMul = %velmul;
+}
+
+//------------------------------------------------------------------------------
+// Server -> Client commands to manipulate player's hearing
+//------------------------------------------------------------------------------
+
+function clientCmdHearingSetDeafness(%deafness, %dt)
+{
+   if(%deafness !$= "")
+      hearingSetDeafness(%deafness);
+   if(%dt !$= "")
+      hearingSetDeafnessDt(%dt);
+}
+
+function clientCmdHearingSetTinnitus(%enabled, %volume, %volumeDt)
+{
+   if(%enabled !$= "")
+      hearingSetTinnitusEnabled(%enabled);
+   if(%volume !$= "")
+      hearingSetTinnitusVolume(%volume);
+   if(%volumeDt !$= "")
+      hearingSetTinnitusVolumeDt(%volumeDt);
 }
 
 //------------------------------------------------------------------------------
