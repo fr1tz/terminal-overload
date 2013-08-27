@@ -645,21 +645,21 @@ function GameCore::onDeath(%game, %client, %sourceObject, %sourceClient, %damage
    
    // Schedule corpse removal
    cancelAll(%client.player);
-   %client.player.schedule(5000, "startFade", 1000, 0, true);
-   %client.player.schedule(6000, "delete");
+   %client.player.schedule(10000, "startFade", 1000, 0, true);
+   %client.player.schedule(11000, "delete");
 
    // Switch the client over to the death cam and unhook the player object.
    if (isObject(%client.camera) && isObject(%client.player))
    {
       %client.camera.setMode("Corpse", %client.player);
       %client.camera.setDamageFlash(1);
-      %client.camera.fovDelta = 0.5;
+      %client.camera.fovDelta = 0.25;
       %client.camera.guiIrisSize = 8;
-      %client.camera.guiIrisDt = -0.05;
+      %client.camera.guiIrisDt = -0.025;
       %client.camera.viewMotionBlurActive = true;
       %client.camera.viewMotionBlurVelMul = 5;
       %client.camera.hearingDeafness = 0.0;
-      %client.camera.hearingDeafnessDt = 0.0025;
+      %client.camera.hearingDeafnessDt = 0.003;
       %client.camera.hearingTinnitusEnabled = true;
       %client.camera.hearingTinnitusVolume = 1.0;
       %client.camera.hearingTinnitusVolumeDt = 0;
