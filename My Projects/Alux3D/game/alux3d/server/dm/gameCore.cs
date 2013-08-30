@@ -660,8 +660,8 @@ function GameCore::onDeath(%game, %client, %sourceObject, %sourceClient, %damage
       %client.camera.viewIrisDtY = -0.03;
       %client.camera.viewMotionBlurActive = true;
       %client.camera.viewMotionBlurVelMul = 5;
-      %client.camera.hearingDeafness = 0.0;
-      %client.camera.hearingDeafnessDt = 0.003;
+      %client.camera.hearingDeafness = 0.7;
+      %client.camera.hearingDeafnessDt = 0.0010;
       %client.camera.hearingTinnitusEnabled = true;
       %client.camera.hearingTinnitusVolume = 1.0;
       %client.camera.hearingTinnitusVolumeDt = -0.005;

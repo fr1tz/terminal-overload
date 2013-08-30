@@ -70,7 +70,7 @@ function hearingTinnitusThread()
       if($Hearing::Tinnitus::Source $= "")
       {
          $Hearing::Tinnitus::Source = sfxCreateSource(
-            AudioLoop2D,
+            AudioGuiLoop2D,
             "library/sound/alux3d/tinnitus.wav"
          );
       }
