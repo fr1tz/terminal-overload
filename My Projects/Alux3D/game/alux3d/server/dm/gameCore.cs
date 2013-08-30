@@ -532,7 +532,7 @@ function GameCore::onClientEnterGame(%game, %client)
 
    // Inform the client we've joined up
    messageClient(%client,
-      'MsgClientJoin', '\c2Welcome to the Torque demo app %1.',
+      'MsgClientJoin', '\c2Welcome to Alux3D Deathmatch %1.',
       %client.playerName,
       %client,
       %client.sendGuid,
