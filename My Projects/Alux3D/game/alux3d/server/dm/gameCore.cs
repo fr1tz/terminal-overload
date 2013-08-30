@@ -664,7 +664,7 @@ function GameCore::onDeath(%game, %client, %sourceObject, %sourceClient, %damage
       %client.camera.hearingDeafnessDt = 0.003;
       %client.camera.hearingTinnitusEnabled = true;
       %client.camera.hearingTinnitusVolume = 1.0;
-      %client.camera.hearingTinnitusVolumeDt = 0;
+      %client.camera.hearingTinnitusVolumeDt = -0.005;
       %client.player.mountObject(%client.camera, 4);
       %client.control(%client.camera);
    }

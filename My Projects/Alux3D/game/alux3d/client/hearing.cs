@@ -71,7 +71,7 @@ function hearingTinnitusThread()
       {
          $Hearing::Tinnitus::Source = sfxCreateSource(
             AudioLoop2D,
-            "library/sound/alux3d/156576__vosvoy__tinnitus-ringing-loop.wav"
+            "library/sound/alux3d/tinnitus.wav"
          );
       }
       
