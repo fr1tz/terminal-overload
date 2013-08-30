@@ -18,8 +18,8 @@ class GuiIrisHud : public GuiBitmapCtrl
 {
    typedef GuiBitmapCtrl Parent;
 
-	F32 mSize;
-	F32 mAlphaFactor;
+	F32 mSizeX;
+	F32 mSizeY;
 
 protected:
 
@@ -60,8 +60,8 @@ GuiIrisHud::GuiIrisHud()
 
 void GuiIrisHud::initPersistFields()
 {
-	addField( "size", TypeF32, Offset( mSize, GuiIrisHud ), "How much the iris is open (0-1)" );
-	addField( "alphaFactor", TypeF32, Offset( mAlphaFactor, GuiIrisHud ), "TODO" );
+	addField( "sizeX", TypeF32, Offset( mSizeX, GuiIrisHud ), "Horizontal size of iris" );
+	addField( "sizeY", TypeF32, Offset( mSizeY, GuiIrisHud ), "Vertical size of iris" );
 
    Parent::initPersistFields();
 }
@@ -75,13 +75,13 @@ void GuiIrisHud::onRender(Point2I offset, const RectI &updateRect)
 		return;
 
 	// No need to render anything if iris it completely open
-	//if(mSize >= 1)
+	//if(mSizeH >= 1)
 	//	return;
 
 	ColorI color(0,0,0,255);
 
 	// Just fill screen if iris is completely closed
-	if(mSize <= 0)
+	if(mSizeX <= 0 && mSizeY <= 0)
 	{
 		GFX->getDrawUtil()->drawRectFill(offset, getExtent()+offset, color);
 		return;
@@ -93,11 +93,12 @@ void GuiIrisHud::onRender(Point2I offset, const RectI &updateRect)
 	S32 centery = offset.y + h/2;
 	S32 radius = ((w > h) ? h : w)/2;
 
-	S32 bitmapWidth = mSize * radius;
+	S32 bitmapWidth = mSizeX * radius;
+	S32 bitmapHeight = mSizeY * radius;
 	Point2I upperLeft, lowerRight;
 
 	// Draw bitmap
-	RectI rect(centerx-bitmapWidth/2, centery-bitmapWidth/2, bitmapWidth, bitmapWidth);
+	RectI rect(centerx-bitmapWidth/2, centery-bitmapHeight/2, bitmapWidth, bitmapHeight);
    GFX->getDrawUtil()->setBitmapModulation(color);
    GFX->getDrawUtil()->drawBitmapStretch(mTextureObject, rect, GFXBitmapFlip_None, GFXTextureFilterLinear, false);
 	GFX->getDrawUtil()->clearBitmapModulation();
@@ -114,11 +115,11 @@ void GuiIrisHud::onRender(Point2I offset, const RectI &updateRect)
 
 	// Fill space above bitmap
 	upperLeft.set(centerx-bitmapWidth/2, updateRect.point.y);
-	lowerRight.set(centerx+bitmapWidth/2, centery-bitmapWidth/2);
+	lowerRight.set(centerx+bitmapWidth/2, centery-bitmapHeight/2);
 	GFX->getDrawUtil()->drawRectFill(upperLeft, lowerRight, color);
 
 	// Fill space below bitmap
-	upperLeft.set(centerx-bitmapWidth/2, centery+bitmapWidth/2);
+	upperLeft.set(centerx-bitmapWidth/2, centery+bitmapHeight/2);
 	lowerRight.set(centerx+bitmapWidth/2, updateRect.point.y+h);
 	GFX->getDrawUtil()->drawRectFill(upperLeft, lowerRight, color);
 }
