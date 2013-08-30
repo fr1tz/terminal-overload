@@ -654,8 +654,10 @@ function GameCore::onDeath(%game, %client, %sourceObject, %sourceClient, %damage
       %client.camera.setMode("Corpse", %client.player);
       %client.camera.setDamageFlash(1);
       %client.camera.fovDelta = 0.25;
-      %client.camera.guiIrisSize = 8;
-      %client.camera.guiIrisDt = -0.025;
+      %client.camera.viewIrisSizeX = 8;
+      %client.camera.viewIrisSizeY = 8;
+      %client.camera.viewIrisDtX = -0.025;
+      %client.camera.viewIrisDtY = -0.03;
       %client.camera.viewMotionBlurActive = true;
       %client.camera.viewMotionBlurVelMul = 5;
       %client.camera.hearingDeafness = 0.0;
@@ -874,8 +876,10 @@ function GameCore::spawnPlayer(%game, %client, %spawnPoint, %noControl)
       
    // Setup view & hearing
    %player.fovDelta = 0;
-   %player.guiIrisSize = 8;
-   %player.guiIrisDt = 0;
+   %player.viewIrisSizeX = 8;
+   %player.viewIrisSizeY = 8;
+   %player.viewIrisDtX = 0;
+   %player.viewIrisDtY = 0;
    %player.viewMotionBlurActive = false;
    %player.hearingDeafness = 0;
    %player.hearingDeafnessDt = 0;

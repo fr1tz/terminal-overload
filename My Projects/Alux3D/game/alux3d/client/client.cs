@@ -165,13 +165,16 @@ function clientCmdSetFovDelta(%dt)
    setFovDelta(%dt);
 }
 
-function clientCmdGuiSetIris(%size, %dt)
+function clientCmdViewSetIris(%sizeX, %dtX, %sizeY, %dtY)
 {
-   if(%size !$= "")
-      Iris.size = %size;
-
-   if(%dt !$= "")
-      Iris.setDelta(%dt);
+   if(%sizeX !$= "")
+      Iris.sizeX = %sizeX;
+   if(%dtX !$= "")
+      Iris.setDeltaX(%dtX);
+   if(%sizeY !$= "")
+      Iris.sizeY = %sizeY;
+   if(%dtY !$= "")
+      Iris.setDeltaY(%dtY);
 }
 
 function clientCmdViewSetMotionBlur(%enabled, %velmul)

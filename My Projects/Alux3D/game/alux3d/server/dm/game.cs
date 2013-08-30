@@ -129,8 +129,17 @@ function GameConnection::control(%client, %obj)
    if(%obj.fovDelta !$= "")
       commandToClient(%client, 'SetFovDelta', %obj.fovDelta);
       
-   if(%obj.guiIrisSize !$= "" || %obj.guiIrisDt !$= "" )
-      commandToClient(%client, 'GuiSetIris', %obj.guiIrisSize, %obj.guiIrisDt);
+   if(%obj.viewIrisSizeX !$= ""
+   || %obj.viewIrisSizeY !$= ""
+   || %obj.viewIrisDtX !$= ""
+   || %obj.viewIrisDtY !$= "" )
+   {
+      commandToClient(%client, 'ViewSetIris',
+         %obj.viewIrisSizeX,
+         %obj.viewIrisDtX,
+         %obj.viewIrisSizeY,
+         %obj.viewIrisDtY);
+   }
       
    if(%obj.viewMotionBlurActive !$= ""
    || %obj.viewMotionBlurVelMul !$= "")
