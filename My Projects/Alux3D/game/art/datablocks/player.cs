@@ -12,10 +12,9 @@ datablock SFXProfile(SoldierSpawnGaspSound)
    preload = true;
 };
 
-
 datablock SFXProfile(DeathCrySound)
 {
-   fileName = "art/sound/orc_death";
+   fileName = "library/sound/alux3d/pain1";
    description = AudioClose3d;
    preload = true;
 };
