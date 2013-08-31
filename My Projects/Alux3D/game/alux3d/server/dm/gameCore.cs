@@ -884,6 +884,9 @@ function GameCore::spawnPlayer(%game, %client, %spawnPoint, %noControl)
    %player.hearingDeafness = 0;
    %player.hearingDeafnessDt = 0;
    %player.hearingTinnitusEnabled = false;
+   
+   %player.setWhiteOut(1);
+   %player.playAudio(0, SoldierSpawnGaspSound);
 
    if (!isDefined("%client.skin"))
    {

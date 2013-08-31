@@ -5,6 +5,14 @@
 // Player Audio Profiles
 //----------------------------------------------------------------------------
 
+datablock SFXProfile(SoldierSpawnGaspSound)
+{
+   fileName = "library/sound/alux3d/gasp1";
+   description = AudioClose3d;
+   preload = true;
+};
+
+
 datablock SFXProfile(DeathCrySound)
 {
    fileName = "art/sound/orc_death";
