@@ -121,28 +121,6 @@
       canSave = "1";
       canSaveDynamicFields = "0";
    };
-   new GuiShapeNameHud() {
-      fillColor = "0 0 0 0.25";
-      frameColor = "0 1 0 1";
-      textColor = "0 1 0 1";
-      showFill = "0";
-      showFrame = "0";
-      verticalOffset = "0.2";
-      distanceFade = "0.1";
-      position = "0 0";
-      extent = "640 480";
-      minExtent = "8 8";
-      horizSizing = "width";
-      vertSizing = "height";
-      profile = "GuiModelessDialogProfile";
-      visible = "1";
-      active = "1";
-      tooltipProfile = "GuiToolTipProfile";
-      hovertime = "1000";
-      isContainer = "0";
-      canSave = "1";
-      canSaveDynamicFields = "0";
-   };
    new GuiDynamicCrossHairHud(CrosshairSharp) {
       size = "0";
       alphaFactor = "6";
