@@ -511,7 +511,7 @@ new SimGroup(MissionGroup) {
       static = "1";
       rotate = "1";
       isAIControlled = "0";
-      dataBlock = "WpnBulldogClip";
+      dataBlock = "WpnBulldogAmmo";
       client = "-1";
       teamId = "0";
       position = "1.98952 -2.19659 40.1024";
@@ -524,7 +524,7 @@ new SimGroup(MissionGroup) {
       static = "1";
       rotate = "1";
       isAIControlled = "0";
-      dataBlock = "WpnBulldogClip";
+      dataBlock = "WpnBulldogAmmo";
       client = "-1";
       teamId = "0";
       position = "-1.90648 -2.19659 40.1024";
@@ -537,7 +537,7 @@ new SimGroup(MissionGroup) {
       static = "1";
       rotate = "1";
       isAIControlled = "0";
-      dataBlock = "WpnBulldogClip";
+      dataBlock = "WpnBulldogAmmo";
       client = "-1";
       teamId = "0";
       position = "-1.90648 2.06245 40.1024";
@@ -550,7 +550,7 @@ new SimGroup(MissionGroup) {
       static = "1";
       rotate = "1";
       isAIControlled = "0";
-      dataBlock = "WpnBulldogClip";
+      dataBlock = "WpnBulldogAmmo";
       client = "-1";
       teamId = "0";
       position = "2.09902 2.06245 40.1024";
@@ -563,7 +563,7 @@ new SimGroup(MissionGroup) {
       static = "1";
       rotate = "1";
       isAIControlled = "0";
-      dataBlock = "WpnRaptorClip";
+      dataBlock = "WpnRaptorAmmo";
       client = "-1";
       teamId = "0";
       position = "25.9315 -29.811 41.0817";
@@ -576,7 +576,7 @@ new SimGroup(MissionGroup) {
       static = "1";
       rotate = "1";
       isAIControlled = "0";
-      dataBlock = "WpnRaptorClip";
+      dataBlock = "WpnRaptorAmmo";
       client = "-1";
       teamId = "0";
       position = "25.9315 -33.9273 41.0817";
@@ -589,7 +589,7 @@ new SimGroup(MissionGroup) {
       static = "1";
       rotate = "1";
       isAIControlled = "0";
-      dataBlock = "WpnRaptorClip";
+      dataBlock = "WpnRaptorAmmo";
       client = "-1";
       teamId = "0";
       position = "22.0168 -33.9273 41.0817";
@@ -602,7 +602,7 @@ new SimGroup(MissionGroup) {
       static = "1";
       rotate = "1";
       isAIControlled = "0";
-      dataBlock = "WpnRaptorClip";
+      dataBlock = "WpnRaptorAmmo";
       client = "-1";
       teamId = "0";
       position = "22.0168 -29.7938 41.0817";
@@ -615,7 +615,7 @@ new SimGroup(MissionGroup) {
       static = "1";
       rotate = "1";
       isAIControlled = "0";
-      dataBlock = "WpnRaptorClip";
+      dataBlock = "WpnRaptorAmmo";
       client = "-1";
       teamId = "0";
       position = "-25.8391 33.6663 41.0119";
@@ -628,7 +628,7 @@ new SimGroup(MissionGroup) {
       static = "1";
       rotate = "1";
       isAIControlled = "0";
-      dataBlock = "WpnRaptorClip";
+      dataBlock = "WpnRaptorAmmo";
       client = "-1";
       teamId = "0";
       position = "-22.0286 33.6663 41.0119";
@@ -641,7 +641,7 @@ new SimGroup(MissionGroup) {
       static = "1";
       rotate = "1";
       isAIControlled = "0";
-      dataBlock = "WpnRaptorClip";
+      dataBlock = "WpnRaptorAmmo";
       client = "-1";
       teamId = "0";
       position = "-22.0286 29.8727 41.0119";
@@ -816,7 +816,7 @@ new SimGroup(MissionGroup) {
       static = "1";
       rotate = "1";
       isAIControlled = "0";
-      dataBlock = "WpnRaptorClip";
+      dataBlock = "WpnRaptorAmmo";
       client = "-1";
       teamId = "0";
       position = "-25.9657 29.8727 41.0119";

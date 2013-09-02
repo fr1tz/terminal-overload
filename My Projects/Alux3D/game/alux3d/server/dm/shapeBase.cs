@@ -91,8 +91,13 @@ function ShapeBase::reloadWeapon(%this)
    // Bail out if we're already reloading.
    if(%image.fireImage !$= "")
       return;
-      
-   if(%image.isField("clip"))
+
+   if(%image.isField("ammo"))
+   {
+      if(%this.getInventory(%image.ammo) > 0)
+         %this.mountImage(%image.reloadImage, $WeaponSlot);
+   }
+   else if(%image.isField("clip"))
    {
       if(%this.getInventory(%image.clip) > 0)
          %this.mountImage(%image.reloadImage, $WeaponSlot);

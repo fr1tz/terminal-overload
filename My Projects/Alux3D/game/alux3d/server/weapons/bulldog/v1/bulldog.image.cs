@@ -56,7 +56,8 @@ datablock ShapeBaseImageData(WpnBulldogImage)
    reloadImage = WpnBulldogReloadImage;
    item = WpnBulldog;
    ammo = WpnBulldogAmmo;
-   clip = WpnBulldogClip;
+   //clip = WpnBulldogClip;
+   magazineCapacity = 2;
 
    // Initial start up state
    stateName[0]                     = "Preactivate";

@@ -1,6 +1,26 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
+datablock ItemData(WpnBulldogAmmo)
+{
+   // Mission editor category
+   category = "Ammo";
+
+   // Add the Ammo namespace as a parent.  The ammo namespace provides
+   // common ammo related functions and hooks into the inventory system.
+   className = "Ammo";
+
+   // Basic Item properties
+   shapeFile = "library/shape/alux3d/bulldog/magazine/p1/shape.dae";
+   mass = 1;
+   elasticity = 0.2;
+   friction = 0.6;
+
+   // Dynamic properties defined by the scripts
+   pickUpName = "Bulldog Shells";
+   count = 2;
+};
+
 datablock ItemData(WpnBulldogClip)
 {
    // Mission editor category
@@ -18,29 +38,6 @@ datablock ItemData(WpnBulldogClip)
 
    // Dynamic properties defined by the scripts
    pickUpName = "Bulldog Magazine";
-   count = 1;
-   maxInventory = 4;
-};
-
-datablock ItemData(WpnBulldogAmmo)
-{
-   // Mission editor category
-   category = "Ammo";
-
-   // Add the Ammo namespace as a parent.  The ammo namespace provides
-   // common ammo related functions and hooks into the inventory system.
-   className = "Ammo";
-
-   // Basic Item properties
-   shapeFile = "library/shape/alux3d/bulldog/magazine/p1/shape.dae";
-   mass = 1;
-   elasticity = 0.2;
-   friction = 0.6;
-
-   // Dynamic properties defined by the scripts
-   pickUpName = "Badger bullet";
-   maxInventory = 2;
-   clip = WpnBulldogClip;
 };
 
 datablock ItemData(WpnBulldog)

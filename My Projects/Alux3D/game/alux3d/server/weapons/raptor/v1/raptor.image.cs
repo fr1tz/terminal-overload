@@ -57,7 +57,8 @@ datablock ShapeBaseImageData(WpnRaptorImage)
    reloadImage = WpnRaptorReloadImage;
    item = WpnRaptor;
    ammo = WpnRaptorAmmo;
-   clip = WpnRaptorClip;
+   //clip = WpnRaptorClip;
+   magazineCapacity = 30;
 
    stateName[0]                     = "Preactivate";
    stateTransitionGeneric3In[0]     = "Ready";

@@ -92,16 +92,16 @@ function Weapon::onInventory(%this, %obj, %amount)
 
 function WeaponImage::onMount(%this, %obj, %slot)
 {
+   // Check if there's already some ammo in the weapon.
+   %magazine = %obj.magazine[%this];
+   if(%magazine !$= "")
+      %obj.setImageMagazineRounds(%slot, %magazine);
+   else
+      %obj.setImageMagazineRounds(%slot, 0);
+      
    if(%this.isField("clip"))
    {
       // Use the clip system for this weapon.
-      // Check if there's already some ammo in the weapon.
-      %magazine = %obj.magazine[%this];
-      if(%magazine !$= "")
-         %obj.setImageMagazineRounds(%slot, %magazine);
-      else
-         %obj.setImageMagazineRounds(%slot, 0);
-         
       if (%obj.client !$= "" && !%obj.isAiControlled)
       {
          %numClips = %obj.getInventory(%this.clip);
@@ -112,17 +112,14 @@ function WeaponImage::onMount(%this, %obj, %slot)
    }
    else if(%this.ammo !$= "")
    {
-      // Use the ammo pool system for this weapon
+      // Use the ammo pool system for this weapon.
       if (%obj.getInventory(%this.ammo))
-      {
-         %obj.setImageAmmo(%slot, true);
-         %currentAmmo = %obj.getInventory(%this.ammo);
-      }
+         %spareAmmo = %obj.getInventory(%this.ammo);
       else
-         %currentAmmo = 0;
+         %spareAmmo = 0;
 
       if (%obj.client !$= "" && !%obj.isAiControlled)
-         %obj.client.RefreshWeaponHud( 1, %this.item.previewImage, %this.item.reticle, %this.item.zoomReticle, %currentAmmo );
+         %obj.client.RefreshWeaponHud(1, %this.item.previewImage, %this.item.reticle, %this.item.zoomReticle, %spareAmmo );
    }
 }
 
@@ -360,8 +357,11 @@ function WeaponImage::onReloadDone(%this, %obj, %slot)
    //echo("WeaponImage::onReloadDone: " SPC %this SPC %obj SPC %slot);
 
    %fireImage = %this.fireImage;
-   %obj.decInventory(%fireImage.clip, 1);
-   %obj.magazine[%fireImage.getId()] = %fireImage.ammo.maxInventory;
+   %magazineRounds = %obj.magazine[%fireImage.getId()];
+   %missingRounds = %fireImage.magazineCapacity - %magazineRounds;
+   %availRounds = %obj.decInventory(%fireImage.ammo, %missingRounds);
+   %magazineRounds += %availRounds;
+   %obj.magazine[%fireImage.getId()] = %magazineRounds;
    %obj.mountImage(%fireImage, $WeaponSlot, true);
    %obj.setImageGenericTrigger($WeaponSlot, 3, true);
 }

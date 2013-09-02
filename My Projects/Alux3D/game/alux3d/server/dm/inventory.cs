@@ -115,19 +115,7 @@ function ShapeBase::hasAmmo(%this, %weapon)
 
 function ShapeBase::maxInventory(%this, %data)
 {
-   if (%data.isField("clip"))
-   {
-      // Use the clip system which uses the maxInventory
-      // field on the ammo itself.
-      return %data.maxInventory;
-   }
-   else
-   {
-      // Use the ammo pool system which uses the maxInv[]
-      // array on the object's datablock.
-      // If there is no limit defined, we assume 0
-      return %this.getDatablock().maxInv[%data.getName()];
-   }
+   return %this.getDatablock().maxInv[%data.getName()];
 }
 
 function ShapeBase::incInventory(%this, %data, %amount)
