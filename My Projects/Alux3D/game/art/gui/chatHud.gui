@@ -13,8 +13,8 @@ new GuiControl(MessageHud)
    visible = "0";
    noCursor = true;
 
-   new GuiBitmapBorderCtrl(MessageHud_Frame) {
-      profile = "ChatHudBorderProfile";
+   new GuiControl(MessageHud_Frame) {
+      profile = "GuiDefaultProfile";
       horizSizing = "right";
       vertSizing = "bottom";
       position = "120 375";
@@ -22,7 +22,7 @@ new GuiControl(MessageHud)
       minExtent = "8 8";
       visible = "1";
 
-      new GuiBitmapCtrl() {
+      new GuiControl() {
          profile = "GuiDefaultProfile";
          horizSizing = "width";
          vertSizing = "height";
@@ -31,8 +31,6 @@ new GuiControl(MessageHud)
          minExtent = "8 8";
          visible = "1";
          helpTag = "0";
-         bitmap = "core/art/gui/images/hudfill.png";
-         wrap = "0";
       };
 
       new GuiTextCtrl(MessageHud_Text)
@@ -84,8 +82,8 @@ new GuiControl(MainChatHud) {
       visible = "1";
       helpTag = "0";
 
-      new GuiBitmapBorderCtrl(OuterChatHud) {
-         profile = "ChatHudBorderProfile";
+      new GuiControl(OuterChatHud) {
+         profile = "GuiDefaultProfile";
          horizSizing = "width";
          vertSizing = "bottom";
          position = "0 0";
@@ -96,7 +94,7 @@ new GuiControl(MainChatHud) {
             useVariable = "0";
             tile = "0";
 
-         new GuiBitmapCtrl() {
+         new GuiControl() {
             profile = "GuiDefaultProfile";
             horizSizing = "width";
             vertSizing = "height";
@@ -105,8 +103,6 @@ new GuiControl(MainChatHud) {
             minExtent = "8 8";
             visible = "1";
             helpTag = "0";
-            bitmap = "core/art/gui/images/hudfill.png";
-            wrap = "0";
          };
 
          new GuiButtonCtrl(chatPageDown) {
