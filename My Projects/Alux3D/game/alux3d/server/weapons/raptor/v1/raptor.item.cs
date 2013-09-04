@@ -17,7 +17,7 @@ datablock ItemData(WpnRaptorAmmo)
    friction = 0.6;
 
    // Dynamic properties defined by the scripts
-   pickUpName = "Raptor Bullets";
+   pickUpName = "Raptor Rounds";
    count = 30;
 };
 
