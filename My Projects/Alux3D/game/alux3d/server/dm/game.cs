@@ -114,12 +114,6 @@ function GameConnection::setAmmoAmountHud(%client, %amount, %amountInClips )
 {
    commandToClient(%client, 'SetAmmoAmountHud', %amount, %amountInClips);
 }
-
-function GameConnection::RefreshWeaponHud(%client, %amount, %preview, %ret, %zoomRet, %amountInClips)
-{
-   commandToClient(%client, 'RefreshWeaponHud', %amount, %preview, %ret, %zoomRet, %amountInClips);
-}
-
 //-----------------------------------------------------------------------------
 
 function GameConnection::control(%client, %obj)

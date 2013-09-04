@@ -107,7 +107,7 @@ function WeaponImage::onMount(%this, %obj, %slot)
          %numClips = %obj.getInventory(%this.clip);
          if(%numClips $= "")
             %numClips = 0;
-         %obj.client.RefreshWeaponHud("", %this.item.previewImage, %this.item.reticle, %this.item.zoomReticle, %numClips);
+         %obj.client.setAmmoAmountHud("", %numClips);
       }
    }
    else if(%this.ammo !$= "")
@@ -119,7 +119,7 @@ function WeaponImage::onMount(%this, %obj, %slot)
          %spareAmmo = 0;
 
       if (%obj.client !$= "" && !%obj.isAiControlled)
-         %obj.client.RefreshWeaponHud(1, %this.item.previewImage, %this.item.reticle, %this.item.zoomReticle, %spareAmmo );
+         %obj.client.setAmmoAmountHud("", %spareAmmo);
    }
 }
 
@@ -529,9 +529,9 @@ function Ammo::onInventory(%this, %obj, %amount)
                else //Is a single fire weapon, like the grenade launcher.
                {
                   %amountInClips = %currentAmmo;
-                  %currentAmmo = 1;
+                  %currentAmmo = "";
                }
-               
+
                if (%obj.client !$= "" && !%obj.isAiControlled)
                   %obj.client.setAmmoAmountHud(%currentAmmo, %amountInClips);
             }

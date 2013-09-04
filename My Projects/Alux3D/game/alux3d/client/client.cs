@@ -65,16 +65,9 @@ function clientCmdPlayTeleportEffect(%position, %effectDataBlock)
 // Update the Ammo Counter with current ammo, if not any then hide the counter.
 function clientCmdSetAmmoAmountHud(%amount, %amountInClips)
 {
-   if(%amount $= "")
-   {
-      SoldierHudAmmoAmount.setVisible(true);
-      SoldierHudAmmoAmount.setText("Clips: " @ %amountInClips);
-   }
-   else
-   {
-      SoldierHudAmmoAmount.setVisible(true);
-      SoldierHudAmmoAmount.setText("Ammo: " @ %amount @ "/" @ %amountInClips);
-   }
+   SoldierHudAmmoAmount.zMagazine = %amount;
+   SoldierHudAmmoAmount.zSpare = %amountInClips;
+   SoldierHudAmmoAmount.setVisible(true);
 }
 
 // Here we update the Weapon Preview image & reticle for each weapon.  We also

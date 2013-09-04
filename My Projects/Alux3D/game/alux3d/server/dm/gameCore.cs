@@ -502,9 +502,6 @@ function GameCore::onClientEnterGame(%game, %client)
    %client.kills = 0;
    %client.deaths = 0;
 
-   // weaponHUD
-   %client.RefreshWeaponHud(0, "", "");
-
    // Prepare the player object.
    %game.preparePlayer(%client);
 
@@ -637,9 +634,6 @@ function GameCore::onDeath(%game, %client, %sourceObject, %sourceClient, %damage
 {
    //echo (%game @"\c4 -> "@ %game.class @" -> GameCore::onDeath");
    
-   // clear the weaponHUD
-   %client.RefreshWeaponHud(0, "", "");
-
    // Clear out the name on the corpse
    %client.player.setShapeName("");
    

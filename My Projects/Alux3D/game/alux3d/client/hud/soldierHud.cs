@@ -55,6 +55,14 @@ function SoldierHud::tickThread(%this)
       %this.zTickThread = "";
    }
    %this.zTickThread = %this.schedule(32, "tickThread");
+   
+   %magazine = SoldierHudAmmoAmount.zMagazine;
+   if(%magazine $= "")
+      %magazine = ServerConnection.getControlObject().getImageMagazineRounds(0);
+      
+   %spare = SoldierHudAmmoAmount.zSpare;
+   
+   SoldierHudAmmoAmount.setText("Ammo: " @ %magazine @ "/" @ %spare);
 }
 
 //-----------------------------------------------------------------------------
