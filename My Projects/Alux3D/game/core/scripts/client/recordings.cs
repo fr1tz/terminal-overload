@@ -37,7 +37,7 @@ function StartSelectedDemo()
 
    if(ServerConnection.playDemo(%file))
    {
-      Canvas.setContent(PlayGui);
+      Canvas.setContent($PlayGui);
       Canvas.popDialog(RecordingsDlg);
       ServerConnection.prepDemoPlayback();
    }

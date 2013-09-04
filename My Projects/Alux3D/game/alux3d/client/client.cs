@@ -32,7 +32,7 @@ function clientCmdSyncClock(%time)
 
 function clientCmdSetDamageDirection(%direction)
 {
-   eval("%ctrl = DamageHUD-->damage_" @ %direction @ ";");
+   eval("%ctrl = SoldierHudDamageHUD-->damage_" @ %direction @ ";");
    if (isObject(%ctrl))
    {
       // Show the indicator, and schedule an event to hide it again
@@ -67,13 +67,13 @@ function clientCmdSetAmmoAmountHud(%amount, %amountInClips)
 {
    if(%amount $= "")
    {
-      AmmoAmount.setVisible(true);
-      AmmoAmount.setText("Clips: " @ %amountInClips);
+      SoldierHudAmmoAmount.setVisible(true);
+      SoldierHudAmmoAmount.setText("Clips: " @ %amountInClips);
    }
    else
    {
-      AmmoAmount.setVisible(true);
-      AmmoAmount.setText("Ammo: " @ %amount @ "/" @ %amountInClips);
+      SoldierHudAmmoAmount.setVisible(true);
+      SoldierHudAmmoAmount.setText("Ammo: " @ %amount @ "/" @ %amountInClips);
    }
 }
 

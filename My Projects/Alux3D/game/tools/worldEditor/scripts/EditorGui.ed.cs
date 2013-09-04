@@ -1946,7 +1946,7 @@ function EditorGui::handleEscape( %this )
       
    if ( !%result )
    {
-     Editor.close("PlayGui");
+     Editor.close($PlayGui);
    }
 }
 

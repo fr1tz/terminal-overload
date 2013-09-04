@@ -127,7 +127,7 @@ function EditorGui::buildMenus(%this)
    %fileMenu.appendItem( "Add FMOD Designer Audio..." TAB "" TAB "AddFMODProjectDlg.show();" );
    
    %fileMenu.appendItem("-");
-   %fileMenu.appendItem("Play Level" TAB "F11" TAB "Editor.close(\"PlayGui\");");
+   %fileMenu.appendItem("Play Level" TAB "F11" TAB "Editor.close($PlayGui);");
       
    if(!isWebDemo())
    {

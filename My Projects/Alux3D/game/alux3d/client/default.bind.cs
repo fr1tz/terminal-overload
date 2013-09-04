@@ -45,7 +45,7 @@ function doScreenShotHudless(%val)
       schedule(10, 0, "doScreenShot", %val);
    }
    else
-      canvas.setContent(PlayGui);
+      canvas.setContent($PlayGui);
 }
 
 moveMap.bind(keyboard, "alt p", doScreenShotHudless);

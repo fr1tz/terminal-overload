@@ -58,10 +58,14 @@ function initClient()
 
    // Load up the Game GUIs
    exec("art/gui/defaultGameProfiles.cs");
-   exec("art/gui/PlayGui.gui");
    exec("art/gui/ChatHud.gui");
    exec("art/gui/playerList.gui");
    exec("art/gui/hudlessGui.gui");
+   exec("alux3d/client/hud/overlayHud.gui");
+   exec("alux3d/client/hud/overlayHud.cs");
+   exec("alux3d/client/hud/soldierHud.gui");
+   exec("alux3d/client/hud/soldierHud.cs");
+   $PlayGui = SoldierHud;
 
    // Load up the shell GUIs
    exec("art/gui/mainMenuGui.gui");

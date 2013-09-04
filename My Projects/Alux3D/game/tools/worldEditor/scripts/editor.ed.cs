@@ -119,7 +119,7 @@ function toggleEditor(%make)
             } 
             else 
             {
-               Editor.close("PlayGui");
+               Editor.close($PlayGui);
             }
          }
          else 
