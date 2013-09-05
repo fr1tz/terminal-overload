@@ -71,8 +71,8 @@ if($dirCount == 0) {
 //-----------------------------------------------------------------------------
 // Display a splash window immediately to improve app responsiveness before
 // engine is initialized and main window created
-if (!$isDedicated)
-   displaySplashWindow();
+//if (!$isDedicated)
+//   displaySplashWindow();
 
 
 //-----------------------------------------------------------------------------
