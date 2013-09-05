@@ -66,6 +66,8 @@ function initClient()
    exec("alux3d/client/hud/soldierHud.gui");
    exec("alux3d/client/hud/soldierHud.cs");
    $PlayGui = SoldierHud;
+   $SB::WODec = 0.015; // HACK HACK HACK: server should decide how
+                       // fast whiteout flash decays.
 
    // Load up the shell GUIs
    exec("art/gui/mainMenuGui.gui");
