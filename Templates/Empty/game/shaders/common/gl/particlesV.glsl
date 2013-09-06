@@ -20,6 +20,8 @@
 // IN THE SOFTWARE.
 //-----------------------------------------------------------------------------
 
+#include "hlslCompat.glsl"
+
 varying vec4 color;
 varying vec2 uv0;
 varying vec4 pos;
@@ -33,5 +35,6 @@ void main()
    pos = fsModelViewProj * gl_Vertex;
    color = gl_Color;
    uv0 = gl_MultiTexCoord0.st;
+   correctSSP(gl_Position);
 }
 
