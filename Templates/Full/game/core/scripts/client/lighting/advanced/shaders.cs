@@ -132,6 +132,11 @@ new ShaderData( AL_PointLightShader )
    OGLVertexShaderFile = "shaders/common/lighting/advanced/gl/convexGeometryV.glsl";
    OGLPixelShaderFile  = "shaders/common/lighting/advanced/gl/pointLightP.glsl";
 
+   samplerNames[0] = "$prePassBuffer";
+   rtParams[0] = true;
+   samplerNames[1] = "$shadowMap";
+   samplerNames[2] = "$cookieMap";
+   
    pixVersion = 3.0;
 };
 
