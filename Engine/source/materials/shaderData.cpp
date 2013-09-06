@@ -294,7 +294,7 @@ bool ShaderData::hasSamplerDef(const String &_samplerName, int &pos) const
    String samplerName = _samplerName.startsWith("$") ? _samplerName : "$"+_samplerName;   
    for(int i = 0; i < NumTextures; ++i)
    {
-      if( mSamplerNames[i] == samplerName )
+      if( mSamplerNames[i].equal(samplerName, String::NoCase ) )
       {
          pos = i;
          return true;
@@ -318,7 +318,7 @@ bool ShaderData::_checkDefinition(GFXShader *shader)
 
    for(int i = 0; i < shaderConstDesc.size(); ++i)
    {
-      auto &desc = shaderConstDesc[i];
+      const GFXShaderConstDesc &desc = shaderConstDesc[i];
       if(desc.constType == GFXSCT_Sampler)
       {
          samplers.push_back(desc.name );
