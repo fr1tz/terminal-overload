@@ -1,0 +1,32 @@
+Torque Exporter 0.97 Beta3 
+ Using blender, version 249
+ Exporting...
+ Writing shape to  'D:\rotc-A\cat5\master\share\shapes\cat5\bluedebris1.dts'.
+ Processing...
+    Loading sequence 'ambient'...
+       Frames: 30 
+    Loaded sequence 'ambient'.
+ > Shape Details
+    > Nodes
+      ^^ Bone [Exp-Catch-Root] (parent -1)
+      ^^ Bone [Particle] (parent -1)
+    > Objects
+     'Particle' : Standard Standard Standard Standard 
+    > Materials
+       bluedebris1
+    > Detail Levels
+       Detail-1 (size : 100)
+       Detail-2 (size : 50)
+       Detail-3 (size : 25)
+       Detail-4 (size : 1)
+       Smallest : Detail-4 (size : 1)
+    > Internal Sequences
+     - ambient
+        Animates: 
+        Frames: 30
+        Ground Frames: 0
+        Triggers: 0
+ Writing out DTS...
+ Done.
+ Finished.
+ 
