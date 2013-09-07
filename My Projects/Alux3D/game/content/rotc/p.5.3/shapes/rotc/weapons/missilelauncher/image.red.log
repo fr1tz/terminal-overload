@@ -1,0 +1,113 @@
+Torque Exporter 0.97 Beta3 
+ Using blender, version 249
+ Exporting...
+   ****************************************************************************
+   Warning: Multiple Blender mesh names in Detail1 all reduce to the same DTS
+    Object name: "Cylinder"
+     The exporter will use the original names for these meshes and any nodes
+     generated from them.  This may result in duplicate or unneccesary nodes,
+     extra animation tracks, and inefficent mesh packing in the exported dts
+     file.
+       Changed dts object and node name for Blender mesh "Cylinder.003"
+         from "Cylinder" to "Cylinder.003".
+       Changed dts object and node name for Blender mesh "Cylinder.002"
+         from "Cylinder" to "Cylinder.002".
+       Changed dts object and node name for Blender mesh "Cylinder"
+         from "Cylinder" to "Cylinder".
+   ****************************************************************************
+
+   ****************************************************************************
+   Warning: Multiple Blender mesh names in Detail1 all reduce to the same DTS
+    Object name: "Cube"
+     The exporter will use the original names for these meshes and any nodes
+     generated from them.  This may result in duplicate or unneccesary nodes,
+     extra animation tracks, and inefficent mesh packing in the exported dts
+     file.
+       Changed dts object and node name for Blender mesh "Cube.003"
+         from "Cube" to "Cube.003".
+       Changed dts object and node name for Blender mesh "Cube.001"
+         from "Cube" to "Cube.001".
+       Changed dts object and node name for Blender mesh "Cube"
+         from "Cube" to "Cube".
+   ****************************************************************************
+
+ Writing shape to  '/home/mike/current/rotc/rotc-ethernet/ethernet/data/weapons/missilelauncher/image.red.dts'.
+ Processing...
+    Loading sequence 'fire'...
+       Frames: 6 
+    Loaded sequence 'fire'.
+    Loading sequence 'idle'...
+       Frames: 5 
+    Loaded sequence 'idle'.
+    Loading sequence 'charged'...
+       Frames: 11 
+       Animates: loc 
+    Loaded sequence 'charged'.
+    Loading sequence 'charge'...
+       Frames: 16 
+       Animates: loc 
+    Loaded sequence 'charge'.
+    Loading sequence 'nocharge'...
+       Frames: 5 
+       Animates: loc 
+       Note: Duplicate frames removed,  (was 5,  now 4)
+    Loaded sequence 'nocharge'.
+ > Shape Details
+    > Nodes
+      ^^ Bone [Exp-Catch-Root] (parent -1)
+      ^^ Bone [Cube] (parent -1)
+      ^^ Bone [Cube.001] (parent -1)
+      ^^ Bone [Cube.003] (parent -1)
+      ^^ Bone [Cylinder] (parent -1)
+      ^^ Bone [Cylinder.002] (parent -1)
+      ^^ Bone [Cylinder.003] (parent -1)
+      ^^ Bone [Glow] (parent -1)
+      ^^ Bone [GlowVisibility] (parent -1)
+      ^^ Bone [MountPoint] (parent -1)
+      ^^ Bone [MuzzlePoint] (parent -1)
+      ^^ Bone [RetractionPoint] (parent -1)
+      ^^ Bone [emitter1] (parent -1)
+      ^^ Bone [emitter2] (parent -1)
+    > Objects
+     'Cube' : Standard 
+     'Cube.001' : Standard 
+     'Cube.003' : Standard 
+     'Cylinder' : Standard 
+     'Cylinder.002' : Standard 
+     'Cylinder.003' : Standard 
+     'Glow' : Standard 
+    > Materials
+       image
+    > Detail Levels
+       Detail-1 (size : 1)
+       Smallest : Detail-1 (size : 1)
+    > Internal Sequences
+     - fire
+        Animates: vis 
+        Frames: 6
+        Ground Frames: 0
+        Triggers: 0
+     - idle
+        Animates: vis 
+        Frames: 5
+        Ground Frames: 0
+        Triggers: 0
+     - charged
+        Animates: loc 
+        Frames: 11
+        Ground Frames: 0
+        Triggers: 0
+     - charge
+        Animates: vis loc 
+        Frames: 16
+        Ground Frames: 0
+        Triggers: 0
+     - nocharge
+        Animates: vis loc 
+        Frames: 4
+        Ground Frames: 0
+        Triggers: 0
+ Writing out DTS...
+ Done.
+ Finished.
+ 

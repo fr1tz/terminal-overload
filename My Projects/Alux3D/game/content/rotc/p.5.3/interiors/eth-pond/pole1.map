@@ -1,0 +1,33 @@
+
+// entity 0
+{
+"classname" "worldspawn"
+"detail_number" "0"
+"min_pixels" "250"
+"geometry_scale" "32.0"
+"light_geometry_scale" "4.0"
+"ambient_color" "0 0 0"
+"emergency_ambient_color" "0 0 0"
+// brush 0
+{
+( 112 96 32 ) ( 112 -96 32 ) ( -80 96 32 ) malloc/grey_grid 240 0 0 1 1 0 0 0
+( 112 32 32 ) ( -128 80 -800 ) ( 160 80 -800 ) malloc/grey_grid 240 224 0 1 1 0 0 0
+( -16 -96 832 ) ( 32 144 0 ) ( 32 -144 0 ) malloc/grey_grid 0 0 0 1 1 0 0 0
+( -144 -176 -192 ) ( 144 -176 -192 ) ( 144 112 -192 ) malloc/grey_grid 0 224 0 1 1 0 0 0
+( -80 -32 32 ) ( 160 -80 -800 ) ( -128 -80 -800 ) malloc/grey_grid 240 224 0 1 1 0 0 0
+( 16 96 832 ) ( -32 -144 0 ) ( -32 144 0 ) malloc/grey_grid 0 0 0 1 1 0 0 0
+}
+}
+// entity 1
+{
+"classname" "detail"
+// brush 0
+{
+( 6 6 864 ) ( 6 -6 864 ) ( -6 6 864 ) malloc/grey_grid 0 0 0 0.0625 0.0625 0 0 0
+( 6 6 864 ) ( -9 9 32 ) ( 9 9 32 ) malloc/grey_grid 0 32 0 0.0625 1 0 0 0
+( 6 -6 864 ) ( 9 9 32 ) ( 9 -9 32 ) malloc/grey_grid 0 32 0 0.0625 1 0 0 0
+( -9 -9 32 ) ( 9 -9 32 ) ( 9 9 32 ) malloc/grey_grid 0 0 0 0.0625 0.0625 0 0 0
+( -6 -6 864 ) ( 9 -9 32 ) ( -9 -9 32 ) malloc/grey_grid 0 32 0 0.0625 1 0 0 0
+( -6 6 864 ) ( -9 -9 32 ) ( -9 9 32 ) malloc/grey_grid 0 32 0 0.0625 1 0 0 0
+}
+}
