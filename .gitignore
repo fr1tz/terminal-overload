@@ -169,6 +169,4 @@ pip-log.txt
 console.log
 *.cached.dts
 !Engine/bin
-Project Manager.exe
-projects.xml
-Qt*.dll
+
