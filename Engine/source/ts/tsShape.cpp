@@ -1818,6 +1818,11 @@ bool TSShape::read(Stream * s)
 
 void TSShape::createEmptyShape()
 {
+   names.setSize(3);
+      names[0] = StringTable->insert("Detail2");
+      names[1] = StringTable->insert("Mesh2");
+      names[2] = StringTable->insert("Mesh");
+
    nodes.set(dMalloc(1 * sizeof(Node)), 1);
       nodes[0].nameIndex = 1;
       nodes[0].parentIndex = -1;
@@ -1827,7 +1832,7 @@ void TSShape::createEmptyShape()
 
    objects.set(dMalloc(1 * sizeof(Object)), 1);
       objects[0].nameIndex = 2;
-      objects[0].numMeshes = 1;
+      objects[0].numMeshes = 0;
       objects[0].startMeshIndex = 0;
       objects[0].nodeIndex = 0;
       objects[0].nextSibling = -1;
@@ -1890,11 +1895,6 @@ void TSShape::createEmptyShape()
    groundTranslations.set(NULL, 0);
    triggers.set(NULL, 0);
    billboardDetails.set(NULL, 0);
-
-   names.setSize(3);
-      names[0] = StringTable->insert("Detail2");
-      names[1] = StringTable->insert("Mesh2");
-      names[2] = StringTable->insert("Mesh");
 
    radius = 0.866025f;
    tubeRadius = 0.707107f;
