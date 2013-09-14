@@ -2568,7 +2568,7 @@ void ShapeBase::emitDust( ParticleEmitter* emitter, F32 triggerHeight, const Poi
 
 //----------------------------------------------------------------------------
 
-TSShape const* ShapeBase::getShape()
+TSShape* ShapeBase::getShape()
 {
    return mShapeInstance? mShapeInstance->getShape(): 0;
 }

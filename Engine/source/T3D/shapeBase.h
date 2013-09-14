@@ -1879,7 +1879,7 @@ public:
    /// @{
 
    /// Returns the renderable shape of this object
-   TSShape const* getShape();
+   TSShape* getShape();
 
    /// @see SceneObject
    virtual void prepRenderImage( SceneRenderState* state );
