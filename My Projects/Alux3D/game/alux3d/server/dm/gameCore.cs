@@ -22,19 +22,7 @@
 // Returns: The Game object
 function GameCore::createGame()
 {
-   // Create Game Objects
-   // Here begins our gametype functionality
-   if (isObject(theLevelInfo))
-   {
-      $Server::MissionType = theLevelInfo.gameType;  //MissionInfo.gametype;
-      //echo("\c4 -> Parsed mission Gametype: "@ theLevelInfo.gameType); //MissionInfo.gametype);
-   }
-   else
-   {
-      $Server::MissionType = "";
-   }
-
-   if ($Server::MissionType $= "")
+   if($Server::MissionType $= "")
       $Server::MissionType = "Deathmatch"; //Default gametype, just in case
 
    // Note: The Game object will be cleaned up by MissionCleanup.  Therefore its lifetime is
