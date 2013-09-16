@@ -212,6 +212,9 @@ class SceneContainer
       ///
       void findObjectList( const Frustum& frustum, U32 mask, Vector< SceneObject* >* outFound );
 
+		///
+      U32 countObjects( const Box3F& box, U32 mask);
+
       /// @}
 
       /// @name Line intersection
