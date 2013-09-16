@@ -440,6 +440,7 @@ static void RegisterGameFunctions()
    Con::setIntVariable("$TypeMasks::DebrisObjectType",         DebrisObjectType);
    Con::setIntVariable("$TypeMasks::PhysicalZoneObjectType",   PhysicalZoneObjectType);
    Con::setIntVariable("$TypeMasks::LightObjectType",          LightObjectType);
+   Con::setIntVariable("$TypeMasks::NextFreeObjectType",       NextFreeObjectType);
 
    Con::addVariable("Ease::InOut", TypeS32, &gEaseInOut, 
       "InOut ease for curve movement.\n"

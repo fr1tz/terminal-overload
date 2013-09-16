@@ -129,6 +129,10 @@ enum SceneObjectTypes
    PhysicalZoneObjectType = BIT( 22 ),
 
    /// @}
+
+   /// Next object type not used within the engine.
+   /// @see StaticShapeData::dynamicTypeField
+   NextFreeObjectType = BIT( 23 ),
 };
 
 enum SceneObjectTypeMasks
