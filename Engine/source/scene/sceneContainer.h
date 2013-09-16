@@ -212,8 +212,10 @@ class SceneContainer
       ///
       void findObjectList( const Frustum& frustum, U32 mask, Vector< SceneObject* >* outFound );
 
-		///
-      U32 countObjects( const Box3F& box, U32 mask);
+		/// Return number of objects of a certain type in a certain area.
+		/// Note: "Strict" means that the object's typeMask must contain 
+		///       all bits set in "mask".
+      U32 countObjectsStrict( const Box3F& box, U32 mask);
 
       /// @}
 

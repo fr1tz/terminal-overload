@@ -414,7 +414,7 @@ void ShapeRenderVolume::rebuild()
 	{
 		if(mDataBlock->mode < 2)
 			return;
-		mServerObjectCount = this->getContainer()->countObjects(
+		mServerObjectCount = this->getContainer()->countObjectsStrict(
 			box,
 			(smBaseObjectMask | mDataBlock->objectMask)
 		);
@@ -422,7 +422,7 @@ void ShapeRenderVolume::rebuild()
 	}
 	else
 	{
-		U32 objectCount = this->getContainer()->countObjects(
+		U32 objectCount = this->getContainer()->countObjectsStrict(
 			box,
 			(smBaseObjectMask | mDataBlock->objectMask)
 		);

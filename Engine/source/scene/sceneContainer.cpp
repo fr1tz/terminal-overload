@@ -834,7 +834,7 @@ void SceneContainer::findObjects( U32 mask, FindCallback callback, void *key )
 
 //-----------------------------------------------------------------------------
 
-U32 SceneContainer::countObjects( const Box3F& searchBox, U32 mask )
+U32 SceneContainer::countObjectsStrict( const Box3F& searchBox, U32 mask )
 {
    PROFILE_SCOPE( Container_CountObjects_Box );
 
