@@ -387,11 +387,42 @@ void ShapeRenderVolume::renderObjectBounds(ObjectRenderInst*  ri,
 	drawer->drawCube(desc, box, ColorI(0, 0, 100), &mRenderObjToWorld );
 }
 
-void ShapeRenderVolume::rebuildShape()
+void ShapeRenderVolume::rebuildMode2MoveMeshVerts(TSMesh* mesh, Point3F vec)
 {
-	char nodeName[256];
-	char objName[256];
-   char meshName[256];
+	// Note: Mesh must be disassembled!
+	for(int i = 0; i < mesh->verts.size(); i++)
+		mesh->verts[i] += vec;
+}
+
+void ShapeRenderVolume::rebuildMode2MergeMesh(TSMesh* dest, TSMesh* src)
+{
+	// Note: Both meshes must be disassembled!
+	U32 numVerts = dest->verts.size();
+	U32 numIndices = dest->indices.size();
+
+	dest->verts.merge(src->verts);
+	dest->norms.merge(src->norms);
+	dest->tverts.merge(src->tverts);
+	dest->tangents.merge(src->tangents);
+	dest->tverts2.merge(src->tverts2);
+	dest->colors.merge(src->colors);
+
+	for(int i = 0; i < src->indices.size(); i++)
+	{
+		dest->indices.push_back(src->indices[i]+numVerts);		
+	}
+
+	for(int i = 0; i < src->primitives.size(); i++)
+	{
+		TSDrawPrimitive newPrimitive = src->primitives[i];
+		newPrimitive.start += numIndices;
+		dest->primitives.push_back(newPrimitive);
+	}
+}
+
+void ShapeRenderVolume::rebuildMode2()
+{
+   char newMeshName[256];
 	if(mObjects.size() == 0)
 		return;
 	if(mShape) SAFE_DELETE(mShape);
@@ -399,29 +430,72 @@ void ShapeRenderVolume::rebuildShape()
 	mShape->createEmptyShape();
 	mShape->materialList = new TSMaterialList(mObjects[0]->getShape()->materialList);
 	mShape->init();
+	TSMesh* mesh = NULL;
+	TSShape::smTSAlloc.setWrite();
+	//Con::printf("Have %i objects", mObjects.size());
+	int numMeshes = 0;
 	for(int i = 0; i < mObjects.size(); i++)
 	{
 		ShapeBase* object = mObjects[i];
-		dSprintf(meshName, sizeof(meshName), "Object%iMesh2", i);
-		if(mShape->addMesh(object->getShape(), "Mesh2", meshName))
+		dSprintf(newMeshName, sizeof(newMeshName), "Object%iMesh2", i);
+		if(mShape->addMesh(object->getShape(), "Mesh2", newMeshName))
 		{
-			S32 nodeIndex = object->getShape()->findNode("Mesh");
 			Point3F pos = object->getPosition() - this->getPosition();
+			S32 nodeIndex = object->getShape()->findNode("Mesh");
 			if(nodeIndex >= 0)
 				pos += object->getShape()->defaultTranslations[nodeIndex];
-			dSprintf(nodeName, sizeof(nodeName), "Object%iNode", i);
-			mShape->addNode(nodeName, "", pos, QuatF(0, 0, 1, 0));
-			dSprintf(objName, sizeof(objName), "Object%iMesh", i);
-			mShape->setObjectNode(objName, nodeName);
+
+			if(mesh == NULL)
+			{
+				//Con::printf("Added initial mesh %s", newMeshName);
+				mesh = mShape->findMesh(newMeshName);
+				if(mesh)
+				{
+					mesh->disassemble();
+					rebuildMode2MoveMeshVerts(mesh, pos);
+					numMeshes++;
+				}
+				else
+				{
+					//Con::errorf("Unable to find mesh %s", newMeshName);
+				}
+			}
+			else
+			{
+				//Con::printf("Added temporary mesh %s", newMeshName);
+				TSMesh* tmp = mShape->findMesh(newMeshName);
+				if(tmp)
+				{
+					tmp->disassemble();
+					rebuildMode2MoveMeshVerts(tmp, pos);
+					rebuildMode2MergeMesh(mesh, tmp);
+					mShape->removeMesh(newMeshName);
+					//Con::printf("Merged and removed temporary mesh %s", newMeshName);
+					numMeshes++;
+				}
+				else
+				{
+					//Con::errorf("Unable to find mesh %s", newMeshName);
+				}
+			}
 		}
 	}
-	if(mShape->meshes.size() > 0)
+	//Con::printf("Added %i meshes", numMeshes);
+	if(mesh)
 	{
-		mShape->updateSmallestVisibleDL();
-	   if(mShapeInstance) SAFE_DELETE(mShapeInstance);
-		mShapeInstance = new TSShapeInstance(mShape, this->isClientObject());
-		mShapeInstance->initMaterialList();
+		mesh->mVertexData.setReady(false);
+		mesh->disassemble();
+		mesh->computeBounds();
+		mesh->createTangents(mesh->verts, mesh->norms);
+		mesh->convertToAlignedMeshData();
 	}
+	mShape->updateSmallestVisibleDL();
+	mShape->init();
+
+   if(mShapeInstance) SAFE_DELETE(mShapeInstance);
+	mShapeInstance = new TSShapeInstance(mShape, this->isClientObject());
+	mShapeInstance->initMaterialList();
+
 #if 0
 	// Save shape to file so it can be debugged in shape editor.
 	FileStream stream;
@@ -432,7 +506,13 @@ void ShapeRenderVolume::rebuildShape()
       return;
    }
 	mShape->write(&stream);
+	stream.close();
 #endif
+}
+
+void ShapeRenderVolume::rebuildMode3()
+{
+
 }
 
 void ShapeRenderVolume::findCallback(SceneObject* obj, void* key)
@@ -476,7 +556,7 @@ void ShapeRenderVolume::processTick(const Move* move)
 
 		if(mDataBlock->mode == 2)
 		{
-			this->rebuildShape();
+			this->rebuildMode2();
 		}
 		else if(mDataBlock->mode == 3)
 		{

@@ -81,7 +81,10 @@ class ShapeRenderVolume : public GameBase
 
 	// ShapeRenderVolume
 	static void findCallback(SceneObject* obj, void* key);
-	void rebuildShape();
+	void rebuildMode2();
+	void rebuildMode2MoveMeshVerts(TSMesh* mesh, Point3F vec);
+	void rebuildMode2MergeMesh(TSMesh* dest, TSMesh* src);
+	void rebuildMode3();
 	void prepRenderImageMode0(SceneRenderState* state);
 	void prepRenderImageMode1(SceneRenderState* state);
 	void prepRenderImageMode2(SceneRenderState* state);
