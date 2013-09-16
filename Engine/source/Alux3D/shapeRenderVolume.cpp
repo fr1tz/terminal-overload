@@ -22,6 +22,10 @@
 
 bool ShapeRenderVolume::smRenderBounds = false;
 
+// All the objects we care about must be
+// derived from ShapeBase and be static!
+U32 ShapeRenderVolume::smBaseObjectMask = (ShapeBaseObjectType | StaticObjectType);
+
 //----------------------------------------------------------------------------
 
 IMPLEMENT_CO_DATABLOCK_V1(ShapeRenderVolumeData);
@@ -39,6 +43,7 @@ ConsoleDocClass( ShapeRenderVolumeData,
 ShapeRenderVolumeData::ShapeRenderVolumeData()
 {
    mode = 0;
+	objectMask = StaticShapeObjectType;
 }
 
 bool ShapeRenderVolumeData::onAdd()
@@ -61,6 +66,10 @@ void ShapeRenderVolumeData::initPersistFields()
 			"Mode 3: Render collision geometry within volume.\n"
 		);
 
+		addField( "objectMask", TypeS32, Offset(objectMask, ShapeRenderVolumeData),
+			"@brief What kind of objects this volume should render.\n\n"
+		);
+
    endGroup("Operation");
 
    Parent::initPersistFields();
@@ -72,12 +81,14 @@ void ShapeRenderVolumeData::packData(BitStream* stream)
 {
    Parent::packData(stream);
    stream->write(mode);
+	stream->write(objectMask);
 }
 
 void ShapeRenderVolumeData::unpackData(BitStream* stream)
 {
    Parent::unpackData(stream);
    stream->read(&mode);
+	stream->read(&objectMask);
 }
 
 //--------------------------------------------------------------------------
@@ -103,10 +114,11 @@ ShapeRenderVolume::ShapeRenderVolume()
    mObjToWorld.identity();
    mWorldToObj.identity();
 
+	mGeometryDirty = false;
+	mServerObjectCount = 0;
    mDataBlock = NULL;
 	mShape = NULL;
 	mShapeInstance = NULL;
-	mUpdateRenderGeometry = true;
 }
 
 ShapeRenderVolume::~ShapeRenderVolume()
@@ -175,6 +187,7 @@ void ShapeRenderVolume::onDeleteNotify( SimObject *obj )
          if (shape == mObjects[i] )
          {
             mObjects.erase(i);
+				mGeometryDirty = true;
             break;
          }
       }
@@ -201,11 +214,9 @@ void ShapeRenderVolume::setTransform(const MatrixF & mat)
                          1.0/mObjScale.z));
       base.mul(mWorldToObj);
       setMaskBits(TransformMask | ScaleMask);
+		this->rebuild();
    }
-
-	mUpdateRenderGeometry = true;
 }
-
 
 void ShapeRenderVolume::prepRenderImage(SceneRenderState* state)
 {
@@ -387,6 +398,47 @@ void ShapeRenderVolume::renderObjectBounds(ObjectRenderInst*  ri,
 	drawer->drawCube(desc, box, ColorI(0, 0, 100), &mRenderObjToWorld );
 }
 
+void ShapeRenderVolume::rebuild()
+{
+	if(!mDataBlock)
+		return;
+
+	Point3F scale = this->getScale();
+	Box3F box = this->getObjBox();
+	box.minExtents.convolve(scale);
+	box.maxExtents.convolve(scale);
+	MatrixF mat = this->getTransform();
+	mat.mul(box);
+
+	if(isServerObject())
+	{
+		if(mDataBlock->mode < 2)
+			return;
+		mServerObjectCount = this->getContainer()->countObjects(
+			box,
+			(smBaseObjectMask | mDataBlock->objectMask)
+		);
+		this->setMaskBits(RebuildMask);
+	}
+	else
+	{
+		U32 objectCount = this->getContainer()->countObjects(
+			box,
+			(smBaseObjectMask | mDataBlock->objectMask)
+		);
+		Con::printf("Have %i need %i", objectCount, mServerObjectCount);
+		if(objectCount != mServerObjectCount)
+			return; // Ghosts are missing
+
+		if(mDataBlock->mode == 2)
+			this->rebuildMode2();
+		else if(mDataBlock->mode == 3)
+			this->rebuildMode3();
+
+		mGeometryDirty = false;
+	}
+}
+
 void ShapeRenderVolume::rebuildMode2MoveMeshVerts(TSMesh* mesh, Point3F vec)
 {
 	// Note: Mesh must be disassembled!
@@ -422,13 +474,36 @@ void ShapeRenderVolume::rebuildMode2MergeMesh(TSMesh* dest, TSMesh* src)
 
 void ShapeRenderVolume::rebuildMode2()
 {
+	Point3F scale = this->getScale();
+	Box3F box = this->getObjBox();
+	box.minExtents.convolve(scale);
+	box.maxExtents.convolve(scale);
+	MatrixF mat = this->getTransform();
+	mat.mul(box);
+
+	mObjects.clear();
+	this->getContainer()->findObjects(
+		box,
+		mDataBlock->objectMask,
+		findCallback,
+		this
+	);
+
    char newMeshName[256];
 	if(mObjects.size() == 0)
 		return;
 	if(mShape) SAFE_DELETE(mShape);
 	mShape = new TSShape();
 	mShape->createEmptyShape();
-	mShape->materialList = new TSMaterialList(mObjects[0]->getShape()->materialList);
+	for(int i = 0; i < mObjects.size(); i++)
+	{
+		if(mObjects[i]->getShape())
+		{
+			mShape->materialList = new TSMaterialList(mObjects[i]->getShape()->materialList);
+			break;
+		}
+		return;
+	}
 	mShape->init();
 	TSMesh* mesh = NULL;
 	TSShape::smTSAlloc.setWrite();
@@ -492,7 +567,8 @@ void ShapeRenderVolume::rebuildMode2()
 	mShape->updateSmallestVisibleDL();
 	mShape->init();
 
-   if(mShapeInstance) SAFE_DELETE(mShapeInstance);
+	if(mShapeInstance)
+		SAFE_DELETE(mShapeInstance);
 	mShapeInstance = new TSShapeInstance(mShape, this->isClientObject());
 	mShapeInstance->initMaterialList();
 
@@ -512,15 +588,29 @@ void ShapeRenderVolume::rebuildMode2()
 
 void ShapeRenderVolume::rebuildMode3()
 {
+	Point3F scale = this->getScale();
+	Box3F box = this->getObjBox();
+	box.minExtents.convolve(scale);
+	box.maxExtents.convolve(scale);
+	MatrixF mat = this->getTransform();
+	mat.mul(box);
 
+	mPolyList.clear();
+	this->getContainer()->buildPolyList(
+		PLC_Collision,
+		box,
+		mDataBlock->objectMask,
+		&mPolyList
+	);
 }
 
 void ShapeRenderVolume::findCallback(SceneObject* obj, void* key)
 {
    ShapeRenderVolume* volume = reinterpret_cast<ShapeRenderVolume*>(key);
+	U32 volumeMask = smBaseObjectMask | volume->mDataBlock->objectMask;
    U32 objectMask = obj->getTypeMask();
 
-   if(objectMask & ShapeBaseObjectType)
+   if((objectMask & volumeMask) == volumeMask)
 	{
       ShapeBase* shape = static_cast<ShapeBase*>(obj);
 		volume->mObjects.push_back(shape);
@@ -534,43 +624,11 @@ void ShapeRenderVolume::processTick(const Move* move)
 {
    Parent::processTick(move);
 
-   if(!mDataBlock)
-      return;
+	if(this->isServerObject())
+		return;
 
-	if(mUpdateRenderGeometry && this->isClientObject())
-	{
-		Point3F scale = this->getScale();
-		Box3F box = this->getObjBox();
-		box.minExtents.convolve(scale);
-		box.maxExtents.convolve(scale);
-		MatrixF mat = this->getTransform();
-		mat.mul(box);
-
-		mObjects.clear();
-		this->getContainer()->findObjects(
-			box,
-			ShapeBaseObjectType,
-			findCallback,
-			this
-		);
-
-		if(mDataBlock->mode == 2)
-		{
-			this->rebuildMode2();
-		}
-		else if(mDataBlock->mode == 3)
-		{
-			mPolyList.clear();
-			this->getContainer()->buildPolyList(
-				PLC_Collision,
-				box,
-				ShapeBaseObjectType,
-				&mPolyList
-			);
-		}
-
-		mUpdateRenderGeometry = false;
-	}
+	if(mGeometryDirty)
+		this->rebuild();
 }
 
 //--------------------------------------------------------------------------
@@ -579,9 +637,14 @@ U32 ShapeRenderVolume::packUpdate(NetConnection* con, U32 mask, BitStream* strea
 {
    U32 retMask = Parent::packUpdate(con, mask, stream);
 
-   if( stream->writeFlag( mask & TransformMask ) )
+   if(stream->writeFlag(mask & TransformMask))
    {
       stream->writeAffineTransform(mObjToWorld);
+   }
+
+   if(stream->writeFlag(mask & RebuildMask))
+   {
+		stream->write(mServerObjectCount);
    }
 
    return retMask;
@@ -592,10 +655,17 @@ void ShapeRenderVolume::unpackUpdate(NetConnection* con, BitStream* stream)
    Parent::unpackUpdate(con, stream);
 
    // Transform
-   if( stream->readFlag() )
+   if(stream->readFlag())
    {
       MatrixF temp;
       stream->readAffineTransform(&temp);
       setTransform(temp);
    }
+
+	// Rebuild
+	if(stream->readFlag())
+	{
+		stream->read(&mServerObjectCount);
+		mGeometryDirty = true;
+	}
 }

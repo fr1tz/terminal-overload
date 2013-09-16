@@ -23,6 +23,7 @@ class ShapeRenderVolumeData : public GameBaseData
 
   public:
 	S32 mode;
+	U32 objectMask;
 
 	ShapeRenderVolumeData();
    
@@ -39,19 +40,23 @@ class ShapeRenderVolume : public GameBase
 	typedef GameBase Parent;
 
 	static bool smRenderBounds;
+	static U32 smBaseObjectMask;
 
 	ShapeRenderVolumeData* mDataBlock;
+
+	bool mGeometryDirty;
+	U32 mServerObjectCount; // Transmitted from server
 
 	TSShape* mShape;
 	TSShapeInstance* mShapeInstance;
 	Vector<ShapeBase*> mObjects;
 	ConcretePolyList mPolyList;
-	bool mUpdateRenderGeometry;
 
 	enum ShapeRenderVolumeUpdateBits
 	{
 		TransformMask = Parent::NextFreeMask << 0,
-		NextFreeMask  = Parent::NextFreeMask << 1
+		RebuildMask = Parent::NextFreeMask << 1,
+		NextFreeMask  = Parent::NextFreeMask << 2
 	};
 
   public:
@@ -81,6 +86,7 @@ class ShapeRenderVolume : public GameBase
 
 	// ShapeRenderVolume
 	static void findCallback(SceneObject* obj, void* key);
+	void rebuild();
 	void rebuildMode2();
 	void rebuildMode2MoveMeshVerts(TSMesh* mesh, Point3F vec);
 	void rebuildMode2MergeMesh(TSMesh* dest, TSMesh* src);
