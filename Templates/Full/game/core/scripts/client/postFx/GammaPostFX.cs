@@ -25,6 +25,13 @@ singleton ShaderData( GammaShader )
    DXVertexShaderFile 	= "shaders/common/postFx/postFxV.hlsl";
    DXPixelShaderFile 	= "shaders/common/postFx/gammaP.hlsl";
 
+   OGLVertexShaderFile 	= "shaders/common/postFx/gl/postFxV.glsl";
+   OGLPixelShaderFile 	= "shaders/common/postFx/gl/gammaP.glsl";
+   
+   samplerNames[0] = "$backBuffer";
+   rtParams[0] = true;
+   samplerNames[1] = "$colorCorrectionTex";
+
    pixVersion = 2.0;   
 };
 
@@ -48,7 +55,10 @@ singleton PostEffect( GammaPostFX )
    stateBlock = GammaStateBlock;
    
    texture[0] = "$backBuffer";  
+   samplerNames[0] = "backBuffer";
+   rtParams[0] = "backBuffer";
    texture[1] = $HDRPostFX::colorCorrectionRamp;  
+   samplerNames[1] = "colorCorrectionTex";
 };
 
 function GammaPostFX::preProcess( %this )
