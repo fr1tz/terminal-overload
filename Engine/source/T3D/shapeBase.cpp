@@ -1205,6 +1205,8 @@ void ShapeBase::onImpact(VectorF vec)
 
 void ShapeBase::processTick(const Move* move)
 {
+   Parent::processTick(move);
+
    PROFILE_SCOPE( ShapeBase_ProcessTick );
 
    // Energy management
