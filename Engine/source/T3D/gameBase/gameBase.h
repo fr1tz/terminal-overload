@@ -176,6 +176,8 @@ class GameBase : public SceneObject
    // Control interface
    GameConnection* mControllingClient;
 
+   U32 mGhostCleanupCountdown; ///< Only used on server (obviously)
+
    S32 mClient; ///< exposed to script under the name 'client' (added for Alux3D)
 
    S32 mTeamId; ///< exposed to script under the name 'teamId' (added for Alux3D)

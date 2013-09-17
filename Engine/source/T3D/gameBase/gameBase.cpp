@@ -216,6 +216,7 @@ GameBase::GameBase()
    // From ProcessObject   
    mIsGameBase = true;
 
+   mGhostCleanupCountdown = 0xFFFFFFFF;
    mClient = -1;
    mTeamId = 0;
    
@@ -242,6 +243,9 @@ bool GameBase::onAdd()
    // Client datablock are initialized by the initial update.
    if ( isServerObject() && mDataBlock && !onNewDataBlock( mDataBlock, false ) )
       return false;
+
+   if(this->isServerObject())
+      mGhostCleanupCountdown = 50 + (U32(this->getId()) & 0x3F);
 
    setProcessTick( true );
 
@@ -295,6 +299,12 @@ void GameBase::inspectPostApply()
 
 void GameBase::processTick(const Move * move)
 {
+   if(this->isServerObject() && --mGhostCleanupCountdown == 0)
+   {
+      this->setMaskBits(GhostCleanupMask);
+      mGhostCleanupCountdown = 100;
+   }
+
 #ifdef TORQUE_DEBUG_NET_MOVES
    if (!move)
       mTicksSinceLastMove++;
