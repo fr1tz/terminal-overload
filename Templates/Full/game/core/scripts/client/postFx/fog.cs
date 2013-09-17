@@ -29,10 +29,11 @@ singleton ShaderData( FogPassShader )
    DXVertexShaderFile 	= "shaders/common/postFx/postFxV.hlsl";
    DXPixelShaderFile 	= "shaders/common/postFx/fogP.hlsl";
          
-//   OGLVertexShaderFile  = "shaders/common/postFx/gl//postFxV.glsl";
-//   OGLPixelShaderFile   = "shaders/common/postFx/gl/fogP.glsl";
+   OGLVertexShaderFile  = "shaders/common/postFx/gl/postFxV.glsl";
+   OGLPixelShaderFile   = "shaders/common/postFx/gl/fogP.glsl";
             
    samplerNames[0] = "$prepassTex";
+   rtParams[0] = true;
    
    pixVersion = 2.0;
 };
@@ -59,6 +60,8 @@ singleton PostEffect( FogPostFx )
    shader = FogPassShader;
    stateBlock = FogPassStateBlock;
    texture[0] = "#prepass";
+   samplerNames[0] = "prepassTex";
+   rtParams[0] = "prepassTex";
    
    renderPriority = 5;
    
