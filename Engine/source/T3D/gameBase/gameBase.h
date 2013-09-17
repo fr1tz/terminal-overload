@@ -205,10 +205,9 @@ public:
    ~GameBase();
 
    enum GameBaseMasks {      
-		RareStuffMask     = Parent::NextFreeMask << 0,
-      DataBlockMask     = Parent::NextFreeMask << 1,
-      ExtendedInfoMask  = Parent::NextFreeMask << 2,
-      NextFreeMask      = Parent::NextFreeMask << 3
+      DataBlockMask     = Parent::NextFreeMask << 0,
+      ExtendedInfoMask  = Parent::NextFreeMask << 1,
+      NextFreeMask      = Parent::NextFreeMask << 2
    };
 
    // net flags added by game base

@@ -504,20 +504,13 @@ U32 GameBase::packUpdate( NetConnection *connection, U32 mask, BitStream *stream
 {
    U32 retMask = Parent::packUpdate( connection, mask, stream );
 
-	// Transmit rare stuff here.
-	if(stream->writeFlag(mask & RareStuffMask))
-	{
-		// Team ID
-		stream->writeInt(mTeamId, 2);
-	}
-       
-   if ( stream->writeFlag( mask & ScaleMask ) )  
+   if(stream->writeFlag(mask & RareUpdatesMask))
    {
-      // Only write one bit if the scale is one.
-      if ( stream->writeFlag( mObjScale != Point3F::One ) )
-         mathWrite( *stream, mObjScale );   
+      stream->writeInt(mTeamId, 2);
+      if(stream->writeFlag(mObjScale != Point3F::One))
+         mathWrite(*stream, mObjScale);  
    }
-
+       
    if ( stream->writeFlag( ( mask & DataBlockMask ) && mDataBlock != NULL ) ) 
    {
       stream->writeRangedU32( mDataBlock->getId(),
@@ -539,26 +532,20 @@ void GameBase::unpackUpdate(NetConnection *con, BitStream *stream)
 {
    Parent::unpackUpdate( con, stream );
 
-	// Rare stuff.
-	if(stream->readFlag())
-	{
-		// Team ID
-		mTeamId = stream->readInt(2);
-	}
-   
-   // ScaleMask
-   if ( stream->readFlag() ) 
+   // Rare updates
+   if(stream->readFlag())
    {
-      if ( stream->readFlag() )
+      mTeamId = stream->readInt(2);
+      if(stream->readFlag())
       {
          VectorF scale;
-         mathRead( *stream, &scale );
-         setScale( scale );
+         mathRead(*stream, &scale);
+         setScale(scale);
       }
       else
-         setScale( Point3F::One );
+         setScale(Point3F::One);
    }
-
+   
    // DataBlockMask
    if ( stream->readFlag() )
    {

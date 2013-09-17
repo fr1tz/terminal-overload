@@ -494,7 +494,7 @@ void Trigger::setTransform(const MatrixF & mat)
       base.mul(mWorldToObj);
       mClippedList.setBaseTransform(base);
 
-      setMaskBits(TransformMask | ScaleMask);
+      setMaskBits(TransformMask | RareUpdatesMask);
    }
 }
 

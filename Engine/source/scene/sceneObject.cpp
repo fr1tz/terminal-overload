@@ -399,7 +399,7 @@ void SceneObject::setScale( const VectorF &scale )
    // scale being changed.
    onScaleChanged();
 
-   setMaskBits( ScaleMask );
+   setMaskBits( RareUpdatesMask );
 }
 
 //-----------------------------------------------------------------------------
@@ -683,7 +683,7 @@ void SceneObject::setRenderEnabled( bool value )
    else
       mObjectFlags.clear( RenderEnabledFlag );
       
-   setMaskBits( FlagMask );
+   setMaskBits( RareUpdatesMask );
 }
 
 //-----------------------------------------------------------------------------
@@ -752,8 +752,10 @@ U32 SceneObject::packUpdate( NetConnection* conn, U32 mask, BitStream* stream )
 {
    U32 retMask = Parent::packUpdate( conn, mask, stream );
 
-   if ( stream->writeFlag( mask & FlagMask ) )
+   if ( stream->writeFlag( mask & RareUpdatesMask ) )
+	{
       stream->writeRangedU32( (U32)mObjectFlags, 0, getObjectFlagMax() );
+	}
 
    if ( mask & MountedMask ) 
    {                  
@@ -790,9 +792,11 @@ void SceneObject::unpackUpdate( NetConnection* conn, BitStream* stream )
 {
    Parent::unpackUpdate( conn, stream );
    
-   // FlagMask
+   // Rare updates
    if ( stream->readFlag() )      
+	{
       mObjectFlags = stream->readRangedU32( 0, getObjectFlagMax() );
+	}
 
    // MountedMask
    if ( stream->readFlag() ) 

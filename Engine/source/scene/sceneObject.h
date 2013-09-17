@@ -91,15 +91,24 @@ class SceneObject : public NetObject, private SceneContainer::Link, public Proce
          NumMountPoints = 32,
          NumMountPointBits = 5,
       };
+
+		/// About the 'GhostCleanupMask':
+		/// Only ghosts that have an update mask set are
+		/// checked to see if they're still in scope or have
+		/// to be killed. All ghostable objects (except
+		/// scope-always objects) should periodically set
+		/// this mask to make sure that ghosts that are no
+		/// longer in scope will be killed even in the 
+		/// absence of "real" (ie. any other mask) updates.
       
       /// Networking dirty mask.
       enum SceneObjectMasks
       {
          InitialUpdateMask = BIT( 0 ),
-         ScaleMask         = BIT( 1 ),
-         FlagMask          = BIT( 2 ),
-         MountedMask       = BIT( 3 ),
-         NextFreeMask      = BIT( 4 )
+         GhostCleanupMask  = BIT( 1 ), // See explanation above.
+         RareUpdatesMask   = BIT( 2 ),
+         MountedMask       = BIT( 4 ),
+         NextFreeMask      = BIT( 5 )
       };
       
       /// Bit-flags stored in mObjectFlags.
