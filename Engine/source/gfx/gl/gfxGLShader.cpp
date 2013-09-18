@@ -30,6 +30,11 @@
 #include "gfx/gfxStructs.h"
 #include "console/console.h"
 
+namespace GL
+{
+   bool hasExtension(const char *name,const char* extensions);
+}
+
 
 class GFXGLShaderConstHandle : public GFXShaderConstHandle
 {
@@ -395,7 +400,7 @@ bool GFXGLShader::_init()
    macros.last().value = String::ToString( mjVer * 10 + mnVer );
    macros.increment();
    macros.last().name = "TORQUE_VERTEX_SHADER";
-   macros.last().value = "";
+   macros.last().value = "";   
 
    // Default to true so we're "successful" if a vertex/pixel shader wasn't specified.
    bool compiledVertexShader = true;
@@ -834,14 +839,36 @@ bool GFXGLShader::_loadShaderFromStream(  GLuint shader,
    Vector<U32> lengths;
    
    // The GLSL version declaration must go first!
-   const char *versionDecl = "#version 120\r\n\r\n";
+   const char *versionDecl = "#version 120\r\n";
    buffers.push_back( dStrdup( versionDecl ) );
    lengths.push_back( dStrlen( versionDecl ) );
+
+   static const char* glExtensions = (const char*)glGetString(GL_EXTENSIONS);
+   static bool hasGL_EXT_gpu_shader4 = GL::hasExtension("GL_EXT_gpu_shader4", glExtensions);
+   static bool hasGL_EXT_gpu_shader5 = GL::hasExtension("GL_EXT_gpu_shader5", glExtensions);
+
+   if(hasGL_EXT_gpu_shader4)
+   {
+      const char *extension = "#extension GL_EXT_gpu_shader4 : enable\r\n";
+      buffers.push_back( dStrdup( extension ) );
+      lengths.push_back( dStrlen( extension ) );
+   }
+
+   if(hasGL_EXT_gpu_shader5)
+   {
+      const char *extension = "#extension GL_EXT_gpu_shader5 : enable\r\n";
+      buffers.push_back( dStrdup( extension ) );
+      lengths.push_back( dStrlen( extension ) );
+   }
+
+   const char *newLine = "\r\n";
+   buffers.push_back( dStrdup( newLine ) );
+   lengths.push_back( dStrlen( newLine ) );
 
    // Now add all the macros.
    for( U32 i = 0; i < macros.size(); i++ )
    {
-      if(macros[i].name.isEmpty())  //TODO OPENGL
+      if(macros[i].name.isEmpty())  // TODO OPENGL
          continue;
 
       String define = String::ToString( "#define %s %s\n", macros[i].name.c_str(), macros[i].value.c_str() );
