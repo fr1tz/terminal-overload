@@ -3,12 +3,6 @@
 
 // See metasoil.txt for documentation
 
-datablock MissionMarkerData(MetaSoilRootMarker)
-{
-   category = "Frontline Game Mode";
-   shapeFile = "core/art/shapes/octahedron.dts";
-};
-
 function MetaSoil::clear()
 {
 	for(%idx = MissionMetaSoilTiles.getCount()-1; %idx >= 0; %idx-- )
@@ -20,10 +14,17 @@ function MetaSoil::clear()
 
 function MetaSoil::setup()
 {
-   if(!isObject(MetaSoilRoot))
+   if(!isObject(MissionSoilGrid))
    {
-      error("Missing MetaSoilRoot!");
+      error("Missing MissionSoilGrid!");
       return;
+   }
+   
+	for(%idx = 0; %idx < MissionSoilBounds.getCount(); %idx++)
+	{
+		%obj = MissionSoilBounds.getObject(%idx);
+      if(%obj.getDataBlock() == SoilVolume.getId())
+         %obj.setName("MissionSoilVolume" @ %idx);
    }
 
    if(!isObject(MissionMetaSoilTiles))
@@ -35,11 +36,12 @@ function MetaSoil::setup()
    
    MetaSoil::clear();
    
-   %tile = new StaticShape() {
+   %tile = new StaticMetaShape() {
       dataBlock = MetaSoilTile;
    };
    %tile.isRenderEnabled = false;
-   %tile.setTransform(MetaSoilRoot.getPosition());
+   %tile.gridPos = "0 0 0";
+   %tile.setTransform(MissionSoilGrid.gridToWorld(%tile.gridPos));
    
    if(!MetaSoil::initWorkerSet("setup"))
       return;
@@ -49,8 +51,8 @@ function MetaSoil::setup()
 
 function MetaSoil::tweak()
 {
-   return;
-   MetaSoil::initWorkerSet("tweak");
+   if(!MetaSoil::initWorkerSet("tweak"))
+      return;
 	for(%idx = 0; %idx < MissionMetaSoilTiles.getCount(); %idx++)
 	{
 		%tile = MissionMetaSoilTiles.getObject(%idx);

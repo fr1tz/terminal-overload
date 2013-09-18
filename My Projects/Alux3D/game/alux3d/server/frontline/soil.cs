@@ -1,21 +1,104 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
+datablock HexagonGridData(SoilGrid)
+{
+   category = "Frontline Game Mode"; // For the mission editor
+   shapeFile = "core/art/shapes/octahedron.dts";
+   spacing = "1.0625 1.25 0.2";
+};
+
+function HexagonGridData::create(%this)
+{
+   %obj = new HexagonGrid() {
+      dataBlock = %this;
+   };
+   return %obj;
+}
+
+function HexagonGrid::worldToGrid(%this, %pos)
+{
+   %data = %this.getDataBlock();
+
+   %worldX = getWord(%pos, 0);
+   %worldY = getWord(%pos, 1);
+   %worldZ = getWord(%pos, 2);
+
+   %originX = getWord(%this.getPosition(), 0);
+   %originY = getWord(%this.getPosition(), 1);
+   %originZ = getWord(%this.getPosition(), 2);
+
+   %spacingX = getWord(%data.spacing, 0);
+   %spacingY = getWord(%data.spacing, 1);
+   %spacingZ = getWord(%data.spacing, 2);
+   
+   %gridX = (%worldX-%originX) / %spacingX;
+   if(%gridX > 0)
+      %gridX = mCeil(%gridX);
+   else
+      %gridX = mFloor(%gridX);
+   if(%gridX % 2 != 0)
+      %gridY = (%worldY - %spacingY/2 - %originY) / %spacingY;
+   else
+      %gridY = (%worldY-%originY)/%spacingY;
+   if(%gridY > 0)
+      %gridY = mCeil(%gridY);
+   else
+      %gridY = mFloor(%gridY);
+   %gridZ = (%worldZ-%originZ)/%spacingZ;
+   %gridZ = mCeil(%gridZ);
+
+   return %gridX SPC %gridY SPC %gridZ;
+}
+
+function HexagonGrid::gridToWorld(%this, %pos)
+{
+   %data = %this.getDataBlock();
+
+   %gridX = getWord(%pos, 0);
+   %gridY = getWord(%pos, 1);
+   %gridZ = getWord(%pos, 2);
+   
+   %originX = getWord(%this.getPosition(), 0);
+   %originY = getWord(%this.getPosition(), 1);
+   %originZ = getWord(%this.getPosition(), 2);
+   
+   %spacingX = getWord(%data.spacing, 0);
+   %spacingY = getWord(%data.spacing, 1);
+   %spacingZ = getWord(%data.spacing, 2);
+
+   %worldX = %originX + %gridX * %spacingX;
+   %worldY = %originY + %gridY * %spacingY;
+   if(%gridX % 2 != 0)
+      %worldY += %spacingY/2;
+   %worldZ = %originZ + %gridZ * %spacingZ;
+   
+   return %worldX SPC %worldY SPC %worldZ;
+}
+
+datablock HexagonVolumeData(SoilVolume)
+{
+   category = "Frontline Game Mode"; // For the mission editor
+   mode = 2;
+   objectMask = $TypeMasks::NextFreeObjectType;
+};
+
 datablock StaticShapeData(SoilTile)
 {
    shapeFile = "content/alux3d/release1/shapes/soil/soil.dae";
    emap = true;
+   dynamicType = $TypeMasks::NextFreeObjectType;
 };
 
 // Called by script
 function SoilTile::damage(%this, %obj, %source, %position, %amount, %damageType)
 {
-   %obj.schedule(0, "delete");
+   //%obj.schedule(0, "delete");
 }
 
 function SoilTile::onAdd(%this, %obj)
 {
-   Game.soilSet.add(%obj);
+   Game.soilTileSet.add(%obj);
    //%obj.expand = false;
    //%this.tickThread(%obj);
 }
@@ -293,9 +376,6 @@ function Soil::tickThread(%this, %obj)
 
 function soiltile(%metasoiltile)
 {
-   if(!isObject(Game.soilSet))
-      Game.soilSet = new SimSet(); // All pieces
-      
    %tile = new StaticShape()
    {
       dataBlock = SoilTile;
@@ -304,16 +384,42 @@ function soiltile(%metasoiltile)
    %tile.metaSoilTile = %metasoiltile;
    %pos = VectorAdd(%metasoiltile.getPosition(), "0 0 1.0");
    %tile.setTransform(%pos);
+   if(%tile.metaSoilTile.numAdjacents == 6)
+   {
+      %tile.setMeshHidden("glow", true);
+      //%tile.isRenderEnabled = false;
+   }
+   %tile.isRenderEnabled = false;
+
    %metasoiltile.soilPiece = %tile;
+   
+   Game.soilVolumeDirtySet.add(%metasoiltile.volumeName);
+}
+
+function Soil::setRenderEnabled(%render)
+{
+	for(%idx = Game.soilTileSet.getCount()-1; %idx >= 0; %idx-- )
+	{
+		%tile = Game.soilTileSet.getObject(%idx);
+      %tile.isRenderEnabled = %render;
+   }
 }
 
 function Soil::clear()
 {
-	for(%idx = Game.soilSet.getCount()-1; %idx >= 0; %idx-- )
+	for(%idx = Game.soilTileSet.getCount()-1; %idx >= 0; %idx-- )
 	{
-		%tile = Game.soilSet.getObject(%idx);
+		%tile = Game.soilTileSet.getObject(%idx);
+      Game.soilVolumeDirtySet.add(%tile.metaSoilTile.renderVolume);
       %tile.delete();
    }
+   
+	for(%idx = Game.soilVolumeDirtySet.getCount()-1; %idx >= 0; %idx--)
+	{
+	   %renderVolume = Game.soilVolumeDirtySet.getObject(%idx);
+      %renderVolume.rebuild();
+   }
+   Game.soilVolumeDirtySet.clear();
 }
 
 function Soil::test(%radius)
@@ -336,5 +442,11 @@ function Soil::test(%radius)
          soiltile(%srchObj);
       }
 	}
-   
+ 
+	for(%idx = Game.soilVolumeDirtySet.getCount()-1; %idx >= 0; %idx--)
+	{
+	   %renderVolume = Game.soilVolumeDirtySet.getObject(%idx);
+      %renderVolume.rebuild();
+   }
+   Game.soilVolumeDirtySet.clear();
 }

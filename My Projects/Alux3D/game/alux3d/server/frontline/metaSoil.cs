@@ -10,13 +10,14 @@ datablock StaticShapeData(MetaSoilTile)
    // Script fields:
    maxExpandHeight = 0.5;
    maxHeightDiff = 0.4;
-   adjacentOffset[0] = "0 0 0";
-   adjacentOffset[1] = "-1.0625 0.625 0";
-   adjacentOffset[2] = "0 1.25 0";
-   adjacentOffset[3] = "1.0625 0.625 0";
-   adjacentOffset[4] = "1.0625 -0.625 0";
-   adjacentOffset[5] = "0 -1.25 0";
-   adjacentOffset[6] = "-1.0625 -0.625 0";
+   
+   adjacentGridOffset[0] = "0 0 0";
+   adjacentGridOffset[1] = "-1 0 0";
+   adjacentGridOffset[2] = "0 1 0";
+   adjacentGridOffset[3] = "1 0 0";
+   adjacentGridOffset[4] = "1 -1 0";
+   adjacentGridOffset[5] = "0 -1 0";
+   adjacentGridOffset[6] = "-1 -1 0";
 };
 
 function MetaSoilTile::onAdd(%this, %obj)

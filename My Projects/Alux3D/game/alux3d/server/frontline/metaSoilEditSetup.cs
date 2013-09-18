@@ -19,84 +19,86 @@ function MetaSoilTile::setup(%this, %obj)
       return false;
    }
 
-   // Adjust own height to ground elevation.
    if(%obj.groundElevation[0] $= "none")
    {
       error("MetaSoilTile::setup(): Tile ID" SPC %obj.getId() SPC "created "
           @ "in invalid position. Aborting!");
       return true;
    }
-   //%newpos = setWord(%obj.getPosition(), 2, %obj.groundElevation[0]+0.1);
-   //%obj.setTransform(%newpos);
 
    // Create adjacent tiles.
    for(%side = 1; %side <= 6; %side++)
    {
       if(%obj.adjacent[%side] $= "")
-         %obj.adjacent[%side] = %this.createAdjacent(%obj, %side);
+      {
+         %adjacent = %this.createAdjacent(%obj, %side);
+         if(%adjacent !$= "None")
+            %adjacent = %adjacent.getName();
+         %obj.adjacent[%side] = %adjacent;
+      }
    }
 
    // Link adjacent tiles together & copy already available info
    // about ground elevation.
    if(isObject(%obj.adjacent[1]))
    {
-      %obj.adjacent[1].adjacent[3] = %obj.adjacent[2];
-      %obj.adjacent[1].adjacent[4] = %obj;
-      %obj.adjacent[1].adjacent[5] = %obj.adjacent[6];
-      %obj.adjacent[1].groundElevation[3] = %obj.groundElevation[2];
-      %obj.adjacent[1].groundElevation[4] = %obj.groundElevation[0];
-      %obj.adjacent[1].groundElevation[5] = %obj.groundElevation[6];
-      %obj.adjacent[1].groundElevation[0] = %obj.groundElevation[1];
+      (%obj.adjacent[1]).adjacent[3] = %obj.adjacent[2];
+      (%obj.adjacent[1]).adjacent[4] = %obj.getName();
+      (%obj.adjacent[1]).adjacent[5] = %obj.adjacent[6];
+      (%obj.adjacent[1]).groundElevation[3] = %obj.groundElevation[2];
+      (%obj.adjacent[1]).groundElevation[4] = %obj.groundElevation[0];
+      (%obj.adjacent[1]).groundElevation[5] = %obj.groundElevation[6];
+      (%obj.adjacent[1]).groundElevation[0] = %obj.groundElevation[1];
    }
    if(isObject(%obj.adjacent[2]))
    {
-      %obj.adjacent[2].adjacent[6] = %obj.adjacent[1];
-      %obj.adjacent[2].adjacent[5] = %obj;
-      %obj.adjacent[2].adjacent[4] = %obj.adjacent[3];
-      %obj.adjacent[2].groundElevation[6] = %obj.groundElevation[1];
-      %obj.adjacent[2].groundElevation[5] = %obj.groundElevation[0];
-      %obj.adjacent[2].groundElevation[4] = %obj.groundElevation[3];
-      %obj.adjacent[2].groundElevation[0] = %obj.groundElevation[2];
+      (%obj.adjacent[2]).adjacent[6] = %obj.adjacent[1];
+      (%obj.adjacent[2]).adjacent[5] = %obj.getName();
+      (%obj.adjacent[2]).adjacent[4] = %obj.adjacent[3];
+      (%obj.adjacent[2]).groundElevation[6] = %obj.groundElevation[1];
+      (%obj.adjacent[2]).groundElevation[5] = %obj.groundElevation[0];
+      (%obj.adjacent[2]).groundElevation[4] = %obj.groundElevation[3];
+      (%obj.adjacent[2]).groundElevation[0] = %obj.groundElevation[2];
    }
    if(isObject(%obj.adjacent[3]))
    {
-      %obj.adjacent[3].adjacent[1] = %obj.adjacent[2];
-      %obj.adjacent[3].adjacent[6] = %obj;
-      %obj.adjacent[3].adjacent[5] = %obj.adjacent[4];
-      %obj.adjacent[3].groundElevation[1] = %obj.groundElevation[2];
-      %obj.adjacent[3].groundElevation[6] = %obj.groundElevation[0];
-      %obj.adjacent[3].groundElevation[5] = %obj.groundElevation[4];
-      %obj.adjacent[3].groundElevation[0] = %obj.groundElevation[3];
+      (%obj.adjacent[3]).adjacent[1] = %obj.adjacent[2];
+      (%obj.adjacent[3]).adjacent[6] = %obj.getName();
+      (%obj.adjacent[3]).adjacent[5] = %obj.adjacent[4];
+      (%obj.adjacent[3]).groundElevation[1] = %obj.groundElevation[2];
+      (%obj.adjacent[3]).groundElevation[6] = %obj.groundElevation[0];
+      (%obj.adjacent[3]).groundElevation[5] = %obj.groundElevation[4];
+      (%obj.adjacent[3]).groundElevation[0] = %obj.groundElevation[3];
    }
    if(isObject(%obj.adjacent[4]))
    {
-      %obj.adjacent[4].adjacent[2] = %obj.adjacent[3];
-      %obj.adjacent[4].adjacent[1] = %obj;
-      %obj.adjacent[4].adjacent[6] = %obj.adjacent[5];
-      %obj.adjacent[4].groundElevation[2] = %obj.groundElevation[3];
-      %obj.adjacent[4].groundElevation[1] = %obj.groundElevation[0];
-      %obj.adjacent[4].groundElevation[6] = %obj.groundElevation[5];
-      %obj.adjacent[4].groundElevation[0] = %obj.groundElevation[4];
+      (%obj.adjacent[4]).adjacent[2] = %obj.adjacent[3];
+      (%obj.adjacent[4]).adjacent[1] = %obj.getName();
+      (%obj.adjacent[4]).adjacent[6] = %obj.adjacent[5];
+      (%obj.adjacent[4]).groundElevation[2] = %obj.groundElevation[3];
+      (%obj.adjacent[4]).groundElevation[1] = %obj.groundElevation[0];
+      (%obj.adjacent[4]).groundElevation[6] = %obj.groundElevation[5];
+      (%obj.adjacent[4]).groundElevation[0] = %obj.groundElevation[4];
    }
    if(isObject(%obj.adjacent[5]))
    {
-      %obj.adjacent[5].adjacent[1] = %obj.adjacent[6];
-      %obj.adjacent[5].adjacent[2] = %obj;
-      %obj.adjacent[5].adjacent[3] = %obj.adjacent[4];
-      %obj.adjacent[5].groundElevation[1] = %obj.groundElevation[6];
-      %obj.adjacent[5].groundElevation[2] = %obj.groundElevation[0];
-      %obj.adjacent[5].groundElevation[3] = %obj.groundElevation[4];
-      %obj.adjacent[5].groundElevation[0] = %obj.groundElevation[5];
+      (%obj.adjacent[5]).adjacent[1] = %obj.adjacent[6];
+      (%obj.adjacent[5]).adjacent[2] = %obj.getName();
+      (%obj.adjacent[5]).adjacent[3] = %obj.adjacent[4];
+      (%obj.adjacent[5]).groundElevation[1] = %obj.groundElevation[6];
+      (%obj.adjacent[5]).groundElevation[2] = %obj.groundElevation[0];
+      (%obj.adjacent[5]).groundElevation[3] = %obj.groundElevation[4];
+      (%obj.adjacent[5]).groundElevation[0] = %obj.groundElevation[5];
    }
    if(isObject(%obj.adjacent[6]))
    {
-      %obj.adjacent[6].adjacent[2] = %obj.adjacent[1];
-      %obj.adjacent[6].adjacent[3] = %obj;
-      %obj.adjacent[6].adjacent[4] = %obj.adjacent[5];
-      %obj.adjacent[6].groundElevation[2] = %obj.groundElevation[1];
-      %obj.adjacent[6].groundElevation[3] = %obj.groundElevation[0];
-      %obj.adjacent[6].groundElevation[4] = %obj.groundElevation[5];
-      %obj.adjacent[6].groundElevation[0] = %obj.groundElevation[6];
+      (%obj.adjacent[6]).adjacent[2] = %obj.adjacent[1];
+      (%obj.adjacent[6]).adjacent[3] = %obj.getName();
+      (%obj.adjacent[6]).adjacent[4] = %obj.adjacent[5];
+      (%obj.adjacent[6]).groundElevation[2] = %obj.groundElevation[1];
+      (%obj.adjacent[6]).groundElevation[3] = %obj.groundElevation[0];
+      (%obj.adjacent[6]).groundElevation[4] = %obj.groundElevation[5];
+      (%obj.adjacent[6]).groundElevation[0] = %obj.groundElevation[6];
    }
 
    return true; // Done
@@ -108,11 +110,33 @@ function MetaSoilTile::computeGroundElevation(%this, %obj, %side)
 {
    // (Brought to you by the Close Enough(tm)
    //  dept. of Algorithms -- fr1tz)
-   
-   %topx = getWord(%obj.getWorldBoxCenter(),0) + getWord(%this.adjacentOffset[%side],0);
-   %topy = getWord(%obj.getWorldBoxCenter(),1) + getWord(%this.adjacentOffset[%side],1);
-   %topz = getWord(%obj.getWorldBoxCenter(),2);
-   %top = %topx SPC %topy SPC %topz;
+
+   %gridPos = VectorAdd(%obj.gridPos, %this.adjacentGridOffset[%side]);
+   %top = MissionSoilGrid.gridToWorld(%gridPos);
+   %topx = getWord(%top, 0);
+   %topy = getWord(%top, 1);
+   %topz = getWord(%obj.getWorldBoxCenter(), 2);
+
+   // Check if we're going out of bounds.
+   %obj.volumeName = "";
+   %outsideBounds = true;
+	InitContainerRadiusSearch(%top, 0.1, $TypeMasks::StaticObjectType);
+	while((%srchObj = containerSearchNext()) != 0)
+	{
+      if(!%srchObj.isMethod("getDataBlock"))
+         continue;
+      if(%srchObj.getDataBlock() == SoilVolume.getId())
+      {
+         %obj.volumeName = %srchObj.getName();
+         %outsideBounds = false;
+         break;
+      }
+	}
+   if(%outsideBounds)
+   {
+       error("outside bounds");
+       return "none";
+   }
    
    %elevation = "none";
    for(%y = -0.625; %y <= 0.625; %y += 0.625)
@@ -149,7 +173,7 @@ function MetaSoilTile::computeGroundElevation(%this, %obj, %side)
             %elevation = %colZ;
       }
    }
-
+   
    return %elevation;
 }
 
@@ -157,12 +181,11 @@ function MetaSoilTile::computeGroundElevation(%this, %obj, %side)
 function MetaSoilTile::createAdjacent(%this, %obj, %side)
 {
    if(%obj.groundElevation[%side] $= "none")
-      return "-1";
+      return "None";
       
-   %x = getWord(%obj.getWorldBoxCenter(),0) + getWord(%this.adjacentOffset[%side],0);
-   %y = getWord(%obj.getWorldBoxCenter(),1) + getWord(%this.adjacentOffset[%side],1);
-   %z = %obj.groundElevation[%side];
-   %pos = %x SPC %y SPC %z;
+   %gridPos = VectorAdd(%obj.gridPos, %this.adjacentGridOffset[%side]);
+   %pos = MissionSoilGrid.gridToWorld(%gridPos);
+   %pos = setWord(%pos, 2, %obj.groundElevation[%side]);
 
    // Scan for existing tile.
 	InitContainerRadiusSearch(%pos, 0.1, $TypeMasks::StaticObjectType);
@@ -185,10 +208,11 @@ function MetaSoilTile::createAdjacent(%this, %obj, %side)
       }
 	}
 
-   %tile = new StaticShape() {
+   %tile = new StaticMetaShape() {
       dataBlock = MetaSoilTile;
    };
    %tile.isRenderEnabled = false;
+   %tile.gridPos = %gridPos;
    %tile.setTransform(%pos);
    MetaSoil::workerSet().add(%tile);
    

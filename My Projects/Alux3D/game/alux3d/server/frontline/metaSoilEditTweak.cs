@@ -6,12 +6,19 @@
 // Called by script
 function MetaSoilTile::tweak(%this, %obj)
 {
+   // Snap to soil grid.
+   %oldPos = %obj.getPosition();
+   %obj.gridPos = MissionSoilGrid.worldToGrid(%obj.getPosition());
+   %obj.setTransform(MissionSoilGrid.gridToWorld(%obj.gridPos));
+   %newPos = %obj.getPosition();
+   echo(%oldPos SPC "->" SPC %newPos);
+   
    // Gather some info about our adjacents.
    %obj.numAdjacents = 0;
    for(%side = 1; %side <= 6; %side++)
    {
       %adjacent = %obj.adjacent[%side];
-      if(!isObject(%adjacent))
+      if(%adjacent $= "None")
          continue;
          
       %obj.numAdjacents++;
@@ -29,7 +36,7 @@ function MetaSoilTile::tweak(%this, %obj)
    %obj.altDiffTotal = %altDiffTotal;
    %obj.altDiffMin = %altDiffMin;
    %obj.altDiffMax = %altDiffMax;
-
+   
    return true;
 }
 
