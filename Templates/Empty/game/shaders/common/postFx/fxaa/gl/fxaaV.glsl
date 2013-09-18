@@ -19,49 +19,19 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 // IN THE SOFTWARE.
 //-----------------------------------------------------------------------------
+#include "../../../gl/hlslCompat.glsl"
+#include "../../../gl/torque.glsl"
 
-// An implementation of "NVIDIA FXAA 3.11" by TIMOTHY LOTTES
-//
-// http://timothylottes.blogspot.com/
-//
-// The shader is tuned for the defaul quality and good performance.
-// See shaders\common\postFx\fxaa\fxaaP.hlsl to tweak the internal
-// quality and performance settings.
+uniform vec4 rtParams0;
 
-singleton GFXStateBlockData( FXAA_StateBlock : PFX_DefaultStateBlock )
-{   
-   samplersDefined = true;   
-   samplerStates[0] = SamplerClampLinear;
-};
-
-singleton ShaderData( FXAA_ShaderData )
-{   
-   DXVertexShaderFile 	= "shaders/common/postFx/fxaa/fxaaV.hlsl";
-   DXPixelShaderFile 	= "shaders/common/postFx/fxaa/fxaaP.hlsl";
-   
-   OGLVertexShaderFile 	= "shaders/common/postFx/fxaa/gl/fxaaV.glsl";
-   OGLPixelShaderFile 	= "shaders/common/postFx/fxaa/gl/fxaaP.glsl";
-   
-   samplerNames[0] = "$colorTex";
-   rtParams[0] = true;
-
-   pixVersion = 3.0;
-};
-
-singleton PostEffect( FXAA_PostEffect )
+varying vec4 hpos;
+varying vec2 uv0;
+                    
+void main()
 {
-   isEnabled = false;
+   gl_Position = gl_Vertex;   
+   hpos = gl_Position;
+   uv0 = viewportCoordToRenderTarget( gl_MultiTexCoord0.st, rtParams0 ); 
    
-   allowReflectPass = false;
-   renderTime = "PFXAfterDiffuse";
-
-   texture[0] = "$backBuffer";      
-   samplerNames[0] = "colorTex";
-   rtParams[0] = "colorTex";   
-
-   target = "$backBuffer";
-
-   stateBlock = FXAA_StateBlock;
-   shader = FXAA_ShaderData;
-};
-
+   correctSSP(gl_Position);
+}
