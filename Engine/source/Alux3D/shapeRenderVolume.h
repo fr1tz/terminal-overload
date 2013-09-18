@@ -46,6 +46,8 @@ class ShapeRenderVolume : public GameBase
 
 	bool mGeometryDirty;
 	U32 mServerObjectCount; // Transmitted from server
+	U32 mGeometryDirtyTicks; // For how many ticks has the
+	                         // geometry been dirty?
 
 	TSShape* mShape;
 	TSShapeInstance* mShapeInstance;
@@ -86,6 +88,7 @@ class ShapeRenderVolume : public GameBase
 
 	// ShapeRenderVolume
 	static void findCallback(SceneObject* obj, void* key);
+	bool clientRebuildCheck();
 	void rebuild();
 	void rebuildMode2();
 	void rebuildMode2MoveMeshVerts(TSMesh* mesh, Point3F vec);

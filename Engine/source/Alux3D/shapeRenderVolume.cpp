@@ -16,6 +16,7 @@
 #include "renderInstance/renderPassManager.h"
 #include "scene/sceneRenderState.h"
 #include "ts/tsShapeInstance.h"
+#include "T3D/gameBase/gameConnection.h"
 #include "T3D/physics/physicsPlugin.h"
 #include "T3D/physics/physicsBody.h"
 #include "T3D/physics/physicsCollision.h"
@@ -104,17 +105,16 @@ ConsoleDocClass( ShapeRenderVolume,
 
 ShapeRenderVolume::ShapeRenderVolume()
 {
-   // Flag this object so that it will always
-   // be sent across the network to clients
-   mNetFlags.set(Ghostable | ScopeAlways);
+   mNetFlags.set(Ghostable);
 
-   mTypeMask |= StaticShapeObjectType;
+   mTypeMask |= StaticObjectType | StaticShapeObjectType;
 
    mObjScale.set(1, 1, 1);
    mObjToWorld.identity();
    mWorldToObj.identity();
 
 	mGeometryDirty = false;
+	mGeometryDirtyTicks = 0;
 	mServerObjectCount = 0;
    mDataBlock = NULL;
 	mShape = NULL;
@@ -187,7 +187,6 @@ void ShapeRenderVolume::onDeleteNotify( SimObject *obj )
          if (shape == mObjects[i] )
          {
             mObjects.erase(i);
-				mGeometryDirty = true;
             break;
          }
       }
@@ -213,8 +212,7 @@ void ShapeRenderVolume::setTransform(const MatrixF & mat)
                          1.0/mObjScale.y,
                          1.0/mObjScale.z));
       base.mul(mWorldToObj);
-      setMaskBits(TransformMask | ScaleMask);
-		this->rebuild();
+      setMaskBits(TransformMask | RareUpdatesMask);
    }
 }
 
@@ -426,7 +424,8 @@ void ShapeRenderVolume::rebuild()
 			box,
 			(smBaseObjectMask | mDataBlock->objectMask)
 		);
-		Con::printf("Have %i need %i", objectCount, mServerObjectCount);
+		Con::printf("ShapeRenderVolume %i: Have %i ghosts, need %i", 
+			this->getId(), objectCount, mServerObjectCount);
 		if(objectCount != mServerObjectCount)
 			return; // Ghosts are missing
 
@@ -436,6 +435,7 @@ void ShapeRenderVolume::rebuild()
 			this->rebuildMode3();
 
 		mGeometryDirty = false;
+		mGeometryDirtyTicks = 0;
 	}
 }
 
@@ -620,6 +620,55 @@ void ShapeRenderVolume::findCallback(SceneObject* obj, void* key)
 
 //--------------------------------------------------------------------------
 
+bool ShapeRenderVolume::clientRebuildCheck()
+{
+	if(mGeometryDirtyTicks <= 1)
+		return true;
+
+	return ((mGeometryDirtyTicks % 10) == 0); 
+
+	if(this->getSceneManager() != NULL)
+	{
+		GameConnection* conn = GameConnection::getConnectionToServer();
+		if(!conn)
+			return false;
+
+		MatrixF cameraMatrix;
+		if(!conn->getControlCameraTransform(0, &cameraMatrix))
+			return false;
+
+		F32 visDist = this->getSceneManager()->getVisibleDistance();
+		Point3F cameraPos = cameraMatrix.getPosition();
+
+		//------------------------------------------------------------------
+		// Note: This is the same algorithm used in _scopeCallback()
+		//       in sceneManager.cpp to check if an object is in scope.
+		// {
+		F32 difSq = (this->getWorldSphere().center - cameraPos).lenSquared();
+		if(difSq < visDist*visDist)
+		{
+			// Not even close, it's in...
+			return true;
+		}
+		else
+		{
+			// Check a little more closely...
+			F32 realDif = mSqrt(difSq);
+			if(realDif - this->getWorldSphere().radius < visDist)
+				return true;
+			else
+				return false;
+		}
+		// }
+		//------------------------------------------------------------------
+	}
+
+	// Fallback: Try to rebuild every 10th tick.
+	return ((mGeometryDirtyTicks % 10) == 0); 
+}
+
+//--------------------------------------------------------------------------
+
 void ShapeRenderVolume::processTick(const Move* move)
 {
    Parent::processTick(move);
@@ -628,7 +677,29 @@ void ShapeRenderVolume::processTick(const Move* move)
 		return;
 
 	if(mGeometryDirty)
-		this->rebuild();
+	{
+		mGeometryDirtyTicks++;
+		if(mServerObjectCount == 0)
+		{
+			if(mShapeInstance)
+			{
+				delete mShapeInstance;
+				mShapeInstance = NULL;
+			}
+			if(mShape)
+			{
+				delete mShape;
+				mShape = NULL;
+			}
+			mGeometryDirty = false;
+			mGeometryDirtyTicks = 0;
+		}
+		else
+		{
+			if(this->clientRebuildCheck())
+				this->rebuild();
+		}
+	}
 }
 
 //--------------------------------------------------------------------------
@@ -667,5 +738,15 @@ void ShapeRenderVolume::unpackUpdate(NetConnection* con, BitStream* stream)
 	{
 		stream->read(&mServerObjectCount);
 		mGeometryDirty = true;
+		mGeometryDirtyTicks = 0;
 	}
+}
+
+//--------------------------------------------------------------------------
+
+DefineEngineMethod(ShapeRenderVolume, rebuild, void, (),,
+   "@brief Rebuild render geometry.\n\n"
+)
+{
+   object->rebuild();
 }
