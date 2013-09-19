@@ -26,8 +26,8 @@ singleton ShaderData( PFX_GlowBlurVertShader )
    DXVertexShaderFile 	= "shaders/common/postFx/glowBlurV.hlsl";
    DXPixelShaderFile 	= "shaders/common/postFx/glowBlurP.hlsl";
    
-//   OGLVertexShaderFile  = "shaders/common/postFx/glowBlurV.glsl";
-//   OGLPixelShaderFile   = "shaders/common/postFx/glowBlurP.glsl";
+   OGLVertexShaderFile  = "shaders/common/postFx/gl/glowBlurV.glsl";
+   OGLPixelShaderFile   = "shaders/common/postFx/gl/glowBlurP.glsl";
       
    defines = "BLUR_DIR=float2(0.0,1.0)";
 
@@ -74,6 +74,8 @@ singleton PostEffect( GlowPostFx )
    shader = PFX_PassthruShader;
    stateBlock = PFX_DefaultStateBlock;
    texture[0] = "#glowbuffer";
+   samplerNames[0] = "inputTex";
+   rtParams[0] = "inputTex";
    target = "$outTex";
    targetScale = "0.5 0.5";
    
@@ -85,6 +87,7 @@ singleton PostEffect( GlowPostFx )
       shader = PFX_GlowBlurVertShader;
       stateBlock = PFX_DefaultStateBlock;
       texture[0] = "$inTex";
+	  samplerNames[0] = "diffuseMap";
       target = "$outTex";
    };
    
@@ -94,6 +97,7 @@ singleton PostEffect( GlowPostFx )
       shader = PFX_GlowBlurHorzShader;
       stateBlock = PFX_DefaultStateBlock;
       texture[0] = "$inTex";
+	  samplerNames[0] = "diffuseMap";
       target = "$outTex";
    };
             
@@ -103,6 +107,8 @@ singleton PostEffect( GlowPostFx )
       shader = PFX_PassthruShader;
       stateBlock = PFX_GlowCombineStateBlock;
       texture[0] = "$inTex";
+	  samplerNames[0] = "inputTex";
+      rtParams[0] = "inputTex";
       target = "$backBuffer";
    };
 };
