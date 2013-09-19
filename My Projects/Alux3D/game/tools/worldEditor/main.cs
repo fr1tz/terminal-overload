@@ -85,6 +85,7 @@ function initializeWorldEditor()
    EVisibility.addOption( "Render: Portals", "$Portal::isRenderable", "" );
    EVisibility.addOption( "Render: Occlusion Volumes", "$OcclusionVolume::isRenderable", "" );
    EVisibility.addOption( "Render: Triggers", "$Trigger::renderTriggers", "" );
+   EVisibility.addOption( "Render: HexagonVolumeBounds", "$HexagonVolume::renderBounds", "" );
    EVisibility.addOption( "Render: PhysicalZones", "$PhysicalZone::renderZones", "" );
    EVisibility.addOption( "Render: Sound Emitters", "$SFXEmitter::renderEmitters", "" );
    EVisibility.addOption( "Render: Mission Area", "EWorldEditor.renderMissionArea", "" );
