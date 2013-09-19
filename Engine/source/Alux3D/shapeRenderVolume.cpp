@@ -123,7 +123,6 @@ ShapeRenderVolume::ShapeRenderVolume()
 
 ShapeRenderVolume::~ShapeRenderVolume()
 {
-
 }
 
 //-----------------------------------------------------------------------------
@@ -164,6 +163,8 @@ bool ShapeRenderVolume::onAdd()
 void ShapeRenderVolume::onRemove()
 {
    removeFromScene();
+   if(mShape) SAFE_DELETE(mShape);
+   if(mShapeInstance) SAFE_DELETE(mShapeInstance);
    Parent::onRemove();
 }
 
