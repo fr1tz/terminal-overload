@@ -136,6 +136,7 @@ GFXGLDevice::GFXGLDevice(U32 adapterIndex) :
       mActiveTextureType[i] = GL_ZERO;
 
    mTextureCoordStartTop = false;
+   mTexelPixelOffset = false;
    mVertexStreamSupported = 1;
 }
 
