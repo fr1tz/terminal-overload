@@ -16,12 +16,19 @@
 #ifndef _TSSHAPE_H_
 #include "ts/tsShape.h"
 #endif
+#ifndef _TSSHAPECACHE_H_
+#include "Alux3d/tsShapeCache.h"
+#endif
+
+class HexagonGrid;
 
 class HexagonVolumeData : public GameBaseData
 {
 	typedef GameBaseData Parent;
 
   public:
+   StringTableEntry shapeName;
+   Resource<TSShape> shape; 
 	S32 mode;
 	U32 objectMask;
 
@@ -30,6 +37,7 @@ class HexagonVolumeData : public GameBaseData
 	DECLARE_CONOBJECT(HexagonVolumeData);
 
 	bool onAdd();
+	bool preload(bool server, String &errorStr);
 	static void initPersistFields();
 	virtual void packData  (BitStream* stream);
 	virtual void unpackData(BitStream* stream);
@@ -44,15 +52,25 @@ class HexagonVolume : public GameBase
 
 	HexagonVolumeData* mDataBlock;
 
-	bool mGeometryDirty;
-	U32 mServerObjectCount; // Transmitted from server
-	U32 mGeometryDirtyTicks; // For how many ticks has the
-	                         // geometry been dirty?
+	HexagonGrid* mGrid;
 
-	TSShape* mShape;
+	Vector<Point3I> mHexagons; // Always empty on client
+	struct HexMap
+	{
+		Point3I originGridPos;
+		S32 width;
+		S32 height;
+		U32* data;
+	} mHexMap;
+
+	TSShape* mServerShape; // Always NULL on client
+	U32 mServerShapeId;
+	U32 mServerShapeRevision;
+
 	TSShapeInstance* mShapeInstance;
-	Vector<ShapeBase*> mObjects;
 	ConcretePolyList mPolyList;
+
+	bool mClientPerformRebuild;
 
 	enum HexagonVolumeUpdateBits
 	{
@@ -75,6 +93,7 @@ class HexagonVolume : public GameBase
 	void inspectPostApply();
 
 	// NetObject
+	void onServerObjectDeleted();
 	U32  packUpdate(NetConnection* conn, U32 mask, BitStream* stream);
 	void unpackUpdate(NetConnection *conn, BitStream* stream);
 
@@ -87,10 +106,11 @@ class HexagonVolume : public GameBase
 	void processTick(const Move *move);
 
 	// HexagonVolume
-	static void findCallback(SceneObject* obj, void* key);
-	bool clientRebuildCheck();
-	void rebuild();
-	void rebuildMode2();
+	void clearHexagons();
+	void addHexagon(Point3I gridpos);
+	bool rebuild();
+	bool rebuildHexMap();
+	bool rebuildMode2();
 	void rebuildMode2MoveMeshVerts(TSMesh* mesh, Point3F vec);
 	void rebuildMode2MergeMesh(TSMesh* dest, TSMesh* src);
 	void rebuildMode3();

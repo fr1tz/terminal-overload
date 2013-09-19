@@ -330,6 +330,7 @@ class TSShape
    S32 mReadVersion;          ///< File version that this shape was read from.
    U32 mFlags;                ///< hasTranslucancy
    U32 data;                  ///< User-defined data storage.
+   U32 revision;              ///< User-defined revision number
 
    /// If enabled detail selection will use the
    /// legacy screen error method for lod.
