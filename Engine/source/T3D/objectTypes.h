@@ -128,11 +128,15 @@ enum SceneObjectTypes
    /// @see PhysicalZone
    PhysicalZoneObjectType = BIT( 22 ),
 
+   /// A hexagon grid object.
+   /// @see HexagonGrid
+   HexagonGridObjectType = BIT( 23 ),
+
    /// @}
 
    /// Next object type not used within the engine.
    /// @see StaticShapeData::dynamicTypeField
-   NextFreeObjectType = BIT( 23 ),
+   NextFreeObjectType = BIT( 24 ),
 };
 
 enum SceneObjectTypeMasks
