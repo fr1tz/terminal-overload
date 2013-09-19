@@ -40,6 +40,7 @@
 #include "materials/matTextureTarget.h"
 #include "gfx/util/screenspace.h"
 #include "math/util/matrixSet.h"
+#include "materials/shaderData.h"
 
 // We need to include customMaterialDefinition for ShaderConstHandles::init
 #include "materials/customMaterialDefinition.h"
@@ -95,16 +96,30 @@ void ShaderConstHandles::init( GFXShader *shader, CustomMaterial* mat /*=NULL*/ 
 
    // Clear any existing texture handles.
    dMemset( mTexHandlesSC, 0, sizeof( mTexHandlesSC ) );
+
    if(mat)
    {
+      int pos;
       for (S32 i = 0; i < Material::MAX_TEX_PER_PASS; ++i)
       {
-         mTexHandlesSC[i] = shader->getShaderConstHandle(mat->mSamplerNames[i]);         
+         mTexHandlesSC[i] = shader->getShaderConstHandle( mat->mSamplerNames[i] );
 
-         if( mat->mRTParams[i] != -1)
+         if(mat->mSamplerNames[i].isEmpty())
+            continue;
+
+         if( mat->mShaderData->hasSamplerDef(mat->mSamplerNames[i], pos) )
          {
-            mRTParamsSC[i] = shader->getShaderConstHandle( String::ToString( "$rtParams%d", mat->mRTParams[i] ) );
+            if( mat->mShaderData->hasRTParamsDef(pos) )
+               mRTParamsSC[i] = shader->getShaderConstHandle( String::ToString( "$rtParams%d", pos ) );
          }
+         else
+         {
+            String error = String::ToString("CustomMaterial(%s): sampler %s is not defined in ShaderData(%s)", 
+               mat->getName(), mat->mSamplerNames[i].c_str(), mat->mShaderData->getName());
+
+            Con::errorf(error);
+            GFXAssertFatal(0, error );
+         }                
       }
    }
 }

@@ -64,6 +64,12 @@ new ShaderData( AL_VectorLightShader )
    OGLVertexShaderFile = "shaders/common/lighting/advanced/gl/farFrustumQuadV.glsl";
    OGLPixelShaderFile  = "shaders/common/lighting/advanced/gl/vectorLightP.glsl";
    
+   samplerNames[0] = "$prePassBuffer";
+   rtParams[0] = true;
+   samplerNames[1] = "$ShadowMap";
+   samplerNames[2] = "$ssaoMask";
+   samplerNames[3] = "$gTapRotationTex";
+   
    pixVersion = 3.0;
 };
 
@@ -73,10 +79,8 @@ new CustomMaterial( AL_VectorLightMaterial )
    stateBlock = AL_VectorLightState;
    
    sampler["prePassBuffer"] = "#prepass";
-   rtParams[0] = "prePassBuffer";
    sampler["ShadowMap"] = "$dynamiclight";
    sampler["ssaoMask"] = "#ssaoMask";  
-   rtParams[2] = "ssaoMask";
    
    target = "lightinfo";
    
@@ -128,6 +132,11 @@ new ShaderData( AL_PointLightShader )
    OGLVertexShaderFile = "shaders/common/lighting/advanced/gl/convexGeometryV.glsl";
    OGLPixelShaderFile  = "shaders/common/lighting/advanced/gl/pointLightP.glsl";
 
+   samplerNames[0] = "$prePassBuffer";
+   rtParams[0] = true;
+   samplerNames[1] = "$shadowMap";
+   samplerNames[2] = "$cookieMap";
+   
    pixVersion = 3.0;
 };
 
@@ -137,7 +146,6 @@ new CustomMaterial( AL_PointLightMaterial )
    stateBlock = AL_ConvexLightState;
    
    sampler["prePassBuffer"] = "#prepass";
-   rtParams[0] = "prePassBuffer";
    sampler["shadowMap"] = "$dynamiclight";
    sampler["cookieMap"] = "$dynamiclightmask";
    
@@ -228,7 +236,6 @@ new CustomMaterial( AL_ParticlePointLightMaterial )
    stateBlock = AL_ConvexLightState;
    
    sampler["prePassBuffer"] = "#prepass";
-   rtParams[0] = "prePassBuffer";
    target = "lightinfo";
    
    pixVersion = 3.0;

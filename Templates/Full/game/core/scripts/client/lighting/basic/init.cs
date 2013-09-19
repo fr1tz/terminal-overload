@@ -46,6 +46,8 @@ singleton ShaderData( BL_ProjectedShadowShaderData )
    OGLVertexShaderFile     = "shaders/common/gl/projectedShadowV.glsl";
    OGLPixelShaderFile      = "shaders/common/gl/projectedShadowP.glsl";   
       
+   samplerNames[0] = "inputTex";
+   
    pixVersion = 2.0;
 };
 
@@ -76,12 +78,18 @@ function onActivateBasicLM()
    // end up in the MissionCleanup instant group.
    RootGroup.add( BL_ProjectedShadowRPM );
    RootGroup.add( %meshBin );      
+
+   // Enable the offscreen render target.
+   AL_FormatToken.enable();
 }
 
 function onDeactivateBasicLM()
 {
    // Delete the pass manager which also deletes the bin.
    BL_ProjectedShadowRPM.delete();
+   
+   // Disable the offscreen render target.
+   AL_FormatToken.disable();
 }
 
 function setBasicLighting()

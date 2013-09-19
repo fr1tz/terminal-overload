@@ -40,6 +40,7 @@ singleton ShaderData( PFX_PassthruShader )
    OGLPixelShaderFile   = "shaders/common/postFx/gl/passthruP.glsl";
       
    samplerNames[0] = "$inputTex";
+   rtParams[0] = true;
    
    pixVersion = 2.0;
 };

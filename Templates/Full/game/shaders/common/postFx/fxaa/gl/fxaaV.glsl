@@ -19,26 +19,19 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 // IN THE SOFTWARE.
 //-----------------------------------------------------------------------------
+#include "../../../gl/hlslCompat.glsl"
+#include "../../../gl/torque.glsl"
 
-#include "hlslCompat.glsl"
+uniform vec4 rtParams0;
 
-varying vec2 texCoord;
-varying vec4 color;
-varying float fade;
-
-uniform mat4 modelview;
-uniform float shadowLength;
-uniform vec3 shadowCasterPosition;
-
+varying vec4 hpos;
+varying vec2 uv0;
+                    
 void main()
 {
-   gl_Position = modelview * vec4(gl_Vertex.xyz, 1.0);
-   
-   color = gl_Color;
-   texCoord = gl_MultiTexCoord1.st;
-   
-   float fromCasterDist = length(gl_Vertex.xyz - shadowCasterPosition) - shadowLength;
-   fade = 1.0 - clamp( fromCasterDist / shadowLength , 0.0, 1.0 );
+   gl_Position = gl_Vertex;   
+   hpos = gl_Position;
+   uv0 = viewportCoordToRenderTarget( gl_MultiTexCoord0.st, rtParams0 ); 
    
    correctSSP(gl_Position);
 }

@@ -61,12 +61,13 @@ vec3 mul( vec3 v, mat3 m) { return v*m; }
 
 vec4 rsqrt( vec4 n ){ return inversesqrt( n ); }
 
-void clip(float a) { if(a < 0) discard;}
-
-//vec2 invertY(vec2 uv) { return vec2(uv.x, 1 - uv.y); }
 #define invertY vec2
 
 void correctSSP(inout vec4 vec) 
 { 
 	vec.y *= -1;
 }
+
+#ifdef TORQUE_PIXEL_SHADER
+	void clip(float a) { if(a < 0) discard;}
+#endif

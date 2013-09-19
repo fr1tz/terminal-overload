@@ -661,6 +661,7 @@ protected:
    GFXTextureManager * mTextureManager;
 
    bool mTextureCoordStartTop;
+   bool mTexelPixelOffset;
 
 public:   
    virtual GFXCubemap * createCubemap() = 0;
@@ -731,6 +732,9 @@ public:
    virtual GFXShader* createShader() = 0;
 
    bool isTextureCoordStartTop() const { return mTextureCoordStartTop; }
+
+   /// For handle with DX9 API texel-to-pixel mapping offset
+   bool hasTexelPixelOffset() const { return mTexelPixelOffset; }
    
    /// @}
  
@@ -1112,5 +1116,11 @@ inline void GFXDevice::setVertexFormat( const GFXVertexFormat *vertexFormat )
    mStateDirty = true;
 }
 
+
+#ifdef TORQUE_DEBUG_GFX
+#define GFXAssertFatal(x, error) AssertFatal(x, error)
+#else
+#define GFXAssertFatal(x, error)
+#endif
 
 #endif // _GFXDEVICE_H_

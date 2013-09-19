@@ -74,9 +74,6 @@ CustomMaterial::CustomMaterial()
    mRefract = false;
    mStateBlockData = NULL;
    mForwardLit = false;
-
-   for(int i = 0; i< MAX_TEX_PER_PASS; ++i)
-      mRTParams[i] = -1;
 }
 
 //--------------------------------------------------------------------------
@@ -128,6 +125,13 @@ bool CustomMaterial::onAdd()
    for (SimFieldDictionaryIterator itr(getFieldDictionary()); *itr; ++itr)
    {
    	SimFieldDictionary::Entry* entry = *itr;
+
+      if( dStrStartsWith(entry->slotName, rtParams) )
+      {
+         Con::warnf("   WARNING: CustomMaterial(%s) cant define rtParams", getName());
+         //GFXAssertFatal(0, "");
+      }
+
       if (dStrStartsWith(entry->slotName, samplerDecl))
       {
       	if (i >= MAX_TEX_PER_PASS)
@@ -140,45 +144,14 @@ bool CustomMaterial::onAdd()
          {
          	logError("sampler declarations must have a sampler name, e.g. sampler[\"diffuseMap\"]");
             return false;
-         }
+         }         
          
       	mSamplerNames[i] = entry->slotName + dStrlen(samplerDecl);
          mSamplerNames[i].insert(0, '$');
          mTexFilename[i] = entry->value;
          ++i;
       }
-   }
-
-   for (SimFieldDictionaryIterator itr(getFieldDictionary()); *itr; ++itr)
-   {
-   	SimFieldDictionary::Entry* entry = *itr;
-      if (dStrStartsWith(entry->slotName, rtParams))
-      {
-      	if (i >= MAX_TEX_PER_PASS)
-         {
-            logError("Too many rtParams declarations, you may only have %i", MAX_TEX_PER_PASS);
-            return false;
-         }
-         
-         if (dStrlen(entry->slotName) == dStrlen(rtParams))
-         {
-         	logError("rtParams declarations must have a id, e.g. sampler[0]");
-            return false;
-         }       
-
-         String sampler = String("$") + String(entry->value); 
-      	
-         for(int s = 0; s < MAX_TEX_PER_PASS; ++s)
-         {
-            if( mSamplerNames[s].equal(sampler) )
-            {
-               mRTParams[s] = dAtoi( entry->slotName + dStrlen(rtParams) );
-               AssertFatal(mRTParams[s] > -1 && mRTParams[s] < MAX_TEX_PER_PASS, "");
-               break;
-            }
-         }
-      }
-   }
+   }   
 
    return true;
 }

@@ -20,25 +20,37 @@
 // IN THE SOFTWARE.
 //-----------------------------------------------------------------------------
 
-#include "hlslCompat.glsl"
+#include "../../gl/hlslCompat.glsl"
+#include "../../gl/torque.glsl"
 
-varying vec2 texCoord;
-varying vec4 color;
-varying float fade;
+uniform float2 texSize0;
 
-uniform mat4 modelview;
-uniform float shadowLength;
-uniform vec3 shadowCasterPosition;
+varying float4 hpos; //POSITION;
+varying float2 uv0; //TEXCOORD0;
+varying float2 uv1; //TEXCOORD1;
+varying float2 uv2; //TEXCOORD2;
+varying float2 uv3; //TEXCOORD3;
+varying float2 uv4; //TEXCOORD4;
+varying float2 uv5; //TEXCOORD5;
+varying float2 uv6; //TEXCOORD6;
+varying float2 uv7; //TEXCOORD7;
 
 void main()
-{
-   gl_Position = modelview * vec4(gl_Vertex.xyz, 1.0);
+{  
+   gl_Position = gl_Vertex;
+   hpos = gl_Position;
    
-   color = gl_Color;
-   texCoord = gl_MultiTexCoord1.st;
-   
-   float fromCasterDist = length(gl_Vertex.xyz - shadowCasterPosition) - shadowLength;
-   fade = 1.0 - clamp( fromCasterDist / shadowLength , 0.0, 1.0 );
+   float2 uv = gl_MultiTexCoord0.st + (0.5f / texSize0);
+
+   uv0 = uv + ( ( BLUR_DIR * 3.5f ) / texSize0 );
+   uv1 = uv + ( ( BLUR_DIR * 2.5f ) / texSize0 );
+   uv2 = uv + ( ( BLUR_DIR * 1.5f ) / texSize0 );
+   uv3 = uv + ( ( BLUR_DIR * 0.5f ) / texSize0 );
+
+   uv4 = uv - ( ( BLUR_DIR * 3.5f ) / texSize0 );
+   uv5 = uv - ( ( BLUR_DIR * 2.5f ) / texSize0 );
+   uv6 = uv - ( ( BLUR_DIR * 1.5f ) / texSize0 );
+   uv7 = uv - ( ( BLUR_DIR * 0.5f ) / texSize0 );
    
    correctSSP(gl_Position);
 }

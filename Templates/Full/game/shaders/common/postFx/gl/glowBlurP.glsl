@@ -20,25 +20,39 @@
 // IN THE SOFTWARE.
 //-----------------------------------------------------------------------------
 
-#include "hlslCompat.glsl"
+#include "../../gl/hlslCompat.glsl"
 
-varying vec2 texCoord;
-varying vec4 color;
-varying float fade;
+uniform sampler2D diffuseMap ;
 
-uniform mat4 modelview;
-uniform float shadowLength;
-uniform vec3 shadowCasterPosition;
+varying float4 hpos; //POSITION;
+varying float2 uv0; //TEXCOORD0;
+varying float2 uv1; //TEXCOORD1;
+varying float2 uv2; //TEXCOORD2;
+varying float2 uv3; //TEXCOORD3;
+varying float2 uv4; //TEXCOORD4;
+varying float2 uv5; //TEXCOORD5;
+varying float2 uv6; //TEXCOORD6;
+varying float2 uv7; //TEXCOORD7;
 
 void main()
 {
-   gl_Position = modelview * vec4(gl_Vertex.xyz, 1.0);
-   
-   color = gl_Color;
-   texCoord = gl_MultiTexCoord1.st;
-   
-   float fromCasterDist = length(gl_Vertex.xyz - shadowCasterPosition) - shadowLength;
-   fade = 1.0 - clamp( fromCasterDist / shadowLength , 0.0, 1.0 );
-   
-   correctSSP(gl_Position);
+   float4 kernel = float4( 0.175, 0.275, 0.375, 0.475 ) * 0.5f;
+
+   float4 OUT = float4(0);
+   OUT += tex2D( diffuseMap, uv0 ) * kernel.x;
+   OUT += tex2D( diffuseMap, uv1 ) * kernel.y;
+   OUT += tex2D( diffuseMap, uv2 ) * kernel.z;
+   OUT += tex2D( diffuseMap, uv3 ) * kernel.w;
+
+   OUT += tex2D( diffuseMap, uv4 ) * kernel.x;
+   OUT += tex2D( diffuseMap, uv5 ) * kernel.y;
+   OUT += tex2D( diffuseMap, uv6 ) * kernel.z;
+   OUT += tex2D( diffuseMap, uv7 ) * kernel.w;
+
+   // Calculate a lumenance value in the alpha so we
+   // can use alpha test to save fillrate.
+   float3 rgb2lum = float3( 0.30, 0.59, 0.11 );
+   OUT.a = dot( OUT.rgb, rgb2lum );
+
+   gl_FragColor = OUT;
 }

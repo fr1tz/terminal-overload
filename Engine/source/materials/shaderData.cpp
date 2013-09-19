@@ -64,6 +64,9 @@ ShaderData::ShaderData()
 
    mUseDevicePixVersion = false;
    mPixVersion = 1.0;
+
+   for( int i = 0; i < NumTextures; ++i)
+      mRTParams[i] = false;
 }
 
 void ShaderData::initPersistFields()
@@ -115,6 +118,10 @@ void ShaderData::initPersistFields()
       "@endtsexample\n\n"
       );
 
+   addField("samplerNames",              TypeRealString,      Offset(mSamplerNames,   ShaderData), NumTextures, ""); // TODO OPENGL ADD DOCUMENTATION
+
+   addField("rtParams",              TypeBool,      Offset(mRTParams,   ShaderData), NumTextures, "");
+
    Parent::initPersistFields();
 
    // Make sure we get activation signals.
@@ -132,6 +139,16 @@ bool ShaderData::onAdd()
    smAllShaderData.push_back( this );
 
    // NOTE: We initialize the shader on request.
+
+   for(int i = 0; i < NumTextures; ++i)
+   {
+      if( mSamplerNames[i].isNotEmpty() && !mSamplerNames[i].startsWith("$") )
+      {
+         mSamplerNames[i].insert(0, "$");
+         //Con::warnf("ShaderData(%s): Sampler names must start with $, change to samplerName[%d] = \"%s\"", 
+         //   getName(), i, mSamplerNames[i].c_str() );         
+      }
+   }
 
    return true;
 }
@@ -189,6 +206,8 @@ GFXShader* ShaderData::getShader( const Vector<GFXShaderMacro> &macros )
    GFXShader *shader = _createShader( finalMacros );
    if ( !shader )
       return NULL;
+
+   _checkDefinition(shader);
 
    // Store the shader in the cache and return it.
    mShaders.insertUnique( cacheKey, shader );
@@ -268,6 +287,69 @@ void ShaderData::_onLMActivate( const char *lm, bool activate )
    // flush and rebuild all shaders.
 
    reloadAllShaders();
+}
+
+bool ShaderData::hasSamplerDef(const String &_samplerName, int &pos) const
+{
+   String samplerName = _samplerName.startsWith("$") ? _samplerName : "$"+_samplerName;   
+   for(int i = 0; i < NumTextures; ++i)
+   {
+      if( mSamplerNames[i].equal(samplerName, String::NoCase ) )
+      {
+         pos = i;
+         return true;
+      }
+   }
+
+   pos = -1;
+   return false;
+}
+
+bool ShaderData::_checkDefinition(GFXShader *shader)
+{
+   bool error = false;
+   Vector<String> samplers;
+   samplers.reserve(NumTextures);
+   bool rtParams[NumTextures];
+   for(int i = 0; i < NumTextures; ++i)
+      rtParams[i] = false;   
+
+   const Vector<GFXShaderConstDesc> &shaderConstDesc = shader->getShaderConstDesc(); 
+
+   for(int i = 0; i < shaderConstDesc.size(); ++i)
+   {
+      const GFXShaderConstDesc &desc = shaderConstDesc[i];
+      if(desc.constType == GFXSCT_Sampler)
+      {
+         samplers.push_back(desc.name );
+      }      
+   }
+
+   for(int i = 0; i < samplers.size(); ++i)
+   {
+      int pos;
+      bool find = hasSamplerDef(samplers[i], pos);
+
+      if(find && pos >= 0 && mRTParams[pos])
+      {              
+         if( !shader->findShaderConstHandle( String::ToString("$rtParams%d", pos)) )
+         {
+            String error = String::ToString("ShaderData(%s) sampler[%d] used but rtParams%d not used in shader compilation. Possible error", getName(), pos, pos);
+            Con::errorf( error );
+            error = true;
+         }
+      }     
+
+      if(!find)
+      {
+         String error = String::ToString("ShaderData(%s) sampler %s not defined", getName(), samplers[i].c_str());
+         Con::errorf(error );
+         GFXAssertFatal(0, error );
+         error = true;
+      }
+   }  
+
+   return !error;
 }
 
 DefineEngineMethod( ShaderData, reload, void, (),,

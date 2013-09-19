@@ -20,25 +20,29 @@
 // IN THE SOFTWARE.
 //-----------------------------------------------------------------------------
 
-#include "hlslCompat.glsl"
+#include "../../gl/hlslCompat.glsl"
 
-varying vec2 texCoord;
-varying vec4 color;
-varying float fade;
+#include "shadergen:/autogenConditioners.h"
+#include "../../gl/torque.glsl"
 
-uniform mat4 modelview;
-uniform float shadowLength;
-uniform vec3 shadowCasterPosition;
+uniform sampler2D backBuffer;
+uniform sampler2D colorCorrectionTex; // ToDo sampler1D not supported
+
+uniform float OneOverGamma;
+
+varying vec2 uv0;
 
 void main()
 {
-   gl_Position = modelview * vec4(gl_Vertex.xyz, 1.0);
-   
-   color = gl_Color;
-   texCoord = gl_MultiTexCoord1.st;
-   
-   float fromCasterDist = length(gl_Vertex.xyz - shadowCasterPosition) - shadowLength;
-   fade = 1.0 - clamp( fromCasterDist / shadowLength , 0.0, 1.0 );
-   
-   correctSSP(gl_Position);
+    vec4 color = texture2D(backBuffer, uv0.xy);
+
+   // Apply the color correction.
+   color.r = texture2D( colorCorrectionTex, vec2(color.r, 1.0) ).r;
+   color.g = texture2D( colorCorrectionTex, vec2(color.g, 1.0) ).g;
+   color.b = texture2D( colorCorrectionTex, vec2(color.b, 1.0) ).b;
+
+   // Apply gamma correction
+   color.rgb = pow( abs(color.rgb), vec3(OneOverGamma) );
+
+   gl_FragColor = color;
 }

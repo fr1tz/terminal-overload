@@ -20,6 +20,7 @@
 // IN THE SOFTWARE.
 //-----------------------------------------------------------------------------
 
+#include "hlslCompat.glsl"
 
 varying vec2 texCoord;
 varying vec4 color;
@@ -38,4 +39,6 @@ void main()
    
    float fromCasterDist = length(gl_Vertex.xyz - shadowCasterPosition) - shadowLength;
    fade = 1.0 - clamp( fromCasterDist / shadowLength , 0.0, 1.0 );
+   
+   correctSSP(gl_Position);
 }

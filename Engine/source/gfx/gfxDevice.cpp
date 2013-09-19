@@ -138,6 +138,7 @@ GFXDevice::GFXDevice()
    }
 
    mTextureCoordStartTop = true;
+   mTexelPixelOffset = true;
    mVertexStreamSupported = VERTEX_STREAM_COUNT;
 
    mLightsDirty = false;

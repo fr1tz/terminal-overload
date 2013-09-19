@@ -20,25 +20,31 @@
 // IN THE SOFTWARE.
 //-----------------------------------------------------------------------------
 
-#include "hlslCompat.glsl"
+#include "../../gl/hlslCompat.glsl"
 
-varying vec2 texCoord;
-varying vec4 color;
-varying float fade;
+#include "shadergen:/autogenConditioners.h"
+#include "../../gl/torque.glsl"
 
-uniform mat4 modelview;
-uniform float shadowLength;
-uniform vec3 shadowCasterPosition;
+uniform sampler2D prepassTex ;
+uniform float3    eyePosWorld;
+uniform float4    fogColor;
+uniform float3    fogData;
+uniform float4    rtParams0;
+
+varying vec2 uv0;
+varying vec3 wsEyeRay;
 
 void main()
-{
-   gl_Position = modelview * vec4(gl_Vertex.xyz, 1.0);
+{   
+   //float2 prepassCoord = ( uv0.xy * rtParams0.zw ) + rtParams0.xy;   
+   float depth = prepassUncondition( prepassTex, uv0 ).w;
+   //return float4( depth, 0, 0, 0.7 );
    
-   color = gl_Color;
-   texCoord = gl_MultiTexCoord1.st;
-   
-   float fromCasterDist = length(gl_Vertex.xyz - shadowCasterPosition) - shadowLength;
-   fade = 1.0 - clamp( fromCasterDist / shadowLength , 0.0, 1.0 );
-   
-   correctSSP(gl_Position);
+   float factor = computeSceneFog( eyePosWorld,
+                                   eyePosWorld + ( wsEyeRay * depth ),
+                                   fogData.x, 
+                                   fogData.y, 
+                                   fogData.z );
+
+   gl_FragColor = hdrEncode( float4( fogColor.rgb, 1.0 - saturate( factor ) ) );     
 }
