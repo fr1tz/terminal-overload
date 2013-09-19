@@ -271,6 +271,7 @@ public:
    static void initPersistFields();
    bool onAdd();
    void onRemove();
+	virtual void onServerObjectDeleted() {};
    /// @}
 
    static void collapseDirtyList();

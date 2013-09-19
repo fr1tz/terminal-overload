@@ -424,6 +424,7 @@ void NetConnection::ghostWritePacket(BitStream *bstream, PacketNotify *notify)
 
       if(walk->flags & GhostInfo::KillGhost)
       {
+         bool serverObjectDeleted = (walk->updateMask == 0xFFFFFFFF);
          walk->flags &= ~GhostInfo::KillGhost;
          walk->flags |= GhostInfo::KillingGhost;
          walk->updateMask = 0;
@@ -431,6 +432,7 @@ void NetConnection::ghostWritePacket(BitStream *bstream, PacketNotify *notify)
          ghostPushToZero(walk);
          upd->ghostInfoFlags = GhostInfo::KillingGhost;
          bstream->writeFlag(true); // killing ghost
+         bstream->writeFlag(serverObjectDeleted);
       }
       else
       {
@@ -522,6 +524,9 @@ void NetConnection::ghostReadPacket(BitStream *bstream)
       {
 		 mGhostsActive--;
          AssertFatal(mLocalGhosts[index] != NULL, "Error, NULL ghost encountered.");
+         bool serverObjectDeleted = bstream->readFlag();
+         if(serverObjectDeleted)
+            mLocalGhosts[index]->onServerObjectDeleted();
          mLocalGhosts[index]->deleteObject();
          mLocalGhosts[index] = NULL;
       }
