@@ -53,6 +53,10 @@ class HexagonGrid : public ShapeBase
    public:
       HexagonGrid();
 
+      // NetObject
+      U32  packUpdate  (NetConnection *conn, U32 mask, BitStream *stream);
+      void unpackUpdate(NetConnection *conn,           BitStream *stream);
+
       // GameBase
       bool onNewDataBlock( GameBaseData *dptr, bool reload );
 
@@ -67,9 +71,9 @@ class HexagonGrid : public ShapeBase
 
       void inspectPostApply();
 
-      // NetObject
-      U32  packUpdate  (NetConnection *conn, U32 mask, BitStream *stream);
-      void unpackUpdate(NetConnection *conn,           BitStream *stream);
+		// HexagonGrid
+		Point3F gridToWorld(Point3I gridPos);
+		Point3I worldToGrid(Point3F worldPos);
 
       DECLARE_CONOBJECT(HexagonGrid);
       static void initPersistFields();

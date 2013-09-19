@@ -63,7 +63,7 @@ ConsoleDocClass( HexagonGrid,
 
 HexagonGrid::HexagonGrid()
 {
-   mTypeMask |= StaticObjectType;
+   mTypeMask |= (StaticObjectType | HexagonGridObjectType);
    mDataBlock = NULL;
    mNetFlags.set(Ghostable | ScopeAlways);
 }
@@ -146,4 +146,25 @@ void HexagonGrid::initPersistFields()
 {
    Parent::initPersistFields();
 }
+
+Point3F HexagonGrid::gridToWorld(Point3I gridPos)
+{
+	Point3F worldPos;
+
+	Point3F origin = this->getPosition();
+	worldPos.x = origin.x + gridPos.x * mDataBlock->spacing.x;
+	worldPos.y = origin.y + gridPos.y * mDataBlock->spacing.y;
+	if(gridPos.x % 2 != 0)
+		worldPos.y += mDataBlock->spacing.y/2;
+	worldPos.z = origin.z + gridPos.z * mDataBlock->spacing.z;
+   
+   return worldPos;
+}
+
+Point3I HexagonGrid::worldToGrid(Point3F worldPos)
+{
+   // TODO
+	return Point3I(0, 0, 0);
+}
+
 
