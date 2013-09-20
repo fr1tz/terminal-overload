@@ -128,9 +128,9 @@ enum SceneObjectTypes
    /// @see PhysicalZone
    PhysicalZoneObjectType = BIT( 22 ),
 
-   /// A hexagon grid object.
-   /// @see HexagonGrid
-   HexagonGridObjectType = BIT( 23 ),
+   /// A grid object.
+   /// @see Grid
+   GridObjectType = BIT( 23 ),
 
    /// @}
 

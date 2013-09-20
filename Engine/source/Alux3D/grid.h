@@ -1,8 +1,8 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
-#ifndef _HEXAGONGRID_H_
-#define _HEXAGONGRID_H_
+#ifndef _GRID_H_
+#define _GRID_H_
 
 #ifndef _BITSTREAM_H_
 #include "core/stream/bitStream.h"
@@ -20,16 +20,16 @@
 #include "core/color.h"
 #endif
 
-class HexagonGridData : public ShapeBaseData
+class GridData : public ShapeBaseData
 {
 	typedef ShapeBaseData Parent;
 
  public:
 	Point3F spacing;
 
-	HexagonGridData();
+	GridData();
    
-	DECLARE_CONOBJECT(HexagonGridData);
+	DECLARE_CONOBJECT(GridData);
 
 	bool onAdd();
 	static void initPersistFields();
@@ -37,7 +37,7 @@ class HexagonGridData : public ShapeBaseData
 	virtual void unpackData(BitStream* stream);
 };
 
-class HexagonGrid : public ShapeBase
+class Grid : public ShapeBase
 {
    private:
       typedef ShapeBase Parent;
@@ -47,11 +47,11 @@ class HexagonGrid : public ShapeBase
          PositionMask = Parent::NextFreeMask,
          NextFreeMask = Parent::NextFreeMask << 1
       };
-      HexagonGridData* mDataBlock;
+      GridData* mDataBlock;
       bool mAddedToScene;
 
    public:
-      HexagonGrid();
+      Grid();
 
       // NetObject
       U32  packUpdate  (NetConnection *conn, U32 mask, BitStream *stream);
@@ -71,13 +71,13 @@ class HexagonGrid : public ShapeBase
 
       void inspectPostApply();
 
-		// HexagonGrid
+		// Grid
 		Point3F gridToWorld(Point3I gridPos);
 		Point3I worldToGrid(Point3F worldPos);
 
-      DECLARE_CONOBJECT(HexagonGrid);
+      DECLARE_CONOBJECT(Grid);
       static void initPersistFields();
 };
 
 
-#endif // _HEXAGONGRID_H_
+#endif // _GRID_H_

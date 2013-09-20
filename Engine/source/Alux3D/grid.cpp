@@ -1,7 +1,7 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
-#include "hexagonGrid.h"
+#include "grid.h"
 
 #include "console/consoleTypes.h"
 #include "core/color.h"
@@ -9,18 +9,18 @@
 
 extern bool gEditingMission;
 
-IMPLEMENT_CO_DATABLOCK_V1(HexagonGridData);
+IMPLEMENT_CO_DATABLOCK_V1(GridData);
 
-ConsoleDocClass( HexagonGridData,
+ConsoleDocClass( GridData,
    "@brief TODO\n\n"
 );
 
-HexagonGridData::HexagonGridData()
+GridData::GridData()
 {
 	spacing.set(1.0625, 1.25, 0.25);
 }
 
-bool HexagonGridData::onAdd()
+bool GridData::onAdd()
 {
    if (!Parent::onAdd())
       return false;
@@ -28,11 +28,11 @@ bool HexagonGridData::onAdd()
    return true;
 }
 
-void HexagonGridData::initPersistFields()
+void GridData::initPersistFields()
 {
    addGroup("Grid");
 
-		addField( "spacing", TypePoint3F, Offset(spacing, HexagonGridData),
+		addField( "spacing", TypePoint3F, Offset(spacing, GridData),
 			"@brief The spacing of the grid nodes\n\n"
 		);
 
@@ -41,13 +41,13 @@ void HexagonGridData::initPersistFields()
    Parent::initPersistFields();
 }
 
-void HexagonGridData::packData(BitStream* stream)
+void GridData::packData(BitStream* stream)
 {
    Parent::packData(stream);
 	mathWrite(*stream, spacing); 
 }
 
-void HexagonGridData::unpackData(BitStream* stream)
+void GridData::unpackData(BitStream* stream)
 {
    Parent::unpackData(stream);
 	mathRead(*stream, &spacing); 
@@ -55,20 +55,20 @@ void HexagonGridData::unpackData(BitStream* stream)
 
 //--------------------------------------------------------------------------
 
-IMPLEMENT_CO_NETOBJECT_V1(HexagonGrid);
+IMPLEMENT_CO_NETOBJECT_V1(Grid);
 
-ConsoleDocClass( HexagonGrid,
+ConsoleDocClass( Grid,
    "@brief TODO\n\n"
 );
 
-HexagonGrid::HexagonGrid()
+Grid::Grid()
 {
-   mTypeMask |= (StaticObjectType | HexagonGridObjectType);
+   mTypeMask |= (StaticObjectType | GridObjectType);
    mDataBlock = NULL;
    mNetFlags.set(Ghostable | ScopeAlways);
 }
 
-bool HexagonGrid::onAdd()
+bool Grid::onAdd()
 {
    if(!Parent::onAdd() || !mDataBlock)
       return(false);
@@ -79,43 +79,43 @@ bool HexagonGrid::onAdd()
    return true;
 }
 
-void HexagonGrid::onRemove()
+void Grid::onRemove()
 {
 	removeFromScene();
 	Parent::onRemove();
 }
 
-void HexagonGrid::inspectPostApply()
+void Grid::inspectPostApply()
 {
    Parent::inspectPostApply();
 }
 
-void HexagonGrid::onEditorEnable()
+void Grid::onEditorEnable()
 {
 	this->setRenderEnabled(true);
 }
 
-void HexagonGrid::onEditorDisable()
+void Grid::onEditorDisable()
 {
 	this->setRenderEnabled(false);
 }
 
-bool HexagonGrid::onNewDataBlock( GameBaseData *dptr, bool reload )
+bool Grid::onNewDataBlock( GameBaseData *dptr, bool reload )
 {
-   mDataBlock = dynamic_cast<HexagonGridData*>( dptr );
+   mDataBlock = dynamic_cast<GridData*>( dptr );
    if ( !mDataBlock || !Parent::onNewDataBlock( dptr, reload ) )
       return(false);
    scriptOnNewDataBlock();
    return(true);
 }
 
-void HexagonGrid::setTransform(const MatrixF& mat)
+void Grid::setTransform(const MatrixF& mat)
 {
    Parent::setTransform(mat);
    setMaskBits(PositionMask);
 }
 
-U32 HexagonGrid::packUpdate(NetConnection * con, U32 mask, BitStream * stream)
+U32 Grid::packUpdate(NetConnection * con, U32 mask, BitStream * stream)
 {
    U32 retMask = Parent::packUpdate(con, mask, stream);
    if(stream->writeFlag(mask & PositionMask))
@@ -127,7 +127,7 @@ U32 HexagonGrid::packUpdate(NetConnection * con, U32 mask, BitStream * stream)
    return(retMask);
 }
 
-void HexagonGrid::unpackUpdate(NetConnection * con, BitStream * stream)
+void Grid::unpackUpdate(NetConnection * con, BitStream * stream)
 {
    Parent::unpackUpdate(con, stream);
    if(stream->readFlag())
@@ -142,26 +142,24 @@ void HexagonGrid::unpackUpdate(NetConnection * con, BitStream * stream)
    }
 }
 
-void HexagonGrid::initPersistFields()
+void Grid::initPersistFields()
 {
    Parent::initPersistFields();
 }
 
-Point3F HexagonGrid::gridToWorld(Point3I gridPos)
+Point3F Grid::gridToWorld(Point3I gridPos)
 {
 	Point3F worldPos;
 
 	Point3F origin = this->getPosition();
 	worldPos.x = origin.x + gridPos.x * mDataBlock->spacing.x;
 	worldPos.y = origin.y + gridPos.y * mDataBlock->spacing.y;
-	if(gridPos.x % 2 != 0)
-		worldPos.y += mDataBlock->spacing.y/2;
 	worldPos.z = origin.z + gridPos.z * mDataBlock->spacing.z;
    
    return worldPos;
 }
 
-Point3I HexagonGrid::worldToGrid(Point3F worldPos)
+Point3I Grid::worldToGrid(Point3F worldPos)
 {
    // TODO
 	return Point3I(0, 0, 0);
