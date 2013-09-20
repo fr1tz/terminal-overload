@@ -4,12 +4,13 @@
 function executeFrontlineServerScripts()
 {
    exec("./frontlineGame.cs");
-   exec("./metaSoil.cs");
-   exec("./metaSoilWorker.cs");
+   exec("./grid.cs");
    exec("./metaSoilEdit.cs");
    exec("./metaSoilEditAux.cs");
    exec("./metaSoilEditSetup.cs");
    exec("./metaSoilEditTweak.cs");
+   exec("./metaSoilEditWorker.cs");
+   exec("./unfinishedSoilTile.cs");
    exec("./soil.cs");
 }
 

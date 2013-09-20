@@ -13,6 +13,25 @@ function MetaSoilTile::tweak(%this, %obj)
    %newPos = %obj.getPosition();
    echo(%oldPos SPC "->" SPC %newPos);
    
+   // Find out to which volume we belong.
+   %obj.volumeName = "";
+	InitContainerRadiusSearch(%obj.getPosition(), 0.1, $TypeMasks::StaticObjectType);
+	while((%srchObj = containerSearchNext()) != 0)
+	{
+      if(!%srchObj.isMethod("getDataBlock"))
+         continue;
+      if(%srchObj.getDataBlock() == SoilVolume.getId())
+      {
+         %obj.volumeName = %srchObj.getName();
+         break;
+      }
+	}
+   if(%obj.volumeName $= "")
+   {
+      error("MetaSoilTile::tweak(): Tile ID" SPC %obj.getId() SPC "not "
+          @ "inside a soil volume!");
+   }
+   
    // Gather some info about our adjacents.
    %obj.numAdjacents = 0;
    for(%side = 1; %side <= 6; %side++)

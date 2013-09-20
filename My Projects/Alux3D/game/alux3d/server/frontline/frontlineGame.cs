@@ -14,9 +14,9 @@ function FrontlineGame::onMissionLoaded(%game)
 
    $Server::MissionType = "Frontline";
    
-   // SimSet for all physical soil tiles
-   %game.soilTileSet = new SimSet();
-   MissionCleanup.add(%game.soilTileSet);
+   // SimSet for unfinished physical soil tiles
+   %game.unfinishedSoilTileSet = new SimSet();
+   MissionCleanup.add(%game.unfinishedSoilTileSet);
 
    // SimSet for soil volumes that need to rebuild their geometry
    %game.soilVolumeDirtySet = new SimSet();

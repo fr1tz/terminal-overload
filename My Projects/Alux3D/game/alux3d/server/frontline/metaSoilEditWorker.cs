@@ -38,7 +38,7 @@ function MetaSoil::workerThread()
    if(MetaSoil::workerSet().getCount() > 0)
    {
 		%tile = MetaSoil::workerSet().getObject(0);
-      echo("MetaSoilWorker:" SPC MetaSoil::workerFunc() SPC "on" SPC %tile.getId());
+      echo("MetaSoilWorker:" SPC MetaSoil::workerFunc() SPC "on" SPC %tile.getName());
       %done = %tile.getDataBlock().call(MetaSoil::workerFunc(), %tile);
       if(%done)
          MetaSoil::workerSet().remove(%tile);

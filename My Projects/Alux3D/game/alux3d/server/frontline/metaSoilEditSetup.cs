@@ -18,6 +18,8 @@ function MetaSoilTile::setup(%this, %obj)
       %obj.setupStage = %side;
       return false;
    }
+   
+   echo("Done computing ground elevations.");
 
    if(%obj.groundElevation[0] $= "none")
    {
@@ -118,7 +120,6 @@ function MetaSoilTile::computeGroundElevation(%this, %obj, %side)
    %topz = getWord(%obj.getWorldBoxCenter(), 2);
 
    // Check if we're going out of bounds.
-   %obj.volumeName = "";
    %outsideBounds = true;
 	InitContainerRadiusSearch(%top, 0.1, $TypeMasks::StaticObjectType);
 	while((%srchObj = containerSearchNext()) != 0)
@@ -127,7 +128,6 @@ function MetaSoilTile::computeGroundElevation(%this, %obj, %side)
          continue;
       if(%srchObj.getDataBlock() == SoilVolume.getId())
       {
-         %obj.volumeName = %srchObj.getName();
          %outsideBounds = false;
          break;
       }
@@ -183,6 +183,8 @@ function MetaSoilTile::createAdjacent(%this, %obj, %side)
    if(%obj.groundElevation[%side] $= "none")
       return "None";
       
+   echo("createAdjacent for" SPC %obj.getName() SPC "side" SPC %side);
+   
    %gridPos = VectorAdd(%obj.gridPos, %this.adjacentGridOffset[%side]);
    %pos = MissionSoilGrid.gridToWorld(%gridPos);
    %pos = setWord(%pos, 2, %obj.groundElevation[%side]);
@@ -203,7 +205,7 @@ function MetaSoilTile::createAdjacent(%this, %obj, %side)
 
       if(%srchObj.getDataBlock() == %this.getId())
       {
-         echo("found existing tile");
+         echo("found existing tile" SPC %srchObj.getName());
          return %srchObj;
       }
 	}
