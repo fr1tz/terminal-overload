@@ -107,7 +107,8 @@ class HexagonVolume : public GameBase
 
 	// HexagonVolume
 	void clearHexagons();
-	void addHexagon(Point3I gridpos);
+	bool addHexagon(Point3I gridpos);
+	bool removeHexagon(Point3I gridpos);
 	bool rebuild();
 	bool rebuildHexMap();
 	bool rebuildMode2();

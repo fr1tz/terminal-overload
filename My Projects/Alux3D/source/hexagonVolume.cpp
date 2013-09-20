@@ -2,8 +2,8 @@
 // located in the root directory of this distribution.
 
 #include "hexagonVolume.h"
-#include "hexagonGrid.h"
 
+#include "Alux3D/grid.h"
 #include "platform/platform.h"
 #include "collision/boxConvex.h"
 #include "console/consoleTypes.h"
@@ -431,10 +431,6 @@ bool HexagonVolume::rebuildHexMap()
 	}
 
 	mHexMap.originGridPos = minGridPos;
-
-	if(maxGridPos == minGridPos)
-		return true;
-
 	mHexMap.width = maxGridPos.x - minGridPos.x + 1;
 	mHexMap.height = maxGridPos.y - minGridPos.y + 1;
 
@@ -527,11 +523,11 @@ bool HexagonVolume::rebuildMode2()
 		}
 	}
 
-	HexagonGrid* grid = NULL;
+	Grid* grid = NULL;
 	{
 		Vector<SceneObject*> grids;
-		this->getContainer()->findObjectList(HexagonGridObjectType, &grids);
-		grid = (HexagonGrid*)grids[0];
+		this->getContainer()->findObjectList(GridObjectType, &grids);
+		grid = (Grid*)grids[0];
 	}
 
 	if(grid == NULL)
@@ -704,10 +700,30 @@ void HexagonVolume::clearHexagons()
 	mHexagons.clear();
 }
 
-void HexagonVolume::addHexagon(Point3I gridpos)
+bool HexagonVolume::addHexagon(Point3I gridpos)
 {
+	for(U32 i = 0; i < mHexagons.size(); i++)
+		if(mHexagons[i] == gridpos)
+			return false;
+
 	mHexagons.push_back(gridpos);
+	return true;
 }
+
+bool HexagonVolume::removeHexagon(Point3I gridpos)
+{
+	for(U32 i = 0; i < mHexagons.size(); i++)
+	{
+		if(mHexagons[i] == gridpos)
+		{
+			mHexagons.erase(i);
+			return true;
+		}
+	}
+
+	return false;
+}
+
 
 //--------------------------------------------------------------------------
 
@@ -821,13 +837,22 @@ DefineEngineMethod(HexagonVolume, clearHexagons, void, (),,
 }
 
 
-DefineEngineMethod(HexagonVolume, addHexagon, void, (Point3I pos),,
+DefineEngineMethod(HexagonVolume, addHexagon, bool, (Point3I pos),,
    "@brief Add a hexagon to the volume.\n\n"
 
    "@param Position of the new hexagon\n"
 )
 {
-   object->addHexagon(pos);
+   return object->addHexagon(pos);
+}
+
+DefineEngineMethod(HexagonVolume, removeHexagon, bool, (Point3I pos),,
+   "@brief Add a hexagon to the volume.\n\n"
+
+   "@param Position of the new hexagon\n"
+)
+{
+   return object->removeHexagon(pos);
 }
 
 DefineEngineMethod(HexagonVolume, rebuild, void, (),,
