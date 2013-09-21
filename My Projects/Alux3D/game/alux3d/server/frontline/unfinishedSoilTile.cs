@@ -3,7 +3,7 @@
 
 datablock StaticShapeData(UnfinishedSoilTile)
 {
-   shapeFile = "content/alux3d/release1/shapes/soil/soil.dae";
+   shapeFile = "content/alux3d/release1/shapes/soil/unfinished1.dae";
    emap = true;
    //dynamicType = $TypeMasks::NextFreeObjectType;
 };
@@ -30,8 +30,8 @@ function UnfinishedSoilTile::onRemove(%this, %obj)
 function UnfinishedSoilTile::startBuild(%this, %obj)
 {
    if(!isObject(%obj)) return;
-   %obj.startFade(10000, 0, false);
-   %obj.zBuildThread = %this.schedule(10000, "buildFinished", %obj);
+   %obj.startFade(5000, 0, false);
+   %obj.zBuildThread = %this.schedule(5000, "buildFinished", %obj);
 }
 
 function UnfinishedSoilTile::buildFinished(%this, %obj)

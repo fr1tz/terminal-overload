@@ -97,6 +97,8 @@ function Soil::buildAdjacent(%tile, %side)
    %unfinishedTile.metaSoilTile = %adjacentTile;
    %unfinishedTile.setTransform(%adjacentTile.getPosition());
    %unfinishedTile.getDataBlock().startBuild(%unfinishedTile);
+   
+   %adjacentTile.teamId = %tile.teamId;
    %adjacentTile.zUnfinishedTile = %unfinishedTile;
    
    return true;
@@ -120,7 +122,7 @@ function Soil::finishTile(%tile, %teamId)
    %tile.teamId = %teamId;
    %tile.zFinished = true;
    %volume = %tile.volumeName;
-   if(%volume.addHexagon(%tile.gridPos))
+   if(%volume.addHexagon(%tile.gridPos, %tile.teamId))
       Game.soilVolumeDirtySet.add(%volume);
    schedule(0, Game, "Soil::buildAdjacents", %tile);
 }
