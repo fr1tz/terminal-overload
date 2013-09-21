@@ -9,7 +9,7 @@ function MetaSoilTile::setup(%this, %obj)
    //if(!%obj.expand)
    //   return;
 
-   if(%obj.setupStage < 7)
+   if(%obj.setupStage < 6)
    {
       %side = %obj.setupStage;
       while(%obj.groundElevation[%side] !$= "")
@@ -112,13 +112,16 @@ function MetaSoilTile::computeGroundElevation(%this, %obj, %side)
 {
    // (Brought to you by the Close Enough(tm)
    //  dept. of Algorithms -- fr1tz)
+   
+   echo("Computing ground elevations for" SPC %obj.getName() SPC "side" SPC %side);
 
    %gridPos = VectorAdd(%obj.gridPos, %this.adjacentGridOffset[%side]);
    %top = MissionSoilGrid.gridToWorld(%gridPos);
    %topx = getWord(%top, 0);
    %topy = getWord(%top, 1);
    %topz = getWord(%obj.getWorldBoxCenter(), 2);
-
+   %top = %topx SPC %topy SPC %topz;
+   
    // Check if we're going out of bounds.
    %outsideBounds = true;
 	InitContainerRadiusSearch(%top, 0.1, $TypeMasks::StaticObjectType);
