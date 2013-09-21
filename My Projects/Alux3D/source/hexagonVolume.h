@@ -47,6 +47,12 @@ class HexagonVolume : public GameBase
 {
 	typedef GameBase Parent;
 
+	struct Hexagon
+	{
+		Point3I gridPos;
+		U32 shapeNr;
+	};
+
 	static bool smRenderBounds;
 	static U32 smBaseObjectMask;
 
@@ -54,13 +60,14 @@ class HexagonVolume : public GameBase
 
 	HexagonGrid* mGrid;
 
-	Vector<Point3I> mHexagons; // Always empty on client
+	Vector<Hexagon> mHexagons; // Always empty on client
 	struct HexMap
 	{
 		Point3I originGridPos;
 		S32 width;
 		S32 height;
-		U32* data;
+		U32* elevation;
+		U32* shapeNr;
 	} mHexMap;
 
 	TSShape* mServerShape; // Always NULL on client
@@ -107,9 +114,10 @@ class HexagonVolume : public GameBase
 
 	// HexagonVolume
 	void clearHexagons();
-	bool addHexagon(Point3I gridpos);
-	bool removeHexagon(Point3I gridpos);
+	bool addHexagon(Point3I gridPos, U32 shapeNr);
+	bool removeHexagon(Point3I gridPos);
 	bool rebuild();
+	void clearHexMap();
 	bool rebuildHexMap();
 	bool rebuildMode2();
 	void rebuildMode2MoveMeshVerts(TSMesh* mesh, Point3F vec);

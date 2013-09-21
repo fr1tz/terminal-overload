@@ -151,7 +151,8 @@ HexagonVolume::HexagonVolume()
 	mHexMap.originGridPos.set(0,0,0);
 	mHexMap.width = 0;
 	mHexMap.height = 0;
-	mHexMap.data = NULL;
+	mHexMap.elevation = NULL;
+	mHexMap.shapeNr = NULL;
 
 	mServerShape = NULL;
 	mServerShapeId = 0;
@@ -395,25 +396,31 @@ bool HexagonVolume::rebuild()
 	return this->rebuildMode2();
 }
 
-bool HexagonVolume::rebuildHexMap()
+void HexagonVolume::clearHexMap()
 {
-	if(mHexMap.data)
-	{
-		delete[] mHexMap.data;
-		mHexMap.data = NULL;
-	}
 	mHexMap.width = 0;
 	mHexMap.height = 0;
+	if(mHexMap.elevation)
+		delete[] mHexMap.elevation;
+	mHexMap.elevation = NULL;
+	if(mHexMap.shapeNr) 
+		delete[] mHexMap.shapeNr;
+	mHexMap.shapeNr = NULL;
+}
+
+bool HexagonVolume::rebuildHexMap()
+{
+	this->clearHexMap();
 
 	if(mHexagons.empty())
 		return true;
 
-	Point3I minGridPos = mHexagons[0];
-	Point3I maxGridPos = mHexagons[0];
+	Point3I minGridPos = mHexagons[0].gridPos;
+	Point3I maxGridPos = mHexagons[0].gridPos;
 
 	for(U32 i = 0; i < mHexagons.size(); i++)
 	{
-		const Point3I& gridPos = mHexagons[i];
+		const Point3I& gridPos = mHexagons[i].gridPos;
 
 		if(gridPos.x < minGridPos.x)
 			minGridPos.x = gridPos.x;
@@ -435,19 +442,22 @@ bool HexagonVolume::rebuildHexMap()
 	mHexMap.height = maxGridPos.y - minGridPos.y + 1;
 
 	U32 n = mHexMap.width*mHexMap.height;
-	mHexMap.data = new U32[n];
-	dMemset(mHexMap.data, 0, n*sizeof(U32));
+	mHexMap.elevation = new U32[n];
+	mHexMap.shapeNr = new U32[n];
+	dMemset(mHexMap.elevation, 0, n*sizeof(U32));
+	dMemset(mHexMap.shapeNr, 0, n*sizeof(U32));
 
 	for(U32 i = 0; i < mHexagons.size(); i++)
 	{
-		const Point3I& gridPos = mHexagons[i];
+		const Point3I& gridPos = mHexagons[i].gridPos;
 
 		Point2I mapPos;
 		mapPos.x = gridPos.x - mHexMap.originGridPos.x;
 		mapPos.y = gridPos.y - mHexMap.originGridPos.y;
 
 		U32 idx = (mapPos.y*mHexMap.width) + mapPos.x;
-		mHexMap.data[idx] = gridPos.z - mHexMap.originGridPos.z + 1;
+		mHexMap.elevation[idx] = gridPos.z - mHexMap.originGridPos.z + 1;
+		mHexMap.shapeNr[idx] = mHexagons[i].shapeNr;
 	}
 
 	return true;
@@ -491,7 +501,7 @@ bool HexagonVolume::rebuildMode2()
 	if(!mDataBlock || !mDataBlock->shape)
 		return false;
 
-	if(mHexMap.data == NULL)
+	if(mHexMap.elevation == NULL)
 	{
 		if(mShapeInstance)
 			SAFE_DELETE(mShapeInstance);
@@ -536,14 +546,6 @@ bool HexagonVolume::rebuildMode2()
 		return false;
 	}
 
-	Point3F adjustPos(0,0,0);
-	S32 nodeIndex = mDataBlock->shape->findNode("Mesh");
-	if(nodeIndex >= 0)
-	{
-		adjustPos = mDataBlock->shape->defaultTranslations[nodeIndex];
-		//adjustPos *= 0.5;
-	}
-
 	TSShape* shapePtr;
 	if(this->isServerObject())
 	{
@@ -572,17 +574,29 @@ bool HexagonVolume::rebuildMode2()
 
 	for(U32 idx = 0; idx < numHexagons; idx++)
 	{
-		if(mHexMap.data[idx] == 0)
+		if(mHexMap.elevation[idx] == 0)
 			continue;
 
+		U32 shapeNr = mHexMap.shapeNr[idx];
+		char shapeNodeName[256];
+		char shapeMeshName[256];
 		char newMeshName[256];
-		dSprintf(newMeshName, sizeof(newMeshName), "Object%iMesh2", idx);
-		if(shapePtr->addMesh(mDataBlock->shape, "Mesh2", newMeshName))
+
+		dSprintf(shapeNodeName, sizeof(shapeNodeName), "shape%imesh", shapeNr);
+		dSprintf(shapeMeshName, sizeof(shapeMeshName), "shape%imesh2", shapeNr);
+		dSprintf(newMeshName, sizeof(newMeshName), "hexmap%imesh2", idx);
+
+		if(shapePtr->addMesh(mDataBlock->shape, shapeMeshName, newMeshName))
 		{
+			Point3F adjustPos(0,0,0);
+			S32 nodeIndex = mDataBlock->shape->findNode(shapeNodeName);
+			if(nodeIndex >= 0)
+				adjustPos = mDataBlock->shape->defaultTranslations[nodeIndex];
+
 			Point3I mapPos;
 			mapPos.y = idx / mHexMap.width;
 			mapPos.x = idx - (mapPos.y*mHexMap.width);
-			mapPos.z = mHexMap.data[idx];
+			mapPos.z = mHexMap.elevation[idx];
 
 			Point3I gridPos;
 			gridPos.x = mHexMap.originGridPos.x + mapPos.x;
@@ -700,21 +714,35 @@ void HexagonVolume::clearHexagons()
 	mHexagons.clear();
 }
 
-bool HexagonVolume::addHexagon(Point3I gridpos)
-{
-	for(U32 i = 0; i < mHexagons.size(); i++)
-		if(mHexagons[i] == gridpos)
-			return false;
-
-	mHexagons.push_back(gridpos);
-	return true;
-}
-
-bool HexagonVolume::removeHexagon(Point3I gridpos)
+bool HexagonVolume::addHexagon(Point3I gridPos, U32 shapeNr)
 {
 	for(U32 i = 0; i < mHexagons.size(); i++)
 	{
-		if(mHexagons[i] == gridpos)
+		if(mHexagons[i].gridPos == gridPos)
+		{
+			if(mHexagons[i].shapeNr != shapeNr)
+			{
+				mHexagons[i].shapeNr = shapeNr;
+				return true;
+			}
+			else
+				return false;
+		}
+	}
+
+	Hexagon newHexagon;
+	newHexagon.gridPos = gridPos;
+	newHexagon.shapeNr = shapeNr;
+
+	mHexagons.push_back(newHexagon);
+	return true;
+}
+
+bool HexagonVolume::removeHexagon(Point3I gridPos)
+{
+	for(U32 i = 0; i < mHexagons.size(); i++)
+	{
+		if(mHexagons[i].gridPos == gridPos)
 		{
 			mHexagons.erase(i);
 			return true;
@@ -766,9 +794,13 @@ U32 HexagonVolume::packUpdate(NetConnection* con, U32 mask, BitStream* stream)
 			U32 n = mHexMap.width*mHexMap.height;
 			for(U32 i = 0; i < n; i++)
 			{
-				U32 elevation = mHexMap.data[i];
+				U32 elevation = mHexMap.elevation[i];
+				U32 shapeNr = mHexMap.shapeNr[i];
 				if(stream->writeFlag(elevation != 0))
+				{
 					stream->writeInt(elevation, 4);
+					stream->writeInt(shapeNr, 2);
+				}
 			}
 		}
    }
@@ -797,6 +829,7 @@ void HexagonVolume::unpackUpdate(NetConnection* con, BitStream* stream)
 	// Rebuild
 	if(stream->readFlag())
 	{
+		this->clearHexMap();
 		stream->read(&mServerShapeRevision);
 		if(stream->readFlag())
 		{
@@ -804,22 +837,20 @@ void HexagonVolume::unpackUpdate(NetConnection* con, BitStream* stream)
 			stream->read(&mHexMap.width);
 			stream->read(&mHexMap.height);
 
-			if(mHexMap.data)
-			{
-				delete[] mHexMap.data;
-				mHexMap.data = NULL;
-			}
-
 			U32 n = mHexMap.width*mHexMap.height;
 			if(n > 0)
 			{
-				mHexMap.data = new U32[n];
+				mHexMap.elevation = new U32[n];
+				mHexMap.shapeNr = new U32[n];
+				dMemset(mHexMap.elevation, 0, n*sizeof(U32));
+				dMemset(mHexMap.shapeNr, 0, n*sizeof(U32));
 				for(U32 i = 0; i < n; i++)
 				{
 					if(stream->readFlag())
-						mHexMap.data[i] = stream->readInt(4);
-					else
-						mHexMap.data[i] = 0;
+					{
+						mHexMap.elevation[i] = stream->readInt(4);
+						mHexMap.shapeNr[i] = stream->readInt(2);
+					}
 				}
 			}
 		}
@@ -837,13 +868,14 @@ DefineEngineMethod(HexagonVolume, clearHexagons, void, (),,
 }
 
 
-DefineEngineMethod(HexagonVolume, addHexagon, bool, (Point3I pos),,
+DefineEngineMethod(HexagonVolume, addHexagon, bool, (Point3I gridPos, U32 shapeNr),,
    "@brief Add a hexagon to the volume.\n\n"
 
-   "@param Position of the new hexagon\n"
+   "@param Grid position of the new hexagon\n"
+	"@param Shape number of the hexagon\n"
 )
 {
-   return object->addHexagon(pos);
+   return object->addHexagon(gridPos, shapeNr);
 }
 
 DefineEngineMethod(HexagonVolume, removeHexagon, bool, (Point3I pos),,
