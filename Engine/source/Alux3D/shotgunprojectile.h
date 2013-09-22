@@ -75,13 +75,17 @@ class ShotgunProjectileTracer : public Projectile
 	typedef Projectile Parent;
 	ShotgunProjectileData* mDataBlock;
 	Point3F mImpactPos;
+	bool mAtImpactPos;
 
  public:
 	ShotgunProjectileTracer(const Point3F* impactPos = NULL);
 	~ShotgunProjectileTracer();
 	bool onAdd();
 	void processTick(const Move*);
+   void advanceTime(F32 dt);
+   void interpolateTick(F32 delta); 
 	bool onNewDataBlock(GameBaseData* dptr, bool reload);
+	void simulate(F32 dt);
 	DECLARE_CONOBJECT(ShotgunProjectileTracer);
 };
 
@@ -163,6 +167,8 @@ class ShotgunFireEvent : public NetEvent
 	S32 sourceId;    // source of shotgun blast
 	S32 sourceSlot;  // source slot of shotgun blast
 	ShotgunHits hits;
+	Point3F muzzlePoint;
+	Point3F muzzleVector;
 
 	ShotgunFireEvent();
 	~ShotgunFireEvent();

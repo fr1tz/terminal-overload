@@ -241,6 +241,7 @@ ShotgunProjectileTracer::ShotgunProjectileTracer(const Point3F* impactPos)
 
 	if(impactPos)
 		mImpactPos.set(*impactPos);
+	mAtImpactPos = false;
 }
 
 ShotgunProjectileTracer::~ShotgunProjectileTracer()
@@ -251,6 +252,12 @@ ShotgunProjectileTracer::~ShotgunProjectileTracer()
 bool ShotgunProjectileTracer::onAdd()
 {
 	AssertFatal(isClientObject(), "ShotgunProjectileTracer on the server? - Someone fucked up!");
+
+	if(mDataBlock->muzzleVelocity <= 10)
+	{
+		mCurrVelocity = (mImpactPos - mCurrPosition) / mDataBlock->muzzleVelocity;
+		mCurrVelocity *= TickMs;
+	}
 
 	mInitialPosition = mCurrPosition;
 	mInitialVelocity = mCurrVelocity;
@@ -280,7 +287,12 @@ void ShotgunProjectileTracer::processTick(const Move* move)
 #if 0
 	mNumTicks++;
 #endif
+
 	mCurrTick++;
+
+	if(mAtImpactPos)
+		this->deleteObject();
+	return;
 
 	// HACK HACK HACK
 	if(mDataBlock->muzzleVelocity > 9000)
@@ -393,6 +405,61 @@ void ShotgunProjectileTracer::processTick(const Move* move)
 	MatrixF xform(true);
 	xform.setColumn(3, mCurrPosition);
 	setTransform(xform);
+}
+
+void ShotgunProjectileTracer::advanceTime(F32 dt)
+{
+	Parent::advanceTime(dt);
+
+	if(mAtImpactPos)
+		return;
+
+	this->simulate(dt);
+	this->updateSound();
+}
+
+void ShotgunProjectileTracer::interpolateTick(F32 delta)
+{
+	// ShotgunProjectileTracers use advanceTime() to
+	// advance their simulation (instead of ticks).
+}
+
+void ShotgunProjectileTracer::simulate(F32 dt)
+{
+	F32 timeLeft;
+	RayInfo rInfo;
+	Point3F oldPosition;
+	Point3F newPosition;
+
+	oldPosition = mCurrPosition;
+
+	newPosition = oldPosition + mCurrVelocity * dt;
+
+	F32 oldDist = (oldPosition-mImpactPos).len();
+	F32 newDist = (newPosition-mImpactPos).len();
+	if(newDist > oldDist) // going away from target?
+	{
+		newPosition = mImpactPos;
+		mAtImpactPos = true;
+	}
+
+	mCurrDeltaBase = newPosition;
+	mCurrBackDelta = mCurrPosition - newPosition;
+
+	this->emitParticles(oldPosition, newPosition, mCurrVelocity, dt*1000);
+
+	mCurrPosition = newPosition;
+
+   Point3F dir = mCurrVelocity;
+   if(dir.isZero())
+      dir.set(0,0,1);
+   else
+      dir.normalize();
+
+   MatrixF xform(true);
+	xform = MathUtils::createOrientFromDir(dir);
+   xform.setPosition(mCurrPosition);
+   setTransform(xform);
 }
 
 //--------------------------------------------------------------------------
@@ -583,6 +650,9 @@ bool ShotgunProjectile::onAdd()
 		MatrixF mat = MathUtils::createOrientFromDir(dir);
 		mat.setPosition(mCurrPosition);
 		this->setTransform(mat);
+
+		// Do script "onAdd" callback.
+		this->scriptOnAdd();
 
 		// Delete us after we've had some time to ghost.
 		Sim::postEvent(this, new ObjectDeleteEvent, Sim::getCurrentTime() + DeleteWaitTime);		
@@ -1049,6 +1119,8 @@ void ShotgunProjectile::transmitHitsToServer()
 	event->source     = mSourceObject;
 	event->sourceId   = mSourceObject->getNetIndex();
 	event->sourceSlot = mSourceObjectSlot;
+	event->muzzlePoint = mCurrPosition;
+	event->muzzleVector = mCurrVelocity;
 
 	U32 n = mHits.size();
 	while(n--)
@@ -1093,6 +1165,10 @@ void ShotgunFireEvent::pack(NetConnection* conn, BitStream* bstream)
 	// source slot
 	bstream->writeSignedInt(sourceSlot,4);
 
+	// muzzle point & vector
+	mathWrite(*bstream, muzzlePoint);
+	mathWrite(*bstream, muzzleVector);
+
 	// hits
 	U32 n = hits.size();
 	bstream->write(n);
@@ -1125,6 +1201,10 @@ void ShotgunFireEvent::unpack(NetConnection* conn, BitStream* bstream)
 	// source slot
 	sourceSlot = bstream->readSignedInt(4);
 
+	// muzzle point & vector
+	mathRead(*bstream, &muzzlePoint);
+	mathRead(*bstream, &muzzleVector);
+
 	// hits
 	U32 n; bstream->read(&n);
 	while(n--)
@@ -1148,10 +1228,12 @@ void ShotgunFireEvent::process(NetConnection* conn)
 	if(!source)
 		return;
 
-	Point3F pos, vel;
-	source->getMuzzlePoint(sourceSlot, &pos);
-	source->getMuzzleVector(sourceSlot, &vel);
-
-	if(source)
-		source->clientFiredShotgun(conn, sourceSlot, hits, datablock, pos, vel);
+	source->clientFiredShotgun(
+		conn,
+		sourceSlot,
+		hits,
+		datablock,
+		muzzlePoint,
+		muzzleVector
+	);
 }
