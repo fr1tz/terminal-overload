@@ -685,6 +685,7 @@ bool Projectile::onAdd()
    if (isServerObject())
    {
 		mInitialPosition = mCurrPosition;
+		mInitialVelocity = mCurrVelocity;
 
 		// no source object?
 		if(mSourceObject == NULL)
