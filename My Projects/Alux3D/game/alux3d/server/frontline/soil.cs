@@ -51,8 +51,10 @@ function Soil::clear()
 	for(%idx = MissionMetaSoilTiles.getCount()-1; %idx >= 0; %idx-- )
 	{
 		%tile = MissionMetaSoilTiles.getObject(%idx);
-      %tile.zUnfinishedTile = "";
-      %tile.zFinished = false;
+      %tile.zChangeSet = "";
+      %tile.zCompletion = 0;
+      %tile.zLastUpdateTime = 0;
+      %tile.teamId = 0;
    }
 
 	for(%idx = MissionSoilBounds.getCount()-1; %idx >= 0; %idx--)
@@ -62,69 +64,59 @@ function Soil::clear()
       %volume.rebuild();
    }
    Game.soilVolumeDirtySet.clear();
+   Game.soilTileDirtySet.clear();
 }
 
-function Soil::reset()
-{
-   Soil::clear();
-   Soil::finishTile(MissionMetaSoilTiles.startTileTeam[1], 1);
-   Soil::finishTile(MissionMetaSoilTiles.startTileTeam[2], 2);
-   Soil::rebuildDirtyThread();
-}
-
-function Soil::buildAdjacent(%tile, %side)
+function Soil::buildAdjacent(%tile, %side, %set)
 {
    %adjacentTile = %tile.adjacent[%side];
 
    if(!isObject(%adjacentTile))
-      return false;
+      return;
    
    if(%adjacentTile $= "None")
-      return false;
+      return;
       
-   if(%adjacentTile.zFinished)
-      return false;
+   if(%adjacentTile.teamId != 0)
+      return;
       
-   if(isObject(%adjacentTile.zUnfinishedTile))
-      return false;
-      
-   %unfinishedTile = new StaticShape()
-   {
-      dataBlock = UnfinishedSoilTile;
-      teamId = %tile.teamId;
-   };
-   MissionCleanup.add(%unfinishedTile);
-   %unfinishedTile.metaSoilTile = %adjacentTile;
-   %unfinishedTile.setTransform(%adjacentTile.getPosition());
-   %unfinishedTile.getDataBlock().startBuild(%unfinishedTile);
-   
    %adjacentTile.teamId = %tile.teamId;
-   %adjacentTile.zUnfinishedTile = %unfinishedTile;
-   
-   return true;
+   %adjacentTile.zCompletion = 0;
+
+   Game.soilTileDirtySet.add(%adjacentTile);
 }
 
-function Soil::buildAdjacents(%tile)
+function Soil::buildAdjacents(%tile, %set)
 {
    for(%side = 1; %side <= 6; %side++)
-      Soil::buildAdjacent(%tile, %side);
+      Soil::buildAdjacent(%tile, %side, %set);
 }
 
 function Soil::finishTile(%tile, %teamId)
 {
    echo("Finishing tile" SPC %tile.getName() SPC "(team" @ %teamId @ ")");
-   if(isObject(%tile.zUnfinishedTile))
-   {
-      error("Deleting unfinished tile for" SPC %tile.getName());
-      %tile.zUnfinishedTile.delete();
-      %tile.zUnfinishedTile = "";
-   }
    %tile.teamId = %teamId;
-   %tile.zFinished = true;
+   %tile.zCompletion = 1;
    %volume = %tile.volumeName;
    if(%volume.addHexagon(%tile.gridPos, %tile.teamId))
       Game.soilVolumeDirtySet.add(%volume);
-   schedule(0, Game, "Soil::buildAdjacents", %tile);
+   Soil::buildAdjacents(%tile);
+}
+
+function Soil::updateTile(%tile, %dt)
+{
+   echo(%tile.getName() SPC %dt);
+
+   if(%tile.zCompletion < 1)
+      %tile.zCompletion += 0.01 * %dt;
+      
+   if(%tile.zCompletion >= 1)
+   {
+      Soil::finishTile(%tile, %tile.teamId);
+      return true;
+   }
+
+   return false;
 }
 
 function Soil::finishRadius(%tile, %teamId, %radius)
@@ -149,26 +141,72 @@ function Soil::test(%radius)
 {
    Soil::clear();
    Soil::finishRadius(MissionMetaSoilTile1, 1, %radius);
-   Soil::rebuildDirtyThread();
+   Soil::rebuild();
 }
 
-function Soil::rebuildDirtyThread()
+function Soil::reset()
 {
-   if(Game.soilRebuildDirtyThread !$= "")
-   {
-      cancel(Game.soilRebuildDirtyThread);
-      Game.soilRebuildDirtyThread = "";
-   }
-   Game.soilRebuildDirtyThread = schedule(32, Game, "Soil::rebuildDirtyThread");
+   Soil::clear();
+   Soil::finishTile(MissionMetaSoilTiles.startTileTeam[1], 1);
+   Soil::finishTile(MissionMetaSoilTiles.startTileTeam[2], 2);
+   Soil::updateThread();
+   Soil::rebuildThread();
+}
 
+function Soil::rebuild()
+{
    if(Game.soilVolumeDirtySet.getCount() == 0)
       return;
+
+   error("rebuilding...");
 
 	for(%idx = Game.soilVolumeDirtySet.getCount()-1; %idx >= 0; %idx--)
 	{
 	   %volume = Game.soilVolumeDirtySet.getObject(%idx);
       %volume.rebuild();
    }
-   
    Game.soilVolumeDirtySet.clear();
 }
+
+function Soil::update()
+{
+   if(Game.soilTileDirtySet.getCount() == 0)
+      return;
+
+   error("updating...");
+
+   %time = getSimTime();
+
+   %count = Game.soilTileDirtySet.getCount();
+   if(%count > 1)
+      %count = 1;
+
+	for(%idx = 0; %idx < %count; %idx++)
+	{
+	   %tile = Game.soilTileDirtySet.getObject(%idx);
+      Game.soilTileDirtySet.remove(%tile);
+      %delta = 0;
+      if(%tile.zLastUpdateTime !$= "")
+         %delta = (%time - %tile.zLastUpdateTime)/32;
+      if(!Soil::updateTile(%tile, %delta))
+         Game.soilTileDirtySet.add(%tile);
+      %tile.zLastUpdateTime = %time;
+   }
+}
+
+function Soil::rebuildThread()
+{
+   if(Game.soilRebuildThread !$= "")
+      cancel(Game.soilRebuildThread);
+   Game.soilRebuildThread = schedule(256, Game, "Soil::rebuildThread");
+   Soil::rebuild();
+}
+
+function Soil::updateThread()
+{
+   if(Game.soilUpdateThread !$= "")
+      cancel(Game.soilUpdateThread);
+   Game.soilUpdateThread = schedule(32, Game, "Soil::updateThread");
+   Soil::update();
+}
+

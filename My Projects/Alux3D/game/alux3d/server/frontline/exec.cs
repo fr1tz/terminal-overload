@@ -10,7 +10,7 @@ function executeFrontlineServerScripts()
    exec("./metaSoilEditSetup.cs");
    exec("./metaSoilEditTweak.cs");
    exec("./metaSoilEditWorker.cs");
-   exec("./unfinishedSoilTile.cs");
+   //exec("./unfinishedSoilTile.cs");
    exec("./soil.cs");
 }
 

@@ -17,7 +17,11 @@ function FrontlineGame::onMissionLoaded(%game)
    // SimSet for unfinished physical soil tiles
    %game.unfinishedSoilTileSet = new SimSet();
    MissionCleanup.add(%game.unfinishedSoilTileSet);
-
+   
+   // SimSet for meta soil tiles that need updating
+   %game.soilTileDirtySet = new SimSet();
+   MissionCleanup.add(%game.soilTileDirtySet);
+   
    // SimSet for soil volumes that need to rebuild their geometry
    %game.soilVolumeDirtySet = new SimSet();
    MissionCleanup.add(%game.soilVolumeDirtySet);
