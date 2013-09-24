@@ -20,7 +20,7 @@
 #include "Alux3d/tsShapeCache.h"
 #endif
 
-class HexagonGrid;
+class Grid;
 
 class HexagonVolumeData : public GameBaseData
 {
@@ -53,12 +53,27 @@ class HexagonVolume : public GameBase
 		U32 shapeNr;
 	};
 
+	struct RebuildProcess
+	{
+		enum State
+		{
+			Ready,
+			Init,
+			Merge,
+			Finish
+		} state;
+		TSShape* shape;
+		TSMesh* mesh;
+		U32 skipCount;
+		U32 i;
+	} mRebuild;
+
 	static bool smRenderBounds;
 	static U32 smBaseObjectMask;
 
 	HexagonVolumeData* mDataBlock;
 
-	HexagonGrid* mGrid;
+	Grid* mGrid;
 
 	Vector<Hexagon> mHexagons; // Always empty on client
 	struct HexMap
@@ -70,14 +85,11 @@ class HexagonVolume : public GameBase
 		U32* shapeNr;
 	} mHexMap;
 
-	TSShape* mServerShape; // Always NULL on client
 	U32 mServerShapeId;
 	U32 mServerShapeRevision;
 
 	TSShapeInstance* mShapeInstance;
 	ConcretePolyList mPolyList;
-
-	bool mClientPerformRebuild;
 
 	enum HexagonVolumeUpdateBits
 	{
@@ -120,6 +132,10 @@ class HexagonVolume : public GameBase
 	void clearHexMap();
 	bool rebuildHexMap();
 	bool rebuildMode2();
+	void rebuildMode2Init();
+	void rebuildMode2Merge();
+	void rebuildMode2Finish();
+	void rebuildMode2Done();
 	void rebuildMode2MoveMeshVerts(TSMesh* mesh, Point3F vec);
 	void rebuildMode2MergeMesh(TSMesh* dest, TSMesh* src);
 	void rebuildMode3();
