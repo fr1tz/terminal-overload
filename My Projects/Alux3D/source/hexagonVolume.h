@@ -27,8 +27,13 @@ class HexagonVolumeData : public GameBaseData
 	typedef GameBaseData Parent;
 
   public:
-   StringTableEntry shapeName;
-   Resource<TSShape> shape; 
+	enum {
+		MaxShapes = 4
+	};
+
+   StringTableEntry renderShapeName[MaxShapes];
+   Resource<TSShape> renderShape[MaxShapes]; 
+	TSShapeInstance* renderShapeInstance[MaxShapes];
 	S32 mode;
 	U32 objectMask;
 
@@ -75,7 +80,7 @@ class HexagonVolume : public GameBase
 
 	Grid* mGrid;
 
-	Vector<Hexagon> mHexagons; // Always empty on client
+	Vector<Hexagon> mHexagons;
 	struct HexMap
 	{
 		Point3I originGridPos;
@@ -130,7 +135,8 @@ class HexagonVolume : public GameBase
 	bool removeHexagon(Point3I gridPos);
 	bool rebuild();
 	void clearHexMap();
-	bool rebuildHexMap();
+	void hexagonsToHexMap();
+	void hexMapToHexagons();
 	bool rebuildMode2();
 	void rebuildMode2Init();
 	void rebuildMode2Merge();
