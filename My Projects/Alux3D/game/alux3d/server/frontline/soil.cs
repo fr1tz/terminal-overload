@@ -4,7 +4,9 @@
 datablock HexagonVolumeData(SoilVolume)
 {
    category = "Frontline Game Mode"; // For the mission editor
-   shapeFile = "content/alux3d/release1/shapes/soil/soil.dae";
+   renderShapeFile[0] = "content/alux3d/release1/shapes/soil/soil.dae";
+   renderShapeFile[1] = "content/alux3d/release1/shapes/soil/soilpiece1-team1.dae";
+   renderShapeFile[2] = "content/alux3d/release1/shapes/soil/soilpiece1-team2.dae";
    mode = 2;
 };
 
@@ -108,7 +110,7 @@ function Soil::updateTile(%tile, %dt)
    echo(%tile.getName() SPC %dt);
 
    if(%tile.zCompletion < 1)
-      %tile.zCompletion += 0.01 * %dt;
+      %tile.zCompletion += 0.001 * %dt;
       
    if(%tile.zCompletion >= 1)
    {
@@ -137,10 +139,13 @@ function Soil::finishRadius(%tile, %teamId, %radius)
 	}
 }
 
-function Soil::test(%radius)
+function Soil::test(%tile, %radius)
 {
+   if(%tile $= "")
+      %tile = MissionMetaSoilTile1;
+
    Soil::clear();
-   Soil::finishRadius(MissionMetaSoilTile1, 1, %radius);
+   Soil::finishRadius(%tile, 1, %radius);
    Soil::rebuild();
 }
 
