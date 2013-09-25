@@ -1,12 +1,20 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
+datablock StaticShapeData(SoilVolumeCollisionShape)
+{
+   shapeFile = "content/alux3d/release1/shapes/soil/soilpiece1-collision.dae";
+};
+
 datablock HexagonVolumeData(SoilVolume)
 {
    category = "Frontline Game Mode"; // For the mission editor
    renderShapeFile[0] = "content/alux3d/release1/shapes/soil/soil.dae";
    renderShapeFile[1] = "content/alux3d/release1/shapes/soil/soilpiece1-team1.dae";
    renderShapeFile[2] = "content/alux3d/release1/shapes/soil/soilpiece1-team2.dae";
+   collisionShape[0] = SoilVolumeCollisionShape;
+   collisionShape[1] = SoilVolumeCollisionShape;
+   collisionShape[2] = SoilVolumeCollisionShape;
    mode = 2;
 };
 
@@ -62,8 +70,7 @@ function Soil::clear()
 	for(%idx = MissionSoilBounds.getCount()-1; %idx >= 0; %idx--)
 	{
 	   %volume = MissionSoilBounds.getObject(%idx);
-      %volume.clearHexagons();
-      %volume.rebuild();
+      %volume.init();
    }
    Game.soilVolumeDirtySet.clear();
    Game.soilTileDirtySet.clear();
@@ -139,7 +146,7 @@ function Soil::finishRadius(%tile, %teamId, %radius)
 	}
 }
 
-function Soil::test(%tile, %radius)
+function Soil::test(%radius, %tile)
 {
    if(%tile $= "")
       %tile = MissionMetaSoilTile1;
