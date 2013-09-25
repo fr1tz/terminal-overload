@@ -50,6 +50,8 @@ HexagonVolumeData::HexagonVolumeData()
 		renderShapeName[i] = StringTable->insert("");
 		renderShapeInstance[i] = NULL;
 	}
+   dMemset(collisionShapeData, 0, sizeof(collisionShapeData));
+	dMemset(collisionShapeDataID, 0, sizeof(collisionShapeDataID));
 
    mode = 0;
 	objectMask = StaticShapeObjectType;
@@ -92,6 +94,10 @@ bool HexagonVolumeData::preload(bool server, String &errorStr)
 					shapeError = true;
 			}
 		}
+
+		if(!collisionShapeData[i] && collisionShapeDataID[i] != 0 )
+			if(!Sim::findObject(collisionShapeDataID[i], collisionShapeData[i]))
+				Con::errorf(ConsoleLogEntry::General, "HexagonVolumeData::preload - Invalid packet, bad datablockId(collisionShape): 0x%x", collisionShapeDataID[i]);
 	}
 
    return !shapeError;
@@ -100,6 +106,10 @@ bool HexagonVolumeData::preload(bool server, String &errorStr)
 void HexagonVolumeData::initPersistFields()
 {
    addGroup("Operation");
+
+		addField("collisionShape", TYPEID<StaticShapeData>(), Offset(collisionShapeData, HexagonVolumeData), MaxShapes,
+			"The datablock to use for the collision object."
+		);
 
       addField("mode", TypeS32, Offset(mode, HexagonVolumeData),
          "@brief How the render volume operates.\n\n"
@@ -136,6 +146,8 @@ void HexagonVolumeData::packData(BitStream* stream)
 	{
 		if(stream->writeFlag(renderShapeName[i] && renderShapeName[i][0]))
 			stream->writeString(renderShapeName[i]);
+      if(stream->writeFlag(collisionShapeData[i]))
+         stream->writeRangedU32(collisionShapeData[i]->getId(), DataBlockObjectIdFirst, DataBlockObjectIdLast);
 	}
 }
 
@@ -148,6 +160,8 @@ void HexagonVolumeData::unpackData(BitStream* stream)
 	{
 		if(stream->readFlag())
 			renderShapeName[i] = stream->readSTString();
+		if(stream->readFlag())
+			collisionShapeDataID[i] = stream->readRangedU32(DataBlockObjectIdFirst, DataBlockObjectIdLast);
 	}
 }
 
@@ -179,19 +193,18 @@ HexagonVolume::HexagonVolume()
 	mHexMap.originGridPos.set(0,0,0);
 	mHexMap.width = 0;
 	mHexMap.height = 0;
-	mHexMap.elevation = NULL;
-	mHexMap.shapeNr = NULL;
+	mHexMap.hexArray = NULL;
+
+	mRebuild.state = RebuildProcess::Ready;
+	mRebuild.shape = NULL;
+	mRebuild.mesh = NULL;
+	mRebuild.idx = 0;
+	mClientStartRebuild = false;
 
 	mServerShapeId = 0;
 	mServerShapeRevision = 0;
 
 	mShapeInstance = NULL;
-
-	mRebuild.state = RebuildProcess::Ready;
-	mRebuild.shape = NULL;
-	mRebuild.mesh = NULL;
-	mRebuild.skipCount = 0;
-	mRebuild.i = 0;
 }
 
 HexagonVolume::~HexagonVolume()
@@ -226,6 +239,8 @@ bool HexagonVolume::onAdd()
 
    this->addToScene();
 
+
+
    if(this->isServerObject())
 	{
 		mServerShapeId = this->getId();
@@ -239,6 +254,7 @@ bool HexagonVolume::onAdd()
 void HexagonVolume::onRemove()
 {
    removeFromScene();
+	this->deleteCollisionObjects();
 	if(this->isServerObject())
 		this->onServerObjectDeleted();
 	if(mRebuild.shape) SAFE_DELETE(mRebuild.shape);
@@ -280,7 +296,8 @@ void HexagonVolume::setTransform(const MatrixF & mat)
 {
    Parent::setTransform(mat);
 
-   if (isServerObject()) {
+   if(this->isServerObject())
+	{
       MatrixF base(true);
       base.scale(Point3F(1.0/mObjScale.x,
                          1.0/mObjScale.y,
@@ -334,11 +351,6 @@ void HexagonVolume::prepRenderImageMode2(SceneRenderState* state)
 		if(!mShapeInstance)
 			return;
 	}
-	else
-	{
-		if(mHexagons.empty())
-			return;
-	}
 
    // Calculate the distance of this object from the camera
    Point3F cameraOffset;
@@ -388,9 +400,13 @@ void HexagonVolume::prepRenderImageMode2(SceneRenderState* state)
 				mDataBlock->renderShapeInstance[i]->setDetailFromDistance( state, dist * invScale );
 		}
 
-		for (U32 i = 0; i < mHexagons.size(); i++)
+		U32 n = mHexMap.width * mHexMap.height;
+		for(U32 idx = 0; idx < n; idx++)
 		{
-			const Hexagon& hex = mHexagons[i];
+			const HexMap::Hex& hex = mHexMap.hexArray[idx];
+
+			if(hex.shapeNr == 0)
+				continue;
 
 			TSShapeInstance* shapeInstance = mDataBlock->renderShapeInstance[hex.shapeNr];
 			if(!shapeInstance)
@@ -401,7 +417,7 @@ void HexagonVolume::prepRenderImageMode2(SceneRenderState* state)
 
 			// Set the world matrix to the hexagon's render transform
 			MatrixF mat(true);
-			mat.setPosition(mGrid->gridToWorld(hex.gridPos));
+			mat.setPosition(mGrid->gridToWorld(mHexMap.indexToGrid(idx)));
 			//mat.scale(scale);
 			GFX->setWorldMatrix(mat);
 
@@ -453,33 +469,82 @@ void HexagonVolume::renderObjectBounds(ObjectRenderInst*  ri,
 	ColorI color(0, 0, 100);
 	switch(mRebuild.state)
 	{
-		case RebuildProcess::Init: color.set(0, 100, 255); break;
-		case RebuildProcess::Merge: color.set(255, 0, 0); break;
-		case RebuildProcess::Finish: color.set(100, 0, 0); break;
+		case RebuildProcess::CollisionStart:
+		case RebuildProcess::CollisionProcess:
+		case RebuildProcess::CollisionFinish:
+			color.set(0, 255, 0); 
+			break;
+		case RebuildProcess::RenderStart: 
+			color.set(100, 0, 0); 
+			break;
+		case RebuildProcess::RenderProcess: 
+			color.set(255, 0, 0); 
+			break;
+		case RebuildProcess::RenderFinish: 
+			color.set(255, 0, 255); 
+			break;
 	}
 
 	drawer->drawCube(desc, box, color, &mRenderObjToWorld );
 }
 
-bool HexagonVolume::rebuild()
+
+void HexagonVolume::deleteCollisionObjects()
 {
-	if(!mDataBlock)
+#if 0
+	for(U32 i = 0; i < mCollisionObjects.size(); i++)
+		mCollisionObjects[i]->deleteObject();
+	mCollisionObjects.clear();
+#endif
+}
+
+void HexagonVolume::createCollisionObjects()
+{
+#if 0
+	this->deleteCollisionObjects();
+	for(U32 i = 0; i < mHexagons.size(); i++)
+	{
+		U32 shapeNr = mHexagons[i].shapeNr;
+		if(!mDataBlock->collisionShapeData[shapeNr])
+		{
+			Con::errorf("HexagonVolume: Datablock is missing collisionShape %i", shapeNr);
+			continue;
+		}
+
+		HexagonVolumeCollisionShape* obj  = new HexagonVolumeCollisionShape(this->isClientObject());
+		obj->onNewDataBlock(mDataBlock->collisionShapeData[shapeNr], false);
+		obj->setPosition(mGrid->gridToWorld(mHexagons[i].gridPos));
+		if(!obj->registerObject())
+		{
+			Con::errorf("HexagonVolume: Creating collision object failed!");
+			delete obj;
+			obj = NULL;
+		}
+		else
+		{
+			mCollisionObjects.push_back(obj);						
+		}
+	}
+#endif
+}
+
+bool HexagonVolume::startRebuild()
+{
+	if(!mHexMap.hexArray)
 		return false;
 
 	if(this->isServerObject())
 	{
 		mServerShapeRevision++;
-		this->hexagonsToHexMap();
 		this->setMaskBits(RebuildMask);
 	}
-	else
-		this->hexMapToHexagons();
 
-	if(this->isGhost())
-		mRebuild.state = RebuildProcess::Init;
+	mRebuild.state = RebuildProcess::CollisionStart;
 
 	return true;
 }
+
+#ifdef TODO_OPTIMIZE_NET_UPDATE
 
 void HexagonVolume::clearHexMap()
 {
@@ -573,6 +638,7 @@ void HexagonVolume::hexMapToHexagons()
 		mHexagons.push_back(hex);
 	}
 }
+#endif
 
 void HexagonVolume::rebuildMode2MoveMeshVerts(TSMesh* mesh, Point3F vec)
 {
@@ -609,15 +675,51 @@ void HexagonVolume::rebuildMode2MergeMesh(TSMesh* dest, TSMesh* src)
 	}
 }
 
-void HexagonVolume::rebuildMode2Init()
+void HexagonVolume::rebuildMode2CollisionStart()
 {
+	mRebuild.idx = 0;
+	mRebuild.state = RebuildProcess::CollisionProcess;
+}
+
+void HexagonVolume::rebuildMode2CollisionProcess()
+{
+	U32 idx = mRebuild.idx++;
+	U32 numHexagons = mHexMap.width * mHexMap.height;
+	if(idx >= numHexagons)
+	{
+		mRebuild.state = RebuildProcess::CollisionFinish;
+		return;
+	}
+
+	Con::printf("%s %i: shape #%i elevation %i", 
+		this->isGhost() ? "CLNT":"SRVR", 
+		idx,
+		mHexMap.hexArray[idx].shapeNr,
+		mHexMap.hexArray[idx].elevation
+	);
+
+	//if(mHexMap.hexArray[idx].elevation == 0)
+	//	return;
+}
+
+void HexagonVolume::rebuildMode2CollisionFinish()
+{
+	// Server doesn't need to rebuild render geometry.
+	if(this->isServerObject())
+		this->rebuildMode2Done();
+	else
+		mRebuild.state = RebuildProcess::RenderStart;
+}
+
+void HexagonVolume::rebuildMode2RenderStart()
+{	
 	if(mRebuild.shape)
 		delete mRebuild.shape;
 	mRebuild.shape = NULL;
 	mRebuild.mesh = NULL;
-	mRebuild.skipCount = 0;
-	mRebuild.i = 0;
+	mRebuild.idx = 0;
 
+#if TODO
 	// No geometry to rebuild?
 	if(mHexagons.empty())
 	{
@@ -626,52 +728,29 @@ void HexagonVolume::rebuildMode2Init()
 		this->rebuildMode2Done();
 		return;
 	}
+#endif
 
-	if(!mDataBlock)
+	TSShape* cachedShape = TSShapeCache::getPtr(mServerShapeId);
+	if(cachedShape)
 	{
-		Con::errorf("HexagonVolume: Impossible to rebuild!");
-		this->rebuildMode2Done();
-		return;
-	}
-
-	mGrid = NULL;
-	{
-		Vector<SceneObject*> grids;
-		this->getContainer()->findObjectList(GridObjectType, &grids);
-		mGrid = (Grid*)grids[0];
-	}
-
-	if(mGrid == NULL)
-	{
-		Con::errorf("HexagonVolume: No grid, can't rebuild!");
-		this->rebuildMode2Done();
-		return;
-	}
-
-	if(this->isClientObject())
-	{
-		TSShape* cachedShape = TSShapeCache::getPtr(mServerShapeId);
-		if(cachedShape)
+		if(cachedShape->revision == mServerShapeRevision)
 		{
-			if(cachedShape->revision == mServerShapeRevision)
-			{
-				//Con::printf("Have up-to-date cached shape.");
-				if(mShapeInstance)
-					SAFE_DELETE(mShapeInstance);
-				mShapeInstance = new TSShapeInstance(cachedShape, this->isClientObject());
-				mShapeInstance->initMaterialList();
-				mRebuild.state = RebuildProcess::Ready;
-				return;
-			}
-			else
-			{
-				//Con::printf("Have out-of-date cached shape.");
-			}
+			//Con::printf("Have up-to-date cached shape.");
+			if(mShapeInstance)
+				SAFE_DELETE(mShapeInstance);
+			mShapeInstance = new TSShapeInstance(cachedShape, this->isClientObject());
+			mShapeInstance->initMaterialList();
+			this->rebuildMode2Done();
+			return;
 		}
 		else
 		{
-			//Con::printf("Don't have cached shape.");
+			//Con::printf("Have out-of-date cached shape.");
 		}
+	}
+	else
+	{
+		//Con::printf("Don't have cached shape.");
 	}
 
 	mRebuild.shape = new TSShape();
@@ -680,25 +759,25 @@ void HexagonVolume::rebuildMode2Init()
 	mRebuild.shape->init();
 	mRebuild.shape->materialList = new TSMaterialList(mDataBlock->renderShape[0]->materialList);
 
-	mRebuild.state = RebuildProcess::Merge;
+	mRebuild.state = RebuildProcess::RenderProcess;
 }
 
-void HexagonVolume::rebuildMode2Merge()
+void HexagonVolume::rebuildMode2RenderProcess()
 {
-	U32 idx = mRebuild.i++;
+	U32 idx = mRebuild.idx++;
 	U32 numHexagons = mHexMap.width * mHexMap.height;
 	if(idx >= numHexagons)
 	{
-		mRebuild.state = RebuildProcess::Finish;
+		mRebuild.state = RebuildProcess::RenderFinish;
 		return;
 	}
 
-	if(mHexMap.elevation[idx] == 0)
+	if(mHexMap.hexArray[idx].shapeNr == 0)
 		return;
 
 	//Con::printf("Have %ix%i map", mHexMap.width, mHexMap.height);
 
-	U32 shapeNr = mHexMap.shapeNr[idx];
+	U32 shapeNr = mHexMap.hexArray[idx].shapeNr;
 	if(!mDataBlock->renderShape[shapeNr])
 	{
 		Con::errorf("HexagonVolume: Datablock is missing render shape %i", shapeNr);
@@ -720,16 +799,7 @@ void HexagonVolume::rebuildMode2Merge()
 	if(nodeIndex >= 0)
 		adjustPos = mDataBlock->renderShape[shapeNr]->defaultTranslations[nodeIndex];
 
-	Point3I mapPos;
-	mapPos.y = idx / mHexMap.width;
-	mapPos.x = idx - (mapPos.y*mHexMap.width);
-	mapPos.z = mHexMap.elevation[idx];
-
-	Point3I gridPos;
-	gridPos.x = mHexMap.originGridPos.x + mapPos.x;
-	gridPos.y = mHexMap.originGridPos.y + mapPos.y;
-	gridPos.z = mHexMap.originGridPos.z + mapPos.z - 1;
-
+	Point3I gridPos = mHexMap.indexToGrid(idx);
 	Point3F worldPos = mGrid->gridToWorld(gridPos);
 	Point3F meshPos = worldPos - this->getPosition() + adjustPos;
 
@@ -772,7 +842,7 @@ void HexagonVolume::rebuildMode2Merge()
 	}
 }
 
-void HexagonVolume::rebuildMode2Finish()
+void HexagonVolume::rebuildMode2RenderFinish()
 {
 	if(mRebuild.mesh == NULL)
 	{
@@ -826,8 +896,7 @@ void HexagonVolume::rebuildMode2Done()
 		delete mRebuild.shape;
 	mRebuild.shape = NULL;
 	mRebuild.mesh = NULL;
-	mRebuild.skipCount = 0;
-	mRebuild.i = 0;
+	mRebuild.idx = 0;
 }
 
 void HexagonVolume::rebuildMode3()
@@ -850,62 +919,37 @@ void HexagonVolume::rebuildMode3()
 
 //--------------------------------------------------------------------------
 
-void HexagonVolume::clearHexagons()
-{
-	mHexagons.clear();
-}
-
-bool HexagonVolume::addHexagon(Point3I gridPos, U32 shapeNr)
-{
-	for(U32 i = 0; i < mHexagons.size(); i++)
-	{
-		if(mHexagons[i].gridPos == gridPos)
-		{
-			if(mHexagons[i].shapeNr != shapeNr)
-			{
-				mHexagons[i].shapeNr = shapeNr;
-				return true;
-			}
-			else
-				return false;
-		}
-	}
-
-	Hexagon newHexagon;
-	newHexagon.gridPos = gridPos;
-	newHexagon.shapeNr = shapeNr;
-
-	mHexagons.push_back(newHexagon);
-	return true;
-}
-
-bool HexagonVolume::removeHexagon(Point3I gridPos)
-{
-	for(U32 i = 0; i < mHexagons.size(); i++)
-	{
-		if(mHexagons[i].gridPos == gridPos)
-		{
-			mHexagons.erase(i);
-			return true;
-		}
-	}
-
-	return false;
-}
-
-
-//--------------------------------------------------------------------------
-
 void HexagonVolume::processTick(const Move* move)
 {
    Parent::processTick(move);
 
-	if(mRebuild.state == RebuildProcess::Init)
-		this->rebuildMode2Init();
-	else if(mRebuild.state == RebuildProcess::Merge)
-		this->rebuildMode2Merge();
-	else if(mRebuild.state == RebuildProcess::Finish)
-		this->rebuildMode2Finish();
+	if(!mGrid)
+	{
+		Vector<SceneObject*> grids;
+		this->getContainer()->findObjectList(GridObjectType, &grids);
+		if(grids.size() == 0)
+			return;
+		mGrid = (Grid*)grids[0];
+	}
+
+	if(this->isClientObject() && mClientStartRebuild)
+	{
+		mClientStartRebuild = false;
+		this->startRebuild();
+	}
+
+	if(mRebuild.state == RebuildProcess::CollisionStart)
+		this->rebuildMode2CollisionStart();
+	else if(mRebuild.state == RebuildProcess::CollisionProcess)
+		this->rebuildMode2CollisionProcess();
+	else if(mRebuild.state == RebuildProcess::CollisionFinish)
+		this->rebuildMode2CollisionFinish();
+	else if(mRebuild.state == RebuildProcess::RenderStart)
+		this->rebuildMode2RenderStart();
+	else if(mRebuild.state == RebuildProcess::RenderProcess)
+		this->rebuildMode2RenderProcess();
+	else if(mRebuild.state == RebuildProcess::RenderFinish)
+		this->rebuildMode2RenderFinish();
 }
 
 //--------------------------------------------------------------------------
@@ -924,24 +968,26 @@ U32 HexagonVolume::packUpdate(NetConnection* con, U32 mask, BitStream* stream)
       stream->writeAffineTransform(mObjToWorld);
    }
 
+   if(stream->writeFlag(mask & InitMask))
+   {
+		mathWrite(*stream, mHexMap.originGridPos);
+		stream->write(mHexMap.width);
+		stream->write(mHexMap.height);
+   }
+
    if(stream->writeFlag(mask & RebuildMask))
    {
 		stream->write(mServerShapeRevision);
-		if(stream->writeFlag(mHexagons.size() > 0))
+		U32 n = mHexMap.width*mHexMap.height;
+		if(stream->writeFlag(n > 0))
 		{
-			mathWrite(*stream, mHexMap.originGridPos);
-			stream->write(mHexMap.width);
-			stream->write(mHexMap.height);
-
-			U32 n = mHexMap.width*mHexMap.height;
 			for(U32 i = 0; i < n; i++)
 			{
-				U32 elevation = mHexMap.elevation[i];
-				U32 shapeNr = mHexMap.shapeNr[i];
-				if(stream->writeFlag(elevation != 0))
+				const HexMap::Hex& hex = mHexMap.hexArray[i];
+				if(stream->writeFlag(hex.shapeNr > 0))
 				{
-					stream->writeInt(elevation, 4);
-					stream->writeInt(shapeNr, 2);
+					stream->writeInt(hex.elevation, 4);
+					stream->writeInt(hex.shapeNr, 2);
 				}
 			}
 		}
@@ -968,47 +1014,161 @@ void HexagonVolume::unpackUpdate(NetConnection* con, BitStream* stream)
       setTransform(temp);
    }
 
+	// Init
+	if(stream->readFlag())
+	{
+		mathRead(*stream, &mHexMap.originGridPos);
+		stream->read(&mHexMap.width);
+		stream->read(&mHexMap.height);
+
+		if(mHexMap.hexArray)
+		{
+			delete[] mHexMap.hexArray;
+			mHexMap.hexArray = NULL;
+		}
+		U32 n = mHexMap.width*mHexMap.height;
+		if(n > 0)
+		{
+			mHexMap.hexArray = new HexMap::Hex[n];
+			dMemset(mHexMap.hexArray, 0, n*sizeof(HexMap::Hex));
+		}
+	}
+
 	// Rebuild
 	if(stream->readFlag())
 	{
-		this->clearHexMap();
 		stream->read(&mServerShapeRevision);
 		if(stream->readFlag())
 		{
-			mathRead(*stream, &mHexMap.originGridPos);
-			stream->read(&mHexMap.width);
-			stream->read(&mHexMap.height);
-
 			U32 n = mHexMap.width*mHexMap.height;
-			if(n > 0)
+			for(U32 i = 0; i < n; i++)
 			{
-				mHexMap.elevation = new U32[n];
-				mHexMap.shapeNr = new U32[n];
-				dMemset(mHexMap.elevation, 0, n*sizeof(U32));
-				dMemset(mHexMap.shapeNr, 0, n*sizeof(U32));
-				for(U32 i = 0; i < n; i++)
+				HexMap::Hex& hex = mHexMap.hexArray[i];
+				if(stream->readFlag())
 				{
-					if(stream->readFlag())
-					{
-						mHexMap.elevation[i] = stream->readInt(4);
-						mHexMap.shapeNr[i] = stream->readInt(2);
-					}
+					hex.elevation = stream->readInt(4);
+					hex.shapeNr = stream->readInt(2);
+				}
+				else
+				{
+					hex.elevation = 0;
+					hex.shapeNr = 0;
 				}
 			}
 		}
-		this->rebuild();
+		mClientStartRebuild = true;
 	}
+}
+
+bool HexagonVolume::sInit()
+{
+	Vector<SceneObject*> grids;
+	this->getContainer()->findObjectList(GridObjectType, &grids);
+	if(grids.size() == 0)
+	{
+		Con::errorf("HexagonVolume: Init failed: No grid found!");
+		return false;
+	}
+
+	mGrid = (Grid*)grids[0];
+
+	Box3F worldBox = this->getWorldBox();
+	Point3I minGridPos = mGrid->worldToGrid(worldBox.minExtents);
+	Point3I maxGridPos = mGrid->worldToGrid(worldBox.maxExtents);
+
+	mHexMap.originGridPos = minGridPos;
+	mHexMap.width = maxGridPos.x - minGridPos.x + 1;
+	mHexMap.height = maxGridPos.y - minGridPos.y + 1;
+
+	if(mHexMap.hexArray)
+	{
+		delete[] mHexMap.hexArray;
+		mHexMap.hexArray = NULL;
+	}
+	U32 n = mHexMap.width*mHexMap.height;
+	if(n > 0)
+	{
+		mHexMap.hexArray = new HexMap::Hex[n];
+		dMemset(mHexMap.hexArray, 0, n*sizeof(HexMap::Hex));
+	}
+
+	this->setMaskBits(InitMask);
+
+	return true;
+}
+
+bool HexagonVolume::sAddHexagon(Point3I gridPos, U32 shapeNr)
+{
+	if(!mHexMap.hexArray)
+	{
+		Con::errorf("HexagonVolume: addHexagon(): No hex map!");
+		return false;
+	}
+
+	Point3F worldPos = mGrid->gridToWorld(gridPos);
+	if(!this->getWorldBox().isContained(worldPos))
+		return false;
+
+	S32 idx = mHexMap.gridToIndex(gridPos);
+	if(idx < 0)
+		return false;
+	if(idx >= mHexMap.width*mHexMap.height)
+		return false;
+
+	HexMap::Hex& hex = mHexMap.hexArray[idx];
+	if(hex.serverGridPos == gridPos && hex.shapeNr == shapeNr)
+		return false;
+
+	hex.serverGridPos = gridPos;
+	hex.shapeNr = shapeNr;
+	hex.elevation = gridPos.z - mHexMap.originGridPos.z;
+
+	return true;
+}
+
+bool HexagonVolume::sRemoveHexagon(Point3I gridPos)
+{
+	if(!mHexMap.hexArray)
+	{
+		Con::errorf("HexagonVolume: addHexagon(): No hex map!");
+		return false;
+	}
+
+	Point3F worldPos = mGrid->gridToWorld(gridPos);
+	if(!this->getWorldBox().isContained(worldPos))
+		return false;
+
+	S32 idx = mHexMap.gridToIndex(gridPos);
+	if(idx < 0)
+		return false;
+	if(idx >= mHexMap.width*mHexMap.height)
+		return false;
+
+	HexMap::Hex& hex = mHexMap.hexArray[idx];
+	if(hex.shapeNr > 0)
+		return false;
+
+	hex.shapeNr = 0;
+
+	return true;
+}
+
+bool HexagonVolume::sRebuild()
+{
+	if(!mHexMap.hexArray)
+		return false;
+
+	return this->startRebuild();
 }
 
 //--------------------------------------------------------------------------
 
-DefineEngineMethod(HexagonVolume, clearHexagons, void, (),,
-   "@brief Removes all hexagons from the volume.\n\n"
+DefineEngineMethod(HexagonVolume, init, bool, (),,
+   "@brief Initialize volume.\n\n"
 )
 {
-   object->clearHexagons();
+   return object->sInit();
 }
-
 
 DefineEngineMethod(HexagonVolume, addHexagon, bool, (Point3I gridPos, U32 shapeNr),,
    "@brief Add a hexagon to the volume.\n\n"
@@ -1017,7 +1177,7 @@ DefineEngineMethod(HexagonVolume, addHexagon, bool, (Point3I gridPos, U32 shapeN
 	"@param Shape number of the hexagon\n"
 )
 {
-   return object->addHexagon(gridPos, shapeNr);
+   return object->sAddHexagon(gridPos, shapeNr);
 }
 
 DefineEngineMethod(HexagonVolume, removeHexagon, bool, (Point3I pos),,
@@ -1026,12 +1186,12 @@ DefineEngineMethod(HexagonVolume, removeHexagon, bool, (Point3I pos),,
    "@param Position of the new hexagon\n"
 )
 {
-   return object->removeHexagon(pos);
+   return object->sRemoveHexagon(pos);
 }
 
-DefineEngineMethod(HexagonVolume, rebuild, void, (),,
+DefineEngineMethod(HexagonVolume, rebuild, bool, (),,
    "@brief Rebuild render geometry.\n\n"
 )
 {
-   object->rebuild();
+   return object->sRebuild();
 }

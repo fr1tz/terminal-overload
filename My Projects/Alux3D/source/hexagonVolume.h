@@ -19,6 +19,9 @@
 #ifndef _TSSHAPECACHE_H_
 #include "Alux3d/tsShapeCache.h"
 #endif
+#ifndef _HEXAGONVOLUMECOLLISIONSHAPE_H_
+#include "hexagonVolumeCollisionShape.h"
+#endif
 
 class Grid;
 
@@ -34,6 +37,9 @@ class HexagonVolumeData : public GameBaseData
    StringTableEntry renderShapeName[MaxShapes];
    Resource<TSShape> renderShape[MaxShapes]; 
 	TSShapeInstance* renderShapeInstance[MaxShapes];
+	StaticShapeData* collisionShapeData[MaxShapes];
+	S32 collisionShapeDataID[MaxShapes];
+
 	S32 mode;
 	U32 objectMask;
 
@@ -52,56 +58,83 @@ class HexagonVolume : public GameBase
 {
 	typedef GameBase Parent;
 
-	struct Hexagon
-	{
-		Point3I gridPos;
-		U32 shapeNr;
-	};
+	static bool smRenderBounds;
+	static U32 smBaseObjectMask;
 
+	struct HexMap
+	{
+		struct Hex
+		{
+			Point3I serverGridPos; // Not networked
+			U32 shapeNr;
+			U32 elevation;
+			HexagonVolumeCollisionShape* col;
+		};
+
+		Point3I originGridPos;
+		S32 width;
+		S32 height;
+		Hex* hexArray;
+
+		Point3I indexToGrid(U32 idx) {
+			Point3I mapPos;
+			mapPos.y = idx / this->width;
+			mapPos.x = idx - (mapPos.y*this->width);
+			mapPos.z = this->hexArray[idx].elevation;
+			Point3I gridPos;
+			gridPos.x = this->originGridPos.x + mapPos.x;
+			gridPos.y = this->originGridPos.y + mapPos.y;
+			gridPos.z = this->originGridPos.z + mapPos.z;
+			return gridPos;
+		};
+
+		S32 gridToIndex(Point3I gridPos) {
+			Point2I mapPos;
+			mapPos.x = gridPos.x - this->originGridPos.x;
+			mapPos.y = gridPos.y - this->originGridPos.y;
+			U32 idx = (mapPos.y*this->width) + mapPos.x;
+			return idx;
+		};
+	};
+	
 	struct RebuildProcess
 	{
 		enum State
 		{
 			Ready,
-			Init,
-			Merge,
-			Finish
+			CollisionStart,
+			CollisionProcess,
+			CollisionFinish,
+			RenderStart,
+			RenderProcess,
+			RenderFinish
 		} state;
 		TSShape* shape;
 		TSMesh* mesh;
-		U32 skipCount;
-		U32 i;
-	} mRebuild;
+		U32 idx;
+	};
 
-	static bool smRenderBounds;
-	static U32 smBaseObjectMask;
+	enum HexagonVolumeUpdateBits
+	{
+		TransformMask = Parent::NextFreeMask << 0,
+		InitMask      = Parent::NextFreeMask << 1,
+		RebuildMask   = Parent::NextFreeMask << 2,
+		NextFreeMask  = Parent::NextFreeMask << 3
+	};
 
 	HexagonVolumeData* mDataBlock;
 
 	Grid* mGrid;
+	HexMap mHexMap;
 
-	Vector<Hexagon> mHexagons;
-	struct HexMap
-	{
-		Point3I originGridPos;
-		S32 width;
-		S32 height;
-		U32* elevation;
-		U32* shapeNr;
-	} mHexMap;
+	RebuildProcess mRebuild;
+	bool mClientStartRebuild;
 
 	U32 mServerShapeId;
 	U32 mServerShapeRevision;
 
 	TSShapeInstance* mShapeInstance;
 	ConcretePolyList mPolyList;
-
-	enum HexagonVolumeUpdateBits
-	{
-		TransformMask = Parent::NextFreeMask << 0,
-		RebuildMask = Parent::NextFreeMask << 1,
-		NextFreeMask  = Parent::NextFreeMask << 2
-	};
 
   public:
 	HexagonVolume();
@@ -130,17 +163,16 @@ class HexagonVolume : public GameBase
 	void processTick(const Move *move);
 
 	// HexagonVolume
-	void clearHexagons();
-	bool addHexagon(Point3I gridPos, U32 shapeNr);
-	bool removeHexagon(Point3I gridPos);
-	bool rebuild();
-	void clearHexMap();
-	void hexagonsToHexMap();
-	void hexMapToHexagons();
-	bool rebuildMode2();
-	void rebuildMode2Init();
-	void rebuildMode2Merge();
-	void rebuildMode2Finish();
+ private:
+	bool startRebuild();
+	void deleteCollisionObjects();
+	void createCollisionObjects();
+	void rebuildMode2CollisionStart();
+	void rebuildMode2CollisionProcess();
+	void rebuildMode2CollisionFinish();
+	void rebuildMode2RenderStart();
+	void rebuildMode2RenderProcess();
+	void rebuildMode2RenderFinish();
 	void rebuildMode2Done();
 	void rebuildMode2MoveMeshVerts(TSMesh* mesh, Point3F vec);
 	void rebuildMode2MergeMesh(TSMesh* dest, TSMesh* src);
@@ -149,8 +181,14 @@ class HexagonVolume : public GameBase
 	void prepRenderImageMode1(SceneRenderState* state);
 	void prepRenderImageMode2(SceneRenderState* state);
 	void prepRenderImageMode3(SceneRenderState* state);
+ public:
 	void renderObjectBounds(ObjectRenderInst* ri, SceneRenderState* state, BaseMatInstance* overrideMat);
 	void renderObjectMode3(ObjectRenderInst* ri, SceneRenderState* state, BaseMatInstance* overrideMat);
+	// Script interface...
+	bool sInit();
+	bool sAddHexagon(Point3I gridPos, U32 shapeNr);
+	bool sRemoveHexagon(Point3I gridPos);
+	bool sRebuild();
 };
 
 #endif // _HEXAGONVOLUME_H_
