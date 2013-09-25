@@ -102,6 +102,7 @@ class HexagonVolume : public GameBase
 		enum State
 		{
 			Ready,
+			Start,
 			CollisionStart,
 			CollisionProcess,
 			CollisionFinish,
@@ -109,6 +110,7 @@ class HexagonVolume : public GameBase
 			RenderProcess,
 			RenderFinish
 		} state;
+		bool useCachedShape;
 		TSShape* shape;
 		TSMesh* mesh;
 		U32 idx;
@@ -165,8 +167,7 @@ class HexagonVolume : public GameBase
 	// HexagonVolume
  private:
 	bool startRebuild();
-	void deleteCollisionObjects();
-	void createCollisionObjects();
+	void rebuildMode2Start();
 	void rebuildMode2CollisionStart();
 	void rebuildMode2CollisionProcess();
 	void rebuildMode2CollisionFinish();

@@ -196,6 +196,7 @@ HexagonVolume::HexagonVolume()
 	mHexMap.hexArray = NULL;
 
 	mRebuild.state = RebuildProcess::Ready;
+	mRebuild.useCachedShape = false;
 	mRebuild.shape = NULL;
 	mRebuild.mesh = NULL;
 	mRebuild.idx = 0;
@@ -239,8 +240,6 @@ bool HexagonVolume::onAdd()
 
    this->addToScene();
 
-
-
    if(this->isServerObject())
 	{
 		mServerShapeId = this->getId();
@@ -254,11 +253,24 @@ bool HexagonVolume::onAdd()
 void HexagonVolume::onRemove()
 {
    removeFromScene();
-	this->deleteCollisionObjects();
 	if(this->isServerObject())
 		this->onServerObjectDeleted();
 	if(mRebuild.shape) SAFE_DELETE(mRebuild.shape);
 	if(mShapeInstance) SAFE_DELETE(mShapeInstance);
+	if(mHexMap.hexArray)
+	{
+		U32 n = mHexMap.width * mHexMap.height;
+		for(U32 idx = 0; idx < n; idx++)
+		{
+			HexMap::Hex& hex = mHexMap.hexArray[idx];
+			if(hex.col)
+			{
+				hex.col->deleteObject();
+				hex.col = NULL;
+			}
+		}
+		delete[] mHexMap.hexArray;
+	}
    Parent::onRemove();
 }
 
@@ -469,6 +481,9 @@ void HexagonVolume::renderObjectBounds(ObjectRenderInst*  ri,
 	ColorI color(0, 0, 100);
 	switch(mRebuild.state)
 	{
+		case RebuildProcess::Start:
+			color.set(255, 255, 255); 
+			break;
 		case RebuildProcess::CollisionStart:
 		case RebuildProcess::CollisionProcess:
 		case RebuildProcess::CollisionFinish:
@@ -488,46 +503,6 @@ void HexagonVolume::renderObjectBounds(ObjectRenderInst*  ri,
 	drawer->drawCube(desc, box, color, &mRenderObjToWorld );
 }
 
-
-void HexagonVolume::deleteCollisionObjects()
-{
-#if 0
-	for(U32 i = 0; i < mCollisionObjects.size(); i++)
-		mCollisionObjects[i]->deleteObject();
-	mCollisionObjects.clear();
-#endif
-}
-
-void HexagonVolume::createCollisionObjects()
-{
-#if 0
-	this->deleteCollisionObjects();
-	for(U32 i = 0; i < mHexagons.size(); i++)
-	{
-		U32 shapeNr = mHexagons[i].shapeNr;
-		if(!mDataBlock->collisionShapeData[shapeNr])
-		{
-			Con::errorf("HexagonVolume: Datablock is missing collisionShape %i", shapeNr);
-			continue;
-		}
-
-		HexagonVolumeCollisionShape* obj  = new HexagonVolumeCollisionShape(this->isClientObject());
-		obj->onNewDataBlock(mDataBlock->collisionShapeData[shapeNr], false);
-		obj->setPosition(mGrid->gridToWorld(mHexagons[i].gridPos));
-		if(!obj->registerObject())
-		{
-			Con::errorf("HexagonVolume: Creating collision object failed!");
-			delete obj;
-			obj = NULL;
-		}
-		else
-		{
-			mCollisionObjects.push_back(obj);						
-		}
-	}
-#endif
-}
-
 bool HexagonVolume::startRebuild()
 {
 	if(!mHexMap.hexArray)
@@ -539,7 +514,7 @@ bool HexagonVolume::startRebuild()
 		this->setMaskBits(RebuildMask);
 	}
 
-	mRebuild.state = RebuildProcess::CollisionStart;
+	mRebuild.state = RebuildProcess::Start;
 
 	return true;
 }
@@ -675,6 +650,33 @@ void HexagonVolume::rebuildMode2MergeMesh(TSMesh* dest, TSMesh* src)
 	}
 }
 
+void HexagonVolume::rebuildMode2Start()
+{
+	TSShape* cachedShape = TSShapeCache::getPtr(mServerShapeId);
+	if(cachedShape)
+	{
+		if(cachedShape->revision == mServerShapeRevision)
+		{
+			//Con::printf("Have up-to-date cached shape.");
+			if(mShapeInstance)
+				SAFE_DELETE(mShapeInstance);
+			mShapeInstance = new TSShapeInstance(cachedShape, this->isClientObject());
+			mShapeInstance->initMaterialList();
+			mRebuild.useCachedShape = true;
+		}
+		else
+		{
+			//Con::printf("Have out-of-date cached shape.");
+		}
+	}
+	else
+	{
+		//Con::printf("Don't have cached shape.");
+	}
+
+	mRebuild.state = RebuildProcess::CollisionStart;
+}
+
 void HexagonVolume::rebuildMode2CollisionStart()
 {
 	mRebuild.idx = 0;
@@ -691,12 +693,49 @@ void HexagonVolume::rebuildMode2CollisionProcess()
 		return;
 	}
 
-	Con::printf("%s %i: shape #%i elevation %i", 
-		this->isGhost() ? "CLNT":"SRVR", 
-		idx,
-		mHexMap.hexArray[idx].shapeNr,
-		mHexMap.hexArray[idx].elevation
-	);
+	HexMap::Hex& hex = mHexMap.hexArray[idx];
+
+	if(hex.shapeNr == 0)
+	{
+		if(hex.col)
+		{
+			hex.col->deleteObject();
+			hex.col = NULL;
+		}
+	}
+	else
+	{
+		if(hex.col)
+			return;
+
+		if(!mDataBlock->collisionShapeData[hex.shapeNr])
+		{
+			Con::errorf("HexagonVolume: Datablock is missing collisionShape %i", hex.shapeNr);
+			return;
+		}
+
+		HexagonVolumeCollisionShape* obj  = new HexagonVolumeCollisionShape(this->isClientObject());
+		obj->onNewDataBlock(mDataBlock->collisionShapeData[hex.shapeNr], false);
+		obj->setPosition(mGrid->gridToWorld(mHexMap.indexToGrid(idx)));
+		if(!obj->registerObject())
+		{
+			Con::errorf("HexagonVolume: Creating collision object failed!");
+			delete obj;
+			obj = NULL;
+		}
+		else
+		{
+			hex.col = obj;
+			hex.col->setRenderEnabled(false);
+		}
+	}
+
+	//Con::printf("%s %i: shape #%i elevation %i", 
+	//	this->isGhost() ? "CLNT":"SRVR", 
+	//	idx,
+	//	mHexMap.hexArray[idx].shapeNr,
+	//	mHexMap.hexArray[idx].elevation
+	//);
 
 	//if(mHexMap.hexArray[idx].elevation == 0)
 	//	return;
@@ -704,8 +743,9 @@ void HexagonVolume::rebuildMode2CollisionProcess()
 
 void HexagonVolume::rebuildMode2CollisionFinish()
 {
-	// Server doesn't need to rebuild render geometry.
-	if(this->isServerObject())
+	// Don't need to rebuild render geometry if
+	// we're the server or are using a cached shape.
+	if(this->isServerObject() || mRebuild.useCachedShape)
 		this->rebuildMode2Done();
 	else
 		mRebuild.state = RebuildProcess::RenderStart;
@@ -729,29 +769,6 @@ void HexagonVolume::rebuildMode2RenderStart()
 		return;
 	}
 #endif
-
-	TSShape* cachedShape = TSShapeCache::getPtr(mServerShapeId);
-	if(cachedShape)
-	{
-		if(cachedShape->revision == mServerShapeRevision)
-		{
-			//Con::printf("Have up-to-date cached shape.");
-			if(mShapeInstance)
-				SAFE_DELETE(mShapeInstance);
-			mShapeInstance = new TSShapeInstance(cachedShape, this->isClientObject());
-			mShapeInstance->initMaterialList();
-			this->rebuildMode2Done();
-			return;
-		}
-		else
-		{
-			//Con::printf("Have out-of-date cached shape.");
-		}
-	}
-	else
-	{
-		//Con::printf("Don't have cached shape.");
-	}
 
 	mRebuild.shape = new TSShape();
 	mRebuild.shape->revision = mServerShapeRevision;
@@ -892,6 +909,7 @@ void HexagonVolume::rebuildMode2RenderFinish()
 void HexagonVolume::rebuildMode2Done()
 {
 	mRebuild.state = RebuildProcess::Ready;
+	mRebuild.useCachedShape = false;
 	if(mRebuild.shape)
 		delete mRebuild.shape;
 	mRebuild.shape = NULL;
@@ -938,7 +956,9 @@ void HexagonVolume::processTick(const Move* move)
 		this->startRebuild();
 	}
 
-	if(mRebuild.state == RebuildProcess::CollisionStart)
+	if(mRebuild.state == RebuildProcess::Start)
+		this->rebuildMode2Start();
+	else if(mRebuild.state == RebuildProcess::CollisionStart)
 		this->rebuildMode2CollisionStart();
 	else if(mRebuild.state == RebuildProcess::CollisionProcess)
 		this->rebuildMode2CollisionProcess();
