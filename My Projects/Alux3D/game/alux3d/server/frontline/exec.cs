@@ -11,6 +11,8 @@ function executeFrontlineServerScripts()
    exec("./metaSoilEditTweak.cs");
    exec("./metaSoilEditWorker.cs");
    //exec("./unfinishedSoilTile.cs");
+   exec("./soil.sfx.cs");
+   exec("./soil.gfx.cs");
    exec("./soil.cs");
 }
 

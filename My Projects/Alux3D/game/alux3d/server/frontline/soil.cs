@@ -61,8 +61,12 @@ function Soil::clear()
 	for(%idx = MissionMetaSoilTiles.getCount()-1; %idx >= 0; %idx-- )
 	{
 		%tile = MissionMetaSoilTiles.getObject(%idx);
+      if(isObject(%tile.zBuildEmitter))
+         %tile.zBuildEmitter.delete();
+      %tile.zBuildEmitter = "";
       %tile.zChangeSet = "";
       %tile.zCompletion = 0;
+      %tile.zBuildEmitter = "";
       %tile.zLastUpdateTime = 0;
       %tile.teamId = 0;
    }
@@ -76,49 +80,128 @@ function Soil::clear()
    Game.soilTileDirtySet.clear();
 }
 
-function Soil::buildAdjacent(%tile, %side, %set)
-{
-   %adjacentTile = %tile.adjacent[%side];
-
-   if(!isObject(%adjacentTile))
-      return;
-   
-   if(%adjacentTile $= "None")
-      return;
-      
-   if(%adjacentTile.teamId != 0)
-      return;
-      
-   %adjacentTile.teamId = %tile.teamId;
-   %adjacentTile.zCompletion = 0;
-
-   Game.soilTileDirtySet.add(%adjacentTile);
-}
-
-function Soil::buildAdjacents(%tile, %set)
+function Soil::updateAdjacents(%tile, %set)
 {
    for(%side = 1; %side <= 6; %side++)
-      Soil::buildAdjacent(%tile, %side, %set);
+   {
+      %adjacentTile = %tile.adjacent[%side];
+      if(%adjacentTile $= "None")
+         continue;
+      if(!isObject(%adjacentTile))
+         continue;
+      %adjacentTile.zLastUpdateTime = getSimTime();
+      Game.soilTileDirtySet.add(%adjacentTile);
+   }
 }
 
 function Soil::finishTile(%tile, %teamId)
 {
    echo("Finishing tile" SPC %tile.getName() SPC "(team" @ %teamId @ ")");
+   if(isObject(%tile.zBuildEmitter))
+      %tile.zBuildEmitter.delete();
+   %tile.zBuildEmitter = "";
    %tile.teamId = %teamId;
    %tile.zCompletion = 1;
    %volume = %tile.volumeName;
    if(%volume.addHexagon(%tile.gridPos, %tile.teamId))
       Game.soilVolumeDirtySet.add(%volume);
-   Soil::buildAdjacents(%tile);
+   %pos = VectorAdd(%tile.getPosition(), "0 0 -0.4");
+   createExplosion(SoilPopupExplosion, %pos, "0 0 1");
+   Soil::updateAdjacents(%tile);
 }
 
 function Soil::updateTile(%tile, %dt)
 {
    echo(%tile.getName() SPC %dt);
+   
+   if(%tile.zCompletion == 1)
+      return true;
 
-   if(%tile.zCompletion < 1)
-      %tile.zCompletion += 0.001 * %dt;
-      
+   %numAdjacents = 0;
+   %numTeam1Adjacents = 0;
+   %numTeam2Adjacents = 0;
+   for(%side = 1; %side <= 6; %side++)
+   {
+      %adjacentTile = %tile.adjacent[%side];
+      if(!isObject(%adjacentTile))
+         continue;
+      if(%adjacentTile.zCompletion != 1)
+         continue;
+      %numAdjacents++;
+      if(%adjacentTile.teamId == 1)
+         %numTeam1Adjacents++;
+      if(%adjacentTile.teamId == 2)
+         %numTeam2Adjacents++;
+   }
+   
+   %emitterData = "";
+   if(%numTeam1Adjacents > 0 && %numTeam2Adjacents > 0)
+   {
+      %tile.teamId = 0;
+      %tile.zCompletion = 0;
+      %emitterData = SoilBuildEmitterTeam0;
+   }
+   else if(%numTeam1Adjacents > 0)
+   {
+      if(%tile.teamId != 1)
+      {
+         %tile.teamId = 1;
+         %tile.zCompletion = 0;
+      }
+      %emitterData = SoilBuildEmitterTeam1;
+      %tile.zCompletion += 0.5 * %dt;
+   }
+   else if(%numTeam2Adjacents > 0)
+   {
+      if(%tile.teamId != 2)
+      {
+         %tile.teamId = 2;
+         %tile.zCompletion = 0;
+      }
+      %emitterData = SoilBuildEmitterTeam2;
+      %tile.zCompletion += 0.5 * %dt;
+   }
+
+   
+   if(%emitterData !$= "")
+   {
+      if(isObject(%tile.zBuildEmitter))
+      {
+         echo(%tile.zBuildEmitter.emitter SPC "->" SPC %emitterData);
+         if(%tile.zBuildEmitter.emitter.getId() != %emitterData.getId())
+         {
+            %tile.zBuildEmitter.delete();
+            %tile.zBuildEmitter = new ParticleEmitterNode()
+            {
+               datablock = SoilBuildEmitterNode;
+               position = %tile.getPosition();
+               rotation = "0 0 1 0";
+               emitter = %emitterData;
+               velocity = 1;
+            };
+            MissionCleanup.add(%tile.zBuildEmitter);
+         }
+      }
+      else
+      {
+         %tile.zBuildEmitter = new ParticleEmitterNode()
+         {
+            datablock = SoilBuildEmitterNode;
+            position = %tile.getPosition();
+            rotation = "0 0 1 0";
+            emitter = %emitterData;
+            velocity = 1;
+         };
+         MissionCleanup.add(%tile.zBuildEmitter);
+      }
+   }
+   else
+   {
+      if(isObject(%tile.zBuildEmitter))
+         %tile.zBuildEmitter.delete();
+      %tile.zBuildEmitter = "";
+   }
+
    if(%tile.zCompletion >= 1)
    {
       Soil::finishTile(%tile, %tile.teamId);
@@ -199,7 +282,7 @@ function Soil::update()
       Game.soilTileDirtySet.remove(%tile);
       %delta = 0;
       if(%tile.zLastUpdateTime !$= "")
-         %delta = (%time - %tile.zLastUpdateTime)/32;
+         %delta = (%time - %tile.zLastUpdateTime)/1000;
       if(!Soil::updateTile(%tile, %delta))
          Game.soilTileDirtySet.add(%tile);
       %tile.zLastUpdateTime = %time;
@@ -210,7 +293,7 @@ function Soil::rebuildThread()
 {
    if(Game.soilRebuildThread !$= "")
       cancel(Game.soilRebuildThread);
-   Game.soilRebuildThread = schedule(256, Game, "Soil::rebuildThread");
+   Game.soilRebuildThread = schedule(512, Game, "Soil::rebuildThread");
    Soil::rebuild();
 }
 
