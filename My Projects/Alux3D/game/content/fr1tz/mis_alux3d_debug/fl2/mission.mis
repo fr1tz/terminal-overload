@@ -8135,7 +8135,7 @@ new SimGroup(MissionGroup) {
          position = "118.670456 -66.951134 3.174610";
    };
    new TerrainBlock() {
-      terrainFile = "content/fr1tz/mis_alux3d_debug/frontlinetest2/ter0.ter";
+      terrainFile = "./ter0.ter";
       castShadows = "1";
       squareSize = "1";
       baseTexSize = "1024";
