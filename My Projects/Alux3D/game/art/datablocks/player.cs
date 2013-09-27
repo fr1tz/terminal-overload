@@ -668,6 +668,8 @@ datablock PlayerData(DefaultPlayerData)
    
    maxInv[WpnSiberion] = 1;
    maxInv[WpnSiberionAmmo] = 120;
+   
+   maxInv[WpnPineapple] = 9999;
 
    // available skins (see materials.cs in model folder)
    availableSkins =  "base	DarkBlue	DarkGreen	LightGreen	Orange	Red	Teal	Violet	Yellow";
