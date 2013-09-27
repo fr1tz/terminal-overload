@@ -3,7 +3,7 @@
 
 datablock StaticShapeData(UnfinishedSoilTile)
 {
-   shapeFile = "content/alux3d/release1/shapes/soil/unfinished1.dae";
+   shapeFile = "content/fr1tz/oldshapes/soil/unfinished1.dae";
    emap = true;
    //dynamicType = $TypeMasks::NextFreeObjectType;
 };

@@ -1,1 +1,0 @@
-The "alux3d" content source (and its modules) will be phased out. Don't add content to it or reference content from it for new stuff.

@@ -4,8 +4,8 @@
 datablock ShapeBaseImageData(WpnRaptorReloadImage)
 {
    // Basic Item properties
-   shapeFile = "content/alux3d/release1/shapes/raptor/image/p1/TP_Raptor.DAE";
-   shapeFileFP = "content/alux3d/release1/shapes/raptor/image/p3/shape.fp.dae";
+   shapeFile = "content/fr1tz/oldshapes/raptor/image/p1/TP_Raptor.DAE";
+   shapeFileFP = "content/fr1tz/oldshapes/raptor/image/p3/shape.fp.dae";
    emap = true;
 
    imageAnimPrefix = "Rifle";

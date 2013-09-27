@@ -28,7 +28,7 @@ datablock DecalData(WpnSiberionProjectileDecal)
 
 datablock ShotgunProjectileData(WpnSiberionPseudoProjectile)
 {
-   //projectileShapeName = "content/alux3d/release1/shapes/siberion/projectile/p1/shape.dae";
+   //projectileShapeName = "content/fr1tz/oldshapes/siberion/projectile/p1/shape.dae";
 
    // ShotgunProjectileData fields
 	numBullets = 1;
@@ -68,7 +68,7 @@ function WpnSiberionPseudoProjectile::onAdd(%this,%obj)
 
 datablock ProjectileData(WpnSiberionProjectile)
 {
-   projectileShapeName = "content/alux3d/release1/shapes/siberion/projectile/p1/shape.dae";
+   projectileShapeName = "content/fr1tz/oldshapes/siberion/projectile/p1/shape.dae";
 
    directDamage        = 30;
    radiusDamage        = 0;

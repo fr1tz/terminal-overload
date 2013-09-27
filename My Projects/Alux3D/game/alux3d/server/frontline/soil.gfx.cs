@@ -81,8 +81,8 @@ datablock ParticleData(SoilBuildEmitterTeam0Particle : DefaultParticle)
    dragCoefficient = "0";
    inheritedVelFactor = "0";
    spinSpeed = "0";
-   textureName = "content/alux3d/release1/textures/core/particle1.png";
-   animTexName = "content/alux3d/release1/textures/core/particle1.png";
+   textureName = "content/fr1tz/alux1/textures/core/particle1.png";
+   animTexName = "content/fr1tz/alux1/textures/core/particle1.png";
    colors[0] = "0.996078 0.996078 0.992157 1";
    colors[1] = "0.996078 0.972549 0.00784314 1";
    colors[2] = "0.992157 0.996078 0.992157 0";

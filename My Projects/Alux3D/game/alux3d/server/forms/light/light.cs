@@ -79,7 +79,7 @@ datablock EtherformData(FrmLight)
 	thirdPersonOnly = true;
 
     //category = "Vehicles"; don't appear in mission editor
-	//shapeFile = "content/alux3d/release1/shapes/light/p1/shape.dae";
+	//shapeFile = "content/fr1tz/oldshapes/light/p1/shape.dae";
 	//emap = true;
  
 	cameraDefaultFov = 90.0;

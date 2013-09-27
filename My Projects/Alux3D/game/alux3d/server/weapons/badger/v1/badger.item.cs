@@ -54,7 +54,7 @@ datablock ItemData(WpnBadger)
    className = "Weapon";
 
    // Basic Item properties
-   shapeFile = "content/alux3d/release1/shapes/badger/image/p1/TP_Badger.DAE";
+   shapeFile = "content/fr1tz/oldshapes/badger/image/p1/TP_Badger.DAE";
    mass = 1;
    elasticity = 0.2;
    friction = 0.6;
