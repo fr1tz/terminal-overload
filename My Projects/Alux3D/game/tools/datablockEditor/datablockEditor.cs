@@ -4,7 +4,7 @@
 // Main code for the Datablock Editor plugin.
 
 
-$DATABLOCK_EDITOR_DEFAULT_FILENAME = "art/datablocks/managedDatablocks.cs";
+$DATABLOCK_EDITOR_DEFAULT_FILENAME = "content/cleanup/datablocks.cs";
 
 //=============================================================================================
 //    Initialization.

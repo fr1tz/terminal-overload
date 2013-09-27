@@ -2,7 +2,7 @@
 // located in the root directory of this distribution.
 
 
-$PE_PARTICLEEDITOR_DEFAULT_FILENAME = "art/particles/managedParticleData.cs";
+$PE_PARTICLEEDITOR_DEFAULT_FILENAME = "content/cleanup/particleData.cs";
 
 
 //=============================================================================================

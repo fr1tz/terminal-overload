@@ -5,7 +5,7 @@ function initializeDecalEditor()
 {
    echo(" % - Initializing Decal Editor");
    
-   $decalDataFile = "art/decals/managedDecalData.cs";
+   $decalDataFile = "content/cleanup/decalData.cs";
      
    exec( "./decalEditor.cs" );
    exec( "./decalEditorGui.gui" );

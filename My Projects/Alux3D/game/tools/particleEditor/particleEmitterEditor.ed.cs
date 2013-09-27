@@ -2,7 +2,7 @@
 // located in the root directory of this distribution.
 
 
-$PE_EMITTEREDITOR_DEFAULT_FILENAME = "art/particles/managedParticleEmitterData.cs";
+$PE_EMITTEREDITOR_DEFAULT_FILENAME = "content/cleanup/particleEmitterData.cs";
 
 
 //=============================================================================================

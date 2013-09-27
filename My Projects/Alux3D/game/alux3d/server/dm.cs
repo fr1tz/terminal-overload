@@ -23,10 +23,10 @@ function onServerCreated()
    
    // Load up any objects or datablocks saved to the editor managed scripts
    %datablockFiles = new ArrayObject();
-   %datablockFiles.add( "art/particles/managedParticleData.cs" );
-   %datablockFiles.add( "art/particles/managedParticleEmitterData.cs" );
-   %datablockFiles.add( "art/decals/managedDecalData.cs" );
-   %datablockFiles.add( "art/datablocks/managedDatablocks.cs" );
+   %datablockFiles.add( "content/cleanup/particleData.cs" );
+   %datablockFiles.add( "content/cleanup/particleEmitterData.cs" );
+   %datablockFiles.add( "content/cleanup/decalData.cs" );
+   %datablockFiles.add( "content/cleanup/datablocks.cs" );
    %datablockFiles.add( "art/forest/managedItemData.cs" );
    %datablockFiles.add( "art/datablocks/datablockExec.cs" );   
    loadDatablockFiles( %datablockFiles, true );
