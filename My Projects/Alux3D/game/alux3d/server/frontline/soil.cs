@@ -110,9 +110,27 @@ function Soil::finishTile(%tile, %teamId)
    Soil::updateAdjacents(%tile);
 }
 
+function Soil::destroyTile(%tile)
+{
+   if(isObject(%tile.zBuildEmitter))
+      %tile.zBuildEmitter.delete();
+   %tile.zBuildEmitter = "";
+   %tile.teamId = 0;
+   %tile.zCompletion = 0;
+   %volume = %tile.volumeName;
+   if(%volume.removeHexagon(%tile.gridPos))
+   {
+      echo("yay");
+      Game.soilVolumeDirtySet.add(%volume);
+   }
+   //%pos = VectorAdd(%tile.getPosition(), "0 0 -0.4");
+   //createExplosion(SoilPopupExplosion, %pos, "0 0 1");
+   Soil::updateAdjacents(%tile);
+}
+
 function Soil::updateTile(%tile, %dt)
 {
-   echo(%tile.getName() SPC %dt);
+   //echo(%tile.getName() SPC %dt);
    
    if(%tile.zCompletion == 1)
       return true;
@@ -167,7 +185,7 @@ function Soil::updateTile(%tile, %dt)
    {
       if(isObject(%tile.zBuildEmitter))
       {
-         echo(%tile.zBuildEmitter.emitter SPC "->" SPC %emitterData);
+         //echo(%tile.zBuildEmitter.emitter SPC "->" SPC %emitterData);
          if(%tile.zBuildEmitter.emitter.getId() != %emitterData.getId())
          {
             %tile.zBuildEmitter.delete();
@@ -268,7 +286,7 @@ function Soil::update()
    if(Game.soilTileDirtySet.getCount() == 0)
       return;
 
-   error("updating...");
+   //error("updating...");
 
    %time = getSimTime();
 
