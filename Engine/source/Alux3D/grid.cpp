@@ -161,8 +161,26 @@ Point3F Grid::gridToWorld(Point3I gridPos)
 
 Point3I Grid::worldToGrid(Point3F worldPos)
 {
-   // TODO
-	return Point3I(0, 0, 0);
+	Point3I gridPos;
+
+	Point3F origin = this->getPosition();
+
+	gridPos.x = (worldPos.x-origin.x) / mDataBlock->spacing.x;
+	if(gridPos.x > 0)
+		gridPos.x = mCeil(gridPos.x);
+	else
+		gridPos.x = mFloor(gridPos.x);
+
+	gridPos.y = (worldPos.y-origin.y) / mDataBlock->spacing.y;
+	if(gridPos.y > 0)
+		gridPos.y = mCeil(gridPos.y);
+	else
+		gridPos.y = mFloor(gridPos.y);
+
+	gridPos.z = (worldPos.z-origin.z) / mDataBlock->spacing.z;
+	gridPos.z = mCeil(gridPos.z);
+
+	return gridPos;
 }
 
 
