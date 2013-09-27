@@ -32,7 +32,7 @@ datablock ShotgunProjectileData(WpnRaptorProjectile)
 
    // ShotgunProjectileData fields
 	numBullets = 1;
-	range = "250";
+	range = 100;
 	muzzleSpreadRadius = 0.0;
 	referenceSpreadRadius = 0.0;
 	referenceSpreadDistance = 50;
@@ -48,7 +48,7 @@ datablock ShotgunProjectileData(WpnRaptorProjectile)
    explosion           = "WpnRaptorProjectileExplosion";
    decal               = "WpnRaptorProjectileDecal";
 
-   muzzleVelocity      = 900;
+   muzzleVelocity      = 5;
    velInheritFactor    = 0;
 
    armingDelay         = 0;
@@ -63,10 +63,18 @@ datablock ShotgunProjectileData(WpnRaptorProjectile)
 
 function WpnRaptorProjectile::onCollision(%this,%obj,%col,%fade,%pos,%normal)
 {
-   // Apply impact force from the projectile.
+   if(!(%col.getType() & $TypeMasks::GameBaseObjectType))
+      return;
 
-   // Apply damage to the object all shape base objects
-   if ( %col.getType() & $TypeMasks::GameBaseObjectType )
-      %col.damage(%obj,%pos,%this.directDamage,"BulletProjectile");
+   %effectiveRange = 25;
+   %dist = VectorLen(VectorSub(%pos, %obj.initialPosition));
+   %distFactor = 1;
+   if(%dist > %effectiveRange)
+      %distFactor = 1 - (%dist-%effectiveRange) / (%this.range-%effectiveRange);
+      
+   error(%dist SPC %distFactor);
+   %damage = %this.directDamage * %distFactor;
+
+   %col.damage(%obj,%pos,%this.directDamage,"BulletProjectile");
 }
 
