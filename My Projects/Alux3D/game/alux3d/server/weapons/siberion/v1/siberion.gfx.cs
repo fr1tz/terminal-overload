@@ -1,40 +1,6 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
-datablock ParticleData(WpnSiberionProjectileEmitterParticle : DefaultParticle)
-{
-   sizes[0] = "0.2";
-   sizes[1] = "0.2";
-   sizes[2] = "0.2";
-   sizes[3] = "1";
-   times[1] = "0.247059";
-   times[2] = "1";
-   dragCoefficient = "0";
-   inheritedVelFactor = "0";
-   lifetimeMS = "50";
-   lifetimeVarianceMS = "0";
-   textureName = "content/alux3d/release1/textures/core/particle4.png";
-   animTexName = "content/alux3d/release1/textures/core/particle4.png";
-   colors[0] = "0.996078 0.996078 0.992157 1";
-   colors[1] = "0.996078 0.996078 0.992157 1";
-   spinSpeed = "0";
-   colors[2] = "0.996078 0.996078 0.992157 0";
-   colors[3] = "0.732283 1 0 0";
-   useInvAlpha = "0";
-};
-
-datablock ParticleEmitterData(WpnSiberionProjectileEmitter : DefaultEmitter)
-{
-   particles = "WpnSiberionProjectileEmitterParticle";
-   softnessDistance = "1";
-   ejectionVelocity = "0.1";
-   ejectionPeriodMS = "1";
-   ejectionOffset = "0";
-   thetaMax = "0";
-   blendStyle = "ADDITIVE";
-   orientParticles = "1";
-};
-
 datablock ParticleData(WpnSiberionProjectileExplosionSparkParticle : DefaultParticle)
 {
    sizes[0] = "0.25";
