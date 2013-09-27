@@ -5,30 +5,39 @@
 
 Vector<TSShapeCache::TSShapeRef> TSShapeCache::mCachedShapes;
 
-void TSShapeCache::allocate(U32 id)
+void TSShapeCache::insertPtr(U32 id, TSShape* ptr)
 {
+	for(U32 i = 0; i < mCachedShapes.size(); i++)
+	{
+		TSShapeRef& ref = mCachedShapes[i];
+		if(ref.id == id)
+		{
+			ref.ptr = ptr;
+			return;
+		}
+	}
+
 	TSShapeRef ref;
 	ref.id = id;
-	ref.ptr = new TSShape();
+	ref.ptr = ptr;
 
 	mCachedShapes.push_back(ref);
 }
 
-void TSShapeCache::destroy(U32 id)
+void TSShapeCache::removePtr(U32 id)
 {
 	for(U32 i = 0; i < mCachedShapes.size(); i++)
 	{
 		const TSShapeRef& ref = mCachedShapes[i];
 		if(ref.id == id)
 		{
-			delete ref.ptr;
 			mCachedShapes.erase(i);
 			return;
 		}
 	}
 }
 
-TSShape* TSShapeCache::get(U32 id)
+TSShape* TSShapeCache::getPtr(U32 id)
 {
 	for(U32 i = 0; i < mCachedShapes.size(); i++)
 	{

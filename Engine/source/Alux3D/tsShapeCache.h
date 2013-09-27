@@ -16,15 +16,15 @@
 class TSShapeCache
 {
  public:
-	 static void allocate(U32 id);
-	 static void destroy(U32 id);
-	 static TSShape* get(U32 id);
+	 static void insertPtr(U32 id, TSShape* ptr);
+	 static void removePtr(U32 id);
+	 static TSShape* getPtr(U32 id);
 
  private:
 	struct TSShapeRef
 	{
-		U32 id;
 		TSShape* ptr;
+		U32 id;
 	};
 
 	static Vector<TSShapeRef> mCachedShapes;
