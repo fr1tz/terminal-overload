@@ -1,0 +1,1 @@
+This directory contains content modules with files from the game Revenge Of The Cats: Ethernet (http://ethernet.wasted.ch)
