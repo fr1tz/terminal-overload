@@ -44,7 +44,7 @@ datablock SFXProfile(WpnRaptorSwitchinSound)
 
 datablock SFXProfile(WpnRaptorProjectileExplosionSound)
 {
-   filename = "content/cat5/p.1/sounds/cat5impact3";
+   filename = "content/cat5/p.1/sounds/cat5/impact3";
    description = AudioClose3D;
    preload = true;
 };

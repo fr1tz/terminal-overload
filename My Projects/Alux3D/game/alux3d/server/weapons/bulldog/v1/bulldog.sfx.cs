@@ -3,14 +3,14 @@
 
 datablock SFXProfile(WpnBulldogFireSound)
 {
-   filename = "content/cat5/p.1/sounds/cat5gunshot2";
+   filename = "content/cat5/p.1/sounds/cat5/gunshot2";
    description = AudioClose3D;
    preload = true;
 };
 
 datablock SFXProfile(WpnBulldogPumpSound)
 {
-	filename = "content/cat5/p.1/sounds/cat5pumpgun1.wav";
+	filename = "content/cat5/p.1/sounds/cat5/pumpgun1.wav";
    description = AudioClose3D;
    preload = true;
 };
