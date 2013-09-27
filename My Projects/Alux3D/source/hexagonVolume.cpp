@@ -253,24 +253,11 @@ bool HexagonVolume::onAdd()
 void HexagonVolume::onRemove()
 {
    removeFromScene();
+	this->freeHexMap();
 	if(this->isServerObject())
 		this->onServerObjectDeleted();
 	if(mRebuild.shape) SAFE_DELETE(mRebuild.shape);
 	if(mShapeInstance) SAFE_DELETE(mShapeInstance);
-	if(mHexMap.hexArray)
-	{
-		U32 n = mHexMap.width * mHexMap.height;
-		for(U32 idx = 0; idx < n; idx++)
-		{
-			HexMap::Hex& hex = mHexMap.hexArray[idx];
-			if(hex.col)
-			{
-				hex.col->deleteObject();
-				hex.col = NULL;
-			}
-		}
-		delete[] mHexMap.hexArray;
-	}
    Parent::onRemove();
 }
 
@@ -501,6 +488,42 @@ void HexagonVolume::renderObjectBounds(ObjectRenderInst*  ri,
 	}
 
 	drawer->drawCube(desc, box, color, &mRenderObjToWorld );
+}
+
+void HexagonVolume::freeHexMap()
+{
+	if(mHexMap.hexArray == NULL)
+		return;
+
+	U32 n = mHexMap.width * mHexMap.height;
+	for(U32 idx = 0; idx < n; idx++)
+	{
+		HexMap::Hex& hex = mHexMap.hexArray[idx];
+		if(hex.col)
+		{
+			hex.col->deleteObject();
+			hex.col = NULL;
+		}
+	}
+
+	delete[] mHexMap.hexArray;
+	mHexMap.hexArray = NULL;
+}
+
+void HexagonVolume::initHexMap(const Point3I& originGridPos, S32 width, S32 height)
+{
+	this->freeHexMap();
+
+	mHexMap.originGridPos = originGridPos;
+	mHexMap.width = width;
+	mHexMap.height = height;
+
+	U32 n = mHexMap.width*mHexMap.height;
+	if(n > 0)
+	{
+		mHexMap.hexArray = new HexMap::Hex[n];
+		dMemset(mHexMap.hexArray, 0, n*sizeof(HexMap::Hex));
+	}
 }
 
 bool HexagonVolume::startRebuild()
@@ -1006,7 +1029,7 @@ U32 HexagonVolume::packUpdate(NetConnection* con, U32 mask, BitStream* stream)
 				const HexMap::Hex& hex = mHexMap.hexArray[i];
 				if(stream->writeFlag(hex.shapeNr > 0))
 				{
-					stream->writeInt(hex.elevation, 4);
+					stream->writeInt(hex.elevation, 8);
 					stream->writeInt(hex.shapeNr, 2);
 				}
 			}
@@ -1037,21 +1060,12 @@ void HexagonVolume::unpackUpdate(NetConnection* con, BitStream* stream)
 	// Init
 	if(stream->readFlag())
 	{
-		mathRead(*stream, &mHexMap.originGridPos);
-		stream->read(&mHexMap.width);
-		stream->read(&mHexMap.height);
-
-		if(mHexMap.hexArray)
-		{
-			delete[] mHexMap.hexArray;
-			mHexMap.hexArray = NULL;
-		}
-		U32 n = mHexMap.width*mHexMap.height;
-		if(n > 0)
-		{
-			mHexMap.hexArray = new HexMap::Hex[n];
-			dMemset(mHexMap.hexArray, 0, n*sizeof(HexMap::Hex));
-		}
+		Point3I originGridPos;
+		S32 width, height;
+		mathRead(*stream, &originGridPos);
+		stream->read(&width);
+		stream->read(&height);
+		this->initHexMap(originGridPos, width, height);
 	}
 
 	// Rebuild
@@ -1066,7 +1080,7 @@ void HexagonVolume::unpackUpdate(NetConnection* con, BitStream* stream)
 				HexMap::Hex& hex = mHexMap.hexArray[i];
 				if(stream->readFlag())
 				{
-					hex.elevation = stream->readInt(4);
+					hex.elevation = stream->readInt(8);
 					hex.shapeNr = stream->readInt(2);
 				}
 				else
@@ -1096,21 +1110,11 @@ bool HexagonVolume::sInit()
 	Point3I minGridPos = mGrid->worldToGrid(worldBox.minExtents);
 	Point3I maxGridPos = mGrid->worldToGrid(worldBox.maxExtents);
 
-	mHexMap.originGridPos = minGridPos;
-	mHexMap.width = maxGridPos.x - minGridPos.x + 1;
-	mHexMap.height = maxGridPos.y - minGridPos.y + 1;
+	Point3I originGridPos = minGridPos;
+	S32 width = maxGridPos.x - minGridPos.x + 1;
+	S32 height = maxGridPos.y - minGridPos.y + 1;
 
-	if(mHexMap.hexArray)
-	{
-		delete[] mHexMap.hexArray;
-		mHexMap.hexArray = NULL;
-	}
-	U32 n = mHexMap.width*mHexMap.height;
-	if(n > 0)
-	{
-		mHexMap.hexArray = new HexMap::Hex[n];
-		dMemset(mHexMap.hexArray, 0, n*sizeof(HexMap::Hex));
-	}
+	this->initHexMap(originGridPos, width, height);
 
 	this->setMaskBits(InitMask);
 
@@ -1165,10 +1169,11 @@ bool HexagonVolume::sRemoveHexagon(Point3I gridPos)
 		return false;
 
 	HexMap::Hex& hex = mHexMap.hexArray[idx];
-	if(hex.shapeNr > 0)
+	if(hex.shapeNr == 0)
 		return false;
 
 	hex.shapeNr = 0;
+	hex.elevation = 0;
 
 	return true;
 }
@@ -1203,7 +1208,7 @@ DefineEngineMethod(HexagonVolume, addHexagon, bool, (Point3I gridPos, U32 shapeN
 DefineEngineMethod(HexagonVolume, removeHexagon, bool, (Point3I pos),,
    "@brief Add a hexagon to the volume.\n\n"
 
-   "@param Position of the new hexagon\n"
+   "@param Grid position of the hexagon to remove\n"
 )
 {
    return object->sRemoveHexagon(pos);

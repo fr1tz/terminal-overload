@@ -166,6 +166,8 @@ class HexagonVolume : public GameBase
 
 	// HexagonVolume
  private:
+	void initHexMap(const Point3I& originGridPos, S32 width, S32 height);
+	void freeHexMap();
 	bool startRebuild();
 	void rebuildMode2Start();
 	void rebuildMode2CollisionStart();
