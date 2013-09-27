@@ -39,6 +39,7 @@ function onServerCreated()
    exec("./weapons/badger/v1/exec.cs");
    exec("./weapons/raptor/v1/exec.cs");
    exec("./weapons/bulldog/v1/exec.cs");
+   exec("./weapons/siberion/v1/exec.cs");
 
    exec("./dm/exec.cs");
    exec("./frontline/exec.cs");

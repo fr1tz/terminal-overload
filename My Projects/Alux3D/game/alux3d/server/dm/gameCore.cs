@@ -587,6 +587,10 @@ function GameCore::loadOut(%game, %player)
    %player.setInventory(WpnRaptorAmmo, 60);
    %player.magazine[WpnRaptorImage.getId()] = WpnRaptorImage.magazineCapacity;
    
+   %player.setInventory(WpnSiberion, 1);
+   %player.setInventory(WpnSiberionAmmo, 120);
+   %player.magazine[WpnSiberionImage.getId()] = WpnSiberionImage.magazineCapacity;
+   
    %player.setInventory(WpnBulldog, 1);
 
    if (%player.getDatablock().mainWeapon.image !$= "")

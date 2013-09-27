@@ -10,6 +10,8 @@ function serverCmdAction(%client, %nr)
       %obj.use(WpnRaptor);
    else if(%nr == 3)
       %obj.use(WpnBulldog);
+   else if(%nr == 4)
+      %obj.use(WpnSiberion);
    else if(%nr == 20)
       %obj.reloadWeapon();
 }

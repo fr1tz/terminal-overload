@@ -665,6 +665,9 @@ datablock PlayerData(DefaultPlayerData)
    
    maxInv[WpnBulldog] = 1;
    maxInv[WpnBulldogAmmo] = 4;
+   
+   maxInv[WpnSiberion] = 1;
+   maxInv[WpnSiberionAmmo] = 120;
 
    // available skins (see materials.cs in model folder)
    availableSkins =  "base	DarkBlue	DarkGreen	LightGreen	Orange	Red	Teal	Violet	Yellow";
@@ -683,4 +686,6 @@ datablock PlayerData(DefaultPlayerData)
    maxInvWpnRaptor = "1";
    maxInvRyder = "1";
    maxInvWpnBulldogClip = "4";
+   maxInvWpnRaptorAmmo = "120";
+   maxInvWpnBulldogAmmo = "4";
 };
