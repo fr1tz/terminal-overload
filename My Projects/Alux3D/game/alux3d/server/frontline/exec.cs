@@ -3,6 +3,8 @@
 
 function executeFrontlineServerScripts()
 {
+   exec("alux3d/server/weapons/pineapple/v1/exec.cs");
+
    exec("./frontlineGame.cs");
    exec("./grid.cs");
    exec("./metaSoilEdit.cs");

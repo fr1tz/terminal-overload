@@ -593,6 +593,8 @@ function GameCore::loadOut(%game, %player)
    
    %player.setInventory(WpnBulldog, 1);
 
+   %player.setInventory(WpnPineapple, 9999);
+
    if (%player.getDatablock().mainWeapon.image !$= "")
       %player.mountImage(%player.getDatablock().mainWeapon.image, 0);
    else
