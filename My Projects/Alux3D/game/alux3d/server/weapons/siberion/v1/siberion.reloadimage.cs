@@ -4,8 +4,8 @@
 datablock ShapeBaseImageData(WpnSiberionReloadImage)
 {
    // Basic Item properties
-   shapeFile = "library/shape/alux3d/raptor/image/p1/TP_Raptor.DAE";
-   shapeFileFP = "library/shape/alux3d/raptor/image/p3/shape.fp.dae";
+   shapeFile = "content/alux3d/release1/shapes/raptor/image/p1/TP_Raptor.DAE";
+   shapeFileFP = "content/alux3d/release1/shapes/raptor/image/p3/shape.fp.dae";
    emap = true;
 
    imageAnimPrefix = "Rifle";

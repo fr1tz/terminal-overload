@@ -40,11 +40,11 @@ singleton Material(fr1tz_mis_alux3d_dm2_grid1FX)
 new TerrainMaterial()
 {
    internalName = "fr1tz_mis_alux3d_dm2_grid1";
-   diffuseMap = "library/texture/alux3d/dm2/grid1";
+   diffuseMap = "content/fr1tz/alux1/textures/dm2/grid1";
    diffuseSize = "4";
-   detailMap = "library/texture/alux3d/dm2/grid1";
+   detailMap = "content/fr1tz/alux1/textures/dm2/grid1";
    detailSize = "4";
    detailDistance = "500";
-   normalMap = "library/texture/alux3d/dm2/grid1_n";
+   normalMap = "content/fr1tz/alux1/textures/dm2/grid1_n";
 };
 

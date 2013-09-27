@@ -3,7 +3,7 @@
 
 datablock SFXProfile(BloodExplosionSound)
 {
-   fileName = "library/sound/rotc/explosion1";
+   fileName = "content/rotc/p.5.3/sounds/rotc/explosion1";
    description = AudioDefault3D;
    preload = true;
 };

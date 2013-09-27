@@ -4,7 +4,7 @@
 singleton Material(Raptor_ScopeScreen_Base)
 {
    mapTo = "Raptor_ScopeScreen_Base";
-   diffuseMap[0] = "library/shape/alux3d/raptor/image/p1/Raptor_D.dds";
+   diffuseMap[0] = "content/alux3d/release1/shapes/raptor/image/p1/Raptor_D.dds";
    specular[0] = "1 1 1 1";
    specularPower[0] = "10";
    translucentBlendOp = "None";
@@ -16,9 +16,9 @@ singleton Material(Raptor_ScopeScreen_Base)
 singleton Material(Raptor_Base)
 {
    mapTo = "Raptor_Base";
-   diffuseMap[0] = "library/shape/alux3d/raptor/image/p1/Raptor_D.dds";
-   normalMap[0] = "library/shape/alux3d/raptor/image/p1/Raptor_N.dds";
-   specularMap[0] = "library/shape/alux3d/raptor/image/p1/Raptor_S.dds";
+   diffuseMap[0] = "content/alux3d/release1/shapes/raptor/image/p1/Raptor_D.dds";
+   normalMap[0] = "content/alux3d/release1/shapes/raptor/image/p1/Raptor_N.dds";
+   specularMap[0] = "content/alux3d/release1/shapes/raptor/image/p1/Raptor_S.dds";
    specular[0] = "1 1 1 1";
    specularPower[0] = "16";
    translucentBlendOp = "None";
@@ -53,7 +53,7 @@ singleton Material(Raptor_MuzzleFlash_Base)
 singleton Material(TP_Raptor_Raptor_Base)
 {
    mapTo = "Raptor_Base";
-   diffuseMap[0] = "library/shape/alux3d/raptor/image/p1/Raptor_D.dds";
+   diffuseMap[0] = "content/alux3d/release1/shapes/raptor/image/p1/Raptor_D.dds";
    specular[0] = "0.9 0.9 0.9 1";
    specularPower[0] = "10";
    translucentBlendOp = "None";
@@ -65,7 +65,7 @@ singleton Material(TP_Raptor_Raptor_Base)
 singleton Material(TP_Raptor_Raptor_ScopeScreen_Base)
 {
    mapTo = "Raptor_ScopeScreen_Base";
-   diffuseMap[0] = "library/shape/alux3d/raptor/image/p1/Raptor_D.dds";
+   diffuseMap[0] = "content/alux3d/release1/shapes/raptor/image/p1/Raptor_D.dds";
    specular[0] = "0.9 0.9 0.9 1";
    specularPower[0] = "10";
    translucentBlendOp = "None";
@@ -77,7 +77,7 @@ singleton Material(TP_Raptor_Raptor_ScopeScreen_Base)
 singleton Material(TP_Raptor_Raptor_MuzzleFlash_Base)
 {
    mapTo = "Raptor_MuzzleFlash_Base";
-   diffuseMap[0] = "library/shape/alux3d/raptor/image/p1/Raptor_MuzzleFlash.dds";
+   diffuseMap[0] = "content/alux3d/release1/shapes/raptor/image/p1/Raptor_MuzzleFlash.dds";
    specular[0] = "0.9 0.9 0.9 1";
    specularPower[0] = "4";
    translucent = "1";

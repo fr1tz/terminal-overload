@@ -4,8 +4,8 @@
 datablock ShapeBaseImageData(WpnBadgerReloadImage)
 {
    // Basic Item properties
-   shapeFile = "library/shape/alux3d/badger/image/p1/TP_Badger.DAE";
-   shapeFileFP = "library/shape/alux3d/badger/image/p1/FP_Badger.DAE";
+   shapeFile = "content/alux3d/release1/shapes/badger/image/p1/TP_Badger.DAE";
+   shapeFileFP = "content/alux3d/release1/shapes/badger/image/p1/FP_Badger.DAE";
    emap = true;
 
    imageAnimPrefix = "Pistol";

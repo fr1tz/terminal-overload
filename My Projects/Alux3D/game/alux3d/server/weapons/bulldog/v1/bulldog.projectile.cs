@@ -3,7 +3,7 @@
 
 datablock ShotgunProjectileData(WpnBulldogProjectile)
 {
-   projectileShapeName = "library/shape/alux3d/bulldog/projectile/p1/shape.dae";
+   projectileShapeName = "content/alux3d/release1/shapes/bulldog/projectile/p1/shape.dae";
 
    // ShotgunProjectileData fields
 	numBullets = 10;

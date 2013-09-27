@@ -9,14 +9,14 @@ datablock SFXPlayList(WpnRaptorFireSoundList)
 
 datablock SFXProfile(WpnRaptorFireSound)
 {
-   filename = "library/sound/rotc/fire3";
+   filename = "content/rotc/p.5.3/sounds/rotc/fire3";
    description = AudioClose3D;
    preload = true;
 };
 
 datablock SFXProfile(WpnRaptorDryFireSound)
 {
-   filename = "library/sound/rotc/weaponEmpty";
+   filename = "content/rotc/p.5.3/sounds/rotc/weaponEmpty";
    description = AudioClose3D;
    preload = true;
 };
@@ -44,28 +44,28 @@ datablock SFXProfile(WpnRaptorSwitchinSound)
 
 datablock SFXProfile(WpnRaptorProjectileExplosionSound)
 {
-   filename = "library/sound/cat5/impact3";
+   filename = "content/cat5/p.1/sounds/cat5impact3";
    description = AudioClose3D;
    preload = true;
 };
 
 datablock SFXProfile(WpnRaptorReleaseMagazineSound)
 {
-   filename = "library/sound/t3d/snap1";
+   filename = "content/fr1tz/alux1/sounds//snap1";
    description = AudioClose3D;
    preload = true;
 };
 
 datablock SFXProfile(WpnRaptorInsertMagazineSound)
 {
-   filename = "library/sound/t3d/snap2";
+   filename = "content/fr1tz/alux1/sounds//snap2";
    description = AudioClose3D;
    preload = true;
 };
 
 datablock SFXProfile(WpnRaptorChamberSound)
 {
-   filename = "library/sound/t3d/chamber2";
+   filename = "content/fr1tz/alux1/sounds//chamber2";
    description = AudioClose3D;
    preload = true;
 };

@@ -19,14 +19,14 @@ singleton Material(shape_fp_shape_alux3d_raptor_image_p2_mat1)
    rotSpeed[0] = "-0.12";
    rotPivotOffset[0] = "-0.5 -0.5";
    detailScale[0] = "1 1";
-   normalMap[0] = "library/shape/alux3d/raptor/image/p2/skin_n.png";
+   normalMap[0] = "content/alux3d/release1/shapes/raptor/image/p2/skin_n.png";
    subSurfaceColor[0] = "0.137255 0.137255 0.137255 1";
    diffuseColor[1] = "0.992157 0.996078 0.992157 1";
-   diffuseMap[1] = "library/shape/alux3d/raptor/image/p2/glow.png";
+   diffuseMap[1] = "content/alux3d/release1/shapes/raptor/image/p2/glow.png";
    glow[1] = "1";
    specularPower[1] = "1";
    pixelSpecular[1] = "0";
-   diffuseMap[0] = "library/shape/alux3d/raptor/image/p2/base.png";
+   diffuseMap[0] = "content/alux3d/release1/shapes/raptor/image/p2/base.png";
    diffuseColor[2] = "0.992157 0.992157 0.992157 1";
    glow[2] = "1";
    emissive[2] = "0";
@@ -37,7 +37,7 @@ singleton Material(shape_fp_shape_alux3d_raptor_image_p2_mat1)
    specularPower[2] = "1";
    pixelSpecular[2] = "1";
    emissive[1] = "1";
-   diffuseMap[2] = "library/shape/alux3d/raptor/image/p2/glow.png";
+   diffuseMap[2] = "content/alux3d/release1/shapes/raptor/image/p2/glow.png";
 };
 
 singleton Material(shape_fp_shape_alux3d_raptor_image_p2_mat2)

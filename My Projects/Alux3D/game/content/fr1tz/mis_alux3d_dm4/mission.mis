@@ -389,7 +389,7 @@ new SimGroup(MissionGroup) {
       };
    };
    new SFXEmitter() {
-      fileName = "library/sound/eth/windy1.ogg";
+      fileName = "content/rotc/p.5.3/sounds/eth/windy1.ogg";
       playOnAdd = "1";
       useTrackDescriptionOnly = "0";
       isLooping = "1";
@@ -2181,7 +2181,7 @@ new SimGroup(MissionGroup) {
       canSaveDynamicFields = "1";
    };
    new SFXEmitter() {
-      fileName = "library/sound/eth1/ambient2.ogg";
+      fileName = "content/rotc/p.5.3/sounds/eth1/ambient2.ogg";
       playOnAdd = "1";
       useTrackDescriptionOnly = "0";
       isLooping = "1";

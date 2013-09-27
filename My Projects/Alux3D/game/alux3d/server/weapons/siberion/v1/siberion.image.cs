@@ -4,7 +4,7 @@
 datablock ShapeBaseImageData(WpnSiberionImage)
 {
    // Basic Item properties
-   shapeFile = "library/shape/alux3d/raptor/image/p1/TP_Raptor.DAE";
+   shapeFile = "content/alux3d/release1/shapes/raptor/image/p1/TP_Raptor.DAE";
    shapeFileFP = "content/alux3d/release1/shapes/siberion/image/p1/shape.fp.dae";
    emap = true;
 

@@ -14,8 +14,8 @@ datablock ParticleData(WpnBulldogProjectileParticles : DefaultParticle)
    lifetimeVarianceMS = "0";
    dragCoefficient = "0";
    spinSpeed = "0";
-   textureName = "library/texture/alux3d/ring.png";
-   animTexName = "library/texture/alux3d/ring.png";
+   textureName = "content/fr1tz/alux1/textures/ring.png";
+   animTexName = "content/fr1tz/alux1/textures/ring.png";
    colors[1] = "0.988235 0.0862745 0.0156863 0.552";
    colors[2] = "0.996078 0.0784314 0.00784314 0";
    colors[3] = "1 0.0705882 0 0";
@@ -157,8 +157,8 @@ datablock ParticleData(WpnBulldogProjectileParticle : DefaultParticle)
    lifetimeMS = "1000";
    lifetimeVarianceMS = "0";
    spinSpeed = "0";
-   textureName = "library/texture/alux3d/ring.png";
-   animTexName = "library/texture/alux3d/ring.png";
+   textureName = "content/fr1tz/alux1/textures/ring.png";
+   animTexName = "content/fr1tz/alux1/textures/ring.png";
    colors[1] = "0.992157 0.0862745 0.0156863 0";
    colors[2] = "0.996078 0.0784314 0.00784314 0.330709";
    colors[3] = "1 0.0705882 0 0";

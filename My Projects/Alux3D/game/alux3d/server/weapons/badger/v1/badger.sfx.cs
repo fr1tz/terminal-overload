@@ -3,14 +3,14 @@
 
 datablock SFXProfile(WpnBadgerFireSound)
 {
-   filename = "library/sound/rotc/fire2";
+   filename = "content/rotc/p.5.3/sounds/rotc/fire2";
    description = AudioClose3D;
    preload = true;
 };
 
 datablock SFXProfile(WpnBadgerDryFireSound)
 {
-   filename = "library/sound/rotc/weaponEmpty";
+   filename = "content/rotc/p.5.3/sounds/rotc/weaponEmpty";
    description = AudioClose3D;
    preload = true;
 };

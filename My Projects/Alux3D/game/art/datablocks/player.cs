@@ -7,14 +7,14 @@
 
 datablock SFXProfile(SoldierSpawnGaspSound)
 {
-   fileName = "library/sound/alux3d/gasp1";
+   fileName = "content/fr1tz/alux1/sounds/gasp1";
    description = AudioClose3d;
    preload = true;
 };
 
 datablock SFXProfile(DeathCrySound)
 {
-   fileName = "library/sound/alux3d/pain1";
+   fileName = "content/fr1tz/alux1/sounds/pain1";
    description = AudioClose3d;
    preload = true;
 };

@@ -28,7 +28,7 @@ datablock DecalData(WpnRaptorProjectileDecal)
 
 datablock ShotgunProjectileData(WpnRaptorProjectile)
 {
-   projectileShapeName = "library/shape/alux3d/raptor/projectile/p1/shape.dae";
+   projectileShapeName = "content/alux3d/release1/shapes/raptor/projectile/p1/shape.dae";
 
    // ShotgunProjectileData fields
 	numBullets = 1;

@@ -51,9 +51,9 @@ singleton Material(Badger_MuzzleFlash_Base)
 singleton Material(TP_Badger_FP_Badger_Base)
 {
    mapTo = "FP_Badger_Base";
-   diffuseMap[0] = "library/shape/alux3d/badger/image/p1/FP_Badger_D";
+   diffuseMap[0] = "content/alux3d/release1/shapes/badger/image/p1/FP_Badger_D";
    specularPower[0] = "10";
-   specularMap[0] = "library/shape/alux3d/badger/image/p1/FP_Badger_S";
+   specularMap[0] = "content/alux3d/release1/shapes/badger/image/p1/FP_Badger_S";
    translucentBlendOp = "None";
    diffuseColor[0] = "0.992157 0.996078 0.996078 1";
    glow[0] = "0";
@@ -72,7 +72,7 @@ singleton Material(TP_Badger_Base)
 singleton Material(TP_Badger_Badger_MuzzleFlash_Base)
 {
    mapTo = "Badger_MuzzleFlash_Base";
-   diffuseMap[0] = "library/shape/alux3d/badger/image/p1/Badger_MuzzleFlash";
+   diffuseMap[0] = "content/alux3d/release1/shapes/badger/image/p1/Badger_MuzzleFlash";
    specular[0] = "0.9 0.9 0.9 1";
    specularPower[0] = "1";
    translucent = "1";

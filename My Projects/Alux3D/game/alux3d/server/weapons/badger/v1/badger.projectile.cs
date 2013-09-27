@@ -3,7 +3,7 @@
 
 datablock ShotgunProjectileData(WpnBadgerProjectile)
 {
-   projectileShapeName = "library/shape/alux3d/badger/projectile/p1/shape.dae";
+   projectileShapeName = "content/alux3d/release1/shapes/badger/projectile/p1/shape.dae";
 
    // ShotgunProjectileData fields
 	numBullets = 1;

@@ -11,23 +11,23 @@ singleton Material(fr1tz_mis_alux3d_frontline2_snowFX)
    materialTag0 = "Terrain";
    effectColor[0] = "0.603922 0.505882 0.4 1";
    effectColor[1] = "0.701961 0.631373 0.552941 0";
-   diffuseMap[0] = "library/texture/nat/Snow.jpg";
-   normalMap[0] = "library/texture/nat/normal1.png";
+   diffuseMap[0] = "content/rotc/p.5.3/textures/nat/Snow.jpg";
+   normalMap[0] = "content/rotc/p.5.3/textures/nat/normal1.png";
    castShadows = "0";
-   detailMap[0] = "library/texture/nat/detail1.jpg";
+   detailMap[0] = "content/rotc/p.5.3/textures/nat/detail1.jpg";
    detailScale[0] = "1 1";
 };
 
 new TerrainMaterial()
 {
    internalName = "fr1tz_mis_alux3d_frontline2_snow";
-   diffuseMap = "library/texture/nat/Snow";
+   diffuseMap = "content/rotc/p.5.3/textures/nat/Snow";
    diffuseSize = "16";
-   detailMap = "library/texture/nat/detail1";
+   detailMap = "content/rotc/p.5.3/textures/nat/detail1";
    detailSize = "16";
    detailDistance = "200";
    detailStrength = "1";
    parallaxScale = "0";
-   normalMap = "library/texture/nat/normal1";
+   normalMap = "content/rotc/p.5.3/textures/nat/normal1";
 };
 

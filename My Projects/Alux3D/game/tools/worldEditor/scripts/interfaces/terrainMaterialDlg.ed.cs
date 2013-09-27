@@ -289,7 +289,7 @@ function TerrainMaterialDlg::newMat( %this )
    %newMat.setFileName( "library/cleanup/materials.cs" );
    
    // Mark it as dirty and to be saved in the default location.
-   ETerrainMaterialPersistMan.setDirty( %newMat, "library/cleanup/materials.cs" );
+   ETerrainMaterialPersistMan.setDirty( %newMat, "content/cleanup/materials.cs" );
             
    %matLibTree = %this-->matLibTree;
    %matLibTree.buildVisibleTree( true );

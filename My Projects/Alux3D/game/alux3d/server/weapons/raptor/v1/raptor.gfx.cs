@@ -88,8 +88,8 @@ datablock ParticleData(WpnRaptorProjectileExplosionCloudParticle : DefaultPartic
    sizes[3] = "0";
    times[1] = "1";
    times[2] = "1";
-   textureName = "library/texture/alux3d/particle1.png";
-   animTexName = "library/texture/alux3d/particle1.png";
+   textureName = "content/fr1tz/alux1/textures/particle1.png";
+   animTexName = "content/fr1tz/alux1/textures/particle1.png";
    lifetimeMS = "50";
    lifetimeVarianceMS = "0";
    spinSpeed = "0";
