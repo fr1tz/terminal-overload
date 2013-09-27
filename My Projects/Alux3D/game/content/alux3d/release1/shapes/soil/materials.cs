@@ -82,15 +82,3 @@ singleton Material(alux3d_release1_shapes_soil_mat0)
    detailScale[0] = "8 8";
 };
 
-singleton Material(soil_alux3d_release1_shapes_soil_mat2)
-{
-   mapTo = "alux3d_release1_shapes_soil_mat2";
-   diffuseColor[0] = "0 0 1 1";
-   diffuseMap[0] = "content/alux3d/release1/shapes/soil/base2.png";
-   glow[0] = "1";
-   emissive[0] = "1";
-   castShadows = "0";
-   translucent = "1";
-   translucentBlendOp = "AddAlpha";
-   materialTag0 = "Miscellaneous";
-};
