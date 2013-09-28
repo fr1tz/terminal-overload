@@ -193,8 +193,15 @@ class Project
 
         // Cool - note in the list!
         $newEntry       = new stdClass();
-        $newEntry->name = $curFile;
+        $newEntry->name = $curFile;		
         $newEntry->path = FileUtil::collapsePath( $curPath . "/" . $curFile );
+		
+		$path_parts = pathinfo($newEntry->path);
+		$newEntry->dirname = $path_parts['dirname'];
+		$newEntry->basename =  $path_parts['basename'];
+		$newEntry->extension =  $path_parts['extension'];
+		$newEntry->filename =  $path_parts['filename'];
+		$newEntry->offsetPath =  str_replace("../", "", $curPath);
         
         if ( !FileUtil::isAbsolutePath( $newEntry->path ) )
         {

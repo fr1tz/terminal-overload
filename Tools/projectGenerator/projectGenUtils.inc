@@ -32,7 +32,7 @@ function beginProject($name, $sharedConfig)
     // Set the game project name, this is what your game's exe/dll will be called
     setGameProjectName($name);
     
-    if (Generator::$platform == "win32" && $sharedConfig)
+    if ($sharedConfig)
         beginSolutionConfig( $name, '{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}' );
 
 	
@@ -40,7 +40,7 @@ function beginProject($name, $sharedConfig)
 
 function endProject($sharedConfig)
 {
-    if (Generator::$platform == "win32" && $sharedConfig)
+    if ($sharedConfig)
         endSolutionConfig();
 }
 
@@ -350,6 +350,11 @@ function setGameProjectName($name)
 function getGameProjectName()
 {
    return Generator::getGameProjectName();
+}
+
+function getGameProjectNameDLL()
+{	
+   return Generator::getGameProjectNameDLL();
 }
 
 function setToolBuild($tb)

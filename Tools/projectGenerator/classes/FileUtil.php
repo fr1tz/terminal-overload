@@ -126,7 +126,7 @@ class FileUtil
       // project relative path part.
       //
       $orgPath = FileUtil::normalizeSlashes( $path );
-      $absPath = FileUtil::normalizeSlashes( realpath( $path ) );
+      $absPath = FileUtil::normalizeSlashes( realpath( $path ) );      
       return strcasecmp( $orgPath, $absPath ) == 0;
    }
 }

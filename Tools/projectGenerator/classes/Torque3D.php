@@ -55,6 +55,9 @@ class Torque3D
     
     static function beginConfig( $platform, $projectName )
     {
+		//linux: error when debuging on shared config
+		if ( $platform == "linux")
+			self::$sharedConfig = false;
         
         setPlatform( $platform );
 
@@ -68,12 +71,12 @@ class Torque3D
    
 
         //some platforms will not want a shared config        
-        if ( Generator::$platform == "360" || Generator::$platform == "ps3" )
+        if ( Generator::$platform == "360" || Generator::$platform == "ps3")
             self::$sharedConfig = false;
 
         //begin either a shared lib config, or a static app config
         if ( self::$sharedConfig )
-            beginSharedLibConfig( getGameProjectName().' '.$ext, '{C0FCDFF9-E125-412E-87BC-2D89DB971CAB}', 'game', getGameProjectName() );
+            beginSharedLibConfig( getGameProjectName().'_'.$ext, '{C0FCDFF9-E125-412E-87BC-2D89DB971CAB}', 'game', getGameProjectName() );
         else
             beginAppConfig( getGameProjectName(), '{C0FCDFF9-E125-412E-87BC-2D89DB971CAB}', 'game', getGameProjectName() );
         
@@ -186,6 +189,24 @@ class Torque3D
 			
 			addProjectLibInput( 'OpenGL32.lib' );
         }
+		
+		if (Generator::$platform == "linux")
+        {
+			addIncludePath("/usr/include/freetype2");
+			addProjectDefine( 'LINUX' );			
+			//-ldl -lXxf86vm -lXext -lX11 -lXft -lSDL -lstdc++ -lpthread
+			addProjectLibInput('dl');
+			addProjectLibInput('Xxf86vm');
+			addProjectLibInput('Xext');
+			addProjectLibInput('X11');
+			addProjectLibInput('Xft');
+			addProjectLibInput('SDL');
+			addProjectLibInput('stdc++');
+			addProjectLibInput('pthread');
+			
+			if ( !self::$sharedConfig )
+				addEngineSrcDir( 'main' );
+	    }
         
         // Include project specific sources in the project/buildFiles/config/projectCode.conf
         $projectCode = realpath($argv[1])."/buildFiles/config/projectCode.conf";
@@ -214,28 +235,34 @@ class Torque3D
                 if (Generator::$platform == "win32")
                 {
                     addProjectDefine( 'WIN32' );
-                    addProjectDependency( getGameProjectName() . ' DLL' );
+                    addProjectDependency( getGameProjectName() . '_DLL' );
+                }
+				
+				if (Generator::$platform == "linux")
+                {
+                    addProjectDefine( 'LINUX' );
+                    addProjectDependency( getGameProjectName() . '_DLL' );
                 }
 
                 if (Generator::$platform == "mac")
                 {
                     addProjectDefine( '__MACOSX__' );
-                    addProjectDependency( getGameProjectName() . ' Bundle' );
-                    addProjectDependency( getGameProjectName() . ' Plugin' );
+                    addProjectDependency( getGameProjectName() . '_Bundle' );
+                    addProjectDependency( getGameProjectName() . '_Plugin' );
                 }
 
             endSharedAppConfig();
         }
         
         // Add solution references for Visual Studio projects
-        if (Generator::$platform == "win32" || Generator::$platform == "360" || Generator::$platform == "ps3")
+        if (Generator::$platform == "win32" || Generator::$platform == "linux" ||Generator::$platform == "360" || Generator::$platform == "ps3")
         {
            if ( !self::$sharedConfig )
               beginSolutionConfig( getGameProjectName(), '{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}' );
               
               addSolutionProjectRef( getGameProjectName() );
               if ( self::$sharedConfig )
-                 addSolutionProjectRef( getGameProjectName() . ' DLL' );
+                 addSolutionProjectRef( getGameProjectName() . '_DLL' );
                  
               addSolutionProjectRef( 'collada_dom' );
               addSolutionProjectRef( 'ljpeg' );
@@ -249,7 +276,7 @@ class Torque3D
               addSolutionProjectRef( 'zlib' );
               addSolutionProjectRef( 'convexDecomp' ); 
               
-              if (Generator::$platform == "win32")
+              if (Generator::$platform == "win32" || Generator::$platform == "linux")
               {
                  addSolutionProjectRef( 'libogg' );
                  addSolutionProjectRef( 'libvorbis' );

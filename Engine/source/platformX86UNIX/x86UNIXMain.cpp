@@ -58,7 +58,7 @@ void Platform::init()
    {
        InitWindowingSystem();
    }
-#endif   
+#endif
 }
 
 //------------------------------------------------------------------------------
@@ -95,7 +95,9 @@ extern "C"
 
 extern S32 TorqueMain(S32 argc, const char **argv);
 
+#if !defined(TORQUE_SHARED)
 int main(int argc, const char **argv)
 {
    return TorqueMain(argc, argv);
 }
+#endif

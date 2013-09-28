@@ -98,6 +98,16 @@ class Generator
     {
        return self::$gameProjectName;
     }
+	
+	static function getGameProjectNameDLL()
+    {
+		if(self::$platform = "linux")
+		{
+			return self::$gameProjectName . "_DLL";
+		}
+		
+       return self::$gameProjectName . " DLL";
+    }
 
     static function setToolBuild($tb)
     {
