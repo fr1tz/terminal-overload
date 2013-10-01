@@ -5,7 +5,7 @@ datablock ShapeBaseImageData(WpnRaptorImage)
 {
    // Basic Item properties
    shapeFile = "content/fr1tz/oldshapes/raptor/image/p1/TP_Raptor.DAE";
-   shapeFileFP = "content/fr1tz/oldshapes/raptor/image/p3/shape.fp.dae";
+   shapeFileFP = "content/fr1tz/alux1/shapes/raptor/image/p1/shape.fp.dae";
    emap = true;
 
    imageAnimPrefix = "Rifle";
