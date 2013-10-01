@@ -3,15 +3,15 @@
 
 datablock StaticShapeData(SoilVolumeCollisionShape)
 {
-   shapeFile = "content/fr1tz/oldshapes/soil/soilpiece1-collision.dae";
+   shapeFile = "content/fr1tz/alux1/shapes/soil/soilpiece1-team1.dae";
 };
 
 datablock HexagonVolumeData(SoilVolume)
 {
    category = "Frontline Game Mode"; // For the mission editor
-   renderShapeFile[0] = "content/fr1tz/oldshapes/soil/soil.dae";
-   renderShapeFile[1] = "content/fr1tz/oldshapes/soil/soilpiece1-team1.dae";
-   renderShapeFile[2] = "content/fr1tz/oldshapes/soil/soilpiece1-team2.dae";
+   renderShapeFile[0] = "content/fr1tz/alux1/shapes/soil/soil.dae";
+   renderShapeFile[1] = "content/fr1tz/alux1/shapes/soil/soilpiece1-team1.dae";
+   renderShapeFile[2] = "content/fr1tz/alux1/shapes/soil/soilpiece1-team2.dae";
    collisionShape[0] = SoilVolumeCollisionShape;
    collisionShape[1] = SoilVolumeCollisionShape;
    collisionShape[2] = SoilVolumeCollisionShape;
