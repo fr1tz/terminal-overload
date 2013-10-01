@@ -42,6 +42,7 @@ X11Window::X11Window(X11WindowManager* owner)
     mWindowID = 0;
     mVisible = false;
     mMouseLocked = false;
+    mHasFocus = false;
 }
 
 X11Window::~X11Window()
@@ -79,8 +80,8 @@ void X11Window::_setFullscreen(const bool fullscreen)
     {
         Display* display = x86UNIXState->getDisplayPointer();
         Atom wm_state = XInternAtom(display, "_NET_WM_STATE", fullscreen ? False : True);
-        Atom fullscreen = XInternAtom(display, "_NET_WM_STATE_FULLSCREEN", fullscreen ? False : True);        
-            
+        Atom fullscreen = XInternAtom(display, "_NET_WM_STATE_FULLSCREEN", fullscreen ? False : True);
+
         XEvent xev;
         memset(&xev, 0, sizeof(xev));
         xev.type = ClientMessage;
@@ -89,7 +90,7 @@ void X11Window::_setFullscreen(const bool fullscreen)
         xev.xclient.format = 32;
         xev.xclient.data.l[0] = 1;
         xev.xclient.data.l[1] = fullscreen;
-        xev.xclient.data.l[2] = 0;            
+        xev.xclient.data.l[2] = 0;
         XSendEvent (display, DefaultRootWindow(display), False, SubstructureRedirectMask | SubstructureNotifyMask, &xev);
         XFlush(display);
         mVideoMode.fullScreen = fullscreen;
@@ -103,7 +104,7 @@ bool X11Window::setCaption( const char *cap )
 
     if( !x86UNIXState->isXWindowsRunning() )
         return false;
-    
+
     Display* display = x86UNIXState->getDisplayPointer();
     XStoreName(display, mWindowID, cap);
 	return true;
@@ -113,7 +114,7 @@ const char * X11Window::getCaption()
 {
     if( !mWindowID )
         return 0;
-    
+
     if( !x86UNIXState->isXWindowsRunning() )
         return 0;
 
@@ -134,7 +135,7 @@ void X11Window::setFocus()
 }
 
 void X11Window::setClientExtent( const Point2I newExtent )
-{    
+{
     AssertFatal(0, "Not Implemented");
 }
 
@@ -154,7 +155,7 @@ const Point2I X11Window::getClientExtent()
 }
 
 void X11Window::setBounds( const RectI &newBounds )
-{    
+{
     AssertFatal(0, "Not Implemented");
 }
 
@@ -163,7 +164,7 @@ const RectI X11Window::getBounds() const
     AssertFatal(0, "Not Implemented");
 
 	// Return as a Torque RectI
-	return RectI(0,0,0,0);   
+	return RectI(0,0,0,0);
 }
 
 void X11Window::setPosition( const Point2I newPosition )
@@ -207,14 +208,14 @@ void X11Window::centerWindow()
     if(x86UNIXState->isXWindowsRunning())
     {
         Display* display = x86UNIXState->getDisplayPointer();
-        
+
         int screenWidth = DisplayWidth(display, DefaultScreen(display));
         int screenHeight = DisplayHeight(display, DefaultScreen(display));
         int windowX = (screenWidth - mVideoMode.resolution.x) / 2;
         int windowY = (screenHeight - mVideoMode.resolution.y) / 2;
-        
+
         XMoveWindow(display, mWindowID, windowX, windowY);
-    }   
+    }
 }
 
 bool X11Window::setSize( const Point2I &newSize )
@@ -222,11 +223,11 @@ bool X11Window::setSize( const Point2I &newSize )
 	if(x86UNIXState->isXWindowsRunning())
     {
         Display* display = x86UNIXState->getDisplayPointer();
-        
+
         mVideoMode.resolution = newSize;
         XResizeWindow(display, mWindowID, newSize.x, newSize.y);
         return true;
-    } 
+    }
 	return false;
 }
 
@@ -247,26 +248,7 @@ bool X11Window::isVisible()
 
 bool X11Window::isFocused()
 {
-    if(x86UNIXState->isXWindowsRunning())
-    {
-        Display* display = x86UNIXState->getDisplayPointer();
-
-        // Get the currently focused window
-        Window rootWindow;
-        Window parentWindow;
-        Window* children;
-        unsigned int numChildren;
-        XQueryTree(display, DefaultRootWindow(display), &rootWindow, &parentWindow, &children, &numChildren);
-        Window focusedWindow;
-        if( numChildren > 0 )
-            focusedWindow = children[numChildren - 1];
-        else
-            focusedWindow = rootWindow;
-
-        bool focused = (mWindowID == focusedWindow);
-        return focused;
-    }
-    return false;
+    return mHasFocus;
 }
 
 bool X11Window::isMinimized()
@@ -317,7 +299,7 @@ void X11Window::show()
 
         // Wait for the window to be visible
         XSelectInput(display, mWindowID, ExposureMask);
-        while (1) 
+        while (1)
         {
             XEvent event;
             XNextEvent(display, &event);
@@ -325,9 +307,9 @@ void X11Window::show()
                 mVisible = true;
                 break;
         }
-        
+
         // Request all events
-        long mask = 0 | KeyPressMask | KeyReleaseMask | ButtonPressMask | ButtonReleaseMask | EnterWindowMask | LeaveWindowMask | PointerMotionMask | PointerMotionHintMask | Button1MotionMask | Button2MotionMask | Button3MotionMask | Button4MotionMask | Button5MotionMask | ButtonMotionMask | KeymapStateMask | ExposureMask | VisibilityChangeMask | StructureNotifyMask | ResizeRedirectMask | SubstructureNotifyMask | SubstructureRedirectMask /*| FocusChangeMask | PropertyChangeMask*/ | ColormapChangeMask;
+        long mask = 0 | FocusChangeMask | KeyPressMask | KeyReleaseMask | ButtonPressMask | ButtonReleaseMask | EnterWindowMask | LeaveWindowMask | PointerMotionMask | PointerMotionHintMask | Button1MotionMask | Button2MotionMask | Button3MotionMask | Button4MotionMask | Button5MotionMask | ButtonMotionMask | KeymapStateMask | ExposureMask | VisibilityChangeMask | StructureNotifyMask | ResizeRedirectMask | SubstructureNotifyMask | SubstructureRedirectMask /*| FocusChangeMask | PropertyChangeMask*/ | ColormapChangeMask;
         XSelectInput(display, mWindowID, mask);
     }
 }
@@ -387,12 +369,12 @@ bool X11Window::createWindow(int x, int y, const GFXVideoMode &mode, Window pare
         cleanup();
 
         // Set the parent
-        setParent(parent);        
-        
+        setParent(parent);
+
         // Create a new window
         Display* display = x86UNIXState->getDisplayPointer();
-        mWindowID = XCreateSimpleWindow(display, mParent, x, y, mode.resolution.x, mode.resolution.y, 0, BlackPixel(display, DefaultScreen(display)), WhitePixel(display, DefaultScreen(display)));       
-        
+        mWindowID = XCreateSimpleWindow(display, mParent, x, y, mode.resolution.x, mode.resolution.y, 0, BlackPixel(display, DefaultScreen(display)), WhitePixel(display, DefaultScreen(display)));
+
         XWindowAttributes attributes;
         XGetWindowAttributes(display, mWindowID, &attributes);
         mVideoMode = mode;
@@ -447,7 +429,7 @@ void X11Window::update()
 
         const long keyMasks = KeyPressMask | KeyReleaseMask;
         const long buttonMasks = ButtonPressMask | ButtonReleaseMask;
-        const long mouseMasks = PointerMotionMask | PointerMotionHintMask | ButtonMotionMask | Button1MotionMask | Button2MotionMask | Button3MotionMask | Button4MotionMask | Button5MotionMask;        
+        const long mouseMasks = PointerMotionMask | PointerMotionHintMask | ButtonMotionMask | Button1MotionMask | Button2MotionMask | Button3MotionMask | Button4MotionMask | Button5MotionMask;
         long eventMask = 0xFFFFFFFF;// keyMasks | buttonMasks | mouseMasks | VisibilityChangeMask | ColormapChangeMask | PropertyChangeMask | StructureNotifyMask | SubstructureNotifyMask | SubstructureRedirectMask | ResizeRedirectMask;
 
         XEvent evt;
@@ -491,9 +473,11 @@ void X11Window::update()
                     break;
                 case FocusIn:
                     appEvent.trigger(getWindowId(), GainFocus);
+                    mHasFocus = true;
                     break;
                 case FocusOut:
 			        appEvent.trigger(getWindowId(), LoseFocus);
+			        mHasFocus = false;
                     break;
                 case KeymapNotify:
                     //Con::printf("KeymapNotify");
