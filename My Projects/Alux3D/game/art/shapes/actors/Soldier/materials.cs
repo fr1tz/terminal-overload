@@ -5,18 +5,26 @@ singleton Material(Mat_Soldier_Main)
 {
    mapTo = "base_Soldier_Main";
 
-   diffuseMap[0] = "Soldier_Dif.dds";
-   normalMap[0] = "Soldier_N.dds";
-   specularMap[0] = "Soldier_Spec.dds";
+   normalMap[0] = "art/shapes/actors/Soldier/Soldier_N.dds";
+   specularMap[0] = "art/shapes/actors/Soldier/Soldier_Spec.dds";
 
-   diffuseColor[0] = "1 1 1 1";
+   diffuseColor[0] = "0.454902 0.454902 0.454902 1";
    specular[0] = "0.9 0.9 0.9 1";
    specularPower[0] = 10;
 
    doubleSided = false;
-   translucent = false;
+   translucent = "0";
    showFootprints = "0";
    materialTag0 = "Player";
+   detailMap[0] = "content/fr1tz/alux1/textures/placeholder.png";
+   detailScale[0] = "16 16";
+   glow[0] = "0";
+   emissive[0] = "0";
+   translucentBlendOp = "LerpAlpha";
+   diffuseMap[0] = "content/fr1tz/alux1/textures/placeholder.png";
+   scrollDir[0] = "1 1";
+   scrollSpeed[0] = "0.118";
+   animFlags[0] = "0x00000000";
 };
 
 singleton Material(Mat_Soldier_Dazzle)
