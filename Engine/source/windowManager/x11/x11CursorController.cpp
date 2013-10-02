@@ -21,13 +21,19 @@
 //-----------------------------------------------------------------------------
 
 #include "windowManager/x11/x11CursorController.h"
+#include "windowManager/x11/x11Window.h"
 #include "platformX86UNIX/x86UNIXState.h"
 
 #include <X11/cursorfont.h>
 
+inline X11Window* X11CursorController::getX11WindowOwner() const
+{
+    return static_cast<X11Window*>(mOwner);
+}
+
 X11CursorController::X11CursorController( PlatformWindow *owner ) :  PlatformCursorController( owner )
 {
-    pushCursor( PlatformCursorController::curArrow );
+    AssertFatal(dynamic_cast<X11Window*>(mOwner), "X11CursorController::X11CursorController window owner not X11Window.");
 
     if(x86UNIXState->isXWindowsRunning())
     {
@@ -37,9 +43,13 @@ X11CursorController::X11CursorController( PlatformWindow *owner ) :  PlatformCur
         static char data[1] = {0};
         Cursor cursor;
         XColor dummy;
+        dummy.red = dummy.green = dummy.blue = 0;
         Pixmap blank = XCreateBitmapFromData(display, DefaultRootWindow(display), data, 1, 1);
         mBlankCursor = XCreatePixmapCursor(display, blank, blank, &dummy, &dummy, 0, 0);
         XFreePixmap(display, blank);
+
+       pushCursor( PlatformCursorController::curArrow );
+
     }
     mVisible = true;
 };
@@ -68,7 +78,7 @@ void X11CursorController::setCursorPosition( S32 x, S32 y )
     if(x86UNIXState->isXWindowsRunning())
     {
         Display* display = x86UNIXState->getDisplayPointer();
-        XWarpPointer(display, None, DefaultRootWindow(display), 0, 0, 0, 0, x, y);
+        XWarpPointer(display, None, getX11WindowOwner()->getWindowId(), 0, 0, 0, 0, x, y);
     }
 }
 
@@ -80,7 +90,7 @@ void X11CursorController::getCursorPosition( Point2I &point )
         Window root, child;
         int rootX, rootY, winX, winY;
         U32 mask;
-        XQueryPointer(display, DefaultRootWindow(display), &root, &child, &rootX, &rootY, &winX, &winY, &mask);
+        XQueryPointer(display, getX11WindowOwner()->getWindowId(), &root, &child, &rootX, &rootY, &winX, &winY, &mask);
         point.x = rootX;
         point.y = rootY;
     }
@@ -94,11 +104,11 @@ void X11CursorController::setCursorVisible( bool visible )
         mVisible = visible;
         if( visible )
         {
-            XUndefineCursor(display, DefaultRootWindow(display));
+            XUndefineCursor(display, getX11WindowOwner()->getWindowId());
         }
         else
         {
-            XDefineCursor(display, DefaultRootWindow(display), mBlankCursor);
+            XDefineCursor(display, getX11WindowOwner()->getWindowId(), mBlankCursor);
         }
     }
 }
@@ -140,7 +150,7 @@ void X11CursorController::setCursorShape(U32 cursorID)
         }
         if( fontCursorID )
         {
-            XDefineCursor(display, DefaultRootWindow(display), XCreateFontCursor(display, fontCursorID));
+            XDefineCursor(display, getX11WindowOwner()->getWindowId(), XCreateFontCursor(display, fontCursorID));
         }
     }
 }

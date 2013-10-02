@@ -341,6 +341,10 @@ void X11Window::setBackgroundImage(X11Image* image)
 
 void X11Window::setMouseLocked( bool enable )
 {
+    mMouseLocked = enable;
+    setCursorVisible(!enable);
+    if(enable)
+        XWarpPointer(x86UNIXState->getDisplayPointer(), NULL, mWindowID, 0, 0, 0, 0, mVideoMode.resolution.x/2, mVideoMode.resolution.y/2);
 }
 
 const UTF16 *X11Window::getWindowClassName()
@@ -416,7 +420,11 @@ void X11Window::triggerMouseLocationNotify()
         int rootX, rootY, winX, winY;
         U32 mask;
         XQueryPointer(display, mWindowID, &root, &child, &rootX, &rootY, &winX, &winY, &mask);
-        mouseEvent.trigger(getWindowId(), 0, winX, winY, false);
+
+        if(!mMouseLocked)
+            mouseEvent.trigger(getWindowId(), 0, winX, winY, false);
+        else
+            mouseEvent.trigger(getWindowId(), 0, winX-(mVideoMode.resolution.x/2), winY-(mVideoMode.resolution.y/2), true);
     }
 }
 
@@ -553,5 +561,8 @@ void X11Window::update()
                     break;
             }
         }
+
+        if(mMouseLocked && mHasFocus)
+            XWarpPointer(display, NULL, mWindowID, 0, 0, 0, 0, mVideoMode.resolution.x/2, mVideoMode.resolution.y/2);
     }
 }

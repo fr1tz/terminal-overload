@@ -26,10 +26,14 @@
 #include "windowManager/platformCursorController.h"
 #include <X11/Xlib.h>
 
+class X11Window;
+
 class X11CursorController : public PlatformCursorController
 {
     bool mVisible;
     Cursor mBlankCursor;
+
+    X11Window* getX11WindowOwner() const;
 
 public:
     X11CursorController(PlatformWindow *owner);

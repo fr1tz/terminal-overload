@@ -26,6 +26,13 @@
 #include "gfx/gfxStructs.h"
 #include "gfx/gfxDevice.h"
 
+
+// TODO LINUX X11 error handle
+int X11ErrorHandle(Display *display, XErrorEvent *errorEvent)
+{
+    //AssertFatal(0, "X11ErrorHandle");
+}
+
 // ------------------------------------------------------------------------
 
 PlatformWindowManager * CreatePlatformWindowManager()
@@ -43,6 +50,8 @@ X11WindowManager::X11WindowManager()
     mWindowListHead = 0;
     mSplashWindow = 0;
     mSplashImage = 0;
+
+    XSetErrorHandler(&X11ErrorHandle);
 }
 
 X11WindowManager::~X11WindowManager()
