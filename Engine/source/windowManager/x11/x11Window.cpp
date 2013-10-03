@@ -31,6 +31,31 @@
 #include "platformX86UNIX/x86UNIXState.h"
 
 
+const long defaultX11EventMask = 0
+    | KeyPressMask
+    | KeyReleaseMask
+    | ButtonPressMask
+    | ButtonReleaseMask
+    | EnterWindowMask
+    | LeaveWindowMask
+    | PointerMotionMask
+    | PointerMotionHintMask
+    | Button1MotionMask
+    | Button2MotionMask
+    | Button3MotionMask
+    | Button4MotionMask
+    | Button5MotionMask
+    | ButtonMotionMask
+    | KeymapStateMask
+    | ExposureMask
+    | VisibilityChangeMask
+    | StructureNotifyMask
+    //| ResizeRedirectMask
+    | SubstructureNotifyMask
+    //| SubstructureRedirectMask
+    | FocusChangeMask
+    //| PropertyChangeMask
+    | ColormapChangeMask;
 
 X11Window::X11Window(X11WindowManager* owner)
 {
@@ -308,9 +333,8 @@ void X11Window::show()
                 break;
         }
 
-        // Request all events
-        long mask = 0 | FocusChangeMask | KeyPressMask | KeyReleaseMask | ButtonPressMask | ButtonReleaseMask | EnterWindowMask | LeaveWindowMask | PointerMotionMask | PointerMotionHintMask | Button1MotionMask | Button2MotionMask | Button3MotionMask | Button4MotionMask | Button5MotionMask | ButtonMotionMask | KeymapStateMask | ExposureMask | VisibilityChangeMask | StructureNotifyMask | ResizeRedirectMask | SubstructureNotifyMask | SubstructureRedirectMask /*| FocusChangeMask | PropertyChangeMask*/ | ColormapChangeMask;
-        XSelectInput(display, mWindowID, mask);
+        // Request all default events
+        XSelectInput(display, mWindowID, defaultX11EventMask);
     }
 }
 
@@ -438,7 +462,7 @@ void X11Window::update()
         const long keyMasks = KeyPressMask | KeyReleaseMask;
         const long buttonMasks = ButtonPressMask | ButtonReleaseMask;
         const long mouseMasks = PointerMotionMask | PointerMotionHintMask | ButtonMotionMask | Button1MotionMask | Button2MotionMask | Button3MotionMask | Button4MotionMask | Button5MotionMask;
-        long eventMask = 0xFFFFFFFF;// keyMasks | buttonMasks | mouseMasks | VisibilityChangeMask | ColormapChangeMask | PropertyChangeMask | StructureNotifyMask | SubstructureNotifyMask | SubstructureRedirectMask | ResizeRedirectMask;
+        long eventMask = defaultX11EventMask;
 
         XEvent evt;
         while( XCheckWindowEvent(display, mWindowID, eventMask, &evt) )
@@ -522,6 +546,11 @@ void X11Window::update()
                     break;
                 case ConfigureNotify:
                     //Con::printf("ConfigureNotify");
+                    if (mTarget.isValid()
+                        && (mVideoMode.resolution.x != evt.xconfigure.width || mVideoMode.resolution.y != evt.xconfigure.height) )
+                    {
+                        mVideoMode.resolution.set(evt.xconfigure.width, evt.xconfigure.height);
+                    }
                     break;
                 case ConfigureRequest:
                     //Con::printf("ConfigureRequest");
