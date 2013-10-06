@@ -31,16 +31,6 @@ function onServerCreated()
    %datablockFiles.add( "art/datablocks/datablockExec.cs" );   
    loadDatablockFiles( %datablockFiles, true );
    
-   exec("./base/commands.cs");
-   exec("./base/misc.cs");
-   exec("./base/bleedfx.cs");
-   exec("./base/etherform.cs");
-   exec("./forms/light/exec.cs");
-   exec("./weapons/badger/v1/exec.cs");
-   exec("./weapons/raptor/v1/exec.cs");
-   exec("./weapons/bulldog/v1/exec.cs");
-   exec("./weapons/siberion/v1/exec.cs");
-
    exec("./dm/exec.cs");
    exec("./frontline/exec.cs");
 

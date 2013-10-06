@@ -1,7 +1,5 @@
-//------------------------------------------------------------------------------
-// Alux Ethernet Prototype
-// Copyright notices are in the file named COPYING.
-//------------------------------------------------------------------------------
+// Copyright information can be found in the file named COPYING
+// located in the root directory of this distribution.
 
 datablock LightFlareData(FrmLightLightFlare)
 {
@@ -146,6 +144,53 @@ function FrmLight::onAdd(%this, %obj)
 {
 	Parent::onAdd(%this,%obj);
  
+   // Setup view & hearing
+   %obj.fovDelta = 0;
+   %obj.viewIrisSizeX = 8;
+   %obj.viewIrisSizeY = 8;
+   %obj.viewIrisDtX = 0;
+   %obj.viewIrisDtY = 0;
+   %obj.viewMotionBlurActive = false;
+   %obj.hearingDeafness = 0.75;
+   %obj.hearingDeafnessDt = 0;
+   %obj.hearingTinnitusEnabled = false;
+
+	// start singing...
+	%obj.playAudio(1, EtherformSingSound);
+
+   %obj.updateVisuals();
+
+	// Make sure grenade ammo bar is not visible...
+	messageClient(%obj.client, 'MsgGrenadeAmmo', "", 1);
+
+	// lights...
+	if(%obj.getTeamId() == 1)
+		%obj.mountImage(RedEtherformLightImage, 3);
+	else
+		%obj.mountImage(BlueEtherformLightImage, 3);
+
+	%obj.client.inventoryMode = "show";
+	%obj.client.displayInventory();
+
+	if($Server::NewbieHelp && isObject(%obj.client))
+	{
+		%client = %obj.client;
+		if(!%client.newbieHelpData_HasManifested)
+		{
+			%client.setNewbieHelp("You are in etherform! Press @bind34 inside a" SPC
+				(%client.team == $Team1 ? "red" : "blue") SPC "zone to change into CAT form.");
+		}
+		else if(%client.newbieHelpData_NeedsRepair && !%client.newbieHelpData_HasRepaired)
+		{
+			%client.setNewbieHelp("If you don't have enough health to change into CAT form," SPC
+				"fly into one of your team's zones to regain your health.");
+		}
+		else
+		{
+			%client.setNewbieHelp("random", false);
+		}
+	}
+ 
    %obj.light = new PointLight() {
       radius = "5";
       isEnabled = "1";
@@ -259,7 +304,20 @@ function FrmLight::onTrigger(%this, %obj, %triggerNum, %val)
       %obj.setVelocity("0 0 0");
 }
 
-// called by ShapeBase::impulse() script function
+// Called by Etherform::updateVisuals() script function
+function FrmLight::updateVisuals(%this, %obj)
+{
+   %client = %obj.client;
+   if(!isObject(%client))
+      return;
+
+   %used = %client.inventory.pieceUsed[0];
+   %free = %client.inventory.pieceCount[0] - %used;
+
+   %obj.setDamageBufferLevel(%free >= 1 ? 200 : 0);
+}
+
+// Called by ShapeBase::impulse() script function
 function FrmLight::impulse(%this, %obj, %position, %impulseVec, %src)
 {
    return; // ignore impulses
