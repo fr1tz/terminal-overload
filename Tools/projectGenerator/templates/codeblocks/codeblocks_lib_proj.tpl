@@ -8,7 +8,7 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="{$libDir}compiled/debug.cb/{$projName}_DEBUG.lib" prefix_auto="0"  extension_auto="1" />
+				<Option output="{$libDir}compiled/debug.cb/{$projName}_DEBUG.lib" prefix_auto="1"  extension_auto="1" />
 				<Option object_output="{$projectOffset}../Link/cb.Debug/" />
 				<Option type="2" /> <!-- Static Library -->
 				<Option compiler="gcc" />
@@ -24,12 +24,12 @@
 				</Linker>
 			</Target>
 			<Target title="Release">
-				<Option output="{$libDir}compiled/release.cb/{$projName}.lib" prefix_auto="0"  extension_auto="1" />
+				<Option output="{$libDir}compiled/release.cb/{$projName}.lib" prefix_auto="1"  extension_auto="1" />
 				<Option object_output="{$projectOffset}../Link/cb.Release/" />
 				<Option type="2" /> <!-- Static Library -->
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add option="-O2" />
+					<Add option="-O" />
 					{include file="codeblocks/codeblocks_add_defines.tpl" projDefines=$projDefines isDebug=0}
 				</Compiler>
 				<Linker>
@@ -44,7 +44,7 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-Wundef" />
-			<Add option="-m32 -msse" />
+			<Add option="-m32 -msse -pipe -Wfatal-errors" />
 			{foreach item=def from=$projIncludes}<Add directory="{$def}" />;
 			{/foreach}
 		</Compiler>
