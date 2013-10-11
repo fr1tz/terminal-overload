@@ -303,6 +303,8 @@ ConsoleDocClass( FlyingVehicle,
 
 FlyingVehicle::FlyingVehicle()
 {
+	mMode = Hover;
+
    mSteering.set(0,0);
    mThrottle = 0;
    mJetting = false;
@@ -440,7 +442,10 @@ void FlyingVehicle::updateMove(const Move* move)
    }
 
    mThrust.x = move->x;
-   mThrust.y = move->y;
+	if( mMode == Fly )
+		mThrust.y = 1;
+	else
+		mThrust.y = move->y;
 
    if (mThrust.y != 0.0f)
       if (mThrust.y > 0)
@@ -533,6 +538,8 @@ void FlyingVehicle::updateForces(F32 /*dt*/)
    steering.y *= mFabs(steering.y);
    torque -= xv * steering.y * mDataBlock->steeringForce;
    torque -= zv * steering.x * mDataBlock->steeringForce;
+	if(mMode == Fly)
+		torque -= zv * mThrust.x * mDataBlock->steeringForce;
 
    // Roll
    torque += yv * steering.x * mDataBlock->steeringRollForce;
@@ -741,6 +748,11 @@ U32 FlyingVehicle::packUpdate(NetConnection *con, U32 mask, BitStream *stream)
 {
    U32 retMask = Parent::packUpdate(con, mask, stream);
 
+   if(stream->writeFlag(mask & ModeMask))
+	{
+		stream->writeInt(mMode, 2);
+	}
+
    // The rest of the data is part of the control object packet update.
    // If we're controlled by this client, we don't need to send it.
    if(stream->writeFlag(getControllingClient() == con && !(mask & InitialUpdateMask)))
@@ -757,6 +769,11 @@ void FlyingVehicle::unpackUpdate(NetConnection *con, BitStream *stream)
 {
    Parent::unpackUpdate(con,stream);
 
+	if(stream->readFlag())
+	{
+		mMode = stream->readInt(2);
+	}
+
    if(stream->readFlag())
       return;
 
@@ -768,6 +785,20 @@ void FlyingVehicle::unpackUpdate(NetConnection *con, BitStream *stream)
 void FlyingVehicle::initPersistFields()
 {
    Parent::initPersistFields();
+}
+
+DefineEngineMethod(FlyingVehicle, setHoverMode, void, (),,
+   "@brief Puts vehicle into fly mode."
+)
+{
+   object->setMode(FlyingVehicle::Hover); 
+}
+
+DefineEngineMethod(FlyingVehicle, setFlyMode, void, (),,
+   "@brief Puts vehicle into fly mode."
+)
+{
+   object->setMode(FlyingVehicle::Fly); 
 }
 
 DefineEngineMethod( FlyingVehicle, useCreateHeight, void, ( bool enabled ),,

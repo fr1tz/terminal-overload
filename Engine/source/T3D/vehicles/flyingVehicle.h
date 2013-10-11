@@ -105,6 +105,10 @@ class FlyingVehicle: public Vehicle
    SFXSource* mJetSound;
    SFXSource* mEngineSound;
 
+   enum MaskBits {
+      ModeMask = Parent::NextFreeMask << 0
+   };
+
    enum NetMaskBits {
       InitMask = BIT(0),
       HoverHeight = BIT(1)
@@ -146,6 +150,15 @@ class FlyingVehicle: public Vehicle
    static JetActivation sJetActivation[NumThrustDirections];
    SimObjectPtr<ParticleEmitter> mJetEmitter[FlyingVehicleData::MaxJetNodes];
 
+  public:
+	enum Mode {
+		Hover,
+		Fly
+	};
+
+  private:
+	S32 mMode;
+
    //
    bool onNewDataBlock(GameBaseData* dptr,bool reload);
    void updateMove(const Move *move);
@@ -175,6 +188,9 @@ class FlyingVehicle: public Vehicle
    U32  packUpdate(NetConnection *conn, U32 mask, BitStream *stream);
    void unpackUpdate(NetConnection *conn, BitStream *stream);
    void useCreateHeight(bool val);
+
+	void setMode(S32 mode) { mMode = mode; setMaskBits(ModeMask); };
+	S32 getMode() { return mMode; };
 };
 
 
