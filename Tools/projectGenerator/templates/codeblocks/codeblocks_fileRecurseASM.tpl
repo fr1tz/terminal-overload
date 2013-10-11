@@ -14,8 +14,8 @@
    {capture assign="itemOut"}
    {if !dontCompile($dirWalk->path, $projOutput)}
       {if substr($dirWalk->path, -4, 4) == ".asm"}
-		<Add before="mkdir -p ../../Link/cb.Debug/{$dirWalk->offsetPath}/" />
-         <Add before="nasm -f elf {$dirWalk->path} -o ../../Link/cb.Debug/{$dirWalk->offsetPath}/{$dirWalk->filename}.o" />
+		<Add before="mkdir -p ../../Link/cb.{$build}/{$dirWalk->offsetPath}/" />
+         <Add before="nasm -f elf {$dirWalk->path} -o ../../Link/cb.{$build}/{$dirWalk->offsetPath}/{$dirWalk->filename}.o" />
       {/if}
    {/if}
    {/capture}

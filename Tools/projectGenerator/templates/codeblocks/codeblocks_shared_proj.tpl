@@ -17,7 +17,8 @@
 					<Add option="-g" />
 					{include file="codeblocks/codeblocks_add_defines.tpl" projDefines=$projDefines isDebug=1}
 				</Compiler>
-				<Linker>					
+				<Linker>
+					<Add directory="..\..\..\..\..\Engine\lib\compiled\cb.Debug\" />;	
 					<!-- <Add library="nameLib" /> -->
 					<Add library="pthread" />
 					{foreach item=dep from=$projLibsDebug}
@@ -37,6 +38,7 @@
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
+					<Add directory="..\..\..\..\..\Engine\lib\compiled\cb.Release\" />;
 					<!-- <Add nameLib" /> -->
 					{foreach item=dep from=$projLibs}
 					<Add library="{$dep}" />
@@ -47,7 +49,7 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-Wundef" />
-			<Add option="-m32 -msse" />
+			<Add option="-m32 -msse -pipe" />
 			{foreach item=def from=$projIncludes}<Add directory="{$def}" />;
 			{/foreach}
 		</Compiler>
