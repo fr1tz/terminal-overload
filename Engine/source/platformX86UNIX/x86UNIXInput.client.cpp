@@ -610,15 +610,15 @@ S32 TranslateOSKeyCode(XKeyEvent* evt)
     {
         index = LockMapIndex+1;
     }
-    if(evt->state & ControlMask)
+    // No use control maps
+    /*if(evt->state & ControlMask)
     {
         index = ControlMapIndex+1;
-    }
+    }*/
     if(evt->state & Mod1Mask)
     {
         index = Mod1MapIndex+1;
     }
-    // TODO LINUX
 
     KeySym key = XLookupKeysym(evt, index);
     U8 torqueKey = TranslateX11KeytoTKey(key);
