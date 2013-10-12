@@ -167,6 +167,125 @@ void HexagonVolumeData::unpackData(BitStream* stream)
 
 //--------------------------------------------------------------------------
 
+Point3F HexagonVolumeHexConvex::support(const VectorF& v) const
+{
+	const HexagonVolume::HexMap::Hex& hex = pHexagonVolume->mHexMap.hexArray[idx];
+
+	if(hex.shapeNr == 0)
+		return Point3F(0,0,0);
+
+	TSShapeInstance* shapeInstance = pHexagonVolume->mDataBlock->renderShapeInstance[hex.shapeNr];
+	if(!shapeInstance)
+		return Point3F(0,0,0);
+
+	ShapeBaseData* shapeData = pHexagonVolume->mDataBlock->collisionShapeData[hex.shapeNr];
+	if(!shapeData)
+		return Point3F(0,0,0);
+
+   TSShape::ConvexHullAccelerator* pAccel =
+      shapeInstance->getShape()->getAccelerator(shapeData->collisionDetails[hullId]);
+   AssertFatal(pAccel != NULL, "Error, no accel!");
+
+   F32 currMaxDP = mDot(pAccel->vertexList[0], v);
+   U32 index = 0;
+   for (U32 i = 1; i < pAccel->numVerts; i++) {
+      F32 dp = mDot(pAccel->vertexList[i], v);
+      if (dp > currMaxDP) {
+         currMaxDP = dp;
+         index = i;
+      }
+   }
+
+   return pAccel->vertexList[index];
+}
+
+
+void HexagonVolumeHexConvex::getFeatures(const MatrixF& mat, const VectorF& n, ConvexFeature* cf)
+{
+   cf->material = 0;
+   cf->object = mObject;
+
+	const HexagonVolume::HexMap::Hex& hex = pHexagonVolume->mHexMap.hexArray[idx];
+
+	if(hex.shapeNr == 0)
+		return;
+
+	TSShapeInstance* shapeInstance = pHexagonVolume->mDataBlock->renderShapeInstance[hex.shapeNr];
+	if(!shapeInstance)
+		return;
+
+	ShapeBaseData* shapeData = pHexagonVolume->mDataBlock->collisionShapeData[hex.shapeNr];
+	if(!shapeData)
+		return;
+
+   TSShape::ConvexHullAccelerator* pAccel =
+      shapeInstance->getShape()->getAccelerator(shapeData->collisionDetails[hullId]);
+   AssertFatal(pAccel != NULL, "Error, no accel!");
+
+   F32 currMaxDP = mDot(pAccel->vertexList[0], n);
+   U32 index = 0;
+   U32 i;
+   for (i = 1; i < pAccel->numVerts; i++) {
+      F32 dp = mDot(pAccel->vertexList[i], n);
+      if (dp > currMaxDP) {
+         currMaxDP = dp;
+         index = i;
+      }
+   }
+
+   const U8* emitString = pAccel->emitStrings[index];
+   U32 currPos = 0;
+   U32 numVerts = emitString[currPos++];
+   for (i = 0; i < numVerts; i++) {
+      cf->mVertexList.increment();
+      U32 index = emitString[currPos++];
+      mat.mulP(pAccel->vertexList[index], &cf->mVertexList.last());
+   }
+
+   U32 numEdges = emitString[currPos++];
+   for (i = 0; i < numEdges; i++) {
+      U32 ev0 = emitString[currPos++];
+      U32 ev1 = emitString[currPos++];
+      cf->mEdgeList.increment();
+      cf->mEdgeList.last().vertex[0] = ev0;
+      cf->mEdgeList.last().vertex[1] = ev1;
+   }
+
+   U32 numFaces = emitString[currPos++];
+   for (i = 0; i < numFaces; i++) {
+      cf->mFaceList.increment();
+      U32 plane = emitString[currPos++];
+      mat.mulV(pAccel->normalList[plane], &cf->mFaceList.last().normal);
+      for (U32 j = 0; j < 3; j++)
+         cf->mFaceList.last().vertex[j] = emitString[currPos++];
+   }
+}
+
+
+void HexagonVolumeHexConvex::getPolyList(AbstractPolyList* list)
+{
+	const HexagonVolume::HexMap::Hex& hex = pHexagonVolume->mHexMap.hexArray[idx];
+
+	if(hex.shapeNr == 0)
+		return;
+
+	TSShapeInstance* shapeInstance = pHexagonVolume->mDataBlock->renderShapeInstance[hex.shapeNr];
+	if(!shapeInstance)
+		return;
+
+	ShapeBaseData* shapeData = pHexagonVolume->mDataBlock->collisionShapeData[hex.shapeNr];
+	if(!shapeData)
+		return;
+
+	MatrixF mat(true);
+	mat.setPosition(pHexagonVolume->mGrid->gridToWorld(pHexagonVolume->mHexMap.indexToGrid(idx)));
+	list->setTransform(&mat, Point3F(1,1,1));
+   list->setObject(pHexagonVolume);
+   shapeInstance->buildPolyList(list, shapeData->collisionDetails[hullId]);
+}
+
+//--------------------------------------------------------------------------
+
 IMPLEMENT_CO_NETOBJECT_V1(HexagonVolume);
 
 ConsoleDocClass( HexagonVolume,
@@ -212,7 +331,215 @@ HexagonVolume::~HexagonVolume()
 {
 }
 
+//----------------------------------------------------------------------------
+
+bool HexagonVolume::buildPolyList(PolyListContext context, AbstractPolyList* polyList, const Box3F &, const SphereF &)
+{
+	if(mRebuild.state > RebuildProcess::CollisionFinish
+	|| mRebuild.state == RebuildProcess::Ready)
+		return false;
+
+	bool ret = false;
+
+   polyList->setObject(this);
+
+	U32 n = mHexMap.width * mHexMap.height;
+	for(U32 idx = 0; idx < n; idx++)
+	{
+		const HexMap::Hex& hex = mHexMap.hexArray[idx];
+
+		if(hex.shapeNr == 0)
+			continue;
+
+		if(hex.col != NULL)
+			continue;
+
+		TSShapeInstance* shapeInstance = mDataBlock->renderShapeInstance[hex.shapeNr];
+		if(!shapeInstance)
+			continue;
+
+		MatrixF mat(true);
+		mat.setPosition(mGrid->gridToWorld(mHexMap.indexToGrid(idx)));
+		polyList->setTransform(&mat, Point3F(1,1,1));
+
+		if(context == PLC_Selection)
+		{
+	      shapeInstance->buildPolyList(polyList, shapeInstance->getCurrentDetail());
+			ret = true;
+		}
+	   else if(context == PLC_Export)
+		{
+			S32 dl = 0;
+	      shapeInstance->buildPolyList(polyList, dl);
+			ret = true;
+		}
+		else
+		{
+			ShapeBaseData* data = mDataBlock->collisionShapeData[hex.shapeNr];
+			if(!data)
+				continue;
+			for(U32 i = 0; i < data->collisionDetails.size(); i++)
+			{
+				shapeInstance->buildPolyList(polyList, data->collisionDetails[i]);
+				ret = true;
+			}
+		}
+	}
+
+	return ret;
+}
+
+void HexagonVolume::buildConvex(const Box3F& box, Convex* convex)
+{
+	if(mRebuild.state > RebuildProcess::CollisionFinish
+	|| mRebuild.state == RebuildProcess::Ready)
+		return;
+
+   Box3F realBox = box;
+   mWorldToObj.mul(realBox);
+   realBox.minExtents.convolveInverse(mObjScale);
+   realBox.maxExtents.convolveInverse(mObjScale);
+
+   if (realBox.isOverlapped(getObjBox()) == false)
+      return;
+
+	U32 n = mHexMap.width * mHexMap.height;
+	for(U32 idx = 0; idx < n; idx++)
+	{
+		const HexMap::Hex& hex = mHexMap.hexArray[idx];
+
+		if(hex.shapeNr == 0)
+			continue;
+
+		if(hex.col != NULL)
+			continue;
+
+		TSShapeInstance* shapeInstance = mDataBlock->renderShapeInstance[hex.shapeNr];
+		if(!shapeInstance)
+			continue;
+
+		ShapeBaseData* data = mDataBlock->collisionShapeData[hex.shapeNr];
+		if(!data)
+			continue;
+
+		for (U32 i = 0; i < data->collisionDetails.size(); i++)
+		{
+			// See if this hull exists in the working set already...
+			Convex* cc = 0;
+			CollisionWorkingList& wl = convex->getWorkingList();
+			for(CollisionWorkingList* itr = wl.wLink.mNext; itr != &wl; itr = itr->wLink.mNext)
+			{
+				if(itr->mConvex->getType() == HexagonVolumeHexConvexType 
+				&& static_cast<HexagonVolumeHexConvex*>(itr->mConvex)->pHexagonVolume == this
+				&& static_cast<HexagonVolumeHexConvex*>(itr->mConvex)->hullId == i
+				&& static_cast<HexagonVolumeHexConvex*>(itr->mConvex)->idx == idx)
+				{
+					cc = itr->mConvex;
+					break;
+				}
+			}
+			if (cc)
+				continue;
+
+			// Create a new convex.
+			HexagonVolumeHexConvex* cp = new HexagonVolumeHexConvex();
+			convex->addToWorkingList(cp);
+			cp->mObject    = this;
+			cp->pHexagonVolume = this;
+			cp->hullId = i;
+			cp->idx = idx;
+		}
+	}
+}
+
 //-----------------------------------------------------------------------------
+
+bool HexagonVolume::castRay(const Point3F &start, const Point3F &end, RayInfo* info)
+{
+   info->object = NULL;
+
+   RayInfo shortest;
+   shortest.t = 1e8;
+
+	U32 n = mHexMap.width * mHexMap.height;
+	for(U32 idx = 0; idx < n; idx++)
+	{
+		const HexMap::Hex& hex = mHexMap.hexArray[idx];
+
+		if(hex.shapeNr == 0)
+			continue;
+
+		if(hex.col != NULL)
+			continue;
+
+		TSShapeInstance* shapeInstance = mDataBlock->renderShapeInstance[hex.shapeNr];
+		if(!shapeInstance)
+			continue;
+
+		ShapeBaseData* shapeData = mDataBlock->collisionShapeData[hex.shapeNr];
+		if(!shapeData)
+			continue;
+
+		Point3F worldPos = mGrid->gridToWorld(mHexMap.indexToGrid(idx));
+		Point3F vec = this->getPosition() - worldPos;
+
+		Point3F s = start + vec;
+		Point3F e = end + vec;
+
+      for(U32 i = 0; i < shapeData->collisionDetails.size(); i++)
+      {
+         if(shapeInstance->castRay(s, e, info, shapeData->collisionDetails[i]))
+         {
+            info->object = this;
+            if(info->t < shortest.t)
+               shortest = *info;
+         }
+      }
+	}
+
+   if(info->object == this) 
+   {
+      // Copy out the shortest time...
+      *info = shortest;
+      return true;
+   }
+
+	return false;
+}
+
+bool HexagonVolume::castRayRendered(const Point3F &start, const Point3F &end, RayInfo* info)
+{
+	RayInfo localInfo;
+
+	U32 n = mHexMap.width * mHexMap.height;
+	for(U32 idx = 0; idx < n; idx++)
+	{
+		const HexMap::Hex& hex = mHexMap.hexArray[idx];
+
+		if(hex.shapeNr == 0)
+			continue;
+
+		if(hex.col != NULL)
+			continue;
+
+		TSShapeInstance* shapeInstance = mDataBlock->renderShapeInstance[hex.shapeNr];
+		if(!shapeInstance)
+			continue;
+
+      bool res = shapeInstance->castRayRendered(start, end, &localInfo, shapeInstance->getCurrentDetail());
+      if(res)
+      {
+         *info = localInfo;
+         info->object = this;
+         return true;
+      }
+   }
+
+   return false;
+}
+
+//----------------------------------------------------------------------------
+
 void HexagonVolume::consoleInit()
 {
    Con::addVariable( "$HexagonVolume::renderBounds", TypeBool, &smRenderBounds,
@@ -315,6 +642,26 @@ void HexagonVolume::prepRenderImage(SceneRenderState* state)
 	{
 		ObjectRenderInst *ri = state->getRenderPass()->allocInst<ObjectRenderInst>();
 		ri->renderDelegate.bind(this, &HexagonVolume::renderObjectBounds);
+		ri->type = RenderPassManager::RIT_Editor;      
+		ri->translucentSort = true;
+		ri->defaultKey = 1;
+		state->getRenderPass()->addInst(ri);	
+	}
+
+	if(false)
+	{
+		ObjectRenderInst *ri = state->getRenderPass()->allocInst<ObjectRenderInst>();
+		ri->renderDelegate.bind(this, &HexagonVolume::renderObjectPolyList);
+		ri->type = RenderPassManager::RIT_Editor;      
+		ri->translucentSort = true;
+		ri->defaultKey = 1;
+		state->getRenderPass()->addInst(ri);	
+	}
+
+	if(false)
+	{
+		ObjectRenderInst *ri = state->getRenderPass()->allocInst<ObjectRenderInst>();
+		ri->renderDelegate.bind(this, &HexagonVolume::renderObjectConvex);
 		ri->type = RenderPassManager::RIT_Editor;      
 		ri->translucentSort = true;
 		ri->defaultKey = 1;
@@ -428,23 +775,11 @@ void HexagonVolume::prepRenderImageMode2(SceneRenderState* state)
 void HexagonVolume::prepRenderImageMode3(SceneRenderState* state)
 {
    ObjectRenderInst* ri = state->getRenderPass()->allocInst<ObjectRenderInst>();
-   ri->renderDelegate.bind(this, &HexagonVolume::renderObjectMode3);
+   ri->renderDelegate.bind(this, &HexagonVolume::renderObjectPolyList);
    ri->type = RenderPassManager::RIT_Editor;      
    ri->translucentSort = true;
    ri->defaultKey = 1;
    state->getRenderPass()->addInst(ri);
-}
-
-void HexagonVolume::renderObjectMode3(ObjectRenderInst* ri,
-	SceneRenderState* state, BaseMatInstance* overrideMat)
-{
-   if(overrideMat)
-      return;
-
-	mPolyList.render();
-
-	if(!smRenderBounds && !isSelected())
-		return;
 }
 
 void HexagonVolume::renderObjectBounds(ObjectRenderInst*  ri,
@@ -488,6 +823,41 @@ void HexagonVolume::renderObjectBounds(ObjectRenderInst*  ri,
 	}
 
 	drawer->drawCube(desc, box, color, &mRenderObjToWorld );
+}
+
+void HexagonVolume::renderObjectConvex(ObjectRenderInst* ri,
+	SceneRenderState* state, BaseMatInstance* overrideMat)
+{
+   if(overrideMat)
+      return;
+
+	mConvex.clearWorkingList();
+	this->buildConvex(this->getWorldBox(), &mConvex);
+	mConvex.renderWorkingList();
+}
+
+void HexagonVolume::renderObjectPolyList(ObjectRenderInst* ri,
+	SceneRenderState* state, BaseMatInstance* overrideMat)
+{
+   if(overrideMat)
+      return;
+
+	Point3F scale = this->getScale();
+	Box3F box = this->getObjBox();
+	box.minExtents.convolve(scale);
+	box.maxExtents.convolve(scale);
+	MatrixF mat = this->getTransform();
+	mat.mul(box);
+
+	mPolyList.clear();
+	this->getContainer()->buildPolyList(
+		PLC_Collision,
+		box,
+		mDataBlock->objectMask,
+		&mPolyList
+	);
+
+	mPolyList.render();
 }
 
 void HexagonVolume::freeHexMap()
@@ -703,7 +1073,8 @@ void HexagonVolume::rebuildMode2Start()
 void HexagonVolume::rebuildMode2CollisionStart()
 {
 	mRebuild.idx = 0;
-	mRebuild.state = RebuildProcess::CollisionProcess;
+	//mRebuild.state = RebuildProcess::CollisionProcess;
+	mRebuild.state = RebuildProcess::CollisionFinish;
 }
 
 void HexagonVolume::rebuildMode2CollisionProcess()
@@ -884,6 +1255,8 @@ void HexagonVolume::rebuildMode2RenderProcess()
 
 void HexagonVolume::rebuildMode2RenderFinish()
 {
+	return;
+
 	if(mRebuild.mesh == NULL)
 	{
 		Con::errorf("HexagonVolume: Merging meshes failed somehow!");
@@ -942,20 +1315,7 @@ void HexagonVolume::rebuildMode2Done()
 
 void HexagonVolume::rebuildMode3()
 {
-	Point3F scale = this->getScale();
-	Box3F box = this->getObjBox();
-	box.minExtents.convolve(scale);
-	box.maxExtents.convolve(scale);
-	MatrixF mat = this->getTransform();
-	mat.mul(box);
 
-	mPolyList.clear();
-	this->getContainer()->buildPolyList(
-		PLC_Collision,
-		box,
-		mDataBlock->objectMask,
-		&mPolyList
-	);
 }
 
 //--------------------------------------------------------------------------

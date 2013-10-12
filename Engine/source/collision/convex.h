@@ -71,7 +71,8 @@ enum ConvexType {
    TSPolysoupConvexType,
    MeshRoadConvexType,
 	ConvexShapeCollisionConvexType,
-   ForestConvexType
+   ForestConvexType,
+	HexagonVolumeHexConvexType
 };
 
 

@@ -7,6 +7,9 @@
 #ifndef _CONCRETEPOLYLIST_H_
 #include "collision/concretePolyList.h"
 #endif
+#ifndef _CONVEX_H_
+#include "collision/convex.h"
+#endif
 #ifndef _MBOX_H_
 #include "math/mBox.h"
 #endif
@@ -24,6 +27,8 @@
 #endif
 
 class Grid;
+
+//--------------------------------------------------------------------------
 
 class HexagonVolumeData : public GameBaseData
 {
@@ -54,8 +59,32 @@ class HexagonVolumeData : public GameBaseData
 	virtual void unpackData(BitStream* stream);
 };
 
+//--------------------------------------------------------------------------
+
+class HexagonVolumeHexConvex : public Convex
+{
+   friend class HexagonVolume;
+
+   typedef Convex Parent;
+
+	HexagonVolume* pHexagonVolume;
+   U32 hullId;
+   U32 idx;
+
+ public:
+   HexagonVolumeHexConvex() { mType = HexagonVolumeHexConvexType; }
+
+   Point3F support(const VectorF& v) const;
+   void getFeatures(const MatrixF& mat,const VectorF& n, ConvexFeature* cf);
+   void getPolyList(AbstractPolyList* list);
+};
+
+//--------------------------------------------------------------------------
+
 class HexagonVolume : public GameBase
 {
+	friend class HexagonVolumeHexConvex;
+
 	typedef GameBase Parent;
 
 	static bool smRenderBounds;
@@ -137,6 +166,7 @@ class HexagonVolume : public GameBase
 
 	TSShapeInstance* mShapeInstance;
 	ConcretePolyList mPolyList;
+	HexagonVolumeHexConvex mConvex;
 
   public:
 	HexagonVolume();
@@ -159,6 +189,10 @@ class HexagonVolume : public GameBase
 	// SceneObject
 	void setTransform(const MatrixF &mat);
 	void prepRenderImage(SceneRenderState* state);
+   bool buildPolyList(PolyListContext context, AbstractPolyList* polyList, const Box3F &box, const SphereF& sphere);
+   void buildConvex(const Box3F& box, Convex* convex);
+   bool castRay(const Point3F &start, const Point3F &end, RayInfo* info);
+   bool castRayRendered(const Point3F &start, const Point3F &end, RayInfo* info);
 	
 	// GameBase
 	bool onNewDataBlock(GameBaseData* dptr, bool reload);
@@ -186,7 +220,8 @@ class HexagonVolume : public GameBase
 	void prepRenderImageMode3(SceneRenderState* state);
  public:
 	void renderObjectBounds(ObjectRenderInst* ri, SceneRenderState* state, BaseMatInstance* overrideMat);
-	void renderObjectMode3(ObjectRenderInst* ri, SceneRenderState* state, BaseMatInstance* overrideMat);
+	void renderObjectConvex(ObjectRenderInst* ri, SceneRenderState* state, BaseMatInstance* overrideMat);
+	void renderObjectPolyList(ObjectRenderInst* ri, SceneRenderState* state, BaseMatInstance* overrideMat);
 	// Script interface...
 	bool sInit();
 	bool sAddHexagon(Point3I gridPos, U32 shapeNr);
