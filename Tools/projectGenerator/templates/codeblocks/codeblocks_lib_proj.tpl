@@ -29,7 +29,7 @@
 				<Option type="2" /> <!-- Static Library -->
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add option="-O" />
+					<Add option="-O3" />
 					{include file="codeblocks/codeblocks_add_defines.tpl" projDefines=$projDefines isDebug=0}
 				</Compiler>
 				<Linker>

@@ -33,7 +33,7 @@
 				<Option type="5" /> <!-- Native executable -->
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add option="-O2" />
+					<Add option="-O3" />
 					{include file="codeblocks/codeblocks_add_defines.tpl" projDefines=$projDefines isDebug=0}
 				</Compiler>
 				<Linker>
