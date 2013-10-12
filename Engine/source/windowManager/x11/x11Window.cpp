@@ -68,6 +68,7 @@ X11Window::X11Window(X11WindowManager* owner)
     mVisible = false;
     mMouseLocked = false;
     mHasFocus = false;
+
 }
 
 X11Window::~X11Window()
@@ -409,8 +410,6 @@ bool X11Window::createWindow(int x, int y, const GFXVideoMode &mode, Window pare
         mVideoMode.resolution.x = attributes.width;
         mVideoMode.resolution.y = attributes.height;
         mVideoMode.bitDepth = attributes.depth;
-
-        XAutoRepeatOff(display);
     }
 
     return (mWindowID != 0);
@@ -421,6 +420,7 @@ void X11Window::cleanup()
     if( mWindowID != 0 )
     {
         Display* display = x86UNIXState->getDisplayPointer();
+        XAutoRepeatOn(display);
         XDestroyWindow(display, mWindowID);
         mWindowID = 0;
     }
@@ -464,8 +464,6 @@ void X11Window::update()
     {
         Display* display = x86UNIXState->getDisplayPointer();
 
-        static U8 lastTKey;
-        static S32 lastTMods;
         const long keyMasks = KeyPressMask | KeyReleaseMask;
         const long buttonMasks = ButtonPressMask | ButtonReleaseMask;
         const long mouseMasks = PointerMotionMask | PointerMotionHintMask | ButtonMotionMask | Button1MotionMask | Button2MotionMask | Button3MotionMask | Button4MotionMask | Button5MotionMask;
@@ -484,25 +482,29 @@ void X11Window::update()
                 case KeyPress:
                 case KeyRelease:
                 {
+                    U32 inputAction = IA_MAKE;
                     U32 modifiers = TranslateModifiersToWindowManagerInput(&evt.xkey);
                     U8 tKey = TranslateOSKeyCode(&evt.xkey);
 
-                    if(tKey == lastTKey && lastTMods == modifiers)
-                        repeatKey = true;
-                    lastTKey = tKey;
-                    lastTMods = modifiers;
-
                     if(evt.type == KeyRelease)
-                       lastTKey = tKey;
+                    {
+                        inputAction = IA_BREAK;
+                    }
 
                     if(tKey)
-                        keyEvent.trigger(getWindowId(), modifiers, (evt.type == KeyPress) ? (repeatKey ? IA_REPEAT : IA_MAKE) : IA_BREAK, tKey);
+                    {
+                        keyEvent.trigger(getWindowId(), modifiers, inputAction, tKey);
+                        //Con::printf("Key %d : %d", tKey, inputAction);
+                    }
 
                      if(evt.type == KeyPress)
                      {
                          S16 ascii = TranslateOSString(&evt.xkey);
                          if(ascii)
+                         {
+                            //Con::printf("Char %d : %d", ascii, inputAction);
                             charEvent.trigger(getWindowId(), modifiers, ascii);
+                         }
                      }
                      break;
                 }
@@ -535,10 +537,12 @@ void X11Window::update()
                 case FocusIn:
                     appEvent.trigger(getWindowId(), GainFocus);
                     mHasFocus = true;
+                    XAutoRepeatOff(display);
                     break;
                 case FocusOut:
 			        appEvent.trigger(getWindowId(), LoseFocus);
 			        mHasFocus = false;
+			        XAutoRepeatOn(display);
                     break;
                 case KeymapNotify:
                     //Con::printf("KeymapNotify");
