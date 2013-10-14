@@ -456,6 +456,14 @@ void HexagonVolume::buildConvex(const Box3F& box, Convex* convex)
 
 bool HexagonVolume::castRay(const Point3F &start, const Point3F &end, RayInfo* info)
 {
+	if(mRebuild.state > RebuildProcess::CollisionFinish
+	|| mRebuild.state == RebuildProcess::Ready)
+		return false;
+
+	Point3F worldStart = start; Point3F worldEnd = end;
+	worldStart.convolve(mObjScale); worldEnd.convolve(mObjScale);
+	mObjToWorld.mulP(worldStart, &worldStart); mObjToWorld.mulP(worldEnd, &worldEnd);
+
    info->object = NULL;
 
    RayInfo shortest;
@@ -481,10 +489,8 @@ bool HexagonVolume::castRay(const Point3F &start, const Point3F &end, RayInfo* i
 			continue;
 
 		Point3F worldPos = mGrid->gridToWorld(mHexMap.indexToGrid(idx));
-		Point3F vec = this->getPosition() - worldPos;
-
-		Point3F s = start + vec;
-		Point3F e = end + vec;
+		Point3F s = worldStart - worldPos;
+		Point3F e = worldEnd - worldPos;
 
       for(U32 i = 0; i < shapeData->collisionDetails.size(); i++)
       {
@@ -509,6 +515,14 @@ bool HexagonVolume::castRay(const Point3F &start, const Point3F &end, RayInfo* i
 
 bool HexagonVolume::castRayRendered(const Point3F &start, const Point3F &end, RayInfo* info)
 {
+	if(mRebuild.state > RebuildProcess::CollisionFinish
+	|| mRebuild.state == RebuildProcess::Ready)
+		return false;
+
+	Point3F worldStart = start; Point3F worldEnd = end;
+	worldStart.convolve(mObjScale); worldEnd.convolve(mObjScale);
+	mObjToWorld.mulP(worldStart, &worldStart); mObjToWorld.mulP(worldEnd, &worldEnd);
+
 	RayInfo localInfo;
 
 	U32 n = mHexMap.width * mHexMap.height;
@@ -526,7 +540,11 @@ bool HexagonVolume::castRayRendered(const Point3F &start, const Point3F &end, Ra
 		if(!shapeInstance)
 			continue;
 
-      bool res = shapeInstance->castRayRendered(start, end, &localInfo, shapeInstance->getCurrentDetail());
+		Point3F worldPos = mGrid->gridToWorld(mHexMap.indexToGrid(idx));
+		Point3F s = worldStart - worldPos;
+		Point3F e = worldEnd - worldPos;
+
+      bool res = shapeInstance->castRayRendered(s, e, &localInfo, shapeInstance->getCurrentDetail());
       if(res)
       {
          *info = localInfo;
@@ -1073,8 +1091,7 @@ void HexagonVolume::rebuildMode2Start()
 void HexagonVolume::rebuildMode2CollisionStart()
 {
 	mRebuild.idx = 0;
-	//mRebuild.state = RebuildProcess::CollisionProcess;
-	mRebuild.state = RebuildProcess::CollisionFinish;
+	mRebuild.state = RebuildProcess::CollisionProcess;
 }
 
 void HexagonVolume::rebuildMode2CollisionProcess()
@@ -1255,8 +1272,6 @@ void HexagonVolume::rebuildMode2RenderProcess()
 
 void HexagonVolume::rebuildMode2RenderFinish()
 {
-	return;
-
 	if(mRebuild.mesh == NULL)
 	{
 		Con::errorf("HexagonVolume: Merging meshes failed somehow!");
