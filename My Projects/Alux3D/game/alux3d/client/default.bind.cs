@@ -26,7 +26,7 @@ function showPlayerList(%val)
       PlayerListGui.toggle();
 }
 
-moveMap.bind( keyboard, F2, showPlayerList );
+moveMap.bind( keyboard, Tab, showPlayerList );
 
 function hideHUDs(%val)
 {
@@ -464,7 +464,7 @@ moveMap.bindCmd(keyboard, "ctrl k", "commandToServer('suicide');", "");
 // Item manipulation
 //------------------------------------------------------------------------------
 
-moveMap.bindCmd(keyboard, "0", "commandToServer('action', 0);", "");
+moveMap.bindCmd(keyboard, "tab", "commandToServer('action', 0);", "");
 moveMap.bindCmd(keyboard, "1", "commandToServer('action', 1);", "");
 moveMap.bindCmd(keyboard, "2", "commandToServer('action', 2);", "");
 moveMap.bindCmd(keyboard, "3", "commandToServer('action', 3);", "");
@@ -474,8 +474,18 @@ moveMap.bindCmd(keyboard, "6", "commandToServer('action', 6);", "");
 moveMap.bindCmd(keyboard, "7", "commandToServer('action', 7);", "");
 moveMap.bindCmd(keyboard, "8", "commandToServer('action', 8);", "");
 moveMap.bindCmd(keyboard, "9", "commandToServer('action', 9);", "");
-
-moveMap.bindCmd(keyboard, "r", "commandToServer('action', 20);", "");
+moveMap.bindCmd(keyboard, "0", "commandToServer('action', 10);", "");
+moveMap.bindCmd(keyboard, "F1", "commandToServer('action', 11);", "");
+moveMap.bindCmd(keyboard, "F2", "commandToServer('action', 12);", "");
+moveMap.bindCmd(keyboard, "F3", "commandToServer('action', 13);", "");
+moveMap.bindCmd(keyboard, "F4", "commandToServer('action', 14);", "");
+moveMap.bindCmd(keyboard, "F5", "commandToServer('action', 15);", "");
+moveMap.bindCmd(keyboard, "F6", "commandToServer('action', 16);", "");
+moveMap.bindCmd(keyboard, "F7", "commandToServer('action', 17);", "");
+moveMap.bindCmd(keyboard, "F8", "commandToServer('action', 18);", "");
+moveMap.bindCmd(keyboard, "q", "commandToServer('action', 19);", "");
+moveMap.bindCmd(keyboard, "e", "commandToServer('action', 20);", "");
+moveMap.bindCmd(keyboard, "r", "commandToServer('action', 21);", "");
 
 function unmountWeapon(%val)
 {
@@ -519,8 +529,8 @@ function mouseWheelWeaponCycle(%val)
       commandToServer('cycleWeapon', "prev");
 }
 
-moveMap.bind(keyboard, q, nextWeapon);
-moveMap.bind(keyboard, "ctrl q", prevWeapon);
+//moveMap.bind(keyboard, q, nextWeapon);
+//moveMap.bind(keyboard, "ctrl q", prevWeapon);
 moveMap.bind(mouse, "zaxis", mouseWheelWeaponCycle);
 
 //------------------------------------------------------------------------------
@@ -567,28 +577,13 @@ function stopRecordingDemo( %val )
       stopDemoRecord();
 }
 
-moveMap.bind( keyboard, F3, startRecordingDemo );
-moveMap.bind( keyboard, F4, stopRecordingDemo );
+//moveMap.bind( keyboard, F3, startRecordingDemo );
+//moveMap.bind( keyboard, F4, stopRecordingDemo );
 
 
 //------------------------------------------------------------------------------
 // Helper Functions
 //------------------------------------------------------------------------------
-
-function dropCameraAtPlayer(%val)
-{
-   if (%val)
-      commandToServer('dropCameraAtPlayer');
-}
-
-function dropPlayerAtCamera(%val)
-{
-   if (%val)
-      commandToServer('DropPlayerAtCamera');
-}
-
-moveMap.bind(keyboard, "F8", dropCameraAtPlayer);
-moveMap.bind(keyboard, "F7", dropPlayerAtCamera);
 
 function bringUpOptions(%val)
 {
@@ -637,7 +632,6 @@ GlobalActionMap.bind(keyboard, "ctrl F3", doProfile);
 GlobalActionMap.bind(keyboard, "tilde", toggleConsole);
 GlobalActionMap.bindCmd(keyboard, "alt k", "cls();","");
 GlobalActionMap.bindCmd(keyboard, "alt enter", "", "Canvas.attemptFullscreenToggle();");
-GlobalActionMap.bindCmd(keyboard, "F1", "", "contextHelp();");
 moveMap.bindCmd(keyboard, "n", "toggleNetGraph();", "");
 
 // ----------------------------------------------------------------------------

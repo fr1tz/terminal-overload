@@ -1,7 +1,5 @@
-//------------------------------------------------------------------------------
-// Alux Ethernet Prototype
-// Copyright notices are in the file named COPYING.
-//------------------------------------------------------------------------------
+// Copyright information can be found in the file named COPYING
+// located in the root directory of this distribution.
 
 datablock StaticShapeData(FrmSoldierProxy : FrmCrateProxy)
 {
@@ -22,87 +20,6 @@ function FrmSoldierProxy::adjustTransform(%this, %pos, %normal, %eyeVec)
 
 //------------------------------------------------------------------------------
 
-datablock TSShapeConstructor(FrmSoldierDts)
-{
-	baseShape = "share/shapes/alux/soldier.dts";
-	sequenceBaseDir = "share/shapes/rotc/players/a/";
-
-	// movement when standing...
-	sequence0  = "tl/root.dsq root";
-	sequence1  = "nm/run.dsq run";
-	sequence2  = "nm/back.dsq back";
-	sequence3  = "nm/side.dsq side";
-
-	// movement when marching...
-	sequence4  = "tl/root.dsq rootMarching";
-	sequence5  = "nm/run.dsq runMarching";
-	sequence6  = "nm/back.dsq backMarching";
-	sequence7  = "nm/side.dsq sideMarching";
-
-	// movement when crouched...
-	sequence8  = "tl/rootcrouched.dsq UNUSED_rootCrouched";
-	sequence9  = "nm/run.dsq runCrouched";
-	sequence10  = "nm/back.dsq backCrouched";
-	sequence11  = "nm/side.dsq sideCrouched";
-
-	// movement when prone...
-	sequence12 = "fb/rootprone.dsq rootProne";
-	sequence13 = "fb/rootprone.dsq rootProne";
-	sequence14 = "fb/rootprone.dsq rootProne";
-	sequence15 = "fb/rootprone.dsq rootProne";
-
-	// arm threads...
-	sequence16 = "a/holdnoweapon.dsq look";
-	sequence17 = "a/discdeflect_left_base.dsq discdeflect_left_base";
-	sequence18 = "a/holdgun_onehand.dsq look2";
-	sequence52 = "a/holdblaster.dsq holdblaster";
-	sequence53 = "ub/aimblaster.dsq aimblaster";
-	sequence19 = "ub/holdrifle.dsq holdrifle";
-	sequence51 = "ub/aimrifle.dsq aimrifle";
-	sequence20 = "ub/holdshield.dsq holdshield";
-	sequence46 = "a/holdspear.dsq holdspear";
-	sequence47 = "a/holdaimspear.dsq holdaimspear";
-
-	// other...
-	sequence21 = "nm/diehead.dsq death1";
-	sequence22 = "nm/diechest.dsq death2";
-	sequence23 = "nm/dieback.dsq death3";
-	sequence24 = "nm/diesidelf.dsq death4";
-	sequence25 = "nm/diesidert.dsq death5";
-	sequence26 = "nm/dieleglf.dsq death6";
-	sequence27 = "nm/dielegrt.dsq death7";
-	sequence28 = "nm/dieslump.dsq death8";
-	sequence29 = "nm/dieknees.dsq death9";
-	sequence30 = "nm/dieforward.dsq death10";
-	sequence31 = "nm/diespin.dsq death11";
-
-	sequence32 = "nm/headside.dsq headside";
-	sequence33 = "nm/recoilde.dsq light_recoil";
-	sequence34 = "nm/sitting.dsq sitting";
-	sequence35 = "fb/cel_headbang.dsq celsalute";
-	sequence36 = "nm/tauntbest.dsq celwave";
-	sequence37 = "nm/standjump.dsq standjump";
-
-	sequence38 = "nm/head.dsq head";
-	sequence39 = "nm/fall.dsq fall";
-	sequence40 = "nm/land.dsq land";
-	sequence41 = "nm/jump.dsq jump";
-
-	sequence42 = "fb/cel_hail.dsq celhail";
-
-	sequence43 = "ub/throwsidearm.dsq throwSidearm";
-	sequence44 = "ub/aimarmcannon.dsq aimarmcannon";
-	sequence48 = "ub/aimspear.dsq aimSpear";
-	sequence49 = "ub/throwSpear.dsq throwSpear";
-	sequence50 = "ub/discdeflect_left_anim.dsq discdeflect_left_anim";
-	sequence54 = "ub/throwinterceptor.dsq throwInterceptor";
-
-	sequence45 = "fb/flyer.dsq flyer";
-
-	sequence55  = "b/slide.dsq slide";
-	sequence56 = "nm/scoutroot.dsq scoutroot";
-};
-
 datablock PlayerData(FrmSoldier)
 {
    proxy = FrmSoldierProxy; // script field
@@ -112,244 +29,228 @@ datablock PlayerData(FrmSoldier)
 
    allowColorization = true;
 
-	className = StandardCat;
-	
-	firstPersonOnly = false;
-	
-	targetLockTimeMS = 200;
-	
-	//hudImageNameFriendly = "~/client/ui/hud/pixmaps/black.png";
-	//hudImageNameEnemy = "~/client/ui/hud/pixmaps/black.png";
+   renderFirstPerson = false;
 
-	useEyePoint = true;
-	renderFirstPerson = true;
-	emap = true;
+   computeCRC = false;
 
-   eyeOffset = "0 -0.2 -0.02";
-   cameraDefaultFov = 110.0;
-	cameraMinFov	  = 10.0;
-	cameraMaxFov	  = 130.0;
-	cameraMinDist = 1;
-	cameraMaxDist = 5;
+   // Third person shape
+   shapeFile = "art/shapes/actors/Soldier/soldier_rigged.DAE";
+   cameraMaxDist = 3;
+   allowImageStateAnimation = true;
 
-	shapeFile = "share/shapes/alux/soldier.dts";
- 
-	//cloakTexture = "share/shapes/rotc/effects/explosion_white.png";
-	shapeFxTexture[0] = "share/textures/alux/light.png";
-	shapeFxTexture[1] = "share/textures/alux/grid1.png";
-	shapeFxTexture[2] = "share/textures/alux/grid2.png";
-	shapeFxTexture[3] = "share/shapes/alux/light.png";
-	shapeFxTexture[4] = "share/textures/alux/blocked.png";
-	shapeFxColor[0] = "1.0 1.0 1.0 1.0";  
+   // First person arms
+   imageAnimPrefixFP = "soldier";
+   //shapeNameFP[0] = "art/shapes/actors/Soldier/FP/FP_SoldierArms.DAE";
 
-	computeCRC = true;
+   canObserve = 1;
+   cmdCategory = "Clients";
 
-	canObserve = true;
-	cmdCategory = "Clients";
+   cameraDefaultFov = "80";
+   cameraMinFov = "80";
+   cameraMaxFov = "180";
 
-	renderWhenDestroyed = false;
-	//debrisShapeName = "share/shapes/rotc/players/standardcat/debris.red.dts";
-	//debris = StandardCatDebris;
+   debrisShapeName = "art/shapes/actors/common/debris_player.dts";
+   debris = PlayerDebris;
 
-	aiAvoidThis = true;
+   throwForce = 30;
 
-	minLookAngle = -1.5;
-	maxLookAngle = 1.5;
-	minLookAngleMarching = -1.5;
-	maxLookAngleMarching = 1.5;
-	minLookAngleCrouched = -1.5;
-	maxLookAngleCrouched = 1.5;
-	minLookAngleProne = -0.8;
-	maxLookAngleProne = 0.8;
+   minLookAngle = "-1.4";
+   maxLookAngle = "0.9";
+   maxFreelookAngle = 3.0;
 
-	maxFreelookAngle = 3.0;
+   mass = 120;
+   drag = 1.3;
+   maxdrag = 0.4;
+   density = 1.1;
+   maxDamage = 100;
+   maxEnergy =  60;
+   repairRate = 0.33;
+   energyPerDamagePoint = 75;
 
-	mass = 90;
-	drag = 0.0;
-	density = 10;
-	gravityMod = 1.0;
+   rechargeRate = 0.256;
 
-	maxDamage = 100;
-	damageBuffer = 0;
-	maxEnergy = 800;
+   runForce = 4320;
+   runEnergyDrain = 0;
+   minRunEnergy = 0;
+   maxForwardSpeed = 8;
+   maxBackwardSpeed = 6;
+   maxSideSpeed = 6;
 
-	repairRate = 0.8;
-	damageBufferRechargeRate = 0.0;
-	damageBufferDischargeRate = 0.0;
-	energyRechargeRate = 0.0;
+   sprintForce = 4320;
+   sprintEnergyDrain = 0;
+   minSprintEnergy = 0;
+   maxSprintForwardSpeed = 14;
+   maxSprintBackwardSpeed = 8;
+   maxSprintSideSpeed = 6;
+   sprintStrafeScale = 0.25;
+   sprintYawScale = "0.4";
+   sprintPitchScale = "1";
+   sprintCanJump = true;
 
-	skidSpeed = 20;
-	skidFactor = 4.0;
+   crouchForce = 405;
+   maxCrouchForwardSpeed = 4.0;
+   maxCrouchBackwardSpeed = 2.0;
+   maxCrouchSideSpeed = 2.0;
 
-	flyForce = 0;
+   maxUnderwaterForwardSpeed = 8.4;
+   maxUnderwaterBackwardSpeed = 7.8;
+   maxUnderwaterSideSpeed = 4.0;
 
-	runForce = 50 * 90; // formerly 48 * 90
-	runEnergyDrain = 0;
-	minRunEnergy = 0;
-	
-	slideForce = 20 * 90;
-	slideEnergyDrain = 0;
-	minSlideEnergy = 0;
+   jumpForce = "747";
+   jumpEnergyDrain = 0;
+   minJumpEnergy = 0;
+   jumpDelay = "15";
+   airControl = 0.3;
 
-	maxForwardSpeed = 10;
-	maxBackwardSpeed = 8;
-	maxSideSpeed = 8;
-	maxForwardSpeedSliding = 30;
-	maxBackwardSpeedSliding = 25;
-	maxSideSpeedSliding = 12;
-	maxForwardSpeedMarching = 8;
-	maxBackwardSpeedMarching = 8;
-	maxSideSpeedMarching = 8;
-	maxForwardSpeedCrouched = 10;
-	maxBackwardSpeedCrouched = 8;
-	maxSideSpeedCrouched = 8;
-//	maxForwardSpeedProne = 3; NOT USED
-//	maxBackwardSpeedProne = 3; NOT USED
-//	maxSideSpeedProne = 2; NOT USED
+   fallingSpeedThreshold = -6.0;
 
-	maxUnderwaterForwardSpeed = 8.4;
-	maxUnderwaterBackwardSpeed = 7.8;
-	maxUnderwaterSideSpeed = 7.8;
-	// [todo: insert values for other body poses here?]
+   landSequenceTime = 0.33;
+   transitionToLand = false;
+   recoverDelay = 0;
+   recoverRunForceScale = 0;
 
-	jumpForce = 8 * 90;  // 12 * 90
-	jumpEnergyDrain = 0;
-   reJumpForce = 10 * 90; // script field
-   reJumpEnergyDrain = 20; // script field
-	minJumpEnergy = 0;
-	jumpDelay = 0;
-	
-	recoverDelay = 9;
-	recoverRunForceScale = 1.2;
+   minImpactSpeed = 10;
+   minLateralImpactSpeed = 20;
+   speedDamageScale = 0.4;
 
-	minImpactSpeed = 16; //
-	speedDamageScale = 10.0; // dynamic field: impact damage multiplier
+   boundingBox = "0.65 0.75 1.85";
+   crouchBoundingBox = "0.65 0.75 1.3";
+   swimBoundingBox = "1 2 2";
+   pickupRadius = 1;
 
-	boundingBox = "1.2 1.1 2.7";
-	pickupRadius = 0.75;
+   // Damage location details
+   boxHeadPercentage       = 0.83;
+   boxTorsoPercentage      = 0.49;
+   boxHeadLeftPercentage         = 0.30;
+   boxHeadRightPercentage        = 0.60;
+   boxHeadBackPercentage         = 0.30;
+   boxHeadFrontPercentage        = 0.60;
 
-	// Controls over slope of runnable/jumpable surfaces
-	maxStepHeight = 1.0;
-	maxStepHeightMarching = 1.0;
-	maxStepHeightCrouched = 1.0;
-	maxStepHeightProne = 0.2;
-	runSurfaceAngle  = 35;
-	runSurfaceAngleMarching  = 35;
-	runSurfaceAngleCrouched  = 35;
-	runSurfaceAngleProne  = 35;
+   // Foot Prints
+   decalOffset = 0.25;
 
-	jumpSurfaceAngle = 30;
+   footPuffEmitter = "LightPuffEmitter";
+   footPuffNumParts = 10;
+   footPuffRadius = "0.25";
 
-	minJumpSpeed = 20;
-	maxJumpSpeed = 30;
+   dustEmitter = "LightPuffEmitter";
 
-	horizMaxSpeed = 200;
-	horizResistSpeed = 30;
-	horizResistFactor = 0.35;
+   splash = PlayerSplash;
+   splashVelocity = 4.0;
+   splashAngle = 67.0;
+   splashFreqMod = 300.0;
+   splashVelEpsilon = 0.60;
+   bubbleEmitTime = 0.4;
+   splashEmitter[0] = PlayerWakeEmitter;
+   splashEmitter[1] = PlayerFoamEmitter;
+   splashEmitter[2] = PlayerBubbleEmitter;
+   mediumSplashSoundVelocity = 10.0;
+   hardSplashSoundVelocity = 20.0;
+   exitSplashSoundVelocity = 5.0;
 
-	upMaxSpeed = 65;
-	upResistSpeed = 25;
-	upResistFactor = 0.3;
+   // Controls over slope of runnable/jumpable surfaces
+   runSurfaceAngle  = "25";
+   jumpSurfaceAngle = 80;
+   maxStepHeight = 0.35;  //two meters
+   minJumpSpeed = 20;
+   maxJumpSpeed = 30;
 
-	footstepSplashHeight = 0.35;
+   horizMaxSpeed = 68;
+   horizResistSpeed = 33;
+   horizResistFactor = 0.35;
 
-	// Damage location details
-	boxNormalHeadPercentage		 = 0.83;
-	boxNormalTorsoPercentage		= 0.49;
-	boxHeadLeftPercentage			= 0;
-	boxHeadRightPercentage		  = 1;
-	boxHeadBackPercentage			= 0;
-	boxHeadFrontPercentage		  = 1;
+   upMaxSpeed = 80;
+   upResistSpeed = 25;
+   upResistFactor = 0.3;
 
-	// footprints
-	decalData	= FrmSoldierFootprint;
-	decalOffset = 0.25;
+   footstepSplashHeight = 0.35;
 
-	// foot puffs
-	footPuffEmitter = FrmSoldierFootPuffEmitter;
-	footPuffNumParts = 10;
-	footPuffRadius = 0.5;
-	
-	// ground connection beam
-	groundConnectionBeam = FrmSoldierGroundConnectionBeam;
+   //NOTE:  some sounds commented out until wav's are available
 
-   numShapeTrails = 0;
+   // Footstep Sounds
+   FootSoftSound        = FootLightSoftSound;
+   FootHardSound        = FootLightHardSound;
+   FootMetalSound       = FootLightMetalSound;
+   FootSnowSound        = FootLightSnowSound;
+   FootShallowSound     = FootLightShallowSplashSound;
+   FootWadingSound      = FootLightWadingSound;
+   FootUnderwaterSound  = FootLightUnderwaterSound;
 
-	// slide emitters
-	//slideContactParticleFootEmitter = RedSlideEmitter;
-	slideContactParticleTrailEmitter[0] = CatSlideContactTrailEmitter;
-	//slideParticleFootEmitter = RedCatSlideFootEmitter;
-	//slideParticleTrailEmitter[0] = BlueSlideEmitter;
-	skidParticleFootEmitter = CatSkidFootEmitter;
-	skidParticleTrailEmitter[0] = CatSkidTrailEmitter0;
-	skidParticleTrailEmitter[1] = CatSkidTrailEmitter1;
-	
-	// damage info eyecandy...
-	//damageBufferParticleEmitter = RedCatDamageBufferEmitter;
-	//repairParticleEmitter = RedCatRepairEmitter;
-	//bufferRepairParticleEmitter = RedCatBufferRepairEmitter;
-	damageParticleEmitter = FrmCrate_DamageEmitter;
-	//bufferDamageParticleEmitter = RedCatBufferDamageEmitter;
-	//damageDebris = RedCatDamageDebris;
-	//bufferDamageDebris = CatBufferDamageDebris;
+   //FootBubblesSound     = FootLightBubblesSound;
+   //movingBubblesSound   = ArmorMoveBubblesSound;
+   //waterBreathSound     = WaterBreathMaleSound;
 
-	// not implemented in engine...
-	// dustEmitter = StandardCatLiftoffDustEmitter;
+   //impactSoftSound      = ImpactLightSoftSound;
+   //impactHardSound      = ImpactLightHardSound;
+   //impactMetalSound     = ImpactLightMetalSound;
+   //impactSnowSound      = ImpactLightSnowSound;
 
-	splash = StandardCatSplash;
-	splashVelocity = 4.0;
-	splashAngle = 67.0;
-	splashFreqMod = 300.0;
-	splashVelEpsilon = 0.60;
-	bubbleEmitTime = 0.4;
-	splashEmitter[0] = StandardCatFoamDropletsEmitter;
-	splashEmitter[1] = StandardCatFoamEmitter;
-	splashEmitter[2] = StandardCatBubbleEmitter;
-	mediumSplashSoundVelocity = 10.0;
-	hardSplashSoundVelocity = 20.0;
-	exitSplashSoundVelocity = 5.0;
+   //impactWaterEasy      = ImpactLightWaterEasySound;
+   //impactWaterMedium    = ImpactLightWaterMediumSound;
+   //impactWaterHard      = ImpactLightWaterHardSound;
 
-	//NOTE:  some sounds commented out until wav's are available
+   groundImpactMinSpeed    = "45";
+   groundImpactShakeFreq   = "4.0 4.0 4.0";
+   groundImpactShakeAmp    = "1.0 1.0 1.0";
+   groundImpactShakeDuration = 0.8;
+   groundImpactShakeFalloff = 10.0;
 
-	// Footstep Sounds
-	LeftFootSoftSound		= FrmSoldierLeftFootSoftSound;
-	LeftFootHardSound		= FrmSoldierLeftFootHardSound;
-	LeftFootMetalSound	  = FrmSoldierLeftFootMetalSound;
-	LeftFootSnowSound		= FrmSoldierLeftFootSnowSound;
-	LeftFootShallowSound	= FrmSoldierLeftFootShallowSplashSound;
-	LeftFootWadingSound	 = FrmSoldierLeftFootWadingSound;
-	RightFootSoftSound	  = FrmSoldierRightFootSoftSound;
-	RightFootHardSound	  = FrmSoldierRightFootHardSound;
-	RightFootMetalSound	 = FrmSoldierRightFootMetalSound;
-	RightFootSnowSound	  = FrmSoldierRightFootSnowSound;
-	RightFootShallowSound  = FrmSoldierRightFootShallowSplashSound;
-	RightFootWadingSound	= FrmSoldierRightFootWadingSound;
-	FootUnderwaterSound	 = FrmSoldierFootUnderwaterSound;
-	//FootBubblesSound	  = FootBubblesSound;
-	//movingBubblesSound	= ArmorMoveBubblesSound;
-	//waterBreathSound	  = WaterBreathMaleSound;
+   //exitingWater         = ExitingWaterLightSound;
 
-	impactSoftSound		= FrmSoldierImpactSoftSound;
-	impactHardSound		= FrmSoldierImpactHardSound;
-	impactMetalSound	  = FrmSoldierImpactMetalSound;
-	impactSnowSound		= FrmSoldierImpactSnowSound;
+   observeParameters = "0.5 4.5 4.5";
 
-	//impactWaterEasy		= ImpactLightWaterEasySound;
-	//impactWaterMedium	 = ImpactLightWaterMediumSound;
-	//impactWaterHard		= ImpactLightWaterHardSound;
+   cameraMinDist = "0";
+   DecalData = "PlayerFootprint";
 
-	groundImpactMinSpeed	 = 10.0;
-	groundImpactShakeFreq	= "4.0 4.0 4.0";
-	groundImpactShakeAmp	 = "1.0 1.0 1.0";
-	groundImpactShakeDuration = 0.8;
-	groundImpactShakeFalloff = 10.0;
+   // Allowable Inventory Items
+   mainWeapon = WpnRaptor;
 
-	//exitingWater			= ExitingWaterLightSound;
-	slideSound = PlayerSlideSound;
-	slideContactSound = PlayerSlideContactSound;
-	skidSound = PlayerSkidSound;
+   maxInv[Lurker] = 1;
+   maxInv[LurkerClip] = 20;
 
-	observeParameters = "0.5 4.5 4.5";
+   maxInv[LurkerGrenadeLauncher] = 1;
+   maxInv[LurkerGrenadeAmmo] = 20;
+
+   maxInv[Ryder] = 1;
+   maxInv[RyderClip] = 10;
+
+   maxInv[ProxMine] = 5;
+
+   maxInv[DeployableTurret] = 5;
+
+   maxInv[WpnBadger] = 1;
+   maxInv[WpnBadgerClip] = 8;
+
+   maxInv[WpnRaptor] = 1;
+   maxInv[WpnRaptorAmmo] = 120;
+
+   maxInv[WpnBulldog] = 1;
+   maxInv[WpnBulldogAmmo] = 4;
+
+   maxInv[WpnSiberion] = 1;
+   maxInv[WpnSiberionAmmo] = 120;
+
+   maxInv[WpnPineapple] = 9999;
+
+   // available skins (see materials.cs in model folder)
+   availableSkins =  "base	DarkBlue	DarkGreen	LightGreen	Orange	Red	Teal	Violet	Yellow";
+   useEyePoint = "0";
+   maxInvLurkerGrenadeLauncher = "1";
+   maxInvRyderClip = "10";
+   maxInvWpnRaptorClip = "4";
+   maxInvWpnBadger = "1";
+   maxInvLurker = "1";
+   maxInvProxMine = "5";
+   maxInvLurkerGrenadeAmmo = "20";
+   maxInvWpnBadgerClip = "8";
+   maxInvWpnBulldog = "1";
+   maxInvLurkerClip = "20";
+   maxInvDeployableTurret = "5";
+   maxInvWpnRaptor = "1";
+   maxInvRyder = "1";
+   maxInvWpnBulldogClip = "4";
+   maxInvWpnRaptorAmmo = "120";
+   maxInvWpnBulldogAmmo = "4";
 };
 
 // *** callback function: called by engine
@@ -360,6 +261,27 @@ function FrmSoldier::onAdd(%this, %obj)
    
 	%obj.isCAT = true;
 	%obj.getTeamObject().numCATs++;
+ 
+   %obj.clearWeaponCycle();
+   %obj.addToWeaponCycle(WpnRaptor);
+   %obj.addToWeaponCycle(WpnBulldog);
+
+   %obj.setInventory(WpnRaptor, 1);
+   %obj.setInventory(WpnRaptorAmmo, 60);
+   %obj.magazine[WpnRaptorImage.getId()] = WpnRaptorImage.magazineCapacity;
+
+   %obj.setInventory(WpnSiberion, 1);
+   %obj.setInventory(WpnSiberionAmmo, 120);
+   %obj.magazine[WpnSiberionImage.getId()] = WpnSiberionImage.magazineCapacity;
+
+   %obj.setInventory(WpnBulldog, 1);
+
+   %obj.setInventory(WpnPineapple, 9999);
+
+   if (%obj.getDatablock().mainWeapon.image !$= "")
+      %obj.mountImage(%obj.getDatablock().mainWeapon.image, 0);
+   else
+      %obj.mountImage(WpnBadgerImage, 0);
 
    return;
 
@@ -459,9 +381,43 @@ function FrmSoldier::onUnmount(%this, %obj, %vehicle, %node)
       %obj.useWeapon(1);
 }
 
+// Called by script
+function FrmSoldier::clientAction(%this, %obj, %nr)
+{
+   Parent::clientAction(%this, %obj, %nr);
+
+   if(%nr == 1)
+      %obj.use(WpnBadger);
+   else if(%nr == 2)
+      %obj.use(WpnRaptor);
+   else if(%nr == 3)
+      %obj.use(WpnBulldog);
+   else if(%nr == 4)
+      %obj.use(WpnSiberion);
+   else if(%nr == 5)
+      %obj.use(WpnPineapple);
+   else if(%nr == 21)
+      %obj.reloadWeapon();
+}
+
 function FrmSoldier::canMaterialize(%this, %client, %pos, %normal, %transform)
 {
-	%ownTeamId = %client.player.getTeamId();
+	%ownTeamId = %client.team.teamId;
+ 
+ 	InitContainerRadiusSearch(%pos, 0.1, $TypeMasks::StaticObjectType);
+	while((%srchObj = containerSearchNext()) != 0)
+	{
+      if(!%srchObj.isMethod("getDataBlock"))
+         continue;
+
+      if(%srchObj.getDataBlock().getId() == MetaSoilTile.getId())
+      {
+         if(%srchObj.teamId == %ownTeamId)
+            return "";
+      }
+	}
+ 
+   return "No friendly soil found";
 
 	%inOwnZone = false;
 	%inOwnTerritory = false;
@@ -562,71 +518,6 @@ function FrmSoldier::dematerializeFinish(%this, %obj)
    FrmCrate::dematerializeFinish(%this, %obj);
 }
 
-function FrmSoldier::reloadStart(%this, %obj)
-{
-   if(%obj.getEnergyLevel() == %this.maxEnergy)
-      return;
-
-   if(%obj.reloadingThread !$= "")
-      return;
-      
-   %state = %obj.getImageState(0);
-   if(!(%state $= "Ready" || %state $= "NoAmmo" || %state $= "KeepAiming"))
-      return;
-
-   %image = %obj.getMountedImage(0);
-   %reloadTime = %image.reloadTime;
-   %reloadAmount = %image.reloadAmount;
-   if(%reloadAmount $= "")
-      %reloadAmount = %this.maxEnergy;
-   %newEnergyLevel = %obj.getEnergyLevel() + %reloadAmount;
-
-   %obj.isReloading = true;
-   %obj.reloadingImage = %image;
-   %obj.reloadingNewEnergyLevel = %newEnergyLevel;
-   %obj.reloadingThread = %obj.schedule(%reloadTime, "reloadFinish");
-
-	%obj.playAudio(0, WeaponSwitchSound);
-   %obj.unmountImage(0);
-   %obj.setArmThread("look");
-   %obj.setEnergyLevel(0);
-	%obj.setEnergyRechargeRate(%this.maxEnergy/(%reloadTime/32));
-
-   commandToClient(%obj.client, 'Hud', "energy", true,
-      "game/client/ui/hud/pixmaps/energy_meter.png");
-
-   commandToClient(%obj.client, 'Crosshair', 0);
-   //commandToClient(%obj.client, 'Crosshair', 3, 1, 10);
-   //commandToClient(%obj.client, 'Crosshair', 1);
-}
-
-function FrmSoldier::reloadFinish(%this, %obj)
-{
-   if(%obj.reloadingThread !$= "")
-      cancel(%obj.reloadingThread);
-      
-   %image = %obj.reloadingImage;
-   %ammoType = %image.ammoType;
-   if(%ammoType $= "")
-      %ammoType = 0;
-   
-   %obj.ammo[%ammoType] = %obj.reloadingNewEnergyLevel;
-   %obj.mountImage(%image, 0, -1, true);
-
-   %this.reloadStop(%obj);
-}
-
-function FrmSoldier::reloadStop(%this, %obj)
-{
-   if(%obj.reloadingThread !$= "")
-      cancel(%obj.reloadingThread);
-      
-   %obj.isReloading = false;
-   %obj.reloadingImage = "";
-   %obj.reloadingNewEnergyLevel = "";
-   %obj.reloadingThread = "";
-}
-
 function FrmSoldier::special(%this, %obj, %nr)
 {
    return; // mounting & unmounting hoverpods is now done by jumping
@@ -681,7 +572,7 @@ function FrmSoldier::special(%this, %obj, %nr)
 }
 
 // Called from script
-function FrmSoldier::onAluxEnter(%this, %obj)
+function FrmSoldier::onLightEnter(%this, %obj)
 {
 	%vehicle = %obj.getObjectMount();
    if(isObject(%vehicle))
@@ -691,7 +582,7 @@ function FrmSoldier::onAluxEnter(%this, %obj)
 }
 
 // Called from script
-function FrmSoldier::onAluxLeft(%this, %obj)
+function FrmSoldier::onLightLeft(%this, %obj)
 {
 	%vehicle = %obj.getObjectMount();
    if(isObject(%vehicle))

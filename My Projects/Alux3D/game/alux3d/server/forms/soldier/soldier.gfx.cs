@@ -1,7 +1,5 @@
-//------------------------------------------------------------------------------
-// Alux Ethernet Prototype
-// Copyright notices are in the file named COPYING.
-//------------------------------------------------------------------------------
+// Copyright information can be found in the file named COPYING
+// located in the root directory of this distribution.
 
 //----------------------------------------------------------------------------
 // Foot prints
@@ -11,7 +9,7 @@ datablock DecalData(FrmSoldierFootprint)
 {
 	sizeX = "0.18";
 	sizeY = "0.27";
-	textureName = "share/textures/inf/footprint";
+	textureName = "content/rotc/p.5.3/textures/inf/footprint";
 	SelfIlluminated = false;
 };
 
@@ -229,7 +227,7 @@ datablock ParticleEmitterData(FrmSoldierSpawnExplosion_SparksEmitter)
 datablock DebrisData(FrmSoldierSpawnExplosion_SmallDebris)
 {
 	// shape...
-	shapeFile = "share/shapes/rotc/misc/debris1.white.dts";
+	shapeFile = "content/rotc/p.5.3/shapes/rotc/misc/debris1.white.dts";
 
 	// bounce...
 	staticOnMaxBounce = true;
@@ -262,7 +260,7 @@ datablock MultiNodeLaserBeamData(FrmSoldierSpawnExplosion_LargeDebris_LaserTrail
 	outerColor = "1.00 1.00 1.00 0.2";
 	outerWidth = "0.40";
 
-//	bitmap = "share/shapes/rotc/weapons/missilelauncher/explosion.trail";
+//	bitmap = "content/rotc/p.5.3/shapes/rotc/weapons/missilelauncher/explosion.trail";
 //	bitmapWidth = 0.25;
 
 	blendMode = 1;
@@ -367,7 +365,7 @@ datablock ExplosionData(FrmSoldierSpawnExplosion_LargeDebris_Explosion)
 datablock DebrisData(FrmSoldierSpawnExplosion_LargeDebris)
 {
 	// shape...
-	shapeFile = "share/shapes/rotc/misc/debris2.white.dts";
+	shapeFile = "content/rotc/p.5.3/shapes/rotc/misc/debris2.white.dts";
 
 	explosion = FrmSoldierSpawnExplosion_LargeDebris_Explosion;
 

@@ -144,6 +144,8 @@ function FrmLight::onAdd(%this, %obj)
 {
 	Parent::onAdd(%this,%obj);
  
+   %obj.mode = "posess";
+ 
    // Setup view & hearing
    %obj.fovDelta = 0;
    %obj.viewIrisSizeX = 8;
@@ -213,6 +215,16 @@ function FrmLight::onRemove(%this, %obj)
 // *** Callback function: called by engine
 function FrmLight::onTrigger(%this, %obj, %triggerNum, %val)
 {
+   if(%val || %triggerNum > 0)
+      return;
+      
+   error(%obj.mode);
+   
+   if(%obj.mode $= "posess")
+      %this.posess(%obj);
+   else if(%obj.mode $= "transform")
+      %this.materializeFDV(%obj);
+
    return;
 
 	if(%triggerNum == 0 && %val)
@@ -323,20 +335,71 @@ function FrmLight::impulse(%this, %obj, %position, %impulseVec, %src)
    return; // ignore impulses
 }
 
-function FrmLight::useWeapon(%this, %obj, %nr)
+// Called by script
+function FrmLight::clientAction(%this, %obj, %nr)
 {
-	%client = %obj.client.changeInventory(%nr);
+   if(%nr < 10)
+   {
+      %obj.mode = "build";
+      %obj.client.selectLoadout(%nr);
+   }
+   else if(%nr < 18)
+   {
+      %obj.mode = "transform";
+      %obj.client.selectLoadout(%nr-10+51);
+   }
+   else if(%nr == 19)
+   {
+      %obj.mode = "posess";
+   }
 }
 
-function FrmLight::special(%this, %obj, %nr)
+// Called by script
+function FrmLight::posess(%this, %obj)
 {
-   if(%nr < 51 || %nr > 56)
-      return;
-
    %client = %obj.client;
 
-   %pieces = sLoadoutcode2Pieces(%client.loadoutCode[%nr]);
-   for(%f = 0; %f < getFieldCount(%pieces); %f++)
+   %eyeVec = %obj.getEyeVector();
+   %startPos = %obj.getEyePoint();
+   %endPos = VectorAdd(%startPos, VectorScale(%eyeVec, 2));
+
+   %target = ContainerRayCast(%startPos, %endPos, $TypeMasks::ShapeBaseObjectType);
+   
+   if(!isObject(%target))
+      return;
+   if(%target.getTeamId() != %obj.getTeamId())
+      return;
+   if(isObject(%target.getControllingClient()))
+      return;
+   if(!isObject(%target.getDataBlock()))
+      return;
+   if(!%target.getDataBlock().isMethod("dematerialize"))
+      return;
+      
+   if(isObject(%client.proxy))
+   {
+  //%this.proxy.delete();
+      %client.proxy.removeClientFromGhostingList(%client);
+      %client.proxy.setTransform("0 0 0");
+      %client.pointer.removeClientFromGhostingList(%client);
+      %client.pointer.setTransform("0 0 0");
+      %client.pointer.getHudInfo().setActive(false);
+   }
+   %client.player = %target;
+   %client.control(%target);
+   if(%target.getDataBlock().isMethod("onLightEnter"))
+      %target.getDataBlock().onLightEnter(%target);
+   %obj.schedule(0, "delete");
+}
+
+// Called by script
+function FrmLight::materializeFDV(%this, %obj)
+{
+   %client = %obj.client;
+
+   %pieces = sLoadoutcode2Pieces(%client.activeLoadout);
+   //for(%f = 0; %f < getFieldCount(%pieces); %f++)
+   if(false)
    {
       %field = getField(%pieces, %f);
       %piece = getWord(%field, 0);
@@ -355,12 +418,12 @@ function FrmLight::special(%this, %obj, %nr)
 	%player = FrmSoldierpod.materialize(%client);
    %player.setLoadoutCode(%client.loadoutCode[%nr]);
    %player.setTransform(%obj.getTransform());
-
+   
    createExplosion(FrmCrateDematerializeExplosion, %player.getPosition(), "0 0 1");
 
    %client.control(%player);
    %client.player = %player;
-   %obj.delete();
+   %obj.schedule(0, "delete");
 
    %client.inventoryMode = "";
    %client.displayInventory();

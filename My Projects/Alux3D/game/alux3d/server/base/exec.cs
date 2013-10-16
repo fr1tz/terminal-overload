@@ -8,6 +8,7 @@ function executeBaseServerScripts()
    exec("./gameCore.cs");
    exec("./game.cs");
    exec("./misc.cs");
+   exec("./player.cs");
 }
 
 executeBaseServerScripts();

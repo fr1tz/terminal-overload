@@ -188,8 +188,7 @@ function FrmSoldierpod::onImpact(%this, %obj, %col, %vec, %vecLen)
    %start = %pos;
    %end = VectorAdd(%pos, "0 0 -10");
 
-   %c = containerRayCast(%start, %end, $TypeMasks::TerrainObjectType |
-         $TypeMasks::InteriorObjectType, %obj);
+   %c = containerRayCast(%start, %end, $TypeMasks::StaticObjectType, %obj);
 
    %x = getWord(%c,1); 
    %y = getWord(%c,2);
@@ -217,7 +216,7 @@ function FrmSoldierpod::onImpact(%this, %obj, %col, %vec, %vecLen)
 
    createExplosion(FrmSoldierSpawnExplosion, %player.getPosition(), "0 0 1");
 
-   if(%obj == %client.player)
+   if(true || %obj == %client.player)
    {
       %client.control(%player);
       %client.player = %player;
@@ -308,10 +307,10 @@ function FrmSoldierpod::damage(%this, %obj, %sourceObject, %position, %damage, %
 // Called from script
 function FrmSoldierpod::explode(%this, %obj)
 {
-   %obj.client.onFormDestroyed(%obj);
    %pos = %obj.getPosition();
    createExplosion(FrmSoldierpodExplosion, %pos, "0 0 1");
    %obj.schedule(0, "delete");
+   %obj.client.onDeath(0, 0, 0, 0);
 }
 
 // Called from script

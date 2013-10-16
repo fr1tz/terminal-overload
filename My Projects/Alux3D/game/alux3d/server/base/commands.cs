@@ -3,18 +3,7 @@
 
 function serverCmdAction(%client, %nr)
 {
-   %obj = %client.getControlObject();
-   if(%nr == 1)
-      %obj.use(WpnBadger);
-   else if(%nr == 2)
-      %obj.use(WpnRaptor);
-   else if(%nr == 3)
-      %obj.use(WpnBulldog);
-   else if(%nr == 4)
-      %obj.use(WpnSiberion);
-   else if(%nr == 5)
-      %obj.use(WpnPineapple);
-   else if(%nr == 20)
-      %obj.reloadWeapon();
+   echo("serverCmdAction(): client" SPC %client SPC "action" SPC %nr);
+   Game.clientAction(%client, %nr);
 }
 
