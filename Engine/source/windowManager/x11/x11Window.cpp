@@ -420,7 +420,6 @@ void X11Window::cleanup()
     if( mWindowID != 0 )
     {
         Display* display = x86UNIXState->getDisplayPointer();
-        XAutoRepeatOn(display);
         XDestroyWindow(display, mWindowID);
         mWindowID = 0;
     }
@@ -458,6 +457,41 @@ S32 TranslateOSKeyCode(XKeyEvent* evt);
 S16 TranslateOSString(XKeyEvent* evt);
 U32 TranslateModifiersToWindowManagerInput(XKeyEvent* evt);
 
+
+
+struct KeyRepeatCheckData
+{
+    XEvent *event;
+    bool found;
+};
+
+static Bool X11_KeyRepeatCheckIfEvent(Display *display, XEvent *chkev,
+    XPointer arg)
+{
+    struct KeyRepeatCheckData *d = (struct KeyRepeatCheckData *) arg;
+    if (chkev->type == KeyPress &&
+        chkev->xkey.keycode == d->event->xkey.keycode &&
+        chkev->xkey.time - d->event->xkey.time < 2)
+        d->found = true;
+    return false;
+}
+
+//From SDL2, thx :D
+/* Check to see if this is a repeated key.
+   (idea shamelessly lifted from GII -- thanks guys! :)
+ */
+static bool X11_KeyRepeat(Display *display, XEvent *event)
+{
+    XEvent dummyev;
+    struct KeyRepeatCheckData d;
+    d.event = event;
+    d.found = false;
+    if (XPending(display))
+        XCheckIfEvent(display, &dummyev, X11_KeyRepeatCheckIfEvent,
+            (XPointer) &d);
+    return d.found;
+}
+
 void X11Window::update()
 {
     if(x86UNIXState->isXWindowsRunning())
@@ -489,6 +523,9 @@ void X11Window::update()
                     if(evt.type == KeyRelease)
                     {
                         inputAction = IA_BREAK;
+
+                        if(X11_KeyRepeat(display, &evt))
+                            inputAction = IA_REPEAT;
                     }
 
                     if(tKey)
@@ -537,12 +574,10 @@ void X11Window::update()
                 case FocusIn:
                     appEvent.trigger(getWindowId(), GainFocus);
                     mHasFocus = true;
-                    XAutoRepeatOff(display);
                     break;
                 case FocusOut:
 			        appEvent.trigger(getWindowId(), LoseFocus);
 			        mHasFocus = false;
-			        XAutoRepeatOn(display);
                     break;
                 case KeymapNotify:
                     //Con::printf("KeymapNotify");
