@@ -154,3 +154,18 @@ void Processor::init()
 
    PlatformBlitInit();
 }
+
+#include "platform/platformCPUCount.h"
+#include <unistd.h>
+
+// TODO LINUX CPUInfo::CPUCount better support
+namespace CPUInfo
+{
+    EConfig CPUCount(U32& TotAvailLogical, U32& TotAvailCore, U32& PhysicalNum)
+    {
+        PhysicalNum = TotAvailCore = 0;
+        TotAvailLogical = (int)sysconf(_SC_NPROCESSORS_ONLN);
+
+       return CONFIG_SingleCoreHTDisabled;
+    }
+}; // namespace CPUInfo
