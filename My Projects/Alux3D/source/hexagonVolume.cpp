@@ -277,11 +277,17 @@ void HexagonVolumeHexConvex::getPolyList(AbstractPolyList* list)
 	if(!shapeData)
 		return;
 
-	MatrixF mat(true);
-	mat.setPosition(pHexagonVolume->mGrid->gridToWorld(pHexagonVolume->mHexMap.indexToGrid(idx)));
-	list->setTransform(&mat, Point3F(1,1,1));
-   list->setObject(pHexagonVolume);
-   shapeInstance->buildPolyList(list, shapeData->collisionDetails[hullId]);
+	for(U32 i = 0; i < hex.amount; i++)
+	{
+		Point3I gridPos = pHexagonVolume->mHexMap.indexToGrid(idx); gridPos.z += i;
+		Point3F worldPos = pHexagonVolume->mGrid->gridToWorld(gridPos);
+
+		MatrixF mat(true);
+		mat.setPosition(worldPos);
+		list->setTransform(&mat, Point3F(1,1,1));
+		list->setObject(pHexagonVolume);
+		shapeInstance->buildPolyList(list, shapeData->collisionDetails[hullId]);
+	}
 }
 
 //--------------------------------------------------------------------------
@@ -351,37 +357,43 @@ bool HexagonVolume::buildPolyList(PolyListContext context, AbstractPolyList* pol
 		if(hex.shapeNr == 0)
 			continue;
 
-		if(hex.col != NULL)
+		if(hex.col.size() == hex.amount)
 			continue;
 
 		TSShapeInstance* shapeInstance = mDataBlock->renderShapeInstance[hex.shapeNr];
 		if(!shapeInstance)
 			continue;
 
-		MatrixF mat(true);
-		mat.setPosition(mGrid->gridToWorld(mHexMap.indexToGrid(idx)));
-		polyList->setTransform(&mat, Point3F(1,1,1));
+		for(U32 i = 0; i < hex.amount; i++)
+		{
+			Point3I gridPos = mHexMap.indexToGrid(idx); gridPos.z += i;
+			Point3F worldPos = mGrid->gridToWorld(gridPos);
 
-		if(context == PLC_Selection)
-		{
-	      shapeInstance->buildPolyList(polyList, shapeInstance->getCurrentDetail());
-			ret = true;
-		}
-	   else if(context == PLC_Export)
-		{
-			S32 dl = 0;
-	      shapeInstance->buildPolyList(polyList, dl);
-			ret = true;
-		}
-		else
-		{
-			ShapeBaseData* data = mDataBlock->collisionShapeData[hex.shapeNr];
-			if(!data)
-				continue;
-			for(U32 i = 0; i < data->collisionDetails.size(); i++)
+			MatrixF mat(true);
+			mat.setPosition(worldPos);
+			polyList->setTransform(&mat, Point3F(1,1,1));
+
+			if(context == PLC_Selection)
 			{
-				shapeInstance->buildPolyList(polyList, data->collisionDetails[i]);
+				shapeInstance->buildPolyList(polyList, shapeInstance->getCurrentDetail());
 				ret = true;
+			}
+			else if(context == PLC_Export)
+			{
+				S32 dl = 0;
+				shapeInstance->buildPolyList(polyList, dl);
+				ret = true;
+			}
+			else
+			{
+				ShapeBaseData* data = mDataBlock->collisionShapeData[hex.shapeNr];
+				if(!data)
+					continue;
+				for(U32 i = 0; i < data->collisionDetails.size(); i++)
+				{
+					shapeInstance->buildPolyList(polyList, data->collisionDetails[i]);
+					ret = true;
+				}
 			}
 		}
 	}
@@ -411,7 +423,7 @@ void HexagonVolume::buildConvex(const Box3F& box, Convex* convex)
 		if(hex.shapeNr == 0)
 			continue;
 
-		if(hex.col != NULL)
+		if(hex.col.size() == hex.amount)
 			continue;
 
 		TSShapeInstance* shapeInstance = mDataBlock->renderShapeInstance[hex.shapeNr];
@@ -422,7 +434,7 @@ void HexagonVolume::buildConvex(const Box3F& box, Convex* convex)
 		if(!data)
 			continue;
 
-		for (U32 i = 0; i < data->collisionDetails.size(); i++)
+		for (U32 hullId = 0; hullId < data->collisionDetails.size(); hullId++)
 		{
 			// See if this hull exists in the working set already...
 			Convex* cc = 0;
@@ -431,7 +443,7 @@ void HexagonVolume::buildConvex(const Box3F& box, Convex* convex)
 			{
 				if(itr->mConvex->getType() == HexagonVolumeHexConvexType 
 				&& static_cast<HexagonVolumeHexConvex*>(itr->mConvex)->pHexagonVolume == this
-				&& static_cast<HexagonVolumeHexConvex*>(itr->mConvex)->hullId == i
+				&& static_cast<HexagonVolumeHexConvex*>(itr->mConvex)->hullId == hullId
 				&& static_cast<HexagonVolumeHexConvex*>(itr->mConvex)->idx == idx)
 				{
 					cc = itr->mConvex;
@@ -446,7 +458,7 @@ void HexagonVolume::buildConvex(const Box3F& box, Convex* convex)
 			convex->addToWorkingList(cp);
 			cp->mObject    = this;
 			cp->pHexagonVolume = this;
-			cp->hullId = i;
+			cp->hullId = hullId;
 			cp->idx = idx;
 		}
 	}
@@ -460,9 +472,13 @@ bool HexagonVolume::castRay(const Point3F &start, const Point3F &end, RayInfo* i
 	|| mRebuild.state == RebuildProcess::Ready)
 		return false;
 
-	Point3F worldStart = start; Point3F worldEnd = end;
-	worldStart.convolve(mObjScale); worldEnd.convolve(mObjScale);
-	mObjToWorld.mulP(worldStart, &worldStart); mObjToWorld.mulP(worldEnd, &worldEnd);
+	Point3F worldStart = start;
+	Point3F worldEnd = end;
+	worldStart.convolve(mObjScale);
+	worldEnd.convolve(mObjScale);
+	worldStart += this->getPosition();
+	worldEnd += this->getPosition();
+	//mObjToWorld.mulP(worldStart, &worldStart); mObjToWorld.mulP(worldEnd, &worldEnd);
 
    info->object = NULL;
 
@@ -477,7 +493,7 @@ bool HexagonVolume::castRay(const Point3F &start, const Point3F &end, RayInfo* i
 		if(hex.shapeNr == 0)
 			continue;
 
-		if(hex.col != NULL)
+		if(hex.col.size() == hex.amount)
 			continue;
 
 		TSShapeInstance* shapeInstance = mDataBlock->renderShapeInstance[hex.shapeNr];
@@ -488,19 +504,24 @@ bool HexagonVolume::castRay(const Point3F &start, const Point3F &end, RayInfo* i
 		if(!shapeData)
 			continue;
 
-		Point3F worldPos = mGrid->gridToWorld(mHexMap.indexToGrid(idx));
-		Point3F s = worldStart - worldPos;
-		Point3F e = worldEnd - worldPos;
+		for(U32 i = 0; i < hex.amount; i++)
+		{
+			Point3I gridPos = mHexMap.indexToGrid(idx); gridPos.z += i;
+			Point3F worldPos = mGrid->gridToWorld(gridPos);
 
-      for(U32 i = 0; i < shapeData->collisionDetails.size(); i++)
-      {
-         if(shapeInstance->castRay(s, e, info, shapeData->collisionDetails[i]))
-         {
-            info->object = this;
-            if(info->t < shortest.t)
-               shortest = *info;
-         }
-      }
+			Point3F s = worldStart - worldPos;
+			Point3F e = worldEnd - worldPos;
+
+			for(U32 hullId = 0; i < shapeData->collisionDetails.size(); i++)
+			{
+				if(shapeInstance->castRay(s, e, info, shapeData->collisionDetails[hullId]))
+				{
+					info->object = this;
+					if(info->t < shortest.t)
+						shortest = *info;
+				}
+			}
+		}
 	}
 
    if(info->object == this) 
@@ -519,9 +540,13 @@ bool HexagonVolume::castRayRendered(const Point3F &start, const Point3F &end, Ra
 	|| mRebuild.state == RebuildProcess::Ready)
 		return false;
 
-	Point3F worldStart = start; Point3F worldEnd = end;
-	worldStart.convolve(mObjScale); worldEnd.convolve(mObjScale);
-	mObjToWorld.mulP(worldStart, &worldStart); mObjToWorld.mulP(worldEnd, &worldEnd);
+	Point3F worldStart = start;
+	Point3F worldEnd = end;
+	worldStart.convolve(mObjScale);
+	worldEnd.convolve(mObjScale);
+	worldStart += this->getPosition();
+	worldEnd += this->getPosition();
+	//mObjToWorld.mulP(worldStart, &worldStart); mObjToWorld.mulP(worldEnd, &worldEnd);
 
 	RayInfo localInfo;
 
@@ -533,24 +558,28 @@ bool HexagonVolume::castRayRendered(const Point3F &start, const Point3F &end, Ra
 		if(hex.shapeNr == 0)
 			continue;
 
-		if(hex.col != NULL)
+		if(hex.col.size() == hex.amount)
 			continue;
 
 		TSShapeInstance* shapeInstance = mDataBlock->renderShapeInstance[hex.shapeNr];
 		if(!shapeInstance)
 			continue;
 
-		Point3F worldPos = mGrid->gridToWorld(mHexMap.indexToGrid(idx));
-		Point3F s = worldStart - worldPos;
-		Point3F e = worldEnd - worldPos;
+		for(U32 i = 0; i < hex.amount; i++)
+		{
+			Point3I gridPos = mHexMap.indexToGrid(idx); gridPos.z += i;
+			Point3F worldPos = mGrid->gridToWorld(gridPos);
+			Point3F s = worldStart - worldPos;
+			Point3F e = worldEnd - worldPos;
 
-      bool res = shapeInstance->castRayRendered(s, e, &localInfo, shapeInstance->getCurrentDetail());
-      if(res)
-      {
-         *info = localInfo;
-         info->object = this;
-         return true;
-      }
+			bool res = shapeInstance->castRayRendered(s, e, &localInfo, shapeInstance->getCurrentDetail());
+			if(res)
+			{
+				*info = localInfo;
+				info->object = this;
+				return true;
+			}
+		}
    }
 
    return false;
@@ -779,13 +808,18 @@ void HexagonVolume::prepRenderImageMode2(SceneRenderState* state)
 			if(shapeInstance->getCurrentDetail() < 0)
 				continue;
 
-			// Set the world matrix to the hexagon's render transform
-			MatrixF mat(true);
-			mat.setPosition(mGrid->gridToWorld(mHexMap.indexToGrid(idx)));
-			//mat.scale(scale);
-			GFX->setWorldMatrix(mat);
+			for(U32 i = 0; i < hex.amount; i++)
+			{
+				// Set the world matrix to the hexagon's render transform
+				Point3I gridPos = mHexMap.indexToGrid(idx); gridPos.z += i;
+				Point3F worldPos = mGrid->gridToWorld(gridPos);
+				MatrixF mat(true);
+				mat.setPosition(worldPos);
+				//mat.scale(scale);
+				GFX->setWorldMatrix(mat);
 
-			shapeInstance->render(rdata);		
+				shapeInstance->render(rdata);		
+			}
 		}
 	}
 }
@@ -887,10 +921,11 @@ void HexagonVolume::freeHexMap()
 	for(U32 idx = 0; idx < n; idx++)
 	{
 		HexMap::Hex& hex = mHexMap.hexArray[idx];
-		if(hex.col)
+		if(hex.col.size() > 0)
 		{
-			hex.col->deleteObject();
-			hex.col = NULL;
+			for(U32 i = 0; i < hex.col.size(); i++)
+				hex.col[i]->deleteObject();
+			hex.col.clear();
 		}
 	}
 
@@ -1096,7 +1131,7 @@ void HexagonVolume::rebuildMode2CollisionStart()
 
 void HexagonVolume::rebuildMode2CollisionProcess()
 {
-	U32 idx = mRebuild.idx++;
+	U32 idx = mRebuild.idx;
 	U32 numHexagons = mHexMap.width * mHexMap.height;
 	if(idx >= numHexagons)
 	{
@@ -1108,16 +1143,18 @@ void HexagonVolume::rebuildMode2CollisionProcess()
 
 	if(hex.shapeNr == 0)
 	{
-		if(hex.col)
-		{
-			hex.col->deleteObject();
-			hex.col = NULL;
-		}
+		for(U32 i = 0; i < hex.col.size(); i++)
+			hex.col[i]->deleteObject();
+		hex.col.clear();
+		mRebuild.idx++;
 	}
 	else
 	{
-		if(hex.col)
+		if(hex.col.size() == hex.amount)
+		{
+			mRebuild.idx++;
 			return;
+		}
 
 		if(!mDataBlock->collisionShapeData[hex.shapeNr])
 		{
@@ -1125,19 +1162,23 @@ void HexagonVolume::rebuildMode2CollisionProcess()
 			return;
 		}
 
+		Point3I gridPos = mHexMap.indexToGrid(idx); gridPos.z += hex.col.size();
+		Point3F worldPos = mGrid->gridToWorld(gridPos);
+
 		HexagonVolumeCollisionShape* obj  = new HexagonVolumeCollisionShape(this->isClientObject());
 		obj->onNewDataBlock(mDataBlock->collisionShapeData[hex.shapeNr], false);
-		obj->setPosition(mGrid->gridToWorld(mHexMap.indexToGrid(idx)));
+		obj->setPosition(worldPos);
 		if(!obj->registerObject())
 		{
 			Con::errorf("HexagonVolume: Creating collision object failed!");
 			delete obj;
 			obj = NULL;
+			mRebuild.idx++;
 		}
 		else
 		{
-			hex.col = obj;
-			hex.col->setRenderEnabled(false);
+			obj->setRenderEnabled(false);
+			hex.col.push_back(obj);
 		}
 	}
 
@@ -1169,6 +1210,7 @@ void HexagonVolume::rebuildMode2RenderStart()
 	mRebuild.shape = NULL;
 	mRebuild.mesh = NULL;
 	mRebuild.idx = 0;
+	mRebuild.x = 0;
 
 #if TODO
 	// No geometry to rebuild?
@@ -1192,7 +1234,7 @@ void HexagonVolume::rebuildMode2RenderStart()
 
 void HexagonVolume::rebuildMode2RenderProcess()
 {
-	U32 idx = mRebuild.idx++;
+	U32 idx = mRebuild.idx;
 	U32 numHexagons = mHexMap.width * mHexMap.height;
 	if(idx >= numHexagons)
 	{
@@ -1200,25 +1242,35 @@ void HexagonVolume::rebuildMode2RenderProcess()
 		return;
 	}
 
-	if(mHexMap.hexArray[idx].shapeNr == 0)
+	const HexMap::Hex& hex = mHexMap.hexArray[idx];
+
+	if(hex.shapeNr == 0)
+	{
+		mRebuild.idx++;
+		mRebuild.x = 0;
 		return;
+	}
 
 	//Con::printf("Have %ix%i map", mHexMap.width, mHexMap.height);
 
-	U32 shapeNr = mHexMap.hexArray[idx].shapeNr;
+	U32 shapeNr = hex.shapeNr;
 	if(!mDataBlock->renderShape[shapeNr])
 	{
 		Con::errorf("HexagonVolume: Datablock is missing render shape %i", shapeNr);
+		mRebuild.idx++;
+		mRebuild.x = 0;
 		return;
 	}
 
 	const char* shapeNodeName = "mesh";
 	const char* shapeMeshName = "mesh2";
 	char newMeshName[256];
-	dSprintf(newMeshName, sizeof(newMeshName), "hexmap%imesh2", idx);
+	dSprintf(newMeshName, sizeof(newMeshName), "hexmap_%i_%i_mesh2", idx, mRebuild.x);
 	if(!mRebuild.shape->addMesh(mDataBlock->renderShape[shapeNr], shapeMeshName, newMeshName))
 	{
 		Con::errorf("HexagonVolume: Unable to add mesh %s", shapeMeshName);
+		mRebuild.idx++;
+		mRebuild.x = 0;
 		return;
 	}
 
@@ -1227,7 +1279,7 @@ void HexagonVolume::rebuildMode2RenderProcess()
 	if(nodeIndex >= 0)
 		adjustPos = mDataBlock->renderShape[shapeNr]->defaultTranslations[nodeIndex];
 
-	Point3I gridPos = mHexMap.indexToGrid(idx);
+	Point3I gridPos = mHexMap.indexToGrid(idx); gridPos.z += mRebuild.x;
 	Point3F worldPos = mGrid->gridToWorld(gridPos);
 	Point3F meshPos = worldPos - this->getPosition() + adjustPos;
 
@@ -1267,6 +1319,13 @@ void HexagonVolume::rebuildMode2RenderProcess()
 		{
 			Con::errorf("HexagonVolume: Unable to find mesh %s", newMeshName);
 		}
+	}
+
+	mRebuild.x++;
+	if(mRebuild.x == hex.amount)
+	{
+		mRebuild.idx++;
+		mRebuild.x = 0;
 	}
 }
 
@@ -1406,6 +1465,8 @@ U32 HexagonVolume::packUpdate(NetConnection* con, U32 mask, BitStream* stream)
 				{
 					stream->writeInt(hex.elevation, 8);
 					stream->writeInt(hex.shapeNr, 2);
+					if(stream->writeFlag(hex.amount > 1))
+						stream->writeInt(hex.amount, 8);
 				}
 			}
 		}
@@ -1457,11 +1518,16 @@ void HexagonVolume::unpackUpdate(NetConnection* con, BitStream* stream)
 				{
 					hex.elevation = stream->readInt(8);
 					hex.shapeNr = stream->readInt(2);
+					if(stream->readFlag())
+						hex.amount = stream->readInt(8);
+					else
+						hex.amount = 1;
 				}
 				else
 				{
 					hex.elevation = 0;
 					hex.shapeNr = 0;
+					hex.amount = 0;
 				}
 			}
 		}
@@ -1496,6 +1562,79 @@ bool HexagonVolume::sInit()
 	return true;
 }
 
+S32 HexagonVolume::sGetHexagonAmount(Point2I gridPos2D)
+{
+	if(!mHexMap.hexArray)
+	{
+		Con::errorf("HexagonVolume: sGetHexagonAmount(): No hex map!");
+		return false;
+	}
+
+	Point3I gridPos(gridPos2D.x, gridPos2D.y, 0);
+	S32 idx = mHexMap.gridToIndex(gridPos);
+	if(idx < 0)
+		return -1;
+	if(idx >= mHexMap.width*mHexMap.height)
+		return -1;
+
+	HexMap::Hex& hex = mHexMap.hexArray[idx];
+	return hex.amount;
+}
+
+S32 HexagonVolume::sGetHexagonElevation(Point2I gridPos2D)
+{
+	if(!mHexMap.hexArray)
+	{
+		Con::errorf("HexagonVolume: sGetHexagonElevation(): No hex map!");
+		return false;
+	}
+
+	Point3I gridPos(gridPos2D.x, gridPos2D.y, 0);
+	S32 idx = mHexMap.gridToIndex(gridPos);
+	if(idx < 0)
+		return -1;
+	if(idx >= mHexMap.width*mHexMap.height)
+		return -1;
+
+	const HexMap::Hex& hex = mHexMap.hexArray[idx];
+	if(hex.shapeNr == 0)
+		return -1;
+
+	return hex.elevation;
+}
+
+bool HexagonVolume::sSetHexagon(Point3I gridPos, U32 shapeNr, U32 amount)
+{
+	if(!mHexMap.hexArray)
+	{
+		Con::errorf("HexagonVolume: sSetHexagon(): No hex map!");
+		return false;
+	}
+
+	Point3F worldPos = mGrid->gridToWorld(gridPos);
+	if(!this->getWorldBox().isContained(worldPos))
+		return false;
+
+	S32 idx = mHexMap.gridToIndex(gridPos);
+	if(idx < 0)
+		return false;
+	if(idx >= mHexMap.width*mHexMap.height)
+		return false;
+
+	HexMap::Hex& hex = mHexMap.hexArray[idx];
+	if(hex.serverGridPos == gridPos 
+	&& hex.shapeNr == shapeNr
+	&& hex.amount == amount)
+		return false;
+
+	hex.serverGridPos = gridPos;
+	hex.shapeNr = shapeNr;
+	hex.elevation = gridPos.z - mHexMap.originGridPos.z;
+	hex.amount = amount;
+
+	return true;
+}
+
 bool HexagonVolume::sAddHexagon(Point3I gridPos, U32 shapeNr)
 {
 	if(!mHexMap.hexArray)
@@ -1514,13 +1653,18 @@ bool HexagonVolume::sAddHexagon(Point3I gridPos, U32 shapeNr)
 	if(idx >= mHexMap.width*mHexMap.height)
 		return false;
 
+	U32 amount = 1;
+
 	HexMap::Hex& hex = mHexMap.hexArray[idx];
-	if(hex.serverGridPos == gridPos && hex.shapeNr == shapeNr)
+	if(hex.serverGridPos == gridPos 
+	&& hex.shapeNr == shapeNr
+	&& hex.amount == amount)
 		return false;
 
 	hex.serverGridPos = gridPos;
 	hex.shapeNr = shapeNr;
 	hex.elevation = gridPos.z - mHexMap.originGridPos.z;
+	hex.amount = amount;
 
 	return true;
 }
@@ -1549,6 +1693,7 @@ bool HexagonVolume::sRemoveHexagon(Point3I gridPos)
 
 	hex.shapeNr = 0;
 	hex.elevation = 0;
+	hex.amount = 0;
 
 	return true;
 }
@@ -1568,6 +1713,33 @@ DefineEngineMethod(HexagonVolume, init, bool, (),,
 )
 {
    return object->sInit();
+}
+
+DefineEngineMethod(HexagonVolume, getHexagonAmount, S32, (Point2I gridPos2D),,
+   "@brief Get height of hexagon stack.\n\n"
+   "@param 2D grid position\n"
+)
+{
+   return object->sGetHexagonAmount(gridPos2D);
+}
+
+DefineEngineMethod(HexagonVolume, getHexagonElevation, S32, (Point2I gridPos2D),,
+   "@brief Get elevation of hexagon stack.\n\n"
+   "@param 2D grid position\n"
+)
+{
+   return object->sGetHexagonElevation(gridPos2D);
+}
+
+DefineEngineMethod(HexagonVolume, setHexagon, bool, (Point3I gridPos, U32 shapeNr, U32 amount),,
+   "@brief Change a hexagon-stack int the volume.\n\n"
+
+   "@param Grid position of the new hexagon\n"
+	"@param Shape number of the hexagon\n"
+	"@param Amount of hexagons in the stack\n"
+)
+{
+   return object->sSetHexagon(gridPos, shapeNr, amount);
 }
 
 DefineEngineMethod(HexagonVolume, addHexagon, bool, (Point3I gridPos, U32 shapeNr),,

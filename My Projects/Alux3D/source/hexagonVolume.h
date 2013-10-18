@@ -97,7 +97,8 @@ class HexagonVolume : public GameBase
 			Point3I serverGridPos; // Not networked
 			U32 shapeNr;
 			U32 elevation;
-			HexagonVolumeCollisionShape* col;
+			U32 amount;
+			Vector<HexagonVolumeCollisionShape*> col;
 		};
 
 		Point3I originGridPos;
@@ -143,6 +144,7 @@ class HexagonVolume : public GameBase
 		TSShape* shape;
 		TSMesh* mesh;
 		U32 idx;
+		U32 x;
 	};
 
 	enum HexagonVolumeUpdateBits
@@ -224,6 +226,9 @@ class HexagonVolume : public GameBase
 	void renderObjectPolyList(ObjectRenderInst* ri, SceneRenderState* state, BaseMatInstance* overrideMat);
 	// Script interface...
 	bool sInit();
+	S32  sGetHexagonAmount(Point2I gridPos2D);
+	S32  sGetHexagonElevation(Point2I gridPos2D);
+	bool sSetHexagon(Point3I gridPos, U32 shapeNr, U32 amount);
 	bool sAddHexagon(Point3I gridPos, U32 shapeNr);
 	bool sRemoveHexagon(Point3I gridPos);
 	bool sRebuild();
