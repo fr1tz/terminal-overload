@@ -114,6 +114,10 @@ switch( Generator::$platform )
 
    case "linux_dedicated":
      addEngineSrcDir('windowManager/dedicated');
+     addEngineSrcDir('platformX86UNIX');
+     addEngineSrcDir('platformX86UNIX/threads');
+     addEngineSrcDir('platformPOSIX');
+     break;
 
    case "linux":
      addEngineSrcDir('platformX86UNIX');

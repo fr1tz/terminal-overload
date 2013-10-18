@@ -93,6 +93,8 @@ void Platform::openFile(const char *path) { }
 
 // window
 bool Platform::displaySplashWindow(String path) { return false; }
+void Platform::closeSplashWindow() { }
+
 
 // font
 PlatformFont *createPlatformFont(const char *name, U32 size, U32 charset) { return NULL; }
@@ -106,6 +108,24 @@ void Platform::AlertOK(const char *, const char *) {}
 bool Platform::AlertOKCancel(const char *, const char *) { return false; }
 S32  Platform::messageBox(char const*, char const*, MBButtons, MBIcons) { return 0; }
 bool Platform::AlertRetry(char const*, char const*) { return false ; }
+Platform::ALERT_ASSERT_RESULT Platform::AlertAssert(const char *windowTitle, const char *message)
+{
+    {
+        if (Con::isActive() /*&& StdConsole::isEnabled()*/)
+            Con::printf("AlertAssert: %s %s", windowTitle, message);
+        else
+            dPrintf("AlertAssert: %s %s\n", windowTitle, message);
+
+        return ALERT_ASSERT_DEBUG;
+   }
+}
+class PlatformWindowManager;
+PlatformWindowManager * CreatePlatformWindowManager()
+{
+   AssertFatal(0, "");
+   return NULL;
+}
+
 
 // file dialog
 IMPLEMENT_CONOBJECT(FileDialog);

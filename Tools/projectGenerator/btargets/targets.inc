@@ -151,7 +151,7 @@ $c = BuildTarget::add( 'Make',                // Name
 		       '',                    // NP Plugin
 		       '' );                  // File ext to write the project to
 
-$c->setSolutionInfo( 'makeSolution.tpl', '', '' );
+$c->setSolutionInfo( 'makeSolution.tpl', '', '.makefile', '' );
 
 $c->setFileExtensions( 'c', 'cc', 'cpp', 'asm' );
 
@@ -173,7 +173,7 @@ $c = BuildTarget::add( 'Make Dedicated',      // Name
 		       '',                    // NP Plugin
 		       '' );                  // File ext to write the project to
 
-$c->setSolutionInfo( 'makeSolution.tpl', '', '' );
+$c->setSolutionInfo( 'makeSolution.tpl', '', '.makefile', '' );
 
 $c->setFileExtensions( 'c', 'cc', 'cpp', 'asm' );
 
