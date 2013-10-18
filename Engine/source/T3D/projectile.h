@@ -53,6 +53,9 @@ public:
    bool faceViewer;
    Point3F scale;
 
+	// target-tracking related...
+	S32 maxTrackingAbility;
+	S32 trackingAgility;
 
    /// [0,1] scale of how much velocity should be inherited from the parent object
    F32 velInheritFactor;
@@ -125,6 +128,7 @@ public:
    
    DECLARE_CALLBACK( void, onExplode, ( Projectile* proj, Point3F pos, F32 fade ) );
    DECLARE_CALLBACK( void, onCollision, ( Projectile* proj, SceneObject* col, F32 fade, Point3F pos, Point3F normal ) );
+	DECLARE_CALLBACK( void, onTargetLost, ( Projectile* proj ) );
 };
 
 
@@ -149,7 +153,9 @@ public:
    enum UpdateMasks {
       BounceMask    = Parent::NextFreeMask,
       ExplosionMask = Parent::NextFreeMask << 1,
-      NextFreeMask  = Parent::NextFreeMask << 2
+		MovementMask  = Parent::NextFreeMask << 2,
+		TargetMask    = Parent::NextFreeMask << 3,
+      NextFreeMask  = Parent::NextFreeMask << 4
    };
 
    
@@ -161,6 +167,7 @@ public:
    // SimObject
    bool onAdd();
    void onRemove();
+	void onDeleteNotify(SimObject* obj);
    static void initPersistFields();
 
    // NetObject
@@ -203,9 +210,18 @@ public:
    void setInitialPosition( const Point3F& pos );
    void setInitialVelocity( const Point3F& vel );
 
+   virtual void onTargetLost();
+	virtual void updateTargetTracking();
+	virtual void setTarget(GameBase* target);
+	virtual void setTargetPosition(const Point3F& pos);
+	GameBase* getTarget() { return mTarget; };
+	Point3F getTargetPosition() { return mTargetPosition; };
+
 public:
    Point3F  mCurrPosition;
    Point3F  mCurrVelocity;
+
+   U32      mCurrTrackingAbility;
 
 	SimObjectPtr<ShapeBase> mSourceObject; ///< Actual pointer to the source object
 	                                       ///  (never times out for Alux3D)
@@ -231,6 +247,15 @@ protected:
 
    Point3F  mInitialPosition;
    Point3F  mInitialVelocity;
+
+	enum {
+		None,
+		Object,
+		Position
+	} mTargetMode;
+	GameBase*  mTarget;
+	Point3F    mTargetPointOffset;
+	Point3F    mTargetPosition;
 
    // Time related variables common to all projectiles, managed by processTick
    U32 mCurrTick;                         ///< Current time in ticks

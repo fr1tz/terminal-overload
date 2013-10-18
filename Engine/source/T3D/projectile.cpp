@@ -107,6 +107,14 @@ IMPLEMENT_CALLBACK( ProjectileData, onCollision, void, ( Projectile* proj, Scene
 				   "@see Projectile\n"
 				  );
 
+IMPLEMENT_CALLBACK( ProjectileData, onTargetLost, void, ( Projectile* proj ),
+                   ( proj ),
+				   "@brief Called when a projectile misses its target.\n\n"
+                   "This function is only called on server objects."
+				   "@param proj The projectile.\n"
+				   "@see Projectile\n"
+				  );
+
 const U32 Projectile::csmStaticCollisionMask =  TerrainObjectType | StaticShapeObjectType;
 
 const U32 Projectile::csmDynamicCollisionMask = PlayerObjectType | VehicleObjectType;
@@ -137,6 +145,9 @@ ProjectileData::ProjectileData()
 
    faceViewer = false;
    scale.set( 1.0f, 1.0f, 1.0f );
+
+	maxTrackingAbility = 0;
+	trackingAgility = 1;
 
    isBallistic = false;
 
@@ -175,6 +186,9 @@ ProjectileData::ProjectileData()
 
 void ProjectileData::initPersistFields()
 {
+	addNamedField(maxTrackingAbility, TypeS32, ProjectileData);
+	addNamedField(trackingAgility, TypeS32, ProjectileData);
+
    addField("particleEmitter", TYPEID< ParticleEmitterData >(), Offset(particleEmitter, ProjectileData),
       "@brief Particle emitter datablock used to generate particles while the projectile is outside of water.\n\n"
       "@note If datablocks are defined for both particleEmitter and particleWaterEmitter, both effects will play "
@@ -336,6 +350,9 @@ void ProjectileData::packData(BitStream* stream)
 {
    Parent::packData(stream);
 
+	stream->writeInt(maxTrackingAbility,32);
+	stream->writeInt(trackingAgility,32);
+
    stream->writeString(projectileShapeName);
    stream->writeFlag(faceViewer);
    if(stream->writeFlag(scale.x != 1 || scale.y != 1 || scale.z != 1))
@@ -401,6 +418,9 @@ void ProjectileData::packData(BitStream* stream)
 void ProjectileData::unpackData(BitStream* stream)
 {
    Parent::unpackData(stream);
+
+	maxTrackingAbility = stream->readInt(32);
+	trackingAgility = stream->readInt(32);
 
    projectileShapeName = stream->readSTString();
 
@@ -558,6 +578,11 @@ Projectile::Projectile()
 
    mLightState.clear();
    mLightState.setLightInfo( mLight );
+
+	mTargetMode = None;
+	mTarget = NULL;
+	mTargetPointOffset.set(0,0,0);
+	mTargetPosition.set(0,0,0);
 }
 
 Projectile::~Projectile()
@@ -802,6 +827,13 @@ void Projectile::onRemove()
    Parent::onRemove();
 }
 
+void Projectile::onDeleteNotify(SimObject* obj)
+{
+	Parent::onDeleteNotify(obj);
+
+   if(obj == mTarget)
+		mTarget = NULL;
+}
 
 bool Projectile::onNewDataBlock( GameBaseData *dptr, bool reload )
 {
@@ -1029,6 +1061,41 @@ void Projectile::explode( const Point3F &p, const Point3F &n, const U32 collideT
    */
 }
 
+void Projectile::setTarget(GameBase* target)
+{
+	// look for target...
+	mTarget = target;
+	if(mTarget)
+	{
+		mTargetMode = Object;
+		deleteNotify(mTarget);
+		mTargetPointOffset = mTarget->getPosition();
+		if( mTarget->getTypeMask() & PlayerObjectType )
+		{
+			F32 rand = Platform::getRandom()*mTarget->getObjBox().len_z();
+			if( rand < 1.5 ) rand = 1.5;
+			mTargetPointOffset.z += rand;
+		}
+		mTargetPointOffset -= mTarget->getPosition();
+
+		//mTargetClientControlled = mTarget->getControllingClient() ? true : false;
+	}
+	else
+	{
+		mTargetMode = None;
+		//mTargetClientControlled = false;
+	}
+	setMaskBits(TargetMask|MovementMask);
+}
+
+void Projectile::setTargetPosition(const Point3F& pos)
+{
+	mTargetMode = Position;
+	mTarget = NULL;
+	mTargetPosition = pos;
+	setMaskBits(TargetMask|MovementMask);
+}
+
 void Projectile::updateSound()
 {
    if (!mDataBlock->sound)
@@ -1076,6 +1143,10 @@ void Projectile::simulate( F32 dt )
    oldPosition = mCurrPosition;
    if ( mDataBlock->isBallistic )
       mCurrVelocity.z -= 9.81 * mDataBlock->gravityMod * dt;
+
+   // target-tracking...
+	if( mDataBlock->maxTrackingAbility > 0 && mTargetMode != None )
+		updateTargetTracking();
 
    newPosition = oldPosition + mCurrVelocity * dt;
 
@@ -1193,6 +1264,52 @@ void Projectile::simulate( F32 dt )
    setTransform( xform );
 }
 
+void Projectile::updateTargetTracking()
+{
+	Point3F targetPos, targetDir;
+	F32 speed = mCurrVelocity.len();
+
+	if(mTargetMode == Object)
+		targetPos = mTarget->getPosition()+mTargetPointOffset;
+	else if(mTargetMode == Position)
+		targetPos = mTargetPosition;
+	else
+		return;
+	F32 dist = (targetPos-mCurrPosition).len();
+
+	// target moving? - intercept it!...
+	if(mTargetMode == Object)
+	{
+		F32 tickDist = speed * (F32(TickMs) / 1000.0f);
+		if( dist > tickDist && mTarget->getVelocity().len() > 0 )
+		{
+			Point3F vel;
+			
+			vel = mTarget->getVelocity();
+			vel.normalize();
+			vel *= 1-(1/dist);
+
+			targetPos += vel; 
+		}
+	}
+
+	targetDir = targetPos - mCurrPosition;
+	targetDir.normalize();
+	if( mCurrTrackingAbility < mDataBlock->maxTrackingAbility )
+	{
+		mCurrTrackingAbility += mDataBlock->trackingAgility;
+		targetDir *= mCurrTrackingAbility;
+	}
+	else
+	{
+		targetDir *= mDataBlock->maxTrackingAbility;
+	}
+	targetDir += mCurrVelocity;
+	targetDir.normalize();
+
+	mCurrVelocity = targetDir;
+	mCurrVelocity *= speed; 
+}
 
 void Projectile::advanceTime(F32 dt)
 {
@@ -1270,6 +1387,13 @@ void Projectile::onCollision(const Point3F& hitPosition, const Point3F& hitNorma
    }
 }
 
+void Projectile::onTargetLost()
+{
+	// No client specific code should be placed or branched from this function
+	if(isServerObject())
+	   mDataBlock->onTargetLost_callback(this);
+}
+
 //--------------------------------------------------------------------------
 U32 Projectile::packUpdate( NetConnection *con, U32 mask, BitStream *stream )
 {
@@ -1327,6 +1451,37 @@ U32 Projectile::packUpdate( NetConnection *con, U32 mask, BitStream *stream )
       mathWrite(*stream, mCurrVelocity);
    }
 
+
+   // movement update...
+   if(stream->writeFlag(mask & MovementMask))
+   {
+      mathWrite(*stream, mCurrPosition);
+      mathWrite(*stream, mCurrVelocity);
+		stream->writeInt(mCurrTrackingAbility,32);
+   }
+
+	// target update...
+	if( stream->writeFlag(mask & TargetMask) )
+	{
+		if(stream->writeFlag(mTargetMode != None))
+		{
+			if(stream->writeFlag(mTargetMode == Object && mTarget))
+		    {
+				S32 ghostIndex = con->getGhostIndex(mTarget);
+				if (stream->writeFlag(ghostIndex != -1))
+				{
+					stream->writeRangedU32(U32(ghostIndex), 0, NetConnection::MaxGhostCount);
+					mathWrite(*stream, mTargetPointOffset);
+					//stream->writeFlag(mTargetClientControlled);
+				}
+			}
+			else if(stream->writeFlag(mTargetMode == Position))
+			{
+				mathWrite(*stream, mTargetPosition);
+			}
+		}
+	}
+
    return retMask;
 }
 
@@ -1381,6 +1536,47 @@ void Projectile::unpackUpdate(NetConnection* con, BitStream* stream)
       mCurrPosition = pos;
       setPosition( mCurrPosition );
    }
+
+
+   // movement update
+   if (stream->readFlag())
+   {
+      mathRead(*stream, &mCurrPosition);
+      mathRead(*stream, &mCurrVelocity);
+		mCurrTrackingAbility = stream->readInt(32);
+   }
+
+	// target mask...
+	if(stream->readFlag())
+	{
+		if (stream->readFlag()) // have target?
+		{
+			if(stream->readFlag())
+			{
+				mTargetMode = Object;
+				S32 ghostIndex = stream->readRangedU32(0, NetConnection::MaxGhostCount);
+		        NetObject* pObject = con->resolveGhost(ghostIndex);
+			    if( pObject != NULL )
+				{
+					mTarget = dynamic_cast<GameBase*>(pObject);
+					deleteNotify(mTarget);
+				}
+				mathRead(*stream, &mTargetPointOffset);
+				//mTargetClientControlled = stream->readFlag();
+			}
+			else if(stream->readFlag())
+			{
+				mTarget = NULL;
+				mTargetMode = Position;
+				mathRead(*stream, &mTargetPosition);
+			}
+		}
+		else
+		{
+			mTargetMode = None;
+			mTarget = NULL;
+		}
+	}
 }
 
 //--------------------------------------------------------------------------
@@ -1455,4 +1651,53 @@ DefineEngineMethod(Projectile, presimulate, void, (F32 seconds), (1.0f),
                                        "@note This function is not called if the SimObject::hidden is true.")
 {
 	object->simulate( seconds );
+}
+
+DefineEngineMethod(Projectile, setTrackingAbility, void, (U32 val),,
+   "@brief Set projectile tracking ability.\n\n"
+   "@param New value\n"
+)
+{
+	object->mCurrTrackingAbility = val;
+	object->setMaskBits(Projectile::MovementMask);
+}
+
+DefineEngineMethod(Projectile, getTrackingAbility, S32, (),,
+   "@brief Return projectile's current tracking ability value.\n\n"
+)
+{
+	return object->mCurrTrackingAbility;
+}
+
+DefineEngineMethod(Projectile, setTarget, bool, (GameBase* target),,
+   "@brief Set projectile's target.\n\n"
+   "@param Target object\n"
+)
+{
+   if(target)
+	{
+		object->setTarget(target);
+		return true;
+   }
+	else
+	{
+		object->setTarget(NULL);
+		return false;
+	}
+}
+
+DefineEngineMethod(Projectile, getTarget, S32, (),,
+   "@brief Return projectile's target object.\n\n"
+)
+{
+   GameBase* target = object->getTarget();
+   return target ? target->getId() : 0;
+}
+
+DefineEngineMethod(Projectile, setTargetPosition, void, (Point3F pos),,
+   "@brief Set projectile's target position.\n\n"
+   "@param Target point\n"
+)
+{
+   object->setTargetPosition(pos);
 }
