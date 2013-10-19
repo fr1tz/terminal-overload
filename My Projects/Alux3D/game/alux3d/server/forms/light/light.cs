@@ -224,6 +224,8 @@ function FrmLight::onTrigger(%this, %obj, %triggerNum, %val)
       %this.posess(%obj);
    else if(%obj.mode $= "transform")
       %this.materializeFDV(%obj);
+   else if(%obj.mode $= "build")
+      %this.build(%obj);
 
    return;
 
@@ -427,4 +429,68 @@ function FrmLight::materializeFDV(%this, %obj)
 
    %client.inventoryMode = "";
    %client.displayInventory();
+}
+
+// Called by script
+function FrmLight::build(%this, %obj)
+{
+   %client = %obj.client;
+
+   %eyeVec = %obj.getEyeVector();
+   %startPos = %obj.getEyePoint();
+   %endPos = VectorAdd(%startPos, VectorScale(%eyeVec, 9999));
+   %target = ContainerRayCast(%startPos, %endPos, $TypeMasks::StaticObjectType);
+   if(%target == 0)
+      return;
+   if(!%target.isMethod("getDataBlock"))
+      return;
+   %data = %target.getDataBlock();
+      
+   // Find meta soil tile.
+   %tile = "";
+   if(%data == SoilVolume.getId() || %data == SoilVolumeCollisionShape.getId())
+   {
+   	InitContainerRadiusSearch(%pos, 0.1, $TypeMasks::StaticObjectType);
+   	while((%srchObj = containerSearchNext()) != 0)
+   	{
+         if(!%srchObj.isMethod("getDataBlock"))
+            continue;
+
+         if(%srchObj.getDataBlock() == MetaSoilTile.getId())
+         {
+            echo("found tile" SPC %srchObj.getName());
+            %tile = %srchObj;
+            break;
+         }
+   	}
+   }
+      
+   echo(%target.getClassName());
+   echo(%target.getDataBlock().getName());
+      
+   return;
+      
+   %targetPos = getWords(%target, 1, 3);
+
+   %pos = %obj.getWorldBoxCenter();
+   %vec = %obj.getEyeVector();
+   //%vec = "0 0 1";
+   %vel = VectorScale(%vec, -FrmBrickSeed.muzzleVelocity);
+   
+   // create the projectile object...
+	%p = new Projectile() {
+		dataBlock       = FrmBrickSeed;
+		teamId          = %obj.teamId;
+		initialVelocity = %vel;
+		initialPosition = %pos;
+		sourceObject    = %obj;
+		sourceSlot      =  0;
+		client	       = %obj.client;
+	};
+	MissionCleanup.add(%p);
+
+   %p.setLoadoutCode(%obj.client.activeLoadout);
+   %p.setTargetPosition(%targetPos);
+   %p.setTrackingAbility(%p.getDataBlock().maxTrackingAbility);
+   %p.zTargetPosition = %targetPos;
 }

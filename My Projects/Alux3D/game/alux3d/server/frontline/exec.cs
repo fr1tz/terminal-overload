@@ -6,6 +6,7 @@ function executeFrontlineServerScripts()
    exec("alux3d/server/base/exec.cs");
 
    exec("alux3d/server/forms/light/exec.cs");
+   exec("alux3d/server/forms/brick/exec.cs");
    exec("alux3d/server/forms/soldierpod/exec.cs");
    exec("alux3d/server/forms/soldier/exec.cs");
    
