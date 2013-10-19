@@ -228,6 +228,7 @@ class HexagonVolume : public GameBase
 	bool sInit();
 	S32  sGetHexagonAmount(Point2I gridPos2D);
 	S32  sGetHexagonElevation(Point2I gridPos2D);
+	S32  sGetHexagonShapeNr(Point2I gridPos2D);
 	bool sSetHexagon(Point3I gridPos, U32 shapeNr, U32 amount);
 	bool sAddHexagon(Point3I gridPos, U32 shapeNr);
 	bool sRemoveHexagon(Point3I gridPos);

@@ -1596,11 +1596,28 @@ S32 HexagonVolume::sGetHexagonElevation(Point2I gridPos2D)
 	if(idx >= mHexMap.width*mHexMap.height)
 		return -1;
 
-	const HexMap::Hex& hex = mHexMap.hexArray[idx];
-	if(hex.shapeNr == 0)
+	gridPos = mHexMap.indexToGrid(idx);
+
+	return gridPos.z;
+}
+
+S32 HexagonVolume::sGetHexagonShapeNr(Point2I gridPos2D)
+{
+	if(!mHexMap.hexArray)
+	{
+		Con::errorf("HexagonVolume: sGetHexagonShapeNr(): No hex map!");
+		return false;
+	}
+
+	Point3I gridPos(gridPos2D.x, gridPos2D.y, 0);
+	S32 idx = mHexMap.gridToIndex(gridPos);
+	if(idx < 0)
+		return -1;
+	if(idx >= mHexMap.width*mHexMap.height)
 		return -1;
 
-	return hex.elevation;
+	HexMap::Hex& hex = mHexMap.hexArray[idx];
+	return hex.shapeNr;
 }
 
 bool HexagonVolume::sSetHexagon(Point3I gridPos, U32 shapeNr, U32 amount)
@@ -1729,6 +1746,14 @@ DefineEngineMethod(HexagonVolume, getHexagonElevation, S32, (Point2I gridPos2D),
 )
 {
    return object->sGetHexagonElevation(gridPos2D);
+}
+
+DefineEngineMethod(HexagonVolume, getHexagonShapeNr, S32, (Point2I gridPos2D),,
+   "@brief Get shape nr used for hexagon stack.\n\n"
+   "@param 2D grid position\n"
+)
+{
+   return object->sGetHexagonShapeNr(gridPos2D);
 }
 
 DefineEngineMethod(HexagonVolume, setHexagon, bool, (Point3I gridPos, U32 shapeNr, U32 amount),,
