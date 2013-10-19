@@ -84,7 +84,7 @@ $c->setSolutionInfo( 'vc2k8_sln.tpl', 'vc2k8_proj_user.tpl', '.sln' );
 
 $c->setFileExtensions( 'c', 'cc', 'h', 'cpp', 'inl', 'asm', 'rc', 'm', 'mm', 'cs' );
 
-//$c->setPlatforms( "win", "win32" );
+$c->setPlatforms( "win", "win32" );
 
 $c->setDotNetInfo('vc2k8_csproj.tpl');
 
@@ -110,7 +110,7 @@ $c->setSolutionInfo( 'vc2010_sln.tpl', '', '.sln', 'vc2010_filter.tpl' );
 $c->setFileExtensions( 'c', 'cc', 'h', 'cpp', 'inl', 'asm', 'rc', 'm', 'mm', 'cs' );
 $c->setSourceFileExtensions( 'c', 'cc', 'cpp' );
 
-//$c->setPlatforms( "win", "win32" );
+$c->setPlatforms( "win", "win32" );
 
 $c->setDotNetInfo('vc2010_csproj.tpl');
 
@@ -221,7 +221,7 @@ $c->setSolutionInfo( 'codeblocks/codeblocks_workspace.tpl', '', '.workspace', ''
 $c->setFileExtensions( 'c', 'cc', 'h', 'cpp', 'inl', 'asm', 'rc', 'm', 'mm', 'cs' );
 $c->setSourceFileExtensions( 'c', 'cc', 'cpp' );
 
-$c->setPlatforms( "win", "win32", "linux" );
+$c->setPlatforms( "linux" );
 
 $c->setDontCompilePatterns( "*\.h*", "*win32*", "*\.win\.*", "/D3D.*/", "*dsound*", "#/mac/#", "#\.mm$#", "#\.m$#", "*\.dedicated\.*" );
 
