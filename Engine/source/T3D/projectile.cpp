@@ -803,12 +803,16 @@ bool Projectile::onAdd()
    if ( PHYSICSMGR )
       mPhysicsWorld = PHYSICSMGR->getWorld( isServerObject() ? "server" : "client" );
 
+	this->scriptOnAdd();
+
    return true;
 }
 
 
 void Projectile::onRemove()
 {
+	this->scriptOnRemove();
+
    if( !mParticleEmitter.isNull() )
    {
       mParticleEmitter->deleteWhenEmpty();

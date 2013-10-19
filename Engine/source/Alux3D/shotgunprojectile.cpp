@@ -651,9 +651,6 @@ bool ShotgunProjectile::onAdd()
 		mat.setPosition(mCurrPosition);
 		this->setTransform(mat);
 
-		// Do script "onAdd" callback.
-		this->scriptOnAdd();
-
 		// Delete us after we've had some time to ghost.
 		Sim::postEvent(this, new ObjectDeleteEvent, Sim::getCurrentTime() + DeleteWaitTime);		
 	}
