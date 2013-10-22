@@ -38,52 +38,11 @@ PixelSpecularGLSL::PixelSpecularGLSL()
 void PixelSpecularGLSL::processVert(   Vector<ShaderComponent*> &componentList, 
                                        const MaterialFeatureData &fd )
 {
-   
    AssertFatal( fd.features[MFT_RTLighting], 
       "PixelSpecularHLSL requires RTLighting to be enabled!" );
-   /*
-   MultiLine *meta = new MultiLine;
 
-   // Get the eye world position.
-   Var *eyePos = (Var*)LangElement::find( "eyePosWorld" );
-   if( !eyePos )
-   {
-      eyePos = new Var;
-      eyePos->setType( "float3" );
-      eyePos->setName( "eyePosWorld" );
-      eyePos->uniform = true;
-      eyePos->constSortPos = cspPass;
-   }
-
-   // Grab a register for passing the 
-   // world space view vector.
-   ShaderConnector *connectComp = dynamic_cast<ShaderConnector *>( componentList[C_CONNECTOR] );
-   Var *wsView = connectComp->getElement( RT_TEXCOORD );
-   wsView->setName( "wsView" );
-   wsView->setStructName( "OUT" );
-   wsView->setType( "float3" );
-
-   // Get the input position.
-   Var *position = (Var*)LangElement::find( "inPosition" );
-   if ( !position )
-      position = (Var*)LangElement::find( "position" );
-   
-   // Get the object to world transform.
-   Var *objTrans = (Var*) LangElement::find( "objTrans" );
-   if ( !objTrans )
-   {
-      objTrans = new Var;
-      objTrans->setType( "float4x4" );
-      objTrans->setName( "objTrans" );
-      objTrans->uniform = true;
-      objTrans->constSortPos = cspPrimitive;      
-   }
-
-   meta->addStatement( new GenOp( "   @ = @ - mul( @, float4( @.xyz,1 ) ).xyz;\r\n", 
-      wsView, eyePos, objTrans, position ) );
-
-   output = meta;
-   */
+   // Nothing to do here... MFT_RTLighting should have
+   // taken care of passing everything to the pixel shader.
 }
 
 void PixelSpecularGLSL::processPix( Vector<ShaderComponent*> &componentList, 
@@ -132,7 +91,7 @@ void PixelSpecularGLSL::processPix( Vector<ShaderComponent*> &componentList,
       if (specularColor)
          final = new GenOp( "@ * @", final, specularColor );
    }
-   else if ( !fd.features[MFT_SpecularMap] && fd.features[MFT_NormalMap] )
+   else if ( fd.features[MFT_NormalMap] && !fd.features[MFT_IsDXTnm] )
    {
       Var *bumpColor = (Var*)LangElement::find( "bumpNormal" );
       final = new GenOp( "@ * @.a", final, bumpColor );
@@ -144,19 +103,17 @@ void PixelSpecularGLSL::processPix( Vector<ShaderComponent*> &componentList,
    meta->addStatement( new GenOp( "   @.rgb += ( @ ).rgb;\r\n", color, final ) );
 
    output = meta;
-   
 }
 
 ShaderFeature::Resources PixelSpecularGLSL::getResources( const MaterialFeatureData &fd )
 {
    Resources res;
-   res.numTexReg = 1;
    return res;
 }
 
+
 void SpecularMapGLSL::processPix( Vector<ShaderComponent*> &componentList, const MaterialFeatureData &fd )
 {
-
    // Get the texture coord.
    Var *texCoord = getInTexCoord( "texCoord", "vec2", true, componentList );
 
@@ -177,7 +134,6 @@ void SpecularMapGLSL::processPix( Vector<ShaderComponent*> &componentList, const
 ShaderFeature::Resources SpecularMapGLSL::getResources( const MaterialFeatureData &fd )
 {
    Resources res;
-
    res.numTex = 1;
    return res;
 }
@@ -187,7 +143,6 @@ void SpecularMapGLSL::setTexData( Material::StageData &stageDat,
                                  RenderPassData &passData,
                                  U32 &texIndex )
 {
-
    GFXTextureObject *tex = stageDat.getTex( MFT_SpecularMap );
    if ( tex )
    {
