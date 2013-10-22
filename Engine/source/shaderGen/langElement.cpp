@@ -22,7 +22,7 @@
 
 #include "core/strings/stringFunctions.h"
 #include "core/util/str.h"
-
+#include "gfx/gfxDevice.h"
 #include "langElement.h"
 
 //**************************************************************************
@@ -158,7 +158,10 @@ void Var::print( Stream &stream )
    if( structName[0] != '\0' )
    {
       stream.write( dStrlen((char*)structName), structName );
-      stream.write( 1, "." );
+      if(GFX->getAdapterType() == OpenGL)
+         stream.write( 1, "_" );
+      else
+         stream.write( 1, "." );
    }
 
    stream.write( dStrlen((char*)name), name );

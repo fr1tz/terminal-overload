@@ -66,7 +66,7 @@ void DeferredRTLightingFeatGLSL::processVert(   Vector<ShaderComponent*> &compon
    ShaderConnector *connectComp = dynamic_cast<ShaderConnector *>( componentList[C_CONNECTOR] );
    Var *ssPos = connectComp->getElement( RT_TEXCOORD );
    ssPos->setName( "screenspacePos" );
-   //ssPos->setStructName( "OUT" );
+   ssPos->setStructName( "OUT" );
    ssPos->setType( "float4" );
 
    Var *outPosition = (Var*) LangElement::find( "gl_Position" );
@@ -90,7 +90,7 @@ void DeferredRTLightingFeatGLSL::processPix( Vector<ShaderComponent*> &component
    ShaderConnector *connectComp = dynamic_cast<ShaderConnector *>( componentList[C_CONNECTOR] );
    Var *ssPos = connectComp->getElement( RT_TEXCOORD );
    ssPos->setName( "screenspacePos" );
-   //ssPos->setStructName( "IN" );
+   ssPos->setStructName( "IN" );
    ssPos->setType( "float4" );
 
    Var *uvScene = new Var;
@@ -140,7 +140,7 @@ void DeferredRTLightingFeatGLSL::processPix( Vector<ShaderComponent*> &component
 
    // Perform the uncondition here.
    String unconditionLightInfo = String::ToLower( AdvancedLightBinManager::smBufferName ) + "Uncondition";
-   meta->addStatement( new GenOp( avar( "   %s(tex2D(@, invertY(@)), @, @, @);\r\n", 
+   meta->addStatement( new GenOp( avar( "   %s(tex2D(@, @), @, @, @);\r\n", 
       unconditionLightInfo.c_str() ), lightInfoBuffer, uvScene, d_lightcolor, d_NL_Att, d_specular ) );
 
    // If this has an interlaced pre-pass, do averaging here

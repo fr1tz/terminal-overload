@@ -124,6 +124,11 @@ ShaderComponent* ShaderGenComponentFactoryGLSL::createVertexInputConnector( cons
          var = vertComp->getElement( RT_TANGENT );
          var->setName( "T" );
       }
+      else if ( element.isSemantic( GFXSemantic::TANGENTW ) )
+      {
+         var = vertComp->getElement( RT_TEXCOORD );
+         var->setName( "tangentW" );
+      }
       else if ( element.isSemantic( GFXSemantic::BINORMAL ) )
       {
          var = vertComp->getElement( RT_BINORMAL );
