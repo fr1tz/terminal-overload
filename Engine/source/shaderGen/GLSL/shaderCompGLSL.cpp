@@ -277,6 +277,13 @@ void VertPixelConnectorGLSL::printOnMain( Stream &stream, bool isVerterShader )
    stream.write( dStrlen((char*)newLine), newLine );
 }
 
+Vector<String> initDeprecadedDefines()
+{
+   Vector<String> vec;
+   vec.push_back( "isBack"); 
+   return vec;
+}
+
 void VertPixelConnectorGLSL::printStructDefines( Stream &stream, bool in )
 {
    const char* connectionDir;
@@ -291,6 +298,8 @@ void VertPixelConnectorGLSL::printStructDefines( Stream &stream, bool in )
       connectionDir = "OUT";
    }
 
+   static Vector<String> deprecatedDefines = initDeprecadedDefines();
+
    const char *newLine = "\r\n";
    const char *header = "// Struct defines\r\n";
    stream.write( dStrlen((char*)newLine), newLine );
@@ -303,13 +312,16 @@ void VertPixelConnectorGLSL::printStructDefines( Stream &stream, bool in )
 
       Var *var = mElementList[i];
       if(!dStrcmp((const char*)var->name, "gl_Position"))
-         continue;
+         continue;      
   
       if(!in)
       {
          dSprintf((char*)output, sizeof(output), "#define %s_%s _%s_\r\n", connectionDir, var->name, var->connectName);
          stream.write( dStrlen((char*)output), output );
       }
+
+      if( deprecatedDefines.contains((char*)var->name))
+         continue;
 
       dSprintf((char*)output, sizeof(output), "#define %s %s_%s\r\n", var->name, connectionDir, var->name);
       stream.write( dStrlen((char*)output), output );
