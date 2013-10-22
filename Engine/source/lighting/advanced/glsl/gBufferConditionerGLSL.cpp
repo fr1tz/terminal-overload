@@ -98,7 +98,7 @@ void GBufferConditionerGLSL::processVert( Vector<ShaderComponent*> &componentLis
    ShaderConnector *connectComp = dynamic_cast<ShaderConnector *>( componentList[C_CONNECTOR] );
    Var *outNormal = connectComp->getElement( RT_TEXCOORD );
    outNormal->setName( "gbNormal" );
-   //outNormal->setStructName( "OUT" );
+   outNormal->setStructName( "OUT" );
    outNormal->setType( "float3" );
 
    if( !fd.features[MFT_ParticleNormal] )
@@ -137,7 +137,7 @@ void GBufferConditionerGLSL::processPix(  Vector<ShaderComponent*> &componentLis
    {
       gbNormal = connectComp->getElement( RT_TEXCOORD );
       gbNormal->setName( "gbNormal" );
-      //gbNormal->setStructName( "IN" );
+      gbNormal->setStructName( "IN" );
       gbNormal->setType( "float3" );
       gbNormal->mapsToSampler = false;
       gbNormal->uniform = false;
@@ -249,9 +249,9 @@ Var* GBufferConditionerGLSL::printMethodHeader( MethodType methodType, const Str
       // The gbuffer has no mipmaps, so use tex2dlod when 
       // possible so that the shader compiler can optimize.
       meta->addStatement( new GenOp( "   #if TORQUE_SM >= 30\r\n" ) );
-      meta->addStatement( new GenOp( "      @ = tex2Dlod(@, float4(invertY(@),0,0));\r\n", bufferSampleDecl, prepassSampler, screenUV ) );
+      meta->addStatement( new GenOp( "      @ = tex2Dlod(@, float4(@,0,0));\r\n", bufferSampleDecl, prepassSampler, screenUV ) );
       meta->addStatement( new GenOp( "   #else\r\n" ) );
-      meta->addStatement( new GenOp( "      @ = tex2D(@, invertY(@));\r\n", bufferSampleDecl, prepassSampler, screenUV ) );
+      meta->addStatement( new GenOp( "      @ = tex2D(@, @);\r\n", bufferSampleDecl, prepassSampler, screenUV ) );
       meta->addStatement( new GenOp( "   #endif\r\n\r\n" ) );
 #endif
 
