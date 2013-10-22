@@ -158,7 +158,7 @@ void SpecularMapGLSL::processPix( Vector<ShaderComponent*> &componentList, const
 {
 
    // Get the texture coord.
-   Var *texCoord = getInTexCoord( "out_texCoord", "vec2", true, componentList );
+   Var *texCoord = getInTexCoord( "texCoord", "vec2", true, componentList );
 
    // create texture var
    Var *specularMap = new Var;

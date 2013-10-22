@@ -141,13 +141,44 @@ Var * VertPixelConnectorGLSL::getElement( RegisterType type,
    switch( type )
    {
    case RT_POSITION:
+      {
+         Var *newVar = new Var;
+         mElementList.push_back( newVar );
+         newVar->setConnectName( "POSITION" );
+         return newVar;
+      }
+
    case RT_NORMAL:
+      {
+         Var *newVar = new Var;
+         mElementList.push_back( newVar );
+         newVar->setConnectName( "NORMAL" );
+         return newVar;
+      }
+
    case RT_COLOR:
       {
          Var *newVar = new Var;
          mElementList.push_back( newVar );
+         newVar->setConnectName( "COLOR" );
          return newVar;
       }
+
+   /*case RT_BINORMAL:
+      {
+         Var *newVar = new Var;
+         mElementList.push_back( newVar );
+         newVar->setConnectName( "BINORMAL" );
+         return newVar;
+      }
+
+   case RT_TANGENT:
+      {
+         Var *newVar = new Var;
+         mElementList.push_back( newVar );
+         newVar->setConnectName( "TANGENT" );
+         return newVar;
+      }   */
 
    case RT_TEXCOORD:
    case RT_BINORMAL:
@@ -155,6 +186,10 @@ Var * VertPixelConnectorGLSL::getElement( RegisterType type,
       {
          Var *newVar = new Var;
          newVar->arraySize = numElements;
+
+         char out[32];
+         dSprintf( (char*)out, sizeof(out), "TEXCOORD%d", mCurTexElem );
+         newVar->setConnectName( out );
 
          if ( numRegisters != -1 )
             mCurTexElem += numRegisters;
@@ -205,9 +240,9 @@ void VertPixelConnectorGLSL::print( Stream &stream, bool isVerterShader )
          continue;
 
       if(var->arraySize <= 1)
-         dSprintf((char*)output, sizeof(output), "varying %s _%s_;\r\n", var->type, var->name);
+         dSprintf((char*)output, sizeof(output), "varying %s _%s_;\r\n", var->type, var->connectName);
       else
-         dSprintf((char*)output, sizeof(output), "varying %s _%s_[%d];\r\n", var->type, var->name, var->arraySize);      
+         dSprintf((char*)output, sizeof(output), "varying %s _%s_[%d];\r\n", var->type, var->connectName, var->arraySize);      
 
       stream.write( dStrlen((char*)output), output );
    }
@@ -234,7 +269,7 @@ void VertPixelConnectorGLSL::printOnMain( Stream &stream, bool isVerterShader )
       if(!dStrcmp((const char*)var->name, "gl_Position"))
          continue;
   
-      dSprintf((char*)output, sizeof(output), "   %s IN_%s = _%s_;\r\n", var->type, var->name, var->name);      
+      dSprintf((char*)output, sizeof(output), "   %s IN_%s = _%s_;\r\n", var->type, var->name, var->connectName);      
 
       stream.write( dStrlen((char*)output), output );
    }
@@ -272,11 +307,11 @@ void VertPixelConnectorGLSL::printStructDefines( Stream &stream, bool in )
   
       if(!in)
       {
-         dSprintf((char*)output, sizeof(output), "#define %s_%s _%s_\r\n", connectionDir, var->name, var->name);
+         dSprintf((char*)output, sizeof(output), "#define %s_%s _%s_\r\n", connectionDir, var->name, var->connectName);
          stream.write( dStrlen((char*)output), output );
       }
 
-      dSprintf((char*)output, sizeof(output), "#define %s _%s_\r\n", var->name, var->name);
+      dSprintf((char*)output, sizeof(output), "#define %s %s_%s\r\n", var->name, connectionDir, var->name);
       stream.write( dStrlen((char*)output), output );
    }
 

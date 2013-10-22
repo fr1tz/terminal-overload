@@ -636,7 +636,7 @@ void DiffuseMapFeatGLSL::processPix(   Vector<ShaderComponent*> &componentList,
                                        const MaterialFeatureData &fd )
 {
    // grab connector texcoord register
-   Var *inTex = getInTexCoord( "out_texCoord", "vec2", true, componentList );
+   Var *inTex = getInTexCoord( "texCoord", "vec2", true, componentList );
 
    // create texture var
    Var *diffuseMap = new Var;
@@ -2005,15 +2005,7 @@ void VisibilityFeatGLSL::processVert( Vector<ShaderComponent*> &componentList,
 
 void VisibilityFeatGLSL::processPix(   Vector<ShaderComponent*> &componentList, 
                                        const MaterialFeatureData &fd )
-{
-   // Look up output color.
-   
-   Var* color = ( Var* ) LangElement::find( "col" );
-   if( !color )
-   {
-      output = NULL;
-      return;
-   }
+{  
       
 	Var* visibility = (Var*)LangElement::find( "visibility" );
 
@@ -2078,9 +2070,24 @@ void VisibilityFeatGLSL::processPix(   Vector<ShaderComponent*> &componentList,
       meta->addStatement( new GenOp( "   if( ( fizz * @ - 0.329 ) < 0.0 )\r\n"
                                      "      discard\r\n;", finalVisibility ) );
 	}
-   else if( color )
-   {
-      meta->addStatement( new GenOp( "   @.w *= @;\r\n", color, finalVisibility ) );
+   else 
+   {        
+      // Get the out color.
+      Var *color = (Var*) LangElement::find( "col" );
+      if ( color )
+      {
+          meta->addStatement( new GenOp( "   @.w *= @;\r\n", color, finalVisibility ) );
+      }
+      else
+      {
+         color = new Var;
+         color->setType( "vec4" );
+         color->setName( "col" );
+
+         meta->addStatement( new GenOp( "   @.w *= @;\r\n", DecOp(color), finalVisibility ) );
+      }
+
+     
    }      
 }
 
