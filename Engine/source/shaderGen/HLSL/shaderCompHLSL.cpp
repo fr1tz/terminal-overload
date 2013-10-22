@@ -203,7 +203,7 @@ void ShaderConnectorHLSL::reset()
    mCurTexElem = 0;
 }
 
-void ShaderConnectorHLSL::print( Stream &stream )
+void ShaderConnectorHLSL::print( Stream &stream, bool isVertexShader )
 {
    const char * header = "struct ";
    const char * header2 = "\r\n{\r\n";
@@ -269,7 +269,7 @@ void ParamsDefHLSL::assignConstantNumbers()
    }
 }
 
-void VertexParamsDefHLSL::print( Stream &stream )
+void VertexParamsDefHLSL::print( Stream &stream, bool isVerterShader )
 {
    assignConstantNumbers();
 
@@ -305,7 +305,7 @@ void VertexParamsDefHLSL::print( Stream &stream )
    stream.write( dStrlen(closer), closer );
 }
 
-void PixelParamsDefHLSL::print( Stream &stream )
+void PixelParamsDefHLSL::print( Stream &stream, bool isVerterShader )
 {
    assignConstantNumbers();
 

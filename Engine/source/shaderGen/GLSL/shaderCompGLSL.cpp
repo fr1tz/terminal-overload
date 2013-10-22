@@ -108,7 +108,7 @@ void AppVertConnectorGLSL::reset()
    mCurTexElem = 0;
 }
 
-void AppVertConnectorGLSL::print( Stream &stream )
+void AppVertConnectorGLSL::print( Stream &stream, bool isVertexShader )
 {
    // print out elements
    for( U32 i=0; i<mElementList.size(); i++ )
@@ -128,7 +128,8 @@ void AppVertConnectorGLSL::print( Stream &stream )
       // This is ugly.  We use #defines to match user defined names with 
       // built in vars.  There is no cleaner way to do this.
       dSprintf( (char*)output, sizeof(output), "#define %s %s.%s\r\n", var->name, var->connectName, swizzle );
-
+      stream.write( dStrlen((char*)output), output );
+      dSprintf( (char*)output, sizeof(output), "#define IN_%s %s.%s\r\n", var->name, var->connectName, swizzle );
       stream.write( dStrlen((char*)output), output );
    }
 }
@@ -192,7 +193,7 @@ void VertPixelConnectorGLSL::reset()
    mCurTexElem = 0;
 }
 
-void VertPixelConnectorGLSL::print( Stream &stream )
+void VertPixelConnectorGLSL::print( Stream &stream, bool isVerterShader )
 {
    // print out elements
    for( U32 i=0; i<mElementList.size(); i++ )
@@ -204,15 +205,85 @@ void VertPixelConnectorGLSL::print( Stream &stream )
          continue;
 
       if(var->arraySize <= 1)
-         dSprintf((char*)output, sizeof(output), "varying %s %s;\r\n", var->type, var->name);
+         dSprintf((char*)output, sizeof(output), "varying %s _%s_;\r\n", var->type, var->name);
       else
-         dSprintf((char*)output, sizeof(output), "varying %s %s[%d];\r\n", var->type, var->name, var->arraySize);
+         dSprintf((char*)output, sizeof(output), "varying %s _%s_[%d];\r\n", var->type, var->name, var->arraySize);      
 
       stream.write( dStrlen((char*)output), output );
    }
+
+   printStructDefines(stream, !isVerterShader);
 }
 
-void VertexParamsDefGLSL::print( Stream &stream )
+void VertPixelConnectorGLSL::printOnMain( Stream &stream, bool isVerterShader )
+{
+   if(isVerterShader)
+      return;
+
+   const char *newLine = "\r\n";
+   const char *header = "   //-------------------------\r\n";
+   stream.write( dStrlen((char*)newLine), newLine );
+   stream.write( dStrlen((char*)header), header );
+
+   // print out elements
+   for( U32 i=0; i<mElementList.size(); i++ )
+   {
+      U8 output[256];
+
+      Var *var = mElementList[i];
+      if(!dStrcmp((const char*)var->name, "gl_Position"))
+         continue;
+  
+      dSprintf((char*)output, sizeof(output), "   %s IN_%s = _%s_;\r\n", var->type, var->name, var->name);      
+
+      stream.write( dStrlen((char*)output), output );
+   }
+
+   stream.write( dStrlen((char*)newLine), newLine );
+}
+
+void VertPixelConnectorGLSL::printStructDefines( Stream &stream, bool in )
+{
+   const char* connectionDir;
+
+   if(in)
+   {       
+      connectionDir = "IN";
+   }
+   else
+   {
+     
+      connectionDir = "OUT";
+   }
+
+   const char *newLine = "\r\n";
+   const char *header = "// Struct defines\r\n";
+   stream.write( dStrlen((char*)newLine), newLine );
+   stream.write( dStrlen((char*)header), header );
+
+   // print out elements
+   for( U32 i=0; i<mElementList.size(); i++ )
+   {
+      U8 output[256];
+
+      Var *var = mElementList[i];
+      if(!dStrcmp((const char*)var->name, "gl_Position"))
+         continue;
+  
+      if(!in)
+      {
+         dSprintf((char*)output, sizeof(output), "#define %s_%s _%s_\r\n", connectionDir, var->name, var->name);
+         stream.write( dStrlen((char*)output), output );
+      }
+
+      dSprintf((char*)output, sizeof(output), "#define %s _%s_\r\n", var->name, var->name);
+      stream.write( dStrlen((char*)output), output );
+   }
+
+   stream.write( dStrlen((char*)newLine), newLine );
+}
+
+void VertexParamsDefGLSL::print( Stream &stream, bool isVerterShader )
 {
    // find all the uniform variables and print them out
    for( U32 i=0; i<LangElement::elementList.size(); i++)
@@ -237,7 +308,7 @@ void VertexParamsDefGLSL::print( Stream &stream )
    stream.write( dStrlen(closer), closer );
 }
 
-void PixelParamsDefGLSL::print( Stream &stream )
+void PixelParamsDefGLSL::print( Stream &stream, bool isVerterShader )
 {
    // find all the uniform variables and print them out
    for( U32 i=0; i<LangElement::elementList.size(); i++)

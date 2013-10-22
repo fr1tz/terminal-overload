@@ -412,13 +412,13 @@ void ShaderGen::_printVertShader( Stream &stream )
    _printFeatureList(stream);
 
    // print out structures
-   mComponents[C_VERT_STRUCT]->print( stream );
-   mComponents[C_CONNECTOR]->print( stream );
+   mComponents[C_VERT_STRUCT]->print( stream, true );
+   mComponents[C_CONNECTOR]->print( stream, true );
 
    mPrinter->printMainComment(stream);
 
-   mComponents[C_VERT_MAIN]->print( stream );
-
+   mComponents[C_VERT_MAIN]->print( stream, true );
+   mComponents[C_CONNECTOR]->printOnMain( stream, true );
 
    // print out the function
    _printFeatures( stream );
@@ -433,12 +433,13 @@ void ShaderGen::_printPixShader( Stream &stream )
    _printDependencies(stream); // TODO: Split into vert and pix dependencies?
    _printFeatureList(stream);
 
-   mComponents[C_CONNECTOR]->print( stream );
+   mComponents[C_CONNECTOR]->print( stream, false );
 
    mPrinter->printPixelShaderOutputStruct(stream, mFeatureData);
    mPrinter->printMainComment(stream);
 
-   mComponents[C_PIX_MAIN]->print( stream );
+   mComponents[C_PIX_MAIN]->print( stream, false );
+   mComponents[C_CONNECTOR]->printOnMain( stream, false );
 
    // print out the function
    _printFeatures( stream );
