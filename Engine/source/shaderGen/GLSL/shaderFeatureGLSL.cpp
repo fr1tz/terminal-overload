@@ -41,26 +41,37 @@ LangElement * ShaderFeatureGLSL::setupTexSpaceMat( Vector<ShaderComponent*> &, /
    Var *B = (Var*) LangElement::find( "B" );
    Var *T = (Var*) LangElement::find( "T" );
    
+   Var *tangentW = (Var*) LangElement::find( "tangentW" );
+   
    // setup matrix var
    *texSpaceMat = new Var;
-   (*texSpaceMat)->setType( "mat3" );
+   (*texSpaceMat)->setType( "float3x3" );
    (*texSpaceMat)->setName( "objToTangentSpace" );
 
    MultiLine * meta = new MultiLine;
+   meta->addStatement( new GenOp( "   @;\r\n", new DecOp( *texSpaceMat ) ) );
    
-   // Recreate the binormal if we don't have one.
-   if ( !B )
+   // Protect against missing normal and tangent.
+   if ( !N || !T )
    {
-      B = new Var;
-      B->setType( "vec3" );
-      B->setName( "B" );
-      meta->addStatement( new GenOp( "   @ = cross( @, normalize(@) );\r\n", new DecOp( B ), T, N ) );
+      meta->addStatement( new GenOp( "   @[0] = float3( 1, 0, 0 ); @[1] = float3( 0, 1, 0 ); @[2] = float3( 0, 0, 1 );\r\n", 
+         *texSpaceMat, *texSpaceMat, *texSpaceMat ) );
+      return meta;
    }
 
-   meta->addStatement( new GenOp( "   @;\r\n", new DecOp( *texSpaceMat ) ) );
-   meta->addStatement( new GenOp( "   @[0] = vec3(@.x, @.x, normalize(@).x);\r\n", *texSpaceMat, T, B, N ) );
-   meta->addStatement( new GenOp( "   @[1] = vec3(@.y, @.y, normalize(@).y);\r\n", *texSpaceMat, T, B, N ) );
-   meta->addStatement( new GenOp( "   @[2] = vec3(@.z, @.z, normalize(@).z);\r\n", *texSpaceMat, T, B, N ) );
+   meta->addStatement( new GenOp( "   @[0] = @;\r\n", *texSpaceMat, T ) );
+   if ( B )
+      meta->addStatement( new GenOp( "   @[1] = @;\r\n", *texSpaceMat, B ) );
+   else
+   {
+      if(dStricmp((char*)T->type, "float4") == 0)
+         meta->addStatement( new GenOp( "   @[1] = cross( @, normalize(@) ) * @.w;\r\n", *texSpaceMat, T, N, T ) );
+      else if(tangentW)
+         meta->addStatement( new GenOp( "   @[1] = cross( @, normalize(@) ) * @;\r\n", *texSpaceMat, T, N, tangentW ) );
+      else
+         meta->addStatement( new GenOp( "   @[1] = cross( @, normalize(@) );\r\n", *texSpaceMat, T, N ) );
+   }
+   meta->addStatement( new GenOp( "   @[2] = normalize(@);\r\n", *texSpaceMat, N ) );
 
    return meta;
 }
