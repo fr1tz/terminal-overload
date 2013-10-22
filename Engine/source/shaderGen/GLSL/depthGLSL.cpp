@@ -37,7 +37,7 @@ void EyeSpaceDepthOutGLSL::processVert(   Vector<ShaderComponent*> &componentLis
    ShaderConnector *connectComp = dynamic_cast<ShaderConnector *>( componentList[C_CONNECTOR] );
    Var *outWSEyeVec = connectComp->getElement( RT_TEXCOORD );
    outWSEyeVec->setName( "wsEyeVec" );
-   //outWSEyeVec->setStructName( "OUT" );
+   outWSEyeVec->setStructName( "OUT" );
 
    // grab incoming vert position   
    Var *wsPosition = new Var( "depthPos", "float3" );
@@ -65,7 +65,7 @@ void EyeSpaceDepthOutGLSL::processPix( Vector<ShaderComponent*> &componentList,
    ShaderConnector *connectComp = dynamic_cast<ShaderConnector *>( componentList[C_CONNECTOR] );
    Var *wsEyeVec = connectComp->getElement( RT_TEXCOORD );
    wsEyeVec->setName( "wsEyeVec" );
-   //wsEyeVec->setStructName( "IN" );
+   wsEyeVec->setStructName( "IN" );
    wsEyeVec->setType( "float4" );
    wsEyeVec->mapsToSampler = false;
    wsEyeVec->uniform = false;
@@ -132,7 +132,7 @@ void DepthOutGLSL::processVert(  Vector<ShaderComponent*> &componentList,
    // Grab our output depth.
    Var *outDepth = connectComp->getElement( RT_TEXCOORD );
    outDepth->setName( "depth" );
-   //outDepth->setStructName( "OUT" );
+   outDepth->setStructName( "OUT" );
    outDepth->setType( "float" );
 
    output = new GenOp( "   @ = @.z / @.w;\r\n", outDepth, outPosition, outPosition );
@@ -146,7 +146,7 @@ void DepthOutGLSL::processPix(   Vector<ShaderComponent*> &componentList,
    // grab connector position
    Var *depthVar = connectComp->getElement( RT_TEXCOORD );
    depthVar->setName( "depth" );
-   //depthVar->setStructName( "IN" );
+   depthVar->setStructName( "IN" );
    depthVar->setType( "float" );
    depthVar->mapsToSampler = false;
    depthVar->uniform = false;
