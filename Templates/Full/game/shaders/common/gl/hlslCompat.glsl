@@ -38,6 +38,9 @@
 
 #define texCUBE textureCube
 #define tex2D texture2D
+#define tex1D texture1D
+
+#define samplerCUBE samplerCube
 
 #define frac fract
 
@@ -55,9 +58,13 @@ vec2 round( vec2 n ) { return sign( n ) * floor( abs( n ) + 0.5 ); }
 vec3 round( vec3 n ) { return sign( n ) * floor( abs( n ) + 0.5 ); }
 vec4 round( vec4 n ) { return sign( n ) * floor( abs( n ) + 0.5 ); }
 
-vec4 mul( mat4 m, vec4 v) { return m*v; }
-vec4 mul( vec4 v, mat4 m) { return v*m; }
-vec3 mul( vec3 v, mat3 m) { return v*m; }
+vec4 mul( mat4 m1, vec4 v1) { return m1*v1; }
+vec4 mul( vec4 v1, mat4 m1) { return v1*m1; }
+vec3 mul( vec3 v1, mat3 m1) { return v1*m1; }
+vec3 mul( mat3 m1, vec3 v1) { return m1*v1; }
+vec2 mul( mat2 m1, vec2 v1) { return m1*v1; }
+mat3 mul( mat3 m1, mat3 m2) { return m1*m2; }
+
 
 vec4 rsqrt( vec4 n ){ return inversesqrt( n ); }
 
