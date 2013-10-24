@@ -54,24 +54,24 @@ LangElement * ShaderFeatureGLSL::setupTexSpaceMat( Vector<ShaderComponent*> &, /
    // Protect against missing normal and tangent.
    if ( !N || !T )
    {
-      meta->addStatement( new GenOp( "   @[0] = float3( 1, 0, 0 ); @[1] = float3( 0, 1, 0 ); @[2] = float3( 0, 0, 1 );\r\n", 
+      meta->addStatement( new GenOp( "   tSetMatrixRow(@, 0, float3( 1, 0, 0 )); tSetMatrixRow(@, 1,float3( 0, 1, 0 )); tSetMatrixRow(@,2, float3( 0, 0, 1 ));\r\n", 
          *texSpaceMat, *texSpaceMat, *texSpaceMat ) );
       return meta;
    }
 
-   meta->addStatement( new GenOp( "   @[0] = @;\r\n", *texSpaceMat, T ) );
+   meta->addStatement( new GenOp( "   tSetMatrixRow(@, 0, @);\r\n", *texSpaceMat, T ) );
    if ( B )
-      meta->addStatement( new GenOp( "   @[1] = @;\r\n", *texSpaceMat, B ) );
+      meta->addStatement( new GenOp( "   tSetMatrixRow(@, 1, @);\r\n", *texSpaceMat, B ) );
    else
    {
       if(dStricmp((char*)T->type, "vec4") == 0)
-         meta->addStatement( new GenOp( "   @[1] = cross( @, normalize(@) ) * @.w;\r\n", *texSpaceMat, T, N, T ) );
+         meta->addStatement( new GenOp( "   tSetMatrixRow(@, 1, cross( @, normalize(@) ) * @.w);\r\n", *texSpaceMat, T, N, T ) );
       else if(tangentW)
-         meta->addStatement( new GenOp( "   @[1] = cross( @, normalize(@) ) * @;\r\n", *texSpaceMat, T, N, tangentW ) );
+         meta->addStatement( new GenOp( "   tSetMatrixRow(@, 1, cross( @, normalize(@) ) * @);\r\n", *texSpaceMat, T, N, tangentW ) );
       else
-         meta->addStatement( new GenOp( "   @[1] = cross( @, normalize(@) );\r\n", *texSpaceMat, T, N ) );
+         meta->addStatement( new GenOp( "   tSetMatrixRow(@, 1, cross( @, normalize(@) ));\r\n", *texSpaceMat, T, N ) );
    }
-   meta->addStatement( new GenOp( "   @[2] = normalize(@);\r\n", *texSpaceMat, N ) );
+   meta->addStatement( new GenOp( "   tSetMatrixRow(@, 2, normalize(@));\r\n", *texSpaceMat, N ) );
 
    return meta;
 }
@@ -308,7 +308,7 @@ Var* ShaderFeatureGLSL::getOutViewToTangent( Vector<ShaderComponent*> &component
 			Var *viewToObj = getInvWorldView( componentList, fd.features[MFT_UseInstancing], meta );
 			
 			// assign world->tangent transform
-         meta->addStatement( new GenOp( "   @ = mul( @, float3x3(@) );\r\n", viewToTangentDecl, texSpaceMat, viewToObj ) );
+         meta->addStatement( new GenOp( "   @ = mul( (@), float3x3(@) );\r\n", viewToTangentDecl, texSpaceMat, viewToObj ) );
 		}
 		else
 		{
@@ -555,10 +555,10 @@ Var* ShaderFeatureGLSL::getObjTrans(   Vector<ShaderComponent*> &componentList,
       objTrans->setType( "float4x4" );
       objTrans->setName( "objTrans" );
       meta->addStatement( new GenOp( "   @ = { // Instancing!\r\n", new DecOp( objTrans ), instObjTrans ) );
-      meta->addStatement( new GenOp( "      @[0],\r\n", instObjTrans ) );
-      meta->addStatement( new GenOp( "      @[1],\r\n", instObjTrans ) );
-      meta->addStatement( new GenOp( "      @[2],\r\n",instObjTrans ) );
-      meta->addStatement( new GenOp( "      @[3] };\r\n", instObjTrans ) );
+      meta->addStatement( new GenOp( "      tGetMatrixRow(@, 0),\r\n", instObjTrans ) );
+      meta->addStatement( new GenOp( "      tGetMatrixRow(@, 1),\r\n", instObjTrans ) );
+      meta->addStatement( new GenOp( "      tGetMatrixRow(@, 2),\r\n",instObjTrans ) );
+      meta->addStatement( new GenOp( "      tGetMatrixRow(@, 3) };\r\n", instObjTrans ) );
    }
    else
    {
@@ -1702,7 +1702,7 @@ void ReflectCubeFeatGLSL::processVert( Vector<ShaderComponent*> &componentList,
     cubePos->setType( "vec3" );
     LangElement *cubePosDecl = new DecOp( cubePos );
 
-    meta->addStatement( new GenOp( "   @ = float3( @[0][3], @[1][3], @[2][3] );\r\n", 
+    meta->addStatement( new GenOp( "   @ = float3( tGetMatrixRC(@,0,3), tGetMatrixRC(@,1,3), tGetMatrixRC(@,2,3) );\r\n", 
                         cubePosDecl, cubeTrans, cubeTrans, cubeTrans ) );
 
    // eye to vert

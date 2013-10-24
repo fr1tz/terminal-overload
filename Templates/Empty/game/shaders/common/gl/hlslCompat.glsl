@@ -48,6 +48,48 @@ vec4 tex2Dlod(sampler2D sampler, vec4 texCoord) { return texture2DLod(sampler, t
 
 #define lerp mix
 
+void tSetMatrixRow(out float3x3 m, int row, float3 value)
+{
+   m[0][row] = value.x;
+   m[1][row] = value.y;
+   m[2][row] = value.z;
+}
+
+void tSetMatrixRow(out float4x4 m, int row, float4 value)
+{
+   m[0][row] = value.x;
+   m[1][row] = value.y;
+   m[2][row] = value.z;
+   m[3][row] = value.w;
+}
+
+#define tGetMatrixRC(m, row, col) m[col][row]
+#define tSetMatrixRC(m, row, col, val) m[col][row] = val
+
+float3 tGetMatrixRow(in float3x3 m, int row)
+{
+   float3 value;
+   value.x = m[0][row];
+   value.y = m[1][row];
+   value.y = m[2][row];
+   return value;
+}
+
+float4 tGetMatrixRow(in float4x4 m, int row)
+{
+   float4 value;
+   value.x = m[0][row];
+   value.y = m[1][row];
+   value.y = m[2][row];
+   value.w = m[3][row];
+   return value;
+}
+
+float3x3 float4x4to3x3(float4x4 m)
+{   
+   return float3x3( vec3(m[0]), m[1].xyz, m[2].xyz);
+}
+
 float saturate( float val ) { return clamp( val, 0.0, 1.0 ); }
 vec2 saturate( vec2 val ) { return clamp( val, 0.0, 1.0 ); }
 vec3 saturate( vec3 val ) { return clamp( val, 0.0, 1.0 ); }
@@ -64,7 +106,6 @@ vec3 mul( vec3 v1, mat3 m1) { return v1*m1; }
 vec3 mul( mat3 m1, vec3 v1) { return m1*v1; }
 vec2 mul( mat2 m1, vec2 v1) { return m1*v1; }
 mat3 mul( mat3 m1, mat3 m2) { return m1*m2; }
-
 
 vec4 rsqrt( vec4 n ){ return inversesqrt( n ); }
 
