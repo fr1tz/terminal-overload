@@ -75,7 +75,7 @@ function FrmBrickSeed::onCollision(%data, %proj, %col, %fade, %pos, %normal)
       %volume.init();
    }
 
-   %gridPos = MissionSoilGrid.worldToGrid(%pos);
+   %gridPos = MissionSoilGrid.worldToGrid(%proj.zTargetPosition);
    %gridPosX = getWord(%gridPos, 0);
    %gridPosY = getWord(%gridPos, 1);
    %gridPosZ = getWord(%gridPos, 2);
@@ -85,6 +85,10 @@ function FrmBrickSeed::onCollision(%data, %proj, %col, %fade, %pos, %normal)
    {
       %elevation = %volume.getHexagonElevation(%gridPos2D);
       %gridPos = %gridPosX SPC %gridPosY SPC %elevation;
+   }
+   else
+   {
+      %gridPos = %gridPosX SPC %gridPosY SPC %gridPosZ + 1;
    }
    %amount = %volume.getHexagonAmount(%gridPos2D);
    %volume.setHexagon(%gridPos, %proj.teamId, %amount + 1);

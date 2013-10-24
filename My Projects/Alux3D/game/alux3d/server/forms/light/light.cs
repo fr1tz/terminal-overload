@@ -1,6 +1,11 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
+datablock StaticShapeData(FrmLightPointerShape)
+{
+   shapeFile = "content/fr1tz/alux1/shapes/light/pointer.dae";
+};
+
 datablock LightFlareData(FrmLightLightFlare)
 {
    overallScale = "1";
@@ -156,6 +161,9 @@ function FrmLight::onAdd(%this, %obj)
    %obj.hearingDeafness = 0.75;
    %obj.hearingDeafnessDt = 0;
    %obj.hearingTinnitusEnabled = false;
+   
+   // Setup pointer.
+   %this.createPointer(%obj);
 
 	// start singing...
 	%obj.playAudio(1, EtherformSingSound);
@@ -209,6 +217,7 @@ function FrmLight::onAdd(%this, %obj)
 // callback function: called by engine
 function FrmLight::onRemove(%this, %obj)
 {
+   %obj.pointer.delete();
    %obj.light.delete();
 }
 
@@ -218,8 +227,6 @@ function FrmLight::onTrigger(%this, %obj, %triggerNum, %val)
    if(%val || %triggerNum > 0)
       return;
       
-   error(%obj.mode);
-   
    if(%obj.mode $= "posess")
       %this.posess(%obj);
    else if(%obj.mode $= "transform")
@@ -316,6 +323,268 @@ function FrmLight::onTrigger(%this, %obj, %triggerNum, %val)
 
 	if(%triggerNum == 1 && %val)
       %obj.setVelocity("0 0 0");
+}
+
+// Called by script
+function FrmLight::createPointer(%this, %obj)
+{
+   if(isObject(%obj.pointer))
+      %obj.pointer.delete();
+
+   %obj.pointer = new StaticShape() {
+	  dataBlock = FrmLightPointerShape;
+	  client = %obj.client;
+     teamId = %obj.client.team.teamId;
+   };
+   MissionCleanup.add(%obj.pointer);
+   //%obj.pointer.setGhostingListMode("GhostOnly");
+   //%obj.pointer.getHudInfo().setActive(true);
+   //%obj.pointer.setCollisionsDisabled(true);
+   
+   %this.updatePointerThread(%obj);
+}
+
+// Called by script
+function FrmLight::updatePointerThread(%this, %obj)
+{
+   %this.schedule(32, "updatePointerThread", %obj);
+
+   if(!isObject(%obj))
+      return;
+      
+   %obj.pointer.setTransform("0 0 0");
+
+   %prevSpawnError = %client.spawnError;
+
+   %eyeVec = %obj.getEyeVector();
+   %start = %obj.getEyePoint();
+   %end = VectorAdd(%start, VectorScale(%eyeVec, 9999));
+   %c = containerRayCast(%start, %end, $TypeMasks::StaticObjectType, %obj);
+   if(!%c)
+   {
+      //%client.spawnError = "No surface in range";
+      //%client.proxy.removeClientFromGhostingList(%client);
+      //%client.proxy.setTransform("0 0 0");
+      //%client.pointer.removeClientFromGhostingList(%client);
+      //%obj.pointer.setTransform("0 0 0");
+      //%client.pointer.getHudInfo().setActive(false);
+      return;
+   }
+
+
+   %pos = getWords(%c, 1, 3);
+   %vec = VectorNormalize(VectorSub(%pos, %start));
+   %pos = VectorAdd(%pos, VectorScale(%vec, 0.1));
+   
+   %normal = getWords(%c, 4, 6);
+
+   %obj.pointer.basePos = %pos;
+
+   //%transform = createOrientFromDir(%normal);
+   //%pos = VectorAdd(%pos, VectorScale(%normal, 0.25));
+   //%transform = setWord(%transform, 0, getWord(%pos, 0));
+   //%transform = setWord(%transform, 1, getWord(%pos, 1));
+   //%transform = setWord(%transform, 2, getWord(%pos, 2));
+   
+   %gridPos = MissionSoilGrid.worldToGrid(%pos);
+
+   %x = getWord(%gridPos, 0);
+   %y = getWord(%gridPos, 1);
+   %z = getWord(%gridPos, 2);
+   
+//   if(false)
+   if(((%x & 1) == 0 && (%y & 1) == 1)
+   || ((%x & 1) == 1 && (%y & 1) == 0))
+   {
+      %worldPos1 = MissionSoilGrid.gridToWorld(%x SPC %y + 1 SPC %z);
+      %worldPos2 = MissionSoilGrid.gridToWorld(%x SPC %y - 1 SPC %z);
+      %dist1 = VectorLen(VectorSub(%worldPos1, %pos));
+      %dist2 = VectorLen(VectorSub(%worldPos2, %pos));
+      if(%dist1 < %dist2)
+         %y += 1;
+      else
+         %y -= 1;
+      %gridPos = setWord(%gridPos, 1, %y);
+   }
+   
+   %gridPos2D = %x SPC %y;
+   
+   %worldPos = MissionSoilGrid.gridToWorld(%gridPos);
+   
+	InitContainerRadiusSearch(%pos, 0.1, $TypeMasks::StaticObjectType);
+	while((%srchObj = containerSearchNext()) != 0)
+	{
+      if(%srchObj.getClassName() $= "HexagonVolume")
+      {
+         %volume = %srchObj;
+         %shapeNr = %volume.getHexagonShapeNr(%gridPos2D);
+         if(%shapeNr == 0)
+            continue;
+
+         %elevation = %volume.getHexagonElevation(%gridPos2D);
+         %amount = %volume.getHexagonAmount(%gridPos2D);
+         %top = %elevation + %amount - 1;
+         
+         if(%top > %z)
+            %z = %top;
+      }
+	}
+ 
+   %gridPos = %x SPC %y SPC %z;
+   
+   %worldPos = MissionSoilGrid.gridToWorld(%gridPos);
+   
+   //%obj.pointer.addClientToGhostingList(%client);
+   %obj.pointer.setTransform(%worldPos);
+   //%obj.pointer.getHudInfo().setActive(true);
+
+   return;
+   
+
+   if(%y > 0)
+   {
+      //%r = %y - mFloor(%y);
+      if((%y & 1) == 0)
+      {
+         %r = %y % 2;
+         if(%r < 1)
+            %y = mCeil(%y);
+         else
+            %y = mFloor(%y);
+      }
+   }
+   else
+   {
+      //%r = %y - mFloor(%y);
+      %r = %y % 2;
+      if(%r > 1)
+         %y = mCeil(%y);
+      else
+         %y = mFloor(%y);
+   }
+   %gridPos = setWord(%gridPos, 1, %y);
+
+   %worldPos = MissionSoilGrid.gridToWorld(%gridPos);
+
+   //%obj.pointer.addClientToGhostingList(%client);
+   %obj.pointer.setTransform(%worldPos);
+   //%obj.pointer.getHudInfo().setActive(true);
+      
+   return;
+
+   if(isObject(%client.pointer))
+   {
+
+   }
+
+   if(%obj.getEnergyLevel() < 0) // %obj.maxEnergy)
+   {
+      %client.spawnError = "Not enough energy to materialize.";
+      %client.proxy.shapeFxSetColor(0, 2);
+      %client.proxy.shapeFxSetColor(1, 2);
+   }
+   else
+      %client.spawnError = "";
+
+   %x = getWord(%c,1);
+   if(%x > 0)
+   {
+      //%r = %x - mFloor(%x);
+      %r = %x % 2;
+      if(%r < 1)
+         %x = mCeil(%x);
+      else
+         %x = mFloor(%x);
+   }
+   else
+   {
+      %r = %x % 2;
+      if(%r > 1)
+         %x = mCeil(%x);
+      else
+         %x = mFloor(%x);
+   }
+   %y = getWord(%c,2);
+   if(%y > 0)
+   {
+      //%r = %y - mFloor(%y);
+      %r = %y % 2;
+      if(%r < 1)
+         %y = mCeil(%y);
+      else
+         %y = mFloor(%y);
+   }
+   else
+   {
+      //%r = %y - mFloor(%y);
+      %r = %y % 2;
+      if(%r > 1)
+         %y = mCeil(%y);
+      else
+         %y = mFloor(%y);
+   }
+   %z = getWord(%c,3);
+   %pos = %x SPC %y SPC %z;
+   %normal = getWords(%c, 4, 6);
+   if(%pos $= %client.proxy.getPosition()
+   && (%client.spawnError $= %prevSpawnError))
+      return;
+
+   %transform = %pos SPC %normal SPC "0";
+   if(%client.proxy.getDataBlock().isMethod("adjustTransform"))
+   {
+      %transform = %client.proxy.getDataBlock().adjustTransform(
+         %pos, %normal, %eyeVec);
+   }
+   %client.proxy.addClientToGhostingList(%client);
+   %client.proxy.setTransform(%transform);
+
+   if(%obj.getEnergyLevel() < %obj.maxEnergy)
+      return;
+
+   %pieces = sLoadoutcode2Pieces(%client.activeLoadout);
+   %missing = "";
+   for(%f = 0; %f < getFieldCount(%pieces); %f++)
+   {
+      %field = getField(%pieces, %f);
+      %piece = getWord(%field, 0);
+      %count = getWord(%field, 1);
+
+      %used = %client.inventory.pieceUsed[%piece];
+      %free = %client.inventory.pieceCount[%piece] - %used;
+
+      %piecestring = sPiece2String(%piece);
+
+      if(%free < %count)
+      {
+         if(%missing !$= "")
+            %missing = %missing @ " and ";
+         %missing = %missing @ %piecestring;
+      }
+   }
+   if(%missing !$= "")
+      %client.spawnError = "Bank is missing" SPC %missing SPC "piece";
+
+
+   if(%client.spawnError $= "")
+   {
+      if(%client.proxy.getDataBlock().form.isMethod("canMaterialize"))
+      {
+         %client.spawnError = %client.proxy.getDataBlock().form.canMaterialize(
+            %client, %pos, %normal, %transform);
+      }
+   }
+
+   if(%client.spawnError $= "")
+   {
+      %client.proxy.shapeFxSetColor(0, 3);
+      %client.proxy.shapeFxSetColor(1, 3);
+   }
+   else
+   {
+      %client.proxy.shapeFxSetColor(0, 1);
+      %client.proxy.shapeFxSetColor(1, 1);
+   }
 }
 
 // Called by Etherform::updateVisuals() script function
@@ -434,49 +703,10 @@ function FrmLight::materializeFDV(%this, %obj)
 // Called by script
 function FrmLight::build(%this, %obj)
 {
-   %client = %obj.client;
+   %pos = %obj.getPosition();
+   %vel = VectorScale(%obj.getEyeVector(), -FrmBrickSeed.muzzleVelocity);
+   %targetPos = %obj.pointer.getPosition();
 
-   %eyeVec = %obj.getEyeVector();
-   %startPos = %obj.getEyePoint();
-   %endPos = VectorAdd(%startPos, VectorScale(%eyeVec, 9999));
-   %target = ContainerRayCast(%startPos, %endPos, $TypeMasks::StaticObjectType);
-   if(%target == 0)
-      return;
-   if(!%target.isMethod("getDataBlock"))
-      return;
-   %data = %target.getDataBlock();
-      
-   // Find meta soil tile.
-   %tile = "";
-   if(%data == SoilVolume.getId() || %data == SoilVolumeCollisionShape.getId())
-   {
-   	InitContainerRadiusSearch(%pos, 0.1, $TypeMasks::StaticObjectType);
-   	while((%srchObj = containerSearchNext()) != 0)
-   	{
-         if(!%srchObj.isMethod("getDataBlock"))
-            continue;
-
-         if(%srchObj.getDataBlock() == MetaSoilTile.getId())
-         {
-            echo("found tile" SPC %srchObj.getName());
-            %tile = %srchObj;
-            break;
-         }
-   	}
-   }
-      
-   echo(%target.getClassName());
-   echo(%target.getDataBlock().getName());
-      
-   return;
-      
-   %targetPos = getWords(%target, 1, 3);
-
-   %pos = %obj.getWorldBoxCenter();
-   %vec = %obj.getEyeVector();
-   //%vec = "0 0 1";
-   %vel = VectorScale(%vec, -FrmBrickSeed.muzzleVelocity);
-   
    // create the projectile object...
 	%p = new Projectile() {
 		dataBlock       = FrmBrickSeed;

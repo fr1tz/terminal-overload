@@ -27,14 +27,40 @@ function Grid::worldToGrid(%this, %pos)
 
    %gridX = (%worldX-%originX) / %spacingX;
    if(%gridX > 0)
-      %gridX = mCeil(%gridX);
+   {
+      %r = (%gridX*2) % 2;
+      if(%r < 1)
+         %gridX = mFloor(%gridX);
+      else
+         %gridX = mCeil(%gridX);
+   }
    else
-      %gridX = mFloor(%gridX);
+   {
+      %r = (%gridX*2) % 2;
+      if(%r > 1)
+         %gridX = mFloor(%gridX);
+      else
+         %gridX = mCeil(%gridX);
+   }
+
    %gridY = (%worldY-%originY)/%spacingY;
    if(%gridY > 0)
-      %gridY = mCeil(%gridY);
+   {
+      %r = (%gridY*2) % 2;
+      if(%r < 1)
+         %gridY = mFloor(%gridY);
+      else
+         %gridY = mCeil(%gridY);
+   }
    else
-      %gridY = mFloor(%gridY);
+   {
+      %r = (%gridY*2) % 2;
+      if(%r > 1)
+         %gridY = mFloor(%gridY);
+      else
+         %gridY = mCeil(%gridY);
+   }
+      
    %gridZ = (%worldZ-%originZ)/%spacingZ;
    %gridZ = mCeil(%gridZ);
 
