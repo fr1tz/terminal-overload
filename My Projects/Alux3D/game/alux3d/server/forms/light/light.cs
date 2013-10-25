@@ -153,6 +153,7 @@ function FrmLight::onAdd(%this, %obj)
  
    // Setup view & hearing
    %obj.fovDelta = 0;
+   %obj.viewHud = "LightHud";
    %obj.viewIrisSizeX = 8;
    %obj.viewIrisSizeY = 8;
    %obj.viewIrisDtX = 0;

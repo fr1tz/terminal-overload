@@ -158,6 +158,22 @@ function clientCmdSetFovDelta(%dt)
    setFovDelta(%dt);
 }
 
+function clientCmdViewSetHud(%hud, %teamId)
+{
+   %valid = false;
+   if(%hud $= "LightHud")
+      %valid = true;
+   if(%hud $= "SoldierHud")
+      %valid = true;
+      
+   if(!%valid)
+      return;
+      
+   %hud.zTeamId = %teamId;
+   $PlayGui = %hud;
+   Canvas.setContent($PlayGui);
+}
+
 function clientCmdViewSetIris(%sizeX, %dtX, %sizeY, %dtY)
 {
    if(%sizeX !$= "")

@@ -63,6 +63,8 @@ function initClient()
    exec("art/gui/hudlessGui.gui");
    exec("alux3d/client/hud/overlayHud.gui");
    exec("alux3d/client/hud/overlayHud.cs");
+   exec("alux3d/client/hud/lightHud.gui");
+   exec("alux3d/client/hud/lightHud.cs");
    exec("alux3d/client/hud/soldierHud.gui");
    exec("alux3d/client/hud/soldierHud.cs");
    $PlayGui = SoldierHud;
