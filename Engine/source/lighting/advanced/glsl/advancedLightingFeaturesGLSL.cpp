@@ -67,7 +67,7 @@ void DeferredRTLightingFeatGLSL::processVert(   Vector<ShaderComponent*> &compon
    Var *ssPos = connectComp->getElement( RT_TEXCOORD );
    ssPos->setName( "screenspacePos" );
    ssPos->setStructName( "OUT" );
-   ssPos->setType( "float4" );
+   ssPos->setType( "vec4" );
 
    Var *outPosition = (Var*) LangElement::find( "gl_Position" );
    AssertFatal( outPosition, "No gl_Position, ohnoes." );
@@ -91,10 +91,10 @@ void DeferredRTLightingFeatGLSL::processPix( Vector<ShaderComponent*> &component
    Var *ssPos = connectComp->getElement( RT_TEXCOORD );
    ssPos->setName( "screenspacePos" );
    ssPos->setStructName( "IN" );
-   ssPos->setType( "float4" );
+   ssPos->setType( "vec4" );
 
    Var *uvScene = new Var;
-   uvScene->setType( "float2" );
+   uvScene->setType( "vec2" );
    uvScene->setName( "uvScene" );
    LangElement *uvSceneDecl = new DecOp( uvScene );
 
@@ -103,7 +103,7 @@ void DeferredRTLightingFeatGLSL::processPix( Vector<ShaderComponent*> &component
    if( !rtParams )
    {
       rtParams = new Var;
-      rtParams->setType( "float4" );
+      rtParams->setType( "vec4" );
       rtParams->setName( rtParamName );
       rtParams->uniform = true;
       rtParams->constSortPos = cspPass;
@@ -115,7 +115,7 @@ void DeferredRTLightingFeatGLSL::processPix( Vector<ShaderComponent*> &component
    meta->addStatement( new GenOp( "   @ = ( @ * @.zw ) + @.xy;\r\n", uvScene, uvScene, rtParams, rtParams) ); // scale it down and offset it to the rt size
 
    Var *lightInfoSamp = new Var;
-   lightInfoSamp->setType( "float4" );
+   lightInfoSamp->setType( "vec4" );
    lightInfoSamp->setName( "lightInfoSample" );
 
    // create texture var
@@ -128,7 +128,7 @@ void DeferredRTLightingFeatGLSL::processPix( Vector<ShaderComponent*> &component
 
    // Declare the RTLighting variables in this feature, they will either be assigned
    // in this feature, or in the tonemap/lightmap feature
-   Var *d_lightcolor = new Var( "d_lightcolor", "float3" );
+   Var *d_lightcolor = new Var( "d_lightcolor", "vec3" );
    meta->addStatement( new GenOp( "   @;\r\n", new DecOp( d_lightcolor ) ) );
 
    Var *d_NL_Att = new Var( "d_NL_Att", "float" );
@@ -150,7 +150,7 @@ void DeferredRTLightingFeatGLSL::processPix( Vector<ShaderComponent*> &component
       if( !oneOverTargetSize )
       {
          oneOverTargetSize = new Var;
-         oneOverTargetSize->setType( "float2" );
+         oneOverTargetSize->setType( "vec2" );
          oneOverTargetSize->setName( "oneOverTargetSize" );
          oneOverTargetSize->uniform = true;
          oneOverTargetSize->constSortPos = cspPass;
@@ -231,7 +231,7 @@ void DeferredBumpFeatGLSL::processVert(   Vector<ShaderComponent*> &componentLis
          const bool useTexAnim = fd.features[MFT_TexAnim];
 
          getOutTexCoord(   "texCoord", 
-                           "float2", 
+                           "vec2", 
                            true, 
                            useTexAnim, 
                            meta, 
@@ -272,13 +272,13 @@ void DeferredBumpFeatGLSL::processPix( Vector<ShaderComponent*> &componentList,
 
       // create texture var
       Var *bumpMap = getNormalMapTex();
-      Var *texCoord = getInTexCoord( "texCoord", "float2", true, componentList );
+      Var *texCoord = getInTexCoord( "texCoord", "vec2", true, componentList );
       LangElement *texOp = new GenOp( "tex2D(@, @)", bumpMap, texCoord );
 
       // create bump normal
       Var *bumpNorm = new Var;
       bumpNorm->setName( "bumpNormal" );
-      bumpNorm->setType( "float4" );
+      bumpNorm->setType( "vec4" );
 
       LangElement *bumpNormDecl = new DecOp( bumpNorm );
       meta->addStatement( expandNormalMap( texOp, bumpNormDecl, bumpNorm, fd ) );
@@ -295,12 +295,12 @@ void DeferredBumpFeatGLSL::processPix( Vector<ShaderComponent*> &componentList,
          bumpMap->sampler = true;
          bumpMap->constNum = Var::getTexUnitNum();
 
-         texCoord = getInTexCoord( "detCoord", "float2", true, componentList );
+         texCoord = getInTexCoord( "detCoord", "vec2", true, componentList );
          texOp = new GenOp( "tex2D(@, @)", bumpMap, texCoord );
 
          Var *detailBump = new Var;
          detailBump->setName( "detailBump" );
-         detailBump->setType( "float4" );
+         detailBump->setType( "vec4" );
          meta->addStatement( expandNormalMap( texOp, new DecOp( detailBump ), detailBump, fd ) );
 
          Var *detailBumpScale = new Var;
@@ -342,12 +342,12 @@ void DeferredBumpFeatGLSL::processPix( Vector<ShaderComponent*> &componentList,
       Var *bumpSample = (Var *)LangElement::find( "bumpSample" );
       if( bumpSample == NULL )
       {
-         Var *texCoord = getInTexCoord( "texCoord", "float2", true, componentList );
+         Var *texCoord = getInTexCoord( "texCoord", "vec2", true, componentList );
 
          Var *bumpMap = getNormalMapTex();
 
          bumpSample = new Var;
-         bumpSample->setType( "float4" );
+         bumpSample->setType( "vec4" );
          bumpSample->setName( "bumpSample" );
          LangElement *bumpSampleDecl = new DecOp( bumpSample );
 
@@ -403,12 +403,14 @@ void DeferredBumpFeatGLSL::setTexData( Material::StageData &stageDat,
            fd.features[MFT_PixSpecular] ) )
    {
       passData.mTexType[ texIndex ] = Material::Bump;
+      passData.mSamplerNames[ texIndex ] = "bumpMap";
       passData.mTexSlot[ texIndex++ ].texObject = stageDat.getTex( MFT_NormalMap );
 
       if (  fd.features[MFT_PrePassConditioner] &&
             fd.features.hasFeature( MFT_DetailNormalMap ) )
       {
          passData.mTexType[ texIndex ] = Material::DetailBump;
+         passData.mSamplerNames[ texIndex ] = "detailBumpMap";
          passData.mTexSlot[ texIndex++ ].texObject = stageDat.getTex( MFT_DetailNormalMap );
       }
    }
@@ -446,7 +448,7 @@ void DeferredPixelSpecularGLSL::processPix(  Vector<ShaderComponent*> &component
    if(specCol == NULL)
    {
       specCol = new Var;
-      specCol->setType( "float4" );
+      specCol->setType( "vec4" );
       specCol->setName( "specularColor" );
       specCol->uniform = true;
       specCol->constSortPos = cspPotentialPrimitive;
@@ -620,7 +622,7 @@ void DeferredSubSurfaceGLSL::processPix(  Vector<ShaderComponent*> &componentLis
    }
 
    Var *subSurfaceParams = new Var;
-   subSurfaceParams->setType( "float4" );
+   subSurfaceParams->setType( "vec4" );
    subSurfaceParams->setName( "subSurfaceParams" );
    subSurfaceParams->uniform = true;
    subSurfaceParams->constSortPos = cspPotentialPrimitive;
