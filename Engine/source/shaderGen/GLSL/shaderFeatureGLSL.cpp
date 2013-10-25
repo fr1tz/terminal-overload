@@ -2634,7 +2634,7 @@ void ImposterVertFeatureGLSL::processVert(   Vector<ShaderComponent*> &component
    meta->addStatement( new GenOp( "   @ = @.y;\r\n", outFade, inMiscParams ) );
 	
    // All actual work is done in this method.
-   meta->addStatement( new GenOp( "   imposter_v( @.xyz, @.w, @.x * length(@), normalize(@), normalize(@), @.y, @.x, @.z, @.w, @, @, @, @, @ );\r\n",
+   meta->addStatement( new GenOp( "   imposter_v( @.xyz, int(@.w), @.x * length(@), normalize(@), normalize(@), int(@.y), int(@.x), @.z, bool(@.w), @, @, @, @, @ );\r\n",
 											
 											inPosition,
 											inPosition,
