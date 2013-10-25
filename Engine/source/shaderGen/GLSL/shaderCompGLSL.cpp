@@ -378,4 +378,22 @@ void PixelParamsDefGLSL::print( Stream &stream, bool isVerterShader )
 
    const char *closer = "\r\nvoid main()\r\n{\r\n";
    stream.write( dStrlen(closer), closer );
+
+   for( U32 i=0; i<LangElement::elementList.size(); i++)
+   {
+      Var *var = dynamic_cast<Var*>(LangElement::elementList[i]);
+      if( var )
+      {
+         if( var->uniform && !var->sampler)
+         {
+            U8 output[256];
+            if(var->arraySize <= 1)
+               dSprintf((char*)output, sizeof(output), "   %s %s = %s;\r\n", var->type, var->name, var->name);
+            else
+               dSprintf((char*)output, sizeof(output), "   %s %s[%d] = %s;\r\n", var->type, var->name, var->arraySize, var->name);
+
+            stream.write( dStrlen((char*)output), output );
+         }
+      }
+   }
 }
