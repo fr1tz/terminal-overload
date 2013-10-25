@@ -352,7 +352,8 @@ function FrmLight::updatePointerThread(%this, %obj)
 
    if(!isObject(%obj))
       return;
-      
+
+   %obj.pointer.setMeshHidden("hexagon", true);
    %obj.pointer.setTransform("0 0 0");
 
    %prevSpawnError = %client.spawnError;
@@ -363,6 +364,7 @@ function FrmLight::updatePointerThread(%this, %obj)
    %c = containerRayCast(%start, %end, $TypeMasks::StaticObjectType, %obj);
    if(!%c)
    {
+      %obj.buildError = "No surface in range";
       //%client.spawnError = "No surface in range";
       //%client.proxy.removeClientFromGhostingList(%client);
       //%client.proxy.setTransform("0 0 0");
@@ -412,6 +414,7 @@ function FrmLight::updatePointerThread(%this, %obj)
    
    %worldPos = MissionSoilGrid.gridToWorld(%gridPos);
    
+   %obj.buildError = "Invalid surface";
 	InitContainerRadiusSearch(%pos, 0.1, $TypeMasks::StaticObjectType);
 	while((%srchObj = containerSearchNext()) != 0)
 	{
@@ -419,9 +422,10 @@ function FrmLight::updatePointerThread(%this, %obj)
       {
          %volume = %srchObj;
          %shapeNr = %volume.getHexagonShapeNr(%gridPos2D);
-         if(%shapeNr == 0)
+         if(%shapeNr != %obj.teamId)
             continue;
-
+            
+         %obj.buildError = "";
          %elevation = %volume.getHexagonElevation(%gridPos2D);
          %amount = %volume.getHexagonAmount(%gridPos2D);
          %top = %elevation + %amount - 1;
@@ -431,11 +435,15 @@ function FrmLight::updatePointerThread(%this, %obj)
       }
 	}
  
+   if(%obj.buildError !$= "")
+      return;
+ 
    %gridPos = %x SPC %y SPC %z;
    
    %worldPos = MissionSoilGrid.gridToWorld(%gridPos);
    
    //%obj.pointer.addClientToGhostingList(%client);
+   %obj.pointer.setMeshHidden("hexagon", false);
    %obj.pointer.setTransform(%worldPos);
    //%obj.pointer.getHudInfo().setActive(true);
 
