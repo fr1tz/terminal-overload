@@ -209,6 +209,10 @@ function FrmSoldierpod::onImpact(%this, %obj, %col, %vec, %vecLen)
    }
 
    %player = FrmSoldier.materialize(%client, %pos, %normal, %transform);
+   if(%obj.teamId == 1)
+      %player.setSkinName("Team1");
+   else if(%obj.teamId == 2)
+      %player.setSkinName("Team2");
    %player.setTransform(%transform);
    //%client.proxy.removeClientFromGhostingList(%client);
    //%client.proxy.setTransform("0 0 0");

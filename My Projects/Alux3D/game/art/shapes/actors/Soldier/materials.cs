@@ -70,6 +70,22 @@ singleton Material(soldier_rigged_ShapeBounds)
 // Soldier Skins
 // Add names to PlayerData.availableSkins list in art/datablock/player.cs
 
+singleton Material(Mat_Team1_Soldier_Main : Mat_Soldier_Main)
+{
+   mapTo = "Team1_Soldier_Main";
+   diffuseColor[0] = "0.996078 0.992157 0.992157 1";
+   diffuseMap[0] = "art/shapes/actors/Soldier/Soldier_Red_Dif.dds";
+   normalMap[0] = "art/shapes/actors/Soldier/Soldier_N.dds";
+   specularMap[0] = "art/shapes/actors/Soldier/Soldier_Spec.dds";
+   glow[0] = "0";
+   emissive[0] = "0";
+};
+
+singleton Material(Mat_Team2_Soldier_Main : Mat_Soldier_Main)
+{
+   mapTo = "Team2_Soldier_Main";
+};
+
 singleton Material(Mat_DarkBlue_Soldier_Main : Mat_Soldier_Main)
 {
    mapTo = "DarkBlue_Soldier_Main";

@@ -233,7 +233,7 @@ datablock PlayerData(FrmSoldier)
    maxInv[WpnPineapple] = 9999;
 
    // available skins (see materials.cs in model folder)
-   availableSkins =  "base	DarkBlue	DarkGreen	LightGreen	Orange	Red	Teal	Violet	Yellow";
+   availableSkins =  "base Team1 Team2 DarkBlue	DarkGreen	LightGreen	Orange	Red	Teal	Violet	Yellow";
    useEyePoint = "0";
    maxInvLurkerGrenadeLauncher = "1";
    maxInvRyderClip = "10";
