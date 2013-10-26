@@ -1,6 +1,13 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
+datablock SFXProfile(FrmSoldierSpawnGaspSound)
+{
+   fileName = "content/fr1tz/alux1/sounds/gasp1";
+   description = AudioClose3d;
+   preload = true;
+};
+
 datablock SFXProfile(FrmSoldierSpawnExplosionSound)
 {
 	filename	 = "content/rotc/p.5.3/sounds/rotc/deploy1.wav";

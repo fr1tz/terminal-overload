@@ -257,6 +257,9 @@ datablock PlayerData(FrmSoldier)
 function FrmSoldier::onAdd(%this, %obj)
 {
    Parent::onAdd(%this, %obj);
+   
+   %obj.playAudio(0, SoldierSpawnGaspSound);
+   
    %obj.setEnergyLevel(%this.maxEnergy);
    
 	%obj.isCAT = true;
