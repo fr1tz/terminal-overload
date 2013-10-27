@@ -2,7 +2,7 @@
 singleton Material(fr1tz_alux1_shapes_light_pointer_mat1)
 {
    mapTo = "fr1tz_alux1_shapes_light_pointer_mat1";
-   diffuseColor[0] = "0.992157 0.992157 0.996078 1";
+   diffuseColor[0] = "0.996078 0.996078 0.996078 1";
    specular[0] = "0.5 0.5 0.5 1";
    specularPower[0] = "50";
    doubleSided = "1";

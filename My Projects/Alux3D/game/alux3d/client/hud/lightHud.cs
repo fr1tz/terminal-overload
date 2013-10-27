@@ -67,7 +67,7 @@ function LightHud::onWake(%this)
    activateDirectInput();
 
    // Message hud dialog
-   if ( isObject( MainChatHud ) )
+   if (false && isObject( MainChatHud ) )
    {
       Canvas.pushDialog( OverlayHud );
       Canvas.pushDialog( MainChatHud );
