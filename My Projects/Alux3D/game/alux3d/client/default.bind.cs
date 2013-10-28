@@ -291,13 +291,13 @@ function mouseFire(%val)
    $mvTriggerCount0++;
 }
 
-//function altTrigger(%val)
-//{
-   //$mvTriggerCount1++;
-//}
+function altTrigger(%val)
+{
+   $mvTriggerCount1++;
+}
 
 moveMap.bind( mouse, button0, mouseFire );
-//moveMap.bind( mouse, button1, altTrigger );
+moveMap.bind( mouse, button1, altTrigger );
 
 //------------------------------------------------------------------------------
 // Gamepad Trigger
@@ -411,7 +411,7 @@ function mouseButtonZoom(%val)
 
 moveMap.bind(keyboard, f, setZoomFOV); // f for field of view
 moveMap.bind(keyboard, z, toggleZoom); // z for zoom
-moveMap.bind( mouse, button1, mouseButtonZoom );
+//moveMap.bind( mouse, button1, mouseButtonZoom );
 
 //------------------------------------------------------------------------------
 // Camera & View functions
@@ -707,7 +707,7 @@ vehicleMap.bind( keyboard, down, movebackward );
 vehicleMap.bind( mouse, xaxis, yaw );
 vehicleMap.bind( mouse, yaxis, pitch );
 vehicleMap.bind( mouse, button0, mouseFire );
-vehicleMap.bind( mouse, button1, altTrigger );
+//vehicleMap.bind( mouse, button1, altTrigger );
 vehicleMap.bindCmd(keyboard, "ctrl f","getout();","");
 vehicleMap.bind(keyboard, space, brake);
 vehicleMap.bindCmd(keyboard, "l", "brakeLights();", "");
