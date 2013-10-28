@@ -726,12 +726,15 @@ void Etherform::updateVelocity(const Move* move)
 		mObjToWorld.getColumn(3,&pos);
 		// sideways...
 		mObjToWorld.getColumn(0,&vec);
+		vec.z = 0; vec.normalize();
 		acc += vec * move->x * TickSec * scale;
 		// forward/backward...
 		mObjToWorld.getColumn(1,&vec);
+		vec.z = 0; vec.normalize();
 		acc += vec * move->y * TickSec * scale;
 		// up/down...
 		mObjToWorld.getColumn(2,&vec);
+		vec.set(0, 0, 1); vec.normalize();
 		acc += vec * move->trigger[2] * TickSec * scale;
 		vec.neg();
 		acc += vec * move->trigger[3] * TickSec * scale;
@@ -741,6 +744,8 @@ void Etherform::updateVelocity(const Move* move)
 
 		mVelocity += acc;
 		mVelocity -= mVelocity * mDrag * TickSec; // drag
+		if(move->trigger[1])
+			mVelocity *= 0.5;
 
 		setMaskBits(MoveMask);
 	}
