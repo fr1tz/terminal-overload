@@ -355,12 +355,16 @@ function FrmLight::updatePointerThread(%this, %obj)
 
    %obj.pointer.setMeshHidden("hexagon", true);
    %obj.pointer.setTransform("0 0 0");
+   
+   if(%obj.mode !$= "build")
+      return;
 
    %prevSpawnError = %client.spawnError;
 
-   %eyeVec = %obj.getEyeVector();
+   //%vec = %obj.getEyeVector();
+   %vec = "0 0 -4";
    %start = %obj.getEyePoint();
-   %end = VectorAdd(%start, VectorScale(%eyeVec, 9999));
+   %end = VectorAdd(%start, %vec);
    %c = containerRayCast(%start, %end, $TypeMasks::StaticObjectType, %obj);
    if(!%c)
    {
@@ -390,7 +394,8 @@ function FrmLight::updatePointerThread(%this, %obj)
    //%transform = setWord(%transform, 2, getWord(%pos, 2));
    
    %gridPos = MissionSoilGrid.worldToGrid(%pos);
-
+   //error(%gridPos);
+   
    %x = getWord(%gridPos, 0);
    %y = getWord(%gridPos, 1);
    %z = getWord(%gridPos, 2);
@@ -411,11 +416,12 @@ function FrmLight::updatePointerThread(%this, %obj)
    }
    
    %gridPos2D = %x SPC %y;
+   //echo(%gridPos2D);
    
    %worldPos = MissionSoilGrid.gridToWorld(%gridPos);
    
    %obj.buildError = "Invalid surface";
-	InitContainerRadiusSearch(%pos, 0.1, $TypeMasks::StaticObjectType);
+	InitContainerRadiusSearch(%worldPos, 0.1, $TypeMasks::StaticObjectType);
 	while((%srchObj = containerSearchNext()) != 0)
 	{
       if(%srchObj.getClassName() $= "HexagonVolume")
@@ -712,24 +718,10 @@ function FrmLight::materializeFDV(%this, %obj)
 // Called by script
 function FrmLight::build(%this, %obj)
 {
-   %pos = %obj.getPosition();
-   %vel = VectorScale(%obj.getEyeVector(), -FrmBrickSeed.muzzleVelocity);
+   if(%obj.buildError !$= "" || !isObject(%obj.pointer))
+      return;
+
    %targetPos = %obj.pointer.getPosition();
 
-   // create the projectile object...
-	%p = new Projectile() {
-		dataBlock       = FrmBrickSeed;
-		teamId          = %obj.teamId;
-		initialVelocity = %vel;
-		initialPosition = %pos;
-		sourceObject    = %obj;
-		sourceSlot      =  0;
-		client	       = %obj.client;
-	};
-	MissionCleanup.add(%p);
-
-   %p.setLoadoutCode(%obj.client.activeLoadout);
-   %p.setTargetPosition(%targetPos);
-   %p.setTrackingAbility(%p.getDataBlock().maxTrackingAbility);
-   %p.zTargetPosition = %targetPos;
+   FrmSpawn::spawnBrick(%targetPos, %obj.teamId);
 }
