@@ -113,7 +113,7 @@ datablock EtherformData(FrmLight)
     boundingBox = "1.0 1.0 1.0";
  
     // etherform movement...
-    accelerationForce = 60;
+    accelerationForce = 30;
 
 	// impact damage...
 	minImpactSpeed = 1;		// If hit ground at speed above this then it's an impact. Meters/second
