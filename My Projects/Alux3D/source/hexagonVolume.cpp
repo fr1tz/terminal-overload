@@ -1205,6 +1205,8 @@ void HexagonVolume::rebuildMode2CollisionFinish()
 
 void HexagonVolume::rebuildMode2RenderStart()
 {	
+	return;
+
 	if(mRebuild.shape)
 		delete mRebuild.shape;
 	mRebuild.shape = NULL;
