@@ -65,7 +65,7 @@ void ParaboloidVertTransformGLSL::processVert(  Vector<ShaderComponent*> &compon
    // http://www.gamedev.net/reference/articles/article2308.asp
 
    // Swizzle z and y post-transform
-   meta->addStatement( new GenOp( "   @ = vec4(@ * vec4(@.xyz,1)).xzyw;\r\n", outPosition, worldViewOnly, inPosition ) );
+   meta->addStatement( new GenOp( "   @ = mul(@, float4(@.xyz,1)).xzyw;\r\n", outPosition, worldViewOnly, inPosition ) );
    meta->addStatement( new GenOp( "   float L = length(@.xyz);\r\n", outPosition ) ); 
 
    if ( isSinglePass )
