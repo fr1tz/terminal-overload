@@ -28,3 +28,15 @@ singleton Material(fr1tz_alux1_shapes_brick_mat2)
    detailScale[0] = "4 4";
    castShadows = "0";
 };
+
+singleton Material(fr1tz_alux1_shapes_brick_mat3)
+{
+   mapTo = "fr1tz_alux1_shapes_brick_mat3";
+   diffuseColor[0] = "0.992157 0.992157 0.992157 1";
+   specular[0] = "0.15927 0.15927 0.15927 1";
+   specularPower[0] = "50";
+   doubleSided = "1";
+   translucentBlendOp = "None";
+   glow[0] = "1";
+   emissive[0] = "1";
+};

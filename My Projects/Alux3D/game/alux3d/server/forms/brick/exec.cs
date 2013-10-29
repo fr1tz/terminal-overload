@@ -2,5 +2,8 @@
 // located in the root directory of this distribution.
 
 exec("./brick.cs");
+exec("./brick.gfx.cs");
+exec("./brick.sfx.cs");
 exec("./brick.seed.cs");
+exec("./brick.spawn.cs");
 
