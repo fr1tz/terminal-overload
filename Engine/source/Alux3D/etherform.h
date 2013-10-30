@@ -76,6 +76,22 @@ class Etherform : public ShapeBase
 	Point3F mCameraTargetPos;
 	/// @}
 
+   struct ContactInfo 
+   {
+      bool contacted;
+      SceneObject *contactObject;
+      VectorF contactNormal;
+
+      void clear()
+      {
+         contacted=false; 
+         contactObject = NULL; 
+         contactNormal.set(1,1,1);
+      }
+
+      ContactInfo() { clear(); }
+   } mContactInfo;
+
 	/// Client interpolation/warp data
 	struct StateDelta {
 		Move move;                    ///< Last move from server
@@ -125,10 +141,13 @@ private:
 
 protected:
 	// Etherform...
+   Point3F _move(const F32 travelTime, Collision *outCol);
+   void _handleCollision(const Collision &collision);
+   void _findContact(SceneObject **contactObject, VectorF *contactNormal, Vector<SceneObject*> *outOverlapObjects);
+   void findContact(VectorF *contactNormal);
 	void addLaserTrailNode(const Point3F& pos);
 	void updateTrailEmitter(F32 dt);
 	void updateWorkingCollisionSet();
-	void findContacts();
 	void updateVelocity(const Move* move);
 	bool updatePos(const F32 travelTime = TickSec);
 	void updateCameraPos(F32 delta);
