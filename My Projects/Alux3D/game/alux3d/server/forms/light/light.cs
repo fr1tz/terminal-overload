@@ -338,7 +338,8 @@ function FrmLight::createPointer(%this, %obj)
      teamId = %obj.client.team.teamId;
    };
    MissionCleanup.add(%obj.pointer);
-   //%obj.pointer.setGhostingListMode("GhostOnly");
+   %obj.pointer.setGhostingListMode("GhostOnly");
+   %obj.pointer.addClientToGhostingList(%obj.client);
    //%obj.pointer.getHudInfo().setActive(true);
    //%obj.pointer.setCollisionsDisabled(true);
    
