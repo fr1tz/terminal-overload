@@ -122,6 +122,10 @@ class HexagonVolume : public GameBase
 			Point2I mapPos;
 			mapPos.x = gridPos.x - this->originGridPos.x;
 			mapPos.y = gridPos.y - this->originGridPos.y;
+			if(mapPos.x < 0 || mapPos.x >= this->width)
+				return -1;
+			if(mapPos.y < 0 || mapPos.y >= this->height)
+				return -1;
 			U32 idx = (mapPos.y*this->width) + mapPos.x;
 			return idx;
 		};
