@@ -497,6 +497,17 @@ static void _scopeCallback( SceneObject* object, void* data )
    ScopingInfo* info = reinterpret_cast< ScopingInfo* >( data );
    NetConnection* connection = info->connection;
 
+	if(object->getGhostingListMode() == NetObject::GhostOnly)
+	{
+		if(!object->isClientOnGhostingList(connection))
+			return;
+	}
+	else if(object->getGhostingListMode() == NetObject::NeverGhost)
+	{
+		if(object->isClientOnGhostingList(connection))
+			return;
+	}	
+
    F32 difSq = ( object->getWorldSphere().center - info->scopePoint ).lenSquared();
    if( difSq < info->scopeDistSquared )
    {

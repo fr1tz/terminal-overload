@@ -27,6 +27,7 @@ NetObject::NetObject()
    mPrevDirtyList = NULL;
    mNextDirtyList = NULL;
    mDirtyMaskBits = 0;
+   mGhostingListMode = Disabled;
 }
 
 NetObject::~NetObject()
@@ -146,6 +147,86 @@ void NetObject::collapseDirtyList()
 }
 
 //-----------------------------------------------------------------------------
+
+void NetObject::setGhostingListMode(const char* mode)
+{
+	if(dStricmp(mode, "Disabled") == 0)
+		mGhostingListMode = Disabled;
+	else if(dStricmp(mode, "GhostOnly") == 0)
+		mGhostingListMode = GhostOnly;
+	else if(dStricmp(mode, "NeverGhost") == 0)
+		mGhostingListMode = NeverGhost;
+}
+
+void NetObject::clearGhostingList()
+{
+	for(U32 i = 0; i < mGhostingList.size(); i++)
+		this->clearNotify(mGhostingList[i]);
+	mGhostingList.clear();
+}
+
+void NetObject::addClientToGhostingList(NetConnection* conn)
+{
+	for(U32 i = 0; i < mGhostingList.size(); i++)
+		if(mGhostingList[i] == conn)
+			return;
+
+	mGhostingList.push_back(conn);
+	this->deleteNotify(conn);
+}
+
+void NetObject::removeClientFromGhostingList(NetConnection* conn)
+{
+	for(U32 i = 0; i < mGhostingList.size(); i++) 
+	{
+		if(mGhostingList[i] == conn) 
+		{
+			mGhostingList.erase(i);
+			this->clearNotify(conn);
+			return;
+		}
+	}	
+}
+
+bool NetObject::isClientOnGhostingList(NetConnection* conn)
+{
+	for(U32 i = 0; i < mGhostingList.size(); i++) 
+		if(mGhostingList[i] == conn) 
+			return true;
+	return false;
+}
+
+DefineEngineMethod(NetObject, setGhostingListMode, void, (const char* mode),,
+   "@brief Available modes: Disabled, GhostOnly, NeverGhost.\n\n")
+{
+   object->setGhostingListMode(mode);
+}
+
+DefineEngineMethod(NetObject, clearGhostingList, void, (),,
+   "@brief Clear object's ghosting list.\n\n")
+{
+   object->clearGhostingList();
+}
+
+DefineEngineMethod(NetObject, addClientToGhostingList, void, (NetConnection* client),,
+   "@brief Add the client to the object's ghosting list.\n\n")
+{
+   object->addClientToGhostingList(client);
+}
+
+DefineEngineMethod(NetObject, removeClientFromGhostingList, void, (NetConnection* client),,
+   "@brief Remove the client from the object's ghosting list.\n\n")
+{
+   object->removeClientFromGhostingList(client);
+}
+
+DefineEngineMethod(NetObject, isClientOnGhostingList, bool, (NetConnection* client),,
+   "@brief Return whether the client is on the object's ghosting list.\n\n")
+{
+   return object->isClientOnGhostingList(client);
+}
+
+
 DefineEngineMethod( NetObject, scopeToClient, void, ( NetConnection* client),,
    "@brief Cause the NetObject to be forced as scoped on the specified NetConnection.\n\n"
 

@@ -208,6 +208,13 @@ class NetObject: public SimObject
    // Not the best way to do this, but the event needs access to mNetFlags
    friend class GhostAlwaysObjectEvent;
 
+public:
+	enum GhostingListMode {
+		Disabled,
+		GhostOnly,
+		NeverGhost
+	};
+
 private:
    typedef SimObject Parent;
 
@@ -233,6 +240,16 @@ private:
    /// Previous item in the dirty list...
    NetObject *mNextDirtyList;
 
+   /// @}
+
+   /// @name Ghosting list: (added for Alux)
+   /// Connections can be added to/removed from the ghosting list via script.
+   /// The ghosting list is ignored by default, but can be activated to either
+   /// allow ghosting only to connections on the list or deny ghosting to the
+   /// connections on the list.
+   /// @{
+   Vector<NetConnection*> mGhostingList;
+   GhostingListMode mGhostingListMode;
    /// @}
 protected:
 
@@ -286,6 +303,30 @@ public:
    /// @param   orMask   Bits to clear
    virtual void clearMaskBits(U32 orMask);
    virtual U32 filterMaskBits(U32 mask, NetConnection * connection) { return mask; }
+
+   /// Set ghosting list mode. (added for Alux)
+   ///(See mGhostingList for more info.)
+   void setGhostingListMode(const char* mode);
+
+   /// Return ghosting list mode. (added for Alux)
+   /// (See mGhostingList for more info.)
+   GhostingListMode getGhostingListMode() { return mGhostingListMode; };
+
+   /// Clear ghosting list. (added for Alux)
+   /// (See mGhostingList for more info.)
+   void clearGhostingList();
+
+   /// Add a connection to the ghosting list. (added for Alux)
+   /// (See mGhostingList for more info.)
+   void addClientToGhostingList(NetConnection* conn);
+
+   /// Remove a connection from the ghosting list. (added for Alux)
+   /// (See mGhostingList for more info.)
+   void removeClientFromGhostingList(NetConnection* conn);
+
+   /// Check if a connection is on the ghosting list. (added for Alux)
+   /// (See mGhostingList for more info.)
+   bool isClientOnGhostingList(NetConnection* conn);
 
    ///  Scope the object to all connections.
    ///
