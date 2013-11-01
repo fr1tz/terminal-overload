@@ -1125,6 +1125,19 @@ void HexagonVolume::rebuildMode2Start()
 
 void HexagonVolume::rebuildMode2CollisionStart()
 {
+	// Get rid of collision objects.
+	U32 n = mHexMap.width * mHexMap.height;
+	for(U32 idx = 0; idx < n; idx++)
+	{
+		HexMap::Hex& hex = mHexMap.hexArray[idx];
+		if(hex.col.size() > 0)
+		{
+			for(U32 i = 0; i < hex.col.size(); i++)
+				hex.col[i]->deleteObject();
+			hex.col.clear();
+		}
+	}
+
 	mRebuild.idx = 0;
 	mRebuild.state = RebuildProcess::CollisionProcess;
 }
@@ -1143,9 +1156,6 @@ void HexagonVolume::rebuildMode2CollisionProcess()
 
 	if(hex.shapeNr == 0)
 	{
-		for(U32 i = 0; i < hex.col.size(); i++)
-			hex.col[i]->deleteObject();
-		hex.col.clear();
 		mRebuild.idx++;
 	}
 	else
