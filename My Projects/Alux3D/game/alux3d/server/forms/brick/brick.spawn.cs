@@ -31,6 +31,7 @@ function FrmSpawn::spawnBrick(%transform, %teamId)
          scale = "10 10 10";
       };
       MissionCleanup.add(%volume);
+      %volume.zNumBricks = 0;
       %volume.init();
    }
 
@@ -51,6 +52,7 @@ function FrmSpawn::spawnBrick(%transform, %teamId)
    }
    %amount = %volume.getHexagonAmount(%gridPos2D);
    %volume.setHexagon(%gridPos, %teamId, %amount + 1);
+   %volume.zNumBricks++;
    %volume.rebuild();
 
    %gridPos = setWord(%gridPos, 2, %amount + 1);
