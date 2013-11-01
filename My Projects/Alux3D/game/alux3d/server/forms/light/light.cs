@@ -394,27 +394,12 @@ function FrmLight::updatePointerThread(%this, %obj)
    //%transform = setWord(%transform, 1, getWord(%pos, 1));
    //%transform = setWord(%transform, 2, getWord(%pos, 2));
    
-   %gridPos = MissionSoilGrid.worldToGrid(%pos);
+   %gridPos = MissionSoilGrid.worldToHexagon(%pos);
    //error(%gridPos);
    
    %x = getWord(%gridPos, 0);
    %y = getWord(%gridPos, 1);
    %z = getWord(%gridPos, 2);
-   
-//   if(false)
-   if(((%x & 1) == 0 && (%y & 1) == 1)
-   || ((%x & 1) == 1 && (%y & 1) == 0))
-   {
-      %worldPos1 = MissionSoilGrid.gridToWorld(%x SPC %y + 1 SPC %z);
-      %worldPos2 = MissionSoilGrid.gridToWorld(%x SPC %y - 1 SPC %z);
-      %dist1 = VectorLen(VectorSub(%worldPos1, %pos));
-      %dist2 = VectorLen(VectorSub(%worldPos2, %pos));
-      if(%dist1 < %dist2)
-         %y += 1;
-      else
-         %y -= 1;
-      %gridPos = setWord(%gridPos, 1, %y);
-   }
    
    %gridPos2D = %x SPC %y;
    //echo(%gridPos2D);
