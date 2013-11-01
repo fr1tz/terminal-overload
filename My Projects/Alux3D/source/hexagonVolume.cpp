@@ -389,9 +389,9 @@ bool HexagonVolume::buildPolyList(PolyListContext context, AbstractPolyList* pol
 				ShapeBaseData* data = mDataBlock->collisionShapeData[hex.shapeNr];
 				if(!data)
 					continue;
-				for(U32 i = 0; i < data->collisionDetails.size(); i++)
+				for(U32 hullId = 0; hullId < data->collisionDetails.size(); hullId++)
 				{
-					shapeInstance->buildPolyList(polyList, data->collisionDetails[i]);
+					shapeInstance->buildPolyList(polyList, data->collisionDetails[hullId]);
 					ret = true;
 				}
 			}
@@ -512,7 +512,7 @@ bool HexagonVolume::castRay(const Point3F &start, const Point3F &end, RayInfo* i
 			Point3F s = worldStart - worldPos;
 			Point3F e = worldEnd - worldPos;
 
-			for(U32 hullId = 0; i < shapeData->collisionDetails.size(); i++)
+			for(U32 hullId = 0; hullId < shapeData->collisionDetails.size(); hullId++)
 			{
 				if(shapeInstance->castRay(s, e, info, shapeData->collisionDetails[hullId]))
 				{
