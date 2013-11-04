@@ -407,12 +407,7 @@ void HexagonVolume::buildConvex(const Box3F& box, Convex* convex)
 	|| mRebuild.state == RebuildProcess::Ready)
 		return;
 
-   Box3F realBox = box;
-   mWorldToObj.mul(realBox);
-   realBox.minExtents.convolveInverse(mObjScale);
-   realBox.maxExtents.convolveInverse(mObjScale);
-
-   if (realBox.isOverlapped(getObjBox()) == false)
+   if(box.isOverlapped(this->getWorldBox()) == false)
       return;
 
 	U32 n = mHexMap.width * mHexMap.height;
@@ -436,6 +431,19 @@ void HexagonVolume::buildConvex(const Box3F& box, Convex* convex)
 
 		for (U32 hullId = 0; hullId < data->collisionDetails.size(); hullId++)
 		{
+			Box3F hullBounds = data->collisionBounds[hullId];
+			F32 hullHeight = hullBounds.len_z();
+
+			Point3I gridPos = mHexMap.indexToGrid(idx);
+			Point3F worldPos = mGrid->gridToWorld(gridPos);
+
+			hullBounds.minExtents += worldPos;
+			hullBounds.maxExtents += worldPos;
+			hullBounds.maxExtents.z += hullHeight*(hex.amount-1);
+
+			if(box.isOverlapped(hullBounds) == false)
+				continue;
+
 			// See if this hull exists in the working set already...
 			Convex* cc = 0;
 			CollisionWorkingList& wl = convex->getWorkingList();
