@@ -18,6 +18,27 @@ datablock HexagonVolumeData(SoilVolume)
    mode = 2;
 };
 
+
+function SoilVolume::destroy(%this, %volume, %pos, %radius, %spareShapeNr)
+{
+	%targets = new SimSet();
+	InitContainerRadiusSearch(%pos, %radius, $TypeMasks::StaticObjectType);
+	while((%targetObject = containerSearchNext()) != 0)
+		%targets.add(%targetObject);
+ 	for(%idx = %targets.getCount()-1; %idx >= 0; %idx-- )
+	{
+		%targetObject = %targets.getObject(%idx);
+ 
+      if(!%targetObject.isMethod("getDataBlock"))
+         continue;
+
+      if(%targetObject.getDataBlock() == MetaSoilTile.getId())
+         if(%targetObject.teamId != %spareShapeNr)
+            Soil::destroyTile(%targetObject);
+   }
+	%targets.delete();
+}
+
 datablock GridData(SoilGrid)
 {
    category = "Frontline Game Mode"; // For the mission editor
@@ -119,10 +140,7 @@ function Soil::destroyTile(%tile)
    %tile.zCompletion = 0;
    %volume = %tile.volumeName;
    if(%volume.removeHexagon(%tile.gridPos))
-   {
-      echo("yay");
       Game.soilVolumeDirtySet.add(%volume);
-   }
    //%pos = VectorAdd(%tile.getPosition(), "0 0 -0.4");
    //createExplosion(SoilPopupExplosion, %pos, "0 0 1");
    Soil::updateAdjacents(%tile);
