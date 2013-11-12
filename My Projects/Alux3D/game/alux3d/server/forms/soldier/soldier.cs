@@ -54,13 +54,13 @@ datablock PlayerData(FrmSoldier)
 
    throwForce = 30;
 
-   minLookAngle = "-1.4";
-   maxLookAngle = "0.9";
+   minLookAngle = "-1.5";
+   maxLookAngle = "1.5";
    maxFreelookAngle = 3.0;
 
-   mass = 120;
-   drag = 1.3;
-   maxdrag = 0.4;
+   mass = 90;
+   drag = 0.0;
+   maxdrag = 0.0;
    density = 1.1;
    maxDamage = 100;
    maxEnergy =  60;
@@ -69,38 +69,38 @@ datablock PlayerData(FrmSoldier)
 
    rechargeRate = 0.256;
 
-   runForce = 4320;
+   runForce = 50 * 90;
    runEnergyDrain = 0;
    minRunEnergy = 0;
-   maxForwardSpeed = 8;
-   maxBackwardSpeed = 6;
-   maxSideSpeed = 6;
+   maxForwardSpeed = 5;
+   maxBackwardSpeed = 3;
+   maxSideSpeed = 3;
 
-   sprintForce = 4320;
+   sprintForce = 50 * 90;
    sprintEnergyDrain = 0;
    minSprintEnergy = 0;
-   maxSprintForwardSpeed = 14;
-   maxSprintBackwardSpeed = 8;
+   maxSprintForwardSpeed = 8;
+   maxSprintBackwardSpeed = 6;
    maxSprintSideSpeed = 6;
-   sprintStrafeScale = 0.25;
-   sprintYawScale = "0.4";
-   sprintPitchScale = "1";
+   sprintStrafeScale = 1.0;
+   sprintYawScale = "1.0";
+   sprintPitchScale = "1.0";
    sprintCanJump = true;
 
-   crouchForce = 405;
-   maxCrouchForwardSpeed = 4.0;
-   maxCrouchBackwardSpeed = 2.0;
-   maxCrouchSideSpeed = 2.0;
+   crouchForce = 50 * 90;
+   maxCrouchForwardSpeed = 3.0;
+   maxCrouchBackwardSpeed = 1.0;
+   maxCrouchSideSpeed = 1.0;
 
    maxUnderwaterForwardSpeed = 8.4;
    maxUnderwaterBackwardSpeed = 7.8;
    maxUnderwaterSideSpeed = 4.0;
 
-   jumpForce = "747";
+   jumpForce =  8 * 90;
    jumpEnergyDrain = 0;
    minJumpEnergy = 0;
    jumpDelay = "15";
-   airControl = 0.3;
+   airControl = 0.0;
 
    fallingSpeedThreshold = -6.0;
 
