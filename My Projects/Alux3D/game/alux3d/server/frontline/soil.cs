@@ -19,7 +19,7 @@ datablock HexagonVolumeData(SoilVolume)
 };
 
 
-function SoilVolume::destroy(%this, %volume, %pos, %radius, %spareShapeNr)
+function SoilVolume::destroy(%this, %volume, %pos, %radius, %spareShapeNr, %out_destroyed)
 {
 	%targets = new SimSet();
 	InitContainerRadiusSearch(%pos, %radius, $TypeMasks::StaticObjectType);
@@ -33,8 +33,19 @@ function SoilVolume::destroy(%this, %volume, %pos, %radius, %spareShapeNr)
          continue;
 
       if(%targetObject.getDataBlock() == MetaSoilTile.getId())
+      {
          if(%targetObject.teamId != %spareShapeNr)
+         {
+            if(isObject(%out_destroyed))
+            {
+               %outObject = new ScriptObject();
+               %outObject.gridPos = %targetObject.gridPos;
+               %outObject.amount = 1;
+               %out_destroyed.add(%outObject);
+            }
             Soil::destroyTile(%targetObject);
+         }
+      }
    }
 	%targets.delete();
 }

@@ -17,7 +17,7 @@ datablock HexagonVolumeData(BrickVolume)
    mode = 2;
 };
 
-function BrickVolume::destroyStack(%this, %volume, %gridPos2D, %pos, %radius)
+function BrickVolume::destroyStack(%this, %volume, %gridPos2D, %pos, %radius, %out_destroyed)
 {
    //echo("BrickVolume::destroyStack()");
    %shapeNr = %volume.getHexagonShapeNr(%gridPos2D);
@@ -40,12 +40,19 @@ function BrickVolume::destroyStack(%this, %volume, %gridPos2D, %pos, %radius)
             %shapeNr = 0;
          %volume.setHexagon(%gridPos, %shapeNr, %newAmount);
          %volume.zNumBricks -= (%amount - %newAmount);
+         if(isObject(%out_destroyed))
+         {
+            %outObject = new ScriptObject();
+            %outObject.gridPos = %gridPos2D SPC %elevation + %newAmount;
+            %outObject.amount = (%amount - %newAmount);
+            %out_destroyed.add(%outObject);
+         }
          break;
       }
    }
 }
 
-function BrickVolume::destroy(%this, %volume, %pos, %radius, %spareShapeNr)
+function BrickVolume::destroy(%this, %volume, %pos, %radius, %spareShapeNr, %out_destroyed)
 {
    //echo("BrickVolume::destroy()");
    //echo("numBricks start:" SPC %volume.zNumBricks);
@@ -91,7 +98,7 @@ function BrickVolume::destroy(%this, %volume, %pos, %radius, %spareShapeNr)
       }
       else if(%shapeNr > 0 && %shapeNr != %spareShapeNr)
       {
-         %this.destroyStack(%volume, %gridPos2D, %pos, %radius);
+         %this.destroyStack(%volume, %gridPos2D, %pos, %radius, %out_destroyed);
       }
       
       %x++;
