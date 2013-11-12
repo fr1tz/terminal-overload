@@ -3449,6 +3449,10 @@ void ShapeBase::updateImageState(U32 imageSlot, const Move* move, F32 dt)
    if (!mMountedImageList[imageSlot].dataBlock)
       return;
    MountedImage& image = mMountedImageList[imageSlot];
+
+	if(image.dataBlock == NULL)
+		return;
+
    ShapeBaseImageData& imageData = *image.dataBlock;
 
    image.rDT = dt;
@@ -3562,38 +3566,6 @@ TICKAGAIN:
 		}
    }
 
-   // Check for transitions. On some states we must wait for the
-   // full timeout value before moving on.
-   if (image.delayTime <= 0 || !stateData.waitForTimeout) 
-   {
-      S32 ns;
-
-      if ((ns = stateData.transition.loaded[image.loaded]) != -1) 
-         setImageState(imageSlot,ns);
-      else if ((ns = stateData.transition.genericTrigger[0][image.genericTrigger[0]]) != -1)
-         setImageState(imageSlot,ns);
-      else if ((ns = stateData.transition.genericTrigger[1][image.genericTrigger[1]]) != -1)
-         setImageState(imageSlot,ns);
-      else if ((ns = stateData.transition.genericTrigger[2][image.genericTrigger[2]]) != -1)
-         setImageState(imageSlot,ns);
-      else if ((ns = stateData.transition.genericTrigger[3][image.genericTrigger[3]]) != -1)
-         setImageState(imageSlot,ns);
-      else if ((ns = stateData.transition.ammo[image.ammo]) != -1) 
-         setImageState(imageSlot,ns);
-      else if ((ns = stateData.transition.target[image.target]) != -1) 
-         setImageState(imageSlot,ns);
-      else if ((ns = stateData.transition.wet[image.wet]) != -1)
-         setImageState(imageSlot,ns);
-      else if ((ns = stateData.transition.motion[image.motion]) != -1)
-         setImageState(imageSlot,ns);
-      else if ((ns = stateData.transition.trigger[image.triggerDown]) != -1)
-         setImageState(imageSlot,ns);
-      else if ((ns = stateData.transition.altTrigger[image.altTriggerDown]) != -1) 
-         setImageState(imageSlot,ns);
-      else if (image.delayTime <= 0 && (ns = stateData.transition.timeout) != -1) 
-         setImageState(imageSlot,ns);
-   }
-
    // Update the spinning thread timeScale
    U32 imageShapeIndex = getImageShapeIndex(image);
    for (U32 i=0; i<ShapeBaseImageData::MaxShapes; ++i)
@@ -3631,6 +3603,38 @@ TICKAGAIN:
             }
          }
       }
+   }
+
+   // Check for transitions. On some states we must wait for the
+   // full timeout value before moving on.
+   if (image.delayTime <= 0 || !stateData.waitForTimeout) 
+   {
+      S32 ns;
+
+      if ((ns = stateData.transition.loaded[image.loaded]) != -1) 
+         setImageState(imageSlot,ns);
+      else if ((ns = stateData.transition.genericTrigger[0][image.genericTrigger[0]]) != -1)
+         setImageState(imageSlot,ns);
+      else if ((ns = stateData.transition.genericTrigger[1][image.genericTrigger[1]]) != -1)
+         setImageState(imageSlot,ns);
+      else if ((ns = stateData.transition.genericTrigger[2][image.genericTrigger[2]]) != -1)
+         setImageState(imageSlot,ns);
+      else if ((ns = stateData.transition.genericTrigger[3][image.genericTrigger[3]]) != -1)
+         setImageState(imageSlot,ns);
+      else if ((ns = stateData.transition.ammo[image.ammo]) != -1) 
+         setImageState(imageSlot,ns);
+      else if ((ns = stateData.transition.target[image.target]) != -1) 
+         setImageState(imageSlot,ns);
+      else if ((ns = stateData.transition.wet[image.wet]) != -1)
+         setImageState(imageSlot,ns);
+      else if ((ns = stateData.transition.motion[image.motion]) != -1)
+         setImageState(imageSlot,ns);
+      else if ((ns = stateData.transition.trigger[image.triggerDown]) != -1)
+         setImageState(imageSlot,ns);
+      else if ((ns = stateData.transition.altTrigger[image.altTriggerDown]) != -1) 
+         setImageState(imageSlot,ns);
+      else if (image.delayTime <= 0 && (ns = stateData.transition.timeout) != -1) 
+         setImageState(imageSlot,ns);
    }
 
 #if 0
