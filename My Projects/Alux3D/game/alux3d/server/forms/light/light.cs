@@ -407,7 +407,7 @@ function FrmLight::updatePointerThread(%this, %obj)
    %worldPos = MissionSoilGrid.gridToWorld(%gridPos);
    
    %obj.buildError = "Invalid surface";
-	InitContainerRadiusSearch(%worldPos, 0.1, $TypeMasks::StaticObjectType);
+	InitContainerRadiusSearch(%worldPos, 1, $TypeMasks::StaticObjectType);
 	while((%srchObj = containerSearchNext()) != 0)
 	{
       if(%srchObj.getClassName() $= "HexagonVolume")
