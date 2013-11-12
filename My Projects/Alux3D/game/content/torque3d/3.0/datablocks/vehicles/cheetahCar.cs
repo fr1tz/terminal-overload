@@ -24,48 +24,48 @@ datablock SFXProfile(cheetahEngine)
 {
    preload = "1";
    description = "AudioCloseLoop3D";
-   fileName = "art/sound/cheetah/cheetah_engine.ogg";
+   fileName = "content/torque3d/3.0/sound/cheetah/cheetah_engine.ogg";
 };
 
 datablock SFXProfile(cheetahSqueal)
 {
    preload = "1";
    description = "AudioDefault3D";
-   fileName = "art/sound/cheetah/cheetah_squeal.ogg";
+   fileName = "content/torque3d/3.0/sound/cheetah/cheetah_squeal.ogg";
 };
 
 datablock SFXProfile(hardImpact)
 {
    preload = "1";
    description = "AudioDefault3D";
-   fileName = "art/sound/cheetah/hardImpact.ogg";
+   fileName = "content/torque3d/3.0/sound/cheetah/hardImpact.ogg";
 };
 
 datablock SFXProfile(softImpact)
 {
    preload = "1";
    description = "AudioDefault3D";
-   fileName = "art/sound/cheetah/softImpact.ogg";
+   fileName = "content/torque3d/3.0/sound/cheetah/softImpact.ogg";
 };
 
 datablock SFXProfile(DirtKickup)
 {
    preload = "1";
    description = "AudioDefault3D";
-   fileName = "art/sound/cheetah/softImpact.ogg";
+   fileName = "content/torque3d/3.0/sound/cheetah/softImpact.ogg";
 };
 
 datablock SFXProfile(CheetahTurretFireSound)
 {
-   //filename = "art/sound/cheetah/turret_firing.wav";
-   filename = "art/sound/turret/wpn_turret_fire.wav";
+   //filename = "content/torque3d/3.0/sound/cheetah/turret_firing.wav";
+   filename = "content/torque3d/3.0/sound/turret/wpn_turret_fire.wav";
    description = BulletFireDesc;
    preload = true;
 };
 
 datablock ParticleData(CheetahTireParticle)
 {
-   textureName          = "art/particles/dustParticle";
+   textureName          = "content/torque3d/3.0/particles/dustParticle";
    dragCoefficient      = "1.99902";
    gravityCoefficient   = "-0.100122";
    inheritedVelFactor   = "0.0998043";
@@ -102,7 +102,7 @@ datablock ParticleEmitterData(CheetahTireEmitter)
 
 datablock ProjectileData(TurretProjectile)
 {
-   projectileShapeName = "art/shapes/weapons/shared/rocket.dts";
+   projectileShapeName = "content/torque3d/3.0/shapes/weapons/shared/rocket.dts";
    directDamage = 10;
    radiusDamage = 15;
    damageRadius = 3;
@@ -148,7 +148,7 @@ datablock ParticleEmitterData(TurretFireSmokeEmitter)
 datablock ShapeBaseImageData(TurretImage)
 {
    // Basic Item properties
-   shapeFile = "art/shapes/Cheetah/Cheetah_Turret.DAE";
+   shapeFile = "content/torque3d/3.0/shapes/Cheetah/Cheetah_Turret.DAE";
    emap = true;
 
    // Specify mount point & offset for 3rd person, and eye offset
@@ -275,7 +275,7 @@ datablock WheeledVehicleTire(CheetahCarTire)
    // forces to move the vehicle. These distortion/spring forces
    // are what convert wheel angular velocity into forces that
    // act on the rigid body.
-   shapeFile = "art/shapes/Cheetah/wheel.DAE";
+   shapeFile = "content/torque3d/3.0/shapes/Cheetah/wheel.DAE";
    staticFriction = 4.2;
    kineticFriction = "1";
 
@@ -297,7 +297,7 @@ datablock WheeledVehicleTire(CheetahCarTireRear)
    // forces to move the vehicle. These distortion/spring forces
    // are what convert wheel angular velocity into forces that
    // act on the rigid body.
-   shapeFile = "art/shapes/Cheetah/wheelBack.DAE";
+   shapeFile = "content/torque3d/3.0/shapes/Cheetah/wheelBack.DAE";
    staticFriction = "7.2";
    kineticFriction = "1";
 
@@ -325,7 +325,7 @@ datablock WheeledVehicleSpring(CheetahCarSpring)
 datablock WheeledVehicleData(CheetahCar)
 {
    category = "Vehicles";
-   shapeFile = "art/shapes/Cheetah/Cheetah_Body.DAE";
+   shapeFile = "content/torque3d/3.0/shapes/Cheetah/Cheetah_Body.DAE";
    emap = 1;
 
    mountPose[0] = sitting;

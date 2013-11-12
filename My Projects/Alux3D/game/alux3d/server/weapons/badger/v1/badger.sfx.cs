@@ -17,14 +17,14 @@ datablock SFXProfile(WpnBadgerDryFireSound)
 
 datablock SFXProfile(WpnBadgerReloadSound)
 {
-   filename = "art/sound/weapons/wpn_ryder_reload";
+   filename = "content/torque3d/3.0/sound/weapons/wpn_ryder_reload";
    description = AudioClose3D;
    preload = true;
 };
 
 datablock SFXProfile(WpnBadgerSwitchinSound)
 {
-   filename = "art/sound/weapons/wpn_ryder_switchin";
+   filename = "content/torque3d/3.0/sound/weapons/wpn_ryder_switchin";
    description = AudioClose3D;
    preload = true;
 };

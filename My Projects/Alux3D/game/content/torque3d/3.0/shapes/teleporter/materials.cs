@@ -41,18 +41,18 @@ singleton Material(teleporter_collision)
 singleton Material(Teleporter_Main)
 {
    mapTo = "Teleporter_Main";
-   diffuseMap[0] = "art/shapes/Teleporter/Teleporter_d.dds";
+   diffuseMap[0] = "content/torque3d/3.0/shapes/Teleporter/Teleporter_d.dds";
    specular[0] = "0.9 0.9 0.9 1";
    specularPower[0] = "23";
    translucentBlendOp = "None";
-   normalMap[0] = "art/shapes/Teleporter/Teleporter_n.dds";
-   specularMap[0] = "art/shapes/Teleporter/Teleporter_s.dds";
+   normalMap[0] = "content/torque3d/3.0/shapes/Teleporter/Teleporter_n.dds";
+   specularMap[0] = "content/torque3d/3.0/shapes/Teleporter/Teleporter_s.dds";
 };
 
 singleton Material(Teleporter_Glow_Main)
 {
    mapTo = "Teleporter_Glow_Main";
-   diffuseMap[0] = "art/shapes/Teleporter/Teleporter_glow.dds";
+   diffuseMap[0] = "content/torque3d/3.0/shapes/Teleporter/Teleporter_glow.dds";
    specular[0] = "0.9 0.9 0.9 1";
    specularPower[0] = "1";
    translucent = "1";
@@ -71,7 +71,7 @@ singleton Material(Teleporter_Glow_Main)
 singleton Material(Teleporter_Animated_GlowU_Main)
 {
    mapTo = "Teleporter_Animated_GlowU_Main";
-   diffuseMap[0] = "art/shapes/Teleporter/Teleporter_glow.dds";
+   diffuseMap[0] = "content/torque3d/3.0/shapes/Teleporter/Teleporter_glow.dds";
    specular[0] = "0.9 0.9 0.9 1";
    specularPower[0] = "1";
    translucent = "1";
@@ -85,7 +85,7 @@ singleton Material(Teleporter_Animated_GlowU_Main)
 singleton Material(Teleporter_Animated_GlowV_Main)
 {
    mapTo = "Teleporter_Animated_GlowV_Main";
-   diffuseMap[0] = "art/shapes/Teleporter/Teleporter_glow.dds";
+   diffuseMap[0] = "content/torque3d/3.0/shapes/Teleporter/Teleporter_glow.dds";
    specular[0] = "0.9 0.9 0.9 1";
    specularPower[0] = "1";
    translucent = "1";
@@ -100,7 +100,7 @@ singleton Material(Teleporter_Animated_GlowV_Main)
 singleton Material(Teleporter_GlowWave_Main)
 {
    mapTo = "Teleporter_GlowWave_Main";
-   diffuseMap[0] = "art/shapes/Teleporter/Teleporter_glow.dds";
+   diffuseMap[0] = "content/torque3d/3.0/shapes/Teleporter/Teleporter_glow.dds";
    specular[0] = "0.9 0.9 0.9 1";
    specularPower[0] = "1";
    translucent = "1";

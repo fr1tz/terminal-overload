@@ -28,7 +28,7 @@
 
 datablock SFXProfile(HeavyRainSound)
 {
-   filename = "art/sound/environment/amb";
+   filename = "content/torque3d/3.0/sound/environment/amb";
    description = AudioLoop2d;
 };
 
@@ -36,8 +36,8 @@ datablock PrecipitationData(HeavyRain)
 {
    soundProfile = "HeavyRainSound";
 
-   dropTexture = "art/environment/precipitation/rain";
-   splashTexture = "art/environment/precipitation/water_splash";
+   dropTexture = "content/torque3d/3.0/environment/precipitation/rain";
+   splashTexture = "content/torque3d/3.0/environment/precipitation/water_splash";
    dropSize = 0.35;
    splashSize = 0.1;
    useTrueBillboards = false;
@@ -54,25 +54,25 @@ datablock PrecipitationData(HeavyRain)
 
 datablock SFXProfile(ThunderCrash1Sound)
 {
-   filename = "art/sound/environment/thunder1";
+   filename = "content/torque3d/3.0/sound/environment/thunder1";
    description = Audio2d;
 };
 
 datablock SFXProfile(ThunderCrash2Sound)
 {
-   filename = "art/sound/environment/thunder2";
+   filename = "content/torque3d/3.0/sound/environment/thunder2";
    description = Audio2d;
 };
 
 datablock SFXProfile(ThunderCrash3Sound)
 {
-   filename = "art/sound/environment/thunder3";
+   filename = "content/torque3d/3.0/sound/environment/thunder3";
    description = Audio2d;
 };
 
 datablock SFXProfile(ThunderCrash4Sound)
 {
-   filename = "art/sound/environment/thunder4";
+   filename = "content/torque3d/3.0/sound/environment/thunder4";
    description = Audio2d;
 };
 

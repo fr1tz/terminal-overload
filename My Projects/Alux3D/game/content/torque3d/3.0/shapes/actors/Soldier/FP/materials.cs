@@ -23,12 +23,12 @@
 singleton Material(Mat_FP_Soldier_Arms_Main)
 {
    mapTo = "base_FP_Soldier_Arms_Main";
-   diffuseMap[0] = "art/shapes/actors/Soldier/FP/FP_SoldierArms_D";
+   diffuseMap[0] = "content/torque3d/3.0/shapes/actors/Soldier/FP/FP_SoldierArms_D";
    specular[0] = "0.9 0.9 0.9 1";
    specularPower[0] = "10";
    translucentBlendOp = "None";
-   normalMap[0] = "art/shapes/actors/Soldier/FP/FP_SoldierArms_N.dds";
-   specularMap[0] = "art/shapes/actors/Soldier/FP/FP_SoldierArms_S.dds";
+   normalMap[0] = "content/torque3d/3.0/shapes/actors/Soldier/FP/FP_SoldierArms_N.dds";
+   specularMap[0] = "content/torque3d/3.0/shapes/actors/Soldier/FP/FP_SoldierArms_S.dds";
 };
 
 //-----------------------------------------------------------------------------

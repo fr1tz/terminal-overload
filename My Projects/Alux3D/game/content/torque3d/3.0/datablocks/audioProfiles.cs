@@ -29,7 +29,7 @@
 
 datablock SFXProfile(ThrowSnd)
 {
-   filename = "art/sound/throw";
+   filename = "content/torque3d/3.0/sound/throw";
    description = AudioClose3d;
    preload = false;
 };

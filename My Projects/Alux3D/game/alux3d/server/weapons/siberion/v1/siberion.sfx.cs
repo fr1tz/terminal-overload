@@ -23,21 +23,21 @@ datablock SFXProfile(WpnSiberionDryFireSound)
 
 datablock SFXProfile(WpnSiberionReloadSound)
 {
-   filename = "art/sound/weapons/wpn_lurker_reload";
+   filename = "content/torque3d/3.0/sound/weapons/wpn_lurker_reload";
    description = AudioClose3D;
    preload = true;
 };
 
 datablock SFXProfile(WpnSiberionIdleSound)
 {
-   filename = "art/sound/weapons/wpn_lurker_idle";
+   filename = "content/torque3d/3.0/sound/weapons/wpn_lurker_idle";
    description = AudioClose3D;
    preload = true;
 };
 
 datablock SFXProfile(WpnSiberionSwitchinSound)
 {
-   filename = "art/sound/weapons/wpn_lurker_switchin";
+   filename = "content/torque3d/3.0/sound/weapons/wpn_lurker_switchin";
    description = AudioClose3D;
    preload = true;
 };

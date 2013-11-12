@@ -74,7 +74,7 @@ function ForestEditorPlugin::onWorldEditorStartup( %this )
 {       
    new PersistenceManager( ForestDataManager );
    
-   %brushPath = "art/forest/brushes.cs";
+   %brushPath = "content/torque3d/3.0/forest/brushes.cs";
    if ( !isFile( %brushPath ) )   
       createPath( %brushPath );      
       
@@ -217,7 +217,7 @@ function ForestEditorPlugin::onSaveMission( %this, %missionFile )
    if ( isObject( theForest ) )                     
       theForest.saveDataFile();
       
-   ForestBrushGroup.save( "art/forest/brushes.cs" );
+   ForestBrushGroup.save( "content/torque3d/3.0/forest/brushes.cs" );
 }
 
 function ForestEditorPlugin::onEditorSleep( %this )

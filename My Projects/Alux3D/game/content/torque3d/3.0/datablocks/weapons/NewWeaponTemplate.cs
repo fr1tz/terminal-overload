@@ -26,42 +26,42 @@
 // Added for Lesson 5 - Adding Weapons - 23 Sep 11
 datablock SFXProfile(WeaponTemplateFireSound)
 {
-   filename = "art/sound/weapons/wpn_fire";
+   filename = "content/torque3d/3.0/sound/weapons/wpn_fire";
    description = AudioClose3D;
    preload = true;
 };
 
 datablock SFXProfile(WeaponTemplateReloadSound)
 {
-   filename = "art/sound/weapons/wpn_reload";
+   filename = "content/torque3d/3.0/sound/weapons/wpn_reload";
    description = AudioClose3D;
    preload = true;
 };
 
 datablock SFXProfile(WeaponTemplateSwitchinSound)
 {
-   filename = "art/sound/weapons/wpn_switchin";
+   filename = "content/torque3d/3.0/sound/weapons/wpn_switchin";
    description = AudioClose3D;
    preload = true;
 };
 
 datablock SFXProfile(WeaponTemplateIdleSound)
 {
-   filename = "art/sound/weapons/wpn_idle";
+   filename = "content/torque3d/3.0/sound/weapons/wpn_idle";
    description = AudioClose3D;
    preload = true;
 };
 
 datablock SFXProfile(WeaponTemplateGrenadeSound)
 {
-   filename = "art/sound/weapons/wpn_grenadelaunch";
+   filename = "content/torque3d/3.0/sound/weapons/wpn_grenadelaunch";
    description = AudioClose3D;
    preload = true;
 };
 
 datablock SFXProfile(WeaponTemplateMineSwitchinSound)
 {
-   filename = "art/sound/weapons/wpn_mine_switchin";
+   filename = "content/torque3d/3.0/sound/weapons/wpn_mine_switchin";
    description = AudioClose3D;
    preload = true;
 };
@@ -196,8 +196,8 @@ datablock ShapeBaseImageData(WeaponTemplateImage)
    // FP refers to first person specific features
    
    // Defines what art file to use.
-   shapeFile = "art/shapes/weapons/Lurker/TP_Lurker.DAE";
-   shapeFileFP = "art/shapes/weapons/Lurker/FP_Lurker.DAE";
+   shapeFile = "content/torque3d/3.0/shapes/weapons/Lurker/TP_Lurker.DAE";
+   shapeFileFP = "content/torque3d/3.0/shapes/weapons/Lurker/FP_Lurker.DAE";
    
    // Whether or not to enable environment mapping
    //emap                           = true;

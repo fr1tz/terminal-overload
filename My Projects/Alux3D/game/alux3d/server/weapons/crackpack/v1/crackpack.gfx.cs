@@ -10,8 +10,8 @@ datablock ParticleData(WpnCrackpackActivationExplosionSparkParticle : DefaultPar
    times[1] = "0.498039";
    times[2] = "1";
    spinSpeed = "0";
-   textureName = "art/particles/droplet.png";
-   animTexName = "art/particles/droplet.png";
+   textureName = "content/torque3d/3.0/particles/droplet.png";
+   animTexName = "content/torque3d/3.0/particles/droplet.png";
    inheritedVelFactor = "0";
    lifetimeMS = "100";
    lifetimeVarianceMS = "25";
@@ -38,7 +38,7 @@ datablock ParticleEmitterData(WpnCrackpackActivationExplosionSparkEmitter : Defa
 
 datablock ParticleData(WpnCrackpackActivationExplosionPlasmaParticles)
 {
-   textureName          = "art/particles/ricochet.png";
+   textureName          = "content/torque3d/3.0/particles/ricochet.png";
    dragCoefficient      = "0.99218";
    gravityCoefficient   = "0";
    windCoefficient      = 0;
@@ -61,7 +61,7 @@ datablock ParticleData(WpnCrackpackActivationExplosionPlasmaParticles)
    times[0]      = 0.0;
    times[1]      = "0.494118";
    times[2]      = 1.0;
-   animTexName = "art/particles/ricochet.png";
+   animTexName = "content/torque3d/3.0/particles/ricochet.png";
    colors[3] = "1 0.835294 0 1";
 };
 

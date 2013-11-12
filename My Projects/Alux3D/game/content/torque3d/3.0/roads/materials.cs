@@ -22,7 +22,7 @@
 
 singleton Material(DefaultDecalRoadMaterial)
 {
-   diffuseMap[0] = "art/roads/defaultRoadTextureTop.png";
+   diffuseMap[0] = "content/torque3d/3.0/roads/defaultRoadTextureTop.png";
    mapTo = "unmapped_mat";
    materialTag0 = "RoadAndPath";
 };
@@ -30,13 +30,13 @@ singleton Material(DefaultDecalRoadMaterial)
 singleton Material(DefaultRoadMaterialTop)
 {
    mapTo = "unmapped_mat";
-   diffuseMap[0] = "art/roads/defaultRoadTextureTop.png";
+   diffuseMap[0] = "content/torque3d/3.0/roads/defaultRoadTextureTop.png";
    materialTag0 = "RoadAndPath";
 };
 
 singleton Material(DefaultRoadMaterialOther)
 {
    mapTo = "unmapped_mat";
-   diffuseMap[0] = "art/roads/defaultRoadTextureOther.png";
+   diffuseMap[0] = "content/torque3d/3.0/roads/defaultRoadTextureOther.png";
    materialTag0 = "RoadAndPath";
 };

@@ -47,8 +47,8 @@ function initClient()
 
    // These should be game specific GuiProfiles.  Custom profiles are saved out
    // from the Gui Editor.  Either of these may override any that already exist.
-   exec("art/gui/defaultGameProfiles.cs");
-   exec("art/gui/customProfiles.cs"); 
+   exec("alux3d/client/shell/defaultGameProfiles.cs");
+   exec("alux3d/client/shell/customProfiles.cs");
    
    // The common module provides basic client functionality
    initBaseClient();
@@ -57,10 +57,10 @@ function initClient()
    configureCanvas();
 
    // Load up the Game GUIs
-   exec("art/gui/defaultGameProfiles.cs");
-   exec("art/gui/ChatHud.gui");
-   exec("art/gui/playerList.gui");
-   exec("art/gui/hudlessGui.gui");
+   exec("alux3d/client/shell/defaultGameProfiles.cs");
+   exec("alux3d/client/shell/ChatHud.gui");
+   exec("alux3d/client/shell/playerList.gui");
+   exec("alux3d/client/shell/hudlessGui.gui");
    exec("alux3d/client/hud/overlayHud.gui");
    exec("alux3d/client/hud/overlayHud.cs");
    exec("alux3d/client/hud/lightHud.gui");
@@ -72,24 +72,24 @@ function initClient()
                        // fast whiteout flash decays.
 
    // Load up the shell GUIs
-   exec("art/gui/mainMenuGui.gui");
-   exec("art/gui/joinServerDlg.gui");
-   exec("art/gui/endGameGui.gui");
-   exec("art/gui/StartupGui.gui");
-   exec("art/gui/chooseLevelDlg.gui");
-   exec("art/gui/loadingGui.gui");
-   exec("art/gui/optionsDlg.gui");
-   exec("art/gui/remapDlg.gui");
+   exec("alux3d/client/shell/mainMenuGui.gui");
+   exec("alux3d/client/shell/joinServerDlg.gui");
+   exec("alux3d/client/shell/endGameGui.gui");
+   exec("alux3d/client/shell/StartupGui.gui");
+   exec("alux3d/client/shell/chooseLevelDlg.gui");
+   exec("alux3d/client/shell/loadingGui.gui");
+   exec("alux3d/client/shell/optionsDlg.gui");
+   exec("alux3d/client/shell/remapDlg.gui");
    
    // Gui scripts
    exec("./playerList.cs");
    exec("./chatHud.cs");
    exec("./messageHud.cs");
-   exec("alux3d/gui/playGui.cs");
-   exec("alux3d/gui/startupGui.cs");
-   exec("alux3d/gui/chooseLevelDlg.cs");
-   exec("alux3d/gui/loadingGui.cs");
-   exec("alux3d/gui/optionsDlg.cs");
+   exec("alux3d/client/shell/playGui.cs");
+   exec("alux3d/client/shell/startupGui.cs");
+   exec("alux3d/client/shell/chooseLevelDlg.cs");
+   exec("alux3d/client/shell/loadingGui.cs");
+   exec("alux3d/client/shell/optionsDlg.cs");
 
    // Client scripts
    exec("./hearing.cs");

@@ -22,21 +22,21 @@
 
 datablock SFXProfile( MineArmedSound )
 {
-   filename = "art/sound/weapons/mine_armed";
+   filename = "content/torque3d/3.0/sound/weapons/mine_armed";
    description = AudioClose3d;
    preload = true;
 };
 
 datablock SFXProfile( MineSwitchinSound )
 {
-   filename = "art/sound/weapons/wpn_proximitymine_switchin";
+   filename = "content/torque3d/3.0/sound/weapons/wpn_proximitymine_switchin";
    description = AudioClose3D;
    preload = true;
 };
 
 datablock SFXProfile( MineTriggeredSound )
 {
-   filename = "art/sound/weapons/mine_trigger";
+   filename = "content/torque3d/3.0/sound/weapons/mine_trigger";
    description = AudioClose3d;
    preload = true;
 };
@@ -45,7 +45,7 @@ datablock ProximityMineData( ProxMine )
 {
    // ShapeBaseData fields
    category = "Weapon";
-   shapeFile = "art/shapes/weapons/ProxMine/TP_ProxMine.DAE";
+   shapeFile = "content/torque3d/3.0/shapes/weapons/ProxMine/TP_ProxMine.DAE";
    explosion = GrenadeLauncherExplosion;
 
    // ItemData fields
@@ -86,8 +86,8 @@ datablock ProximityMineData( ProxMine )
 datablock ShapeBaseImageData( ProxMineImage )
 {
    // Basic Item properties
-   shapeFile = "art/shapes/weapons/ProxMine/TP_ProxMine.DAE";
-   shapeFileFP = "art/shapes/weapons/ProxMine/FP_ProxMine.DAE";
+   shapeFile = "content/torque3d/3.0/shapes/weapons/ProxMine/TP_ProxMine.DAE";
+   shapeFileFP = "content/torque3d/3.0/shapes/weapons/ProxMine/FP_ProxMine.DAE";
 
    imageAnimPrefix = "ProxMine";
    imageAnimPrefixFP = "ProxMine";

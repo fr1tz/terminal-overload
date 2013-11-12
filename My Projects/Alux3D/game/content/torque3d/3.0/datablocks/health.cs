@@ -32,7 +32,7 @@
 //-----------------------------------------------------------------------------
 datablock SFXProfile(HealthUseSound)
 {
-   filename = "art/sound/health_mono_01";
+   filename = "content/torque3d/3.0/sound/health_mono_01";
    description = AudioClose3d;
    preload = true;
 };
@@ -52,7 +52,7 @@ datablock ItemData(HealthKitSmall)
    className = "HealthPatch";
 
    // Basic Item properties
-   shapeFile = "art/shapes/items/kit/healthkit.dts";
+   shapeFile = "content/torque3d/3.0/shapes/items/kit/healthkit.dts";
    mass = 2;
    friction = 1;
    elasticity = 0.3;
@@ -73,7 +73,7 @@ datablock ItemData(HealthKitPatch)
    className = "HealthPatch";
 
    // Basic Item properties
-   shapeFile = "art/shapes/items/patch/healthpatch.dts";
+   shapeFile = "content/torque3d/3.0/shapes/items/patch/healthpatch.dts";
    mass = 2;
    friction = 1;
    elasticity = 0.3;

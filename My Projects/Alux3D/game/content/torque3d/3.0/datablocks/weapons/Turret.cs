@@ -50,28 +50,28 @@ datablock SFXProfile(TurretThrown)
 
 datablock SFXProfile(TurretFireSound)
 {
-   filename = "art/sound/turret/wpn_turret_fire";
+   filename = "content/torque3d/3.0/sound/turret/wpn_turret_fire";
    description = AudioClose3D;
    preload = true;
 };
 
 datablock SFXProfile(TurretActivatedSound)
 {
-   filename = "art/sound/turret/wpn_turret_deploy";
+   filename = "content/torque3d/3.0/sound/turret/wpn_turret_deploy";
    description = AudioClose3D;
    preload = true;
 };
 
 datablock SFXProfile(TurretScanningSound)
 {
-   filename = "art/sound/turret/wpn_turret_scan";
+   filename = "content/torque3d/3.0/sound/turret/wpn_turret_scan";
    description = AudioCloseLoop3D;
    preload = true;
 };
 
 datablock SFXProfile(TurretSwitchinSound)
 {
-   filename = "art/sound/turret/wpn_turret_switchin";
+   filename = "content/torque3d/3.0/sound/turret/wpn_turret_switchin";
    description = AudioClose3D;
    preload = true;
 };
@@ -130,7 +130,7 @@ datablock ItemData(AITurretAmmo)
    className = "Ammo";
 
    // Basic Item properties
-   shapeFile = "art/shapes/weapons/Turret/Turret_Legs.DAE";
+   shapeFile = "content/torque3d/3.0/shapes/weapons/Turret/Turret_Legs.DAE";
    mass = 1;
    elasticity = 0.2;
    friction = 0.6;
@@ -154,7 +154,7 @@ datablock ItemData(AITurretHead)
    className = "Weapon";
 
    // Basic Item properties
-   shapeFile = "art/shapes/weapons/Turret/Turret_Head.DAE";
+   shapeFile = "content/torque3d/3.0/shapes/weapons/Turret/Turret_Head.DAE";
    mass = 1;
    elasticity = 0.2;
    friction = 0.6;
@@ -169,7 +169,7 @@ datablock ItemData(AITurretHead)
 datablock ShapeBaseImageData(AITurretHeadImage)
 {
    // Basic Item properties
-   shapeFile = "art/shapes/weapons/Turret/Turret_Head.DAE";
+   shapeFile = "content/torque3d/3.0/shapes/weapons/Turret/Turret_Head.DAE";
    emap = true;
 
    // Specify mount point
@@ -306,7 +306,7 @@ datablock ShapeBaseImageData(AITurretHeadImage)
 datablock AITurretShapeData(AITurret)
 {
    category = "Turrets";
-   shapeFile = "art/shapes/weapons/Turret/Turret_Legs.DAE";
+   shapeFile = "content/torque3d/3.0/shapes/weapons/Turret/Turret_Legs.DAE";
 
    maxDamage = 70;
    destroyedLevel = 70;
@@ -424,8 +424,8 @@ datablock AITurretShapeData(DeployableTurret : AITurret)
 datablock ShapeBaseImageData(DeployableTurretImage)
 {
    // Basic Item properties
-   shapeFile = "art/shapes/weapons/Turret/TP_Turret.DAE";
-   shapeFileFP = "art/shapes/weapons/Turret/FP_Turret.DAE";
+   shapeFile = "content/torque3d/3.0/shapes/weapons/Turret/TP_Turret.DAE";
+   shapeFileFP = "content/torque3d/3.0/shapes/weapons/Turret/FP_Turret.DAE";
    emap = true;
 
    imageAnimPrefix = "Turret";

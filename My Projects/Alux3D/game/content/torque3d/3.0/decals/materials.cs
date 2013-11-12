@@ -33,7 +33,7 @@ singleton Material(DECAL_scorch)
 
 singleton Material(DECAL_RocketEXP)
 {
-   baseTex[0] = "art/decals/rBlast";
+   baseTex[0] = "content/torque3d/3.0/decals/rBlast";
 
    vertColor[0] = true;
    translucent = true;
@@ -43,7 +43,7 @@ singleton Material(DECAL_RocketEXP)
 
 singleton Material(DECAL_bulletHole)
 {
-   baseTex[0] = "art/decals/Bullet Holes/BulletHole_Walls.dds";
+   baseTex[0] = "content/torque3d/3.0/decals/Bullet Holes/BulletHole_Walls.dds";
 
    vertColor[0] = true;
    translucent = true;
@@ -53,7 +53,7 @@ singleton Material(DECAL_bulletHole)
 
 singleton Material(DECAL_defaultblobshadow)
 {
-   baseTex[0] = "art/decals/defaultblobshadow";
+   baseTex[0] = "content/torque3d/3.0/decals/defaultblobshadow";
 
    translucent = true;
    translucentBlendOp = LerpAlpha;

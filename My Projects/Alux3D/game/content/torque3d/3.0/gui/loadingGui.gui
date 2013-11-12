@@ -13,7 +13,7 @@
    Visible = "1";
    tooltipprofile = "GuiToolTipProfile";
    hovertime = "1000";
-   bitmap = "art/gui/background";
+   bitmap = "content/torque3d/3.0/gui/background";
    useVariable = "0";
    tile = "0";
 
@@ -46,7 +46,7 @@
          Visible = "1";
          tooltipprofile = "GuiToolTipProfile";
          hovertime = "1000";
-         bitmap = "art/gui/Torque-3D-logo.png";
+         bitmap = "content/torque3d/3.0/gui/Torque-3D-logo.png";
          wrap = "0";
       };
       singleton GuiProgressBitmapCtrl(LoadingProgress) {

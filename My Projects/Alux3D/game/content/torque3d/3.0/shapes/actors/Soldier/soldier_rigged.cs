@@ -103,28 +103,28 @@ function SoldierDAE::onLoad(%this)
 
    // BEGIN: Ryder Pistol sequences
    // Extracted from Ryder
-   %this.addSequence( "art/shapes/weapons/Ryder/PlayerAnims/PlayerAnim_Pistol_Back.dae Back", "Pistol_Back", 0, -1);
-   %this.addSequence( "art/shapes/weapons/Ryder/PlayerAnims/PlayerAnim_Pistol_Crouch_Backward.dae Crouch_Backward", "Pistol_Crouch_Backward", 0, -1);
-   %this.addSequence( "art/shapes/weapons/Ryder/PlayerAnims/PlayerAnim_Pistol_Crouch_Forward.dae Crouch_Forward", "Pistol_Crouch_Forward", 0, -1);
-   %this.addSequence( "art/shapes/weapons/Ryder/PlayerAnims/PlayerAnim_Pistol_Crouch_Side.dae Crouch_Side", "Pistol_Crouch_Side", 0, -1);
-   %this.addSequence( "art/shapes/weapons/Ryder/PlayerAnims/PlayerAnim_Pistol_Crouch_Root.dae Crouch_Root", "Pistol_Crouch_Root", 0, -1);
-   %this.addSequence( "art/shapes/weapons/Ryder/PlayerAnims/PlayerAnim_Pistol_Death1.dae Death1", "Pistol_Death1", 0, -1);
-   %this.addSequence( "art/shapes/weapons/Ryder/PlayerAnims/PlayerAnim_Pistol_Death2.dae Death2", "Pistol_Death2", 0, -1);
-   %this.addSequence( "art/shapes/weapons/Ryder/PlayerAnims/PlayerAnim_Pistol_Fall.dae Fall", "Pistol_Fall", 0, -1);
-   %this.addSequence( "art/shapes/weapons/Ryder/PlayerAnims/PlayerAnim_Pistol_Head.dae Head", "Pistol_Head", 0, -1);
-   %this.addSequence( "art/shapes/weapons/Ryder/PlayerAnims/PlayerAnim_Pistol_Jump.dae Jump", "Pistol_Jump", 0, -1);
-   %this.addSequence( "art/shapes/weapons/Ryder/PlayerAnims/PlayerAnim_Pistol_Land.dae Land", "Pistol_Land", 0, -1);
-   %this.addSequence( "art/shapes/weapons/Ryder/PlayerAnims/PlayerAnim_Pistol_Look.dae Look", "Pistol_Look", 0, -1);
-   %this.addSequence( "art/shapes/weapons/Ryder/PlayerAnims/PlayerAnim_Pistol_Reload.dae Reload", "Pistol_Reload", 0, -1);
-   %this.addSequence( "art/shapes/weapons/Ryder/PlayerAnims/PlayerAnim_Pistol_Root.dae Root", "Pistol_Root", 0, -1);
-   %this.addSequence( "art/shapes/weapons/Ryder/PlayerAnims/PlayerAnim_Pistol_Run.dae Run", "Pistol_Run", 0, -1);
-   %this.addSequence( "art/shapes/weapons/Ryder/PlayerAnims/PlayerAnim_Pistol_Side.dae Side", "Pistol_Side", 0, -1);
-   %this.addSequence( "art/shapes/weapons/Ryder/PlayerAnims/PlayerAnim_Pistol_Sitting.dae Sitting", "Pistol_Sitting", 0, -1);
-   %this.addSequence( "art/shapes/weapons/Ryder/PlayerAnims/PlayerAnim_Pistol_Swim_Backward.dae Swim_Backward", "Pistol_Swim_Backward", 0, -1);
-   %this.addSequence( "art/shapes/weapons/Ryder/PlayerAnims/PlayerAnim_Pistol_Swim_Forward.dae Swim_Forward", "Pistol_Swim_Forward", 0, -1);
-   %this.addSequence( "art/shapes/weapons/Ryder/PlayerAnims/PlayerAnim_Pistol_Swim_Root.dae Swim_Root", "Pistol_Swim_Root", 0, -1);
-   %this.addSequence( "art/shapes/weapons/Ryder/PlayerAnims/PlayerAnim_Pistol_Swim_Left.dae Swim_Left", "Pistol_Swim_Left", 0, -1);
-   %this.addSequence( "art/shapes/weapons/Ryder/PlayerAnims/PlayerAnim_Pistol_Swim_Right.dae Swim_Right", "Pistol_Swim_Right", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/Ryder/PlayerAnims/PlayerAnim_Pistol_Back.dae Back", "Pistol_Back", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/Ryder/PlayerAnims/PlayerAnim_Pistol_Crouch_Backward.dae Crouch_Backward", "Pistol_Crouch_Backward", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/Ryder/PlayerAnims/PlayerAnim_Pistol_Crouch_Forward.dae Crouch_Forward", "Pistol_Crouch_Forward", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/Ryder/PlayerAnims/PlayerAnim_Pistol_Crouch_Side.dae Crouch_Side", "Pistol_Crouch_Side", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/Ryder/PlayerAnims/PlayerAnim_Pistol_Crouch_Root.dae Crouch_Root", "Pistol_Crouch_Root", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/Ryder/PlayerAnims/PlayerAnim_Pistol_Death1.dae Death1", "Pistol_Death1", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/Ryder/PlayerAnims/PlayerAnim_Pistol_Death2.dae Death2", "Pistol_Death2", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/Ryder/PlayerAnims/PlayerAnim_Pistol_Fall.dae Fall", "Pistol_Fall", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/Ryder/PlayerAnims/PlayerAnim_Pistol_Head.dae Head", "Pistol_Head", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/Ryder/PlayerAnims/PlayerAnim_Pistol_Jump.dae Jump", "Pistol_Jump", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/Ryder/PlayerAnims/PlayerAnim_Pistol_Land.dae Land", "Pistol_Land", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/Ryder/PlayerAnims/PlayerAnim_Pistol_Look.dae Look", "Pistol_Look", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/Ryder/PlayerAnims/PlayerAnim_Pistol_Reload.dae Reload", "Pistol_Reload", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/Ryder/PlayerAnims/PlayerAnim_Pistol_Root.dae Root", "Pistol_Root", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/Ryder/PlayerAnims/PlayerAnim_Pistol_Run.dae Run", "Pistol_Run", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/Ryder/PlayerAnims/PlayerAnim_Pistol_Side.dae Side", "Pistol_Side", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/Ryder/PlayerAnims/PlayerAnim_Pistol_Sitting.dae Sitting", "Pistol_Sitting", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/Ryder/PlayerAnims/PlayerAnim_Pistol_Swim_Backward.dae Swim_Backward", "Pistol_Swim_Backward", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/Ryder/PlayerAnims/PlayerAnim_Pistol_Swim_Forward.dae Swim_Forward", "Pistol_Swim_Forward", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/Ryder/PlayerAnims/PlayerAnim_Pistol_Swim_Root.dae Swim_Root", "Pistol_Swim_Root", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/Ryder/PlayerAnims/PlayerAnim_Pistol_Swim_Left.dae Swim_Left", "Pistol_Swim_Left", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/Ryder/PlayerAnims/PlayerAnim_Pistol_Swim_Right.dae Swim_Right", "Pistol_Swim_Right", 0, -1);
    
    %this.setSequenceCyclic( "Pistol_Back", true);
    %this.setSequenceCyclic( "Pistol_Crouch_Backward", true);
@@ -166,30 +166,30 @@ function SoldierDAE::onLoad(%this)
    // END: General pistol sequences
 
    // BEGIN: ProxMine Sequences
-   %this.addSequence( "art/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Back.dae Back", "ProxMine_Back", 0, -1);
-   %this.addSequence( "art/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Crouch_Backward.dae Crouch_Backward", "ProxMine_Crouch_Backward", 0, -1);
-   %this.addSequence( "art/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Crouch_Forward.dae Crouch_Forward", "ProxMine_Crouch_Forward", 0, -1);
-   %this.addSequence( "art/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Crouch_Side.dae Crouch_Side", "ProxMine_Crouch_Side", 0, -1);
-   %this.addSequence( "art/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Crouch_Root.dae Crouch_Root", "ProxMine_Crouch_Root", 0, -1);
-   %this.addSequence( "art/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Death1.dae Death1", "ProxMine_Death1", 0, -1);
-   %this.addSequence( "art/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Death2.dae Death2", "ProxMine_Death2", 0, -1);
-   %this.addSequence( "art/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Fall.dae Fall", "ProxMine_Fall", 0, -1);
-   %this.addSequence( "art/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Head.dae Head", "ProxMine_Head", 0, -1);
-   %this.addSequence( "art/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Jump.dae Jump", "ProxMine_Jump", 0, -1);
-   %this.addSequence( "art/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Land.dae Land", "ProxMine_Land", 0, -1);
-   %this.addSequence( "art/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Look.dae Look", "ProxMine_Look", 0, -1);
-   %this.addSequence( "art/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Reload.dae Reload", "ProxMine_Reload", 0, -1);
-   %this.addSequence( "art/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Fire.dae Fire", "ProxMine_Fire", 0, -1);
-   %this.addSequence( "art/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Fire_Release.dae Fire_Release", "ProxMine_Fire_Release", 0, -1);
-   %this.addSequence( "art/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Root.dae Root", "ProxMine_Root", 0, -1);
-   %this.addSequence( "art/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Run.dae Run", "ProxMine_Run", 0, -1);
-   %this.addSequence( "art/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Side.dae Side", "ProxMine_Side", 0, -1);
-   %this.addSequence( "art/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Sitting.dae Sitting", "ProxMine_Sitting", 0, -1);
-   %this.addSequence( "art/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Swim_Backward.dae Swim_Backward", "ProxMine_Swim_Backward", 0, -1);
-   %this.addSequence( "art/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Swim_Forward.dae Swim_Forward", "ProxMine_Swim_Forward", 0, -1);
-   %this.addSequence( "art/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Swim_Root.dae Swim_Root", "ProxMine_Swim_Root", 0, -1);
-   %this.addSequence( "art/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Swim_Left.dae Swim_Left", "ProxMine_Swim_Left", 0, -1);
-   %this.addSequence( "art/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Swim_Right.dae Swim_Right", "ProxMine_Swim_Right", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Back.dae Back", "ProxMine_Back", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Crouch_Backward.dae Crouch_Backward", "ProxMine_Crouch_Backward", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Crouch_Forward.dae Crouch_Forward", "ProxMine_Crouch_Forward", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Crouch_Side.dae Crouch_Side", "ProxMine_Crouch_Side", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Crouch_Root.dae Crouch_Root", "ProxMine_Crouch_Root", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Death1.dae Death1", "ProxMine_Death1", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Death2.dae Death2", "ProxMine_Death2", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Fall.dae Fall", "ProxMine_Fall", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Head.dae Head", "ProxMine_Head", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Jump.dae Jump", "ProxMine_Jump", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Land.dae Land", "ProxMine_Land", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Look.dae Look", "ProxMine_Look", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Reload.dae Reload", "ProxMine_Reload", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Fire.dae Fire", "ProxMine_Fire", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Fire_Release.dae Fire_Release", "ProxMine_Fire_Release", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Root.dae Root", "ProxMine_Root", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Run.dae Run", "ProxMine_Run", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Side.dae Side", "ProxMine_Side", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Sitting.dae Sitting", "ProxMine_Sitting", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Swim_Backward.dae Swim_Backward", "ProxMine_Swim_Backward", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Swim_Forward.dae Swim_Forward", "ProxMine_Swim_Forward", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Swim_Root.dae Swim_Root", "ProxMine_Swim_Root", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Swim_Left.dae Swim_Left", "ProxMine_Swim_Left", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Swim_Right.dae Swim_Right", "ProxMine_Swim_Right", 0, -1);
    
    %this.setSequenceCyclic( "ProxMine_Back", true);
    %this.setSequenceCyclic( "ProxMine_Crouch_Backward", true);
@@ -235,29 +235,29 @@ function SoldierDAE::onLoad(%this)
    // END: ProxMine Sequences
 
    // BEGIN: Turret Sequences
-   %this.addSequence( "art/shapes/weapons/Turret/PlayerAnims/PlayerAnim_Turret_Back.dae Back", "Turret_Back", 0, -1);
-   %this.addSequence( "art/shapes/weapons/Turret/PlayerAnims/PlayerAnim_Turret_Crouch_Root.dae Crouch_Root", "Turret_Crouch_Root", 0, -1);
-   %this.addSequence( "art/shapes/weapons/Turret/PlayerAnims/PlayerAnim_Turret_Crouch_Backward.dae Crouch_Backward", "Turret_Crouch_Backward", 0, -1);
-   %this.addSequence( "art/shapes/weapons/Turret/PlayerAnims/PlayerAnim_Turret_Crouch_Forward.dae Crouch_Forward", "Turret_Crouch_Forward", 0, -1);
-   %this.addSequence( "art/shapes/weapons/Turret/PlayerAnims/PlayerAnim_Turret_Crouch_Side.dae Crouch_Side", "Turret_Crouch_Side", 0, -1);
-   %this.addSequence( "art/shapes/weapons/Turret/PlayerAnims/PlayerAnim_Turret_Death1.dae Death1", "Turret_Death1", 0, -1);
-   %this.addSequence( "art/shapes/weapons/Turret/PlayerAnims/PlayerAnim_Turret_Death2.dae Death2", "Turret_Death2", 0, -1);
-   %this.addSequence( "art/shapes/weapons/Turret/PlayerAnims/PlayerAnim_Turret_Fall.dae Fall", "Turret_Fall", 0, -1);
-   %this.addSequence( "art/shapes/weapons/Turret/PlayerAnims/PlayerAnim_Turret_Run.dae Run", "Turret_Run", 0, -1);
-   %this.addSequence( "art/shapes/weapons/Turret/PlayerAnims/PlayerAnim_Turret_Jump.dae Jump", "Turret_Jump", 0, -1);
-   %this.addSequence( "art/shapes/weapons/Turret/PlayerAnims/PlayerAnim_Turret_Land.dae Land", "Turret_Land", 0, -1);
-   %this.addSequence( "art/shapes/weapons/Turret/PlayerAnims/PlayerAnim_Turret_Look.dae Look", "Turret_Look", 0, -1);
-   %this.addSequence( "art/shapes/weapons/Turret/PlayerAnims/PlayerAnim_Turret_Head.dae Head", "Turret_Head", 0, -1);
-   %this.addSequence( "art/shapes/weapons/Turret/PlayerAnims/PlayerAnim_Turret_Recoil.dae Recoil", "Turret_Recoil", 0, -1);
-   %this.addSequence( "art/shapes/weapons/Turret/PlayerAnims/PlayerAnim_Turret_Fire_Release.dae Fire_Release", "Turret_Fire_Release", 0, -1);
-   %this.addSequence( "art/shapes/weapons/Turret/PlayerAnims/PlayerAnim_Turret_Root.dae Root", "Turret_Root", 0, -1);
-   %this.addSequence( "art/shapes/weapons/Turret/PlayerAnims/PlayerAnim_Turret_Side.dae Side", "Turret_Side", 0, -1);
-   %this.addSequence( "art/shapes/weapons/Turret/PlayerAnims/PlayerAnim_Turret_Sitting.dae Sitting", "Turret_Sitting", 0, -1);
-   %this.addSequence( "art/shapes/weapons/Turret/PlayerAnims/PlayerAnim_Turret_Swim_Backward.dae Swim_Backward", "Turret_Swim_Backward", 0, -1);
-   %this.addSequence( "art/shapes/weapons/Turret/PlayerAnims/PlayerAnim_Turret_Swim_Forward.dae Swim_Forward", "Turret_Swim_Forward", 0, -1);
-   %this.addSequence( "art/shapes/weapons/Turret/PlayerAnims/PlayerAnim_Turret_Swim_Root.dae Swim_Root", "Turret_Swim_Root", 0, -1);
-   %this.addSequence( "art/shapes/weapons/Turret/PlayerAnims/PlayerAnim_Turret_Swim_Left.dae Swim_Left", "Turret_Swim_Left", 0, -1);
-   %this.addSequence( "art/shapes/weapons/Turret/PlayerAnims/PlayerAnim_Turret_Swim_Right.dae Swim_Right", "Turret_Swim_Right", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/Turret/PlayerAnims/PlayerAnim_Turret_Back.dae Back", "Turret_Back", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/Turret/PlayerAnims/PlayerAnim_Turret_Crouch_Root.dae Crouch_Root", "Turret_Crouch_Root", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/Turret/PlayerAnims/PlayerAnim_Turret_Crouch_Backward.dae Crouch_Backward", "Turret_Crouch_Backward", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/Turret/PlayerAnims/PlayerAnim_Turret_Crouch_Forward.dae Crouch_Forward", "Turret_Crouch_Forward", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/Turret/PlayerAnims/PlayerAnim_Turret_Crouch_Side.dae Crouch_Side", "Turret_Crouch_Side", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/Turret/PlayerAnims/PlayerAnim_Turret_Death1.dae Death1", "Turret_Death1", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/Turret/PlayerAnims/PlayerAnim_Turret_Death2.dae Death2", "Turret_Death2", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/Turret/PlayerAnims/PlayerAnim_Turret_Fall.dae Fall", "Turret_Fall", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/Turret/PlayerAnims/PlayerAnim_Turret_Run.dae Run", "Turret_Run", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/Turret/PlayerAnims/PlayerAnim_Turret_Jump.dae Jump", "Turret_Jump", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/Turret/PlayerAnims/PlayerAnim_Turret_Land.dae Land", "Turret_Land", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/Turret/PlayerAnims/PlayerAnim_Turret_Look.dae Look", "Turret_Look", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/Turret/PlayerAnims/PlayerAnim_Turret_Head.dae Head", "Turret_Head", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/Turret/PlayerAnims/PlayerAnim_Turret_Recoil.dae Recoil", "Turret_Recoil", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/Turret/PlayerAnims/PlayerAnim_Turret_Fire_Release.dae Fire_Release", "Turret_Fire_Release", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/Turret/PlayerAnims/PlayerAnim_Turret_Root.dae Root", "Turret_Root", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/Turret/PlayerAnims/PlayerAnim_Turret_Side.dae Side", "Turret_Side", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/Turret/PlayerAnims/PlayerAnim_Turret_Sitting.dae Sitting", "Turret_Sitting", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/Turret/PlayerAnims/PlayerAnim_Turret_Swim_Backward.dae Swim_Backward", "Turret_Swim_Backward", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/Turret/PlayerAnims/PlayerAnim_Turret_Swim_Forward.dae Swim_Forward", "Turret_Swim_Forward", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/Turret/PlayerAnims/PlayerAnim_Turret_Swim_Root.dae Swim_Root", "Turret_Swim_Root", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/Turret/PlayerAnims/PlayerAnim_Turret_Swim_Left.dae Swim_Left", "Turret_Swim_Left", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/Turret/PlayerAnims/PlayerAnim_Turret_Swim_Right.dae Swim_Right", "Turret_Swim_Right", 0, -1);
    
    %this.setSequenceCyclic( "Turret_Back", true);
    %this.setSequenceCyclic( "Turret_Crouch_Backward", true);

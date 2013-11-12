@@ -37,8 +37,8 @@ singleton Material(TerrainFX_grass1)
 new TerrainMaterial()
 {
    internalName = "grass1";
-   diffuseMap = "art/terrains/Example/grass1";
-   detailMap = "art/terrains/Example/grass1_d";
+   diffuseMap = "content/torque3d/3.0/terrains/Example/grass1";
+   detailMap = "content/torque3d/3.0/terrains/Example/grass1_d";
    detailSize = "10";
    isManaged = "1";
    detailBrightness = "1";
@@ -59,8 +59,8 @@ singleton Material(TerrainFX_grass1dry)
 new TerrainMaterial()
 {
    internalName = "grass1-dry";
-   diffuseMap = "art/terrains/Example/grass1-dry";
-   detailMap = "art/terrains/Example/grass1-dry_d";
+   diffuseMap = "content/torque3d/3.0/terrains/Example/grass1-dry";
+   detailMap = "content/torque3d/3.0/terrains/Example/grass1-dry_d";
    detailSize = "10";
    detailDistance = "100";
    isManaged = "1";
@@ -83,8 +83,8 @@ singleton Material(TerrainFX_dirt_grass)
 new TerrainMaterial()
 {
    internalName = "dirt_grass";
-   diffuseMap = "art/terrains/Example/dirt_grass";
-   detailMap = "art/terrains/Example/dirt_grass_d";
+   diffuseMap = "content/torque3d/3.0/terrains/Example/dirt_grass";
+   detailMap = "content/torque3d/3.0/terrains/Example/dirt_grass_d";
    detailSize = "5";
    detailDistance = "100";
    isManaged = "1";
@@ -110,8 +110,8 @@ singleton Material(TerrainFX_rocktest)
 new TerrainMaterial()
 {
    internalName = "rocktest";
-   diffuseMap = "art/terrains/Example/rocktest";
-   detailMap = "art/terrains/Example/rocktest_d";
+   diffuseMap = "content/torque3d/3.0/terrains/Example/rocktest";
+   detailMap = "content/torque3d/3.0/terrains/Example/rocktest_d";
    detailSize = "10";
    detailDistance = "100";
    isManaged = "1";
@@ -137,8 +137,8 @@ singleton Material(TerrainFX_sand)
 new TerrainMaterial()
 {
    internalName = "sand";
-   diffuseMap = "art/terrains/Example/sand";
-   detailMap = "art/terrains/Example/sand_d";
+   diffuseMap = "content/torque3d/3.0/terrains/Example/sand";
+   detailMap = "content/torque3d/3.0/terrains/Example/sand_d";
    detailSize = "10";
    detailDistance = "100";
    isManaged = "1";

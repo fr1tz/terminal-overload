@@ -23,13 +23,13 @@
 singleton Material(Turret_Base)
 {
    mapTo = "Turret_Base";
-   diffuseMap[0] = "art/shapes/weapons/Turret/Turret_D.dds";
+   diffuseMap[0] = "content/torque3d/3.0/shapes/weapons/Turret/Turret_D.dds";
    specular[0] = "0.9 0.9 0.9 1";
    specularPower[0] = "10";
    translucentBlendOp = "None";
-   normalMap[0] = "art/shapes/weapons/Turret/Turret_N.dds";
+   normalMap[0] = "content/torque3d/3.0/shapes/weapons/Turret/Turret_N.dds";
    pixelSpecular[0] = "1";
-   specularMap[0] = "art/shapes/weapons/Turret/Turret_D.dds";
+   specularMap[0] = "content/torque3d/3.0/shapes/weapons/Turret/Turret_D.dds";
    useAnisotropic[0] = "1";
    materialTag0 = "Weapon";
 };
@@ -37,7 +37,7 @@ singleton Material(Turret_Base)
 singleton Material(Turret_Lazer_Base)
 {
    mapTo = "Turret_Lazer_Base";
-   diffuseMap[0] = "art/shapes/weapons/Turret/Turret_Lazer_D.dds";
+   diffuseMap[0] = "content/torque3d/3.0/shapes/weapons/Turret/Turret_Lazer_D.dds";
    diffuseColor[0] = "1 1 1 1";
    specular[0] = "0.9 0.9 0.9 1";
    specularPower[0] = "10";
@@ -84,7 +84,7 @@ singleton Material(Turret_MuzzleFlash_Base)
 {
    mapTo = "Turret_MuzzleFlash_Base";
    diffuseColor[0] = "1 1 1 1";
-   diffuseMap[0] = "art/shapes/weapons/Turret/Turret_MuzzleFlash.dds";
+   diffuseMap[0] = "content/torque3d/3.0/shapes/weapons/Turret/Turret_MuzzleFlash.dds";
    specular[0] = "0 0 0 1";
    specularPower[0] = "10";
    glow[0] = "1";

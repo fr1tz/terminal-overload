@@ -10,7 +10,7 @@ singleton Material(DECAL_WpnRaptorProjectile)
    translucentZWrite = "0";
    mapTo = "rBlast";
    diffuseColor[0] = "0 1 0.929412 1";
-   diffuseMap[0] = "art/decals/rBlast.png";
+   diffuseMap[0] = "content/torque3d/3.0/decals/rBlast.png";
    glow[0] = "0";
    emissive[0] = "0";
    castShadows = "0";

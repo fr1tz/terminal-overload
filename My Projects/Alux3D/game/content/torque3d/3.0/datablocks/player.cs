@@ -26,14 +26,14 @@
 
 datablock SFXProfile(DeathCrySound)
 {
-   fileName = "art/sound/orc_death";
+   fileName = "content/torque3d/3.0/sound/orc_death";
    description = AudioClose3d;
    preload = true;
 };
 
 datablock SFXProfile(PainCrySound)
 {
-   fileName = "art/sound/orc_pain";
+   fileName = "content/torque3d/3.0/sound/orc_pain";
    description = AudioClose3d;
    preload = true;
 };
@@ -42,49 +42,49 @@ datablock SFXProfile(PainCrySound)
 
 datablock SFXProfile(FootLightSoftSound)
 {
-   filename    = "art/sound/lgtStep_mono_01";
+   filename    = "content/torque3d/3.0/sound/lgtStep_mono_01";
    description = AudioClosest3d;
    preload = true;
 };
 
 datablock SFXProfile(FootLightHardSound)
 {
-   filename    = "art/sound/hvystep_ mono_01";
+   filename    = "content/torque3d/3.0/sound/hvystep_ mono_01";
    description = AudioClose3d;
    preload = true;
 };
 
 datablock SFXProfile(FootLightMetalSound)
 {
-   filename    = "art/sound/metalstep_mono_01";
+   filename    = "content/torque3d/3.0/sound/metalstep_mono_01";
    description = AudioClose3d;
    preload = true;
 };
 
 datablock SFXProfile(FootLightSnowSound)
 {
-   filename    = "art/sound/snowstep_mono_01";
+   filename    = "content/torque3d/3.0/sound/snowstep_mono_01";
    description = AudioClosest3d;
    preload = true;
 };
 
 datablock SFXProfile(FootLightShallowSplashSound)
 {
-   filename    = "art/sound/waterstep_mono_01";
+   filename    = "content/torque3d/3.0/sound/waterstep_mono_01";
    description = AudioClose3d;
    preload = true;
 };
 
 datablock SFXProfile(FootLightWadingSound)
 {
-   filename    = "art/sound/waterstep_mono_01";
+   filename    = "content/torque3d/3.0/sound/waterstep_mono_01";
    description = AudioClose3d;
    preload = true;
 };
 
 datablock SFXProfile(FootLightUnderwaterSound)
 {
-   filename    = "art/sound/waterstep_mono_01";
+   filename    = "content/torque3d/3.0/sound/waterstep_mono_01";
    description = AudioClosest3d;
    preload = true;
 };
@@ -104,7 +104,7 @@ datablock ParticleData(PlayerSplashMist)
    useInvAlpha          = false;
    spinRandomMin        = -90.0;
    spinRandomMax        = 500.0;
-   textureName          = "art/shapes/actors/common/splash";
+   textureName          = "content/torque3d/3.0/shapes/actors/common/splash";
    colors[0]     = "0.7 0.8 1.0 1.0";
    colors[1]     = "0.7 0.8 1.0 0.5";
    colors[2]     = "0.7 0.8 1.0 0.0";
@@ -142,7 +142,7 @@ datablock ParticleData(PlayerBubbleParticle)
    lifetimeMS           = 400;
    lifetimeVarianceMS   = 100;
    useInvAlpha          = false;
-   textureName          = "art/shapes/actors/common/splash";
+   textureName          = "content/torque3d/3.0/shapes/actors/common/splash";
    colors[0]     = "0.7 0.8 1.0 0.4";
    colors[1]     = "0.7 0.8 1.0 0.4";
    colors[2]     = "0.7 0.8 1.0 0.0";
@@ -180,7 +180,7 @@ datablock ParticleData(PlayerFoamParticle)
    useInvAlpha          = false;
    spinRandomMin        = -90.0;
    spinRandomMax        = 500.0;
-   textureName          = "art/particles/millsplash01";
+   textureName          = "content/torque3d/3.0/particles/millsplash01";
    colors[0]     = "0.7 0.8 1.0 0.20";
    colors[1]     = "0.7 0.8 1.0 0.20";
    colors[2]     = "0.7 0.8 1.0 0.00";
@@ -216,7 +216,7 @@ datablock ParticleData( PlayerFoamDropletsParticle )
    constantAcceleration = -0.0;
    lifetimeMS           = 600;
    lifetimeVarianceMS   = 0;
-   textureName          = "art/shapes/actors/common/splash";
+   textureName          = "content/torque3d/3.0/shapes/actors/common/splash";
    colors[0]     = "0.7 0.8 1.0 1.0";
    colors[1]     = "0.7 0.8 1.0 0.5";
    colors[2]     = "0.7 0.8 1.0 0.0";
@@ -246,7 +246,7 @@ datablock ParticleEmitterData( PlayerFoamDropletsEmitter )
 
 datablock ParticleData( PlayerWakeParticle )
 {
-   textureName          = "art/particles/wake";
+   textureName          = "content/torque3d/3.0/particles/wake";
    dragCoefficient     = "0.0";
    gravityCoefficient   = "0.0";
    inheritedVelFactor   = "0.0";
@@ -348,7 +348,7 @@ datablock SplashData(PlayerSplash)
    acceleration = -3.0;
    texWrap = 5.0;
 
-   texture = "art/particles/millsplash01";
+   texture = "content/torque3d/3.0/particles/millsplash01";
 
    emitter[0] = PlayerSplashEmitter;
    emitter[1] = PlayerSplashMistEmitter;
@@ -421,7 +421,7 @@ datablock ParticleData(LiftoffDust)
    colors[0]     = "1.0 1.0 1.0 1.0";
    sizes[0]      = 1.0;
    times[0]      = 1.0;
-   textureName = "art/particles/dustParticle";
+   textureName = "content/torque3d/3.0/particles/dustParticle";
 };
 
 datablock ParticleEmitterData(LiftoffDustEmitter)
@@ -485,13 +485,13 @@ datablock PlayerData(DefaultPlayerData)
    computeCRC = false;
 
    // Third person shape
-   shapeFile = "art/shapes/actors/Soldier/soldier_rigged.DAE";
+   shapeFile = "content/torque3d/3.0/shapes/actors/Soldier/soldier_rigged.DAE";
    cameraMaxDist = 3;
    allowImageStateAnimation = true;
 
    // First person arms
    imageAnimPrefixFP = "soldier";
-   shapeNameFP[0] = "art/shapes/actors/Soldier/FP/FP_SoldierArms.DAE";
+   shapeNameFP[0] = "content/torque3d/3.0/shapes/actors/Soldier/FP/FP_SoldierArms.DAE";
 
    canObserve = 1;
    cmdCategory = "Clients";
@@ -500,7 +500,7 @@ datablock PlayerData(DefaultPlayerData)
    cameraMinFov = 5.0;
    cameraMaxFov = 65.0;
 
-   debrisShapeName = "art/shapes/actors/common/debris_player.dts";
+   debrisShapeName = "content/torque3d/3.0/shapes/actors/common/debris_player.dts";
    debris = playerDebris;
    
    throwForce = 30;

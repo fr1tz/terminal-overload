@@ -25,35 +25,35 @@
 //--------------------------------------------------------------------------
 datablock SFXProfile(LurkerFireSound)
 {
-   filename = "art/sound/weapons/wpn_lurker_fire";
+   filename = "content/torque3d/3.0/sound/weapons/wpn_lurker_fire";
    description = AudioClose3D;
    preload = true;
 };
 
 datablock SFXProfile(LurkerReloadSound)
 {
-   filename = "art/sound/weapons/wpn_lurker_reload";
+   filename = "content/torque3d/3.0/sound/weapons/wpn_lurker_reload";
    description = AudioClose3D;
    preload = true;
 };
 
 datablock SFXProfile(LurkerIdleSound)
 {
-   filename = "art/sound/weapons/wpn_lurker_idle";
+   filename = "content/torque3d/3.0/sound/weapons/wpn_lurker_idle";
    description = AudioClose3D;
    preload = true;
 };
 
 datablock SFXProfile(LurkerSwitchinSound)
 {
-   filename = "art/sound/weapons/wpn_lurker_switchin";
+   filename = "content/torque3d/3.0/sound/weapons/wpn_lurker_switchin";
    description = AudioClose3D;
    preload = true;
 };
 
 datablock SFXProfile(LurkerGrenadeFireSound)
 {
-   filename = "art/sound/weapons/wpn_lurker_grenadelaunch";
+   filename = "content/torque3d/3.0/sound/weapons/wpn_lurker_grenadelaunch";
    description = AudioClose3D;
    preload = true;
 };
@@ -68,7 +68,7 @@ datablock SFXPlayList(LurkerFireSoundList)
 
 /*datablock SFXProfile(BulletImpactSound)
 {
-   filename = "art/sound/weapons/SCARFIRE";
+   filename = "content/torque3d/3.0/sound/weapons/SCARFIRE";
    description = AudioClose3D;
    preload = true;
 };*/
@@ -78,7 +78,7 @@ datablock SFXPlayList(LurkerFireSoundList)
 // ----------------------------------------------------------------------------
 datablock ParticleData(GunFireSmoke)
 {
-   textureName          = "art/particles/smoke";
+   textureName          = "content/torque3d/3.0/particles/smoke";
    dragCoefficient      = 0;
    gravityCoefficient   = "-1";
    windCoefficient      = 0;
@@ -101,7 +101,7 @@ datablock ParticleData(GunFireSmoke)
    times[0]      = 0.0;
    times[1]      = "0.498039";
    times[2]      = 1.0;
-   animTexName = "art/particles/smoke";
+   animTexName = "content/torque3d/3.0/particles/smoke";
 };
 
 datablock ParticleEmitterData(GunFireSmokeEmitter)
@@ -123,7 +123,7 @@ datablock ParticleEmitterData(GunFireSmokeEmitter)
 
 datablock ParticleData(BulletDirtDust)
 {
-   textureName          = "art/particles/impact";
+   textureName          = "content/torque3d/3.0/particles/impact";
    dragCoefficient      = "1";
    gravityCoefficient   = "-0.100122";
    windCoefficient      = 0;
@@ -146,7 +146,7 @@ datablock ParticleData(BulletDirtDust)
    times[0]      = 0.0;
    times[1]      = "0.498039";
    times[2]      = 1.0;
-   animTexName = "art/particles/impact";
+   animTexName = "content/torque3d/3.0/particles/impact";
 };
 
 datablock ParticleEmitterData(BulletDirtDustEmitter)
@@ -186,7 +186,7 @@ datablock ExplosionData(BulletDirtExplosion)
 //-----------------------------------------------------------------------------
 datablock DebrisData(BulletShell)
 {
-   shapeFile = "art/shapes/weapons/shared/RifleShell.DAE";
+   shapeFile = "content/torque3d/3.0/shapes/weapons/shared/RifleShell.DAE";
    lifetime = 6.0;
    minSpinSpeed = 300.0;
    maxSpinSpeed = 400.0;
@@ -256,7 +256,7 @@ datablock ItemData(LurkerClip)
    className = "AmmoClip";
 
    // Basic Item properties
-   shapeFile = "art/shapes/weapons/Lurker/TP_Lurker.DAE";
+   shapeFile = "content/torque3d/3.0/shapes/weapons/Lurker/TP_Lurker.DAE";
    mass = 1;
    elasticity = 0.2;
    friction = 0.6;
@@ -277,7 +277,7 @@ datablock ItemData(LurkerAmmo)
    className = "Ammo";
 
    // Basic Item properties
-   shapeFile = "art/shapes/weapons/Lurker/TP_Lurker.DAE";
+   shapeFile = "content/torque3d/3.0/shapes/weapons/Lurker/TP_Lurker.DAE";
    mass = 1;
    elasticity = 0.2;
    friction = 0.6;
@@ -304,7 +304,7 @@ datablock ItemData(Lurker)
    className = "Weapon";
 
    // Basic Item properties
-   shapeFile = "art/shapes/weapons/Lurker/TP_Lurker.DAE";
+   shapeFile = "content/torque3d/3.0/shapes/weapons/Lurker/TP_Lurker.DAE";
    mass = 1;
    elasticity = 0.2;
    friction = 0.6;
@@ -322,8 +322,8 @@ datablock ItemData(Lurker)
 datablock ShapeBaseImageData(LurkerWeaponImage)
 {
    // Basic Item properties
-   shapeFile = "art/shapes/weapons/Lurker/TP_Lurker.DAE";
-   shapeFileFP = "art/shapes/weapons/Lurker/FP_Lurker.DAE";
+   shapeFile = "content/torque3d/3.0/shapes/weapons/Lurker/TP_Lurker.DAE";
+   shapeFileFP = "content/torque3d/3.0/shapes/weapons/Lurker/FP_Lurker.DAE";
    emap = true;
 
    imageAnimPrefix = "Rifle";
@@ -565,7 +565,7 @@ datablock ItemData(LurkerGrenadeAmmo)
    className = "Ammo";
 
    // Basic Item properties
-   shapeFile = "art/shapes/weapons/Lurker/TP_Lurker.DAE";
+   shapeFile = "content/torque3d/3.0/shapes/weapons/Lurker/TP_Lurker.DAE";
    mass = 1;
    elasticity = 0.2;
    friction = 0.6;
@@ -586,7 +586,7 @@ datablock ItemData(LurkerGrenadeLauncher)
    className = "Weapon";
 
    // Basic Item properties
-   shapeFile = "art/shapes/weapons/Lurker/TP_Lurker.DAE";
+   shapeFile = "content/torque3d/3.0/shapes/weapons/Lurker/TP_Lurker.DAE";
    mass = 1;
    elasticity = 0.2;
    friction = 0.6;
@@ -603,8 +603,8 @@ datablock ItemData(LurkerGrenadeLauncher)
 datablock ShapeBaseImageData(LurkerGrenadeLauncherImage)
 {
    // Basic Item properties
-   shapeFile = "art/shapes/weapons/Lurker/TP_Lurker.DAE";
-   shapeFileFP = "art/shapes/weapons/Lurker/FP_Lurker.DAE";
+   shapeFile = "content/torque3d/3.0/shapes/weapons/Lurker/TP_Lurker.DAE";
+   shapeFileFP = "content/torque3d/3.0/shapes/weapons/Lurker/FP_Lurker.DAE";
    emap = true;
 
    imageAnimPrefix = "Rifle";

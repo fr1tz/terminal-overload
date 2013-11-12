@@ -24,7 +24,7 @@
       noCursor = "1";
 
    new GuiBitmapCtrl(centerPrintDlg) {
-      bitmap = "art/gui/hudfill.png";
+      bitmap = "content/torque3d/3.0/gui/hudfill.png";
       wrap = "0";
       position = "45 230";
       extent = "550 20";
@@ -62,7 +62,7 @@
       };
    };
    new GuiBitmapCtrl(bottomPrintDlg) {
-      bitmap = "art/gui/hudfill.png";
+      bitmap = "content/torque3d/3.0/gui/hudfill.png";
       wrap = "0";
       position = "45 431";
       extent = "550 20";
@@ -100,7 +100,7 @@
       };
    };
    new GuiBitmapCtrl(LagIcon) {
-      bitmap = "art/gui/lagIcon.png";
+      bitmap = "content/torque3d/3.0/gui/lagIcon.png";
       wrap = "0";
       position = "572 3";
       extent = "32 32";

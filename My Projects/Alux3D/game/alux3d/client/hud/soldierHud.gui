@@ -129,7 +129,7 @@
       canSaveDynamicFields = "0";
 
       new GuiBitmapCtrl() {
-         bitmap = "art/gui/damageFront.png";
+         bitmap = "content/torque3d/3.0/gui/damageFront.png";
          wrap = "0";
          position = "0 0";
          extent = "256 32";
@@ -148,7 +148,7 @@
          canSaveDynamicFields = "0";
       };
       new GuiBitmapCtrl() {
-         bitmap = "art/gui/damageTop.png";
+         bitmap = "content/torque3d/3.0/gui/damageTop.png";
          wrap = "0";
          position = "0 0";
          extent = "256 32";
@@ -167,7 +167,7 @@
          canSaveDynamicFields = "0";
       };
       new GuiBitmapCtrl() {
-         bitmap = "art/gui/damageBottom.png";
+         bitmap = "content/torque3d/3.0/gui/damageBottom.png";
          wrap = "0";
          position = "0 224";
          extent = "256 32";
@@ -186,7 +186,7 @@
          canSaveDynamicFields = "0";
       };
       new GuiBitmapCtrl() {
-         bitmap = "art/gui/damageLeft.png";
+         bitmap = "content/torque3d/3.0/gui/damageLeft.png";
          wrap = "0";
          position = "0 0";
          extent = "32 256";
@@ -205,7 +205,7 @@
          canSaveDynamicFields = "0";
       };
       new GuiBitmapCtrl() {
-         bitmap = "art/gui/damageRight.png";
+         bitmap = "content/torque3d/3.0/gui/damageRight.png";
          wrap = "0";
          position = "224 0";
          extent = "32 256";

@@ -112,7 +112,7 @@ function clientCmdRefreshWeaponHUD(%amount, %preview, %ret, %zoomRet, %amountInC
    else
    {
       WeaponHUD.setVisible(true);//PreviewImage.setVisible(true);
-      PreviewImage.setbitmap("art/gui/weaponHud/"@ detag(%preview));
+      PreviewImage.setbitmap("content/torque3d/3.0/gui/weaponHud/"@ detag(%preview));
    }
 
    if (%ret $= "")
@@ -120,7 +120,7 @@ function clientCmdRefreshWeaponHUD(%amount, %preview, %ret, %zoomRet, %amountInC
    else
    {
       Reticle.setVisible(true);
-      Reticle.setbitmap("art/gui/weaponHud/"@ detag(%ret));
+      Reticle.setbitmap("content/torque3d/3.0/gui/weaponHud/"@ detag(%ret));
    }
 
    if (isObject(ZoomReticle))
@@ -131,7 +131,7 @@ function clientCmdRefreshWeaponHUD(%amount, %preview, %ret, %zoomRet, %amountInC
       }
       else
       {
-         ZoomReticle.setBitmap("art/gui/weaponHud/"@ detag(%zoomRet));
+         ZoomReticle.setBitmap("content/torque3d/3.0/gui/weaponHud/"@ detag(%zoomRet));
       }
    }
 }

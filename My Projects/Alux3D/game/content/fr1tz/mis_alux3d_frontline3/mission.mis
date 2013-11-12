@@ -757,7 +757,7 @@ new SimGroup(MissionGroup) {
       waveMagnitude[1] = "0.2";
       waveMagnitude[2] = "0.2";
       overallWaveMagnitude = "0.1";
-      rippleTex = "art/water/ripple";
+      rippleTex = "content/torque3d/3.0/water/ripple";
       rippleDir[0] = "0 1";
       rippleDir[1] = "0.707 0.707";
       rippleDir[2] = "0.5 0.86";
@@ -771,7 +771,7 @@ new SimGroup(MissionGroup) {
       rippleMagnitude[1] = "1";
       rippleMagnitude[2] = "0.3";
       overallRippleMagnitude = "2";
-      foamTex = "art/water/foam";
+      foamTex = "content/torque3d/3.0/water/foam";
       foamDir[0] = "1 0";
       foamDir[1] = "0 1";
       foamSpeed[0] = "0";
@@ -796,7 +796,7 @@ new SimGroup(MissionGroup) {
       waterFogDensityOffset = "0";
       wetDepth = "2";
       wetDarkening = "0.2";
-      depthGradientTex = "art/water/depthcolor_ramp";
+      depthGradientTex = "content/torque3d/3.0/water/depthcolor_ramp";
       depthGradientMax = "50";
       distortStartDist = "0.1";
       distortEndDist = "20";

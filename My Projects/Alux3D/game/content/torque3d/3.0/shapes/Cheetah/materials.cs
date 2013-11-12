@@ -23,12 +23,12 @@
 singleton Material(Cheetah_Main)
 {
    mapTo = "Cheetah_Main";
-   diffuseMap[0] = "art/shapes/Cheetah/Cheetah_D";
+   diffuseMap[0] = "content/torque3d/3.0/shapes/Cheetah/Cheetah_D";
    specular[0] = "0.9 0.9 0.9 1";
    specularPower[0] = "10";
    translucentBlendOp = "None";
-   normalMap[0] = "art/shapes/Cheetah/Cheetah_N";
-   specularMap[0] = "art/shapes/Cheetah/Cheetah_S";
+   normalMap[0] = "content/torque3d/3.0/shapes/Cheetah/Cheetah_N";
+   specularMap[0] = "content/torque3d/3.0/shapes/Cheetah/Cheetah_S";
 };
 
 singleton Material(Cheetah_TailLights)
@@ -45,7 +45,7 @@ singleton Material(Cheetah_TailLights)
 singleton Material(Cheetah_MuzzleFlash)
 {
    mapTo = "Cheetah_MuzzleFlash";
-   diffuseMap[0] = "art/shapes/Cheetah/Cheetah_MuzzleFlash_D";
+   diffuseMap[0] = "content/torque3d/3.0/shapes/Cheetah/Cheetah_MuzzleFlash_D";
    specular[0] = "0.9 0.9 0.9 1";
    specularPower[0] = "10";
    translucentBlendOp = "AddAlpha";

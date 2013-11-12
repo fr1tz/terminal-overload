@@ -26,21 +26,21 @@
 
 datablock SFXProfile(RyderFireSound)
 {
-   filename = "art/sound/weapons/wpn_ryder_fire";
+   filename = "content/torque3d/3.0/sound/weapons/wpn_ryder_fire";
    description = AudioClose3D;
    preload = true;
 };
 
 datablock SFXProfile(RyderReloadSound)
 {
-   filename = "art/sound/weapons/wpn_ryder_reload";
+   filename = "content/torque3d/3.0/sound/weapons/wpn_ryder_reload";
    description = AudioClose3D;
    preload = true;
 };
 
 datablock SFXProfile(RyderSwitchinSound)
 {
-   filename = "art/sound/weapons/wpn_ryder_switchin";
+   filename = "content/torque3d/3.0/sound/weapons/wpn_ryder_switchin";
    description = AudioClose3D;
    preload = true;
 };
@@ -75,7 +75,7 @@ datablock ItemData(RyderClip)
    className = "AmmoClip";
 
    // Basic Item properties
-   shapeFile = "art/shapes/weapons/Ryder/TP_Ryder.DAE";
+   shapeFile = "content/torque3d/3.0/shapes/weapons/Ryder/TP_Ryder.DAE";
    mass = 1;
    elasticity = 0.2;
    friction = 0.6;
@@ -96,7 +96,7 @@ datablock ItemData(RyderAmmo)
    className = "Ammo";
 
    // Basic Item properties
-   shapeFile = "art/shapes/weapons/Ryder/TP_Ryder.DAE";
+   shapeFile = "content/torque3d/3.0/shapes/weapons/Ryder/TP_Ryder.DAE";
    mass = 1;
    elasticity = 0.2;
    friction = 0.6;
@@ -123,7 +123,7 @@ datablock ItemData(Ryder)
    className = "Weapon";
 
    // Basic Item properties
-   shapeFile = "art/shapes/weapons/Ryder/TP_Ryder.DAE";
+   shapeFile = "content/torque3d/3.0/shapes/weapons/Ryder/TP_Ryder.DAE";
    mass = 1;
    elasticity = 0.2;
    friction = 0.6;
@@ -141,8 +141,8 @@ datablock ItemData(Ryder)
 datablock ShapeBaseImageData(RyderWeaponImage)
 {
    // Basic Item properties
-   shapeFile = "art/shapes/weapons/Ryder/TP_Ryder.DAE";
-   shapeFileFP = "art/shapes/weapons/Ryder/FP_Ryder.DAE";
+   shapeFile = "content/torque3d/3.0/shapes/weapons/Ryder/TP_Ryder.DAE";
+   shapeFileFP = "content/torque3d/3.0/shapes/weapons/Ryder/FP_Ryder.DAE";
    emap = true;
 
    imageAnimPrefix = "Pistol";

@@ -151,7 +151,7 @@ function ForestEditorGui::newMesh( %this )
       ForestEditMeshTree.scrollVisible( %item );
       ForestEditMeshTree.addSelection( %item );
       
-      ForestDataManager.setDirty( %name, "art/forest/managedItemData.cs" );  
+      ForestDataManager.setDirty( %name, "content/torque3d/3.0/forest/managedItemData.cs" );  
       
       %element = new ForestBrushElement()
       {
@@ -200,7 +200,7 @@ function ForestEditorGui::deleteMesh( %this )
 function ForestEditorGui::okDeleteMesh( %this, %mesh )
 {
    // Remove mesh from file
-   ForestDataManager.removeObjectFromFile( %mesh, "art/forest/managedItemData.cs" );  
+   ForestDataManager.removeObjectFromFile( %mesh, "content/torque3d/3.0/forest/managedItemData.cs" );  
 
    // Submitting undo actions is handled in code.
    %this.deleteMeshSafe( %mesh );   
@@ -316,7 +316,7 @@ function ForestEditMeshTree::onDoubleClick( %this )
       parentGroup = ForestBrushGroup;
    };          
    
-   //ForestDataManager.setDirty( %element, "art/forest/brushes.cs" );                 
+   //ForestDataManager.setDirty( %element, "content/torque3d/3.0/forest/brushes.cs" );                 
 
    ForestEditBrushTree.clearSelection();      
    ForestEditBrushTree.buildVisibleTree( true );

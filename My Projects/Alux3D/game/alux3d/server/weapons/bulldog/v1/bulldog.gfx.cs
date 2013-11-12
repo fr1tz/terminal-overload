@@ -42,7 +42,7 @@ datablock ParticleEmitterData(WpnBulldogProjectileEmitter : DefaultEmitter)
 
 datablock ParticleData(WpnBulldogProjectileExplosionPlasmaParticles)
 {
-   textureName          = "art/particles/ricochet.png";
+   textureName          = "content/torque3d/3.0/particles/ricochet.png";
    dragCoefficient      = "0.99218";
    gravityCoefficient   = "0";
    windCoefficient      = 0;
@@ -65,7 +65,7 @@ datablock ParticleData(WpnBulldogProjectileExplosionPlasmaParticles)
    times[0]      = 0.0;
    times[1]      = "0.494118";
    times[2]      = 1.0;
-   animTexName = "art/particles/ricochet.png";
+   animTexName = "content/torque3d/3.0/particles/ricochet.png";
    colors[3] = "1 0.835294 0 1";
 };
 
@@ -92,8 +92,8 @@ datablock ParticleData(WpnBulldogProjectileExplosionCloudParticle : DefaultParti
    sizes[3] = "0";
    times[1] = "0.5";
    times[2] = "1";
-   textureName = "art/particles/dustParticle.png";
-   animTexName = "art/particles/dustParticle.png";
+   textureName = "content/torque3d/3.0/particles/dustParticle.png";
+   animTexName = "content/torque3d/3.0/particles/dustParticle.png";
    lifetimeMS = "150";
    lifetimeVarianceMS = "0";
    spinSpeed = "0";
@@ -136,7 +136,7 @@ datablock ExplosionData(WpnBulldogProjectileExplosion)
 
 datablock DebrisData(WpnBulldogProjectileShell)
 {
-   shapeFile = "art/shapes/weapons/shared/RifleShell.DAE";
+   shapeFile = "content/torque3d/3.0/shapes/weapons/shared/RifleShell.DAE";
    lifetime = 6.0;
    minSpinSpeed = 300.0;
    maxSpinSpeed = 400.0;

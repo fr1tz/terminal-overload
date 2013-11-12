@@ -27,8 +27,8 @@ function onServerCreated()
    %datablockFiles.add( "content/cleanup/particleEmitterData.cs" );
    %datablockFiles.add( "content/cleanup/decalData.cs" );
    %datablockFiles.add( "content/cleanup/datablocks.cs" );
-   %datablockFiles.add( "art/forest/managedItemData.cs" );
-   %datablockFiles.add( "art/datablocks/datablockExec.cs" );   
+   %datablockFiles.add( "content/torque3d/3.0/forest/managedItemData.cs" );
+   %datablockFiles.add( "content/torque3d/3.0/datablocks/datablockExec.cs" );   
    loadDatablockFiles( %datablockFiles, true );
    
    exec("./base/commands.cs");

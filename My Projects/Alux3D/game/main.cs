@@ -51,7 +51,7 @@ exec("core/parseArgs.cs");
 
 $isDedicated = false;
 $dirCount = 2;
-$userDirs = $defaultGame @ ";art;levels";
+$userDirs = $defaultGame;
 
 // load tools scripts if we're a tool build
 if (isToolBuild())

@@ -1,6 +1,6 @@
 //--- OBJECT WRITE BEGIN ---
 %guiContent = new GuiChunkedBitmapCtrl(MainMenuGui) {
-   bitmap = "art/gui/background";
+   bitmap = "content/torque3d/3.0/gui/background";
    useVariable = "0";
    tile = "0";
    position = "0 0";
@@ -20,7 +20,7 @@
       isDecoy = "0";
 
    new GuiBitmapCtrl(MainMenuAppLogo) {
-      bitmap = "art/gui/Torque-3D-logo.png";
+      bitmap = "content/torque3d/3.0/gui/Torque-3D-logo.png";
       wrap = "0";
       position = "540 30";
       extent = "443 139";

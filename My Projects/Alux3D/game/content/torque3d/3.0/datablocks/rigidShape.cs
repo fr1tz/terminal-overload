@@ -24,7 +24,7 @@ datablock RigidShapeData( BouncingBoulder )
 {	
    category = "RigidShape";
 	
-   shapeFile = "art/shapes/rocks/boulder.dts";
+   shapeFile = "content/torque3d/3.0/shapes/rocks/boulder.dts";
    emap = true;
 
    // Rigid Body

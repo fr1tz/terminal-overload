@@ -21,30 +21,30 @@
 //-----------------------------------------------------------------------------
 
    // BEGIN: ProxMine Sequences
-   %this.addSequence( "art/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Back.dae Back", "ProxMine_Back", 0, -1);
-   %this.addSequence( "art/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Crouch_Backward.dae Crouch_Backward", "ProxMine_Crouch_Backward", 0, -1);
-   %this.addSequence( "art/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Crouch_Forward.dae Crouch_Forward", "ProxMine_Crouch_Forward", 0, -1);
-   %this.addSequence( "art/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Crouch_Side.dae Crouch_Side", "ProxMine_Crouch_Side", 0, -1);
-   %this.addSequence( "art/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Crouch_Root.dae Crouch_Root", "ProxMine_Crouch_Root", 0, -1);
-   %this.addSequence( "art/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Death1.dae Death1", "ProxMine_Death1", 0, -1);
-   %this.addSequence( "art/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Death2.dae Death2", "ProxMine_Death2", 0, -1);
-   %this.addSequence( "art/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Fall.dae Fall", "ProxMine_Fall", 0, -1);
-   %this.addSequence( "art/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Head.dae Head", "ProxMine_Head", 0, -1);
-   %this.addSequence( "art/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Jump.dae Jump", "ProxMine_Jump", 0, -1);
-   %this.addSequence( "art/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Land.dae Land", "ProxMine_Land", 0, -1);
-   %this.addSequence( "art/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Look.dae Look", "ProxMine_Look", 0, -1);
-   %this.addSequence( "art/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Reload.dae Reload", "ProxMine_Reload", 0, -1);
-   %this.addSequence( "art/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Fire.dae Fire", "ProxMine_Fire", 0, -1);
-   %this.addSequence( "art/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Fire_Release.dae Fire_Release", "ProxMine_Fire_Release", 0, -1);
-   %this.addSequence( "art/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Root.dae Root", "ProxMine_Root", 0, -1);
-   %this.addSequence( "art/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Run.dae Run", "ProxMine_Run", 0, -1);
-   %this.addSequence( "art/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Side.dae Side", "ProxMine_Side", 0, -1);
-   %this.addSequence( "art/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Sitting.dae Sitting", "ProxMine_Sitting", 0, -1);
-   %this.addSequence( "art/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Swim_Backward.dae Swim_Backward", "ProxMine_Swim_Backward", 0, -1);
-   %this.addSequence( "art/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Swim_Forward.dae Swim_Forward", "ProxMine_Swim_Forward", 0, -1);
-   %this.addSequence( "art/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Swim_Root.dae Swim_Root", "ProxMine_Swim_Root", 0, -1);
-   %this.addSequence( "art/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Swim_Left.dae Swim_Left", "ProxMine_Swim_Left", 0, -1);
-   %this.addSequence( "art/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Swim_Right.dae Swim_Right", "ProxMine_Swim_Right", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Back.dae Back", "ProxMine_Back", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Crouch_Backward.dae Crouch_Backward", "ProxMine_Crouch_Backward", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Crouch_Forward.dae Crouch_Forward", "ProxMine_Crouch_Forward", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Crouch_Side.dae Crouch_Side", "ProxMine_Crouch_Side", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Crouch_Root.dae Crouch_Root", "ProxMine_Crouch_Root", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Death1.dae Death1", "ProxMine_Death1", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Death2.dae Death2", "ProxMine_Death2", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Fall.dae Fall", "ProxMine_Fall", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Head.dae Head", "ProxMine_Head", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Jump.dae Jump", "ProxMine_Jump", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Land.dae Land", "ProxMine_Land", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Look.dae Look", "ProxMine_Look", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Reload.dae Reload", "ProxMine_Reload", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Fire.dae Fire", "ProxMine_Fire", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Fire_Release.dae Fire_Release", "ProxMine_Fire_Release", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Root.dae Root", "ProxMine_Root", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Run.dae Run", "ProxMine_Run", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Side.dae Side", "ProxMine_Side", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Sitting.dae Sitting", "ProxMine_Sitting", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Swim_Backward.dae Swim_Backward", "ProxMine_Swim_Backward", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Swim_Forward.dae Swim_Forward", "ProxMine_Swim_Forward", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Swim_Root.dae Swim_Root", "ProxMine_Swim_Root", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Swim_Left.dae Swim_Left", "ProxMine_Swim_Left", 0, -1);
+   %this.addSequence( "content/torque3d/3.0/shapes/weapons/ProxMine/PlayerAnims/PlayerAnim_ProxMine_Swim_Right.dae Swim_Right", "ProxMine_Swim_Right", 0, -1);
    
    %this.setSequenceCyclic( "ProxMine_Back", true);
    %this.setSequenceCyclic( "ProxMine_Crouch_Backward", true);

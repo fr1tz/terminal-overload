@@ -24,28 +24,28 @@ datablock SFXProfile(WpnBulldogDryFireSound)
 
 datablock SFXProfile(WpnBulldogReloadSound)
 {
-   filename = "art/sound/weapons/wpn_lurker_reload";
+   filename = "content/torque3d/3.0/sound/weapons/wpn_lurker_reload";
    description = AudioClose3D;
    preload = true;
 };
 
 datablock SFXProfile(WpnBulldogIdleSound)
 {
-   filename = "art/sound/weapons/wpn_lurker_idle";
+   filename = "content/torque3d/3.0/sound/weapons/wpn_lurker_idle";
    description = AudioClose3D;
    preload = true;
 };
 
 datablock SFXProfile(WpnBulldogSwitchinSound)
 {
-   filename = "art/sound/weapons/wpn_lurker_switchin";
+   filename = "content/torque3d/3.0/sound/weapons/wpn_lurker_switchin";
    description = AudioClose3D;
    preload = true;
 };
 
 datablock SFXProfile(WpnBulldogGrenadeFireSound)
 {
-   filename = "art/sound/weapons/wpn_lurker_grenadelaunch";
+   filename = "content/torque3d/3.0/sound/weapons/wpn_lurker_grenadelaunch";
    description = AudioClose3D;
    preload = true;
 };

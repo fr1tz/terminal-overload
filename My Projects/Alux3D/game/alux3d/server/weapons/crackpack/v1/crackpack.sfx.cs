@@ -3,14 +3,14 @@
 
 datablock SFXProfile(WpnCrackpackDeploySound)
 {
-	filename = "content/torque3d/3.0/sound/weapons/mine_armed.ogg";
+	filename = "content/torque3d/3.0//sound/weapons/mine_armed.ogg";
 	description = AudioDefault3D;
 	preload = true;
 };
 
 datablock SFXProfile(WpnCrackpackActivateSound)
 {
-	filename = "content/torque3d/3.0/sound/weapons/mine_trigger.ogg";
+	filename = "content/torque3d/3.0//sound/weapons/mine_trigger.ogg";
 	description = AudioDefault3D;
 	preload = true;
 };

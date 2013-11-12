@@ -16,13 +16,13 @@ singleton Material(fr1tz_mis_alux3d_dm2_ter1FX)
 new TerrainMaterial()
 {
    internalName = "fr1tz_mis_alux3d_dm2_ter1";
-   diffuseMap = "art/terrains/Example/stone";
+   diffuseMap = "content/torque3d/3.0/terrains/Example/stone";
    diffuseSize = "400";
-   detailMap = "art/terrains/Example/stone_d";
+   detailMap = "content/torque3d/3.0/terrains/Example/stone_d";
    detailSize = "10";
    detailDistance = "400";
    parallaxScale = "0";
-   normalMap = "art/terrains/Example/stone_n";
+   normalMap = "content/torque3d/3.0/terrains/Example/stone_n";
 };
 
 singleton Material(fr1tz_mis_alux3d_dm2_grid1FX)

@@ -34,13 +34,13 @@ datablock PlayerData(FrmSoldier)
    computeCRC = false;
 
    // Third person shape
-   shapeFile = "art/shapes/actors/Soldier/soldier_rigged.DAE";
+   shapeFile = "content/torque3d/3.0/shapes/actors/Soldier/soldier_rigged.DAE";
    cameraMaxDist = 3;
    allowImageStateAnimation = true;
 
    // First person arms
    imageAnimPrefixFP = "soldier";
-   //shapeNameFP[0] = "art/shapes/actors/Soldier/FP/FP_SoldierArms.DAE";
+   //shapeNameFP[0] = "content/torque3d/3.0/shapes/actors/Soldier/FP/FP_SoldierArms.DAE";
 
    canObserve = 1;
    cmdCategory = "Clients";
@@ -49,7 +49,7 @@ datablock PlayerData(FrmSoldier)
    cameraMinFov = "80";
    cameraMaxFov = "180";
 
-   debrisShapeName = "art/shapes/actors/common/debris_player.dts";
+   debrisShapeName = "content/torque3d/3.0/shapes/actors/common/debris_player.dts";
    debris = PlayerDebris;
 
    throwForce = 30;

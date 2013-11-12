@@ -2,7 +2,7 @@ singleton Material(w_swarmgun)
 {
 	mapTo = "w_swarmgun";
 
-	diffuseMap[0] = "art/shapes/weapons/shared/w_swarmgun";
+	diffuseMap[0] = "content/torque3d/3.0/shapes/weapons/shared/w_swarmgun";
 	normalMap[0] = "";
 	specularMap[0] = "";
 
@@ -22,7 +22,7 @@ singleton Material(RifleShell_RifleShell)
 {
 	mapTo = "RifleShell";
 
-	diffuseMap[0] = "art/shapes/weapons/shared/RifleShell_diff";
+	diffuseMap[0] = "content/torque3d/3.0/shapes/weapons/shared/RifleShell_diff";
 	normalMap[0] = "";
 	specularMap[0] = "";
 

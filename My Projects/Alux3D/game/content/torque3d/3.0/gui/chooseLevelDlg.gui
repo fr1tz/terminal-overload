@@ -192,7 +192,7 @@
          Visible = "1";
          tooltipprofile = "GuiToolTipProfile";
          hovertime = "1000";
-         bitmap = "art/gui/previous-button";
+         bitmap = "content/torque3d/3.0/gui/previous-button";
          wrap = "0";
          command = "ChooseLevelWindow.previousPreviews();";
       };
@@ -222,7 +222,7 @@
          Visible = "1";
          tooltipprofile = "GuiToolTipProfile";
          hovertime = "1000";
-         bitmap = "art/gui/next-button";
+         bitmap = "content/torque3d/3.0/gui/next-button";
          wrap = "0";
          command = "ChooseLevelWindow.nextPreviews();";
       };

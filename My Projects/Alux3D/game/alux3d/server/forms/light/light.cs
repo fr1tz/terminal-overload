@@ -11,7 +11,7 @@ datablock LightFlareData(FrmLightLightFlare)
    overallScale = "1";
    flareEnabled = true;
    renderReflectPass = true;
-   flareTexture = "art/lights/lensFlareSheet1.png";
+   flareTexture = "content/torque3d/3.0/lights/lensFlareSheet1.png";
 
    elementRect[0] = "512 512 512 512";
    elementDist[0] = 0.0;

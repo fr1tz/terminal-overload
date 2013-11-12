@@ -28,7 +28,7 @@
 // teleporter after an object has teleported.
 datablock SFXProfile(TeleportEntrance)  
 {  
-   fileName = "art/sound/orc_pain"; 
+   fileName = "content/torque3d/3.0/sound/orc_pain"; 
    description = AudioDefault3D;  
    preload = true;
 }; 
@@ -36,7 +36,7 @@ datablock SFXProfile(TeleportEntrance)
 // The 2D sound played by the client after a teleport.
 datablock SFXProfile(TeleportSound)  
 {  
-   fileName = "art/sound/orc_death"; 
+   fileName = "content/torque3d/3.0/sound/orc_death"; 
    description = Audio2D;  
    preload = true;  
 };
@@ -49,8 +49,8 @@ datablock ParticleData(TeleporterFlash : DefaultParticle)
    lifetimeMS = "500";
    spinRandomMin = "-90";
    spinRandomMax = "90";
-   textureName = "art/particles/flare.png";
-   animTexName = "art/particles/flare.png";
+   textureName = "content/torque3d/3.0/particles/flare.png";
+   animTexName = "content/torque3d/3.0/particles/flare.png";
    colors[0] = "0.678431 0.686275 0.913726 0.207";
    colors[1] = "0 0.543307 1 0.759";
    colors[2] = "0.0472441 0.181102 0.92126 0.838";
@@ -79,7 +79,7 @@ datablock ParticleData(TeleporterParticles)
 {
    lifetimeMS = "750";
    lifetimeVarianceMS = "100";
-   textureName = "art/particles/Streak.png";
+   textureName = "content/torque3d/3.0/particles/Streak.png";
    useInvAlpha = "0";
    gravityCoefficient = "-1";
    spinSpeed = "0";
@@ -94,7 +94,7 @@ datablock ParticleData(TeleporterParticles)
    times[0]      = 0.0;
    times[1]      = "0.415686";
    times[2]      = "0.74902";
-   animTexName = "art/particles/Streak.png";
+   animTexName = "content/torque3d/3.0/particles/Streak.png";
    inheritedVelFactor = "0.0998043";
    constantAcceleration = "-2";
    colors[3] = "0.694118 0.843137 0.945098 0";
