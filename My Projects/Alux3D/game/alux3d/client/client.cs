@@ -26,6 +26,35 @@ function clientCmdSyncClock(%time)
    // or when a client joins a game in progress.
 }
 
+function clientCmdGridCreateExplosions(%grid, %datablock, %griddata)
+{
+   if(!isObject(%datablock))
+      return;
+
+   %grid = ServerConnection.resolveGhostID(%grid);
+   if(%grid == 0)
+      return;
+      
+   %numExplosions = getWordCount(%griddata) / 4;
+   for(%i = 0; %i < %numExplosions; %i++)
+   {
+      %gridPosX = getWord(%griddata, 4*%i+0);
+      %gridPosY = getWord(%griddata, 4*%i+1);
+      %gridPosZ = getWord(%griddata, 4*%i+2);
+      %amount = getWord(%griddata, 4*%i+3);
+      for(%j = 0; %j < %amount; %j++)
+      {
+         %gridPos = %gridPosX SPC %gridPosY SPC %gridPosZ + %j;
+         %worldPos = %grid.gridToWorld(%gridPos);
+         new Explosion()
+         {
+            position = %worldPos;
+            dataBlock = %datablock;
+         };
+      }
+   }
+}
+
 //-----------------------------------------------------------------------------
 // Damage Direction Indicator
 //-----------------------------------------------------------------------------

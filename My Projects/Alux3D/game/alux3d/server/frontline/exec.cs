@@ -15,6 +15,7 @@ function executeFrontlineServerScripts()
    exec("alux3d/server/weapons/bulldog/v1/exec.cs");
    exec("alux3d/server/weapons/siberion/v1/exec.cs");
    exec("alux3d/server/weapons/pineapple/v1/exec.cs");
+   exec("alux3d/server/weapons/crackpack/v1/exec.cs");
 
    exec("./etherform.cs");
    exec("./frontlineActions.cs");

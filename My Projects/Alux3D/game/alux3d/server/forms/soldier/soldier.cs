@@ -231,6 +231,8 @@ datablock PlayerData(FrmSoldier)
    maxInv[WpnSiberionAmmo] = 120;
 
    maxInv[WpnPineapple] = 9999;
+   
+   maxInv[WpnCrackpack] = 9999;
 
    // available skins (see materials.cs in model folder)
    availableSkins =  "base Team1 Team2 DarkBlue	DarkGreen	LightGreen	Orange	Red	Teal	Violet	Yellow";
@@ -268,6 +270,8 @@ function FrmSoldier::onAdd(%this, %obj)
    %obj.clearWeaponCycle();
    %obj.addToWeaponCycle(WpnRaptor);
    %obj.addToWeaponCycle(WpnBulldog);
+   %obj.addToWeaponCycle(WpnSiberion);
+   %obj.addToWeaponCycle(WpnCrackpack);
 
    %obj.setInventory(WpnRaptor, 1);
    %obj.setInventory(WpnRaptorAmmo, 60);
@@ -280,6 +284,8 @@ function FrmSoldier::onAdd(%this, %obj)
    %obj.setInventory(WpnBulldog, 1);
 
    %obj.setInventory(WpnPineapple, 9999);
+   
+   %obj.setInventory(WpnCrackpack, 10);
 
    if (%obj.getDatablock().mainWeapon.image !$= "")
       %obj.mountImage(%obj.getDatablock().mainWeapon.image, 0);
@@ -398,7 +404,7 @@ function FrmSoldier::clientAction(%this, %obj, %nr)
    else if(%nr == 4)
       %obj.use(WpnSiberion);
    else if(%nr == 5)
-      %obj.use(WpnPineapple);
+      %obj.use(WpnCrackpack);
    else if(%nr == 21)
       %obj.reloadWeapon();
 }
