@@ -6,11 +6,11 @@ new SimGroup(MissionGroup) {
 
    new LevelInfo(theLevelInfo) {
       nearClip = "0.1";
-      visibleDistance = "100";
+      visibleDistance = "200";
       decalBias = "0.0015";
       fogColor = "0.392157 0.392157 0.392157 1";
-      fogDensity = "0.01";
-      fogDensityOffset = "0";
+      fogDensity = "0.1";
+      fogDensityOffset = "100";
       fogAtmosphereHeight = "400";
       canvasClearColor = "100 100 100 255";
       ambientLightBlendPhase = "1";
@@ -100,7 +100,7 @@ new SimGroup(MissionGroup) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-20 0 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -125,14 +125,16 @@ new SimGroup(MissionGroup) {
             groundElevation5 = "10";
             groundElevation6 = "10";
             numAdjacents = "6";
-            setupStage = "6";
+            setupStage = "0";
             volumeName = "MissionSoilVolume4";
+            zCompletion = "1";
+            zLastUpdateTime = "9097";
       };
       new StaticMetaShape(MissionMetaSoilTile1) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-21.0625 0.625 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -157,14 +159,16 @@ new SimGroup(MissionGroup) {
             groundElevation5 = "10";
             groundElevation6 = "9.99999";
             numAdjacents = "6";
-            setupStage = "6";
+            setupStage = "0";
             volumeName = "MissionSoilVolume4";
+            zCompletion = "1";
+            zLastUpdateTime = "13449";
       };
       new StaticMetaShape(MissionMetaSoilTile2) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-20 1.25 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -190,14 +194,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "10";
             groundElevation7 = "9.99999";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume4";
+            zCompletion = "1";
+            zLastUpdateTime = "15209";
       };
       new StaticMetaShape(MissionMetaSoilTile3) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-18.9375 0.625 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -223,14 +229,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "10";
             groundElevation7 = "9.99999";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume4";
+            zCompletion = "1";
+            zLastUpdateTime = "13705";
       };
       new StaticMetaShape(MissionMetaSoilTile4) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-18.9375 -0.625 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -256,14 +264,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "10";
             groundElevation7 = "9.99999";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume4";
+            zCompletion = "1";
+            zLastUpdateTime = "12233";
       };
       new StaticMetaShape(MissionMetaSoilTile5) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-20 -1.25 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -288,14 +298,16 @@ new SimGroup(MissionGroup) {
             groundElevation5 = "9.99999";
             groundElevation6 = "9.99999";
             numAdjacents = "6";
-            setupStage = "6";
+            setupStage = "0";
             volumeName = "MissionSoilVolume4";
+            zCompletion = "1";
+            zLastUpdateTime = "13961";
       };
       new StaticMetaShape(MissionMetaSoilTile6) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-21.0625 -0.625 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -320,14 +332,16 @@ new SimGroup(MissionGroup) {
             groundElevation5 = "9.99999";
             groundElevation6 = "9.99999";
             numAdjacents = "6";
-            setupStage = "6";
+            setupStage = "0";
             volumeName = "MissionSoilVolume4";
+            zCompletion = "1";
+            zLastUpdateTime = "18793";
       };
       new StaticMetaShape(MissionMetaSoilTile7) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-22.125 1.25 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -352,14 +366,16 @@ new SimGroup(MissionGroup) {
             groundElevation5 = "9.99999";
             groundElevation6 = "9.99999";
             numAdjacents = "6";
-            setupStage = "6";
+            setupStage = "0";
             volumeName = "MissionSoilVolume4";
+            zCompletion = "1";
+            zLastUpdateTime = "15785";
       };
       new StaticMetaShape(MissionMetaSoilTile8) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-21.0625 1.875 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -385,14 +401,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume4";
+            zCompletion = "1";
+            zLastUpdateTime = "18249";
       };
       new StaticMetaShape(MissionMetaSoilTile9) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-22.125 0 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -417,14 +435,16 @@ new SimGroup(MissionGroup) {
             groundElevation5 = "9.99999";
             groundElevation6 = "9.99999";
             numAdjacents = "6";
-            setupStage = "6";
+            setupStage = "0";
             volumeName = "MissionSoilVolume4";
+            zCompletion = "1";
+            zLastUpdateTime = "18761";
       };
       new StaticMetaShape(MissionMetaSoilTile10) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-20 2.5 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -450,14 +470,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "5";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume4";
+            zCompletion = "1";
+            zLastUpdateTime = "18217";
       };
       new StaticMetaShape(MissionMetaSoilTile11) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-18.9375 1.875 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -483,14 +505,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "10";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume4";
+            zCompletion = "1";
+            zLastUpdateTime = "16809";
       };
       new StaticMetaShape(MissionMetaSoilTile12) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-17.875 1.25 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -516,14 +540,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "10";
             groundElevation7 = "9.99999";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume4";
+            zCompletion = "1";
+            zLastUpdateTime = "16937";
       };
       new StaticMetaShape(MissionMetaSoilTile13) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-17.875 0 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -549,14 +575,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "10";
             groundElevation7 = "9.99999";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume4";
+            zCompletion = "1";
+            zLastUpdateTime = "15497";
       };
       new StaticMetaShape(MissionMetaSoilTile14) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-17.875 -1.25 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -582,14 +610,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "9.99999";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume4";
+            zCompletion = "1";
+            zLastUpdateTime = "15593";
       };
       new StaticMetaShape(MissionMetaSoilTile15) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-18.9375 -1.875 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -615,14 +645,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume4";
+            zCompletion = "1";
+            zLastUpdateTime = "17225";
       };
       new StaticMetaShape(MissionMetaSoilTile16) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-20 -2.5 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -647,14 +679,16 @@ new SimGroup(MissionGroup) {
             groundElevation5 = "none";
             groundElevation6 = "9.99999";
             numAdjacents = "5";
-            setupStage = "6";
+            setupStage = "0";
             volumeName = "MissionSoilVolume4";
+            zCompletion = "1";
+            zLastUpdateTime = "17193";
       };
       new StaticMetaShape(MissionMetaSoilTile17) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-21.0625 -1.875 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -679,14 +713,16 @@ new SimGroup(MissionGroup) {
             groundElevation5 = "9.99999";
             groundElevation6 = "9.99999";
             numAdjacents = "6";
-            setupStage = "6";
+            setupStage = "0";
             volumeName = "MissionSoilVolume4";
+            zCompletion = "1";
+            zLastUpdateTime = "18825";
       };
       new StaticMetaShape(MissionMetaSoilTile18) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-22.125 -1.25 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -711,14 +747,16 @@ new SimGroup(MissionGroup) {
             groundElevation5 = "9.99999";
             groundElevation6 = "9.99999";
             numAdjacents = "6";
-            setupStage = "6";
+            setupStage = "0";
             volumeName = "MissionSoilVolume4";
+            zCompletion = "1";
+            zLastUpdateTime = "17385";
       };
       new StaticMetaShape(MissionMetaSoilTile19) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-23.1875 1.875 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -743,14 +781,16 @@ new SimGroup(MissionGroup) {
             groundElevation5 = "9.99999";
             groundElevation6 = "none";
             numAdjacents = "4";
-            setupStage = "6";
+            setupStage = "0";
             volumeName = "MissionSoilVolume4";
+            zCompletion = "1";
+            zLastUpdateTime = "18185";
       };
       new StaticMetaShape(MissionMetaSoilTile20) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-22.125 2.5 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -776,14 +816,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "5";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume4";
+            zCompletion = "1";
+            zLastUpdateTime = "18153";
       };
       new StaticMetaShape(MissionMetaSoilTile21) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-23.1875 0.625 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -808,14 +850,16 @@ new SimGroup(MissionGroup) {
             groundElevation5 = "9.99999";
             groundElevation6 = "none";
             numAdjacents = "4";
-            setupStage = "6";
+            setupStage = "0";
             volumeName = "MissionSoilVolume4";
+            zCompletion = "1";
+            zLastUpdateTime = "14025";
       };
       new StaticMetaShape(MissionMetaSoilTile22) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-21.0625 3.125 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -841,14 +885,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "3";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume4";
+            zCompletion = "1";
+            zLastUpdateTime = "16713";
       };
       new StaticMetaShape(MissionMetaSoilTile23) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-23.1875 -0.625 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -873,14 +919,16 @@ new SimGroup(MissionGroup) {
             groundElevation5 = "9.99999";
             groundElevation6 = "none";
             numAdjacents = "4";
-            setupStage = "6";
+            setupStage = "0";
             volumeName = "MissionSoilVolume4";
+            zCompletion = "1";
+            zLastUpdateTime = "18729";
       };
       new StaticMetaShape(MissionMetaSoilTile24) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-18.9375 3.125 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -906,14 +954,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "3";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume4";
+            zCompletion = "1";
+            zLastUpdateTime = "16745";
       };
       new StaticMetaShape(MissionMetaSoilTile25) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-17.875 2.5 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -939,14 +989,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "5";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume4";
+            zCompletion = "1";
+            zLastUpdateTime = "19561";
       };
       new StaticMetaShape(MissionMetaSoilTile26) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-16.8125 1.875 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -972,14 +1024,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume4";
+            zCompletion = "1";
+            zLastUpdateTime = "19657";
       };
       new StaticMetaShape(MissionMetaSoilTile27) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-16.8125 0.625 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -1005,14 +1059,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "9.99999";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume4";
+            zCompletion = "1";
+            zLastUpdateTime = "20585";
       };
       new StaticMetaShape(MissionMetaSoilTile28) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-16.8125 -0.625 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -1038,14 +1094,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "9.99999";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume4";
+            zCompletion = "1";
+            zLastUpdateTime = "20681";
       };
       new StaticMetaShape(MissionMetaSoilTile29) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-16.8125 -1.875 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -1071,14 +1129,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume4";
+            zCompletion = "1";
+            zLastUpdateTime = "18665";
       };
       new StaticMetaShape(MissionMetaSoilTile30) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-17.875 -2.5 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -1104,14 +1164,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "5";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume4";
+            zCompletion = "1";
+            zLastUpdateTime = "17257";
       };
       new StaticMetaShape(MissionMetaSoilTile31) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-18.9375 -3.125 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -1137,14 +1199,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "none";
             groundElevation7 = "none";
             numAdjacents = "3";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume4";
+            zCompletion = "1";
+            zLastUpdateTime = "15721";
       };
       new StaticMetaShape(MissionMetaSoilTile32) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-21.0625 -3.125 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -1169,14 +1233,16 @@ new SimGroup(MissionGroup) {
             groundElevation5 = "none";
             groundElevation6 = "none";
             numAdjacents = "3";
-            setupStage = "6";
+            setupStage = "0";
             volumeName = "MissionSoilVolume4";
+            zCompletion = "1";
+            zLastUpdateTime = "15881";
       };
       new StaticMetaShape(MissionMetaSoilTile33) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-22.125 -2.5 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -1201,14 +1267,16 @@ new SimGroup(MissionGroup) {
             groundElevation5 = "none";
             groundElevation6 = "9.99999";
             numAdjacents = "5";
-            setupStage = "6";
+            setupStage = "0";
             volumeName = "MissionSoilVolume4";
+            zCompletion = "1";
+            zLastUpdateTime = "18857";
       };
       new StaticMetaShape(MissionMetaSoilTile34) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-23.1875 -1.875 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -1233,14 +1301,16 @@ new SimGroup(MissionGroup) {
             groundElevation5 = "9.99999";
             groundElevation6 = "none";
             numAdjacents = "4";
-            setupStage = "6";
+            setupStage = "0";
             volumeName = "MissionSoilVolume4";
+            zCompletion = "1";
+            zLastUpdateTime = "18889";
       };
       new StaticMetaShape(MissionMetaSoilTile35) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-23.1875 3.125 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -1266,14 +1336,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "none";
             groundElevation7 = "none";
             numAdjacents = "2";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume4";
+            zCompletion = "1";
+            zLastUpdateTime = "16681";
       };
       new StaticMetaShape(MissionMetaSoilTile36) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-16.8125 3.125 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -1299,14 +1371,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "3";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume4";
+            zCompletion = "1";
+            zLastUpdateTime = "18313";
       };
       new StaticMetaShape(MissionMetaSoilTile37) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-15.75 2.5 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -1332,14 +1406,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "5";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume4";
+            zCompletion = "1";
+            zLastUpdateTime = "21257";
       };
       new StaticMetaShape(MissionMetaSoilTile38) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-15.75 1.25 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -1365,14 +1441,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "9.99999";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume4";
+            zCompletion = "1";
+            zLastUpdateTime = "22473";
       };
       new StaticMetaShape(MissionMetaSoilTile39) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-15.75 0 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -1398,14 +1476,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "9.99999";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume4";
+            zCompletion = "1";
+            zLastUpdateTime = "22537";
       };
       new StaticMetaShape(MissionMetaSoilTile40) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-15.75 -1.25 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -1431,14 +1511,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "9.99999";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume4";
+            zCompletion = "1";
+            zLastUpdateTime = "21481";
       };
       new StaticMetaShape(MissionMetaSoilTile41) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-15.75 -2.5 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -1464,14 +1546,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "5";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume4";
+            zCompletion = "1";
+            zLastUpdateTime = "19849";
       };
       new StaticMetaShape(MissionMetaSoilTile42) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-16.8125 -3.125 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -1497,14 +1581,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "none";
             groundElevation7 = "none";
             numAdjacents = "3";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume4";
+            zCompletion = "1";
+            zLastUpdateTime = "17161";
       };
       new StaticMetaShape(MissionMetaSoilTile43) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-23.1875 -3.125 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -1529,14 +1615,16 @@ new SimGroup(MissionGroup) {
             groundElevation5 = "none";
             groundElevation6 = "none";
             numAdjacents = "2";
-            setupStage = "6";
+            setupStage = "0";
             volumeName = "MissionSoilVolume4";
+            zCompletion = "1";
+            zLastUpdateTime = "18697";
       };
       new StaticMetaShape(MissionMetaSoilTile44) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-14.6875 3.125 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -1562,14 +1650,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "3";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "22313";
       };
       new StaticMetaShape(MissionMetaSoilTile45) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-14.6875 1.875 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -1595,14 +1685,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "23817";
       };
       new StaticMetaShape(MissionMetaSoilTile46) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-14.6875 0.625 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -1628,14 +1720,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "9.99999";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "24457";
       };
       new StaticMetaShape(MissionMetaSoilTile47) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-14.6875 -0.625 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -1661,14 +1755,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "9.99999";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "23977";
       };
       new StaticMetaShape(MissionMetaSoilTile48) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-14.6875 -1.875 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -1694,14 +1790,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "24073";
       };
       new StaticMetaShape(MissionMetaSoilTile49) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-14.6875 -3.125 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -1727,14 +1825,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "none";
             groundElevation7 = "none";
             numAdjacents = "3";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "22729";
       };
       new StaticMetaShape(MissionMetaSoilTile50) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-13.625 2.5 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -1760,14 +1860,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "5";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "25641";
       };
       new StaticMetaShape(MissionMetaSoilTile51) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-13.625 1.25 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -1793,14 +1895,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "9.99999";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "26921";
       };
       new StaticMetaShape(MissionMetaSoilTile52) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-13.625 0 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -1826,14 +1930,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "9.99999";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "27529";
       };
       new StaticMetaShape(MissionMetaSoilTile53) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-13.625 -1.25 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -1859,14 +1965,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "9.99999";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "27625";
       };
       new StaticMetaShape(MissionMetaSoilTile54) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-13.625 -2.5 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -1892,14 +2000,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "5";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "25929";
       };
       new StaticMetaShape(MissionMetaSoilTile55) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-12.5625 3.125 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -1925,14 +2035,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "3";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "27369";
       };
       new StaticMetaShape(MissionMetaSoilTile56) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-12.5625 1.875 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -1958,14 +2070,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "28745";
       };
       new StaticMetaShape(MissionMetaSoilTile57) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-12.5625 0.625 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -1991,14 +2105,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "9.99999";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "30089";
       };
       new StaticMetaShape(MissionMetaSoilTile58) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-12.5625 -0.625 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -2024,14 +2140,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "9.99999";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "30185";
       };
       new StaticMetaShape(MissionMetaSoilTile59) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-12.5625 -1.875 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -2057,14 +2175,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "29001";
       };
       new StaticMetaShape(MissionMetaSoilTile60) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-12.5625 -3.125 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -2090,14 +2210,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "none";
             groundElevation7 = "none";
             numAdjacents = "3";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "27753";
       };
       new StaticMetaShape(MissionMetaSoilTile61) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-11.5 2.5 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -2123,14 +2245,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "5";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "30601";
       };
       new StaticMetaShape(MissionMetaSoilTile62) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-11.5 1.25 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -2156,14 +2280,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "9.99999";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "31817";
       };
       new StaticMetaShape(MissionMetaSoilTile63) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-11.5 0 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -2189,14 +2315,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "9.99999";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "32521";
       };
       new StaticMetaShape(MissionMetaSoilTile64) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-11.5 -1.25 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -2222,14 +2350,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "9.99999";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "32617";
       };
       new StaticMetaShape(MissionMetaSoilTile65) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-11.5 -2.5 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -2255,14 +2385,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "5";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "30281";
       };
       new StaticMetaShape(MissionMetaSoilTile66) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-10.4375 3.125 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -2288,14 +2420,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "3";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "32361";
       };
       new StaticMetaShape(MissionMetaSoilTile67) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-10.4375 1.875 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -2321,14 +2455,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "33129";
       };
       new StaticMetaShape(MissionMetaSoilTile68) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-10.4375 0.625 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -2354,14 +2490,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "9.99999";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "34889";
       };
       new StaticMetaShape(MissionMetaSoilTile69) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-10.4375 -0.625 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -2387,14 +2525,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "9.99999";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "34985";
       };
       new StaticMetaShape(MissionMetaSoilTile70) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-10.4375 -1.875 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -2420,14 +2560,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "33289";
       };
       new StaticMetaShape(MissionMetaSoilTile71) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-10.4375 -3.125 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -2453,14 +2595,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "none";
             groundElevation7 = "none";
             numAdjacents = "3";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "33385";
       };
       new StaticMetaShape(MissionMetaSoilTile72) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-9.375 2.5 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -2486,14 +2630,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "5";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "35529";
       };
       new StaticMetaShape(MissionMetaSoilTile73) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-9.375 1.25 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -2519,14 +2665,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "9.99999";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "36169";
       };
       new StaticMetaShape(MissionMetaSoilTile74) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-9.375 0 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -2552,14 +2700,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "9.99999";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "37449";
       };
       new StaticMetaShape(MissionMetaSoilTile75) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-9.375 -1.25 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -2585,14 +2735,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "9.99999";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "37545";
       };
       new StaticMetaShape(MissionMetaSoilTile76) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-9.375 -2.5 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -2618,14 +2770,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "5";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "35721";
       };
       new StaticMetaShape(MissionMetaSoilTile77) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-8.3125 3.125 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -2651,14 +2805,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "3";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "37257";
       };
       new StaticMetaShape(MissionMetaSoilTile78) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-8.3125 1.875 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -2684,14 +2840,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "38505";
       };
       new StaticMetaShape(MissionMetaSoilTile79) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-8.3125 0.625 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -2717,14 +2875,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "9.99999";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "39209";
       };
       new StaticMetaShape(MissionMetaSoilTile80) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-8.3125 -0.625 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -2750,14 +2910,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "9.99999";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "39881";
       };
       new StaticMetaShape(MissionMetaSoilTile81) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-8.3125 -1.875 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -2783,14 +2945,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "39977";
       };
       new StaticMetaShape(MissionMetaSoilTile82) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-8.3125 -3.125 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -2816,14 +2980,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "none";
             groundElevation7 = "none";
             numAdjacents = "3";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "38793";
       };
       new StaticMetaShape(MissionMetaSoilTile83) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-7.25 2.5 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -2849,14 +3015,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "5";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "40425";
       };
       new StaticMetaShape(MissionMetaSoilTile84) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-7.25 1.25 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -2882,14 +3050,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "9.99999";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "41641";
       };
       new StaticMetaShape(MissionMetaSoilTile85) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-7.25 0 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -2915,14 +3085,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "9.99999";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "42377";
       };
       new StaticMetaShape(MissionMetaSoilTile86) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-7.25 -1.25 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -2948,14 +3120,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "9.99999";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "41801";
       };
       new StaticMetaShape(MissionMetaSoilTile87) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-7.25 -2.5 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -2981,14 +3155,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "5";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "41129";
       };
       new StaticMetaShape(MissionMetaSoilTile88) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-6.1875 3.125 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -3014,14 +3190,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "3";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "42217";
       };
       new StaticMetaShape(MissionMetaSoilTile89) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-6.1875 1.875 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -3047,14 +3225,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "43369";
       };
       new StaticMetaShape(MissionMetaSoilTile90) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-6.1875 0.625 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -3080,14 +3260,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "9.99999";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "44681";
       };
       new StaticMetaShape(MissionMetaSoilTile91) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-6.1875 -0.625 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -3113,14 +3295,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "9.99999";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "45321";
       };
       new StaticMetaShape(MissionMetaSoilTile92) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-6.1875 -1.875 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -3146,14 +3330,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "45417";
       };
       new StaticMetaShape(MissionMetaSoilTile93) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-6.1875 -3.125 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -3179,14 +3365,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "none";
             groundElevation7 = "none";
             numAdjacents = "3";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "44105";
       };
       new StaticMetaShape(MissionMetaSoilTile94) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-5.125 2.5 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -3212,14 +3400,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "5";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "45161";
       };
       new StaticMetaShape(MissionMetaSoilTile95) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-5.125 1.25 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -3245,14 +3435,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "9.99999";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "46409";
       };
       new StaticMetaShape(MissionMetaSoilTile96) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-5.125 0 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -3278,14 +3470,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "9.99999";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "47913";
       };
       new StaticMetaShape(MissionMetaSoilTile97) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-5.125 -1.25 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -3311,14 +3505,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "9.99999";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "47241";
       };
       new StaticMetaShape(MissionMetaSoilTile98) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-5.125 -2.5 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -3344,14 +3540,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "5";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume3";
+            zCompletion = "1";
+            zLastUpdateTime = "46601";
       };
       new StaticMetaShape(MissionMetaSoilTile99) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-4.0625 3.125 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -3377,14 +3575,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "3";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume0";
+            zCompletion = "1";
+            zLastUpdateTime = "47049";
       };
       new StaticMetaShape(MissionMetaSoilTile100) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-4.0625 1.875 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -3410,14 +3610,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume0";
+            zCompletion = "1";
+            zLastUpdateTime = "47753";
       };
       new StaticMetaShape(MissionMetaSoilTile101) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-4.0625 0.625 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -3443,14 +3645,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "9.99999";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume0";
+            zCompletion = "1";
+            zLastUpdateTime = "49545";
       };
       new StaticMetaShape(MissionMetaSoilTile102) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-4.0625 -0.625 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -3476,14 +3680,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "9.99999";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume0";
+            zCompletion = "1";
+            zLastUpdateTime = "50921";
       };
       new StaticMetaShape(MissionMetaSoilTile103) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-4.0625 -1.875 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -3509,14 +3715,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume0";
+            zCompletion = "1";
+            zLastUpdateTime = "50985";
       };
       new StaticMetaShape(MissionMetaSoilTile104) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-4.0625 -3.125 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -3542,14 +3750,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "none";
             groundElevation7 = "none";
             numAdjacents = "3";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume0";
+            zCompletion = "1";
+            zLastUpdateTime = "49801";
       };
       new StaticMetaShape(MissionMetaSoilTile105) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-3 2.5 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -3575,14 +3785,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "5";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume0";
+            zCompletion = "1";
+            zLastUpdateTime = "50217";
       };
       new StaticMetaShape(MissionMetaSoilTile106) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-3 1.25 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -3608,14 +3820,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "9.99999";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume0";
+            zCompletion = "1";
+            zLastUpdateTime = "50761";
       };
       new StaticMetaShape(MissionMetaSoilTile107) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-3 0 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -3641,14 +3855,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "9.99999";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume0";
+            zCompletion = "1";
+            zLastUpdateTime = "52521";
       };
       new StaticMetaShape(MissionMetaSoilTile108) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-3 -1.25 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -3674,14 +3890,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "9.99999";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume0";
+            zCompletion = "1";
+            zLastUpdateTime = "52937";
       };
       new StaticMetaShape(MissionMetaSoilTile109) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-3 -2.5 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -3707,14 +3925,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "5";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume0";
+            zCompletion = "1";
+            zLastUpdateTime = "53033";
       };
       new StaticMetaShape(MissionMetaSoilTile110) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-1.9375 3.125 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -3740,14 +3960,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "3";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume0";
+            zCompletion = "1";
+            zLastUpdateTime = "50249";
       };
       new StaticMetaShape(MissionMetaSoilTile111) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-1.9375 1.875 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -3773,14 +3995,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume0";
+            zCompletion = "1";
+            zLastUpdateTime = "50793";
       };
       new StaticMetaShape(MissionMetaSoilTile112) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-1.9375 0.625 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -3806,14 +4030,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "9.99999";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume0";
+            zCompletion = "1";
+            zLastUpdateTime = "52553";
       };
       new StaticMetaShape(MissionMetaSoilTile113) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-1.9375 -0.625 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -3839,14 +4065,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "9.99999";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume0";
+            zCompletion = "1";
+            zLastUpdateTime = "52969";
       };
       new StaticMetaShape(MissionMetaSoilTile114) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-1.9375 -1.875 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -3872,14 +4100,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume0";
+            zCompletion = "1";
+            zLastUpdateTime = "52649";
       };
       new StaticMetaShape(MissionMetaSoilTile115) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "1";
          position = "-1.9375 -3.125 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -3905,8 +4135,10 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "none";
             groundElevation7 = "none";
             numAdjacents = "3";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume0";
+            zCompletion = "1";
+            zLastUpdateTime = "53001";
       };
       new StaticMetaShape(MissionMetaSoilTile116) {
          isAIControlled = "0";
@@ -3938,8 +4170,11 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "5";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume0";
+            zBuildEmitter = "7325";
+            zCompletion = "0";
+            zLastUpdateTime = "100905";
       };
       new StaticMetaShape(MissionMetaSoilTile117) {
          isAIControlled = "0";
@@ -3971,8 +4206,11 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "9.99999";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume0";
+            zBuildEmitter = "7356";
+            zCompletion = "0";
+            zLastUpdateTime = "100937";
       };
       new StaticMetaShape(MissionMetaSoilTile118) {
          isAIControlled = "0";
@@ -4004,8 +4242,11 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "9.99999";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume0";
+            zBuildEmitter = "7378";
+            zCompletion = "0";
+            zLastUpdateTime = "100809";
       };
       new StaticMetaShape(MissionMetaSoilTile119) {
          isAIControlled = "0";
@@ -4037,8 +4278,11 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "9.99999";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume0";
+            zBuildEmitter = "7395";
+            zCompletion = "0";
+            zLastUpdateTime = "100841";
       };
       new StaticMetaShape(MissionMetaSoilTile120) {
          isAIControlled = "0";
@@ -4070,14 +4314,17 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "5";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume0";
+            zBuildEmitter = "7390";
+            zCompletion = "0";
+            zLastUpdateTime = "100873";
       };
       new StaticMetaShape(MissionMetaSoilTile121) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "0.1875 3.125 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -4103,14 +4350,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "3";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume0";
+            zCompletion = "1";
+            zLastUpdateTime = "51625";
       };
       new StaticMetaShape(MissionMetaSoilTile122) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "0.1875 1.875 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -4136,14 +4385,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume0";
+            zCompletion = "1";
+            zLastUpdateTime = "52137";
       };
       new StaticMetaShape(MissionMetaSoilTile123) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "0.1875 0.625 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -4169,14 +4420,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "9.99999";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume0";
+            zCompletion = "1";
+            zLastUpdateTime = "54057";
       };
       new StaticMetaShape(MissionMetaSoilTile124) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "0.1875 -0.625 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -4202,14 +4455,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "9.99999";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume0";
+            zCompletion = "1";
+            zLastUpdateTime = "53865";
       };
       new StaticMetaShape(MissionMetaSoilTile125) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "0.1875 -1.875 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -4235,14 +4490,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume0";
+            zCompletion = "1";
+            zLastUpdateTime = "54153";
       };
       new StaticMetaShape(MissionMetaSoilTile126) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "0.1875 -3.125 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -4268,14 +4525,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "none";
             groundElevation7 = "none";
             numAdjacents = "3";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume0";
+            zCompletion = "1";
+            zLastUpdateTime = "53673";
       };
       new StaticMetaShape(MissionMetaSoilTile127) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "1.25 2.5 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -4301,14 +4560,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "5";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume0";
+            zCompletion = "1";
+            zLastUpdateTime = "51657";
       };
       new StaticMetaShape(MissionMetaSoilTile128) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "1.25 1.25 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -4334,14 +4595,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "9.99999";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume0";
+            zCompletion = "1";
+            zLastUpdateTime = "52169";
       };
       new StaticMetaShape(MissionMetaSoilTile129) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "1.25 0 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -4367,14 +4630,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "9.99999";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume0";
+            zCompletion = "1";
+            zLastUpdateTime = "54089";
       };
       new StaticMetaShape(MissionMetaSoilTile130) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "1.25 -1.25 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -4400,14 +4665,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "9.99999";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume0";
+            zCompletion = "1";
+            zLastUpdateTime = "54121";
       };
       new StaticMetaShape(MissionMetaSoilTile131) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "1.25 -2.5 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -4433,14 +4700,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "5";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume0";
+            zCompletion = "1";
+            zLastUpdateTime = "53641";
       };
       new StaticMetaShape(MissionMetaSoilTile132) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "2.3125 3.125 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -4466,14 +4735,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "3";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume0";
+            zCompletion = "1";
+            zLastUpdateTime = "49033";
       };
       new StaticMetaShape(MissionMetaSoilTile133) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "2.3125 1.875 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -4499,14 +4770,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume0";
+            zCompletion = "1";
+            zLastUpdateTime = "49929";
       };
       new StaticMetaShape(MissionMetaSoilTile134) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "2.3125 0.625 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -4532,14 +4805,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume0";
+            zCompletion = "1";
+            zLastUpdateTime = "51753";
       };
       new StaticMetaShape(MissionMetaSoilTile135) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "2.3125 -0.625 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -4565,14 +4840,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume0";
+            zCompletion = "1";
+            zLastUpdateTime = "52265";
       };
       new StaticMetaShape(MissionMetaSoilTile136) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "2.3125 -1.875 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -4598,14 +4875,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume0";
+            zCompletion = "1";
+            zLastUpdateTime = "52297";
       };
       new StaticMetaShape(MissionMetaSoilTile137) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "2.3125 -3.125 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -4631,14 +4910,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "none";
             groundElevation7 = "none";
             numAdjacents = "3";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume0";
+            zCompletion = "1";
+            zLastUpdateTime = "51337";
       };
       new StaticMetaShape(MissionMetaSoilTile138) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "3.375 2.5 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -4664,14 +4945,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "5";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume0";
+            zCompletion = "1";
+            zLastUpdateTime = "47433";
       };
       new StaticMetaShape(MissionMetaSoilTile139) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "3.375 1.25 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -4697,14 +4980,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume0";
+            zCompletion = "1";
+            zLastUpdateTime = "48521";
       };
       new StaticMetaShape(MissionMetaSoilTile140) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "3.375 0 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -4730,14 +5015,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume0";
+            zCompletion = "1";
+            zLastUpdateTime = "50057";
       };
       new StaticMetaShape(MissionMetaSoilTile141) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "3.375 -1.25 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -4763,14 +5050,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume0";
+            zCompletion = "1";
+            zLastUpdateTime = "49321";
       };
       new StaticMetaShape(MissionMetaSoilTile142) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "3.375 -2.5 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -4796,14 +5085,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "5";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume0";
+            zCompletion = "1";
+            zLastUpdateTime = "51273";
       };
       new StaticMetaShape(MissionMetaSoilTile143) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "4.4375 3.125 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -4829,14 +5120,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "3";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume0";
+            zCompletion = "1";
+            zLastUpdateTime = "44169";
       };
       new StaticMetaShape(MissionMetaSoilTile144) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "4.4375 1.875 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -4862,14 +5155,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume0";
+            zCompletion = "1";
+            zLastUpdateTime = "45609";
       };
       new StaticMetaShape(MissionMetaSoilTile145) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "4.4375 0.625 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -4895,14 +5190,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume0";
+            zCompletion = "1";
+            zLastUpdateTime = "46825";
       };
       new StaticMetaShape(MissionMetaSoilTile146) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "4.4375 -0.625 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -4928,14 +5225,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume0";
+            zCompletion = "1";
+            zLastUpdateTime = "46185";
       };
       new StaticMetaShape(MissionMetaSoilTile147) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "4.4375 -1.875 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -4961,14 +5260,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume0";
+            zCompletion = "1";
+            zLastUpdateTime = "49353";
       };
       new StaticMetaShape(MissionMetaSoilTile148) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "4.4375 -3.125 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -4994,14 +5295,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "none";
             groundElevation7 = "none";
             numAdjacents = "3";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume0";
+            zCompletion = "1";
+            zLastUpdateTime = "49385";
       };
       new StaticMetaShape(MissionMetaSoilTile149) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "5.5 2.5 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -5027,14 +5330,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "5";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume1";
+            zCompletion = "1";
+            zLastUpdateTime = "42601";
       };
       new StaticMetaShape(MissionMetaSoilTile150) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "5.5 1.25 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -5060,14 +5365,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume1";
+            zCompletion = "1";
+            zLastUpdateTime = "43689";
       };
       new StaticMetaShape(MissionMetaSoilTile151) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "5.5 0 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -5093,14 +5400,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume1";
+            zCompletion = "1";
+            zLastUpdateTime = "44329";
       };
       new StaticMetaShape(MissionMetaSoilTile152) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "5.5 -1.25 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -5126,14 +5435,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume1";
+            zCompletion = "1";
+            zLastUpdateTime = "46217";
       };
       new StaticMetaShape(MissionMetaSoilTile153) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "5.5 -2.5 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -5159,14 +5470,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "5";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume1";
+            zCompletion = "1";
+            zLastUpdateTime = "47657";
       };
       new StaticMetaShape(MissionMetaSoilTile154) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "6.5625 3.125 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -5192,14 +5505,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "3";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume1";
+            zCompletion = "1";
+            zLastUpdateTime = "39465";
       };
       new StaticMetaShape(MissionMetaSoilTile155) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "6.5625 1.875 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -5225,14 +5540,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume1";
+            zCompletion = "1";
+            zLastUpdateTime = "40777";
       };
       new StaticMetaShape(MissionMetaSoilTile156) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "6.5625 0.625 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -5258,14 +5575,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume1";
+            zCompletion = "1";
+            zLastUpdateTime = "41321";
       };
       new StaticMetaShape(MissionMetaSoilTile157) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "6.5625 -0.625 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -5291,14 +5610,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume1";
+            zCompletion = "1";
+            zLastUpdateTime = "43177";
       };
       new StaticMetaShape(MissionMetaSoilTile158) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "6.5625 -1.875 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -5324,14 +5645,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume1";
+            zCompletion = "1";
+            zLastUpdateTime = "44457";
       };
       new StaticMetaShape(MissionMetaSoilTile159) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "6.5625 -3.125 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -5357,14 +5680,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "none";
             groundElevation7 = "none";
             numAdjacents = "3";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume1";
+            zCompletion = "1";
+            zLastUpdateTime = "44489";
       };
       new StaticMetaShape(MissionMetaSoilTile160) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "7.625 2.5 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -5390,14 +5715,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "5";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume1";
+            zCompletion = "1";
+            zLastUpdateTime = "37705";
       };
       new StaticMetaShape(MissionMetaSoilTile161) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "7.625 1.25 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -5423,14 +5750,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume1";
+            zCompletion = "1";
+            zLastUpdateTime = "38185";
       };
       new StaticMetaShape(MissionMetaSoilTile162) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "7.625 0 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -5456,14 +5785,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume1";
+            zCompletion = "1";
+            zLastUpdateTime = "40233";
       };
       new StaticMetaShape(MissionMetaSoilTile163) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "7.625 -1.25 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -5489,14 +5820,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume1";
+            zCompletion = "1";
+            zLastUpdateTime = "41449";
       };
       new StaticMetaShape(MissionMetaSoilTile164) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "7.625 -2.5 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -5522,14 +5855,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "5";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume1";
+            zCompletion = "1";
+            zLastUpdateTime = "42185";
       };
       new StaticMetaShape(MissionMetaSoilTile165) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "8.6875 3.125 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -5555,14 +5890,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "3";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume1";
+            zCompletion = "1";
+            zLastUpdateTime = "34537";
       };
       new StaticMetaShape(MissionMetaSoilTile166) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "8.6875 1.875 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -5588,14 +5925,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume1";
+            zCompletion = "1";
+            zLastUpdateTime = "35209";
       };
       new StaticMetaShape(MissionMetaSoilTile167) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "8.6875 0.625 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -5621,14 +5960,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume1";
+            zCompletion = "1";
+            zLastUpdateTime = "37033";
       };
       new StaticMetaShape(MissionMetaSoilTile168) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "8.6875 -0.625 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -5654,14 +5995,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume1";
+            zCompletion = "1";
+            zLastUpdateTime = "38313";
       };
       new StaticMetaShape(MissionMetaSoilTile169) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "8.6875 -1.875 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -5687,14 +6030,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume1";
+            zCompletion = "1";
+            zLastUpdateTime = "39017";
       };
       new StaticMetaShape(MissionMetaSoilTile170) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "8.6875 -3.125 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -5720,14 +6065,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "none";
             groundElevation7 = "none";
             numAdjacents = "3";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume1";
+            zCompletion = "1";
+            zLastUpdateTime = "39049";
       };
       new StaticMetaShape(MissionMetaSoilTile171) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "9.75 2.5 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -5753,14 +6100,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "5";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume1";
+            zCompletion = "1";
+            zLastUpdateTime = "32777";
       };
       new StaticMetaShape(MissionMetaSoilTile172) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "9.75 1.25 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -5786,14 +6135,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume1";
+            zCompletion = "1";
+            zLastUpdateTime = "33993";
       };
       new StaticMetaShape(MissionMetaSoilTile173) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "9.75 0 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -5819,14 +6170,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume1";
+            zCompletion = "1";
+            zLastUpdateTime = "35337";
       };
       new StaticMetaShape(MissionMetaSoilTile174) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "9.75 -1.25 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -5852,14 +6205,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume1";
+            zCompletion = "1";
+            zLastUpdateTime = "35977";
       };
       new StaticMetaShape(MissionMetaSoilTile175) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "9.75 -2.5 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -5885,14 +6240,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "5";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume1";
+            zCompletion = "1";
+            zLastUpdateTime = "37225";
       };
       new StaticMetaShape(MissionMetaSoilTile176) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "10.8125 3.125 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -5918,14 +6275,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "3";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume1";
+            zCompletion = "1";
+            zLastUpdateTime = "29641";
       };
       new StaticMetaShape(MissionMetaSoilTile177) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "10.8125 1.875 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -5951,14 +6310,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume1";
+            zCompletion = "1";
+            zLastUpdateTime = "30985";
       };
       new StaticMetaShape(MissionMetaSoilTile178) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "10.8125 0.625 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -5984,14 +6345,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume1";
+            zCompletion = "1";
+            zLastUpdateTime = "32201";
       };
       new StaticMetaShape(MissionMetaSoilTile179) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "10.8125 -0.625 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -6017,14 +6380,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume1";
+            zCompletion = "1";
+            zLastUpdateTime = "32937";
       };
       new StaticMetaShape(MissionMetaSoilTile180) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "10.8125 -1.875 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -6050,14 +6415,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume1";
+            zCompletion = "1";
+            zLastUpdateTime = "34185";
       };
       new StaticMetaShape(MissionMetaSoilTile181) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "10.8125 -3.125 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -6083,14 +6450,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "none";
             groundElevation7 = "none";
             numAdjacents = "3";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume1";
+            zCompletion = "1";
+            zLastUpdateTime = "34217";
       };
       new StaticMetaShape(MissionMetaSoilTile182) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "11.875 2.5 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -6116,14 +6485,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "5";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume1";
+            zCompletion = "1";
+            zLastUpdateTime = "27849";
       };
       new StaticMetaShape(MissionMetaSoilTile183) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "11.875 1.25 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -6149,14 +6520,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume1";
+            zCompletion = "1";
+            zLastUpdateTime = "29193";
       };
       new StaticMetaShape(MissionMetaSoilTile184) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "11.875 0 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -6182,14 +6555,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume1";
+            zCompletion = "1";
+            zLastUpdateTime = "29801";
       };
       new StaticMetaShape(MissionMetaSoilTile185) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "11.875 -1.25 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -6215,14 +6590,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume1";
+            zCompletion = "1";
+            zLastUpdateTime = "31177";
       };
       new StaticMetaShape(MissionMetaSoilTile186) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "11.875 -2.5 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -6248,14 +6625,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "5";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume1";
+            zCompletion = "1";
+            zLastUpdateTime = "31721";
       };
       new StaticMetaShape(MissionMetaSoilTile187) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "12.9375 3.125 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -6281,14 +6660,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "3";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume1";
+            zCompletion = "1";
+            zLastUpdateTime = "24713";
       };
       new StaticMetaShape(MissionMetaSoilTile188) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "12.9375 1.875 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -6314,14 +6695,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume1";
+            zCompletion = "1";
+            zLastUpdateTime = "26089";
       };
       new StaticMetaShape(MissionMetaSoilTile189) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "12.9375 0.625 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -6347,14 +6730,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume1";
+            zCompletion = "1";
+            zLastUpdateTime = "26633";
       };
       new StaticMetaShape(MissionMetaSoilTile190) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "12.9375 -0.625 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -6380,14 +6765,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume1";
+            zCompletion = "1";
+            zLastUpdateTime = "28041";
       };
       new StaticMetaShape(MissionMetaSoilTile191) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "12.9375 -1.875 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -6413,14 +6800,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume1";
+            zCompletion = "1";
+            zLastUpdateTime = "28585";
       };
       new StaticMetaShape(MissionMetaSoilTile192) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "12.9375 -3.125 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -6446,14 +6835,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "none";
             groundElevation7 = "none";
             numAdjacents = "3";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume1";
+            zCompletion = "1";
+            zLastUpdateTime = "28617";
       };
       new StaticMetaShape(MissionMetaSoilTile193) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "14 2.5 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -6479,14 +6870,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "5";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume1";
+            zCompletion = "1";
+            zLastUpdateTime = "22825";
       };
       new StaticMetaShape(MissionMetaSoilTile194) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "14 1.25 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -6512,14 +6905,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume1";
+            zCompletion = "1";
+            zLastUpdateTime = "23497";
       };
       new StaticMetaShape(MissionMetaSoilTile195) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "14 0 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -6545,14 +6940,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume1";
+            zCompletion = "1";
+            zLastUpdateTime = "24905";
       };
       new StaticMetaShape(MissionMetaSoilTile196) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "14 -1.25 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -6578,14 +6975,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume1";
+            zCompletion = "1";
+            zLastUpdateTime = "25481";
       };
       new StaticMetaShape(MissionMetaSoilTile197) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "14 -2.5 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -6611,14 +7010,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "5";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume1";
+            zCompletion = "1";
+            zLastUpdateTime = "26825";
       };
       new StaticMetaShape(MissionMetaSoilTile198) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "15.0625 3.125 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -6644,14 +7045,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "3";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume2";
+            zCompletion = "1";
+            zLastUpdateTime = "19977";
       };
       new StaticMetaShape(MissionMetaSoilTile199) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "15.0625 1.875 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -6677,14 +7080,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume2";
+            zCompletion = "1";
+            zLastUpdateTime = "20905";
       };
       new StaticMetaShape(MissionMetaSoilTile200) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "15.0625 0.625 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -6710,14 +7115,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume2";
+            zCompletion = "1";
+            zLastUpdateTime = "21705";
       };
       new StaticMetaShape(MissionMetaSoilTile201) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "15.0625 -0.625 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -6743,14 +7150,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume2";
+            zCompletion = "1";
+            zLastUpdateTime = "23017";
       };
       new StaticMetaShape(MissionMetaSoilTile202) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "15.0625 -1.875 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -6776,14 +7185,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume2";
+            zCompletion = "1";
+            zLastUpdateTime = "23657";
       };
       new StaticMetaShape(MissionMetaSoilTile203) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "15.0625 -3.125 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -6809,14 +7220,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "none";
             groundElevation7 = "none";
             numAdjacents = "3";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume2";
+            zCompletion = "1";
+            zLastUpdateTime = "23689";
       };
       new StaticMetaShape(MissionMetaSoilTile204) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "16.125 2.5 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -6842,14 +7255,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "5";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume2";
+            zCompletion = "1";
+            zLastUpdateTime = "20105";
       };
       new StaticMetaShape(MissionMetaSoilTile205) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "16.125 1.25 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -6875,14 +7290,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume2";
+            zCompletion = "1";
+            zLastUpdateTime = "19017";
       };
       new StaticMetaShape(MissionMetaSoilTile206) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "16.125 0 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -6908,14 +7325,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume2";
+            zCompletion = "1";
+            zLastUpdateTime = "20169";
       };
       new StaticMetaShape(MissionMetaSoilTile207) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "16.125 -1.25 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -6941,14 +7360,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume2";
+            zCompletion = "1";
+            zLastUpdateTime = "21097";
       };
       new StaticMetaShape(MissionMetaSoilTile208) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "16.125 -2.5 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -6974,14 +7395,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "5";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume2";
+            zCompletion = "1";
+            zLastUpdateTime = "23145";
       };
       new StaticMetaShape(MissionMetaSoilTile209) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "17.1875 3.125 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -7007,14 +7430,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "3";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume2";
+            zCompletion = "1";
+            zLastUpdateTime = "19113";
       };
       new StaticMetaShape(MissionMetaSoilTile210) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "17.1875 1.875 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -7040,14 +7465,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume2";
+            zCompletion = "1";
+            zLastUpdateTime = "20073";
       };
       new StaticMetaShape(MissionMetaSoilTile211) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "17.1875 0.625 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -7073,14 +7500,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume2";
+            zCompletion = "1";
+            zLastUpdateTime = "16137";
       };
       new StaticMetaShape(MissionMetaSoilTile212) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "17.1875 -0.625 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -7106,14 +7535,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume2";
+            zCompletion = "1";
+            zLastUpdateTime = "17769";
       };
       new StaticMetaShape(MissionMetaSoilTile213) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "17.1875 -1.875 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -7139,14 +7570,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume2";
+            zCompletion = "1";
+            zLastUpdateTime = "20361";
       };
       new StaticMetaShape(MissionMetaSoilTile214) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "17.1875 -3.125 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -7172,14 +7605,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "none";
             groundElevation7 = "none";
             numAdjacents = "3";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume2";
+            zCompletion = "1";
+            zLastUpdateTime = "20393";
       };
       new StaticMetaShape(MissionMetaSoilTile215) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "18.25 2.5 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -7205,14 +7640,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "5";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume2";
+            zCompletion = "1";
+            zLastUpdateTime = "19273";
       };
       new StaticMetaShape(MissionMetaSoilTile216) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "18.25 1.25 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -7238,14 +7675,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume2";
+            zCompletion = "1";
+            zLastUpdateTime = "17673";
       };
       new StaticMetaShape(MissionMetaSoilTile217) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "18.25 0 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -7271,14 +7710,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume2";
+            zCompletion = "1";
+            zLastUpdateTime = "12713";
       };
       new StaticMetaShape(MissionMetaSoilTile218) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "18.25 -1.25 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -7304,14 +7745,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume2";
+            zCompletion = "1";
+            zLastUpdateTime = "14985";
       };
       new StaticMetaShape(MissionMetaSoilTile219) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "18.25 -2.5 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -7337,14 +7780,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "5";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume2";
+            zCompletion = "1";
+            zLastUpdateTime = "15017";
       };
       new StaticMetaShape(MissionMetaSoilTile220) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "19.3125 3.125 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -7370,14 +7815,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "3";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume2";
+            zCompletion = "1";
+            zLastUpdateTime = "17833";
       };
       new StaticMetaShape(MissionMetaSoilTile221) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "19.3125 1.875 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -7403,14 +7850,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume2";
+            zCompletion = "1";
+            zLastUpdateTime = "19241";
       };
       new StaticMetaShape(MissionMetaSoilTile222) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "19.3125 0.625 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -7436,14 +7885,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume2";
+            zCompletion = "1";
+            zLastUpdateTime = "14505";
       };
       new StaticMetaShape(MissionMetaSoilTile223) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "19.3125 -0.625 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -7469,14 +7920,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume2";
+            zCompletion = "1";
+            zLastUpdateTime = "9417";
       };
       new StaticMetaShape(MissionMetaSoilTile224) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "19.3125 -1.875 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -7502,14 +7955,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume2";
+            zCompletion = "1";
+            zLastUpdateTime = "13225";
       };
       new StaticMetaShape(MissionMetaSoilTile225) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "19.3125 -3.125 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -7535,14 +7990,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "none";
             groundElevation7 = "none";
             numAdjacents = "3";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume2";
+            zCompletion = "1";
+            zLastUpdateTime = "13193";
       };
       new StaticMetaShape(MissionMetaSoilTile226) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "20.375 2.5 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -7568,14 +8025,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "5";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume2";
+            zCompletion = "1";
+            zLastUpdateTime = "20329";
       };
       new StaticMetaShape(MissionMetaSoilTile227) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "20.375 1.25 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -7601,14 +8060,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume2";
+            zCompletion = "1";
+            zLastUpdateTime = "16425";
       };
       new StaticMetaShape(MissionMetaSoilTile228) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "20.375 0 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -7634,14 +8095,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume2";
+            zCompletion = "1";
+            zLastUpdateTime = "13033";
       };
       new StaticMetaShape(MissionMetaSoilTile229) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "20.375 -1.25 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -7667,14 +8130,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume2";
+            zCompletion = "1";
+            zLastUpdateTime = "14761";
       };
       new StaticMetaShape(MissionMetaSoilTile230) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "20.375 -2.5 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -7700,14 +8165,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "5";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume2";
+            zCompletion = "1";
+            zLastUpdateTime = "18089";
       };
       new StaticMetaShape(MissionMetaSoilTile231) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "21.4375 3.125 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -7733,14 +8200,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "3";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume2";
+            zCompletion = "1";
+            zLastUpdateTime = "19305";
       };
       new StaticMetaShape(MissionMetaSoilTile232) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "21.4375 1.875 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -7766,14 +8235,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume2";
+            zCompletion = "1";
+            zLastUpdateTime = "19369";
       };
       new StaticMetaShape(MissionMetaSoilTile233) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "21.4375 0.625 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -7799,14 +8270,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume2";
+            zCompletion = "1";
+            zLastUpdateTime = "16489";
       };
       new StaticMetaShape(MissionMetaSoilTile234) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "21.4375 -0.625 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -7832,14 +8305,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume2";
+            zCompletion = "1";
+            zLastUpdateTime = "17961";
       };
       new StaticMetaShape(MissionMetaSoilTile235) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "21.4375 -1.875 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -7865,14 +8340,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "6";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume2";
+            zCompletion = "1";
+            zLastUpdateTime = "19401";
       };
       new StaticMetaShape(MissionMetaSoilTile236) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "21.4375 -3.125 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -7898,14 +8375,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "none";
             groundElevation7 = "none";
             numAdjacents = "3";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume2";
+            zCompletion = "1";
+            zLastUpdateTime = "19465";
       };
       new StaticMetaShape(MissionMetaSoilTile237) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "22.5 2.5 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -7931,14 +8410,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "3";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume2";
+            zCompletion = "1";
+            zLastUpdateTime = "20297";
       };
       new StaticMetaShape(MissionMetaSoilTile238) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "22.5 1.25 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -7964,14 +8445,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "4";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume2";
+            zCompletion = "1";
+            zLastUpdateTime = "19337";
       };
       new StaticMetaShape(MissionMetaSoilTile239) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "22.5 0 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -7997,14 +8480,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "4";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume2";
+            zCompletion = "1";
+            zLastUpdateTime = "17993";
       };
       new StaticMetaShape(MissionMetaSoilTile240) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "22.5 -1.25 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -8030,14 +8515,16 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "4";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume2";
+            zCompletion = "1";
+            zLastUpdateTime = "19433";
       };
       new StaticMetaShape(MissionMetaSoilTile241) {
          isAIControlled = "0";
          dataBlock = "MetaSoilTile";
          client = "-1";
-         teamId = "0";
+         teamId = "2";
          position = "22.5 -2.5 10.1708";
          rotation = "1 0 0 0";
          scale = "1 1 1";
@@ -8063,8 +8550,10 @@ new SimGroup(MissionGroup) {
             groundElevation6 = "9.99999";
             groundElevation7 = "none";
             numAdjacents = "3";
-            setupStage = "7";
+            setupStage = "0";
             volumeName = "MissionSoilVolume2";
+            zCompletion = "1";
+            zLastUpdateTime = "18057";
       };
    };
    new SimGroup(PlayerDropPoints) {
@@ -8135,7 +8624,7 @@ new SimGroup(MissionGroup) {
          position = "118.670456 -66.951134 3.174610";
    };
    new TerrainBlock() {
-      terrainFile = "./ter0.ter";
+      terrainFile = "content/fr1tz/mis_alux3d_debug/fl2/ter0.ter";
       castShadows = "1";
       squareSize = "1";
       baseTexSize = "1024";
