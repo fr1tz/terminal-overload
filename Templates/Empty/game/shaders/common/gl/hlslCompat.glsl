@@ -63,31 +63,28 @@ void tSetMatrixRow(out float4x4 m, int row, float4 value)
    m[3][row] = value.w;
 }
 
-#define tGetMatrixRC(m, row, col) m[col][row]
-#define tSetMatrixRC(m, row, col, val) m[col][row] = val
-
-float3 tGetMatrixRow(in float3x3 m, int row)
-{
-   float3 value;
-   value.x = m[0][row];
-   value.y = m[1][row];
-   value.y = m[2][row];
-   return value;
-}
-
-float4 tGetMatrixRow(in float4x4 m, int row)
-{
-   float4 value;
-   value.x = m[0][row];
-   value.y = m[1][row];
-   value.y = m[2][row];
-   value.w = m[3][row];
-   return value;
-}
+#define tGetMatrix3Row(matrix, row) float3(m[0][row], m[1][row], m[2][row])
+#define tGetMatrix4Row(matrix, row) float4(m[0][row], m[1][row], m[2][row], m[3][row])
 
 float3x3 float4x4to3x3(float4x4 m)
 {   
+   return float3x3( vec3(m[0]).xyz, m[1].xyz, m[2].xyz);
+}
+
+float3x3 float4x4to3x3_(float4x4 m)
+{   
    return float3x3( vec3(m[0]), m[1].xyz, m[2].xyz);
+}
+
+mat4 mat4FromRow( float r0c0, float r0c1, float r0c2, float r0c3,
+                  float r1c0, float r1c1, float r1c2, float r1c3,
+                  float r2c0, float r2c1, float r2c2, float r2c3,
+                  float r3c0, float r3c1, float r3c2, float r3c3 )
+{
+   return mat4( r0c0, r1c0, r2c0, r3c0,
+                r0c1, r1c1, r2c1, r3c1,
+                r0c2, r1c2, r2c2, r3c2,
+                r0c3, r1c3, r2c3, r3c3 );
 }
 
 float saturate( float val ) { return clamp( val, 0.0, 1.0 ); }

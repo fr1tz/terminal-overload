@@ -34,6 +34,15 @@ singleton ShaderData( WaterShader )
    OGLVertexShaderFile = "shaders/common/water/gl/waterV.glsl";
    OGLPixelShaderFile = "shaders/common/water/gl/waterP.glsl";
    
+   samplerNames[0] = "$bumpMap";  // noise
+   samplerNames[1] = "$prepassTex";  // #prepass
+   rtParams[1] = true;
+   samplerNames[2] = "$reflectMap"; // $reflectbuff
+   samplerNames[3] = "$refractBuff";  // $backbuff
+   samplerNames[4] = "$skyMap";  // $cubemap   
+   samplerNames[5] = "$foamMap";  // foam     
+   samplerNames[6] = "$depthGradMap"; // depthMap ( color gradient ) 
+   
    pixVersion = 3.0;
 };
 
@@ -73,6 +82,14 @@ singleton CustomMaterial( WaterMat )
    sampler["prepassTex"] = "#prepass";
    sampler["reflectMap"] = "$reflectbuff";
    sampler["refractBuff"] = "$backbuff";
+   // These samplers are set in code not here.
+   // This is to allow different WaterObject instances
+   // to use this same material but override these textures
+   // per instance.
+   //sampler["bumpMap"] = "";    
+   //sampler["skyMap"] = "";
+   //sampler["foamMap"] = "";  
+   //sampler["depthGradMap"] = "";
    
    shader = WaterShader;
    stateBlock = WaterStateBlock;

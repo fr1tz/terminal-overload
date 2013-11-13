@@ -262,9 +262,5 @@ void fizzle(float2 vpos, float visibility)
    clip( visibility - frac( determinant( m ) ) );
 }
 
-#define tGetMatrixRow( m, row ) m[row]
-#define tSetMatrixRow( m, row, v ) m[row] = v
-#define tGetMatrixRC(m, row, col) m[row][col]
-#define tSetMatrixRC(m, row, col, val) m[row][col]
 
 #endif // _TORQUE_HLSL_
