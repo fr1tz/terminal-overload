@@ -7,3 +7,9 @@ function serverCmdAction(%client, %nr)
    Game.clientAction(%client, %nr);
 }
 
+function serverCmdJoinTeam(%client, %nr)
+{
+   echo("serverCmdJoinTeam(): client" SPC %client SPC "action" SPC %nr);
+   Game.joinTeam(%client, %nr);
+}
+
