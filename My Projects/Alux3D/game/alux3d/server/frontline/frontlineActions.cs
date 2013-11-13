@@ -52,7 +52,7 @@ function FrontlineGame::clientLeaveForm(%game, %client, %obj, %dematerialize)
    %prevhealth = (%maxdmg - %dmg)/%maxdmg;
    %newenergy = (%data.maxEnergy*%prevhealth)/2;
    %obj.setEnergyLevel(%newenergy);
-	%obj.applyImpulse(%pos, VectorScale(%form.getVelocity(),100));
+	%obj.applyImpulse(%pos, VectorScale(%form.getVelocity(), 1));
 	%obj.playAudio(0, EtherformSpawnSound);
 
 	%client.control(%obj);
