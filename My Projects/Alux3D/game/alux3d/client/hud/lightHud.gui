@@ -48,7 +48,7 @@
       canSaveDynamicFields = "0";
    };
    new GuiBitmapCtrl() {
-      bitmap = "alux3d/client/graphics/lighthud.frame.png";
+      bitmap = "content/fr1tz/alux1/hud/lighthud/frame.png";
       wrap = "0";
       position = "0 0";
       extent = "640 480";
