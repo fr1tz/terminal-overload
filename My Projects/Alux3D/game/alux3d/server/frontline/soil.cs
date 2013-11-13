@@ -110,6 +110,8 @@ function Soil::clear()
    }
    Game.soilVolumeDirtySet.clear();
    Game.soilTileDirtySet.clear();
+   Game.team1.numSoilTiles = 0;
+   Game.team2.numSoilTiles = 0;
 }
 
 function Soil::updateAdjacents(%tile, %set)
@@ -129,6 +131,7 @@ function Soil::updateAdjacents(%tile, %set)
 function Soil::finishTile(%tile, %teamId)
 {
    echo("Finishing tile" SPC %tile.getName() SPC "(team" @ %teamId @ ")");
+   Game.team[%teamId].numSoilTiles++;
    if(isObject(%tile.zBuildEmitter))
       %tile.zBuildEmitter.delete();
    %tile.zBuildEmitter = "";
@@ -144,6 +147,8 @@ function Soil::finishTile(%tile, %teamId)
 
 function Soil::destroyTile(%tile)
 {
+   Game.team[%tile.teamId].numSoilTiles--;
+   Game.checkRoundEnd();
    if(isObject(%tile.zBuildEmitter))
       %tile.zBuildEmitter.delete();
    %tile.zBuildEmitter = "";
