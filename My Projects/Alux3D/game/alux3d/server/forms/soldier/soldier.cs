@@ -232,7 +232,7 @@ datablock PlayerData(FrmSoldier)
 
    maxInv[WpnPineapple] = 9999;
    
-   maxInv[WpnCrackpack] = 9999;
+   maxInv[WpnCrackpack] = 1;
 
    // available skins (see materials.cs in model folder)
    availableSkins =  "base Team1 Team2 DarkBlue	DarkGreen	LightGreen	Orange	Red	Teal	Violet	Yellow";
@@ -285,7 +285,7 @@ function FrmSoldier::onAdd(%this, %obj)
 
    %obj.setInventory(WpnPineapple, 9999);
    
-   %obj.setInventory(WpnCrackpack, 10);
+   %obj.setInventory(WpnCrackpack, 1);
 
    if (%obj.getDatablock().mainWeapon.image !$= "")
       %obj.mountImage(%obj.getDatablock().mainWeapon.image, 0);
