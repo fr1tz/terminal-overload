@@ -55,6 +55,19 @@ function clientCmdGridCreateExplosions(%grid, %datablock, %griddata)
    }
 }
 
+function clientCmdLeftPrint(%text)
+{
+   if(%text $= "")
+      leftPrintText.setText("");
+   else
+      leftPrintText.setText(leftPrintText.getText() @ %text);
+}
+
+function clientCmdLightHudSetModeText(%text)
+{
+   LightHudModeText.setText(%text);
+}
+
 //-----------------------------------------------------------------------------
 // Damage Direction Indicator
 //-----------------------------------------------------------------------------

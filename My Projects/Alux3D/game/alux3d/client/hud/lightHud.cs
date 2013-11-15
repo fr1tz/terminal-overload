@@ -67,11 +67,11 @@ function LightHud::onWake(%this)
    activateDirectInput();
 
    // Message hud dialog
-   if (false && isObject( MainChatHud ) )
+   if (isObject( MainChatHud ) )
    {
       Canvas.pushDialog( OverlayHud );
-      Canvas.pushDialog( MainChatHud );
-      chatHud.attach(HudMessageVector);
+      //Canvas.pushDialog( MainChatHud );
+      //chatHud.attach(HudMessageVector);
    }      
    
    // just update the action map here

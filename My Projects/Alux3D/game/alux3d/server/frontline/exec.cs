@@ -22,8 +22,10 @@ function executeFrontlineServerScripts()
    exec("./frontlineBasics.cs");
    exec("./frontlineEtherforms.cs");
    exec("./frontlinePrepare.cs");
+   exec("./frontlineResources.cs");
    exec("./frontlineRounds.cs");
    exec("./frontlineTeams.cs");
+   exec("./frontlineUnits.cs");
    exec("./gameBase.cs");
    exec("./grid.cs");
    exec("./loadout.cs");

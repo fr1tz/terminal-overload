@@ -2,15 +2,52 @@
 // located in the root directory of this distribution.
 
 // *** callback function: called by engine
+function GameBaseData::onAdd(%this, %obj)
+{
+
+}
+
+// *** callback function: called by engine
 function GameBaseData::onRemove(%this, %obj)
 {
    %obj.beingRemoved = true;
    %obj.removePiecesFromPlay();
+   if(isObject(%obj.tags))
+      %obj.tags.delete();
 }
 
 // Called by script code
 function GameBase::removePiecesFromPlay(%this)
 {
+   //echo("GameBase::removePiecesFromPlay()");
+ 	for(%idx = %this.tags.getCount()-1; %idx >= 0; %idx--)
+	{
+		%tag = %this.tags.getObject(%idx);
+      if(isObject(%tag.creator))
+      {
+         %pieces = %tag.pieces;
+         for(%f = 0; %f < getFieldCount(%pieces); %f++)
+         {
+            %field = getField(%pieces, %f);
+            %piece = getWord(%field, 0);
+            %count = getWord(%field, 1);
+            if(%tag.creator.resources.pieceLimit[%piece])
+               %tag.creator.resources.pieceUsed[%piece] -= %count;
+            if(%this.zFormDestroyed)
+               %tag.creator.resources.pieceCount[%piece] -= %count;
+
+            //if(%piece == 0)
+            //{
+            //   if(%this.client.player.getClassName() $= "Etherform")
+            //      %this.client.player.updateVisuals();
+            //}
+         }
+      }
+      %tag.delete();
+   }
+   
+   return;
+
    if(%this.zPiecesRemovedFromPlay)
       return;
 
@@ -25,7 +62,7 @@ function GameBase::removePiecesFromPlay(%this)
          %this.client.inventory.pieceUsed[%piece] -= %count;
          if(%this.zFormDestroyed)
             %this.client.inventory.pieceCount[%piece] -= %count;
-            
+
          if(%piece == 0)
          {
             if(%this.client.player.getClassName() $= "Etherform")

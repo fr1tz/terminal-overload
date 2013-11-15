@@ -353,12 +353,20 @@ function FrmLight::updatePointerThread(%this, %obj)
 
    if(!isObject(%obj))
       return;
+      
+   %client = %obj.client;
 
    %obj.pointer.setMeshHidden("hexagon", true);
    %obj.pointer.setTransform("0 0 0");
    
    if(%obj.mode !$= "build")
       return;
+      
+   if(%obj.spawnFunc $= "")
+   {
+      %obj.buildError = "Invalid spawn function";
+      return;
+   }
 
    %prevSpawnError = %client.spawnError;
 
@@ -438,123 +446,26 @@ function FrmLight::updatePointerThread(%this, %obj)
    %obj.pointer.setMeshHidden("hexagon", false);
    %obj.pointer.setTransform(%worldPos);
    //%obj.pointer.getHudInfo().setActive(true);
-
-   return;
    
-
-   if(%y > 0)
-   {
-      //%r = %y - mFloor(%y);
-      if((%y & 1) == 0)
-      {
-         %r = %y % 2;
-         if(%r < 1)
-            %y = mCeil(%y);
-         else
-            %y = mFloor(%y);
-      }
-   }
-   else
-   {
-      //%r = %y - mFloor(%y);
-      %r = %y % 2;
-      if(%r > 1)
-         %y = mCeil(%y);
-      else
-         %y = mFloor(%y);
-   }
-   %gridPos = setWord(%gridPos, 1, %y);
-
-   %worldPos = MissionSoilGrid.gridToWorld(%gridPos);
-
-   //%obj.pointer.addClientToGhostingList(%client);
-   %obj.pointer.setTransform(%worldPos);
-   //%obj.pointer.getHudInfo().setActive(true);
-      
-   return;
-
-   if(isObject(%client.pointer))
-   {
-
-   }
-
-   if(%obj.getEnergyLevel() < 0) // %obj.maxEnergy)
-   {
-      %client.spawnError = "Not enough energy to materialize.";
-      %client.proxy.shapeFxSetColor(0, 2);
-      %client.proxy.shapeFxSetColor(1, 2);
-   }
-   else
-      %client.spawnError = "";
-
-   %x = getWord(%c,1);
-   if(%x > 0)
-   {
-      //%r = %x - mFloor(%x);
-      %r = %x % 2;
-      if(%r < 1)
-         %x = mCeil(%x);
-      else
-         %x = mFloor(%x);
-   }
-   else
-   {
-      %r = %x % 2;
-      if(%r > 1)
-         %x = mCeil(%x);
-      else
-         %x = mFloor(%x);
-   }
-   %y = getWord(%c,2);
-   if(%y > 0)
-   {
-      //%r = %y - mFloor(%y);
-      %r = %y % 2;
-      if(%r < 1)
-         %y = mCeil(%y);
-      else
-         %y = mFloor(%y);
-   }
-   else
-   {
-      //%r = %y - mFloor(%y);
-      %r = %y % 2;
-      if(%r > 1)
-         %y = mCeil(%y);
-      else
-         %y = mFloor(%y);
-   }
-   %z = getWord(%c,3);
-   %pos = %x SPC %y SPC %z;
-   %normal = getWords(%c, 4, 6);
-   if(%pos $= %client.proxy.getPosition()
-   && (%client.spawnError $= %prevSpawnError))
-      return;
-
-   %transform = %pos SPC %normal SPC "0";
-   if(%client.proxy.getDataBlock().isMethod("adjustTransform"))
-   {
-      %transform = %client.proxy.getDataBlock().adjustTransform(
-         %pos, %normal, %eyeVec);
-   }
-   %client.proxy.addClientToGhostingList(%client);
-   %client.proxy.setTransform(%transform);
-
-   if(%obj.getEnergyLevel() < %obj.maxEnergy)
-      return;
-
-   %pieces = sLoadoutcode2Pieces(%client.activeLoadout);
+   %pieces = %obj.pieces;
    %missing = "";
    for(%f = 0; %f < getFieldCount(%pieces); %f++)
    {
       %field = getField(%pieces, %f);
       %piece = getWord(%field, 0);
       %count = getWord(%field, 1);
-
-      %used = %client.inventory.pieceUsed[%piece];
-      %free = %client.inventory.pieceCount[%piece] - %used;
-
-      %piecestring = sPiece2String(%piece);
+      
+      if(%client.resources.pieceLimit[%piece])
+      {
+         %used = %client.resources.pieceUsed[%piece];
+         %free = %client.resources.pieceCount[%piece] - %used;
+      }
+      else
+      {
+         %free = %client.resources.pieceCount[%piece];
+      }
+         
+      %piecestring = Game.piece2String(%piece);
 
       if(%free < %count)
       {
@@ -564,27 +475,9 @@ function FrmLight::updatePointerThread(%this, %obj)
       }
    }
    if(%missing !$= "")
-      %client.spawnError = "Bank is missing" SPC %missing SPC "piece";
-
-
-   if(%client.spawnError $= "")
    {
-      if(%client.proxy.getDataBlock().form.isMethod("canMaterialize"))
-      {
-         %client.spawnError = %client.proxy.getDataBlock().form.canMaterialize(
-            %client, %pos, %normal, %transform);
-      }
-   }
-
-   if(%client.spawnError $= "")
-   {
-      %client.proxy.shapeFxSetColor(0, 3);
-      %client.proxy.shapeFxSetColor(1, 3);
-   }
-   else
-   {
-      %client.proxy.shapeFxSetColor(0, 1);
-      %client.proxy.shapeFxSetColor(1, 1);
+      %obj.buildError = "Bank is missing" SPC %missing SPC "piece";
+      //echo(%obj.buildError);
    }
 }
 
@@ -598,7 +491,7 @@ function FrmLight::updateVisuals(%this, %obj)
    %used = %client.inventory.pieceUsed[0];
    %free = %client.inventory.pieceCount[0] - %used;
 
-   %obj.setDamageBufferLevel(%free >= 1 ? 200 : 0);
+   //%obj.setDamageBufferLevel(%free >= 1 ? 200 : 0);
 }
 
 // Called by ShapeBase::impulse() script function
@@ -610,20 +503,28 @@ function FrmLight::impulse(%this, %obj, %position, %impulseVec, %src)
 // Called by script
 function FrmLight::clientAction(%this, %obj, %nr)
 {
-   if(%nr < 10)
-   {
-      %obj.mode = "build";
-      %obj.client.selectLoadout(%nr);
-   }
-   else if(%nr < 18)
-   {
-      %obj.mode = "transform";
-      %obj.client.selectLoadout(%nr-10+51);
-   }
-   else if(%nr == 19)
+   %client = %obj.client;
+
+   if(%nr == 19)
    {
       %obj.mode = "posess";
+      commandToClient(%client, 'LightHudSetModeText', "Posess");
+      return;
    }
+   
+   %obj.unitCode = %client.unitCode[%nr];
+   %obj.unitName = %client.unitName[%nr];
+   %obj.mode = Game.unitcode2SpawnMode(%obj.unitCode);
+   %obj.spawnFunc = Game.unitcode2SpawnFunc(%obj.unitCode);
+   %obj.pieces = Game.unitcode2Pieces(%obj.unitCode);
+   
+   echo(%obj.unitCode);
+   echo(%obj.unitName);
+   echo(%obj.mode);
+   echo(%obj.spawnFunc);
+   echo(%obj.pieces);
+   
+   commandToClient(%client, 'LightHudSetModeText', %obj.mode @ ": " @ %obj.unitName);
 }
 
 // Called by script
@@ -668,37 +569,69 @@ function FrmLight::posess(%this, %obj)
 function FrmLight::materializeFDV(%this, %obj)
 {
    %client = %obj.client;
+   
+   if(%obj.spawnFunc $= "")
+      return;
 
-   %pieces = sLoadoutcode2Pieces(%client.activeLoadout);
-   //for(%f = 0; %f < getFieldCount(%pieces); %f++)
-   if(false)
+   %pieces = %obj.pieces;
+   %missing = "";
+   for(%f = 0; %f < getFieldCount(%pieces); %f++)
    {
       %field = getField(%pieces, %f);
       %piece = getWord(%field, 0);
       %count = getWord(%field, 1);
 
-      %used = %client.inventory.pieceUsed[%piece];
-      %free = %client.inventory.pieceCount[%piece] - %used;
+      if(%client.resources.pieceLimit[%piece])
+      {
+         %used = %client.resources.pieceUsed[%piece];
+         %free = %client.resources.pieceCount[%piece] - %used;
+      }
+      else
+      {
+         %free = %client.resources.pieceCount[%piece];
+      }
+
+      %piecestring = Game.piece2String(%piece);
 
       if(%free < %count)
       {
-         %client.play2D(BeepMessageSound);
-         return;
+         if(%missing !$= "")
+            %missing = %missing @ " and ";
+         %missing = %missing @ %piecestring;
       }
    }
+   if(%missing !$= "")
+   {
+      echo(%missing);
+      return;
+   }
 
-	%player = FrmSoldierpod.materialize(%client);
-   %player.setLoadoutCode(%client.loadoutCode[%nr]);
-   %player.setTransform(%obj.getTransform());
-   
-   createExplosion(FrmCrateDematerializeExplosion, %player.getPosition(), "0 0 1");
+	%spawned = call(%obj.spawnFunc, %obj.getTransform(), %obj.teamId);
+   if(!isObject(%spawned))
+      return;
 
-   %client.control(%player);
-   %client.player = %player;
+   %spawned.client = %client;
+
+   for(%f = 0; %f < getFieldCount(%pieces); %f++)
+   {
+      %field = getField(%pieces, %f);
+      %piece = getWord(%field, 0);
+      %count = getWord(%field, 1);
+      if(%client.resources.pieceLimit[%piece])
+         %client.resources.pieceUsed[%piece] += %count;
+      else
+         %client.resources.pieceCount[%piece] -= %count;
+   }
+ 
+   %spawned.tags = new SimSet();
+   %tag = new ScriptObject();
+   %tag.creator = %client;
+   %tag.pieces = %pieces;
+   %spawned.tags.add(%tag);
+
+   %client.control(%spawned);
+   %client.player = %spawned;
    %obj.schedule(0, "delete");
-
-   %client.inventoryMode = "";
-   %client.displayInventory();
 }
 
 // Called by script
@@ -706,8 +639,33 @@ function FrmLight::build(%this, %obj)
 {
    if(%obj.buildError !$= "" || !isObject(%obj.pointer))
       return;
+      
+   %client = %obj.client;
+   
+   %pieces = %obj.pieces;
+   for(%f = 0; %f < getFieldCount(%pieces); %f++)
+   {
+      %field = getField(%pieces, %f);
+      %piece = getWord(%field, 0);
+      %count = getWord(%field, 1);
+      if(%client.resources.pieceLimit[%piece])
+         %client.resources.pieceUsed[%piece] += %count;
+      else
+         %client.resources.pieceCount[%piece] -= %count;
+   }
 
    %targetPos = %obj.pointer.getPosition();
-
-   FrmSpawn::spawnBrick(%targetPos, %obj.teamId);
+   
+   %spawned = call(%obj.spawnFunc, %targetPos, %obj.teamId);
+   
+   if(!isObject(%spawned))
+      return;
+      
+   %spawned.client = %client;
+   
+   %spawned.tags = new SimSet();
+   %tag = new ScriptObject();
+   %tag.creator = %client;
+   %tag.pieces = %pieces;
+   %spawned.tags.add(%tag);
 }

@@ -28,12 +28,16 @@ function FrontlineGame::onClientEnterGame(%game, %client)
 {
    //echo(%game @"\c4 -> "@ %game.class @" -> FrontlineGame::onClientEnterGame");
 
-   Parent::onClientEnterGame(%game, %client);
-   
 	for(%i = 0; %i <= 100; %i++)
    {
-      %client.loadDefaultLoadout(%i);
+      %game.loadDefaultUnit(%client, %i);
    }
+
+   // Resources
+   %client.resources = new ScriptObject();
+   %game.updateResourcesThread(%client);
+
+   Parent::onClientEnterGame(%game, %client);
 }
 
 function FrontlineGame::onClientLeaveGame(%game, %client)
@@ -42,6 +46,8 @@ function FrontlineGame::onClientLeaveGame(%game, %client)
 
    Parent::onClientLeaveGame(%game, %client);
 
+	if(isObject(%client.resources))
+		%client.resources.delete();
 }
 
 function FrontlineGame::preparePlayer(%game, %client)
@@ -59,7 +65,7 @@ function FrontlineGame::spawnPlayer(%game, %client, %spawnPoint, %noControl)
 {
    //echo(%game @"\c4 -> "@ %game.class @" -> FrontlineGame::spawnPlayer");
    
-   %client.resetInventory();
+   %game.resetResources(%client);
 
 	// Remove existing etherform
 	if(%client.player > 0 && %client.player.getClassName() $= "Etherform")
@@ -99,7 +105,7 @@ function FrontlineGame::spawnPlayer(%game, %client, %spawnPoint, %noControl)
 function FrontlineGame::onFormDestroyed(%game, %client, %obj)
 {
    //echo(%game @"\c4 -> "@ %game.class @" -> FrontlineGame::onFormDestroyed");
-
+   
    %obj.zFormDestroyed = true;
    %obj.removePiecesFromPlay();
 }

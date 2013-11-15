@@ -1,9 +1,9 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
-function FrmSpawn::spawnBrick(%transform, %teamId)
+function Spawn_Brick(%transform, %teamId)
 {
-   echo("FrmSpawn::spawnBrick("@%transform@","@%teamId@")");
+   //echo("Spawn_Brick("@%transform@","@%teamId@")");
    
    %pos = getWords(%transform, 0, 2);
 
@@ -67,4 +67,6 @@ function FrmSpawn::spawnBrick(%transform, %teamId)
    %spawnFx.startFade(1000, 0, true);
    %spawnFx.schedule(1000, "delete");
    serverPlay3D(FrmBrickSpawnSound, %worldPos);
+   
+   return "";
 }

@@ -169,7 +169,7 @@ function FrmSoldierpod::onAdd(%this, %obj)
 function FrmSoldierpod::onRemove(%this, %obj)
 {
    Parent::onRemove(%this, %obj);
-   
+
    // delete engine light...
 //   %obj.light.delete();
 }
@@ -207,7 +207,7 @@ function FrmSoldierpod::onImpact(%this, %obj, %col, %vec, %vecLen)
       %this.explode(%obj);
       return;
    }
-
+   
    %player = FrmSoldier.materialize(%client, %pos, %normal, %transform);
    if(%obj.teamId == 1)
       %player.setSkinName("Team1");
@@ -216,7 +216,15 @@ function FrmSoldierpod::onImpact(%this, %obj, %col, %vec, %vecLen)
    %player.setTransform(%transform);
    //%client.proxy.removeClientFromGhostingList(%client);
    //%client.proxy.setTransform("0 0 0");
-   %player.setLoadoutCode(%obj.loadoutCode);
+
+   // Transfer tags.
+   %player.tags = new SimSet();
+ 	for(%idx = %obj.tags.getCount()-1; %idx >= 0; %idx--)
+	{
+		%tag = %obj.tags.getObject(%idx);
+      %player.tags.add(%tag);
+   }
+   %obj.tags.clear();
 
    createExplosion(FrmSoldierSpawnExplosion, %player.getPosition(), "0 0 1");
 
@@ -321,20 +329,6 @@ function FrmSoldierpod::explode(%this, %obj)
 function FrmSoldierpod::canMaterialize(%this, %client, %pos, %normal, %transform)
 {
    return FrmSoldier::canMaterialize(%this, %client, %pos, %normal, %transform);
-}
-
-// Called from script
-function FrmSoldierpod::materialize(%this, %client)
-{
-	%player = new FlyingVehicle() {
-		dataBlock = %this;
-		client = %client;
-		teamId = %client.team.teamId;
-	};
-   MissionCleanup.add(%player);
-	//%player.playAudio(0, CatSpawnSound);
-
-   return %player;
 }
 
 // Called from script
