@@ -96,3 +96,25 @@ function FrontlineGame::unitcode2Pieces(%game, %code)
    }
    return %pieces;
 }
+
+function FrontlineGame::loadoutSoldier(%game, %obj, %unitCode)
+{
+   %obj.clearWeaponCycle();
+   %arg2 = getWord(%unitCode, 1);
+   if(%arg2 == 1)
+   {
+      %obj.addToWeaponCycle(WpnRaptor);
+      %obj.setInventory(WpnRaptor, 1);
+      %obj.setInventory(WpnRaptorAmmo, 60);
+      %obj.magazine[WpnRaptorImage.getId()] = WpnRaptorImage.magazineCapacity;
+      %obj.mountImage(WpnRaptorImage, 0);
+   }
+   else if(%arg2 == 2)
+   {
+      %obj.addToWeaponCycle(WpnSiberion);
+      %obj.setInventory(WpnSiberion, 1);
+      %obj.setInventory(WpnSiberionAmmo, 120);
+      %obj.magazine[WpnSiberionImage.getId()] = WpnSiberionImage.magazineCapacity;
+      %obj.mountImage(WpnSiberionImage, 0);
+   }
+}

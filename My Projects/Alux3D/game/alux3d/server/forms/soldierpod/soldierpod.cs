@@ -225,10 +225,13 @@ function FrmSoldierpod::onImpact(%this, %obj, %col, %vec, %vecLen)
       %player.tags.add(%tag);
    }
    %obj.tags.clear();
+   
+   // Loadout
+   Game.loadoutSoldier(%player, %obj.unitCode);
 
    createExplosion(FrmSoldierSpawnExplosion, %player.getPosition(), "0 0 1");
 
-   if(true || %obj == %client.player)
+   if(%obj == %client.player)
    {
       %client.control(%player);
       %client.player = %player;

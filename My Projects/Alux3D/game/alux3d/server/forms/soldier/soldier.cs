@@ -266,39 +266,6 @@ function FrmSoldier::onAdd(%this, %obj)
    
 	%obj.isCAT = true;
 	%obj.getTeamObject().numCATs++;
- 
-   %obj.clearWeaponCycle();
-   %obj.addToWeaponCycle(WpnRaptor);
-   %obj.addToWeaponCycle(WpnBulldog);
-   %obj.addToWeaponCycle(WpnSiberion);
-   %obj.addToWeaponCycle(WpnCrackpack);
-
-   %obj.setInventory(WpnRaptor, 1);
-   %obj.setInventory(WpnRaptorAmmo, 60);
-   %obj.magazine[WpnRaptorImage.getId()] = WpnRaptorImage.magazineCapacity;
-
-   %obj.setInventory(WpnSiberion, 1);
-   %obj.setInventory(WpnSiberionAmmo, 120);
-   %obj.magazine[WpnSiberionImage.getId()] = WpnSiberionImage.magazineCapacity;
-
-   %obj.setInventory(WpnBulldog, 1);
-
-   %obj.setInventory(WpnPineapple, 9999);
-   
-   %obj.setInventory(WpnCrackpack, 1);
-
-   if (%obj.getDatablock().mainWeapon.image !$= "")
-      %obj.mountImage(%obj.getDatablock().mainWeapon.image, 0);
-   else
-      %obj.mountImage(WpnBadgerImage, 0);
-
-   return;
-
-   if(isObject(%obj.client))
-   {
-      %c = %obj.client;
-      commandToClient(%c, 'Hud', "health", true);
-   }
 }
 
 // callback function: called by engine
