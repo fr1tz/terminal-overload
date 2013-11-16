@@ -82,7 +82,7 @@ datablock EtherformData(FrmLight)
 	thirdPersonOnly = true;
 
     //category = "Vehicles"; don't appear in mission editor
-	//shapeFile = "content/fr1tz/oldshapes/light/p1/shape.dae";
+	shapeFile = "content/fr1tz/alux1/shapes/light/shape.dae";
 	//emap = true;
  
 	cameraDefaultFov = 90.0;
@@ -202,6 +202,28 @@ function FrmLight::onAdd(%this, %obj)
 		}
 	}
  
+   %emitterData = "";
+   if(%obj.teamId == 1)
+      %emitterData = FrmLightTeam1ParticleEmitter;
+   else if(%obj.teamId == 2)
+      %emitterData = FrmLightTeam2ParticleEmitter;
+      
+   if(%emitterData !$= "")
+   {
+      %obj.emitter = new ParticleEmitterNode()
+      {
+         datablock = FrmLightParticleEmitterNode;
+         position = "0 0 0";
+         rotation = "0 0 1 0";
+         emitter = %emitterData;
+         velocity = 1;
+      };
+      MissionCleanup.add(%obj.emitter);
+      %obj.mountObject(%obj.emitter, 0);
+   }
+ 
+   return;
+ 
    %obj.light = new PointLight() {
       radius = "5";
       isEnabled = "1";
@@ -218,8 +240,12 @@ function FrmLight::onAdd(%this, %obj)
 // callback function: called by engine
 function FrmLight::onRemove(%this, %obj)
 {
-   %obj.pointer.delete();
-   %obj.light.delete();
+   if(isObject(%obj.pointer))
+      %obj.pointer.delete();
+   if(isObject(%obj.emitter))
+      %obj.emitter.delete();
+   if(isObject(%obj.light))
+      %obj.light.delete();
 }
 
 // *** Callback function: called by engine
