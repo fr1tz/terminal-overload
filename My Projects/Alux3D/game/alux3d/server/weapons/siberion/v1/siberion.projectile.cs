@@ -76,7 +76,7 @@ datablock ProjectileData(WpnSiberionProjectile)
    areaImpulse         = 0.5;
    impactForce         = 600;
 
-   explosion           = BulletDirtExplosion;
+   explosion           = WpnSiberionProjectileExplosion;
    decal               = BulletHoleDecal;
 
    muzzleVelocity      = 300;

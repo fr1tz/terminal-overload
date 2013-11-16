@@ -44,7 +44,7 @@ datablock SFXProfile(WpnSiberionSwitchinSound)
 
 datablock SFXProfile(WpnSiberionProjectileExplosionSound)
 {
-   filename = "content/cat5/p.1/sounds/cat5/impact3";
+   filename = "content/cat5/p.1/sounds/cat5/impact1a";
    description = AudioClose3D;
    preload = true;
 };
