@@ -126,7 +126,7 @@ function FrontlineGame::loadoutSoldier(%game, %obj, %unitCode)
    {
       %obj.addToWeaponCycle(WpnRaptor);
       %obj.setInventory(WpnRaptor, 1);
-      %obj.setInventory(WpnRaptorAmmo, 60);
+      %obj.setInventory(WpnRaptorAmmo, 120);
       %obj.magazine[WpnRaptorImage.getId()] = WpnRaptorImage.magazineCapacity;
       %obj.mountImage(WpnRaptorImage, 0);
    }
