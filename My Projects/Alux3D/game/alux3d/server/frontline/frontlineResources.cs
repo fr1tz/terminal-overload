@@ -32,7 +32,7 @@ function FrontlineGame::resetResources(%game, %client)
 {
    //echo(%game @"\c4 -> "@ %game.class @" -> FrontlineGame::resetResources");
    %game.resetResources1(%client, 0, 1, 1, true, 20); // Infantry
-   %game.resetResources1(%client, 1, 0, 3, true, 10); // Anti-Soil
+   %game.resetResources1(%client, 1, 0, 1, true, 10); // Anti-Soil
    %game.resetResources1(%client, 2, 0, 25, false, 2); // Brick
    %game.displayResources(%client);
 }
