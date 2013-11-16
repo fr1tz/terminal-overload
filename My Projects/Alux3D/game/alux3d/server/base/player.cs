@@ -11,6 +11,8 @@ $CorpseTimeoutValue = 45 * 1000;
 
 function PlayerData::onAdd(%this, %obj)
 {
+   Parent::onAdd(%this, %obj);
+
    // Vehicle timeout
    %obj.mountVehicle = true;
 
@@ -21,7 +23,8 @@ function PlayerData::onAdd(%this, %obj)
 
 function PlayerData::onRemove(%this, %obj)
 {
-   if (%obj.client.player == %obj)
+   Parent::onRemove(%this, %obj);
+   if(%obj.client.player == %obj)
       %obj.client.player = 0;
 }
 
@@ -449,6 +452,6 @@ function Player::use(%player, %data)
    // No mounting/using weapons when you're driving!
    if (%player.isPilot())
       return(false);
-
+      
    Parent::use(%player, %data);
 }
