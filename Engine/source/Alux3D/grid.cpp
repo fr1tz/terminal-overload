@@ -183,4 +183,18 @@ Point3I Grid::worldToGrid(Point3F worldPos)
 	return gridPos;
 }
 
+DefineEngineMethod(Grid, gridToWorld, Point3F, (Point3I gridPos),,
+   "@brief Transform grid position into world position.\n\n"
+   "@param 3D grid position\n"
+)
+{
+   return object->gridToWorld(gridPos);
+}
 
+DefineEngineMethod(Grid, worldToGrid, Point3I, (Point3F worldPos),,
+   "@brief Transform world position into grid position.\n\n"
+   "@param 3D world position\n"
+)
+{
+   return object->worldToGrid(worldPos);
+}
