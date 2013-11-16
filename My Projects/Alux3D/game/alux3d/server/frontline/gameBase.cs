@@ -19,13 +19,18 @@ function GameBaseData::onRemove(%this, %obj)
 // Called by script code
 function GameBase::removePiecesFromPlay(%this)
 {
-   //echo("GameBase::removePiecesFromPlay()");
+   echo("GameBase::removePiecesFromPlay()");
+   echo(%this.getClassName() SPC %this.getDataBlock().getName());
+   if(!isObject(%this.tags))
+      return;
+   
  	for(%idx = %this.tags.getCount()-1; %idx >= 0; %idx--)
 	{
 		%tag = %this.tags.getObject(%idx);
       if(isObject(%tag.creator))
       {
          %pieces = %tag.pieces;
+         echo(%tag.unitString SPC %tag.creator SPC "<-" SPC %tag.pieces);
          for(%f = 0; %f < getFieldCount(%pieces); %f++)
          {
             %field = getField(%pieces, %f);

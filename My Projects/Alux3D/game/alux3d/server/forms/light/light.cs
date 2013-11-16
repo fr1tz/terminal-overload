@@ -362,7 +362,7 @@ function FrmLight::updatePointerThread(%this, %obj)
    if(%obj.mode !$= "build")
       return;
       
-   if(%obj.spawnFunc $= "")
+   if(%obj.unitSpawnFunc $= "")
    {
       %obj.buildError = "Invalid spawn function";
       return;
@@ -447,7 +447,7 @@ function FrmLight::updatePointerThread(%this, %obj)
    %obj.pointer.setTransform(%worldPos);
    //%obj.pointer.getHudInfo().setActive(true);
    
-   %pieces = %obj.pieces;
+   %pieces = %obj.unitPieces;
    %missing = "";
    for(%f = 0; %f < getFieldCount(%pieces); %f++)
    {
@@ -515,14 +515,16 @@ function FrmLight::clientAction(%this, %obj, %nr)
    %obj.unitCode = %client.unitCode[%nr];
    %obj.unitName = %client.unitName[%nr];
    %obj.mode = Game.unitcode2SpawnMode(%obj.unitCode);
-   %obj.spawnFunc = Game.unitcode2SpawnFunc(%obj.unitCode);
-   %obj.pieces = Game.unitcode2Pieces(%obj.unitCode);
+   %obj.unitString = Game.unitcode2UnitString(%obj.unitCode);
+   %obj.unitSpawnFunc = Game.unitcode2unitSpawnFunc(%obj.unitCode);
+   %obj.unitPieces = Game.unitcode2Pieces(%obj.unitCode);
    
-   echo(%obj.unitCode);
-   echo(%obj.unitName);
-   echo(%obj.mode);
-   echo(%obj.spawnFunc);
-   echo(%obj.pieces);
+   //echo(%obj.unitCode);
+   //echo(%obj.unitName);
+   //echo(%obj.mode);
+   //echo(%obj.unitString);
+   //echo(%obj.unitSpawnFunc);
+   //echo(%obj.unitPieces);
    
    commandToClient(%client, 'LightHudSetModeText', %obj.mode @ ": " @ %obj.unitName);
 }
@@ -570,10 +572,10 @@ function FrmLight::materializeFDV(%this, %obj)
 {
    %client = %obj.client;
    
-   if(%obj.spawnFunc $= "")
+   if(%obj.unitSpawnFunc $= "")
       return;
 
-   %pieces = %obj.pieces;
+   %pieces = %obj.unitPieces;
    %missing = "";
    for(%f = 0; %f < getFieldCount(%pieces); %f++)
    {
@@ -606,11 +608,9 @@ function FrmLight::materializeFDV(%this, %obj)
       return;
    }
 
-	%spawned = call(%obj.spawnFunc, %obj.getTransform(), %obj.teamId);
+	%spawned = call(%obj.unitSpawnFunc, %obj.getTransform(), %obj.teamId);
    if(!isObject(%spawned))
       return;
-
-   %spawned.client = %client;
 
    for(%f = 0; %f < getFieldCount(%pieces); %f++)
    {
@@ -622,10 +622,13 @@ function FrmLight::materializeFDV(%this, %obj)
       else
          %client.resources.pieceCount[%piece] -= %count;
    }
- 
+
+   %spawned.client = %client;
+   %spawned.unitCode = %obj.unitCode;
    %spawned.tags = new SimSet();
    %tag = new ScriptObject();
    %tag.creator = %client;
+   %tag.unitString = %obj.unitString;
    %tag.pieces = %pieces;
    %spawned.tags.add(%tag);
 
@@ -642,7 +645,7 @@ function FrmLight::build(%this, %obj)
       
    %client = %obj.client;
    
-   %pieces = %obj.pieces;
+   %pieces = %obj.unitPieces;
    for(%f = 0; %f < getFieldCount(%pieces); %f++)
    {
       %field = getField(%pieces, %f);
@@ -656,16 +659,17 @@ function FrmLight::build(%this, %obj)
 
    %targetPos = %obj.pointer.getPosition();
    
-   %spawned = call(%obj.spawnFunc, %targetPos, %obj.teamId);
+   %spawned = call(%obj.unitSpawnFunc, %targetPos, %obj.teamId);
    
    if(!isObject(%spawned))
       return;
       
    %spawned.client = %client;
-   
+   %spawned.unitCode = %obj.unitCode;
    %spawned.tags = new SimSet();
    %tag = new ScriptObject();
    %tag.creator = %client;
+   %tag.unitString = %obj.unitString;
    %tag.pieces = %pieces;
    %spawned.tags.add(%tag);
 }

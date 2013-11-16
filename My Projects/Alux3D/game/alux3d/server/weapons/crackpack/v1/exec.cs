@@ -6,5 +6,6 @@ exec("./crackpack.gfx.cs");
 exec("./crackpack.image.cs");
 exec("./crackpack.item.cs");
 exec("./crackpack.sfx.cs");
+exec("./crackpack.spawn.cs");
 
 

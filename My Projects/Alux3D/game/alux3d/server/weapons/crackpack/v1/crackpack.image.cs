@@ -215,6 +215,20 @@ function WpnCrackpackImage::fire(%this, %obj, %slot)
      teamId = %obj.client.team.teamId;
    };
    MissionCleanup.add(%shape);
+   
+   // Transfer crackpack tag.
+   %shape.tags = new SimSet();
+   for(%idx = %obj.tags.getCount()-1; %idx >= 0; %idx--)
+   {
+      %tag = %obj.tags.getObject(%idx);
+      if(%tag.unitString $= "crackpack")
+      {
+         %obj.tags.remove(%tag);
+         %shape.tags.add(%tag);
+         break;
+      }
+   }
+   
    %shape.setTransform(%worldPos);
    %shape.playAudio(0, WpnCrackpackDeploySound);
    %shape.schedule(4000, "playAudio", 0, WpnCrackpackActivateSound);

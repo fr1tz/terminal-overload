@@ -102,9 +102,9 @@ function FrontlineGame::spawnPlayer(%game, %client, %spawnPoint, %noControl)
 	//%client.updateHudColors();
 }
 
-function FrontlineGame::onFormDestroyed(%game, %client, %obj)
+function FrontlineGame::onUnitDestroyed(%game, %obj)
 {
-   //echo(%game @"\c4 -> "@ %game.class @" -> FrontlineGame::onFormDestroyed");
+   //echo(%game @"\c4 -> "@ %game.class @" -> FrontlineGame::onUnitDestroyed");
    
    %obj.zFormDestroyed = true;
    %obj.removePiecesFromPlay();

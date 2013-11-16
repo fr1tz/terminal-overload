@@ -15,6 +15,7 @@ function WpnCrackpackStaticShape::onDamage(%this, %obj, %delta)
 	if(%totalDamage >= %this.maxDamage)
 	{
       createExplosion(WpnCrackpackDestroyedExplosion, %obj.getPosition(), "0 0 1");
+      Game.onUnitDestroyed(%obj);
       %obj.schedule(0, "delete");
 	}
 }
@@ -43,6 +44,7 @@ function WpnCrackpackStaticShape::activate(%this, %obj)
 
    serverPlay3D(WpnCrackpackCrackSound, %pos);
    createExplosion(WpnCrackpackActivationExplosion, %pos, "0 0 1");
+   Game.onUnitDestroyed(%obj);
    %obj.schedule(0, "delete");
    
    %msg = "";
