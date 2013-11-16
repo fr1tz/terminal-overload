@@ -105,6 +105,19 @@ function ItemData::onPickup(%this, %obj, %user, %amount)
     }
     
     %user.incInventory(%this, %count);
+    
+    // Transfer tags.
+    if(isObject(%obj.tags))
+    {
+       if(!isObject(%user.tags))
+          %user.tags = new SimSet();
+       for(%idx = %obj.tags.getCount()-1; %idx >= 0; %idx--)
+       {
+          %tag = %obj.tags.getObject(%idx);
+          %user.tags.add(%tag);
+       }
+       %obj.tags.clear();
+    }
 
     // Inform the client what they got.
     if (%user.client)
