@@ -83,16 +83,15 @@ bool HexagonVolumeData::preload(bool server, String &errorStr)
 				errorStr = String::ToString("HexagonVolumeData: Couldn't load shape \"%s\"", renderShapeName[i]);
 				return false;
 			}
-			if(!server)
+
+			// Both client and server need these...
+			if(renderShape[i]->preloadMaterialList(renderShape[i].getPath()))
 			{
-				if(renderShape[i]->preloadMaterialList(renderShape[i].getPath()))
-				{
-					renderShapeInstance[i] = new TSShapeInstance(renderShape[i], !server);
-					renderShapeInstance[i]->initMaterialList();
-				}
-				else
-					shapeError = true;
+				renderShapeInstance[i] = new TSShapeInstance(renderShape[i], true);
+				renderShapeInstance[i]->initMaterialList();
 			}
+			else
+				shapeError = true;
 		}
 
 		if(!collisionShapeData[i] && collisionShapeDataID[i] != 0 )
@@ -419,10 +418,6 @@ void HexagonVolume::buildConvex(const Box3F& box, Convex* convex)
 			continue;
 
 		if(hex.col.size() == hex.amount)
-			continue;
-
-		TSShapeInstance* shapeInstance = mDataBlock->renderShapeInstance[hex.shapeNr];
-		if(!shapeInstance)
 			continue;
 
 		ShapeBaseData* data = mDataBlock->collisionShapeData[hex.shapeNr];
