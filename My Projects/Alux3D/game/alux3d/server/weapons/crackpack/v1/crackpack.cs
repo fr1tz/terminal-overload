@@ -22,6 +22,9 @@ function WpnCrackpackStaticShape::onDamage(%this, %obj, %delta)
 
 function WpnCrackpackStaticShape::activate(%this, %obj)
 {
+   if(!isObject(%obj))
+      return;
+
    %pos = %obj.getPosition();
    %radius = 4;
    %enemyShapeNr = "";
