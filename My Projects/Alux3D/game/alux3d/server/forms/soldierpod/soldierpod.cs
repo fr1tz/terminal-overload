@@ -324,8 +324,8 @@ function FrmSoldierpod::explode(%this, %obj)
 {
    %pos = %obj.getPosition();
    createExplosion(FrmSoldierpodExplosion, %pos, "0 0 1");
+   Game.onUnitDestroyed(%obj);
    %obj.schedule(0, "delete");
-   %obj.client.onDeath(0, 0, 0, 0);
 }
 
 // Called from script

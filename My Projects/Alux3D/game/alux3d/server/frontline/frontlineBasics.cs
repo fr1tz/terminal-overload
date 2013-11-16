@@ -108,17 +108,22 @@ function FrontlineGame::onUnitDestroyed(%game, %obj)
    
    %obj.zFormDestroyed = true;
    %obj.removePiecesFromPlay();
+   
+   %client = %obj.client;
+   if(%client == %obj.getControllingClient())
+      %game.clientLeaveForm(%client, %obj);
 }
 
 function FrontlineGame::onDeath(%game, %client, %sourceObject, %sourceClient, %damageType, %damLoc)
 {
    //echo(%game @"\c4 -> "@ %game.class @" -> FrontlineGame::onDeath");
    
+   return;
+   
    %form = %client.player;
    
    if(isObject(%client))
    {
-      %game.onFormDestroyed(%client, %form);
       if(%client == %form.getControllingClient())
          %game.clientLeaveForm(%client, %form);
    }
