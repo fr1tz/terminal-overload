@@ -27,7 +27,7 @@ datablock ShapeBaseImageData(WpnSiberionImage)
    // provides some hooks into the inventory system.
    class = "WeaponImage";
 
-   ammoSource = "Energy";
+   ammoSource = "Magazine";
    //minEnergy = 0;
 
    projectile = WpnSiberionPseudoProjectile;
