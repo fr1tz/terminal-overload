@@ -198,6 +198,8 @@ private:
    StrongRefPtr<GFXGLPrimitiveBuffer> mCurrentPB;
    
    GFXShader* mCurrentShader;
+   GFXShaderRef mGenericShader[GS_COUNT];
+   GFXShaderConstBufferRef mGenericShaderBuffer[GS_COUNT];
    
    /// Since GL does not have separate world and view matrices we need to track them
    MatrixF m_mCurrentWorld;

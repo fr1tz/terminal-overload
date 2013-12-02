@@ -158,6 +158,7 @@ void GuiMaterialCtrl::onRender( Point2I offset, const RectI &updateRect )
    {
       mMaterialInst->setSceneInfo( &state, sgData );
       mMaterialInst->setTransforms( matSet, &state );
+      GFX->setupGenericShaders();
       GFX->drawPrimitive( GFXTriangleStrip, 0, 2 );
    }
 

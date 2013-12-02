@@ -127,6 +127,7 @@ namespace
       desc.setBlend(true, GFXBlendSrcAlpha, GFXBlendInvSrcAlpha);
       GFX->setStateBlockByDesc( desc );
 
+      GFX->setupGenericShaders();
       GFX->drawPrimitive( GFXTriangleStrip, 0, 2 );
    }
 }

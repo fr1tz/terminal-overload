@@ -42,6 +42,7 @@
 #include "gfx/primBuilder.h"
 #include "console/console.h"
 #include "gfx/gl/gfxGLOcclusionQuery.h"
+#include "materials/shaderData.h"
 
 GFXAdapter::CreateDeviceInstanceDelegate GFXGLDevice::mCreateDeviceInstance(GFXGLDevice::createInstance); 
 
@@ -592,8 +593,8 @@ void GFXGLDevice::setClipRect( const RectI &inRect )
    setViewMatrix( mTempMatrix );
    setWorldMatrix( mTempMatrix );
 
-   // Set the viewport to the clip rect (with y flip)
-   RectI viewport(mClip.point.x, size.y - (mClip.point.y + mClip.extent.y), mClip.extent.x, mClip.extent.y);
+   // Set the viewport to the clip rect
+   RectI viewport(mClip.point.x, mClip.point.y, mClip.extent.x, mClip.extent.y); // TODO OPENGL
    setViewport(viewport);
 }
 
@@ -645,11 +646,46 @@ GFXOcclusionQuery* GFXGLDevice::createOcclusionQuery()
 
 void GFXGLDevice::setupGenericShaders( GenericShaderType type ) 
 {
-   TORQUE_UNUSED(type);
-   // We have FF support, use that.
-   disableShaders();
-}
+   AssertFatal(type != GSTargetRestore, "");
+   AssertFatal(type != GSTexture, "");
 
+   if( mGenericShader[GSColor] == NULL )
+   {
+      ShaderData *shaderData;
+
+      shaderData = new ShaderData();
+      shaderData->setField("OGLVertexShaderFile", "shaders/common/fixedFunction/gl/colorV.glsl");
+      shaderData->setField("OGLPixelShaderFile", "shaders/common/fixedFunction/gl/colorP.glsl");
+      shaderData->setField("pixVersion", "2.0");
+      shaderData->registerObject();
+      mGenericShader[GSColor] =  shaderData->getShader();
+      mGenericShaderBuffer[GSColor] = mGenericShader[GSColor]->allocConstBuffer();
+
+      shaderData = new ShaderData();
+      shaderData->setField("OGLVertexShaderFile", "shaders/common/fixedFunction/gl/modColorTextureV.glsl");
+      shaderData->setField("OGLPixelShaderFile", "shaders/common/fixedFunction/gl/modColorTextureP.glsl");
+      shaderData->setField("pixVersion", "2.0");
+      shaderData->registerObject();
+      mGenericShader[GSModColorTexture] = shaderData->getShader();
+      mGenericShaderBuffer[GSModColorTexture] = mGenericShader[GSModColorTexture]->allocConstBuffer();
+
+      shaderData = new ShaderData();
+      shaderData->setField("OGLVertexShaderFile", "shaders/common/fixedFunction/gl/addColorTextureV.glsl");
+      shaderData->setField("OGLPixelShaderFile", "shaders/common/fixedFunction/gl/addColorTextureP.glsl");
+      shaderData->setField("pixVersion", "2.0");
+      shaderData->registerObject();
+      mGenericShader[GSAddColorTexture] = shaderData->getShader();
+      mGenericShaderBuffer[GSAddColorTexture] = mGenericShader[GSAddColorTexture]->allocConstBuffer();
+   }
+
+   MatrixF tempMatrix = mWorldMatrix[mWorldStackSize] * mViewMatrix * mProjectionMatrix;
+   GFXGLShader *shader = (GFXGLShader*)mGenericShader[type].getPointer();
+   auto mModelViewProjSC = shader->getShaderConstHandle( "$modelView" ); 
+   mGenericShaderBuffer[type]->setSafe(mModelViewProjSC, tempMatrix);
+
+   setShader(shader);
+   setShaderConstBuffer(mGenericShaderBuffer[type]);
+}
 GFXShader* GFXGLDevice::createShader()
 {
    GFXGLShader* shader = new GFXGLShader();
@@ -674,8 +710,7 @@ void GFXGLDevice::setShader( GFXShader *shader )
 
 void GFXGLDevice::disableShaders()
 {
-   setShader(NULL);
-   setShaderConstBuffer( NULL );
+   setupGenericShaders();
 }
 
 void GFXGLDevice::setShaderConstBufferInternal(GFXShaderConstBuffer* buffer)
