@@ -151,8 +151,20 @@ GFXGLDevice::~GFXGLDevice()
    for(U32 i = 0; i < mVolatilePBs.size(); i++)
       mVolatilePBs[i] = NULL;
 
-   if( mTextureManager ) 
+   // Clear out our current texture references
+   for (U32 i = 0; i < TEXTURE_STAGE_COUNT; i++)
+   {
+      mCurrentTexture[i] = NULL;
+      mNewTexture[i] = NULL;
+      mCurrentCubemap[i] = NULL;
+      mNewCubemap[i] = NULL;
+   }
+
+   if( mTextureManager )
+   {
       mTextureManager->zombify();
+      mTextureManager->kill();
+   }
 
    GFXResource* walk = mResourceListHead;
    while(walk)
