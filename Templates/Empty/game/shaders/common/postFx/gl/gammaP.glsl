@@ -21,9 +21,8 @@
 //-----------------------------------------------------------------------------
 
 #include "../../gl/hlslCompat.glsl"
-
-#include "shadergen:/autogenConditioners.h"
 #include "../../gl/torque.glsl"
+#include "shadergen:/autogenConditioners.h"
 
 uniform sampler2D backBuffer;
 uniform sampler2D colorCorrectionTex; // ToDo sampler1D not supported
