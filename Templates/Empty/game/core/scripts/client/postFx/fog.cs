@@ -78,10 +78,13 @@ singleton ShaderData( UnderwaterFogPassShader )
    DXVertexShaderFile 	= "shaders/common/postFx/postFxV.hlsl";
    DXPixelShaderFile 	= "shaders/common/postFx/underwaterFogP.hlsl";
          
-//   OGLVertexShaderFile  = "shaders/common/postFx/gl/postFxV.glsl";
-//   OGLPixelShaderFile   = "shaders/common/postFx/gl/fogP.glsl";
+   OGLVertexShaderFile  = "shaders/common/postFx/gl/postFxV.glsl";
+   OGLPixelShaderFile   = "shaders/common/postFx/gl/underwaterFogP.glsl";
             
    samplerNames[0] = "$prepassTex";
+   rtParams[0] = true;
+   samplerNames[1] = "$backbuffer";
+   samplerNames[2] = "$waterDepthGradMap";
    
    pixVersion = 2.0;      
 };
@@ -110,9 +113,18 @@ singleton PostEffect( UnderwaterFogPostFx )
   
    shader = UnderwaterFogPassShader;
    stateBlock = UnderwaterFogPassStateBlock;
+   /*sampler["prepassTex"] = "#prepass";
+   rtParams[0] = "prepassTex"; // TODO get from ShaderData
+   sampler["backbuffer"] = "$backBuffer";
+   sampler["waterDepthGradMap"] = "#waterDepthGradMap";*/
+   
    texture[0] = "#prepass";
+   samplerNames[0] = "prepassTex";
+   rtParams[0] = "prepassTex";
    texture[1] = "$backBuffer";
+   samplerNames[1] = "backbuffer";
    texture[2] = "#waterDepthGradMap";
+   samplerNames[2] = "waterDepthGradMap";
    
    // Needs to happen after the FogPostFx
    renderPriority = 4;

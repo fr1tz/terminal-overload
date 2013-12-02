@@ -20,48 +20,33 @@
 // IN THE SOFTWARE.
 //-----------------------------------------------------------------------------
 
-singleton ShaderData( PFX_TurbulenceShader )
-{   
-   DXVertexShaderFile 	= "shaders/common/postFx/postFxV.hlsl";
-   DXPixelShaderFile 	= "shaders/common/postFx/turbulenceP.hlsl";
-           
-   OGLVertexShaderFile  = "shaders/common/postFx/gl/postFxV.glsl";
-   OGLPixelShaderFile   = "shaders/common/postFx/gl/turbulenceP.glsl";
-           
-   samplerNames[0] = "$inputTex";
-   pixVersion = 3.0;
-};
+#include "../../gl/hlslCompat.glsl"  
+#include "../../gl/torque.glsl"
+#include "shadergen:/autogenConditioners.h"
 
-singleton PostEffect( TurbulenceFx )  
-{  
-   requirements = "None";
-   isEnabled = false;    
-   allowReflectPass = true;  
-         
-   renderTime = "PFXAfterDiffuse";  
-   renderBin = "ObjTranslucentBin";     
-     
-   shader = PFX_TurbulenceShader;  
-   stateBlock = PFX_myShaderStateBlock;  
-   texture[0] = "$backBuffer";  
-   samplerNames[0] = "inputTex";
-      
-   renderPriority = 0.1;  
- };
+uniform float  accumTime;
+uniform sampler2D inputTex;
 
-function TurbulenceFx::setShaderConsts(%this)
+varying vec2 uv0;
+
+#define IN_uv0 uv0
+
+void main() 
 {
-   %this.setShaderConst(%this.timeConst, $Sim::time - %this.timeStart); 
-}
+	float reduction = 128;	
+	float power = 1.0;
+	float speed = 3.0;
+	float frequency=8;
+	
+	float backbuffer_edge_coef=0.98;
+	float2 screen_center = float2(0.5, 0.5);	
+	float2 cPos = (IN_uv0 - screen_center);
+	
+	float len = 1.0 - length(cPos);		
+	float2 uv = clamp((cPos / len * cos(len * frequency - (accumTime * speed)) * (power / reduction)), 0, 1);
+	gl_FragColor = tex2D(inputTex, IN_uv0 * backbuffer_edge_coef + uv);
 
-function UnderwaterFogPostFx::onEnabled( %this )
-{
-   TurbulenceFx.enable();
-   return true;
-}
+//    float4 color = tex2D(inputTex, IN_uv0 * backbuffer_edge_coef+(sin*right));           
+//	return color;
 
-function UnderwaterFogPostFx::onDisabled( %this )
-{
-   TurbulenceFx.disable();
-   return false;
 }

@@ -102,16 +102,9 @@ singleton CustomMaterial( WaterMat )
 // Underwater
 //-----------------------------------------------------------------------------
 
-singleton ShaderData( UnderWaterShader )
+singleton ShaderData( UnderWaterShader : WaterShader )
 {
-   DXVertexShaderFile 	= "shaders/common/water/waterV.hlsl";
-   DXPixelShaderFile 	= "shaders/common/water/waterP.hlsl";   
-   
-   OGLVertexShaderFile 	= "shaders/common/water/gl/waterV.glsl";
-   OGLPixelShaderFile 	= "shaders/common/water/gl/waterP.glsl"; 
-   
    defines = "UNDERWATER";   
-   pixVersion = 3.0;
 };
 
 singleton CustomMaterial( UnderwaterMat )
