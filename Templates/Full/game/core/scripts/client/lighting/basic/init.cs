@@ -77,19 +77,13 @@ function onActivateBasicLM()
    // Add both to the root group so that it doesn't
    // end up in the MissionCleanup instant group.
    RootGroup.add( BL_ProjectedShadowRPM );
-   RootGroup.add( %meshBin );      
-
-   // Enable the offscreen render target.
-   AL_FormatToken.enable();
+   RootGroup.add( %meshBin );
 }
 
 function onDeactivateBasicLM()
 {
    // Delete the pass manager which also deletes the bin.
    BL_ProjectedShadowRPM.delete();
-   
-   // Disable the offscreen render target.
-   AL_FormatToken.disable();
 }
 
 function setBasicLighting()

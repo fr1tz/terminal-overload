@@ -36,7 +36,21 @@ singleton ShaderData( PFX_PassthruShader )
    DXVertexShaderFile 	= "shaders/common/postFx/postFxV.hlsl";
    DXPixelShaderFile 	= "shaders/common/postFx/passthruP.hlsl";
          
-   OGLVertexShaderFile  = "shaders/common/postFx/gl/postFxV_BackBuffer.glsl";
+   OGLVertexShaderFile  = "shaders/common/postFx/gl/postFxV.glsl";
+   OGLPixelShaderFile   = "shaders/common/postFx/gl/passthruP.glsl";
+      
+   samplerNames[0] = "$inputTex";
+   rtParams[0] = true;
+   
+   pixVersion = 2.0;
+};
+
+singleton ShaderData( PFX_FinalPassthruShader )
+{   
+   DXVertexShaderFile 	= "shaders/common/postFx/postFxV.hlsl";
+   DXPixelShaderFile 	= "shaders/common/postFx/passthruP.hlsl";
+         
+   OGLVertexShaderFile  = "shaders/common/postFx/gl/finalPassthruV.glsl";
    OGLPixelShaderFile   = "shaders/common/postFx/gl/passthruP.glsl";
       
    samplerNames[0] = "$inputTex";

@@ -110,3 +110,20 @@ singleton PostEffect( AL_FormatCopy )
    rtParams[0] = "inputTex";
    target = "$backbuffer";
 };
+
+singleton PostEffect( PFX_FinalPassthru )
+{
+   isEnabled = true;
+   allowReflectPass = true;
+   
+   shader = PFX_FinalPassthruShader;
+   stateBlock = AL_FormatTokenState;
+   
+   texture[0] = "$backbuffer";
+   samplerNames[0] = "inputTex";
+   rtParams[0] = "inputTex";
+   target = "$backbuffer";
+   
+   renderTime = "PFXEndOfFrame";
+   renderPriority = -9999; //must be the last PostFX
+};
