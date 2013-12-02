@@ -111,6 +111,8 @@ singleton PostEffect( AL_FormatCopy )
    target = "$backbuffer";
 };
 
+if($pref::Video::displayDevice $= "OpenGL")
+{
 singleton PostEffect( PFX_FinalPassthru )
 {
    isEnabled = true;
@@ -127,3 +129,4 @@ singleton PostEffect( PFX_FinalPassthru )
    renderTime = "PFXEndOfFrame";
    renderPriority = -9999; //must be the last PostFX
 };
+}
