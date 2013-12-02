@@ -139,6 +139,9 @@ GFXGLDevice::GFXGLDevice(U32 adapterIndex) :
    mTextureCoordStartTop = false;
    mTexelPixelOffset = false;
    mVertexStreamSupported = 1;
+
+   for(int i = 0; i < GS_COUNT; ++i)
+      mModelViewProjSC[i] = NULL;
 }
 
 GFXGLDevice::~GFXGLDevice()
@@ -672,6 +675,7 @@ void GFXGLDevice::setupGenericShaders( GenericShaderType type )
       shaderData->registerObject();
       mGenericShader[GSColor] =  shaderData->getShader();
       mGenericShaderBuffer[GSColor] = mGenericShader[GSColor]->allocConstBuffer();
+      mModelViewProjSC[GSColor] = mGenericShader[GSColor]->getShaderConstHandle( "$modelView" ); 
 
       shaderData = new ShaderData();
       shaderData->setField("OGLVertexShaderFile", "shaders/common/fixedFunction/gl/modColorTextureV.glsl");
@@ -680,6 +684,7 @@ void GFXGLDevice::setupGenericShaders( GenericShaderType type )
       shaderData->registerObject();
       mGenericShader[GSModColorTexture] = shaderData->getShader();
       mGenericShaderBuffer[GSModColorTexture] = mGenericShader[GSModColorTexture]->allocConstBuffer();
+      mModelViewProjSC[GSModColorTexture] = mGenericShader[GSModColorTexture]->getShaderConstHandle( "$modelView" ); 
 
       shaderData = new ShaderData();
       shaderData->setField("OGLVertexShaderFile", "shaders/common/fixedFunction/gl/addColorTextureV.glsl");
@@ -688,15 +693,14 @@ void GFXGLDevice::setupGenericShaders( GenericShaderType type )
       shaderData->registerObject();
       mGenericShader[GSAddColorTexture] = shaderData->getShader();
       mGenericShaderBuffer[GSAddColorTexture] = mGenericShader[GSAddColorTexture]->allocConstBuffer();
+      mModelViewProjSC[GSAddColorTexture] = mGenericShader[GSAddColorTexture]->getShaderConstHandle( "$modelView" ); 
    }
 
-   MatrixF tempMatrix = mWorldMatrix[mWorldStackSize] * mViewMatrix * mProjectionMatrix;
-   GFXGLShader *shader = (GFXGLShader*)mGenericShader[type].getPointer();
-   auto mModelViewProjSC = shader->getShaderConstHandle( "$modelView" ); 
-   mGenericShaderBuffer[type]->setSafe(mModelViewProjSC, tempMatrix);
+   MatrixF tempMatrix = mWorldMatrix[mWorldStackSize] * mViewMatrix * mProjectionMatrix;      
+   mGenericShaderBuffer[type]->setSafe(mModelViewProjSC[type], tempMatrix);
 
-   setShader(shader);
-   setShaderConstBuffer(mGenericShaderBuffer[type]);
+   setShader( mGenericShader[type] );
+   setShaderConstBuffer( mGenericShaderBuffer[type] );
 }
 GFXShader* GFXGLDevice::createShader()
 {
