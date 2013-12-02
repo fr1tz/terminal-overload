@@ -992,7 +992,7 @@ void TerrainLightMapFeatGLSL::processPix( Vector<ShaderComponent*> &componentLis
    if ( !lightMask )
    {
       lightMask = new Var( "lightMask", "vec4" );
-      meta->addStatement( new GenOp( "   @ = 1;\r\n", new DecOp( lightMask ) ) );
+      meta->addStatement( new GenOp( "   @ = vec4(1);\r\n", new DecOp( lightMask ) ) );
    }
 
    meta->addStatement( new GenOp( "   @[0] = tex2D( @, @.xy ).r;\r\n", lightMask, lightMap, inTex ) );
