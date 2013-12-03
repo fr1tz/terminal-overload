@@ -680,6 +680,7 @@ void GFXGLDevice::setupGenericShaders( GenericShaderType type )
       shaderData = new ShaderData();
       shaderData->setField("OGLVertexShaderFile", "shaders/common/fixedFunction/gl/modColorTextureV.glsl");
       shaderData->setField("OGLPixelShaderFile", "shaders/common/fixedFunction/gl/modColorTextureP.glsl");
+      shaderData->setSamplerName("$diffuseMap", 0);
       shaderData->setField("pixVersion", "2.0");
       shaderData->registerObject();
       mGenericShader[GSModColorTexture] = shaderData->getShader();
@@ -689,6 +690,7 @@ void GFXGLDevice::setupGenericShaders( GenericShaderType type )
       shaderData = new ShaderData();
       shaderData->setField("OGLVertexShaderFile", "shaders/common/fixedFunction/gl/addColorTextureV.glsl");
       shaderData->setField("OGLPixelShaderFile", "shaders/common/fixedFunction/gl/addColorTextureP.glsl");
+      shaderData->setSamplerName("$diffuseMap", 0);
       shaderData->setField("pixVersion", "2.0");
       shaderData->registerObject();
       mGenericShader[GSAddColorTexture] = shaderData->getShader();
@@ -696,7 +698,7 @@ void GFXGLDevice::setupGenericShaders( GenericShaderType type )
       mModelViewProjSC[GSAddColorTexture] = mGenericShader[GSAddColorTexture]->getShaderConstHandle( "$modelView" ); 
    }
 
-   MatrixF tempMatrix = mWorldMatrix[mWorldStackSize] * mViewMatrix * mProjectionMatrix;      
+   MatrixF tempMatrix =  mProjectionMatrix * mViewMatrix * mWorldMatrix[mWorldStackSize];  
    mGenericShaderBuffer[type]->setSafe(mModelViewProjSC[type], tempMatrix);
 
    setShader( mGenericShader[type] );
