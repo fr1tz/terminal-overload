@@ -138,6 +138,12 @@ singleton ShaderData( WaterBasicShader )
    OGLVertexShaderFile 	= "shaders/common/water/gl/waterBasicV.glsl";
    OGLPixelShaderFile 	= "shaders/common/water/gl/waterBasicP.glsl"; 
    
+   samplerNames[0] = "$bumpMap";
+   samplerNames[1] = "$reflectMap";
+   samplerNames[2] = "$refractBuff";
+   samplerNames[3] = "$samplerCUBE";
+   samplerNames[4] = "$depthGradMap";
+   
    pixVersion = 2.0;
 };
 
@@ -180,16 +186,9 @@ singleton CustomMaterial( WaterBasicMat )
 // Basic UnderWater
 //-----------------------------------------------------------------------------
 
-singleton ShaderData( UnderWaterBasicShader )
+singleton ShaderData( UnderWaterBasicShader : WaterBasicShader)
 {
-   DXVertexShaderFile 	= "shaders/common/water/waterBasicV.hlsl";
-   DXPixelShaderFile 	= "shaders/common/water/waterBasicP.hlsl";   
-   
-   OGLVertexShaderFile 	= "shaders/common/water/gl/waterBasicV.glsl";
-   OGLPixelShaderFile 	= "shaders/common/water/gl/waterBasicP.glsl";
-   
    defines = "UNDERWATER";   
-   pixVersion = 2.0;
 };
 
 singleton CustomMaterial( UnderwaterBasicMat )

@@ -39,6 +39,7 @@
 #define texCUBE textureCube
 #define tex2D texture2D
 #define tex1D texture1D
+#define tex2Dproj texture2DProj
 
 #define samplerCUBE samplerCube
 
