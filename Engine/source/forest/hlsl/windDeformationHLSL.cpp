@@ -165,7 +165,7 @@ void WindDeformationHLSL::processVert( Vector<ShaderComponent*> &componentList,
                      "@.y, "    // fBranchAmp
                      "@.r, "  // fBranchAtten
 
-                     "dot( @[3], float4(1) ), "    // fDetailPhase
+                     "dot( @[3], 1 ), "    // fDetailPhase
                      "@.z, "  // fDetailAmp
                      "@.w, "  // fDetailFreq
 
