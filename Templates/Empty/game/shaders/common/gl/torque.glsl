@@ -286,6 +286,7 @@ float determinant(mat4 m)
            + m[0][3] * adj_0[3]);
 }
 
+#ifdef TORQUE_PIXEL_SHADER
 /// Called from the visibility feature to do screen
 /// door transparency for fading of objects.
 void fizzle(vec2 vpos, float visibility)
@@ -306,6 +307,7 @@ void fizzle(vec2 vpos, float visibility)
    if( (visibility - fract( determinant( m ) )) < 0 ) //if(a < 0) discard;
       discard;
 }
+#endif //TORQUE_PIXEL_SHADER
 
 /// Basic assert macro.  If the condition fails, then the shader will output color.
 /// @param condition This should be a bvec[2-4].  If any items is false, condition is considered to fail.
