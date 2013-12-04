@@ -444,6 +444,15 @@ DefineEngineStaticMethod( GFXInit, getAdapterType, GFXAdapterType, ( S32 index )
    return GFXAdapterType_Count;
 }
 
+DefineEngineStaticMethod( GFXInit, getDeviceType, GFXAdapterType, (),,
+   "Returns the type (Direct3D9, Direct3D8, OpenGL, NullDevice) of a graphics adapter.\n" )
+{    
+   if(GFX)
+      return GFX->getAdapterType();
+   else
+      return NullDevice;
+}
+
 DefineEngineStaticMethod( GFXInit, getAdapterShaderModel, F32, ( S32 index ),,
    "Returns the supported shader model of the graphics adapter or -1 if the index is bad.\n"
    "@param index The index of the adapter." )
