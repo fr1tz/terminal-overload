@@ -418,7 +418,7 @@ void ShaderGen::_printVertShader( Stream &stream )
    mPrinter->printMainComment(stream);
 
    mComponents[C_VERT_MAIN]->print( stream, true );
-   mComponents[C_CONNECTOR]->printOnMain( stream, true );
+   mComponents[C_VERT_STRUCT]->printOnMain( stream, true );
 
    // print out the function
    _printFeatures( stream );

@@ -55,14 +55,15 @@ public:
    virtual void reset();
    virtual void sortVars();
    
-   virtual void print( Stream &stream, bool isVerterShader );
+   virtual void print( Stream &stream, bool isVerterShader );   
+   virtual void printOnMain( Stream &stream, bool isVerterShader ) override;
 };
 
 
 class VertexParamsDefGLSL : public ParamsDef
 {
 public:
-   virtual void print( Stream &stream, bool isVerterShader );
+   virtual void print( Stream &stream, bool isVerterShader );   
 };
 
 

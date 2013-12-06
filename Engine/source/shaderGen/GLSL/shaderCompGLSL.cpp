@@ -109,7 +109,7 @@ void AppVertConnectorGLSL::reset()
 }
 
 void AppVertConnectorGLSL::print( Stream &stream, bool isVertexShader )
-{
+{/*
    // print out elements
    for( U32 i=0; i<mElementList.size(); i++ )
    {
@@ -131,7 +131,7 @@ void AppVertConnectorGLSL::print( Stream &stream, bool isVertexShader )
       stream.write( dStrlen((char*)output), output );
       dSprintf( (char*)output, sizeof(output), "#define IN_%s %s.%s\r\n", var->name, var->connectName, swizzle );
       stream.write( dStrlen((char*)output), output );
-   }
+   }*/
 }
 
 Var * VertPixelConnectorGLSL::getElement( RegisterType type, 
@@ -274,8 +274,48 @@ void VertPixelConnectorGLSL::printOnMain( Stream &stream, bool isVerterShader )
       stream.write( dStrlen((char*)output), output );
    }
 
+   stream.write( dStrlen((char*)header), header );
    stream.write( dStrlen((char*)newLine), newLine );
 }
+
+
+void AppVertConnectorGLSL::printOnMain( Stream &stream, bool isVerterShader )
+{
+   if(!isVerterShader)
+      return;   
+
+   const char *newLine = "\r\n";
+   const char *header = "   //-------------------------\r\n";
+   stream.write( dStrlen((char*)newLine), newLine );
+   stream.write( dStrlen((char*)header), header );
+
+   // print out elements
+   for( U32 i=0; i<mElementList.size(); i++ )
+   {
+      Var *var = mElementList[i];
+      U8 output[256];
+      const char* swizzle;
+      if(!dStrcmp((const char*)var->type, "float"))
+         swizzle = "x";
+      else if(!dStrcmp((const char*)var->type, "vec2"))
+         swizzle = "xy";
+      else if(!dStrcmp((const char*)var->type, "vec3"))
+         swizzle = "xyz";
+      else
+         swizzle = "xyzw";      
+   
+      /// Necessary to simulate HLSL, allowing write to vertex data
+      dSprintf((char*)output, sizeof(output), "   %s IN_%s = %s.%s;\r\n", var->type, var->name, var->connectName, swizzle);      
+
+      stream.write( dStrlen((char*)output), output );
+   }
+
+   stream.write( dStrlen((char*)header), header );
+   stream.write( dStrlen((char*)newLine), newLine );
+}
+
+
+
 
 Vector<String> initDeprecadedDefines()
 {

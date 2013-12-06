@@ -157,7 +157,7 @@ ShaderComponent* ShaderGenComponentFactoryGLSL::createVertexInputConnector( cons
       if ( !var )
          continue;
 
-      var->setStructName( "" );
+      var->setStructName( "IN" );
       var->setType( typeToString( element.getType() ) );
    }
 
