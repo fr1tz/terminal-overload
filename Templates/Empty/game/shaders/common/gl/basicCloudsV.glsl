@@ -20,36 +20,31 @@
 // IN THE SOFTWARE.
 //-----------------------------------------------------------------------------
 
-//------------------------------------------------------------------------------
-// CloudLayer
-//------------------------------------------------------------------------------
+#include "hlslCompat.glsl"
 
-singleton ShaderData( CloudLayerShader )
-{
-   DXVertexShaderFile   = "shaders/common/cloudLayerV.hlsl";
-   DXPixelShaderFile    = "shaders/common/cloudLayerP.hlsl";
-   
-   OGLVertexShaderFile = "shaders/common/gl/cloudLayerV.glsl";
-   OGLPixelShaderFile = "shaders/common/gl/cloudLayerP.glsl";
-      
-   samplerNames[0] = "$normalHeightMap";
-      
-   pixVersion = 2.0;   
-};
+//CloudVert
+#define IN_pos       gl_Vertex.xyzw
+#define IN_uv0       gl_MultiTexCoord0.st
 
-//------------------------------------------------------------------------------
-// BasicClouds
-//------------------------------------------------------------------------------
+uniform float4x4  modelview;
+uniform float     accumTime;
+uniform float     texScale;
+uniform float2    texDirection;
+uniform float2    texOffset;
 
-singleton ShaderData( BasicCloudsShader )
-{
-   DXVertexShaderFile   = "shaders/common/basicCloudsV.hlsl";
-   DXPixelShaderFile    = "shaders/common/basicCloudsP.hlsl";
+varying float2 texCoord;
+#define OUT_texCoord texCoord
+
+void main()
+{  
+   gl_Position = mul(modelview, IN_pos);
    
-   OGLVertexShaderFile = "shaders/common/gl/basicCloudsV.glsl";
-   OGLPixelShaderFile = "shaders/common/gl/basicCloudsP.glsl";
+   float2 uv = IN_uv0;
+   uv += texOffset;
+   uv *= texScale;
+   uv += accumTime * texDirection;
+
+   OUT_texCoord = uv;   
    
-   samplerNames[0] = "$diffuseMap";
-      
-   pixVersion = 2.0;   
-};
+   correctSSP(gl_Position);
+}

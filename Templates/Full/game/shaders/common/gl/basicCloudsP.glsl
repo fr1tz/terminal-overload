@@ -20,36 +20,18 @@
 // IN THE SOFTWARE.
 //-----------------------------------------------------------------------------
 
-//------------------------------------------------------------------------------
-// CloudLayer
-//------------------------------------------------------------------------------
+#include "torque.glsl"
+#include "hlslCompat.glsl"
 
-singleton ShaderData( CloudLayerShader )
+//ConnectData
+varying float2 texCoord;
+#define IN_texCoord texCoord
+
+
+uniform sampler2D diffuseMap        ;
+
+void main()
 {
-   DXVertexShaderFile   = "shaders/common/cloudLayerV.hlsl";
-   DXPixelShaderFile    = "shaders/common/cloudLayerP.hlsl";
-   
-   OGLVertexShaderFile = "shaders/common/gl/cloudLayerV.glsl";
-   OGLPixelShaderFile = "shaders/common/gl/cloudLayerP.glsl";
-      
-   samplerNames[0] = "$normalHeightMap";
-      
-   pixVersion = 2.0;   
-};
-
-//------------------------------------------------------------------------------
-// BasicClouds
-//------------------------------------------------------------------------------
-
-singleton ShaderData( BasicCloudsShader )
-{
-   DXVertexShaderFile   = "shaders/common/basicCloudsV.hlsl";
-   DXPixelShaderFile    = "shaders/common/basicCloudsP.hlsl";
-   
-   OGLVertexShaderFile = "shaders/common/gl/basicCloudsV.glsl";
-   OGLPixelShaderFile = "shaders/common/gl/basicCloudsP.glsl";
-   
-   samplerNames[0] = "$diffuseMap";
-      
-   pixVersion = 2.0;   
-};
+   float4 col = tex2D( diffuseMap, IN_texCoord );
+   gl_FragColor = hdrEncode( col );
+}

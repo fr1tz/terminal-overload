@@ -78,7 +78,8 @@ CloudLayer::CloudLayer()
   mCoverage( 0.5f ),
   mExposure( 1.0f ),
   mWindSpeed( 1.0f ),
-  mLastTime( 0 )
+  mLastTime( 0 ),
+  mNormalHeightMapReg(-1)
 {
    mTypeMask |= EnvironmentObjectType | StaticObjectType;
    mNetFlags.set(Ghostable | ScopeAlways);
@@ -144,6 +145,7 @@ bool CloudLayer::onAdd()
       mCoverageSC = mShader->getShaderConstHandle( "$cloudCoverage" );
       mExposureSC = mShader->getShaderConstHandle( "$cloudExposure" );
       mBaseColorSC = mShader->getShaderConstHandle( "$cloudBaseColor" );
+      mNormalHeightMapReg = mShader->getShaderConstHandle( "$normalHeightMap" )->getSamplerRegister();
 
       // Create StateBlocks
       GFXStateBlockDesc desc;
@@ -367,7 +369,7 @@ void CloudLayer::renderObject( ObjectRenderInst *ri, SceneRenderState *state, Ba
 
    mShaderConsts->setSafe( mExposureSC, mExposure );
 
-   GFX->setTexture( 0, mTexture );                            
+   GFX->setTexture( mNormalHeightMapReg, mTexture );                            
    GFX->setVertexBuffer( mVB );            
    GFX->setPrimitiveBuffer( mPB );
 
