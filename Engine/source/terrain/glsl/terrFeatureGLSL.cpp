@@ -487,7 +487,7 @@ void TerrainDetailMapFeatGLSL::processPix(   Vector<ShaderComponent*> &component
       {
          Var *viewToTangent = getInViewToTangent( componentList );
 
-         meta->addStatement( new GenOp( "   @ = lerp( @, tGetMatrixRow(@, 2), min( @, @.w ) );\r\n", 
+         meta->addStatement( new GenOp( "   @ = lerp( @, tGetMatrix3Row(@, 2), min( @, @.w ) );\r\n", 
             gbNormal, gbNormal, viewToTangent, detailBlend, inDet ) );
       }
 
@@ -759,7 +759,7 @@ void TerrainMacroMapFeatGLSL::processPix(   Vector<ShaderComponent*> &componentL
       {
          Var *viewToTangent = getInViewToTangent( componentList );
 
-         meta->addStatement( new GenOp( "   @ = lerp( @, tGetMatrixRow(@, 2), min( @, @.w ) );\r\n", 
+         meta->addStatement( new GenOp( "   @ = lerp( @, tGetMatrix3Row(@, 2), min( @, @.w ) );\r\n", 
             gbNormal, gbNormal, viewToTangent, detailBlend, inDet ) );
       }
 
@@ -884,7 +884,7 @@ void TerrainNormalMapFeatGLSL::processPix(   Vector<ShaderComponent*> &component
       gbNormal = new Var;
       gbNormal->setName( "gbNormal" );
       gbNormal->setType( "vec3" );
-      meta->addStatement( new GenOp( "   @ = tGetMatrixRow(@, 2);\r\n", new DecOp( gbNormal ), viewToTangent ) );
+      meta->addStatement( new GenOp( "   @ = tGetMatrix3Row(@, 2);\r\n", new DecOp( gbNormal ), viewToTangent ) );
    }
 
    const U32 normalIndex = getProcessIndex();

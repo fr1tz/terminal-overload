@@ -555,10 +555,10 @@ Var* ShaderFeatureGLSL::getObjTrans(   Vector<ShaderComponent*> &componentList,
       objTrans->setType( "float4x4" );
       objTrans->setName( "objTrans" );
       meta->addStatement( new GenOp( "   @ = { // Instancing!\r\n", new DecOp( objTrans ), instObjTrans ) );
-      meta->addStatement( new GenOp( "      tGetMatrixRow(@, 0),\r\n", instObjTrans ) );
-      meta->addStatement( new GenOp( "      tGetMatrixRow(@, 1),\r\n", instObjTrans ) );
-      meta->addStatement( new GenOp( "      tGetMatrixRow(@, 2),\r\n",instObjTrans ) );
-      meta->addStatement( new GenOp( "      tGetMatrixRow(@, 3) };\r\n", instObjTrans ) );
+      meta->addStatement( new GenOp( "      tGetMatrix4Row(@, 0),\r\n", instObjTrans ) );
+      meta->addStatement( new GenOp( "      tGetMatrix4Row(@, 1),\r\n", instObjTrans ) );
+      meta->addStatement( new GenOp( "      tGetMatrix4Row(@, 2),\r\n",instObjTrans ) );
+      meta->addStatement( new GenOp( "      tGetMatrix4Row(@, 3) };\r\n", instObjTrans ) );
    }
    else
    {
@@ -1582,7 +1582,10 @@ void DetailFeatGLSL::setTexData( Material::StageData &stageDat,
 {
    GFXTextureObject *tex = stageDat.getTex( MFT_DetailMap );
    if ( tex )
+   {
+      passData.mSamplerNames[texIndex] = "detailMap";
       passData.mTexSlot[ texIndex++ ].texObject = tex;
+   }
 }
 
 
@@ -1675,7 +1678,7 @@ void ReflectCubeFeatGLSL::processVert( Vector<ShaderComponent*> &componentList,
     cubeVertPos->setType( "vec3" );
    LangElement *cubeVertPosDecl = new DecOp( cubeVertPos );
 
-    meta->addStatement( new GenOp( "   @ = mul(float3x3(@), @).xyz;\r\n", 
+    meta->addStatement( new GenOp( "   @ = mul(mat3(@), @).xyz;\r\n", 
                        cubeVertPosDecl, cubeTrans, LangElement::find( "position" ) ) );
 
    // cube normal
@@ -1684,7 +1687,7 @@ void ReflectCubeFeatGLSL::processVert( Vector<ShaderComponent*> &componentList,
     cubeNormal->setType( "vec3" );
    LangElement *cubeNormDecl = new DecOp( cubeNormal );
 
-    meta->addStatement( new GenOp( "   @ = normalize( mul(@, normalize(@)).xyz );\r\n", 
+    meta->addStatement( new GenOp( "   @ = normalize( mul(mat3(@), normalize(@)).xyz );\r\n", 
                        cubeNormDecl, cubeTrans, inNormal ) );
 
     // grab the eye position
@@ -1702,7 +1705,7 @@ void ReflectCubeFeatGLSL::processVert( Vector<ShaderComponent*> &componentList,
     cubePos->setType( "vec3" );
     LangElement *cubePosDecl = new DecOp( cubePos );
 
-    meta->addStatement( new GenOp( "   @ = float3( tGetMatrixRC(@,0,3), tGetMatrixRC(@,1,3), tGetMatrixRC(@,2,3) );\r\n", 
+    meta->addStatement( new GenOp( "   @ = float3( @[3][0], @[3][1], @[3][2] );\r\n", 
                         cubePosDecl, cubeTrans, cubeTrans, cubeTrans ) );
 
    // eye to vert

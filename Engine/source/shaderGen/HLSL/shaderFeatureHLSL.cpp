@@ -1581,7 +1581,10 @@ void DetailFeatHLSL::setTexData( Material::StageData &stageDat,
 {
    GFXTextureObject *tex = stageDat.getTex( MFT_DetailMap );
    if ( tex )
+   {
+      passData.mSamplerNames[texIndex] = "detailMap";
       passData.mTexSlot[ texIndex++ ].texObject = tex;
+   }
 }
 
 

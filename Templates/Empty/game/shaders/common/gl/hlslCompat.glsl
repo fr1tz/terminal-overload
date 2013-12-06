@@ -64,8 +64,8 @@ void tSetMatrixRow(out float4x4 m, int row, float4 value)
    m[3][row] = value.w;
 }
 
-#define tGetMatrix3Row(matrix, row) float3(m[0][row], m[1][row], m[2][row])
-#define tGetMatrix4Row(matrix, row) float4(m[0][row], m[1][row], m[2][row], m[3][row])
+#define tGetMatrix3Row(matrix, row) float3(matrix[0][row], matrix[1][row], matrix[2][row])
+#define tGetMatrix4Row(matrix, row) float4(matrix[0][row], matrix[1][row], matrix[2][row], matrix[3][row])
 
 float3x3 float4x4to3x3(float4x4 m)
 {   
