@@ -92,7 +92,7 @@ void ShaderConstHandles::init( GFXShader *shader, CustomMaterial* mat /*=NULL*/ 
    mImposterLimits = shader->getShaderConstHandle( "$imposterLimits" );
 
    for (S32 i = 0; i < TEXTURE_STAGE_COUNT; ++i)
-      mRTParamsSC[i] = shader->getShaderConstHandle( String::EmptyString );
+      mRTParamsSC[i] = shader->getShaderConstHandle( String::ToString( "$rtParams%d", i ) );
 
    // Clear any existing texture handles.
    dMemset( mTexHandlesSC, 0, sizeof( mTexHandlesSC ) );
@@ -107,12 +107,7 @@ void ShaderConstHandles::init( GFXShader *shader, CustomMaterial* mat /*=NULL*/ 
          if(mat->mSamplerNames[i].isEmpty())
             continue;
 
-         if( mat->mShaderData->hasSamplerDef(mat->mSamplerNames[i], pos) )
-         {
-            if( mat->mShaderData->hasRTParamsDef(pos) )
-               mRTParamsSC[i] = shader->getShaderConstHandle( String::ToString( "$rtParams%d", pos ) );
-         }
-         else
+         if( !mat->mShaderData->hasSamplerDef(mat->mSamplerNames[i], pos) )         
          {
             String error = String::ToString("CustomMaterial(%s): sampler %s is not defined in ShaderData(%s)", 
                mat->getName(), mat->mSamplerNames[i].c_str(), mat->mShaderData->getName());

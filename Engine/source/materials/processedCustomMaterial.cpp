@@ -247,7 +247,9 @@ bool ProcessedCustomMaterial::init( const FeatureSet &features,
       ShaderConstHandles *handles = _getShaderConstHandles( mPasses.size()-1 );
       AssertFatal(handles,"");
 
-      AssertFatal(rpd->mSamplerNames[i].isNotEmpty(),"");
+      if(rpd->mSamplerNames[i].isEmpty())      
+         continue;      
+
       String samplerName = rpd->mSamplerNames[i].startsWith("$") ? rpd->mSamplerNames[i] : String("$") + rpd->mSamplerNames[i];
       GFXShaderConstHandle *handle = rpd->shader->getShaderConstHandle( samplerName ); 
       AssertFatal(handle,"");

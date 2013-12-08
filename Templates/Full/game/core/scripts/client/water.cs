@@ -36,7 +36,6 @@ singleton ShaderData( WaterShader )
    
    samplerNames[0] = "$bumpMap";  // noise
    samplerNames[1] = "$prepassTex";  // #prepass
-   rtParams[1] = true;
    samplerNames[2] = "$reflectMap"; // $reflectbuff
    samplerNames[3] = "$refractBuff";  // $backbuff
    samplerNames[4] = "$skyMap";  // $cubemap   

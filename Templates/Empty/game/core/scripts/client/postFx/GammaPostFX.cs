@@ -29,7 +29,6 @@ singleton ShaderData( GammaShader )
    OGLPixelShaderFile 	= "shaders/common/postFx/gl/gammaP.glsl";
    
    samplerNames[0] = "$backBuffer";
-   rtParams[0] = true;
    samplerNames[1] = "$colorCorrectionTex";
 
    pixVersion = 2.0;   

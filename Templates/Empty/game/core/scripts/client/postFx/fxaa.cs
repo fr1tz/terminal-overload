@@ -43,7 +43,6 @@ singleton ShaderData( FXAA_ShaderData )
    OGLPixelShaderFile 	= "shaders/common/postFx/fxaa/gl/fxaaP.glsl";
    
    samplerNames[0] = "$colorTex";
-   rtParams[0] = true;
 
    pixVersion = 3.0;
 };

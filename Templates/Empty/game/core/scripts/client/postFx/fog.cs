@@ -33,7 +33,6 @@ singleton ShaderData( FogPassShader )
    OGLPixelShaderFile   = "shaders/common/postFx/gl/fogP.glsl";
             
    samplerNames[0] = "$prepassTex";
-   rtParams[0] = true;
    
    pixVersion = 2.0;
 };
@@ -80,7 +79,6 @@ singleton ShaderData( UnderwaterFogPassShader )
    OGLPixelShaderFile   = "shaders/common/postFx/gl/underwaterFogP.glsl";
             
    samplerNames[0] = "$prepassTex";
-   rtParams[0] = true;
    samplerNames[1] = "$backbuffer";
    samplerNames[2] = "$waterDepthGradMap";
    
@@ -111,10 +109,6 @@ singleton PostEffect( UnderwaterFogPostFx )
   
    shader = UnderwaterFogPassShader;
    stateBlock = UnderwaterFogPassStateBlock;
-   /*sampler["prepassTex"] = "#prepass";
-   rtParams[0] = "prepassTex"; // TODO get from ShaderData
-   sampler["backbuffer"] = "$backBuffer";
-   sampler["waterDepthGradMap"] = "#waterDepthGradMap";*/
    
    texture[0] = "#prepass";
    texture[1] = "$backBuffer";
