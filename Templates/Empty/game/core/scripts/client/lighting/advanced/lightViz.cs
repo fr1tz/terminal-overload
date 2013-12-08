@@ -67,10 +67,7 @@ singleton PostEffect( AL_DepthVisualize )
    shader = AL_DepthVisualizeShader;
    stateBlock = AL_DefaultVisualizeState;
    texture[0] = "#prepass";
-   samplerNames[0] = "prepassBuffer";
-   rtParams[0] = "prepassBuffer";
    texture[1] = "depthviz";   
-   samplerNames[1] = "depthViz";   
    target = "$backBuffer";
    renderPriority = 9999;
 };
@@ -96,7 +93,7 @@ new ShaderData( AL_NormalsVisualizeShader )
    OGLVertexShaderFile = "shaders/common/postFx/gl/postFxV.glsl";
    OGLPixelShaderFile  = "shaders/common/lighting/advanced/gl/dbgNormalVisualizeP.glsl";
    
-   samplerNames[0] = "prepassTex";
+   samplerNames[0] = "prepassBuffer";
    
    pixVersion = 2.0;
 };
@@ -106,8 +103,6 @@ singleton PostEffect( AL_NormalsVisualize )
    shader = AL_NormalsVisualizeShader;
    stateBlock = AL_DefaultVisualizeState;
    texture[0] = "#prepass";
-   samplerNames[0] = "prepassBuffer";
-   rtParams[0] = "prepassBuffer";
    
    target = "$backBuffer";
    renderPriority = 9999;
@@ -145,8 +140,6 @@ singleton PostEffect( AL_LightColorVisualize )
    shader = AL_LightColorVisualizeShader;
    stateBlock = AL_DefaultVisualizeState;
    texture[0] = "#lightinfo";
-   samplerNames[0] = "lightInfoBuffer";
-   rtParams[0] = "lightInfoBuffer";
    target = "$backBuffer";
    renderPriority = 9999;
 };

@@ -106,8 +106,6 @@ singleton PostEffect( AL_FormatCopy )
    stateBlock = AL_FormatTokenState;
    
    texture[0] = "$inTex";
-   samplerNames[0] = "inputTex";
-   rtParams[0] = "inputTex";
    target = "$backbuffer";
 };
 
@@ -122,8 +120,6 @@ if(GFXInit::getDeviceType() $= "OpenGL")
       stateBlock = AL_FormatTokenState;
       
       texture[0] = "$backbuffer";
-      samplerNames[0] = "inputTex";
-      rtParams[0] = "inputTex";
       target = "$backbuffer";
       
       renderTime = "PFXEndOfFrame";

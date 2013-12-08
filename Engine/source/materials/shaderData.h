@@ -104,6 +104,7 @@ protected:
 public:
 
    void setSamplerName(const String &name, int idx) { mSamplerNames[idx] = name; }
+   String getSamplerName(int idx) const { return mSamplerNames[idx]; }
 
    bool hasSamplerDef(const String &samplerName, int &pos) const;
    bool hasRTParamsDef(const int pos) const { return mRTParams[pos]; }

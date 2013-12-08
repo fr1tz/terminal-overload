@@ -63,8 +63,6 @@ singleton PostEffect( BL_ShadowFilterPostFx )
    targetClear = "PFXTargetClear_OnDraw";
    targetClearColor = "0 0 0 0";
    texture[0] = "$inTex";
-   samplerNames[0] = "diffuseMap";
-   rtParams[0] = "diffuseMap";
    
    target = "$outTex";   
 
@@ -74,8 +72,6 @@ singleton PostEffect( BL_ShadowFilterPostFx )
       shader = BL_ShadowFilterShaderH;
       stateBlock = PFX_DefaultStateBlock;
       texture[0] = "$inTex";
-	  samplerNames[0] = "diffuseMap";
-	  rtParams[0] = "diffuseMap";
       target = "$outTex";
    };
 };

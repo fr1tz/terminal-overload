@@ -60,8 +60,6 @@ singleton PostEffect( FogPostFx )
    shader = FogPassShader;
    stateBlock = FogPassStateBlock;
    texture[0] = "#prepass";
-   samplerNames[0] = "prepassTex";
-   rtParams[0] = "prepassTex";
    
    renderPriority = 5;
    
@@ -119,12 +117,8 @@ singleton PostEffect( UnderwaterFogPostFx )
    sampler["waterDepthGradMap"] = "#waterDepthGradMap";*/
    
    texture[0] = "#prepass";
-   samplerNames[0] = "prepassTex";
-   rtParams[0] = "prepassTex";
    texture[1] = "$backBuffer";
-   samplerNames[1] = "backbuffer";
    texture[2] = "#waterDepthGradMap";
-   samplerNames[2] = "waterDepthGradMap";
    
    // Needs to happen after the FogPostFx
    renderPriority = 4;

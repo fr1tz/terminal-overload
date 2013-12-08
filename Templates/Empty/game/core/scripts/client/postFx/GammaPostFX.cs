@@ -55,10 +55,7 @@ singleton PostEffect( GammaPostFX )
    stateBlock = GammaStateBlock;
    
    texture[0] = "$backBuffer";  
-   samplerNames[0] = "backBuffer";
-   rtParams[0] = "backBuffer";
    texture[1] = $HDRPostFX::colorCorrectionRamp;  
-   samplerNames[1] = "colorCorrectionTex";
 };
 
 function GammaPostFX::preProcess( %this )

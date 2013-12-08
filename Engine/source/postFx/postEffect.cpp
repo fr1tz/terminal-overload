@@ -1326,53 +1326,27 @@ void PostEffect::_checkRequirements()
 
       if(mShader)
       {
-         const char* samplerDecl = "samplerNames";      
-         for (SimFieldDictionaryIterator itr(getFieldDictionary()); *itr; ++itr)
+         for(int i = 0; i < PostEffect::NumTextures; ++i)
          {
-   	      SimFieldDictionary::Entry* entry = *itr;
-            if (dStrStartsWith(entry->slotName, samplerDecl))
+            String samplerName = shaderData->getSamplerName(i);
+            if(samplerName.isEmpty())
             {
-               S32 i = atoi( entry->slotName + dStrlen(samplerDecl) );
-      	      if (i >= NumTextures)
+               if(mTexFilename[i].isNotEmpty())
                {
-                  logError("Too many sampler declarations, you may only have %i", NumTextures);
+                  const char *error = avar("PostEffect(%s) texture[%d] are set, but ShaderData(%s) samplerNames[%d] is not defined.", getName(), i, shaderData->getName(), i);
+                  Con::errorf(error);
+#if TORQUE_DEBUG_GFX
+                  AssertFatal(0, error);
+#endif
                }
-         
-               if (dStrlen(entry->slotName) == dStrlen(samplerDecl))
-               {
-         	      logError("sampler declarations must have a sampler name, e.g. sampler[\"diffuseMap\"]");
-               }        
-            
-               String handleName = entry->value;
-               mSamplerHandles[i] = mShader->getShaderConstHandle( handleName.startsWith("$") ? handleName : String("$")+handleName );            
+               continue;
             }
+
+            mSamplerHandles[i] = mShader->getShaderConstHandle( samplerName.startsWith("$") ? samplerName : String("$")+samplerName );
          }
 
-         const char* rtParams = "rtParams";
-         for (SimFieldDictionaryIterator itr(getFieldDictionary()); *itr; ++itr)
-         {
-   	      SimFieldDictionary::Entry* entry = *itr;
-            if (dStrStartsWith(entry->slotName, rtParams))
-            {
-               S32 i = atoi( entry->slotName + dStrlen(rtParams) );
-               if (i >= NumTextures)
-               {
-                  logError("Too many rtParams declarations, you may only have %i", NumTextures);
-               }
-         
-               if (dStrlen(entry->slotName) == dStrlen(rtParams))
-               {
-         	      logError("rtParams declarations must have a id, e.g. rtParams[0]");
-               }
-
-               String sampler = String("$") + String(entry->value); 
-      	      
-               mRenderTargetParamsSC[i] =  mShader->getShaderConstHandle( String::ToString("$rtParams%d", i) );    
-               AssertFatal(mRenderTargetParamsSC[i]->isValid(), "");               
-               AssertFatal(mSamplerHandles[i]->getName() == sampler, "");
-               AssertFatal(mTexFilename[i].startsWith("#") || mTexFilename[i].startsWith("$"), "");
-            }
-         }
+         for(int i = 0; i < PostEffect::NumTextures; ++i)
+             mRenderTargetParamsSC[i] =  mShader->getShaderConstHandle( String::ToString("$rtParams%d", i) );
       }
    }
 

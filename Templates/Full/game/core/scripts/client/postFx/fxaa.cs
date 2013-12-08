@@ -56,8 +56,6 @@ singleton PostEffect( FXAA_PostEffect )
    renderTime = "PFXAfterDiffuse";
 
    texture[0] = "$backBuffer";      
-   samplerNames[0] = "colorTex";
-   rtParams[0] = "colorTex";   
 
    target = "$backBuffer";
 

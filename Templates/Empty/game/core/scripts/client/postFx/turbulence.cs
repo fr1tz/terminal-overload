@@ -44,7 +44,6 @@ singleton PostEffect( TurbulenceFx )
    shader = PFX_TurbulenceShader;  
    stateBlock = PFX_myShaderStateBlock;  
    texture[0] = "$backBuffer";  
-   samplerNames[0] = "inputTex";
       
    renderPriority = 0.1;  
  };
