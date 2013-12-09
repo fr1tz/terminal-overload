@@ -33,4 +33,6 @@ void main()
    gl_Position = vec4(gl_Vertex.xyz, 1.0);
    layerCoord = gl_MultiTexCoord0.st;
    texCoord = gl_MultiTexCoord0.st * texScale;
+
+   gl_Position.y *= -1;	
 }

@@ -219,7 +219,7 @@ void main()
 
    // Sample the AO texture.      
    #ifdef USE_SSAO_MASK
-      float ao = 1.0 - tex2D( ssaoMask, invertY(viewportCoordToRenderTarget( uv0.xy, rtParams2 )) ).r;
+      float ao = 1.0 - tex2D( ssaoMask, viewportCoordToRenderTarget( uv0.xy, rtParams2 ) ).r;
       addToResult *= ao;
    #endif
 
@@ -227,9 +227,6 @@ void main()
       lightColorOut = debugColor;
    #endif
    
-   //Sat_NL_Att = 0.5;
-   //specular = 0.5;
-   //addToResult = vec4(0);
+   gl_FragColor = lightinfoCondition( lightColorOut, Sat_NL_Att, specular, addToResult );  
    
-   gl_FragColor = lightinfoCondition( lightColorOut, Sat_NL_Att, specular, addToResult );     
 }

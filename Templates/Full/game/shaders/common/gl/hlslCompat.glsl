@@ -107,12 +107,7 @@ mat3 mul( mat3 m1, mat3 m2) { return m1*m2; }
 
 vec4 rsqrt( vec4 n ){ return inversesqrt( n ); }
 
-#define invertY vec2
-
-void correctSSP(inout vec4 vec) 
-{ 
-	vec.y *= -1;
-}
+#define correctSSP(vec) vec.y *= -1
 
 #ifdef TORQUE_PIXEL_SHADER
 	void clip(float a) { if(a < 0) discard;}
