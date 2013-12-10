@@ -655,3 +655,26 @@ U32 TranslateModifiersToWindowManagerInput(XKeyEvent* evt)
     return modifiers;
 }
 
+U32 TranslateMouseButton_X11ToTorque(XButtonEvent* evt)
+{
+    S32 buttonId = evt->button - 1;
+    if(buttonId < 0)
+    {
+        AssertFatal(0,"");
+        return 0;
+
+    }
+
+    switch(buttonId)
+    {
+        case Button2:   //X11 R-Button
+            return 1;   //Torque R-Button
+
+        case Button1:   //X11 M-Button
+            return 2;   //Torque M-Button
+
+        default:
+            return buttonId;
+    }
+}
+

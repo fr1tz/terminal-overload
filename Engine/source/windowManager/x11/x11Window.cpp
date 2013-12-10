@@ -456,7 +456,7 @@ void X11Window::triggerMouseLocationNotify()
 S32 TranslateOSKeyCode(XKeyEvent* evt);
 S16 TranslateOSString(XKeyEvent* evt);
 U32 TranslateModifiersToWindowManagerInput(XKeyEvent* evt);
-
+U32 TranslateMouseButton_X11ToTorque(XButtonEvent* evt);
 
 
 struct KeyRepeatCheckData
@@ -553,14 +553,18 @@ void X11Window::update()
                     triggerMouseLocationNotify();
 
                     // Trigger the click
-                    buttonEvent.trigger(getWindowId(), 0, IA_MAKE, 0);
+                    buttonEvent.trigger(getWindowId(), 0, IA_MAKE,
+                                        TranslateMouseButton_X11ToTorque(&evt.xbutton) );
+
                     break;
                 case ButtonRelease:
                     // Make sure mouse position is up to date
                     triggerMouseLocationNotify();
 
                     // Release the mouse button
-                    buttonEvent.trigger(getWindowId(), 0, IA_BREAK, 0);
+                    buttonEvent.trigger(getWindowId(), 0, IA_BREAK,
+                                        TranslateMouseButton_X11ToTorque(&evt.xbutton) );
+
                     break;
                 case MotionNotify:
                     triggerMouseLocationNotify();
