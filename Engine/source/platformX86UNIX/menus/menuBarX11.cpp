@@ -29,29 +29,29 @@
 
 void MenuBar::createPlatformPopupMenuData()
 {
-    AssertFatal(0, "Not Implemented");
+    AssertWarn(0, "Not Implemented");
 }
 
 void MenuBar::deletePlatformPopupMenuData()
 {
-    AssertFatal(0, "Not Implemented");
+    AssertWarn(0, "Not Implemented");
 }
 
 //-----------------------------------------------------------------------------
 
 void MenuBar::updateMenuBar(PopupMenu *menu /* = NULL */)
 {
-    AssertFatal(0, "Not Implemented");
+    AssertWarn(0, "Not Implemented");
 }
 
 //-----------------------------------------------------------------------------
 
 void MenuBar::attachToCanvas(GuiCanvas *owner, S32 pos)
 {
-    AssertFatal(0, "Not Implemented");
+    AssertWarn(0, "Not Implemented");
 }
 
 void MenuBar::removeFromCanvas()
 {
-    AssertFatal(0, "Not Implemented");
+    AssertWarn(0, "Not Implemented");
 }
