@@ -38,7 +38,7 @@ X11CursorController::X11CursorController( PlatformWindow *owner ) :  PlatformCur
     if(x86UNIXState->isXWindowsRunning())
     {
         Display* display = x86UNIXState->getDisplayPointer();
-        
+
         // Setup a blank cursor so we can hide the cursor
         static char data[1] = {0};
         Cursor cursor;
@@ -60,17 +60,17 @@ X11CursorController::~X11CursorController()
 
 U32 X11CursorController::getDoubleClickTime()
 {
-    return 0;
+    return 500;
 }
 
 S32 X11CursorController::getDoubleClickWidth()
 {
-    return 0;
+    return 4;
 }
 
 S32 X11CursorController::getDoubleClickHeight()
 {
-    return 0;
+    return 4;
 }
 
 void X11CursorController::setCursorPosition( S32 x, S32 y )
