@@ -31,6 +31,11 @@ echo( "Released under a MIT license.\n" );
 echo( "\n" );
 
 //
+//	Set default timezone for solve warnings
+//
+date_default_timezone_set('UTC');
+
+//
 //	Configure error logging
 //
 error_reporting( E_ALL & ~E_NOTICE );
