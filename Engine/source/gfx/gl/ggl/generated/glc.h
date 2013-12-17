@@ -430,6 +430,8 @@ typedef double		      GLclampd;	/* double precision float in [0,1] */
 #define GL_RGB10_A2 0x8059
 #define GL_RGBA12 0x805A
 #define GL_RGBA16 0x805B
+#define GL_R16F 0x822D
+#define GL_R32F 0x822E
 #define GL_TEXTURE_RED_SIZE 0x805C
 #define GL_TEXTURE_GREEN_SIZE 0x805D
 #define GL_TEXTURE_BLUE_SIZE 0x805E
