@@ -887,7 +887,7 @@ bool GFXGLShader::_loadShaderFromStream(  GLuint shader,
    
    glShaderSource(shader, buffers.size(), (const GLchar**)const_cast<const char**>(buffers.address()), NULL);
 
-#if defined(TORQUE_DEBUG_GFX)
+#if defined(TORQUE_DEBUG) && defined(TORQUE_DEBUG_GFX)
    FileStream stream;
    if ( !stream.open( path.getFullPath()+"_DEBUG", Torque::FS::File::Write ) )
    {

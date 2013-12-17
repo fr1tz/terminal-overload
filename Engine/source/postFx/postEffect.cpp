@@ -1335,9 +1335,7 @@ void PostEffect::_checkRequirements()
                {
                   const char *error = avar("PostEffect(%s) texture[%d] are set, but ShaderData(%s) samplerNames[%d] is not defined.", getName(), i, shaderData->getName(), i);
                   Con::errorf(error);
-#if TORQUE_DEBUG_GFX
-                  AssertFatal(0, error);
-#endif
+                  GFXAssertFatal(0, error);
                }
                continue;
             }
