@@ -833,14 +833,6 @@ void PostEffect::_setupConstants( const SceneRenderState *state )
 
 void PostEffect::_setupTexture( U32 stage, GFXTexHandle &inputTex, const RectI *inTexViewport )
 {
-   S32 samplerReg = stage;
-
-   if(!mSamplerHandles[stage] || !mSamplerHandles[stage]->isValid())
-      return;
-   
-   samplerReg = mSamplerHandles[stage]->getSamplerRegister();
-   AssertFatal(samplerReg >= 0, "");
-
    const String &texFilename = mTexFilename[ stage ];      
 
    GFXTexHandle theTex;
@@ -888,7 +880,7 @@ void PostEffect::_setupTexture( U32 stage, GFXTexHandle &inputTex, const RectI *
    mActiveTextureViewport[ stage ] = viewport;
 
    if ( theTex.isValid() )
-      GFX->setTexture( samplerReg, theTex );
+      GFX->setTexture( stage, theTex );
 }
 
 void PostEffect::_setupTransforms()
