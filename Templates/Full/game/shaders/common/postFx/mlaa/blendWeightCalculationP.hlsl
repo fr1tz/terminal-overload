@@ -27,9 +27,9 @@
 // http://www.iryoku.com/mlaa/
 
 
-uniform sampler2D edgesMap  ;
-uniform sampler2D edgesMapL ;
-uniform sampler2D areaMap   ;
+uniform sampler2D edgesMap  : register(S0);
+uniform sampler2D edgesMapL : register(S1);
+uniform sampler2D areaMap   : register(S2);
 
 #include "./functions.hlsl"
 

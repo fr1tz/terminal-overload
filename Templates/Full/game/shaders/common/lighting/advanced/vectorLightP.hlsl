@@ -30,17 +30,17 @@
 #include "softShadow.hlsl"
 
 
-uniform sampler2D ShadowMap ;
+uniform sampler2D ShadowMap : register(S1);
 
 #ifdef USE_SSAO_MASK
-uniform sampler2D ssaoMask ;
+uniform sampler2D ssaoMask : register(S2);
 uniform float4 rtParams2;
 #endif
 
 
 float4 main( FarFrustumQuadConnectP IN,
 
-             uniform sampler2D prePassBuffer ,
+             uniform sampler2D prePassBuffer : register(S0),
              
              uniform float3 lightDirection,
              uniform float4 lightColor,
@@ -198,8 +198,8 @@ float4 main( FarFrustumQuadConnectP IN,
    // Specular term
    float specular = AL_CalcSpecular(   -lightDirection, 
                                        normal, 
-                                       normalize(-IN.vsEyeRay) ) * lightColor.a;  
-   
+                                       normalize(-IN.vsEyeRay) ) * lightColor.a;
+                                    
    float Sat_NL_Att = saturate( dotNL * shadowed ) * lightBrightness;
    float3 lightColorOut = lightMapParams.rgb * lightColor.rgb;
    float4 addToResult = lightAmbient;
@@ -227,8 +227,7 @@ float4 main( FarFrustumQuadConnectP IN,
 
    #ifdef PSSM_DEBUG_RENDER
       lightColorOut = debugColor;
-   #endif   
+   #endif
 
    return lightinfoCondition( lightColorOut, Sat_NL_Att, specular, addToResult );  
-   
 }

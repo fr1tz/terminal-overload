@@ -23,8 +23,8 @@
 #include "shadergen:/autogenConditioners.h"
 //#include "./../postFx.hlsl"
 
-uniform sampler2D occludeMap ;
-uniform sampler2D prepassMap ;
+uniform sampler2D occludeMap : register(S0);
+uniform sampler2D prepassMap : register(S1);
 
 struct VertToPix
 {

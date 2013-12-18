@@ -42,8 +42,8 @@ struct Fragout
 // Main                                                                        
 //-----------------------------------------------------------------------------
 Fragout main( ConnectData IN,
-              uniform sampler2D diffuseMap ,
-              uniform sampler2D alphaMap ,
+              uniform sampler2D diffuseMap : register(S0),
+              uniform sampler2D alphaMap : register(S1),
               uniform float4 groundAlpha,
               uniform float4 ambient )
 {

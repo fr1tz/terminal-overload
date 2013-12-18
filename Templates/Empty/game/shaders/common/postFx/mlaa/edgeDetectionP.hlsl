@@ -28,8 +28,8 @@
 
 #include "shadergen:/autogenConditioners.h"
 
-uniform sampler2D colorMapG  ;
-uniform sampler2D prepassMap ;
+uniform sampler2D colorMapG  : register(S0);
+uniform sampler2D prepassMap : register(S1);
 
 uniform float3 lumaCoefficients;
 uniform float threshold;

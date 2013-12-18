@@ -24,7 +24,7 @@
 #include "../postFx.hlsl"  
 #include "../../torque.hlsl"
 
-uniform sampler2D backBuffer ;
+uniform sampler2D backBuffer : register(S0);
 
 uniform float2 LensXOffsets;
 

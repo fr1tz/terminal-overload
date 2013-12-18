@@ -38,7 +38,7 @@ struct ConnectData
 //-----------------------------------------------------------------------------
 // Uniforms                                                                        
 //-----------------------------------------------------------------------------
-uniform sampler2D normalHeightMap ;
+uniform sampler2D normalHeightMap : register(S0);
 uniform float3    ambientColor;
 uniform float3    sunColor;
 uniform float     cloudCoverage;

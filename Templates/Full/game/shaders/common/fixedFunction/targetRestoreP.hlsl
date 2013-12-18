@@ -20,7 +20,7 @@
 // IN THE SOFTWARE.
 //-----------------------------------------------------------------------------
 
-uniform sampler2D colorTarget0Texture ;
+uniform sampler2D colorTarget0Texture : register(s0);
 
 float4 main( float2 ScreenPos : VPOS ) : COLOR0
 {

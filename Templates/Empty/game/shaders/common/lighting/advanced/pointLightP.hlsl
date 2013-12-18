@@ -28,6 +28,7 @@
 #include "../shadowMap/shadowMapIO_HLSL.h"
 #include "softShadow.hlsl"
 
+
 struct ConvexConnectP
 {
    float4 wsEyeDir : TEXCOORD0;
@@ -39,7 +40,7 @@ struct ConvexConnectP
 #ifdef USE_COOKIE_TEX
 
 /// The texture for cookie rendering.
-uniform samplerCUBE cookieMap ;
+uniform samplerCUBE cookieMap : register(S2);
 
 #endif
 
@@ -107,12 +108,12 @@ uniform samplerCUBE cookieMap ;
 
 float4 main(   ConvexConnectP IN,
 
-               uniform sampler2D prePassBuffer ,
+               uniform sampler2D prePassBuffer : register(S0),
 
                #ifdef SHADOW_CUBE
-                  uniform samplerCUBE shadowMap ,
+                  uniform samplerCUBE shadowMap : register(S1),
                #else
-                  uniform sampler2D shadowMap ,
+                  uniform sampler2D shadowMap : register(S1),
                #endif
 
                uniform float4 rtParams0,

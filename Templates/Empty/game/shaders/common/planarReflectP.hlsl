@@ -40,8 +40,8 @@ struct Fragout
 // Main                                                                        
 //-----------------------------------------------------------------------------
 Fragout main( ConnectData IN,
-              uniform sampler2D texMap          ,
-              uniform sampler2D refractMap      
+              uniform sampler2D texMap          : register(S0),
+              uniform sampler2D refractMap      : register(S1)
 )
 {
    Fragout OUT;

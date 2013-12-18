@@ -27,9 +27,9 @@
 // http://www.iryoku.com/mlaa/
 
 
-uniform sampler2D blendMap  ;
-uniform sampler2D colorMapL ;
-uniform sampler2D colorMap  ;
+uniform sampler2D blendMap  : register(S0);
+uniform sampler2D colorMapL : register(S1);
+uniform sampler2D colorMap  : register(S2);
 
 // Dummy sampers to please include.
 sampler2D areaMap;

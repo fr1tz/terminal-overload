@@ -22,7 +22,7 @@
 
 #include "./postFx.hlsl"
 
-uniform sampler2D inputTex ;
+uniform sampler2D inputTex : register(S0);
 
 float4 main( PFXVertToPix IN ) : COLOR
 {

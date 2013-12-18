@@ -39,15 +39,15 @@ struct ConvexConnectP
 #ifdef USE_COOKIE_TEX
 
 /// The texture for cookie rendering.
-uniform sampler2D cookieMap ;
+uniform sampler2D cookieMap : register(S2);
 
 #endif
 
 
 float4 main(   ConvexConnectP IN,
 
-               uniform sampler2D prePassBuffer ,
-               uniform sampler2D shadowMap ,
+               uniform sampler2D prePassBuffer : register(S0),
+               uniform sampler2D shadowMap : register(S1),
 
                uniform float4 rtParams0,
 

@@ -38,7 +38,7 @@ struct Frag
 // Main                                                                        
 //-----------------------------------------------------------------------------
 Frag main( Conn In,
-           uniform sampler2D diffuseMap 
+           uniform sampler2D diffuseMap : register(S0)
 )
 {
    Frag Out;

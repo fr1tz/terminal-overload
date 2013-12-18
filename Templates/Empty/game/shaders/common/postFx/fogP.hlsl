@@ -24,7 +24,7 @@
 #include "./postFx.hlsl"
 #include "./../torque.hlsl"
 
-uniform sampler2D prepassTex ;
+uniform sampler2D prepassTex : register(S0);
 uniform float3    eyePosWorld;
 uniform float4    fogColor;
 uniform float3    fogData;

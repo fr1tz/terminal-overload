@@ -38,9 +38,9 @@
 // Uniforms                                                                  
 //-----------------------------------------------------------------------------
 
-uniform sampler2D prepassTex ; 
-uniform sampler2D backbuffer ;
-uniform sampler1D waterDepthGradMap ;
+uniform sampler2D prepassTex : register(S0); 
+uniform sampler2D backbuffer : register(S1);
+uniform sampler1D waterDepthGradMap : register(S2);
 uniform float3    eyePosWorld;
 uniform float3    ambientColor;     
 uniform float4    waterColor;       

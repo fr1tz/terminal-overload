@@ -31,7 +31,7 @@ struct Conn
    float3 pos : TEXCOORD3;
 };
 
-uniform samplerCUBE nightSky ;
+uniform samplerCUBE nightSky : register(S0);
 uniform float4 nightColor;
 uniform float2 nightInterpAndExposure;
 uniform float useCubemap;

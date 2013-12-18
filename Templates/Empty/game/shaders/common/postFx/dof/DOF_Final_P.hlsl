@@ -23,10 +23,10 @@
 #include "shadergen:/autogenConditioners.h"
 #include "./../postFx.hlsl"
 
-uniform sampler2D colorSampler      ; // Original source image  
-uniform sampler2D smallBlurSampler  ; // Output of SmallBlurPS()  
-uniform sampler2D largeBlurSampler  ; // Blurred output of DofDownsample()  
-uniform sampler2D depthSampler      ; // 
+uniform sampler2D colorSampler      : register(S0); // Original source image  
+uniform sampler2D smallBlurSampler  : register(S1); // Output of SmallBlurPS()  
+uniform sampler2D largeBlurSampler  : register(S2); // Blurred output of DofDownsample()  
+uniform sampler2D depthSampler      : register(S3); // 
 uniform float2 oneOverTargetSize;  
 uniform float4 dofLerpScale;  
 uniform float4 dofLerpBias;  

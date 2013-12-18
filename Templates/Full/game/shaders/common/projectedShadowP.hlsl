@@ -27,7 +27,7 @@ struct Conn
    float fade : TEXCOORD1;
 };
 
-uniform sampler2D inputTex ;
+uniform sampler2D inputTex : register(S0);
 uniform float4 ambient;
 
 float4 main( Conn IN ) : COLOR0

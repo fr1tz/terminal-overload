@@ -23,8 +23,8 @@
 #include "./../postFx.hlsl"
 
 // These are set by the game engine.  
-uniform sampler2D shrunkSampler ;  // Output of DofDownsample()  
-uniform sampler2D blurredSampler ; // Blurred version of the shrunk sampler  
+uniform sampler2D shrunkSampler : register(S0);  // Output of DofDownsample()  
+uniform sampler2D blurredSampler : register(S1); // Blurred version of the shrunk sampler  
 
 // This is the pixel shader function that calculates the actual  
 // value used for the near circle of confusion.  

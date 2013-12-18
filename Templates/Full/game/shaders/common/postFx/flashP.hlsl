@@ -25,7 +25,7 @@
 
 uniform float damageFlash;
 uniform float whiteOut;
-uniform sampler2D backBuffer ;
+uniform sampler2D backBuffer : register(S0);
 
 float4 main(PFXVertToPix IN) : COLOR0
 {

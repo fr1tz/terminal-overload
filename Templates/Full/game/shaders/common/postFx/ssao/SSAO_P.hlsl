@@ -26,9 +26,9 @@
 #define DOSMALL
 #define DOLARGE
 
-uniform sampler2D prepassMap ;
-uniform sampler2D randNormalTex ;
-uniform sampler1D powTable ;
+uniform sampler2D prepassMap : register(S0);
+uniform sampler2D randNormalTex : register(S1);
+uniform sampler1D powTable : register(S2);
 
 uniform float2 nearFar;
 uniform float2 worldToScreenScale;

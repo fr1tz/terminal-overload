@@ -23,7 +23,7 @@
 #include "../postFx.hlsl"
 #include "shadergen:/autogenConditioners.h"
 
-uniform sampler2D inputTex ;
+uniform sampler2D inputTex : register(S0);
 uniform float2 oneOverTargetSize;
 uniform float gaussMultiplier;
 uniform float gaussMean;
