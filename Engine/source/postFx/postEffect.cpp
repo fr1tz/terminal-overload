@@ -787,7 +787,10 @@ void PostEffect::_setupConstants( const SceneRenderState *state )
 
       EffectConstTable::Iterator iter = mEffectConsts.begin();
       for ( ; iter != mEffectConsts.end(); iter++ )
+      {
          iter->value->mDirty = true;
+         iter->value->mHandle = NULL;
+      }
    }
 
    // Doesn't look like anyone is using this anymore.
@@ -817,7 +820,7 @@ void PostEffect::_setupConstants( const SceneRenderState *state )
       if ( state )
       {
          Con::setFloatVariable( "$Param::NearDist", state->getNearPlane() );
-         Con::setFloatVariable( "$Param::FarDist", state->getFarPlane() );   
+         Con::setFloatVariable( "$Param::FarDist", state->getFarPlane() );
       }
 
       setShaderConsts_callback();
@@ -1280,6 +1283,13 @@ void PostEffect::_checkRequirements()
    mIsValid = false;
    mUpdateShader = false;
    mShader = NULL;
+   mShaderConsts = NULL;
+   EffectConstTable::Iterator iter = mEffectConsts.begin();
+   for ( ; iter != mEffectConsts.end(); iter++ )
+   {
+      iter->value->mDirty = true;
+      iter->value->mHandle = NULL;
+   }
 
    // First make sure the target format is supported.
    if ( mNamedTarget.isRegistered() )
