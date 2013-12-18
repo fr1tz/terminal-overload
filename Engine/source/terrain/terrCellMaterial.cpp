@@ -46,6 +46,27 @@ AFTER_MODULE_INIT( MaterialManager )
 
 Vector<TerrainCellMaterial*> TerrainCellMaterial::smAllMaterials;
 
+Vector<String> _initSamplerNames()
+{
+   Vector<String> samplerNames;
+   samplerNames.push_back("$baseTexMap");
+   samplerNames.push_back("$layerTex");   
+   samplerNames.push_back("$macrolayerTex");   
+   samplerNames.push_back("$lightMapTex");
+   samplerNames.push_back("$lightInfoBuffer");
+   for(int i = 0; i < 3; ++i)
+   {
+      samplerNames.push_back(avar("$normalMap%d",i));
+      samplerNames.push_back(avar("$detailMap%d",i));
+      samplerNames.push_back(avar("$macroMap%d",i));
+   }   
+
+   return samplerNames;
+}
+
+
+const Vector<String> TerrainCellMaterial::mSamplerNames = _initSamplerNames();
+
 TerrainCellMaterial::TerrainCellMaterial()
    :  mCurrPass( 0 ),
       mTerrain( NULL ),
@@ -296,7 +317,7 @@ bool TerrainCellMaterial::_createPass( Vector<MaterialInfo*> *materials,
    // faster load time and less hiccups during gameplay.
    U32 matCount = getMin( 3, materials->size() );
 
-   Vector<GFXTexHandle> normalMaps;
+   Vector<GFXTexHandle> normalMaps;   
 
    // See if we're currently running under the
    // basic lighting manager.
@@ -460,7 +481,7 @@ bool TerrainCellMaterial::_createPass( Vector<MaterialInfo*> *materials,
          const bool logErrors = matCount == 1;
          GFXShader::setLogging( logErrors, true );
 
-         pass->shader = SHADERGEN->getShader( featureData, getGFXVertexFormat<TerrVertex>(), NULL );
+         pass->shader = SHADERGEN->getShader( featureData, getGFXVertexFormat<TerrVertex>(), NULL, mSamplerNames );
       }
 
       // If we got a shader then we can continue.

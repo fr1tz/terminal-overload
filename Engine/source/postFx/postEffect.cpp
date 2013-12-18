@@ -1351,6 +1351,7 @@ void PostEffect::_checkRequirements()
             }
 
             mSamplerHandles[i] = mShader->getShaderConstHandle( samplerName.startsWith("$") ? samplerName : String("$")+samplerName );
+            GFXAssertFatal(i == mSamplerHandles[i]->getSamplerRegister(), "");
          }
 
          for(int i = 0; i < PostEffect::NumTextures; ++i)

@@ -48,13 +48,15 @@ GFXShader::~GFXShader()
 bool GFXShader::init(   const Torque::Path &vertFile, 
                         const Torque::Path &pixFile, 
                         F32 pixVersion, 
-                        const Vector<GFXShaderMacro> &macros )
+                        const Vector<GFXShaderMacro> &macros,
+                        const Vector<String> &samplerNames)
 {
    // Store the inputs for use in reloading.
    mVertexFile = vertFile;
    mPixelFile = pixFile;
    mPixVersion = pixVersion;
    mMacros = macros;
+   mSamplerNamesOrdered = samplerNames;
 
    // Before we compile the shader make sure the
    // conditioner features have been updated.

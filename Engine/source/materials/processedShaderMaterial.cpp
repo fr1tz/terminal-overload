@@ -616,9 +616,16 @@ bool ProcessedShaderMaterial::_addPass( ShaderRenderPassData &rpd,
    // Copy over features
    rpd.mFeatureData.materialFeatures = fd.features;
 
+   Vector<String> samplers;
+   samplers.setSize(Material::MAX_TEX_PER_PASS);
+   for(int i = 0; i < Material::MAX_TEX_PER_PASS; ++i)
+   {
+      samplers[i] = (rpd.mSamplerNames[i].isEmpty() || rpd.mSamplerNames[i][0] == '$') ? rpd.mSamplerNames[i] : "$" + rpd.mSamplerNames[i];
+   }
+
    // Generate shader
    GFXShader::setLogging( true, true );
-   rpd.shader = SHADERGEN->getShader( rpd.mFeatureData, mVertexFormat, &mUserMacros );
+   rpd.shader = SHADERGEN->getShader( rpd.mFeatureData, mVertexFormat, &mUserMacros, samplers );
    if( !rpd.shader )
       return false;
    rpd.shaderHandles.init( rpd.shader );   

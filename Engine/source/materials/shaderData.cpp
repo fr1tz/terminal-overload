@@ -226,6 +226,11 @@ GFXShader* ShaderData::_createShader( const Vector<GFXShaderMacro> &macros )
    GFXShader *shader = GFX->createShader();
    bool success = false;
 
+   Vector<String> samplers;
+   samplers.setSize(ShaderData::NumTextures);
+   for(int i = 0; i < ShaderData::NumTextures; ++i)
+      samplers[i] = mSamplerNames[i];
+
    // Initialize the right shader type.
    switch( GFX->getAdapterType() )
    {
@@ -235,7 +240,8 @@ GFXShader* ShaderData::_createShader( const Vector<GFXShaderMacro> &macros )
          success = shader->init( mDXVertexShaderName, 
                                  mDXPixelShaderName, 
                                  pixver,
-                                 macros );
+                                 macros,
+                                 samplers);
          break;
       }
 
@@ -244,7 +250,8 @@ GFXShader* ShaderData::_createShader( const Vector<GFXShaderMacro> &macros )
          success = shader->init( mOGLVertexShaderName,
                                  mOGLPixelShaderName,
                                  pixver,
-                                 macros );
+                                 macros,
+                                 samplers);
          break;
       }
          

@@ -571,8 +571,13 @@ void GFXGLShader::initHandles()
       AssertFatal(loc != -1, "");
 
       HandleMap::Iterator handle = mHandles.find(desc.name);
-      S32 sampler = (desc.constType == GFXSCT_Sampler || desc.constType == GFXSCT_SamplerCube) ?
-         assignedSamplerNum++ : -1;
+      S32 sampler = -1;
+      if(desc.constType == GFXSCT_Sampler || desc.constType == GFXSCT_SamplerCube)
+      {
+         S32 idx = mSamplerNamesOrdered.find_next(desc.name);
+         AssertFatal(idx != -1, "");
+         sampler = idx; //assignedSamplerNum++;
+      }
       if ( handle != mHandles.end() )
       {
          handle->value->reinit( desc, loc, sampler );         
