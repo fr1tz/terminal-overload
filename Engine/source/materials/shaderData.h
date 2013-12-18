@@ -93,7 +93,7 @@ protected:
 
    enum
    {
-      NumTextures = 6 // TODO OPENGL NUM_TEXTURES?
+      NumTextures = 8 // TODO OPENGL NUM_TEXTURES?
    };
 
    String mSamplerNames[NumTextures]; 
