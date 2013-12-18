@@ -473,6 +473,10 @@ void GFXGLShader::initConstantDescs()
    glGetProgramiv(mProgram, GL_ACTIVE_UNIFORMS, &numUniforms);
    GLint maxNameLength;
    glGetProgramiv(mProgram, GL_ACTIVE_UNIFORM_MAX_LENGTH, &maxNameLength);
+
+   if(!maxNameLength)
+      return;
+
    FrameTemp<GLchar> uniformName(maxNameLength);
    
    for(U32 i = 0; i < numUniforms; i++)
