@@ -20,44 +20,18 @@
 // IN THE SOFTWARE.
 //-----------------------------------------------------------------------------
 
-singleton ShaderData( PFX_FlashShader )
+#include "./postFx.glsl"
+#include "../../gl/torque.glsl"
+#include "../../gl/hlslCompat.glsl"
+
+uniform float damageFlash;
+uniform float whiteOut;
+uniform sampler2D backBuffer;
+
+void main()
 {
-   DXVertexShaderFile 	= "shaders/common/postFx/postFxV.hlsl";
-   DXPixelShaderFile 	= "shaders/common/postFx/flashP.hlsl";
-   
-   OGLVertexShaderFile 	= "shaders/common/postFx/gl/postFxV.glsl";
-   OGLPixelShaderFile 	= "shaders/common/postFx/gl/flashP.glsl";
-   
-   samplerNames[0] = "$backBuffer";
-
-   defines = "WHITE_COLOR=float4(1.0,1.0,1.0,0.0);MUL_COLOR=float4(1.0,0.25,0.25,0.0)";
-
-   pixVersion = 2.0;
-};
- 
-singleton PostEffect( FlashFx )
-{
-   isEnabled = false;    
-   allowReflectPass = false;  
-
-   renderTime = "PFXAfterDiffuse";  
-
-   shader = PFX_FlashShader;   
-   texture[0] = "$backBuffer";  
-   renderPriority = 10;
-   stateBlock = PFX_DefaultStateBlock;  
-};
-
-function FlashFx::setShaderConsts( %this )
-{
-   if ( isObject( ServerConnection ) )
-   {
-      %this.setShaderConst( "$damageFlash", ServerConnection.getDamageFlash() );
-      %this.setShaderConst( "$whiteOut", ServerConnection.getWhiteOut() );
-   }
-   else
-   {
-      %this.setShaderConst( "$damageFlash", 0 );
-      %this.setShaderConst( "$whiteOut", 0 );
-   }
+ float4 color1 = tex2D(backBuffer, IN_uv0); 
+ float4 color2 = color1 * MUL_COLOR;
+ float4 damage = lerp(color1,color2,damageFlash);
+ gl_FragColor = lerp(damage,WHITE_COLOR,whiteOut);
 }
