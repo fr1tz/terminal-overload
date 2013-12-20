@@ -35,6 +35,7 @@ singleton ShaderData( ParticlesShaderData )
    
    samplerNames[0] = "$diffuseMap";
    samplerNames[1] = "$prepassTex";
+   samplerNames[2] = "$paraboloidLightMap";
    
    pixVersion = 2.0;
 };

@@ -20,17 +20,13 @@
 // IN THE SOFTWARE.
 //-----------------------------------------------------------------------------
 
-#include "hlslCompat.glsl"
 #include "torque.glsl"
-
+#include "hlslCompat.glsl"
+   
 // With advanced lighting we get soft particles.
 #ifdef TORQUE_LINEAR_DEPTH
    #define SOFTPARTICLES  
 #endif
-
-#define CLIP_Z // TODO: Make this a proper macro
-
-uniform sampler2D diffuseMap;
 
 #ifdef SOFTPARTICLES
    
@@ -38,45 +34,78 @@ uniform sampler2D diffuseMap;
    
    uniform float oneOverSoftness;
    uniform float oneOverFar;
-   uniform sampler2D prepassTex;
-   //uniform vec3 vEye;
-   uniform vec4 prePassTargetParams;
+   uniform sampler2D prepassTex;   
+   //uniform float3 vEye;
+   uniform float4 prePassTargetParams;
 #endif
+
+#define CLIP_Z // TODO: Make this a proper macro
+
+varying float4 color;
+varying vec2 uv0;
+varying float4 pos;
+
+#define IN_color color
+#define IN_uv0 uv0
+#define IN_pos pos
+
+uniform sampler2D diffuseMap;
+
+uniform sampler2D paraboloidLightMap;
+
+float4 lmSample( float3 nrm )
+{
+   bool calcBack = (nrm.z < 0.0);
+   if ( calcBack )
+      nrm.z = nrm.z * -1.0;
+
+   float2 lmCoord;
+   lmCoord.x = (nrm.x / (2*(1 + nrm.z))) + 0.5;
+   lmCoord.y = 1-((nrm.y / (2*(1 + nrm.z))) + 0.5);
+
+
+   // If this is the back, offset in the atlas
+   if ( calcBack )
+      lmCoord.x += 1.0;
+      
+   // Atlasing front and back maps, so scale
+   lmCoord.x *= 0.5;
+
+   return tex2D(paraboloidLightMap, lmCoord);
+}
+
 
 uniform float alphaFactor;
 uniform float alphaScale;
 
-varying vec4 color;
-varying vec2 uv0;
-varying vec4 pos;
-
-
 void main()
 {
-   float softBlend = 1.0;
+   float softBlend = 1;
    
    #ifdef SOFTPARTICLES
-      float2 tc = pos.xy * vec2(1.0, -1.0 ) / pos.w;
+      float2 tc = IN_pos.xy * float2(1.0, -1.0) / IN_pos.w;
       tc = viewportCoordToRenderTarget(saturate( ( tc + 1.0 ) * 0.5 ), prePassTargetParams); 
    
    	float sceneDepth = prepassUncondition( prepassTex, tc ).w;   	   	   			
-   	float depth = pos.w * oneOverFar;   	
-	   float diff = sceneDepth - depth;
+   	float depth = IN_pos.w * oneOverFar;   	
+	float diff = sceneDepth - depth;
 	#ifdef CLIP_Z
 	   // If drawing offscreen, this acts as the depth test, since we don't line up with the z-buffer
 	   // When drawing high-res, though, we want to be able to take advantage of hi-z
 	   // so this is #ifdef'd out
-      if (diff < 0.0)
-         discard;
+	   //clip(diff);
 	#endif
       softBlend = saturate( diff * oneOverSoftness );
    #endif
-		   
-   vec4 diffuse = texture2D( diffuseMap, uv0 );
+	   
+   float4 diffuse = tex2D( diffuseMap, IN_uv0 );
+   
+   //gl_FragColor = float4( lmSample(float3(0, 0, -1)).rgb, IN_color.a * diffuse.a * softBlend * alphaScale);
    
    // Scale output color by the alpha factor (turn LerpAlpha into pre-multiplied alpha)
-   vec3 colorScale = ( alphaFactor < 0.0 ? color.rgb * diffuse.rgb : ( alphaFactor > 0.0 ? vec3(color.a * alphaFactor * diffuse.a * softBlend) : vec3(softBlend) ) );
+   float3 colorScale = ( alphaFactor < 0.0 ? IN_color.rgb * diffuse.rgb : float3( alphaFactor > 0.0 ? IN_color.a * diffuse.a * alphaFactor * softBlend : softBlend ) );
    
-   gl_FragColor = hdrEncode( vec4(color.rgb * diffuse.rgb * colorScale, softBlend * color.a * diffuse.a * alphaScale) );
+   gl_FragColor = hdrEncode( float4( IN_color.rgb * diffuse.rgb * colorScale,
+                  IN_color.a * diffuse.a * softBlend * alphaScale ) );
 }
 

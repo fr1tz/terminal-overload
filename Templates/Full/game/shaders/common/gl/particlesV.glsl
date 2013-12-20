@@ -22,19 +22,29 @@
 
 #include "hlslCompat.glsl"
 
-varying vec4 color;
-varying vec2 uv0;
-varying vec4 pos;
+#define In_pos    gl_Vertex
+#define In_color  gl_Color
+#define In_uv0    gl_MultiTexCoord0.st
 
-uniform mat4 modelViewProj;
-uniform mat4 fsModelViewProj;
+varying float4 color;
+varying vec2 uv0;
+varying float4 pos;
+
+#define OUT_hpos gl_Position
+#define OUT_color color
+#define OUT_uv0 uv0
+#define OUT_pos pos
+
+uniform float4x4 modelViewProj;
+uniform float4x4 fsModelViewProj;
 
 void main()
 {
-   gl_Position = modelViewProj * gl_Vertex;
-   pos = fsModelViewProj * gl_Vertex;
-   color = gl_Color;
-   uv0 = gl_MultiTexCoord0.st;
+   OUT_hpos = mul( modelViewProj, In_pos );
+	OUT_pos = mul( fsModelViewProj, In_pos );
+	OUT_color = In_color;
+	OUT_uv0 = In_uv0;
+	
    correctSSP(gl_Position);
 }
 
