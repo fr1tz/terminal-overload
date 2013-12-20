@@ -22,22 +22,29 @@
 
 #include "../../../gl/hlslCompat.glsl"
 
-varying vec4 hpos;
-varying vec3 wsEyeDir;
-varying vec3 vsEyeDir;
-varying vec4 ssPos;
+#define IN_pos gl_Vertex
 
-uniform mat4 modelview;
-uniform mat4 worldViewOnly;
-uniform mat4 objTrans;
-uniform vec3 eyePosWorld;
+varying float4 wsEyeDir;
+varying float4 ssPos;
+varying float4 vsEyeDir;
+
+#define OUT_hpos gl_Position
+#define OUT_wsEyeDir wsEyeDir
+#define OUT_ssPos ssPos
+#define OUT_vsEyeDir vsEyeDir
+
+uniform float4x4 modelview;
+uniform float4x4 objTrans;
+uniform float4x4 worldViewOnly;
+uniform float3 eyePosWorld;
 
 void main()
 {
-   hpos = mul( modelview, gl_Vertex );
-   gl_Position = hpos;
-   wsEyeDir = vec3( mul( objTrans, hpos ) - float4( eyePosWorld, 0.0 ) );
-   vsEyeDir = vec3( mul( worldViewOnly, hpos ) );
-   ssPos = hpos;
+   OUT_hpos = mul( modelview, IN_pos );
+   OUT_wsEyeDir = mul( objTrans, IN_pos ) - float4( eyePosWorld, 0.0 );
+   OUT_vsEyeDir = mul( worldViewOnly, IN_pos );
+   OUT_ssPos = OUT_hpos;
+
    correctSSP(gl_Position);
 }
+

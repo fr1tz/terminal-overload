@@ -164,7 +164,7 @@ new ShaderData( AL_SpotLightShader )
    samplerNames[0] = "$prePassBuffer";
    samplerNames[1] = "$shadowMap";
    samplerNames[2] = "$cookieMap";
-   
+   samplerNames[3] = "$gTapRotationTex";   
    
    pixVersion = 3.0;
 };
