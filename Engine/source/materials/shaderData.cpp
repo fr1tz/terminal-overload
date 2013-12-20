@@ -229,7 +229,7 @@ GFXShader* ShaderData::_createShader( const Vector<GFXShaderMacro> &macros )
    Vector<String> samplers;
    samplers.setSize(ShaderData::NumTextures);
    for(int i = 0; i < ShaderData::NumTextures; ++i)
-      samplers[i] = mSamplerNames[i];
+      samplers[i] = mSamplerNames[i][0] == '$' ? mSamplerNames[i] : "$"+mSamplerNames[i];
 
    // Initialize the right shader type.
    switch( GFX->getAdapterType() )
@@ -260,6 +260,29 @@ GFXShader* ShaderData::_createShader( const Vector<GFXShaderMacro> &macros )
          success = false;
          break;
    }
+
+#if defined(TORQUE_DEBUG)
+   //Assert Sampler registers
+   const Vector<GFXShaderConstDesc>& descs = shader->getShaderConstDesc();
+   for(int i = 0; i < descs.size(); ++i)
+   {
+      if(descs[i].constType != GFXSCT_Sampler && descs[i].constType != GFXSCT_SamplerCube)
+         continue;
+      
+      GFXShaderConstHandle *handle = shader->findShaderConstHandle(descs[i].name);
+      if(!handle || !handle->isValid())
+         continue;
+
+      int reg = handle->getSamplerRegister();
+      if( descs[i].name != samplers[reg] )
+      {
+         const char *err = avar("ShaderData(%s): samplerNames[%d] = \"%s\" are diferent to sampler in shader: %s : register(S%d)"
+            ,getName(), reg, samplers[reg].c_str(), handle->getName().c_str(), reg);
+         Con::printf(err);
+         GFXAssertFatal(0, err);
+      }
+   }
+#endif
 
    // If we failed to load the shader then
    // cleanup and return NULL.
