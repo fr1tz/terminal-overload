@@ -22,27 +22,7 @@
 
 #include "../../../gl/torque.glsl"
 #include "../../../gl/hlslCompat.glsl"
-
-#define IN_pos  gl_Vertex
-#define IN_uv gl_MultiTexCoord0.st
-#define IN_wsEyeRay gl_MultiTexCoord1.xyz
-
-uniform float4 rtParams0;
-uniform float4 rtParams1;
-uniform float4 rtParams2;
-uniform float4 rtParams3;
-
-#define OUT_hpos gl_Position
-varying float3 wsEyeRay;
-#define OUT_wsEyeRay wsEyeRay
-varying float2 uv0;
-#define OUT_uv0 uv0
-varying float2 uv1;
-#define OUT_uv1 uv1
-varying float2 uv2;
-#define OUT_uv2 uv2
-varying float2 uv3;
-#define OUT_uv3 uv3
+#include "../../gl/postFX.glsl"
                     
 void main()
 {

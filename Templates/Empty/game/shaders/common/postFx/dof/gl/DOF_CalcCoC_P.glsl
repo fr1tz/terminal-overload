@@ -21,17 +21,7 @@
 //-----------------------------------------------------------------------------
 
 #include "../../../gl/hlslCompat.glsl"
-
-varying float3 wsEyeRay;
-#define IN_wsEyeRay wsEyeRay
-varying float2 uv0;
-#define IN_uv0 uv0
-varying float2 uv1;
-#define IN_uv1 uv1
-varying float2 uv2;
-#define IN_uv2 uv2
-varying float2 uv3;
-#define IN_uv3 uv3
+#include "../../gl/postFX.glsl"
 
 // These are set by the game engine.  
 uniform sampler2D shrunkSampler;  // Output of DofDownsample()  

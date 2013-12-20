@@ -38,6 +38,7 @@ varying vec3 wsEyeRay;
 #define OUT_uv2 uv2
 #define OUT_uv3 uv3
 #define OUT_wsEyeRay wsEyeRay
+#define OUT_hpos gl_Position
 
 #endif //TORQUE_VERTEX_SHADER
 

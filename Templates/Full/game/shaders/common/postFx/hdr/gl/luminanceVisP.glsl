@@ -23,18 +23,7 @@
 #include "../../../gl/torque.glsl"
 #include "../../../gl/hlslCompat.glsl"
 #include "shadergen:/autogenConditioners.h"
-
-varying vec2 uv0;
-varying vec2 uv1;
-varying vec2 uv2;
-varying vec2 uv3;
-varying vec3 wsEyeRay;
-
-#define IN_uv0 uv0
-#define IN_uv1 uv1
-#define IN_uv2 uv2
-#define IN_uv3 uv3
-#define IN_wsEyeRay wsEyeRay
+#include "../../gl/postFX.glsl"
 
 uniform sampler2D inputTex;
 uniform float brightPassThreshold;

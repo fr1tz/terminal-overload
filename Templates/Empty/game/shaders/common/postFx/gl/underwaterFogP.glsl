@@ -22,6 +22,7 @@
 
 #include "../../gl/hlslCompat.glsl"  
 #include "../../gl/torque.glsl"
+#include "postFX.glsl"
 #include "shadergen:/autogenConditioners.h"
 
 //-----------------------------------------------------------------------------
@@ -49,12 +50,6 @@ uniform float4    waterFogPlane;
 uniform float2    nearFar;      
 uniform float4    rtParams0;
 uniform float     waterDepthGradMax;
-
-varying vec2 uv0;
-varying vec3 wsEyeRay;
-
-#define IN_uv0 uv0 
-#define IN_wsEyeRay wsEyeRay 
 
 void main() 
 {    

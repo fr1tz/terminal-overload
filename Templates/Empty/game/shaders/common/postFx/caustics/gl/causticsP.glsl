@@ -21,24 +21,13 @@
 //-----------------------------------------------------------------------------
 
 #include "../../../gl/hlslCompat.glsl"
+#include "../../gl/postFX.glsl"
 #include "shadergen:/autogenConditioners.h"
 
 uniform float3    eyePosWorld;
 uniform float4    rtParams0;
 uniform float4    waterFogPlane;
 uniform float     accumTime;
-
-varying vec2 uv0;
-varying vec2 uv1;
-varying vec2 uv2;
-varying vec2 uv3;
-varying vec3 wsEyeRay;
-
-#define IN_uv0 uv0
-#define IN_uv1 uv1
-#define IN_uv2 uv2
-#define IN_uv3 uv3
-#define IN_wsEyeRay wsEyeRay
 
 uniform sampler2D prepassTex;
 uniform sampler2D causticsTex0;

@@ -22,20 +22,10 @@
 
 #include "../../../gl/hlslCompat.glsl"
 #include "shadergen:/autogenConditioners.h"
+#include "../../gl/postFX.glsl"
 
 #define DOSMALL
 #define DOLARGE
-
-varying float4 wsEyeRay;
-#define IN_wsEyeRay wsEyeRay
-varying float2 uv0;
-#define IN_uv0 uv0
-varying float2 uv1;
-#define IN_uv1 uv1
-varying float2 uv2;
-#define IN_uv2 uv2
-varying float2 uv3;
-#define IN_uv3 uv3
 
 uniform sampler2D prepassMap ;
 uniform sampler2D randNormalTex ;
