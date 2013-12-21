@@ -620,7 +620,7 @@ void GFXGLShader::initHandles()
          // Set sampler number on our program.
          glUniform1i(handle->mLocation, handle->mSamplerNum);
          // Set sampler in constant buffer so it does not get unset later.
-         dMemcpy(mConstBuffer + handle->mOffset, &handle->mLocation, handle->getSize());
+         dMemcpy(mConstBuffer + handle->mOffset, &handle->mSamplerNum, handle->getSize());
       }
    }
    glUseProgram(0);

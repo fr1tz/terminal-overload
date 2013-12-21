@@ -168,7 +168,13 @@ void PostEffect::EffectConst::setToBuffer( GFXShaderConstBufferRef buff )
 
    const char *strVal = mStringVal.c_str();
 
-   if ( type == GFXSCT_Float )
+   if ( type == GFXSCT_Int )
+   {
+      S32 val;
+      Con::setData( TypeS32, &val, 0, 1, &strVal );
+      buff->set( mHandle, val );
+   }
+   else if ( type == GFXSCT_Float )
    {
       F32 val;
       Con::setData( TypeF32, &val, 0, 1, &strVal );
@@ -186,7 +192,7 @@ void PostEffect::EffectConst::setToBuffer( GFXShaderConstBufferRef buff )
       Con::setData( TypePoint3F, &val, 0, 1, &strVal );
       buff->set( mHandle, val );
    }
-   else
+   else if ( type == GFXSCT_Float4 )
    {
       Point4F val;
 
@@ -217,6 +223,14 @@ void PostEffect::EffectConst::setToBuffer( GFXShaderConstBufferRef buff )
          Con::setData( TypePoint4F, &val, 0, 1, &strVal );
          buff->set( mHandle, val );
       }
+   }
+   else
+   {
+#if TORQUE_DEBUG
+      const char* err = avar("PostEffect::EffectConst::setToBuffer $s type is not implemented", mName.c_str());
+      Con::errorf(err);
+      GFXAssertFatal(0,err);
+#endif
    }
 }
 
