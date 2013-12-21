@@ -124,7 +124,7 @@ void GFXGLEnumTranslate::init()
    GFXGLTextureInternalFormat[GFXFormatR5G5B5A1] = GL_RGB5_A1;
    GFXGLTextureInternalFormat[GFXFormatR5G5B5X1] = GL_RGB5_A1;
    GFXGLTextureInternalFormat[GFXFormatL16] = GL_LUMINANCE16;
-   GFXGLTextureInternalFormat[GFXFormatR16F] = GL_R32F;  // TODO OpenGL need extension GL_ARB_texture_rg
+   GFXGLTextureInternalFormat[GFXFormatR16F] = GL_ZERO;
    GFXGLTextureInternalFormat[GFXFormatD16] = GL_DEPTH_COMPONENT;
    GFXGLTextureInternalFormat[GFXFormatR8G8B8] = GL_RGB8;
    GFXGLTextureInternalFormat[GFXFormatR8G8B8A8] = GL_RGBA8;
@@ -151,7 +151,7 @@ void GFXGLEnumTranslate::init()
    GFXGLTextureFormat[GFXFormatR5G5B5A1] = GL_RGBA;
    GFXGLTextureFormat[GFXFormatR5G5B5X1] = GL_RGBA;
    GFXGLTextureFormat[GFXFormatL16] = GL_LUMINANCE;
-   GFXGLTextureFormat[GFXFormatR16F] = GL_RED;  // TODO OpenGL need extension GL_ARB_texture_rg
+   GFXGLTextureFormat[GFXFormatR16F] = GL_ZERO;
    GFXGLTextureFormat[GFXFormatD16] = GL_DEPTH_COMPONENT;
    GFXGLTextureFormat[GFXFormatR8G8B8] = GL_RGB;
    GFXGLTextureFormat[GFXFormatR8G8B8A8] = GL_BGRA;
@@ -178,7 +178,7 @@ void GFXGLEnumTranslate::init()
    GFXGLTextureType[GFXFormatR5G5B5A1] = GL_UNSIGNED_BYTE;
    GFXGLTextureType[GFXFormatR5G5B5X1] = GL_UNSIGNED_BYTE;
    GFXGLTextureType[GFXFormatL16] = GL_UNSIGNED_SHORT;
-   GFXGLTextureType[GFXFormatR16F] = GL_FLOAT;  // TODO OpenGL check if posible use GL_HALF_FLOAT_ARB from GL_ARB_half_float_pixel extension
+   GFXGLTextureType[GFXFormatR16F] = GL_ZERO;
    GFXGLTextureType[GFXFormatD16] = GL_UNSIGNED_SHORT;
    GFXGLTextureType[GFXFormatR8G8B8] = GL_UNSIGNED_BYTE;
    GFXGLTextureType[GFXFormatR8G8B8A8] = GL_UNSIGNED_BYTE;
@@ -208,4 +208,54 @@ void GFXGLEnumTranslate::init()
    GFXGLFillMode[GFXFillPoint] = GL_POINT;
    GFXGLFillMode[GFXFillWireframe] = GL_LINE;
    GFXGLFillMode[GFXFillSolid] = GL_FILL;
+
+   // Extensions
+   if( gglHasExtension(GL_ARB_texture_float) )
+   {      
+      GFXGLTextureInternalFormat[GFXFormatR32F] = GL_R32F;
+      GFXGLTextureInternalFormat[GFXFormatR16G16F] = GL_R32F;
+      GFXGLTextureInternalFormat[GFXFormatR10G10B10A2] = GL_ZERO;
+      GFXGLTextureInternalFormat[GFXFormatR16G16B16A16] = GL_ZERO;      
+      GFXGLTextureInternalFormat[GFXFormatR32G32B32A32F] = GL_RGBA32F_ARB;
+      GFXGLTextureInternalFormat[GFXFormatDXT2] = GL_ZERO;
+      GFXGLTextureInternalFormat[GFXFormatDXT4] = GL_ZERO;   
+      
+      GFXGLTextureFormat[GFXFormatR32F] = GL_RED;
+      GFXGLTextureFormat[GFXFormatR16G16F] = GL_ZERO;
+      GFXGLTextureFormat[GFXFormatR10G10B10A2] = GL_RGBA;
+      GFXGLTextureFormat[GFXFormatR16G16B16A16] = GL_RGBA;      
+      GFXGLTextureFormat[GFXFormatR32G32B32A32F] = GL_RGBA;
+      GFXGLTextureFormat[GFXFormatDXT2] = GL_ZERO;
+      GFXGLTextureFormat[GFXFormatDXT4] = GL_ZERO;   
+      
+      GFXGLTextureType[GFXFormatR32F] = GL_FLOAT;
+      GFXGLTextureType[GFXFormatR16G16F] = GL_FLOAT;
+      GFXGLTextureType[GFXFormatR10G10B10A2] = GL_UNSIGNED_SHORT;
+      GFXGLTextureType[GFXFormatR16G16B16A16] = GL_UNSIGNED_SHORT;
+      GFXGLTextureType[GFXFormatR32G32B32A32F] = GL_FLOAT;
+      GFXGLTextureType[GFXFormatDXT2] = GL_ZERO;
+      GFXGLTextureType[GFXFormatDXT4] = GL_ZERO;
+
+      if( gglHasExtension(GL_ARB_half_float_pixel) )
+      {
+         GFXGLTextureInternalFormat[GFXFormatR16F] = GL_R16F;
+         GFXGLTextureFormat[GFXFormatR16F] = GL_RED;
+         GFXGLTextureType[GFXFormatR16F] = GL_HALF_FLOAT_ARB;
+
+         GFXGLTextureInternalFormat[GFXFormatR16G16B16A16F] = GL_RGBA16F_ARB;
+         GFXGLTextureFormat[GFXFormatR16G16B16A16F] = GL_RGBA;
+         GFXGLTextureType[GFXFormatR16G16B16A16F] = GL_HALF_FLOAT_ARB;
+      }
+      else
+      {
+         GFXGLTextureInternalFormat[GFXFormatR16F] = GL_R32F;
+         GFXGLTextureFormat[GFXFormatR16F] = GL_RED;
+         GFXGLTextureType[GFXFormatR16F] = GL_FLOAT;
+
+         GFXGLTextureInternalFormat[GFXFormatR16G16B16A16F] = GL_RGBA32F_ARB;
+         GFXGLTextureFormat[GFXFormatR16G16B16A16F] = GL_RGBA;
+         GFXGLTextureType[GFXFormatR16G16B16A16F] = GL_FLOAT;
+      }
+   }
+
 }

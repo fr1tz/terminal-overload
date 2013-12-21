@@ -86,7 +86,7 @@ void GFXGLCardProfiler::setupCardCapabilities()
    bool suppBlit = gglHasExtension(GL_EXT_framebuffer_blit);
    setCapability("GL::suppRTBlit", suppBlit);
    
-   bool suppFloatTex = gglHasExtension(GL_ATI_texture_float);
+   bool suppFloatTex = gglHasExtension(GL_ARB_texture_float);
    setCapability("GL::suppFloatTexture", suppFloatTex);
 
    // Check for anisotropic filtering support.

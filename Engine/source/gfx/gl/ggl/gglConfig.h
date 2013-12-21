@@ -45,6 +45,7 @@
 #define GL_ARB_depth_texture
 #define GL_ARB_fragment_program
 #define GL_ARB_fragment_shader
+#define GL_ARB_half_float_pixel
 #define GL_ARB_imaging
 #define GL_ARB_matrix_palette
 #define GL_ARB_multisample
@@ -64,6 +65,7 @@
 #define GL_ARB_texture_env_combine
 #define GL_ARB_texture_env_crossbar
 #define GL_ARB_texture_env_dot3
+#define GL_ARB_texture_float
 #define GL_ARB_texture_mirrored_repeat
 #define GL_ARB_texture_non_power_of_two
 #define GL_ARB_texture_rectangle
