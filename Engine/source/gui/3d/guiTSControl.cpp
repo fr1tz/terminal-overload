@@ -318,6 +318,21 @@ void GuiTSCtrl::onRender(Point2I offset, const RectI &updateRect)
       return;
    }
 
+   // Set up the appropriate render style
+   U32 prevRenderStyle = GFX->getCurrentRenderStyle();
+   Point2F prevProjectionOffset = GFX->getCurrentProjectionOffset();
+   Point3F prevEyeOffset = GFX->getStereoEyeOffset();
+   if(mRenderStyle == RenderStyleStereoSideBySide)
+   {
+      GFX->setCurrentRenderStyle(GFXDevice::RS_StereoSideBySide);
+      GFX->setCurrentProjectionOffset(mLastCameraQuery.projectionOffset);
+      GFX->setStereoEyeOffset(mLastCameraQuery.eyeOffset);
+   }
+   else
+   {
+      GFX->setCurrentRenderStyle(GFXDevice::RS_Standard);
+   }
+
    if ( mReflectPriority > 0 )
    {
       // Get the total reflection priority.
@@ -338,21 +353,6 @@ void GuiTSCtrl::onRender(Point2I offset, const RectI &updateRect)
    {
       MatrixF rotMat(EulerF(0, 0, mDegToRad(mCameraZRot)));
       mLastCameraQuery.cameraMatrix.mul(rotMat);
-   }
-
-   // Set up the appropriate render style
-   U32 prevRenderStyle = GFX->getCurrentRenderStyle();
-   Point2F prevProjectionOffset = GFX->getCurrentProjectionOffset();
-   Point3F prevEyeOffset = GFX->getStereoEyeOffset();
-   if(mRenderStyle == RenderStyleStereoSideBySide)
-   {
-      GFX->setCurrentRenderStyle(GFXDevice::RS_StereoSideBySide);
-      GFX->setCurrentProjectionOffset(mLastCameraQuery.projectionOffset);
-      GFX->setStereoEyeOffset(mLastCameraQuery.eyeOffset);
-   }
-   else
-   {
-      GFX->setCurrentRenderStyle(GFXDevice::RS_Standard);
    }
 
    // set up the camera and viewport stuff:

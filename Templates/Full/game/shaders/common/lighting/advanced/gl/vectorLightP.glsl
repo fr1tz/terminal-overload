@@ -196,7 +196,7 @@ void main()
    // Specular term
    float specular = AL_CalcSpecular(   -lightDirection, 
                                        normal, 
-                                       normalize(-vsEyeRay) ) * lightColor.a;  
+                                       normalize(-vsEyeRay) ) * lightBrightness * shadowed;
    
    float Sat_NL_Att = saturate( dotNL * shadowed ) * lightBrightness;
    vec3 lightColorOut = lightMapParams.rgb * lightColor.rgb;

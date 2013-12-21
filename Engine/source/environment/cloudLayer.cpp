@@ -404,6 +404,7 @@ void CloudLayer::_initBuffers()
    
    mVB.set( GFX, smVertCount, GFXBufferTypeStatic );   
    GFXCloudVertex *pVert = mVB.lock(); 
+   if(!pVert) return;
 
    for ( U32 y = 0; y < smVertStride; y++ )
    {

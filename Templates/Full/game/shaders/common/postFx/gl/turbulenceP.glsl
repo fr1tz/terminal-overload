@@ -25,6 +25,9 @@
 #include "shadergen:/autogenConditioners.h"
 
 uniform float  accumTime;
+uniform float2 projectionOffset;
+uniform float4 targetViewport;
+
 uniform sampler2D inputTex;
 
 varying vec2 uv0;
@@ -33,20 +36,15 @@ varying vec2 uv0;
 
 void main() 
 {
-	float reduction = 128;	
-	float power = 1.0;
-	float speed = 3.0;
-	float frequency=8;
+	float speed = 2.0;
+	float distortion = 6.0;
 	
-	float backbuffer_edge_coef=0.98;
-	float2 screen_center = float2(0.5, 0.5);	
-	float2 cPos = (IN_uv0 - screen_center);
-	
-	float len = 1.0 - length(cPos);		
-	float2 uv = clamp((cPos / len * cos(len * frequency - (accumTime * speed)) * (power / reduction)), 0, 1);
-	gl_FragColor = tex2D(inputTex, IN_uv0 * backbuffer_edge_coef + uv);
+	float y = IN_uv0.y + (cos((IN_uv0.y+projectionOffset.y) * distortion + accumTime * speed) * 0.01);
+   float x = IN_uv0.x + (sin((IN_uv0.x+projectionOffset.x) * distortion + accumTime * speed) * 0.01);
 
-//    float4 color = tex2D(inputTex, IN_uv0 * backbuffer_edge_coef+(sin*right));           
-//	return color;
+   // Clamp the calculated uv values to be within the target's viewport
+	y = clamp(y, targetViewport.y, targetViewport.w);
+	x = clamp(x, targetViewport.x, targetViewport.z);
 
+   gl_FragColor = tex2D (inputTex, float2(x, y));
 }

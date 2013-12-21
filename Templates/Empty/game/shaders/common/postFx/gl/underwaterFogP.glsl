@@ -132,7 +132,7 @@ void main()
    inColor.rgb *= 1.0 - saturate( abs( planeDist ) / WET_DEPTH ) * WET_DARKENING;
    //return float4( inColor, 1 );
    
-   float3 outColor = lerp( inColor, fogColor.xyz, fogAmt );
+   float3 outColor = lerp( inColor, fogColor.rgb, fogAmt );
    
    gl_FragColor = float4( hdrEncode( outColor ), 1 );        
 }

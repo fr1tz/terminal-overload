@@ -205,6 +205,7 @@ singleton PostEffect( SSAOPostFx )
    
    target = "$outTex";
    targetScale = "0.5 0.5";
+   targetViewport = "PFXTargetViewport_NamedInTexture0";
    
    singleton PostEffect()
    {

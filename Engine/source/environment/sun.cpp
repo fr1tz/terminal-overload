@@ -489,6 +489,7 @@ void Sun::_renderCorona( ObjectRenderInst *ri, SceneRenderState *state, BaseMatI
    GFXVertexBufferHandle< GFXVertexPCT > vb;
    vb.set( GFX, 4, GFXBufferTypeVolatile );
    GFXVertexPCT *pVert = vb.lock();
+   if(!pVert) return;
 
    for ( S32 i = 0; i < 4; i++ )
    {

@@ -50,7 +50,6 @@ singleton ShaderData( PFX_CausticsShader )
 
 singleton PostEffect( CausticsPFX )
 {
-   requirements = "None";
    isEnabled = false;
    renderTime = "PFXBeforeBin";
    renderBin = "ObjTranslucentBin";      
@@ -62,17 +61,4 @@ singleton PostEffect( CausticsPFX )
    texture[1] = "textures/caustics_1";
    texture[2] = "textures/caustics_2";
    target = "$backBuffer";
-   
 };
-
-// this effects the timing of the animation -
-
-$CausticsPFX::refTime = getSimTime();
-
-function CausticsPFX::setShaderConsts(%this)
-{
-   //echo($Sim::time - %this.timeStart);
-   //echo(%this.timeConst);
-   %this.setShaderConst( "$refTime", $CausticsPFX::refTime ); 
-}
-

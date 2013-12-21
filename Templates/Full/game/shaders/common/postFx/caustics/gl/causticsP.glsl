@@ -34,22 +34,39 @@ uniform sampler2D causticsTex0;
 uniform sampler2D causticsTex1;
 uniform float2 targetSize;
 
+float distanceToPlane(float4 plane, float3 pos)
+{
+   return (plane.x * pos.x + plane.y * pos.y + plane.z * pos.z) + plane.w;
+}
+
 void main()             
 {   
    //Sample the pre-pass
-   float2 prepassCoord = ( IN_uv0.xy * rtParams0.zw ) + rtParams0.xy;  
-   float4 prePass = prepassUncondition( prepassTex, prepassCoord );
+   float4 prePass = prepassUncondition( prepassTex, IN_uv0 );
    
    //Get depth
    float depth = prePass.w;   
-   clip( 0.9999 - depth );
+   if(depth > 0.9999)
+   {
+      gl_FragColor = float4(0,0,0,0);
+      return;
+   }
    
    //Get world position
    float3 pos = eyePosWorld + IN_wsEyeRay * depth;
    
+   // Check the water depth
+   float waterDepth = -distanceToPlane(waterFogPlane, pos);
+   if(waterDepth < 0)
+   {
+      gl_FragColor = float4(0,0,0,0);
+      return;
+   }
+   waterDepth = saturate(waterDepth);
+   
    //Use world position X and Y to calculate caustics UV 
-   float2 causticsUV0 = mod(abs(pos.xy * 0.25) , float2(1, 1));
-   float2 causticsUV1 = mod(abs(pos.xy * 0.2) , float2(1, 1));
+   float2 causticsUV0 = mod(abs(pos.xy * 0.25), float2(1, 1));
+   float2 causticsUV1 = mod(abs(pos.xy * 0.2), float2(1, 1));
    
    //Animate uvs
    float timeSin = sin(accumTime);
@@ -61,7 +78,7 @@ void main()
    caustics *= tex2D(causticsTex1, causticsUV1);
    
    //Use normal Z to modulate caustics  
-   float waterDepth = 1 - saturate(pos.z + waterFogPlane.w + 1);
+   //float waterDepth = 1 - saturate(pos.z + waterFogPlane.w + 1);
    caustics *= saturate(prePass.z) * pow(1-depth, 64) * waterDepth; 
       
    gl_FragColor = caustics;   

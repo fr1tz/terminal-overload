@@ -687,10 +687,6 @@ void ShapeBaseImageData::initPersistFields()
       "@see animateOnServer\n\n");
 
    addField( "correctMuzzleVector", TypeBool,  Offset(correctMuzzleVector, ShapeBaseImageData),
-      "@brief Flag to adjust the aiming vector to the eye's LOS point.\n\n"
-      "@see ShapeBase::getMuzzleVector()" );
-
-   addField( "correctMuzzleVector", TypeBool,  Offset(correctMuzzleVector, ShapeBaseImageData),
       "@brief Flag to adjust the aiming vector to the eye's LOS point when in 1st person view.\n\n"
       "@see ShapeBase::getMuzzleVector()" );
 
@@ -3262,7 +3258,7 @@ void ShapeBase::submitLights( LightManager *lm, bool staticLighting )
             {
             S32 elapsed = Sim::getCurrentTime() - image.lightStart;
             if ( elapsed > imageData->lightDuration )
-               return;
+               continue;
             intensity = ( 1.0 - (F32)elapsed / (F32)imageData->lightDuration ) * imageData->lightBrightness;
             break;
             }

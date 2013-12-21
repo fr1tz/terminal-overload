@@ -798,6 +798,8 @@ void GFXDevice::setCubeTexture( U32 stage, GFXCubemap *texture )
    mCurrentTexture[stage] = NULL;
 }
 
+//------------------------------------------------------------------------------
+
 inline bool GFXDevice::beginScene()
 {
    AssertFatal( mCanCurrentlyRender == false, "GFXDevice::beginScene() - The scene has already begun!" );
@@ -810,8 +812,6 @@ inline bool GFXDevice::beginScene()
    return beginSceneInternal();
 }
 
-//------------------------------------------------------------------------------
-
 inline void GFXDevice::endScene()
 {
    AssertFatal( mCanCurrentlyRender == true, "GFXDevice::endScene() - The scene has already ended!" );
@@ -821,6 +821,22 @@ inline void GFXDevice::endScene()
 
    endSceneInternal();
    mDeviceStatistics.exportToConsole();
+}
+
+inline void GFXDevice::beginField()
+{
+   AssertFatal( mCanCurrentlyRender == true, "GFXDevice::beginField() - The scene has not yet begun!" );
+
+   // Send the start of field signal.
+   getDeviceEventSignal().trigger( GFXDevice::deStartOfField );
+}
+
+inline void GFXDevice::endField()
+{
+   AssertFatal( mCanCurrentlyRender == true, "GFXDevice::endField() - The scene has not yet begun!" );
+
+   // Send the end of field signal.
+   getDeviceEventSignal().trigger( GFXDevice::deEndOfField );
 }
 
 void GFXDevice::setViewport( const RectI &inRect ) 
@@ -853,7 +869,7 @@ void GFXDevice::popActiveRenderTarget()
    mRTStack.pop_back();
 }
 
-void GFXDevice::setActiveRenderTarget( GFXTarget *target )
+void GFXDevice::setActiveRenderTarget( GFXTarget *target, bool updateViewport )
 {
    AssertFatal( target, 
       "GFXDevice::setActiveRenderTarget - must specify a render target!" );
@@ -882,7 +898,10 @@ void GFXDevice::setActiveRenderTarget( GFXTarget *target )
    // We should consider removing this and making it the
    // responsibility of the caller to set a proper viewport
    // when the target is changed.   
-   setViewport( RectI( Point2I::Zero, mCurrentRT->getSize() ) );
+   if ( updateViewport )
+   {
+      setViewport( RectI( Point2I::Zero, mCurrentRT->getSize() ) );
+   }
 }
 
 /// Helper class for GFXDevice::describeResources.
