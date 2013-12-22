@@ -28,8 +28,11 @@
 
 #include "../../../gl/hlslCompat.glsl"
 
-#define IN_position  gl_Vertex
-#define IN_texcoord  gl_MultiTexCoord0.st
+attribute vec4 vPosition;
+attribute vec2 vTexCoord0;
+
+#define IN_position  vPosition
+#define IN_texcoord  vTexCoord0
 
 #define OUT_position gl_Position
 varying float2 texcoord;

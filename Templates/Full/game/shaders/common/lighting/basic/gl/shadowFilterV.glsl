@@ -22,13 +22,16 @@
 
 #include "../../../../../../shaders/common/gl/torque.glsl"
 
+attribute vec4 vPosition;
+attribute vec2 vTexCoord0;
+
 uniform vec4 rtParams0;
 
 varying vec2 uv;
 
 void main()
 {
-   gl_Position = gl_Vertex;   
-   uv = viewportCoordToRenderTarget( gl_MultiTexCoord0.st, rtParams0 ); 
+   gl_Position = vPosition;   
+   uv = viewportCoordToRenderTarget( vTexCoord0.st, rtParams0 ); 
    gl_Position.y *= -1; //correct ssp
 }

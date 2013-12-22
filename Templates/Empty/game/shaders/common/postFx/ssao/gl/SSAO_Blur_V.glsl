@@ -24,8 +24,11 @@
 #include "../../../gl/torque.glsl"
 #include "../../../gl/hlslCompat.glsl"
 
-#define IN_pos  gl_Vertex
-#define _IN_uv gl_MultiTexCoord0.st
+attribute vec4 vPosition;
+attribute vec2 vTexCoord0;
+
+#define IN_pos  vPosition
+#define _IN_uv  vTexCoord0
 
 uniform float2 texSize0;
 uniform float4 rtParams0;

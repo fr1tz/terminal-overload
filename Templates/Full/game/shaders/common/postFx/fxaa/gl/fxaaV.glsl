@@ -22,6 +22,9 @@
 #include "../../../gl/hlslCompat.glsl"
 #include "../../../gl/torque.glsl"
 
+attribute vec4 vPosition;
+attribute vec2 vTexCoord0;
+
 uniform vec4 rtParams0;
 
 varying vec4 hpos;
@@ -29,9 +32,9 @@ varying vec2 uv0;
                     
 void main()
 {
-   gl_Position = gl_Vertex;   
+   gl_Position = vPosition;   
    hpos = gl_Position;
-   uv0 = viewportCoordToRenderTarget( gl_MultiTexCoord0.st, rtParams0 ); 
+   uv0 = viewportCoordToRenderTarget( vTexCoord0, rtParams0 ); 
    
    correctSSP(gl_Position);
 }

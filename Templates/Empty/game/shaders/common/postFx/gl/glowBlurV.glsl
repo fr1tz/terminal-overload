@@ -23,6 +23,9 @@
 #include "../../gl/hlslCompat.glsl"
 #include "../../gl/torque.glsl"
 
+attribute vec4 vPosition;
+attribute vec2 vTexCoord0;
+
 uniform float2 texSize0;
 
 varying float4 hpos; //POSITION;
@@ -37,10 +40,10 @@ varying float2 uv7; //TEXCOORD7;
 
 void main()
 {  
-   gl_Position = gl_Vertex;
+   gl_Position = vPosition;
    hpos = gl_Position;
    
-   float2 uv = gl_MultiTexCoord0.st + (0.5f / texSize0);
+   float2 uv = vTexCoord0 + (0.5f / texSize0);
 
    uv0 = uv + ( ( BLUR_DIR * 3.5f ) / texSize0 );
    uv1 = uv + ( ( BLUR_DIR * 2.5f ) / texSize0 );

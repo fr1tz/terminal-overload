@@ -70,15 +70,21 @@ uniform float    gridElementSize;
 uniform float    elapsedTime;
 uniform float    undulateMaxDist;
 
+attribute vec4 vPosition;
+attribute vec3 vNormal;
+attribute vec4 vColor;
+attribute vec2 vTexCoord0;
+attribute vec4 vTexCoord1;
+
 //-----------------------------------------------------------------------------
 // Main                                                                        
 //-----------------------------------------------------------------------------
 void main()
 {	
-   vec4 IN_position = gl_Vertex;
-   vec3 IN_normal = gl_Normal;
-   vec2 IN_undulateData = gl_MultiTexCoord0.st;
-   vec4 IN_horizonFactor = gl_MultiTexCoord1;
+   vec4 IN_position = vPosition;
+   vec3 IN_normal = vNormal;
+   vec2 IN_undulateData = vTexCoord0;
+   vec4 IN_horizonFactor = vTexCoord1;
    vec4 OUT_hpos = vec4(0);
    
    // use projection matrix for reflection / refraction texture coords

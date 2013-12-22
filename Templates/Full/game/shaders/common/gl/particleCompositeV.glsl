@@ -22,7 +22,8 @@
 
 #include "hlslCompat.glsl"
 
-#define uvCoord gl_MultiTexCoord0
+attribute vec2  vTexCoord0;
+#define uvCoord vTexCoord0
 
 varying float4 offscreenPos;
 varying float4 backbufferPos;

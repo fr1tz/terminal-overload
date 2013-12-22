@@ -38,10 +38,15 @@ struct VertData
 // Defines                                                                  
 //-----------------------------------------------------------------------------
 //VertData IN
-#define IN_position_       gl_Vertex.xyzw
-#define IN_normal          gl_Normal.xyz
-#define IN_undulateData    gl_MultiTexCoord0.st
-#define IN_horizonFactor   gl_MultiTexCoord1.xyzw
+attribute vec4 vPosition;
+attribute vec3 vNormal;
+attribute vec2 vTexCoord0;
+attribute vec4 vTexCoord1;
+
+#define IN_position_       vPosition
+#define IN_normal          vNormal
+#define IN_undulateData    vTexCoord0
+#define IN_horizonFactor   vTexCoord1
 
 //ConnectData OUT
 //

@@ -21,14 +21,18 @@
 //-----------------------------------------------------------------------------
 #include "../../gl/hlslCompat.glsl"
 
+attribute vec4 vPosition;
+attribute vec4 vColor;
+attribute vec2 vTexCoord0;
+
 uniform mat4 modelview;
 varying vec4 color;
 varying vec2 texCoord;
 
 void main()
 {
-   gl_Position = mul(modelview, gl_Vertex);
+   gl_Position = mul(modelview, vPosition);
    correctSSP(gl_Position);
-   color = gl_Color;
-   texCoord = gl_MultiTexCoord0.st;
+   color = vColor;
+   texCoord = vTexCoord0.st;
 }

@@ -29,9 +29,13 @@ varying vec3 wsEyeRay;
 
 #ifdef TORQUE_VERTEX_SHADER
 
-#define IN_pos       gl_Vertex
-#define IN_uv        gl_MultiTexCoord0.st
-#define IN_wsEyeRay  gl_MultiTexCoord1.xyz
+attribute vec4 vPosition;
+attribute vec2 vTexCoord0;
+attribute vec3 vTexCoord1;
+
+#define IN_pos       vPosition
+#define IN_uv        vTexCoord0.st
+#define IN_wsEyeRay  vTexCoord1.xyz
 
 #define OUT_uv0 uv0
 #define OUT_uv1 uv1

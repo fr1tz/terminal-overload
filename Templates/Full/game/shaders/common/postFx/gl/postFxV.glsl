@@ -22,6 +22,9 @@
 #include "../../gl/hlslCompat.glsl"
 #include "../../gl/torque.glsl"
 
+attribute vec4 vPosition;
+attribute vec2 vTexCoord0;
+attribute vec3 vTexCoord1;
 
 uniform vec4 rtParams0;
 uniform vec4 rtParams1;
@@ -37,13 +40,13 @@ varying vec3 wsEyeRay;
 
 void main()
 {
-   gl_Position = gl_Vertex;
+   gl_Position = vPosition;
    correctSSP(gl_Position);
    
-   uv0 = viewportCoordToRenderTarget( gl_MultiTexCoord0.st, rtParams0 ); 
-   uv1 = viewportCoordToRenderTarget( gl_MultiTexCoord0.st, rtParams1 ); 
-   uv2 = viewportCoordToRenderTarget( gl_MultiTexCoord0.st, rtParams2 ); 
-   uv3 = viewportCoordToRenderTarget( gl_MultiTexCoord0.st, rtParams3 ); 
+   uv0 = viewportCoordToRenderTarget( vTexCoord0, rtParams0 ); 
+   uv1 = viewportCoordToRenderTarget( vTexCoord0, rtParams1 ); 
+   uv2 = viewportCoordToRenderTarget( vTexCoord0, rtParams2 ); 
+   uv3 = viewportCoordToRenderTarget( vTexCoord0, rtParams3 ); 
    
-   wsEyeRay = gl_MultiTexCoord1.xyz;
+   wsEyeRay = vTexCoord1;
 }

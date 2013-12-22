@@ -23,8 +23,11 @@
 #include "hlslCompat.glsl"
 
 //CloudVert
-#define IN_pos       gl_Vertex.xyzw
-#define IN_uv0       gl_MultiTexCoord0.st
+attribute vec4 vPosition;
+attribute vec2 vTexCoord0;
+
+#define IN_pos       vPosition
+#define IN_uv0       gvTexCoord0
 
 uniform float4x4  modelview;
 uniform float     accumTime;

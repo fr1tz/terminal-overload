@@ -35,10 +35,15 @@ float vernierScale(float fCos)
 	return 0.25 * outx;
 }
 
+attribute vec4 vPosition;
+attribute vec3 vNormal;
+attribute vec4 vColor;
+attribute vec2 vTexCoord0;
+
 // This is the shader input vertex structure.
-#define IN_position gl_Vertex
-#define IN_normal gl_Normal.xyz
-#define IN_color gl_MultiTexCoord0.xyzw
+#define IN_position vPosition
+#define IN_normal vNormal
+#define IN_color vColor
 
 // This is the shader output data.
 varying vec4  rayleighColor;

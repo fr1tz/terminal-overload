@@ -24,8 +24,11 @@
 #include "../../../shdrConsts.h"
 #include "../../../gl/hlslCompat.glsl"
 
-#define In_pos gl_Vertex
-#define In_uv gl_MultiTexCoord0
+attribute vec4 vPosition;
+attribute vec2 vTexCoord0;
+
+#define In_pos vPosition
+#define In_uv vTexCoord0
 
 //-----------------------------------------------------------------------------
 // Constants

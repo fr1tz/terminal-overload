@@ -22,9 +22,13 @@
 
 #include "hlslCompat.glsl"
 
-#define In_pos    gl_Vertex
-#define In_color  gl_Color
-#define In_uv0    gl_MultiTexCoord0.st
+attribute vec4 vPosition;
+attribute vec4 vColor;
+attribute vec2 vTexCoord0;
+
+#define In_pos    vPosition
+#define In_color  vColor
+#define In_uv0    vTexCoord0
 
 varying float4 color;
 varying vec2 uv0;

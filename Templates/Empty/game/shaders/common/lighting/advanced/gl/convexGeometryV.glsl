@@ -22,7 +22,9 @@
 
 #include "../../../gl/hlslCompat.glsl"
 
-#define IN_pos gl_Vertex
+attribute vec4 vPosition;
+
+#define IN_pos vPosition
 
 varying float4 wsEyeDir;
 varying float4 ssPos;

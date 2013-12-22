@@ -23,9 +23,13 @@
 #include "../../../gl/hlslCompat.glsl"
 #include "../../../gl/torque.glsl"
 
-#define IN_pos  gl_Vertex
-#define _IN_uv gl_MultiTexCoord0.st
-#define IN_wsEyeRay gl_MultiTexCoord1.xyz
+attribute vec4 vPosition;
+attribute vec2 vTexCoord0;
+attribute vec3 vTexCoord1;
+
+#define IN_pos  vPosition
+#define _IN_uv vTexCoord0
+#define IN_wsEyeRay vTexCoord1
 
 #define OUT_hpos gl_Position
 varying float3 wsEyeRay;
