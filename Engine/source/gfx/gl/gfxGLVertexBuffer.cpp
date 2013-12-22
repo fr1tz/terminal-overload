@@ -26,6 +26,7 @@
 #include "gfx/gl/gfxGLDevice.h"
 #include "gfx/gl/gfxGLEnumTranslate.h"
 #include "gfx/gl/gfxGLUtils.h"
+#include "gfx/gl/gfxGLVertexAttribLocation.h"
 
 
 GFXGLVertexBuffer::GFXGLVertexBuffer(  GFXDevice *device, 
@@ -41,7 +42,8 @@ GFXGLVertexBuffer::GFXGLVertexBuffer(  GFXDevice *device,
 	glGenBuffers(1, &mBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, mBuffer);
 	glBufferData(GL_ARRAY_BUFFER, numVerts * vertexSize, NULL, GFXGLBufferType[bufferType]);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
+      
+   _initVerticesFormat();
 }
 
 GFXGLVertexBuffer::~GFXGLVertexBuffer()
@@ -81,41 +83,21 @@ void GFXGLVertexBuffer::prepare()
 {
 	// Bind the buffer...
 	glBindBuffer(GL_ARRAY_BUFFER, mBuffer);
-   U8* buffer = (U8*)getBuffer();
 
-   // Loop thru the vertex format elements adding the array state...
-   U32 texCoordIndex = 0;
-   for ( U32 i=0; i < mVertexFormat.getElementCount(); i++ )
+   // Loop thru the vertex format elements adding the array state...   
+   for ( U32 i=0; i < glVerticesFormat.size(); i++ )
    {
-      const GFXVertexElement &element = mVertexFormat.getElement( i );
-      
-      if ( element.isSemantic( GFXSemantic::POSITION ) )
-      {
-         glEnableClientState( GL_VERTEX_ARRAY );
-         glVertexPointer( element.getSizeInBytes() / 4, GL_FLOAT, mVertexSize, buffer );
-         buffer += element.getSizeInBytes();
-      }
-      else if ( element.isSemantic( GFXSemantic::NORMAL ) )
-      {
-         glEnableClientState( GL_NORMAL_ARRAY );
-         glNormalPointer( GL_FLOAT, mVertexSize, buffer );
-         buffer += element.getSizeInBytes();
-      }
-      else if ( element.isSemantic( GFXSemantic::COLOR ) )
-      {
-         glEnableClientState( GL_COLOR_ARRAY );
-         glColorPointer( element.getSizeInBytes(), GL_UNSIGNED_BYTE, mVertexSize, buffer );
-         buffer += element.getSizeInBytes();
-      }
-      else // Everything else is a texture coordinate.
-      {
-         glClientActiveTexture( GL_TEXTURE0 + texCoordIndex );
-         glEnableClientState( GL_TEXTURE_COORD_ARRAY );
-         glTexCoordPointer( element.getSizeInBytes() / 4, GL_FLOAT, mVertexSize, buffer );
-         buffer += element.getSizeInBytes();
-         ++texCoordIndex;
-      }
-      
+      auto &e = glVerticesFormat[i];
+      AssertFatal(e.attrIndex != -1, "");
+      glEnableVertexAttribArray(e.attrIndex);
+      glVertexAttribPointer(
+         e.attrIndex,      // attribute
+         e.elementCount,   // number of elements per vertex, here (r,g,b)
+         e.type,           // the type of each element
+         e.normalized,     // take our values as-is
+         e.stride,         // no extra data between each position
+         e.pointerFirst    // offset of first element
+      );
    }
 }
 
@@ -123,23 +105,12 @@ void GFXGLVertexBuffer::finish()
 {
    glBindBuffer(GL_ARRAY_BUFFER, 0);
    
-   U32 texCoordIndex = 0;
-   for ( U32 i=0; i < mVertexFormat.getElementCount(); i++ )
+   // Loop thru the vertex format elements adding the array state...   
+   for ( U32 i=0; i < glVerticesFormat.size(); i++ )
    {
-      const GFXVertexElement &element = mVertexFormat.getElement( i );
-
-      if ( element.isSemantic( GFXSemantic::POSITION ) )
-         glDisableClientState( GL_VERTEX_ARRAY );
-      else if ( element.isSemantic( GFXSemantic::NORMAL ) )
-         glDisableClientState( GL_NORMAL_ARRAY );
-      else if ( element.isSemantic( GFXSemantic::COLOR ) )
-         glDisableClientState( GL_COLOR_ARRAY );
-      else
-      {
-         glClientActiveTexture( GL_TEXTURE0 + texCoordIndex );
-         glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-         ++texCoordIndex;
-      }
+      auto &e = glVerticesFormat[i];
+      AssertFatal(e.attrIndex != -1, "");
+      glDisableVertexAttribArray(e.attrIndex);
    }
 }
 
@@ -174,4 +145,141 @@ void GFXGLVertexBuffer::resurrect()
    
    delete[] mZombieCache;
    mZombieCache = NULL;
+}
+
+void GFXGLVertexBuffer::_initVerticesFormat()
+{
+   U8* buffer = (U8*)getBuffer();
+
+   // Loop thru the vertex format elements adding the array state...
+   U32 texCoordIndex = 0;
+   for ( U32 i=0; i < mVertexFormat.getElementCount(); i++ )
+   {
+      const GFXVertexElement &element = mVertexFormat.getElement( i );
+      glVerticesFormat.increment();
+      auto &glElement = glVerticesFormat.last();
+
+      if ( element.isSemantic( GFXSemantic::POSITION ) )
+      {           
+         glElement.attrIndex = Torque::GL_VertexAttrib_Position;
+         if(glElement.attrIndex == -1)
+         {
+            glVerticesFormat.pop_back();
+            buffer += element.getSizeInBytes();
+            continue;
+         }
+         glElement.elementCount = element.getSizeInBytes() / 4;
+         glElement.normalized = false;
+         glElement.type = GL_FLOAT;
+         glElement.stride = mVertexSize;
+         glElement.pointerFirst = buffer;
+
+         buffer += element.getSizeInBytes();
+      }
+      else if ( element.isSemantic( GFXSemantic::NORMAL ) )
+      {
+         glElement.attrIndex = Torque::GL_VertexAttrib_Normal;
+         if(glElement.attrIndex == -1)     
+         {
+            glVerticesFormat.pop_back();
+            buffer += element.getSizeInBytes();
+            continue;
+         }
+         glElement.elementCount = 3;
+         glElement.normalized = false;
+         glElement.type = GL_FLOAT;
+         glElement.stride = mVertexSize;
+         glElement.pointerFirst = buffer;
+
+         buffer += element.getSizeInBytes();
+      }
+      else if ( element.isSemantic( GFXSemantic::TANGENT ) )
+      {
+         glElement.attrIndex = Torque::GL_VertexAttrib_Tangent;
+         if(glElement.attrIndex == -1)     
+         {
+            glVerticesFormat.pop_back();
+            buffer += element.getSizeInBytes();
+            continue;
+         }
+         glElement.elementCount = 3;
+         glElement.normalized = false;
+         glElement.type = GL_FLOAT;
+         glElement.stride = mVertexSize;
+         glElement.pointerFirst = buffer;
+
+         buffer += element.getSizeInBytes();
+      }
+      else if ( element.isSemantic( GFXSemantic::TANGENTW ) )
+      {
+         glElement.attrIndex = Torque::GL_VertexAttrib_TangentW;
+         if(glElement.attrIndex == -1)     
+         {
+            glVerticesFormat.pop_back();
+            buffer += element.getSizeInBytes();
+            continue;
+         }
+         glElement.elementCount = 3;
+         glElement.normalized = false;
+         glElement.type = GL_FLOAT;
+         glElement.stride = mVertexSize;
+         glElement.pointerFirst = buffer;
+
+         buffer += element.getSizeInBytes();
+      }
+      else if ( element.isSemantic( GFXSemantic::BINORMAL ) )
+      {
+         glElement.attrIndex = Torque::GL_VertexAttrib_Binormal;
+         if(glElement.attrIndex == -1)     
+         {
+            glVerticesFormat.pop_back();
+            buffer += element.getSizeInBytes();
+            continue;
+         }
+         glElement.elementCount = 3;
+         glElement.normalized = false;
+         glElement.type = GL_FLOAT;
+         glElement.stride = mVertexSize;
+         glElement.pointerFirst = buffer;
+
+         buffer += element.getSizeInBytes();
+      }
+      else if ( element.isSemantic( GFXSemantic::COLOR ) )
+      {
+         glElement.attrIndex = Torque::GL_VertexAttrib_Color;
+         if(glElement.attrIndex == -1)     
+         {
+            glVerticesFormat.pop_back();
+            buffer += element.getSizeInBytes();
+            continue;
+         }
+         glElement.elementCount = element.getSizeInBytes();
+         glElement.normalized = true;
+         glElement.type = GL_UNSIGNED_BYTE;
+         glElement.stride = mVertexSize;
+         glElement.pointerFirst = buffer;
+
+         buffer += element.getSizeInBytes();
+      }
+      else // Everything else is a texture coordinate.
+      {
+         String name = element.getSemantic();
+         glElement.elementCount = element.getSizeInBytes() / 4;
+         glElement.attrIndex = Torque::GL_VertexAttrib_TexCoord0 + texCoordIndex;
+         if(glElement.attrIndex == -1)     
+         {
+            glVerticesFormat.pop_back();
+            buffer += element.getSizeInBytes();
+            continue;
+         }
+            
+         glElement.normalized = false;
+         glElement.type = GL_FLOAT;
+         glElement.stride = mVertexSize;
+         glElement.pointerFirst = buffer;
+
+         buffer += element.getSizeInBytes();
+         ++texCoordIndex;
+      }
+   }
 }

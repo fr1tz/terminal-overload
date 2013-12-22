@@ -22,6 +22,7 @@
 
 #include "platform/platform.h"
 #include "gfx/gl/gfxGLShader.h"
+#include "gfx/gl/gfxGLVertexAttribLocation.h"
 
 #include "core/frameAllocator.h"
 #include "core/stream/fileStream.h"
@@ -417,6 +418,24 @@ bool GFXGLShader::_init()
    // If either shader was present and failed to compile, bail.
    if(!compiledVertexShader || !compiledPixelShader)
       return false;
+
+   //bind vertex attributes
+   glBindAttribLocation(mProgram, Torque::GL_VertexAttrib_Position,    "vPosition");
+   glBindAttribLocation(mProgram, Torque::GL_VertexAttrib_Normal,      "vNormal");
+   glBindAttribLocation(mProgram, Torque::GL_VertexAttrib_Color,       "vColor");
+   glBindAttribLocation(mProgram, Torque::GL_VertexAttrib_Tangent,     "vTangent");
+   glBindAttribLocation(mProgram, Torque::GL_VertexAttrib_TangentW,    "vTangentW");
+   glBindAttribLocation(mProgram, Torque::GL_VertexAttrib_Binormal,    "vBinormal");
+   glBindAttribLocation(mProgram, Torque::GL_VertexAttrib_TexCoord0,   "vTexCoord0");
+   glBindAttribLocation(mProgram, Torque::GL_VertexAttrib_TexCoord1,   "vTexCoord1");
+   glBindAttribLocation(mProgram, Torque::GL_VertexAttrib_TexCoord2,   "vTexCoord2");
+   glBindAttribLocation(mProgram, Torque::GL_VertexAttrib_TexCoord3,   "vTexCoord3");
+   glBindAttribLocation(mProgram, Torque::GL_VertexAttrib_TexCoord4,   "vTexCoord4");
+   glBindAttribLocation(mProgram, Torque::GL_VertexAttrib_TexCoord5,   "vTexCoord5");
+   glBindAttribLocation(mProgram, Torque::GL_VertexAttrib_TexCoord6,   "vTexCoord6");
+   glBindAttribLocation(mProgram, Torque::GL_VertexAttrib_TexCoord7,   "vTexCoord7");
+   glBindAttribLocation(mProgram, Torque::GL_VertexAttrib_TexCoord8,   "vTexCoord8");
+   glBindAttribLocation(mProgram, Torque::GL_VertexAttrib_TexCoord9,   "vTexCoord9");
 
    // Link it!
    glLinkProgram( mProgram );

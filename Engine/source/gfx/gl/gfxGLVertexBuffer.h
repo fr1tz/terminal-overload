@@ -34,6 +34,7 @@
 class GFXGLVertexBuffer : public GFXVertexBuffer 
 {
 public:
+
 	GFXGLVertexBuffer(   GFXDevice *device, 
                         U32 numVerts, 
                         const GFXVertexFormat *vertexFormat, 
@@ -59,6 +60,19 @@ private:
 	GLuint mBuffer;
    
    U8* mZombieCache;
+
+   struct glVertexDecl
+   {
+      GLint attrIndex;
+      GLint elementCount; // 1 - 4
+      GLenum type; // GL_FLOAT...
+      GLboolean normalized;
+      GLsizei stride;
+      GLvoid *pointerFirst;
+   };
+
+   Vector<glVertexDecl> glVerticesFormat;  
+   void _initVerticesFormat();
 };
 
 #endif
