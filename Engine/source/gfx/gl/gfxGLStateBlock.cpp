@@ -72,11 +72,6 @@ void GFXGLStateBlock::activate(const GFXGLStateBlock* oldState)
    if(STATE_CHANGE(blendOp))
       glBlendEquation(GFXGLBlendOp[mDesc.blendOp]);
 
-   // Alpha testing
-   CHECK_TOGGLE_STATE(alphaTestEnable, GL_ALPHA_TEST);      
-   if(STATE_CHANGE(alphaTestFunc) || STATE_CHANGE(alphaTestRef))
-      glAlphaFunc(GFXGLCmpFunc[mDesc.alphaTestFunc], (F32) mDesc.alphaTestRef * 1.0f/255.0f);
-
    // Color write masks
    if(STATE_CHANGE(colorWriteRed) || STATE_CHANGE(colorWriteBlue) || STATE_CHANGE(colorWriteGreen) || STATE_CHANGE(colorWriteAlpha))
       glColorMask(mDesc.colorWriteRed, mDesc.colorWriteBlue, mDesc.colorWriteGreen, mDesc.colorWriteAlpha);
@@ -121,7 +116,6 @@ void GFXGLStateBlock::activate(const GFXGLStateBlock* oldState)
    // "Misc"
    CHECK_TOGGLE_STATE(ffLighting, GL_LIGHTING);
 
-   glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
    CHECK_TOGGLE_STATE(vertexColorEnable, GL_COLOR_MATERIAL);
 
    if(STATE_CHANGE(fillMode))
@@ -145,20 +139,7 @@ void GFXGLStateBlock::activate(const GFXGLStateBlock* oldState)
       case GFXTOPDisable :
          if(!tex)
             break;
-         glDisable(GL_TEXTURE_2D);
          updateTexParam = false;
-         break;
-      case GFXTOPModulate :
-         glEnable(GL_TEXTURE_2D);
-         glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-         break;
-      case GFXTOPAdd :
-         glEnable(GL_TEXTURE_2D);
-         glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_ADD);
-         break;
-      default :
-         glEnable(GL_TEXTURE_2D);
-         glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
          break;
       }
 

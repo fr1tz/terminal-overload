@@ -417,53 +417,12 @@ void GFXGLDevice::setPB(GFXGLPrimitiveBuffer* pb)
 
 void GFXGLDevice::setLightInternal(U32 lightStage, const GFXLightInfo light, bool lightEnable)
 {
-   if(!lightEnable)
-   {
-      glDisable(GL_LIGHT0 + lightStage);
-      return;
-   }
-
-   if(light.mType == GFXLightInfo::Ambient)
-   {
-      AssertFatal(false, "Instead of setting an ambient light you should set the global ambient color.");
-      return;
-   }
-
-   GLenum lightEnum = GL_LIGHT0 + lightStage;
-   glLightfv(lightEnum, GL_AMBIENT, (GLfloat*)&light.mAmbient);
-   glLightfv(lightEnum, GL_DIFFUSE, (GLfloat*)&light.mColor);
-   glLightfv(lightEnum, GL_SPECULAR, (GLfloat*)&light.mColor);
-
-   F32 pos[4];
-
-   if(light.mType != GFXLightInfo::Vector)
-   {
-      dMemcpy(pos, &light.mPos, sizeof(light.mPos));
-      pos[3] = 1.0;
-   }
-   else
-   {
-      dMemcpy(pos, &light.mDirection, sizeof(light.mDirection));
-      pos[3] = 0.0;
-   }
-   // Harcoded attenuation
-   glLightf(lightEnum, GL_CONSTANT_ATTENUATION, 1.0f);
-   glLightf(lightEnum, GL_LINEAR_ATTENUATION, 0.1f);
-   glLightf(lightEnum, GL_QUADRATIC_ATTENUATION, 0.0f);
-
-   glLightfv(lightEnum, GL_POSITION, (GLfloat*)&pos);
-   glEnable(lightEnum);
+   // ONLY NEEDED ON FFP
 }
 
 void GFXGLDevice::setLightMaterialInternal(const GFXLightMaterial mat)
 {
-   // CodeReview - Setting these for front and back is unnecessary.  We should consider
-   // checking what faces we're culling and setting this only for the unculled faces.
-   glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, (GLfloat*)&mat.ambient);
-   glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, (GLfloat*)&mat.diffuse);
-   glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, (GLfloat*)&mat.specular);
-   glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, (GLfloat*)&mat.emissive);
-   glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, mat.shininess);
+   // ONLY NEEDED ON FFP
 }
 
 void GFXGLDevice::setGlobalAmbientInternal(ColorF color)
@@ -477,19 +436,12 @@ void GFXGLDevice::setTextureInternal(U32 textureUnit, const GFXTextureObject*tex
    glActiveTexture(GL_TEXTURE0 + textureUnit);
    if (tex)
    {
-      // GFXGLTextureObject::bind also handles applying the current sampler state.
-      if(mActiveTextureType[textureUnit] != tex->getBinding() && mActiveTextureType[textureUnit] != GL_ZERO)
-      {
-         glBindTexture(mActiveTextureType[textureUnit], 0);
-         glDisable(mActiveTextureType[textureUnit]);
-      }
       mActiveTextureType[textureUnit] = tex->getBinding();
       tex->bind(textureUnit);
    } 
    else if(mActiveTextureType[textureUnit] != GL_ZERO)
    {
       glBindTexture(mActiveTextureType[textureUnit], 0);
-      glDisable(mActiveTextureType[textureUnit]);
       mActiveTextureType[textureUnit] = GL_ZERO;
    }
    
@@ -501,18 +453,12 @@ void GFXGLDevice::setCubemapInternal(U32 textureUnit, const GFXGLCubemap* textur
    glActiveTexture(GL_TEXTURE0 + textureUnit);
    if(texture)
    {
-      if(mActiveTextureType[textureUnit] != GL_TEXTURE_CUBE_MAP && mActiveTextureType[textureUnit] != GL_ZERO)
-      {
-         glBindTexture(mActiveTextureType[textureUnit], 0);
-         glDisable(mActiveTextureType[textureUnit]);
-      }
       mActiveTextureType[textureUnit] = GL_TEXTURE_CUBE_MAP;
       texture->bind(textureUnit);
    }
    else if(mActiveTextureType[textureUnit] != GL_ZERO)
    {
       glBindTexture(mActiveTextureType[textureUnit], 0);
-      glDisable(mActiveTextureType[textureUnit]);
       mActiveTextureType[textureUnit] = GL_ZERO;
    }
 
@@ -521,43 +467,7 @@ void GFXGLDevice::setCubemapInternal(U32 textureUnit, const GFXGLCubemap* textur
 
 void GFXGLDevice::setMatrix( GFXMatrixType mtype, const MatrixF &mat )
 {
-   MatrixF modelview;
-   switch (mtype)
-   {
-      case GFXMatrixWorld :
-         {
-            glMatrixMode(GL_MODELVIEW);
-            m_mCurrentWorld = mat;
-            modelview = m_mCurrentWorld;
-            modelview *= m_mCurrentView;
-            modelview.transpose();
-            glLoadMatrixf((F32*) modelview);
-         }
-         break;
-      case GFXMatrixView :
-         {
-            glMatrixMode(GL_MODELVIEW);
-            m_mCurrentView = mat;
-            modelview = m_mCurrentView;
-            modelview *= m_mCurrentWorld;
-            modelview.transpose();
-            glLoadMatrixf((F32*) modelview);
-         }
-         break;
-      case GFXMatrixProjection :
-         {        
-            glMatrixMode(GL_PROJECTION);
-            MatrixF t(mat);
-            t.transpose();
-            glLoadMatrixf((F32*) t);
-            glMatrixMode(GL_MODELVIEW);
-         }
-         break;
-      // CodeReview - Add support for texture transform matrix types
-      default:
-         AssertFatal(false, "GFXGLDevice::setMatrix - Unknown matrix mode!");
-         return;
-   }
+   // ONLY NEEDED ON FFP
 }
 
 void GFXGLDevice::setClipRect( const RectI &inRect )

@@ -142,7 +142,6 @@ void GFXGLTextureObject::bind(U32 textureUnit) const
 {
    glActiveTexture(GL_TEXTURE0 + textureUnit);
    glBindTexture(mBinding, mHandle);
-   glEnable(mBinding);
   
    GFXGLStateBlockRef sb = mGLDevice->getCurrentStateBlock();
    AssertFatal(sb, "GFXGLTextureObject::bind - No active stateblock!");
@@ -156,8 +155,6 @@ void GFXGLTextureObject::bind(U32 textureUnit) const
    glTexParameteri(mBinding, GL_TEXTURE_WRAP_T, !mIsNPoT2 ? GFXGLTextureAddress[ssd.addressModeV] : GL_CLAMP_TO_EDGE);
    if(mBinding == GL_TEXTURE_3D)
       glTexParameteri(mBinding, GL_TEXTURE_WRAP_R, GFXGLTextureAddress[ssd.addressModeW]);
-
-   glTexEnvf(GL_TEXTURE_FILTER_CONTROL, GL_TEXTURE_LOD_BIAS, ssd.mipLODBias);
 }
 
 U8* GFXGLTextureObject::getTextureData()
