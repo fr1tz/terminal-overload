@@ -88,7 +88,6 @@ void GFXGLVertexBuffer::prepare()
    for ( U32 i=0; i < glVerticesFormat.size(); i++ )
    {
       auto &e = glVerticesFormat[i];
-      AssertFatal(e.attrIndex != -1, "");
       glEnableVertexAttribArray(e.attrIndex);
       glVertexAttribPointer(
          e.attrIndex,      // attribute
@@ -104,14 +103,9 @@ void GFXGLVertexBuffer::prepare()
 void GFXGLVertexBuffer::finish()
 {
    glBindBuffer(GL_ARRAY_BUFFER, 0);
-   
-   // Loop thru the vertex format elements adding the array state...   
+
    for ( U32 i=0; i < glVerticesFormat.size(); i++ )
-   {
-      auto &e = glVerticesFormat[i];
-      AssertFatal(e.attrIndex != -1, "");
-      glDisableVertexAttribArray(e.attrIndex);
-   }
+      glDisableVertexAttribArray(glVerticesFormat[i].attrIndex);
 }
 
 GLvoid* GFXGLVertexBuffer::getBuffer()

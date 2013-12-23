@@ -38,7 +38,7 @@ Var * AppVertConnectorGLSL::getElement(   RegisterType type,
       {
          Var *newVar = new Var;
          mElementList.push_back( newVar );
-         newVar->setConnectName( "gl_Vertex" );
+         newVar->setConnectName( "vPosition" );
          return newVar;
       }
 
@@ -46,28 +46,49 @@ Var * AppVertConnectorGLSL::getElement(   RegisterType type,
       {
          Var *newVar = new Var;
          mElementList.push_back( newVar );
-         newVar->setConnectName( "gl_Normal" );
+         newVar->setConnectName( "vNormal" );
          return newVar;
       }
-      
+
+      case RT_BINORMAL:
+      {
+         Var *newVar = new Var;
+         mElementList.push_back( newVar );
+         newVar->setConnectName( "vBinormal" );
+         return newVar;
+      }      
 
       case RT_COLOR:
       {
          Var *newVar = new Var;
          mElementList.push_back( newVar );
-         newVar->setConnectName( "gl_Color" );
+         newVar->setConnectName( "vColor" );
+         return newVar;
+      }
+
+      case RT_TANGENT:
+      {
+         Var *newVar = new Var;
+         mElementList.push_back( newVar );         
+         newVar->setConnectName( "vTangent" );
+         return newVar;
+      }
+
+      case RT_TANGENTW:
+      {
+         Var *newVar = new Var;
+         mElementList.push_back( newVar );         
+         newVar->setConnectName( "vTangentW" );
          return newVar;
       }
 
       case RT_TEXCOORD:
-      case RT_BINORMAL:
-      case RT_TANGENT:
       {
          Var *newVar = new Var;
          mElementList.push_back( newVar );
          
          char out[32];
-         dSprintf( (char*)out, sizeof(out), "gl_MultiTexCoord%d", mCurTexElem );
+         dSprintf( (char*)out, sizeof(out), "vTexCoord%d", mCurTexElem );
          newVar->setConnectName( out );
          newVar->constNum = mCurTexElem;
          newVar->arraySize = numElements;
@@ -109,29 +130,18 @@ void AppVertConnectorGLSL::reset()
 }
 
 void AppVertConnectorGLSL::print( Stream &stream, bool isVertexShader )
-{/*
+{
    // print out elements
    for( U32 i=0; i<mElementList.size(); i++ )
    {
       Var *var = mElementList[i];
       U8 output[256];
-      const char* swizzle;
-      if(!dStrcmp((const char*)var->type, "float"))
-         swizzle = "x";
-      else if(!dStrcmp((const char*)var->type, "vec2"))
-         swizzle = "xy";
-      else if(!dStrcmp((const char*)var->type, "vec3"))
-         swizzle = "xyz";
-      else
-         swizzle = "xyzw";
-
-      // This is ugly.  We use #defines to match user defined names with 
-      // built in vars.  There is no cleaner way to do this.
-      dSprintf( (char*)output, sizeof(output), "#define %s %s.%s\r\n", var->name, var->connectName, swizzle );
-      stream.write( dStrlen((char*)output), output );
-      dSprintf( (char*)output, sizeof(output), "#define IN_%s %s.%s\r\n", var->name, var->connectName, swizzle );
-      stream.write( dStrlen((char*)output), output );
-   }*/
+      
+      dSprintf( (char*)output, sizeof(output), "attribute %s %s;\r\n", var->type, var->connectName );
+      stream.write( dStrlen((char*)output), output );      
+   }
+   const char* newLine ="\r\n";
+   stream.write( dStrlen((char*)newLine), newLine );
 }
 
 Var * VertPixelConnectorGLSL::getElement( RegisterType type, 
@@ -293,20 +303,9 @@ void AppVertConnectorGLSL::printOnMain( Stream &stream, bool isVerterShader )
    for( U32 i=0; i<mElementList.size(); i++ )
    {
       Var *var = mElementList[i];
-      U8 output[256];
-      const char* swizzle;
-      if(!dStrcmp((const char*)var->type, "float"))
-         swizzle = "x";
-      else if(!dStrcmp((const char*)var->type, "vec2"))
-         swizzle = "xy";
-      else if(!dStrcmp((const char*)var->type, "vec3"))
-         swizzle = "xyz";
-      else
-         swizzle = "xyzw";      
-   
-      /// Necessary to simulate HLSL, allowing write to vertex data
-      dSprintf((char*)output, sizeof(output), "   %s IN_%s = %s.%s;\r\n", var->type, var->name, var->connectName, swizzle);      
+      U8 output[256];  
 
+      dSprintf((char*)output, sizeof(output), "   %s IN_%s = %s;\r\n", var->type, var->name, var->connectName);
       stream.write( dStrlen((char*)output), output );
    }
 
