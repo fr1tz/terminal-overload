@@ -415,12 +415,7 @@ void ProcessedCustomMaterial::setTextureStages( SceneRenderState *state, const S
                   Point4F rtParams;
 
                   ScreenSpace::RenderTargetParameters(targetSz, targetVp, rtParams);
-                  shaderConsts->set(handles->mRTParamsSC[i], rtParams);
-               }
-               else
-               {
-                  //const char* samplerName = handle->getName(); // TODO OPENGL CLEAN
-                  //samplerName = samplerName;
+                  shaderConsts->set(handles->mRTParamsSC[i], rtParams);               
                }
               
                GFX->setTexture( samplerRegister, texObject );

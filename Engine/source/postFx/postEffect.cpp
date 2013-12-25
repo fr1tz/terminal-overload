@@ -298,8 +298,6 @@ PostEffect::PostEffect()
    dMemset( mActiveTextureViewport, 0, sizeof( RectI ) * NumTextures );
    dMemset( mTexSizeSC, 0, sizeof( GFXShaderConstHandle* ) * NumTextures );
    dMemset( mRenderTargetParamsSC, 0, sizeof( GFXShaderConstHandle* ) * NumTextures );
-   //mSamplerHandles
-   dMemset( mSamplerHandles, 0, sizeof( GFXShaderConstHandle* ) * NumTextures );
 }
 
 PostEffect::~PostEffect()
@@ -552,6 +550,8 @@ void PostEffect::_setupConstants( const SceneRenderState *state )
       mTexSizeSC[3] = mShader->getShaderConstHandle( "$texSize3" );
       mTexSizeSC[4] = mShader->getShaderConstHandle( "$texSize4" );
       mTexSizeSC[5] = mShader->getShaderConstHandle( "$texSize5" );
+      mTexSizeSC[6] = mShader->getShaderConstHandle( "$texSize6" );
+      mTexSizeSC[7] = mShader->getShaderConstHandle( "$texSize7" );
 
       mRenderTargetParamsSC[0] = mShader->getShaderConstHandle( "$rtParams0" );
       mRenderTargetParamsSC[1] = mShader->getShaderConstHandle( "$rtParams1" );
@@ -559,6 +559,8 @@ void PostEffect::_setupConstants( const SceneRenderState *state )
       mRenderTargetParamsSC[3] = mShader->getShaderConstHandle( "$rtParams3" );
       mRenderTargetParamsSC[4] = mShader->getShaderConstHandle( "$rtParams4" );
       mRenderTargetParamsSC[5] = mShader->getShaderConstHandle( "$rtParams5" );
+      mRenderTargetParamsSC[6] = mShader->getShaderConstHandle( "$rtParams6" );
+      mRenderTargetParamsSC[7] = mShader->getShaderConstHandle( "$rtParams7" );
 
       //mViewportSC = shader->getShaderConstHandle( "$viewport" );
 
@@ -1464,34 +1466,8 @@ void PostEffect::_checkRequirements()
    // Finally find and load the shader.
    ShaderData *shaderData;
    if ( Sim::findObject( mShaderName, shaderData ) )   
-   {
       if ( shaderData->getPixVersion() <= GFX->getPixelShaderVersion() )
          mShader = shaderData->getShader( macros );
-
-      if(mShader)
-      {
-         for(int i = 0; i < PostEffect::NumTextures; ++i)
-         {
-            String samplerName = shaderData->getSamplerName(i);
-            if(samplerName.isEmpty())
-            {
-               if(mTexFilename[i].isNotEmpty())
-               {
-                  const char *error = avar("PostEffect(%s) texture[%d] are set, but ShaderData(%s) samplerNames[%d] is not defined.", getName(), i, shaderData->getName(), i);
-                  Con::errorf(error);
-                  GFXAssertFatal(0, error);
-               }
-               continue;
-            }
-            
-            mSamplerHandles[i] = mShader->getShaderConstHandle( samplerName.startsWith("$") ? samplerName : String("$")+samplerName );
-            GFXAssertFatal( !mSamplerHandles[i]->isValid() || i == mSamplerHandles[i]->getSamplerRegister(), "");
-         }
-
-         for(int i = 0; i < PostEffect::NumTextures; ++i)
-             mRenderTargetParamsSC[i] =  mShader->getShaderConstHandle( String::ToString("$rtParams%d", i) );
-      }
-   }
 
    // If we didn't get a shader... we're done.
    if ( !mShader )

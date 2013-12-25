@@ -119,19 +119,11 @@ bool CustomMaterial::onAdd()
       return false;
    }   
    
+   const char* samplerDecl = "sampler";
    S32 i = 0;
-   const char *samplerDecl = "sampler";
-   const char *rtParams = "rtParams";
    for (SimFieldDictionaryIterator itr(getFieldDictionary()); *itr; ++itr)
    {
    	SimFieldDictionary::Entry* entry = *itr;
-
-      if( dStrStartsWith(entry->slotName, rtParams) )
-      {
-         Con::warnf("   WARNING: CustomMaterial(%s) cant define rtParams", getName());
-         //GFXAssertFatal(0, "");
-      }
-
       if (dStrStartsWith(entry->slotName, samplerDecl))
       {
       	if (i >= MAX_TEX_PER_PASS)

@@ -142,12 +142,8 @@ bool ShaderData::onAdd()
 
    for(int i = 0; i < NumTextures; ++i)
    {
-      if( mSamplerNames[i].isNotEmpty() && !mSamplerNames[i].startsWith("$") )
-      {
-         mSamplerNames[i].insert(0, "$");
-         //Con::warnf("ShaderData(%s): Sampler names must start with $, change to samplerName[%d] = \"%s\"", 
-         //   getName(), i, mSamplerNames[i].c_str() );         
-      }
+      if( mSamplerNames[i].isNotEmpty() && !mSamplerNames[i].startsWith("$") )      
+         mSamplerNames[i].insert(0, "$");      
    }
 
    return true;
