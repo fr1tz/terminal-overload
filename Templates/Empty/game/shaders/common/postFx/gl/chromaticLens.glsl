@@ -30,11 +30,11 @@
 uniform sampler2D backBuffer;
 uniform float distCoeff;
 uniform float cubeDistort;
-uniform float3 colorDistort;
+uniform vec3 colorDistort;
 
 void main()
 {
-    float2 tex = IN_uv0;
+    vec2 tex = IN_uv0;
 
     float f = 0;
     float r2 = (tex.x - 0.5) * (tex.x - 0.5) + (tex.y - 0.5) * (tex.y - 0.5);       
@@ -46,15 +46,15 @@ void main()
         f = 1 + r2 * (distCoeff + cubeDistort * sqrt(r2));
 
     // Distort each color channel seperately to get a chromatic distortion effect.
-    float3 outColor;
-    float3 distort = float3(f) + colorDistort;
+    vec3 outColor;
+    vec3 distort = vec3(f) + colorDistort;
 
     for ( int i=0; i < 3; i++ )
     {
         float x = distort[i] * ( tex.x - 0.5 ) + 0.5;
         float y = distort[i] * ( tex.y - 0.5 ) + 0.5;
-        outColor[i] = tex2Dlod( backBuffer, float4(x,y,0,0) )[i];
+        outColor[i] = tex2Dlod( backBuffer, vec4(x,y,0,0) )[i];
     }
 
-    gl_FragColor = float4( outColor.rgb, 1 );
+    gl_FragColor = vec4( outColor.rgb, 1 );
 }

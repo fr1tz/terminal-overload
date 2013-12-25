@@ -55,17 +55,17 @@ varying vec3 misc;
 //-----------------------------------------------------------------------------
 // Uniforms                                                                  
 //-----------------------------------------------------------------------------
-uniform float4x4 modelMat;
-uniform float4x4 modelview;
-uniform float4   rippleMat[3];
-uniform float3   eyePos;       
-uniform float2   waveDir[3];
-uniform float2   waveData[3];
-uniform float2   rippleDir[3];
-uniform float2   rippleTexScale[3];                    
-uniform float3   rippleSpeed;
-uniform float3   inLightVec;
-uniform float3   reflectNormal;
+uniform mat4 modelMat;
+uniform mat4 modelview;
+uniform vec4   rippleMat[3];
+uniform vec3   eyePos;       
+uniform vec2   waveDir[3];
+uniform vec2   waveData[3];
+uniform vec2   rippleDir[3];
+uniform vec2   rippleTexScale[3];                    
+uniform vec3   rippleSpeed;
+uniform vec3   inLightVec;
+uniform vec3   reflectNormal;
 uniform float    gridElementSize;
 uniform float    elapsedTime;
 uniform float    undulateMaxDist;
@@ -96,14 +96,14 @@ void main()
    // Move the vertex based on the horizonFactor if specified to do so for this vert.
    // if ( IN_horizonFactor.z > 0 )
    // {
-      // float2 offsetXY = eyePos.xy - eyePos.xy % gridElementSize;         
+      // vec2 offsetXY = eyePos.xy - eyePos.xy % gridElementSize;         
       // IN_position.xy += offsetXY;
       // IN_undulateData += offsetXY; 
    // }         
    
-   float4 worldPos = mul( modelMat, IN_position );
+   vec4 worldPos = mul( modelMat, IN_position );
       
-   IN_position.z = lerp( IN_position.z, eyePos.z, IN_horizonFactor.x );
+   IN_position.z = mix( IN_position.z, eyePos.z, IN_horizonFactor.x );
    
    //OUT_objPos = worldPos;
    OUT_objPos.xyz = IN_position.xyz;
@@ -114,7 +114,7 @@ void main()
    OUT_posPreWave = mul( texGen, OUT_posPreWave );
       
    // Calculate the undulation amount for this vertex.   
-   float2 undulatePos = mul( modelMat, float4( IN_undulateData.xy, 0, 1 ) ).xy;
+   vec2 undulatePos = mul( modelMat, vec4( IN_undulateData.xy, 0, 1 ) ).xy;
    //if ( undulatePos.x < 0 )
    //   undulatePos = IN_position.xy;
    
@@ -157,16 +157,16 @@ void main()
    // OUT_misc.w = mul( modelMat, OUT_fogPos ).z;
    // if ( IN_horizonFactor.x > 0 )
    // {
-      // float3 awayVec = normalize( OUT_fogPos.xyz - eyePos );
+      // vec3 awayVec = normalize( OUT_fogPos.xyz - eyePos );
       // OUT_fogPos.xy += awayVec.xy * 1000.0;
    // }
    
    // Convert to screen 
-   OUT_posPostWave = mul( modelview, OUT_posPostWave ); // mul( modelview, float4( OUT_posPostWave.xyz, 1 ) );     
+   OUT_posPostWave = mul( modelview, OUT_posPostWave ); // mul( modelview, vec4( OUT_posPostWave.xyz, 1 ) );     
    
    // Setup the OUT position symantic variable
-   OUT_hpos = OUT_posPostWave; // mul( modelview, float4( IN_position.xyz, 1 ) ); //float4( OUT_posPostWave.xyz, 1 );   
-   //OUT_hpos.z = lerp( OUT_hpos.z, OUT_hpos.w, IN_horizonFactor.x );
+   OUT_hpos = OUT_posPostWave; // mul( modelview, vec4( IN_position.xyz, 1 ) ); //vec4( OUT_posPostWave.xyz, 1 );   
+   //OUT_hpos.z = mix( OUT_hpos.z, OUT_hpos.w, IN_horizonFactor.x );
    
    // Save world space camera dist/depth of the outgoing pixel
    OUT_pixelDist = OUT_hpos.z;              
@@ -174,7 +174,7 @@ void main()
    // Convert to reflection texture space   
    OUT_posPostWave = mul( texGen, OUT_posPostWave );
         
-   float2 txPos = undulatePos;
+   vec2 txPos = undulatePos;
    if ( bool(IN_horizonFactor.x) )
       txPos = normalize( txPos ) * 50000.0;
       
@@ -182,7 +182,7 @@ void main()
    OUT_rippleTexCoord01.xy = txPos * rippleTexScale[0];
    OUT_rippleTexCoord01.xy += rippleDir[0] * elapsedTime * rippleSpeed.x;
             
-   float2x2 texMat;   
+   mat2 texMat;   
    texMat[0][0] = rippleMat[0].x;
    texMat[1][0] = rippleMat[0].y;
    texMat[0][1] = rippleMat[0].z;
@@ -209,9 +209,9 @@ void main()
 
 #ifdef WATER_SPEC
    
-   float3 binormal = float3( 1, 0, 0 );
-   float3 tangent = float3( 0, 1, 0 );
-   float3 normal;
+   vec3 binormal = vec3( 1, 0, 0 );
+   vec3 tangent = vec3( 0, 1, 0 );
+   vec3 normal;
    for ( int i = 0; i < 3; i++ )
    {
       binormal.z += undulateFade * waveDir[i].x * waveData[i].y * cos( waveDir[i].x * IN_undulateData.x + waveDir[i].y * IN_undulateData.y + elapsedTime * waveData[i].x );
@@ -222,7 +222,7 @@ void main()
    tangent = normalize( tangent );
    normal = cross( binormal, tangent );
    
-   float3x3 worldToTangent;
+   mat3 worldToTangent;
    worldToTangent[0] = binormal;
    worldToTangent[1] = tangent;
    worldToTangent[2] = normal;

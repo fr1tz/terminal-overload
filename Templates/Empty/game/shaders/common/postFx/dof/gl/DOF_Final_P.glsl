@@ -28,34 +28,34 @@ uniform sampler2D colorSampler; // Original source image
 uniform sampler2D smallBlurSampler; // Output of SmallBlurPS()  
 uniform sampler2D largeBlurSampler; // Blurred output of DofDownsample()  
 uniform sampler2D depthSampler; // 
-uniform float2 oneOverTargetSize;  
-uniform float4 dofLerpScale;  
-uniform float4 dofLerpBias;  
-uniform float3 dofEqFar;  
+uniform vec2 oneOverTargetSize;  
+uniform vec4 dofLerpScale;  
+uniform vec4 dofLerpBias;  
+uniform vec3 dofEqFar;  
 uniform float maxFarCoC;
 
 //static float d0 = 0.1;
 //static float d1 = 0.1;
 //static float d2 = 0.8;
-//static float4 dofLerpScale = float4( -1.0 / d0, -1.0 / d1, -1.0 / d2, 1.0 / d2 );
-//static float4 dofLerpBias = float4( 1.0, (1.0 - d2) / d1, 1.0 / d2, (d2 - 1.0) / d2 );
-//static float3 dofEqFar = float3( 2.0, 0.0, 1.0 ); 
+//static vec4 dofLerpScale = vec4( -1.0 / d0, -1.0 / d1, -1.0 / d2, 1.0 / d2 );
+//static vec4 dofLerpBias = vec4( 1.0, (1.0 - d2) / d1, 1.0 / d2, (d2 - 1.0) / d2 );
+//static vec3 dofEqFar = vec3( 2.0, 0.0, 1.0 ); 
 
-float4 tex2Doffset( sampler2D s, float2 tc, float2 offset )  
+vec4 tex2Doffset( sampler2D s, vec2 tc, vec2 offset )  
 {  
-   return tex2D( s, tc + offset * oneOverTargetSize );  
+   return texture2D( s, tc + offset * oneOverTargetSize );  
 }  
 
-half3 GetSmallBlurSample( float2 tc )  
+half3 GetSmallBlurSample( vec2 tc )  
 {  
    half3 sum;  
    const half weight = 4.0 / 17;  
    sum = half3(0);  // Unblurred sample done by alpha blending  
-   //sum += weight * tex2Doffset( colorSampler, tc, float2( 0, 0 ) ).rgb;
-   sum += weight * tex2Doffset( colorSampler, tc, float2( +0.5, -1.5 ) ).rgb;  
-   sum += weight * tex2Doffset( colorSampler, tc, float2( -1.5, -0.5 ) ).rgb;  
-   sum += weight * tex2Doffset( colorSampler, tc, float2( -0.5, +1.5 ) ).rgb;  
-   sum += weight * tex2Doffset( colorSampler, tc, float2( +1.5, +0.5 ) ).rgb;  
+   //sum += weight * tex2Doffset( colorSampler, tc, vec2( 0, 0 ) ).rgb;
+   sum += weight * tex2Doffset( colorSampler, tc, vec2( +0.5, -1.5 ) ).rgb;  
+   sum += weight * tex2Doffset( colorSampler, tc, vec2( -1.5, -0.5 ) ).rgb;  
+   sum += weight * tex2Doffset( colorSampler, tc, vec2( -0.5, +1.5 ) ).rgb;  
+   sum += weight * tex2Doffset( colorSampler, tc, vec2( +1.5, +0.5 ) ).rgb;  
    return sum;  
 }  
 
@@ -70,8 +70,8 @@ half4 InterpolateDof( half3 small, half3 med, half3 large, half t )
    // Let the unblurred sample to small blur fade happen over distance  
    // d0, the small to medium blur over distance d1, and the medium to  
    // large blur over distance d2, where d0 + d1 + d2 = 1.  
-   //float4 dofLerpScale = float4( -1 / d0, -1 / d1, -1 / d2, 1 / d2 );  
-   //float4 dofLerpBias = float4( 1, (1 – d2) / d1, 1 / d2, (d2 – 1) / d2 );  
+   //vec4 dofLerpScale = vec4( -1 / d0, -1 / d1, -1 / d2, 1 / d2 );  
+   //vec4 dofLerpBias = vec4( 1, (1 – d2) / d1, 1 / d2, (d2 – 1) / d2 );  
    
    weights = saturate( t * dofLerpScale + dofLerpBias );  
    weights.yz = min( weights.yz, 1 - weights.xy );  
@@ -88,8 +88,8 @@ half4 InterpolateDof( half3 small, half3 med, half3 large, half t )
 void main()
 {  
    //return half4( 1,0,1,1 );
-   //return half4( tex2D( colorSampler, IN_uv0 ).rgb, 1.0 );
-   //return half4( tex2D( colorSampler, texCoords ).rgb, 0 );
+   //return half4( texture2D( colorSampler, IN_uv0 ).rgb, 1.0 );
+   //return half4( texture2D( colorSampler, texCoords ).rgb, 0 );
    half3 small;  
    half4 med;  
    half3 large;  
@@ -101,10 +101,10 @@ void main()
    small = GetSmallBlurSample( IN_uv0 );  
    //small = half3( 1,0,0 );
    //return half4( small, 1.0 );
-   med = tex2D( smallBlurSampler, IN_uv1 );  
+   med = texture2D( smallBlurSampler, IN_uv1 );  
    //med.rgb = half3( 0,1,0 );
    //return half4(med.rgb, 0.0);
-   large = tex2D( largeBlurSampler, IN_uv2 ).rgb;  
+   large = texture2D( largeBlurSampler, IN_uv2 ).rgb;  
    //large = half3( 0,0,1 );
    //return large;
    //return half4(large.rgb,1.0);

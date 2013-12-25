@@ -24,17 +24,17 @@
 #include "../../gl/postFX.glsl"
 #include "shadergen:/autogenConditioners.h"
 
-uniform float3    eyePosWorld;
-uniform float4    rtParams0;
-uniform float4    waterFogPlane;
+uniform vec3    eyePosWorld;
+uniform vec4    rtParams0;
+uniform vec4    waterFogPlane;
 uniform float     accumTime;
 
 uniform sampler2D prepassTex;
 uniform sampler2D causticsTex0;
 uniform sampler2D causticsTex1;
-uniform float2 targetSize;
+uniform vec2 targetSize;
 
-float distanceToPlane(float4 plane, float3 pos)
+float distanceToPlane(vec4 plane, vec3 pos)
 {
    return (plane.x * pos.x + plane.y * pos.y + plane.z * pos.z) + plane.w;
 }
@@ -42,40 +42,40 @@ float distanceToPlane(float4 plane, float3 pos)
 void main()             
 {   
    //Sample the pre-pass
-   float4 prePass = prepassUncondition( prepassTex, IN_uv0 );
+   vec4 prePass = prepassUncondition( prepassTex, IN_uv0 );
    
    //Get depth
    float depth = prePass.w;   
    if(depth > 0.9999)
    {
-      gl_FragColor = float4(0,0,0,0);
+      gl_FragColor = vec4(0,0,0,0);
       return;
    }
    
    //Get world position
-   float3 pos = eyePosWorld + IN_wsEyeRay * depth;
+   vec3 pos = eyePosWorld + IN_wsEyeRay * depth;
    
    // Check the water depth
    float waterDepth = -distanceToPlane(waterFogPlane, pos);
    if(waterDepth < 0)
    {
-      gl_FragColor = float4(0,0,0,0);
+      gl_FragColor = vec4(0,0,0,0);
       return;
    }
    waterDepth = saturate(waterDepth);
    
    //Use world position X and Y to calculate caustics UV 
-   float2 causticsUV0 = mod(abs(pos.xy * 0.25), float2(1, 1));
-   float2 causticsUV1 = mod(abs(pos.xy * 0.2), float2(1, 1));
+   vec2 causticsUV0 = mod(abs(pos.xy * 0.25), vec2(1, 1));
+   vec2 causticsUV1 = mod(abs(pos.xy * 0.2), vec2(1, 1));
    
    //Animate uvs
    float timeSin = sin(accumTime);
-   causticsUV0.xy += float2(accumTime*0.1, timeSin*0.2);
-   causticsUV1.xy -= float2(accumTime*0.15, timeSin*0.15);   
+   causticsUV0.xy += vec2(accumTime*0.1, timeSin*0.2);
+   causticsUV1.xy -= vec2(accumTime*0.15, timeSin*0.15);   
    
    //Sample caustics texture   
-   float4 caustics = tex2D(causticsTex0, causticsUV0);   
-   caustics *= tex2D(causticsTex1, causticsUV1);
+   vec4 caustics = texture2D(causticsTex0, causticsUV0);   
+   caustics *= texture2D(causticsTex1, causticsUV1);
    
    //Use normal Z to modulate caustics  
    //float waterDepth = 1 - saturate(pos.z + waterFogPlane.w + 1);

@@ -26,10 +26,10 @@
 uniform sampler2D frameSampler;
 uniform sampler2D backBuffer;
 
-uniform float3 camForward;
-uniform float3 lightDirection;
-uniform float2 screenSunPos;
-uniform float2 oneOverTargetSize;
+uniform vec3 camForward;
+uniform vec3 lightDirection;
+uniform vec2 screenSunPos;
+uniform vec2 oneOverTargetSize;
 uniform int numSamples;
 uniform float density;
 uniform float weight;
@@ -38,13 +38,13 @@ uniform float exposure;
 
 void main()
 {  
-    float4 texCoord = float4( IN_uv0.xy, 0, 0 );        
+    vec4 texCoord = vec4( IN_uv0.xy, 0, 0 );        
     
     // Store initial sample.
-    half3 color = half3(tex2D( frameSampler, texCoord.xy ).rgb);  
+    half3 color = half3(texture2D( frameSampler, texCoord.xy ).rgb);  
 	
 	// Store original bb color.
-	float4 bbCol = tex2D( backBuffer, IN_uv1 );
+	vec4 bbCol = texture2D( backBuffer, IN_uv1 );
 
     // Set up illumination decay factor.
     half illuminationDecay = 1.0;  		
@@ -88,5 +88,5 @@ void main()
 	//return bbCol * decay;
 	
     // Output final color with a further scale control factor.      
-    gl_FragColor = saturate( amount ) * float4( color * exposure, 1 ) + bbCol;
+    gl_FragColor = saturate( amount ) * vec4( color * exposure, 1 ) + bbCol;
 }  

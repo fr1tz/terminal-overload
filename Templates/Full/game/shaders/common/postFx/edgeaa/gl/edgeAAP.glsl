@@ -26,30 +26,30 @@
 
 uniform sampler2D edgeBuffer;
 uniform sampler2D backBuffer;
-uniform float2 targetSize;
+uniform vec2 targetSize;
 
 void main()
 {
-   float2 pixelSize = 1.0 / targetSize;
+   vec2 pixelSize = 1.0 / targetSize;
 
    // Sample edge buffer, bail if not on an edge
-   float edgeSample = tex2D(edgeBuffer, IN_uv0).r;
+   float edgeSample = texture2D(edgeBuffer, IN_uv0).r;
    clip(edgeSample - 1e-6);
    
    // Ok we're on an edge, so multi-tap sample, average, and return
-   float2 offsets[9] = float2[](
-      float2( 0.0,  0.0),
-      float2(-1.0, -1.0),
-      float2( 0.0, -1.0),
-      float2( 1.0, -1.0),
-      float2( 1.0,  0.0),
-      float2( 1.0,  1.0),
-      float2( 0.0,  1.0),
-      float2(-1.0,  1.0),
-      float2(-1.0,  0.0)
+   vec2 offsets[9] = vec2[](
+      vec2( 0.0,  0.0),
+      vec2(-1.0, -1.0),
+      vec2( 0.0, -1.0),
+      vec2( 1.0, -1.0),
+      vec2( 1.0,  0.0),
+      vec2( 1.0,  1.0),
+      vec2( 0.0,  1.0),
+      vec2(-1.0,  1.0),
+      vec2(-1.0,  0.0)
    );
       
-   float4 accumColor = float4(0.0);
+   vec4 accumColor = vec4(0.0);
    for(int i = 0; i < 9; i++)
    {
       // Multiply the intensity of the edge, by the UV, so that things which maybe
@@ -58,9 +58,9 @@ void main()
       // Scaling offsets by 0.5 to reduce the range bluriness from extending to
       // far outward from the edge.
       
-      float2 offsetUV = IN_uv1 + edgeSample * ( offsets[i] * 0.5 ) * pixelSize;//rtWidthHeightInvWidthNegHeight.zw;
+      vec2 offsetUV = IN_uv1 + edgeSample * ( offsets[i] * 0.5 ) * pixelSize;//rtWidthHeightInvWidthNegHeight.zw;
       //offsetUV *= 0.999;
-      accumColor+= tex2D(backBuffer, offsetUV);
+      accumColor+= texture2D(backBuffer, offsetUV);
    }
    accumColor /= 9.0;
    

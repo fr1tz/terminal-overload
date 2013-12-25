@@ -28,8 +28,8 @@ uniform sampler2D lightInfoBuffer;
 
 void main()
 {   
-   float3 lightcolor;   
+   vec3 lightcolor;   
    float nl_Att, specular;   
-   lightinfoUncondition( tex2D( lightInfoBuffer, uv0 ), lightcolor, nl_Att, specular );   
-   gl_FragColor = float4( lightcolor, 1.0 ); 
+   lightinfoUncondition( texture2D( lightInfoBuffer, uv0 ), lightcolor, nl_Att, specular );   
+   gl_FragColor = vec4( lightcolor, 1.0 ); 
 }

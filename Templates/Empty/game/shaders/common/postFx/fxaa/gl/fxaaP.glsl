@@ -29,7 +29,7 @@
 #include "../../../gl/hlslCompat.glsl"
 
 uniform sampler2D colorTex ;
-uniform float2 oneOverTargetSize;
+uniform vec2 oneOverTargetSize;
 
 varying vec4 hpos;
 varying vec2 uv0;

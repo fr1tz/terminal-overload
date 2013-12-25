@@ -64,12 +64,12 @@ uniform vec4 scatteringCoeffs;
 uniform vec3 camPos;
 uniform vec3 lightDir;
 uniform vec4 invWaveLength;
-uniform float4 colorize;
+uniform vec4 colorize;
 
-float3 desaturate(const float3 color, const float desaturation) 
+vec3 desaturate(const vec3 color, const float desaturation) 
 {  
-   const float3 gray_conv = float3 (0.30, 0.59, 0.11);  
-   return lerp(color, float3(dot(gray_conv , color)), desaturation);  
+   const vec3 gray_conv = vec3 (0.30, 0.59, 0.11);  
+   return mix(color, vec3(dot(gray_conv , color)), desaturation);  
 }  
  
 void main()

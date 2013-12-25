@@ -33,12 +33,12 @@ attribute vec2 vTexCoord0;
 //-----------------------------------------------------------------------------
 // Constants
 //-----------------------------------------------------------------------------
-varying float4 texCoords[8];
+varying vec4 texCoords[8];
 #define Out_texCoords texCoords
 
 #define Out_hpos gl_Position
 
-uniform float2 targetSize;
+uniform vec2 targetSize;
 
 //-----------------------------------------------------------------------------
 // Main
@@ -50,9 +50,9 @@ void main()
    // Sample from the 16 surrounding points. Since the center point will be in
    // the exact center of 16 texels, a 0.5f offset is needed to specify a texel
    // center.
-   float2 texSize = float2( 1.0 / (targetSize.x - 1.0), 1.0 / (targetSize.y - 1.0) );
+   vec2 texSize = vec2( 1.0 / (targetSize.x - 1.0), 1.0 / (targetSize.y - 1.0) );
    
-   float4 uv;
+   vec4 uv;
 	uv.xy = In_uv.xy;
 	uv.zw = In_uv.xy;
    

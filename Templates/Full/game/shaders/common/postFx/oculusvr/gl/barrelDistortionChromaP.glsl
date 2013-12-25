@@ -26,18 +26,18 @@
 
 uniform sampler2D backBuffer : register(S0);
 
-uniform float3 LensCenter;    // x=Left X, y=Right X, z=Y
-uniform float2 ScreenCenter;
-uniform float2 Scale;
-uniform float2 ScaleIn;
-uniform float4 HmdWarpParam;
-uniform float4 HmdChromaAbParam; // Chromatic aberration correction
+uniform vec3 LensCenter;    // x=Left X, y=Right X, z=Y
+uniform vec2 ScreenCenter;
+uniform vec2 Scale;
+uniform vec2 ScaleIn;
+uniform vec4 HmdWarpParam;
+uniform vec4 HmdChromaAbParam; // Chromatic aberration correction
 
-float4 main( PFXVertToPix IN ) : COLOR0  
+vec4 main( PFXVertToPix IN ) : COLOR0  
 {
-   float2 texCoord;
+   vec2 texCoord;
    float xOffset;
-   float2 lensCenter;
+   vec2 lensCenter;
    lensCenter.y = LensCenter.z;
    if(IN.uv0.x < 0.5)
    {
@@ -57,38 +57,38 @@ float4 main( PFXVertToPix IN ) : COLOR0
    // Scales input texture coordinates for distortion.
    // ScaleIn maps texture coordinates to Scales to ([-1, 1]), although top/bottom will be
    // larger due to aspect ratio.
-   float2 theta = (texCoord - lensCenter) * ScaleIn; // Scales to [-1, 1]
+   vec2 theta = (texCoord - lensCenter) * ScaleIn; // Scales to [-1, 1]
    float rSq = theta.x * theta.x + theta.y * theta.y;
-   float2 theta1 = theta * (HmdWarpParam.x + HmdWarpParam.y * rSq + HmdWarpParam.z * rSq * rSq + HmdWarpParam.w * rSq * rSq * rSq);
+   vec2 theta1 = theta * (HmdWarpParam.x + HmdWarpParam.y * rSq + HmdWarpParam.z * rSq * rSq + HmdWarpParam.w * rSq * rSq * rSq);
 
    // Detect whether blue texture coordinates are out of range
    // since these will scaled out the furthest.
-   float2 thetaBlue = theta1 * (HmdChromaAbParam.z + HmdChromaAbParam.w * rSq);
-   float2 tcBlue = lensCenter + Scale * thetaBlue;
+   vec2 thetaBlue = theta1 * (HmdChromaAbParam.z + HmdChromaAbParam.w * rSq);
+   vec2 tcBlue = lensCenter + Scale * thetaBlue;
    
-   float4 color;
-   if (any(clamp(tcBlue, ScreenCenter-float2(0.25,0.5), ScreenCenter+float2(0.25, 0.5)) - tcBlue))
+   vec4 color;
+   if (any(clamp(tcBlue, ScreenCenter-vec2(0.25,0.5), ScreenCenter+vec2(0.25, 0.5)) - tcBlue))
    {
-      color = float4(0,0,0,0);
+      color = vec4(0,0,0,0);
    }
    else
    {
       // Now do blue texture lookup.
       tcBlue.x += xOffset;
-      float blue = tex2D(backBuffer, tcBlue).b;
+      float blue = texture2D(backBuffer, tcBlue).b;
 
       // Do green lookup (no scaling).
-      float2 tcGreen = lensCenter + Scale * theta1;
+      vec2 tcGreen = lensCenter + Scale * theta1;
       tcGreen.x += xOffset;
-      float green = tex2D(backBuffer, tcGreen).g;
+      float green = texture2D(backBuffer, tcGreen).g;
 
       // Do red scale and lookup.
-      float2 thetaRed = theta1 * (HmdChromaAbParam.x + HmdChromaAbParam.y * rSq);
-      float2 tcRed = lensCenter + Scale * thetaRed;
+      vec2 thetaRed = theta1 * (HmdChromaAbParam.x + HmdChromaAbParam.y * rSq);
+      vec2 tcRed = lensCenter + Scale * thetaRed;
       tcRed.x += xOffset;
-      float red = tex2D(backBuffer, tcRed).r;
+      float red = texture2D(backBuffer, tcRed).r;
 
-      color = float4(red, green, blue, 1);
+      color = vec4(red, green, blue, 1);
    }
 
    return color;    

@@ -31,11 +31,11 @@ uniform sampler2D prepassMap ;
 uniform sampler2D randNormalTex ;
 uniform sampler2D powTable ; // TODO sampler1D
 
-uniform float2 nearFar;
-uniform float2 worldToScreenScale;
-uniform float2 texSize0;
-uniform float2 texSize1;
-uniform float2 targetSize;
+uniform vec2 nearFar;
+uniform vec2 worldToScreenScale;
+uniform vec2 texSize0;
+uniform vec2 texSize1;
+uniform vec2 targetSize;
 
 // Script-set constants.
 
@@ -96,74 +96,74 @@ float getOcclusion( float depthDiff, float depthMin, float depthMax, float depth
       
    normalDiff *= 1.0 - ( dt * 0.5 + 0.5 );
    
-   return ( 1.0 - tex2D( powTable, float2(delta, 1.0f) ).r ) * normalDiff;   
+   return ( 1.0 - texture2D( powTable, vec2(delta, 1.0f) ).r ) * normalDiff;   
 }
 
 
 void main()
 {          
-   const float3 ptSphere[32] = float3[]
+   const vec3 ptSphere[32] = vec3[]
    (
-   	float3( 0.295184, 0.077723, 0.068429 ),
-   	float3( -0.271976, -0.365221, -0.838363 ),
-   	float3( 0.547713, 0.467576, 0.488515 ),
-   	float3( 0.662808, -0.031733, -0.584758 ),
-   	float3( -0.025717, 0.218955, -0.657094 ),
-   	float3( -0.310153, -0.365223, -0.370701 ),
-   	float3( -0.101407, -0.006313, -0.747665 ),
-   	float3( -0.769138, 0.360399, -0.086847 ),
-   	float3( -0.271988, -0.275140, -0.905353 ),
-   	float3( 0.096740, -0.566901, 0.700151 ),
-   	float3( 0.562872, -0.735136, -0.094647 ),
-   	float3( 0.379877, 0.359278, 0.190061 ),
-   	float3( 0.519064, -0.023055, 0.405068 ),
-   	float3( -0.301036, 0.114696, -0.088885 ),
-   	float3( -0.282922, 0.598305, 0.487214 ),
-   	float3( -0.181859, 0.251670, -0.679702 ),
-   	float3( -0.191463, -0.635818, -0.512919 ),
-   	float3( -0.293655, 0.427423, 0.078921 ),
-   	float3( -0.267983, 0.680534, -0.132880 ),
-   	float3( 0.139611, 0.319637, 0.477439 ),
-   	float3( -0.352086, 0.311040, 0.653913 ),
-   	float3( 0.321032, 0.805279, 0.487345 ),
-   	float3( 0.073516, 0.820734, -0.414183 ),
-   	float3( -0.155324, 0.589983, -0.411460 ),
-   	float3( 0.335976, 0.170782, -0.527627 ),
-   	float3( 0.463460, -0.355658, -0.167689 ),
-   	float3( 0.222654, 0.596550, -0.769406 ),
-   	float3( 0.922138, -0.042070, 0.147555 ),
-   	float3( -0.727050, -0.329192, 0.369826 ),
-   	float3( -0.090731, 0.533820, 0.463767 ),
-   	float3( -0.323457, -0.876559, -0.238524 ),
-   	float3( -0.663277, -0.372384, -0.342856 )
+   	vec3( 0.295184, 0.077723, 0.068429 ),
+   	vec3( -0.271976, -0.365221, -0.838363 ),
+   	vec3( 0.547713, 0.467576, 0.488515 ),
+   	vec3( 0.662808, -0.031733, -0.584758 ),
+   	vec3( -0.025717, 0.218955, -0.657094 ),
+   	vec3( -0.310153, -0.365223, -0.370701 ),
+   	vec3( -0.101407, -0.006313, -0.747665 ),
+   	vec3( -0.769138, 0.360399, -0.086847 ),
+   	vec3( -0.271988, -0.275140, -0.905353 ),
+   	vec3( 0.096740, -0.566901, 0.700151 ),
+   	vec3( 0.562872, -0.735136, -0.094647 ),
+   	vec3( 0.379877, 0.359278, 0.190061 ),
+   	vec3( 0.519064, -0.023055, 0.405068 ),
+   	vec3( -0.301036, 0.114696, -0.088885 ),
+   	vec3( -0.282922, 0.598305, 0.487214 ),
+   	vec3( -0.181859, 0.251670, -0.679702 ),
+   	vec3( -0.191463, -0.635818, -0.512919 ),
+   	vec3( -0.293655, 0.427423, 0.078921 ),
+   	vec3( -0.267983, 0.680534, -0.132880 ),
+   	vec3( 0.139611, 0.319637, 0.477439 ),
+   	vec3( -0.352086, 0.311040, 0.653913 ),
+   	vec3( 0.321032, 0.805279, 0.487345 ),
+   	vec3( 0.073516, 0.820734, -0.414183 ),
+   	vec3( -0.155324, 0.589983, -0.411460 ),
+   	vec3( 0.335976, 0.170782, -0.527627 ),
+   	vec3( 0.463460, -0.355658, -0.167689 ),
+   	vec3( 0.222654, 0.596550, -0.769406 ),
+   	vec3( 0.922138, -0.042070, 0.147555 ),
+   	vec3( -0.727050, -0.329192, 0.369826 ),
+   	vec3( -0.090731, 0.533820, 0.463767 ),
+   	vec3( -0.323457, -0.876559, -0.238524 ),
+   	vec3( -0.663277, -0.372384, -0.342856 )
    );
    
    // Sample a random normal for reflecting the 
    // sphere vector later in our loop.   
-   float4 noiseMapUV = float4( ( IN_uv1 * ( targetSize / texSize1 ) ).xy, 0, 0 );
-   float3 reflectNormal = normalize( tex2Dlod( randNormalTex, noiseMapUV ).xyz * 2.0 - 1.0 );   
-   //return float4( reflectNormal, 1 );
+   vec4 noiseMapUV = vec4( ( IN_uv1 * ( targetSize / texSize1 ) ).xy, 0, 0 );
+   vec3 reflectNormal = normalize( tex2Dlod( randNormalTex, noiseMapUV ).xyz * 2.0 - 1.0 );   
+   //return vec4( reflectNormal, 1 );
    
-   float4 prepass = prepassUncondition( prepassMap, IN_uv0 );
-   float3 normal = prepass.xyz;
+   vec4 prepass = prepassUncondition( prepassMap, IN_uv0 );
+   vec3 normal = prepass.xyz;
    float depth = prepass.a;
-   //return float4( ( depth ).xxx, 1 );
+   //return vec4( ( depth ).xxx, 1 );
       
    // Early out if too far away.
    if ( depth > 0.99999999 )
    {
-      gl_FragColor = float4( 0,0,0,0 );
+      gl_FragColor = vec4( 0,0,0,0 );
       return;
    }
 
    // current fragment coords in screen space
-   float3 ep = float3( IN_uv0, depth );        
+   vec3 ep = vec3( IN_uv0, depth );        
    
    float bl;
-   float3 baseRay, ray, se, occNorm, projRadius;
+   vec3 baseRay, ray, se, occNorm, projRadius;
    float normalDiff = 0;
    float depthMin, depthMax, dt, depthDiff;    
-   float4 occluderFragment;
+   vec4 occluderFragment;
    int i;
    float sOcclusion = 0.0;
    float lOcclusion = 0.0;
@@ -176,7 +176,7 @@ void main()
 
    bl = 0.0;
    
-   projRadius.xy =  ( float2( sRadius ) / ( depth * nearFar.y ) ) * ( worldToScreenScale / texSize0 );
+   projRadius.xy =  ( vec2( sRadius ) / ( depth * nearFar.y ) ) * ( worldToScreenScale / texSize0 );
    projRadius.z = sRadius / nearFar.y;
    
    depthMin = projRadius.z * sDepthMin;
@@ -224,7 +224,7 @@ void main()
       
    bl = 0.0;
 
-   projRadius.xy =  ( float2( lRadius ) / ( depth * nearFar.y ) ) * ( worldToScreenScale / texSize0 );
+   projRadius.xy =  ( vec2( lRadius ) / ( depth * nearFar.y ) ) * ( worldToScreenScale / texSize0 );
    projRadius.z = lRadius / nearFar.y;
    
    depthMin = projRadius.z * lDepthMin;
@@ -270,7 +270,7 @@ void main()
    // seems backwards, but it makes it simple to deal with the SSAO
    // being disabled in the lighting shaders.   
    
-   gl_FragColor = float4(occlusion, float3(0.0));
+   gl_FragColor = vec4(occlusion, vec3(0.0));
 }
 
 

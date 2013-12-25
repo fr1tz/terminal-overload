@@ -29,20 +29,20 @@ attribute vec2 vTexCoord0;
 #define IN_pos       vPosition
 #define IN_uv0       gvTexCoord0
 
-uniform float4x4  modelview;
+uniform mat4  modelview;
 uniform float     accumTime;
 uniform float     texScale;
-uniform float2    texDirection;
-uniform float2    texOffset;
+uniform vec2    texDirection;
+uniform vec2    texOffset;
 
-varying float2 texCoord;
+varying vec2 texCoord;
 #define OUT_texCoord texCoord
 
 void main()
 {  
    gl_Position = mul(modelview, IN_pos);
    
-   float2 uv = IN_uv0;
+   vec2 uv = IN_uv0;
    uv += texOffset;
    uv *= texScale;
    uv += accumTime * texDirection;

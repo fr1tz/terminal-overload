@@ -25,18 +25,18 @@
 attribute vec2  vTexCoord0;
 #define uvCoord vTexCoord0
 
-varying float4 offscreenPos;
-varying float4 backbufferPos;
+varying vec4 offscreenPos;
+varying vec4 backbufferPos;
 
 #define OUT_hpos gl_Position
 #define OUT_offscreenPos offscreenPos
 #define OUT_backbufferPos backbufferPos
 
-uniform float4 screenRect; // point, extent
+uniform vec4 screenRect; // point, extent
 
 void main()
 {
-   OUT_hpos = float4(uvCoord.xy, 1.0, 1.0);
+   OUT_hpos = vec4(uvCoord.xy, 1.0, 1.0);
    OUT_hpos.xy *= screenRect.zw;
    OUT_hpos.xy += screenRect.xy;
    

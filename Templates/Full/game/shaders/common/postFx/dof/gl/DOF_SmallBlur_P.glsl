@@ -29,16 +29,16 @@
 
 uniform sampler2D colorSampler;  // Output of DofNearCoc()  
 
-varying float4 texCoords;
+varying vec4 texCoords;
 #define IN_texCoords texCoords
 
 void main()
 {  
-   float4 color;
-   color = float4(0.0);  
-   color += tex2D( colorSampler, IN_texCoords.xz );  
-   color += tex2D( colorSampler, IN_texCoords.yz );  
-   color += tex2D( colorSampler, IN_texCoords.xw );  
-   color += tex2D( colorSampler, IN_texCoords.yw );  
+   vec4 color;
+   color = vec4(0.0);  
+   color += texture2D( colorSampler, IN_texCoords.xz );  
+   color += texture2D( colorSampler, IN_texCoords.yz );  
+   color += texture2D( colorSampler, IN_texCoords.xw );  
+   color += texture2D( colorSampler, IN_texCoords.yw );  
    gl_FragColor = color / 4.0;  
 }  

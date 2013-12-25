@@ -24,10 +24,10 @@
 #include "../../../gl/torque.glsl"
 #include "../../gl/postFX.glsl"
 
-uniform float4 rtParams0;
-uniform float4 rtParams1;
-uniform float4 rtParams2;
-uniform float4 rtParams3;
+uniform vec4 rtParams0;
+uniform vec4 rtParams1;
+uniform vec4 rtParams2;
+uniform vec4 rtParams3;
                      
 void main()
 {           

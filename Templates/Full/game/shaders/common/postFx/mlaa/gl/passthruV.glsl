@@ -35,15 +35,15 @@ attribute vec2 vTexCoord0;
 #define IN_texcoord  vTexCoord0
 
 #define OUT_position gl_Position
-varying float2 texcoord;
+varying vec2 texcoord;
 #define OUT_texcoord texcoord
 
-uniform float2 texSize0;
+uniform vec2 texSize0;
 
 void main()
 {
    OUT_position = IN_position;
-   float2 PIXEL_SIZE = 1.0 / texSize0;
+   vec2 PIXEL_SIZE = 1.0 / texSize0;
    
    OUT_texcoord = IN_texcoord;
    texcoord.xy += PIXEL_SIZE * 0.5;

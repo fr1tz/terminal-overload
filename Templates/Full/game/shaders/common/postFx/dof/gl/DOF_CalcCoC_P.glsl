@@ -32,13 +32,13 @@ uniform sampler2D blurredSampler; // Blurred version of the shrunk sampler
 // "texCoords" are 0 at the bottom left pixel and 1 at the top right.  
 void main()
 {
-   float3 color;  
+   vec3 color;  
    float coc;  
    half4 blurred;  
    half4 shrunk;  
    
-   shrunk = tex2D( shrunkSampler, IN_uv0 );  
-   blurred = tex2D( blurredSampler, IN_uv1 );  
+   shrunk = texture2D( shrunkSampler, IN_uv0 );  
+   blurred = texture2D( blurredSampler, IN_uv1 );  
    color = shrunk.rgb;  
    //coc = shrunk.a;
    //coc = blurred.a;
@@ -46,8 +46,8 @@ void main()
    coc = 2 * max( blurred.a, shrunk.a ) - shrunk.a;  
    
    
-   //gl_FragColor = float4( coc.rrr, 1.0 );
-   //gl_FragColor = float4( color, 1.0 );
-   gl_FragColor = float4( color, coc );  
-   //gl_FragColor = float4( 1.0, 0.0, 1.0, 1.0 );
+   //gl_FragColor = vec4( coc.rrr, 1.0 );
+   //gl_FragColor = vec4( color, 1.0 );
+   gl_FragColor = vec4( color, coc );  
+   //gl_FragColor = vec4( 1.0, 0.0, 1.0, 1.0 );
 }

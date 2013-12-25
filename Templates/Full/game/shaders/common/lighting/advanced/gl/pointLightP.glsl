@@ -29,33 +29,33 @@
 #include "../../shadowMap/shadowMapIO_GLSL.h"
 #include "softShadow.glsl"
 
-varying float4 wsEyeDir;
-varying float4 ssPos;
-varying float4 vsEyeDir;
+varying vec4 wsEyeDir;
+varying vec4 ssPos;
+varying vec4 vsEyeDir;
 
 #ifdef USE_COOKIE_TEX
 
 /// The texture for cookie rendering.
-uniform samplerCUBE cookieMap ;
+uniform samplerCube cookieMap ;
 
 #endif
 
 
 #ifdef SHADOW_CUBE
 
-   float3 decodeShadowCoord( float3 shadowCoord )
+   vec3 decodeShadowCoord( vec3 shadowCoord )
    {
       return shadowCoord;
    }
 
-   float4 shadowSample( samplerCUBE shadowMap, float3 shadowCoord )
+   vec4 shadowSample( samplerCube shadowMap, vec3 shadowCoord )
    {
-      return texCUBE( shadowMap, shadowCoord );
+      return textureCube( shadowMap, shadowCoord );
    }
   
 #else
 
-   float3 decodeShadowCoord( float3 paraVec )
+   vec3 decodeShadowCoord( vec3 paraVec )
    {
       // Flip y and z
       paraVec = paraVec.xzy;
@@ -74,7 +74,7 @@ uniform samplerCUBE cookieMap ;
 
       #endif
 
-      float3 shadowCoord;
+      vec3 shadowCoord;
       shadowCoord.x = (paraVec.x / (2*(1 + paraVec.z))) + 0.5;
       shadowCoord.y = 1-((paraVec.y / (2*(1 + paraVec.z))) + 0.5);
       shadowCoord.z = 0;
@@ -104,42 +104,42 @@ uniform samplerCUBE cookieMap ;
 uniform sampler2D prePassBuffer;
 
 #ifdef SHADOW_CUBE
-	uniform samplerCUBE shadowMap;
+	uniform samplerCube shadowMap;
 #else
 	uniform sampler2D shadowMap;
 #endif
 
-uniform float4 rtParams0;
+uniform vec4 rtParams0;
 
-uniform float3 lightPosition;
-uniform float4 lightColor;
+uniform vec3 lightPosition;
+uniform vec4 lightColor;
 uniform float  lightBrightness;
 uniform float  lightRange;
-uniform float2 lightAttenuation;
-uniform float4 lightMapParams;
-uniform float4 vsFarPlane;
-uniform float3x3 viewToLightProj;
-uniform float4 lightParams;
+uniform vec2 lightAttenuation;
+uniform vec4 lightMapParams;
+uniform vec4 vsFarPlane;
+uniform mat3 viewToLightProj;
+uniform vec4 lightParams;
 uniform float shadowSoftness;
 			   
 
 void main()               
 {   
    // Compute scene UV
-   float3 ssPos = ssPos.xyz / ssPos.w;
-   float2 uvScene = getUVFromSSPos( ssPos, rtParams0 );
+   vec3 ssPos = ssPos.xyz / ssPos.w;
+   vec2 uvScene = getUVFromSSPos( ssPos, rtParams0 );
    
    // Sample/unpack the normal/z data
-   float4 prepassSample = prepassUncondition( prePassBuffer, uvScene );
-   float3 normal = prepassSample.rgb;
+   vec4 prepassSample = prepassUncondition( prePassBuffer, uvScene );
+   vec3 normal = prepassSample.rgb;
    float depth = prepassSample.a;
    
    // Eye ray - Eye -> Pixel
-   float3 eyeRay = getDistanceVectorToPlane( -vsFarPlane.w, vsEyeDir.xyz, vsFarPlane );
-   float3 viewSpacePos = eyeRay * depth;
+   vec3 eyeRay = getDistanceVectorToPlane( -vsFarPlane.w, vsEyeDir.xyz, vsFarPlane );
+   vec3 viewSpacePos = eyeRay * depth;
       
    // Build light vec, get length, clip pixel if needed
-   float3 lightVec = lightPosition - viewSpacePos;
+   vec3 lightVec = lightPosition - viewSpacePos;
    float lenLightV = length( lightVec );
    clip( lightRange - lenLightV );
 
@@ -167,12 +167,12 @@ void main()
       #ifdef SHADOW_CUBE
               
          // TODO: We need to fix shadow cube to handle soft shadows!
-         float occ = texCUBE( shadowMap, mul( viewToLightProj, -lightVec ) ).r;
+         float occ = textureCube( shadowMap, mul( viewToLightProj, -lightVec ) ).r;
          float shadowed = saturate( exp( lightParams.y * ( occ - distToLight ) ) );
          
       #else
 
-         float2 shadowCoord = decodeShadowCoord( mul( viewToLightProj, -lightVec ) ).xy;
+         vec2 shadowCoord = decodeShadowCoord( mul( viewToLightProj, -lightVec ) ).xy;
          
          float shadowed = softShadow_filter( shadowMap,
                                              ssPos.xy,
@@ -189,7 +189,7 @@ void main()
    #ifdef USE_COOKIE_TEX
 
       // Lookup the cookie sample.
-      float4 cookie = texCUBE( cookieMap, mul( viewToLightProj, -lightVec ) );
+      vec4 cookie = textureCube( cookieMap, mul( viewToLightProj, -lightVec ) );
 
       // Multiply the light with the cookie tex.
       lightColor.rgb *= cookie.rgb;
@@ -210,8 +210,8 @@ void main()
                                        normalize( -eyeRay ) ) * lightBrightness * atten * shadowed;
 
    float Sat_NL_Att = saturate( nDotL * atten * shadowed ) * lightBrightness;
-   float3 lightColorOut = lightMapParams.rgb * lightColor.rgb;
-   float4 addToResult = float4(0.0);
+   vec3 lightColorOut = lightMapParams.rgb * lightColor.rgb;
+   vec4 addToResult = vec4(0.0);
     
    // TODO: This needs to be removed when lightmapping is disabled
    // as its extra work per-pixel on dynamic lit scenes.
@@ -223,8 +223,8 @@ void main()
       shadowed = nDotL < 0.0f ? 1.0f : shadowed;
 
       Sat_NL_Att = 1.0f;
-      shadowed = lerp( 1.0f, shadowed, atten );
-      lightColorOut = float3(shadowed);
+      shadowed = mix( 1.0f, shadowed, atten );
+      lightColorOut = vec3(shadowed);
       specular *= lightBrightness;
       addToResult = ( 1.0 - shadowed ) * abs(lightMapParams);
    }

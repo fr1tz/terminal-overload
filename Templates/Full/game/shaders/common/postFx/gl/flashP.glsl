@@ -30,8 +30,8 @@ uniform sampler2D backBuffer;
 
 void main()
 {
- float4 color1 = tex2D(backBuffer, IN_uv0); 
- float4 color2 = color1 * MUL_COLOR;
- float4 damage = lerp(color1,color2,damageFlash);
- gl_FragColor = lerp(damage,WHITE_COLOR,whiteOut);
+ vec4 color1 = texture2D(backBuffer, IN_uv0); 
+ vec4 color2 = color1 * MUL_COLOR;
+ vec4 damage = mix(color1,color2,damageFlash);
+ gl_FragColor = mix(damage,WHITE_COLOR,whiteOut);
 }

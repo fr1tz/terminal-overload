@@ -35,19 +35,19 @@ attribute vec2 vTexCoord0;
 #define IN_texCoords vTexCoord0
 
 #define OUT_position gl_Position
-varying float4 texCoords;
+varying vec4 texCoords;
 #define OUT_texCoords texCoords
 
-uniform float2 oneOverTargetSize;  
-uniform float4 rtParams0;
+uniform vec2 oneOverTargetSize;  
+uniform vec4 rtParams0;
 
 void main()  
 {  
-   const float4 halfPixel = float4( -0.5, 0.5, -0.5, 0.5 );     
+   const vec4 halfPixel = vec4( -0.5, 0.5, -0.5, 0.5 );     
    OUT_position = IN_position; //Transform_ObjectToClip( IN_position );  
    
-   //float2 uv = IN_texCoords + rtParams0.xy;
-   float2 uv = viewportCoordToRenderTarget( IN_texCoords, rtParams0 );
+   //vec2 uv = IN_texCoords + rtParams0.xy;
+   vec2 uv = viewportCoordToRenderTarget( IN_texCoords, rtParams0 );
    OUT_texCoords = uv.xxyy + halfPixel * oneOverTargetSize.xxyy; 
    
    correctSSP(gl_Position);

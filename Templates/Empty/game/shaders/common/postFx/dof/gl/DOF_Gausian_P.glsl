@@ -23,23 +23,23 @@
 #include "../../../gl/hlslCompat.glsl"
 #include "shadergen:/autogenConditioners.h"
 
-varying float3 wsEyeRay;
+varying vec3 wsEyeRay;
 #define IN_wsEyeRay wsEyeRay
-varying float2 uv0;
+varying vec2 uv0;
 #define IN_uv0 uv0
-varying float2 uv1;
+varying vec2 uv1;
 #define IN_uv1 uv1
-varying float2 uv2;
+varying vec2 uv2;
 #define IN_uv2 uv2
-varying float2 uv3;
+varying vec2 uv3;
 #define IN_uv3 uv3
-varying float2 uv4;
+varying vec2 uv4;
 #define IN_uv4 uv4
-varying float2 uv5;
+varying vec2 uv5;
 #define IN_uv5 uv5
-varying float2 uv6;
+varying vec2 uv6;
 #define IN_uv6 uv6
-varying float2 uv7;
+varying vec2 uv7;
 #define IN_uv7 uv7
 
 #define OUT gl_FragColor
@@ -48,21 +48,21 @@ uniform sampler2D diffuseMap;
 
 void main()
 {
-   float4 kernel = float4( 0.175, 0.275, 0.375, 0.475 ) * 0.5 / 1.3; //25f;
+   vec4 kernel = vec4( 0.175, 0.275, 0.375, 0.475 ) * 0.5 / 1.3; //25f;
 
-   OUT = float4(0);
-   OUT += tex2D( diffuseMap, IN_uv0 ) * kernel.x;
-   OUT += tex2D( diffuseMap, IN_uv1 ) * kernel.y;
-   OUT += tex2D( diffuseMap, IN_uv2 ) * kernel.z;
-   OUT += tex2D( diffuseMap, IN_uv3 ) * kernel.w;
+   OUT = vec4(0);
+   OUT += texture2D( diffuseMap, IN_uv0 ) * kernel.x;
+   OUT += texture2D( diffuseMap, IN_uv1 ) * kernel.y;
+   OUT += texture2D( diffuseMap, IN_uv2 ) * kernel.z;
+   OUT += texture2D( diffuseMap, IN_uv3 ) * kernel.w;
 
-   OUT += tex2D( diffuseMap, IN_uv4 ) * kernel.x;
-   OUT += tex2D( diffuseMap, IN_uv5 ) * kernel.y;
-   OUT += tex2D( diffuseMap, IN_uv6 ) * kernel.z;
-   OUT += tex2D( diffuseMap, IN_uv7 ) * kernel.w;
+   OUT += texture2D( diffuseMap, IN_uv4 ) * kernel.x;
+   OUT += texture2D( diffuseMap, IN_uv5 ) * kernel.y;
+   OUT += texture2D( diffuseMap, IN_uv6 ) * kernel.z;
+   OUT += texture2D( diffuseMap, IN_uv7 ) * kernel.w;
 
    // Calculate a lumenance value in the alpha so we
    // can use alpha test to save fillrate.
-   //float3 rgb2lum = float3( 0.30, 0.59, 0.11 );
+   //vec3 rgb2lum = vec3( 0.30, 0.59, 0.11 );
    //OUT.a = dot( OUT.rgb, rgb2lum );   
 }

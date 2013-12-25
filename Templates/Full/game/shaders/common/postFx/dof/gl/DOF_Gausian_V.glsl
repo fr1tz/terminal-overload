@@ -32,35 +32,35 @@ attribute vec3 vTexCoord1;
 #define IN_wsEyeRay vTexCoord1
 
 #define OUT_hpos gl_Position
-varying float3 wsEyeRay;
+varying vec3 wsEyeRay;
 #define OUT_wsEyeRay wsEyeRay
-varying float2 uv0;
+varying vec2 uv0;
 #define OUT_uv0 uv0
-varying float2 uv1;
+varying vec2 uv1;
 #define OUT_uv1 uv1
-varying float2 uv2;
+varying vec2 uv2;
 #define OUT_uv2 uv2
-varying float2 uv3;
+varying vec2 uv3;
 #define OUT_uv3 uv3
-varying float2 uv4;
+varying vec2 uv4;
 #define OUT_uv4 uv4
-varying float2 uv5;
+varying vec2 uv5;
 #define OUT_uv5 uv5
-varying float2 uv6;
+varying vec2 uv6;
 #define OUT_uv6 uv6
-varying float2 uv7;
+varying vec2 uv7;
 #define OUT_uv7 uv7
 
-uniform float2 texSize0;
-uniform float4 rtParams0;
-uniform float2 oneOverTargetSize; 
+uniform vec2 texSize0;
+uniform vec4 rtParams0;
+uniform vec2 oneOverTargetSize; 
 
 
 void main()
 {
    OUT_hpos = IN_pos;
    
-   float2 IN_uv = viewportCoordToRenderTarget( _IN_uv, rtParams0 );
+   vec2 IN_uv = viewportCoordToRenderTarget( _IN_uv, rtParams0 );
    
    // I don't know why this offset is necessary, but it is.
    //IN_uv = IN_uv * oneOverTargetSize;

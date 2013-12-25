@@ -25,29 +25,29 @@
 #include "../../gl/postFX.glsl"
 
 uniform sampler2D inputTex;
-uniform float2 texSize0;
+uniform vec2 texSize0;
 
 uniform float g_fMinLuminace;
 
-const float2 gTapOffsets[9] = float2[]
+const vec2 gTapOffsets[9] = vec2[]
 (
-   float2( -1.0, -1.0 ), float2( 0.0, -1.0 ), float2( 1.0, -1.0 ),
-   float2( -1.0, 0.0 ),  float2( 0.0, 0.0 ),  float2( 1.0, 0.0 ),
-   float2( -1.0, 1.0 ),  float2( 0.0, 1.0 ),  float2( 1.0, 1.0 )
+   vec2( -1.0, -1.0 ), vec2( 0.0, -1.0 ), vec2( 1.0, -1.0 ),
+   vec2( -1.0, 0.0 ),  vec2( 0.0, 0.0 ),  vec2( 1.0, 0.0 ),
+   vec2( -1.0, 1.0 ),  vec2( 0.0, 1.0 ),  vec2( 1.0, 1.0 )
 );
 
 
 void main()
 {
-   float2 tsize = 1.0 / texSize0;
+   vec2 tsize = 1.0 / texSize0;
 
-   float3 sample;
+   vec3 sample;
    float average = 0.0;
      
    for ( int i = 0; i < 9; i++ )
    {
       // Decode the hdr value.
-      sample = hdrDecode( tex2D( inputTex, IN_uv0 + ( gTapOffsets[i] * tsize ) ).rgb );
+      sample = hdrDecode( texture2D( inputTex, IN_uv0 + ( gTapOffsets[i] * tsize ) ).rgb );
 
       // Get the luminance and add it to the average.
       float lum = max( hdrLuminance( sample ), g_fMinLuminace );
@@ -56,5 +56,5 @@ void main()
 
    average = exp( average / 9.0 );
 
-   gl_FragColor = float4( average, 0.0, 0.0, 1.0 );
+   gl_FragColor = vec4( average, 0.0, 0.0, 1.0 );
 }

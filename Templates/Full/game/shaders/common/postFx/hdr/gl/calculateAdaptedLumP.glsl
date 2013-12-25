@@ -32,8 +32,8 @@ uniform float deltaTime;
 
 void main()
 {
-   float fAdaptedLum = tex2D( lastAdaptedLum, float2(0.5f, 0.5f) ).r;
-   float fCurrentLum = tex2D( currLum, float2(0.5f, 0.5f) ).r;
+   float fAdaptedLum = texture2D( lastAdaptedLum, vec2(0.5f, 0.5f) ).r;
+   float fCurrentLum = texture2D( currLum, vec2(0.5f, 0.5f) ).r;
 
    // The user's adapted luminance level is simulated by closing the gap between
    // adapted luminance and current luminance by 2% every frame, based on a
@@ -42,5 +42,5 @@ void main()
    float diff = fCurrentLum - fAdaptedLum;
    float fNewAdaptation = fAdaptedLum + ( diff * ( 1.0 - exp( -deltaTime * adaptRate ) ) );
 
-   gl_FragColor = float4( fNewAdaptation, 0.0, 0.0, 1.0f );
+   gl_FragColor = vec4( fNewAdaptation, 0.0, 0.0, 1.0f );
 }

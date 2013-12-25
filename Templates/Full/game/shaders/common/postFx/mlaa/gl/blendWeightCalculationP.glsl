@@ -28,7 +28,7 @@
 
 #include "../../../gl/hlslCompat.glsl"
 
-varying float2 texcoord;
+varying vec2 texcoord;
 
 uniform sampler2D edgesMap;
 uniform sampler2D edgesMapL;
@@ -39,19 +39,19 @@ uniform sampler2D areaMap;
 
 void main()
 {
-   float4 areas = float4(0.0);
+   vec4 areas = vec4(0.0);
 
-   float2 e = tex2D(edgesMap, texcoord).rg;	
+   vec2 e = texture2D(edgesMap, texcoord).rg;	
 
    //[branch]
    if (bool(e.g)) // Edge at north
    { 
       // Search distances to the left and to the right:
-      float2 d = float2(SearchXLeft(texcoord), SearchXRight(texcoord));
+      vec2 d = vec2(SearchXLeft(texcoord), SearchXRight(texcoord));
 
       // Now fetch the crossing edges. Instead of sampling between edgels, we
       // sample at -0.25, to be able to discern what value has each edgel:
-      float4 coords = mad(float4(d.x, -0.25, d.y + 1.0, -0.25),
+      vec4 coords = mad(vec4(d.x, -0.25, d.y + 1.0, -0.25),
                                  PIXEL_SIZE.xyxy, texcoord.xyxy);
       float e1 = tex2Dlevel0(edgesMapL, coords.xy).r;
       float e2 = tex2Dlevel0(edgesMapL, coords.zw).r;
@@ -65,10 +65,10 @@ void main()
    if (bool(e.r)) // Edge at west
    {
       // Search distances to the top and to the bottom:
-      float2 d = float2(SearchYUp(texcoord), SearchYDown(texcoord));
+      vec2 d = vec2(SearchYUp(texcoord), SearchYDown(texcoord));
 
       // Now fetch the crossing edges (yet again):
-      float4 coords = mad(float4(-0.25, d.x, -0.25, d.y + 1.0),
+      vec4 coords = mad(vec4(-0.25, d.x, -0.25, d.y + 1.0),
                                  PIXEL_SIZE.xyxy, texcoord.xyxy);
       float e1 = tex2Dlevel0(edgesMapL, coords.xy).g;
       float e2 = tex2Dlevel0(edgesMapL, coords.zw).g;

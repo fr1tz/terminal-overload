@@ -36,12 +36,12 @@ varying float zPosition;
 varying vec3  pos;
 #define IN_pos pos
 
-uniform samplerCUBE nightSky ;
-uniform float4 nightColor;
-uniform float2 nightInterpAndExposure;
+uniform samplerCube nightSky ;
+uniform vec4 nightColor;
+uniform vec2 nightInterpAndExposure;
 uniform float useCubemap;
-uniform float3 lightDir;
-uniform float3 sunDir;
+uniform vec3 lightDir;
+uniform vec3 sunDir;
 
 void main()
 { 

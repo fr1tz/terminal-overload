@@ -27,36 +27,36 @@
 
 uniform sampler2D inputTex ;
 uniform sampler2D luminanceTex  ;
-uniform float2 oneOverTargetSize;
+uniform vec2 oneOverTargetSize;
 uniform float brightPassThreshold;
 uniform float g_fMiddleGray;
 
-const float3 LUMINANCE_VECTOR = float3(0.3125f, 0.6154f, 0.0721f);
+const vec3 LUMINANCE_VECTOR = vec3(0.3125f, 0.6154f, 0.0721f);
 
 
-const float2 gTapOffsets[4] = float2[]
+const vec2 gTapOffsets[4] = vec2[]
 (
-   float2( -0.5, 0.5 ),  float2( 0.5, -0.5 ),
-   float2( -0.5, -0.5 ), float2( 0.5, 0.5 )
+   vec2( -0.5, 0.5 ),  vec2( 0.5, -0.5 ),
+   vec2( -0.5, -0.5 ), vec2( 0.5, 0.5 )
 );
 
 void main()
 {
-   float4 average = float4( 0.0f, 0.0f, 0.0f, 0.0f );      
+   vec4 average = vec4( 0.0f, 0.0f, 0.0f, 0.0f );      
 
    // Combine and average 4 samples from the source HDR texture.
    for( int i = 0; i < 4; i++ )
-      average += hdrDecode( tex2D( inputTex, IN_uv0 + ( gTapOffsets[i] * oneOverTargetSize ) ) );
+      average += hdrDecode( texture2D( inputTex, IN_uv0 + ( gTapOffsets[i] * oneOverTargetSize ) ) );
    average *= 0.25f;
 
    // Determine the brightness of this particular pixel.   
-   float adaptedLum = tex2D( luminanceTex, float2( 0.5f, 0.5f ) ).r;
+   float adaptedLum = texture2D( luminanceTex, vec2( 0.5f, 0.5f ) ).r;
    float lum = (g_fMiddleGray / (adaptedLum + 0.0001)) * hdrLuminance( average.rgb );
    //float lum = hdrLuminance( average.rgb );
    
    // Determine whether this pixel passes the test...
    if ( lum < brightPassThreshold )
-      average = float4( 0.0f, 0.0f, 0.0f, 1.0f );
+      average = vec4( 0.0f, 0.0f, 0.0f, 1.0f );
 
    // Write the colour to the bright-pass render target
    gl_FragColor = hdrEncode( average );

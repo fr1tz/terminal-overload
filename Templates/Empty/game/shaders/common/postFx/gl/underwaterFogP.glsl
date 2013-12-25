@@ -42,21 +42,21 @@
 uniform sampler2D prepassTex ; 
 uniform sampler2D backbuffer ;
 uniform sampler2D waterDepthGradMap ; // TODO sampler1D
-uniform float3    eyePosWorld;
-uniform float3    ambientColor;     
-uniform float4    waterColor;       
-uniform float4    waterFogData;    
-uniform float4    waterFogPlane;    
-uniform float2    nearFar;      
-uniform float4    rtParams0;
+uniform vec3    eyePosWorld;
+uniform vec3    ambientColor;     
+uniform vec4    waterColor;       
+uniform vec4    waterFogData;    
+uniform vec4    waterFogPlane;    
+uniform vec2    nearFar;      
+uniform vec4    rtParams0;
 uniform float     waterDepthGradMax;
 
 void main() 
 {    
-   //float2 prepassCoord = IN_uv0;
+   //vec2 prepassCoord = IN_uv0;
    //IN_uv0 = ( IN_uv0.xy * rtParams0.zw ) + rtParams0.xy;
    float depth = prepassUncondition( prepassTex, IN_uv0 ).w;
-   //return float4( depth.rrr, 1 );
+   //return vec4( depth.rrr, 1 );
    
    // Skip fogging the extreme far plane so that 
    // the canvas clear color always appears.
@@ -67,39 +67,39 @@ void main()
    
    depth *= nearFar.y;
    
-   float3 eyeRay = normalize( IN_wsEyeRay );
+   vec3 eyeRay = normalize( IN_wsEyeRay );
    
-   float3 rayStart = eyePosWorld;
-   float3 rayEnd = eyePosWorld + ( eyeRay * depth );
-   //return float4( rayEnd, 1 );
+   vec3 rayStart = eyePosWorld;
+   vec3 rayEnd = eyePosWorld + ( eyeRay * depth );
+   //return vec4( rayEnd, 1 );
    
-   float4 plane = waterFogPlane; //float4( 0, 0, 1, -waterHeight );
+   vec4 plane = waterFogPlane; //vec4( 0, 0, 1, -waterHeight );
    //plane.w -= 0.15;
    
    float startSide = dot( plane.xyz, rayStart ) + plane.w;
    if ( startSide > 0 )
    {
       rayStart.z -= ( startSide );
-      //return float4( 1, 0, 0, 1 );
+      //return vec4( 1, 0, 0, 1 );
    }
 
-   float3 hitPos;
-   float3 ray = rayEnd - rayStart;
+   vec3 hitPos;
+   vec3 ray = rayEnd - rayStart;
    float rayLen = length( ray );
-   float3 rayDir = normalize( ray );
+   vec3 rayDir = normalize( ray );
    
    float endSide = dot( plane.xyz, rayEnd ) + plane.w;     
    float planeDist;
    
    if ( endSide < -0.005 )    
    {  
-      //return float4( 0, 0, 1, 1 );   
+      //return vec4( 0, 0, 1, 1 );   
       hitPos = rayEnd;
       planeDist = endSide;
    }
    else
    {   
-      //return float4( 0, 0, 0, 0 );
+      //return vec4( 0, 0, 0, 0 );
       float den = dot( ray, plane.xyz );
       
       // Parallal to the plane, return the endPnt.
@@ -109,11 +109,11 @@ void main()
       float dist = -( dot( plane.xyz, rayStart ) + plane.w ) / den;  
       if ( dist < 0.0 )         
          dist = 0.0;
-         //return float4( 1, 0, 0, 1 );
-      //return float4( ( dist ).rrr, 1 );
+         //return vec4( 1, 0, 0, 1 );
+      //return vec4( ( dist ).rrr, 1 );
               
          
-      hitPos = lerp( rayStart, rayEnd, dist );
+      hitPos = mix( rayStart, rayEnd, dist );
       
       planeDist = dist;
    }
@@ -121,18 +121,18 @@ void main()
    float delta = length( hitPos - rayStart );  
       
    float fogAmt = 1.0 - saturate( exp( -FOG_DENSITY * ( delta - FOG_DENSITY_OFFSET ) ) );   
-   //return float4( fogAmt.rrr, 1 );
+   //return vec4( fogAmt.rrr, 1 );
 
    // Calculate the water "base" color based on depth.
-   float4 fogColor = waterColor * tex2D( waterDepthGradMap, vec2(saturate( delta / waterDepthGradMax ), 1.0) );      
+   vec4 fogColor = waterColor * texture2D( waterDepthGradMap, vec2(saturate( delta / waterDepthGradMax ), 1.0) );      
    // Modulate baseColor by the ambientColor.
-   fogColor *= float4( ambientColor.rgb, 1 );
+   fogColor *= vec4( ambientColor.rgb, 1 );
    
-   float3 inColor = hdrDecode( tex2D( backbuffer, IN_uv0 ).rgb );
+   vec3 inColor = hdrDecode( texture2D( backbuffer, IN_uv0 ).rgb );
    inColor.rgb *= 1.0 - saturate( abs( planeDist ) / WET_DEPTH ) * WET_DARKENING;
-   //return float4( inColor, 1 );
+   //return vec4( inColor, 1 );
    
-   float3 outColor = lerp( inColor, fogColor.rgb, fogAmt );
+   vec3 outColor = mix( inColor, fogColor.rgb, fogAmt );
    
-   gl_FragColor = float4( hdrEncode( outColor ), 1 );        
+   gl_FragColor = vec4( hdrEncode( outColor ), 1 );        
 }

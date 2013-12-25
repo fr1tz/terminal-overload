@@ -28,25 +28,25 @@
 
 /// The non-uniform poisson disk used in the
 /// high quality shadow filtering.
-float2 sNonUniformTaps[NUM_TAPS] = float2[]
+vec2 sNonUniformTaps[NUM_TAPS] = vec2[]
 (    
    // These first 4 taps are located around the edges
    // of the disk and are used to predict fully shadowed
    // or unshadowed areas.
-   float2( 0.992833, 0.979309 ),
-   float2( -0.998585, 0.985853 ),
-   float2( 0.949299, -0.882562 ),
-   float2( -0.941358, -0.893924 ),
+   vec2( 0.992833, 0.979309 ),
+   vec2( -0.998585, 0.985853 ),
+   vec2( 0.949299, -0.882562 ),
+   vec2( -0.941358, -0.893924 ),
 
    // The rest of the samples.
-   float2( 0.545055, -0.589072 ),
-   float2( 0.346526, 0.385821 ),
-   float2( -0.260183, 0.334412 ),
-   float2( 0.248676, -0.679605 ),
-   float2( -0.569502, -0.390637 ),
-   float2( -0.614096, 0.212577 ),
-   float2( -0.259178, 0.876272 ),
-   float2( 0.649526, 0.864333 )
+   vec2( 0.545055, -0.589072 ),
+   vec2( 0.346526, 0.385821 ),
+   vec2( -0.260183, 0.334412 ),
+   vec2( 0.248676, -0.679605 ),
+   vec2( -0.569502, -0.390637 ),
+   vec2( -0.614096, 0.212577 ),
+   vec2( -0.259178, 0.876272 ),
+   vec2( 0.649526, 0.864333 )
 );
 
 #else
@@ -55,13 +55,13 @@ float2 sNonUniformTaps[NUM_TAPS] = float2[]
 
 /// The non-uniform poisson disk used in the
 /// high quality shadow filtering.
-float2 sNonUniformTaps[NUM_PRE_TAPS] = float2[]
+vec2 sNonUniformTaps[NUM_PRE_TAPS] = vec2[]
 (      
-   float2( 0.892833, 0.959309 ),
-   float2( -0.941358, -0.873924 ),
-   float2( -0.260183, 0.334412 ),
-   float2( 0.348676, -0.679605 ),
-   float2( -0.569502, -0.390637 )
+   vec2( 0.892833, 0.959309 ),
+   vec2( -0.941358, -0.873924 ),
+   vec2( -0.260183, 0.334412 ),
+   vec2( 0.348676, -0.679605 ),
+   vec2( -0.569502, -0.390637 )
 );
 
 #endif
@@ -73,8 +73,8 @@ uniform sampler2D gTapRotationTex ;
 
 
 float softShadow_sampleTaps(  sampler2D shadowMap,
-                              float2 sinCos,
-                              float2 shadowPos,
+                              vec2 sinCos,
+                              vec2 shadowPos,
                               float filterRadius,
                               float distToLight,
                               float esmFactor,
@@ -83,12 +83,12 @@ float softShadow_sampleTaps(  sampler2D shadowMap,
 {
    float shadow = 0;
 
-   float2 tap = float2(0);
+   vec2 tap = vec2(0);
    for ( int t = startTap; t < endTap; t++ )
    {
       tap.x = ( sNonUniformTaps[t].x * sinCos.y - sNonUniformTaps[t].y * sinCos.x ) * filterRadius;
       tap.y = ( sNonUniformTaps[t].y * sinCos.y + sNonUniformTaps[t].x * sinCos.x ) * filterRadius;
-      float occluder = tex2Dlod( shadowMap, float4( shadowPos + tap, 0, 0 ) ).r;
+      float occluder = tex2Dlod( shadowMap, vec4( shadowPos + tap, 0, 0 ) ).r;
 
       float esm = saturate( exp( esmFactor * ( occluder - distToLight ) ) );
       shadow += esm / float( endTap - startTap );
@@ -99,8 +99,8 @@ float softShadow_sampleTaps(  sampler2D shadowMap,
 
 
 float softShadow_filter(   sampler2D shadowMap,
-                           float2 vpos,
-                           float2 shadowPos,
+                           vec2 vpos,
+                           vec2 shadowPos,
                            float filterRadius,
                            float distToLight,
                            float dotNL,
@@ -111,13 +111,13 @@ float softShadow_filter(   sampler2D shadowMap,
       // If softshadow is undefined then we skip any complex 
       // filtering... just do a single sample ESM.
 
-      float occluder = tex2Dlod( shadowMap, float4( shadowPos, 0, 0 ) ).r;
+      float occluder = tex2Dlod( shadowMap, vec4( shadowPos, 0, 0 ) ).r;
       float shadow = saturate( exp( esmFactor * ( occluder - distToLight ) ) );
 
    #else
 
       // Lookup the random rotation for this screen pixel.
-      float2 sinCos = ( tex2Dlod( gTapRotationTex, float4( vpos * 16, 0, 0 ) ).rg - 0.5 ) * 2;
+      vec2 sinCos = ( tex2Dlod( gTapRotationTex, vec4( vpos * 16, 0, 0 ) ).rg - 0.5 ) * 2;
 
       // Do the prediction taps first.
       float shadow = softShadow_sampleTaps(  shadowMap,

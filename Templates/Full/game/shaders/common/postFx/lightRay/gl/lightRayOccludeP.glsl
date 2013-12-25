@@ -29,12 +29,12 @@ uniform sampler2D prepassTex;   // The pre-pass depth and normals.
 
 uniform float brightScalar;
 
-const float3 LUMINANCE_VECTOR = float3(0.3125f, 0.6154f, 0.0721f);
+const vec3 LUMINANCE_VECTOR = vec3(0.3125f, 0.6154f, 0.0721f);
 
 
 void main()
 {
-    float4 col = float4( 0, 0, 0, 1 );
+    vec4 col = vec4( 0, 0, 0, 1 );
     
     // Get the depth at this pixel.
     float depth = prepassUncondition( prepassTex, IN_uv0 ).w;
@@ -43,10 +43,10 @@ void main()
     // and perform the exposure calculation on the result.
     if ( depth >= 0.999 )
     {
-        col = tex2D( backBuffer, IN_uv0 );
+        col = texture2D( backBuffer, IN_uv0 );
 
         //col = 1 - exp(-120000 * col);
-        col += dot( float3(col), LUMINANCE_VECTOR ) + 0.0001f;
+        col += dot( vec3(col), LUMINANCE_VECTOR ) + 0.0001f;
         col *= brightScalar;
     }
     

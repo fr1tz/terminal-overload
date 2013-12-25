@@ -30,5 +30,5 @@ uniform sampler2D depthViz;
 void main()
 {
    float depth = prepassUncondition( prepassBuffer, uv0 ).w;
-   gl_FragColor = float4( tex2D( depthViz, vec2(0.0,depth) ).rgb, 1.0 );
+   gl_FragColor = vec4( texture2D( depthViz, vec2(0.0,depth) ).rgb, 1.0 );
 }

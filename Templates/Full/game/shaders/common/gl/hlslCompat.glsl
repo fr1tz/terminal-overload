@@ -40,12 +40,11 @@
 #define tex2D texture2D
 #define tex1D texture1D
 #define tex2Dproj texture2DProj
+#define tex2Dlod( sampler, texCoord ) texture2DLod(sampler, texCoord.xy, texCoord.w)
 
 #define samplerCUBE samplerCube
 
 #define frac fract
-
-vec4 tex2Dlod(sampler2D sampler, vec4 texCoord) { return texture2DLod(sampler, texCoord.xy, texCoord.w); }
 
 #define lerp mix
 
@@ -88,15 +87,10 @@ mat4 mat4FromRow( float r0c0, float r0c1, float r0c2, float r0c3,
                 r0c3, r1c3, r2c3, r3c3 );
 }
 
-float saturate( float val ) { return clamp( val, 0.0, 1.0 ); }
-vec2 saturate( vec2 val ) { return clamp( val, 0.0, 1.0 ); }
-vec3 saturate( vec3 val ) { return clamp( val, 0.0, 1.0 ); }
-vec4 saturate( vec4 val ) { return clamp( val, 0.0, 1.0 ); }
 
-float round( float n ) { return sign( n ) * floor( abs( n ) + 0.5 ); }
-vec2 round( vec2 n ) { return sign( n ) * floor( abs( n ) + 0.5 ); }
-vec3 round( vec3 n ) { return sign( n ) * floor( abs( n ) + 0.5 ); }
-vec4 round( vec4 n ) { return sign( n ) * floor( abs( n ) + 0.5 ); }
+#define saturate( val ) clamp( val, 0.0, 1.0 )
+
+#define round( n ) (sign( n ) * floor( abs( n ) + 0.5 ))
 
 vec4 mul( mat4 m1, vec4 v1) { return m1*v1; }
 vec4 mul( vec4 v1, mat4 m1) { return v1*m1; }
@@ -105,7 +99,7 @@ vec3 mul( mat3 m1, vec3 v1) { return m1*v1; }
 vec2 mul( mat2 m1, vec2 v1) { return m1*v1; }
 mat3 mul( mat3 m1, mat3 m2) { return m1*m2; }
 
-vec4 rsqrt( vec4 n ){ return inversesqrt( n ); }
+#define inversesqrt( n ) inversesqrt( n )
 
 #define correctSSP(vec) vec.y *= -1
 

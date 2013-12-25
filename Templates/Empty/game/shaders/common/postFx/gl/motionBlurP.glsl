@@ -28,8 +28,8 @@
 #undef IN_uv0
 #define _IN_uv0 uv0
 
-uniform float4x4 matPrevScreenToWorld;
-uniform float4x4 matWorldToScreen;
+uniform mat4 matPrevScreenToWorld;
+uniform mat4 matWorldToScreen;
 
 // Passed in from setShaderConsts()
 uniform float velocityMultiplier;
@@ -43,32 +43,32 @@ void main()
    float samples = 5;
    
    // First get the prepass texture for uv channel 0
-   float4 prepass = prepassUncondition( prepassTex, IN_uv0 );
+   vec4 prepass = prepassUncondition( prepassTex, IN_uv0 );
    
    // Next extract the depth
    float depth = prepass.a;
    
    // Create the screen position
-   float4 screenPos = float4(IN_uv0.x*2-1, IN_uv0.y*2-1, depth*2-1, 1);
+   vec4 screenPos = vec4(IN_uv0.x*2-1, IN_uv0.y*2-1, depth*2-1, 1);
 
    // Calculate the world position
-   float4 D = mul(screenPos, matWorldToScreen);
-   float4 worldPos = D / D.w;
+   vec4 D = mul(screenPos, matWorldToScreen);
+   vec4 worldPos = D / D.w;
    
    // Now calculate the previous screen position
-   float4 previousPos = mul( worldPos, matPrevScreenToWorld );
+   vec4 previousPos = mul( worldPos, matPrevScreenToWorld );
    previousPos /= previousPos.w;
 	
    // Calculate the XY velocity
-   float2 velocity = ((screenPos - previousPos) / velocityMultiplier).xy;
+   vec2 velocity = ((screenPos - previousPos) / velocityMultiplier).xy;
    
    // Generate the motion blur
-   float4 color = tex2D(backBuffer, IN_uv0);
+   vec4 color = texture2D(backBuffer, IN_uv0);
 	IN_uv0 += velocity;
 	
    for(int i = 1; i<samples; ++i, IN_uv0 += velocity)
    {
-      float4 currentColor = tex2D(backBuffer, IN_uv0);
+      vec4 currentColor = texture2D(backBuffer, IN_uv0);
       color += currentColor;
    }
    

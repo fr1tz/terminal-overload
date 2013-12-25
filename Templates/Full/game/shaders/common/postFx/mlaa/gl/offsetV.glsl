@@ -35,23 +35,23 @@ attribute vec2 vTexCoord0;
 #define IN_texcoord  vTexCoord0
 
 #define OUT_position gl_Position
-varying float2 texcoord;
+varying vec2 texcoord;
 #define OUT_texcoord texcoord
-varying float4 offset[2];
+varying vec4 offset[2];
 #define OUT_offset offset
 
-uniform float2 texSize0;
+uniform vec2 texSize0;
 
 void main()
 {
    OUT_position = IN_position;
-   float2 PIXEL_SIZE = 1.0 / texSize0;
+   vec2 PIXEL_SIZE = 1.0 / texSize0;
 
    OUT_texcoord = IN_texcoord;
    OUT_texcoord.xy += PIXEL_SIZE * 0.5;
 
-   OUT_offset[0] = OUT_texcoord.xyxy + PIXEL_SIZE.xyxy * float4(-1.0, 0.0, 0.0, -1.0);
-   OUT_offset[1] = OUT_texcoord.xyxy + PIXEL_SIZE.xyxy * float4( 1.0, 0.0, 0.0,  1.0);
+   OUT_offset[0] = OUT_texcoord.xyxy + PIXEL_SIZE.xyxy * vec4(-1.0, 0.0, 0.0, -1.0);
+   OUT_offset[1] = OUT_texcoord.xyxy + PIXEL_SIZE.xyxy * vec4( 1.0, 0.0, 0.0,  1.0);
    
    correctSSP(gl_Position);
 }

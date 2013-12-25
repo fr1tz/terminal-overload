@@ -30,17 +30,17 @@ attribute vec2 vTexCoord0;
 #define In_color  vColor
 #define In_uv0    vTexCoord0
 
-varying float4 color;
+varying vec4 color;
 varying vec2 uv0;
-varying float4 pos;
+varying vec4 pos;
 
 #define OUT_hpos gl_Position
 #define OUT_color color
 #define OUT_uv0 uv0
 #define OUT_pos pos
 
-uniform float4x4 modelViewProj;
-uniform float4x4 fsModelViewProj;
+uniform mat4 modelViewProj;
+uniform mat4 fsModelViewProj;
 
 void main()
 {

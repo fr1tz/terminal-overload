@@ -35,15 +35,15 @@
    uniform float oneOverSoftness;
    uniform float oneOverFar;
    uniform sampler2D prepassTex;   
-   //uniform float3 vEye;
-   uniform float4 prePassTargetParams;
+   //uniform vec3 vEye;
+   uniform vec4 prePassTargetParams;
 #endif
 
 #define CLIP_Z // TODO: Make this a proper macro
 
-varying float4 color;
+varying vec4 color;
 varying vec2 uv0;
-varying float4 pos;
+varying vec4 pos;
 
 #define IN_color color
 #define IN_uv0 uv0
@@ -53,13 +53,13 @@ uniform sampler2D diffuseMap;
 
 uniform sampler2D paraboloidLightMap;
 
-float4 lmSample( float3 nrm )
+vec4 lmSample( vec3 nrm )
 {
    bool calcBack = (nrm.z < 0.0);
    if ( calcBack )
       nrm.z = nrm.z * -1.0;
 
-   float2 lmCoord;
+   vec2 lmCoord;
    lmCoord.x = (nrm.x / (2*(1 + nrm.z))) + 0.5;
    lmCoord.y = 1-((nrm.y / (2*(1 + nrm.z))) + 0.5);
 
@@ -71,7 +71,7 @@ float4 lmSample( float3 nrm )
    // Atlasing front and back maps, so scale
    lmCoord.x *= 0.5;
 
-   return tex2D(paraboloidLightMap, lmCoord);
+   return texture2D(paraboloidLightMap, lmCoord);
 }
 
 
@@ -83,7 +83,7 @@ void main()
    float softBlend = 1;
    
    #ifdef SOFTPARTICLES
-      float2 tc = IN_pos.xy * float2(1.0, -1.0) / IN_pos.w;
+      vec2 tc = IN_pos.xy * vec2(1.0, -1.0) / IN_pos.w;
       tc = viewportCoordToRenderTarget(saturate( ( tc + 1.0 ) * 0.5 ), prePassTargetParams); 
    
    	float sceneDepth = prepassUncondition( prepassTex, tc ).w;   	   	   			
@@ -98,14 +98,14 @@ void main()
       softBlend = saturate( diff * oneOverSoftness );
    #endif
 	   
-   float4 diffuse = tex2D( diffuseMap, IN_uv0 );
+   vec4 diffuse = texture2D( diffuseMap, IN_uv0 );
    
-   //gl_FragColor = float4( lmSample(float3(0, 0, -1)).rgb, IN_color.a * diffuse.a * softBlend * alphaScale);
+   //gl_FragColor = vec4( lmSample(vec3(0, 0, -1)).rgb, IN_color.a * diffuse.a * softBlend * alphaScale);
    
    // Scale output color by the alpha factor (turn LerpAlpha into pre-multiplied alpha)
-   float3 colorScale = ( alphaFactor < 0.0 ? IN_color.rgb * diffuse.rgb : float3( alphaFactor > 0.0 ? IN_color.a * diffuse.a * alphaFactor * softBlend : softBlend ) );
+   vec3 colorScale = ( alphaFactor < 0.0 ? IN_color.rgb * diffuse.rgb : vec3( alphaFactor > 0.0 ? IN_color.a * diffuse.a * alphaFactor * softBlend : softBlend ) );
    
-   gl_FragColor = hdrEncode( float4( IN_color.rgb * diffuse.rgb * colorScale,
+   gl_FragColor = hdrEncode( vec4( IN_color.rgb * diffuse.rgb * colorScale,
                   IN_color.a * diffuse.a * softBlend * alphaScale ) );
 }
 

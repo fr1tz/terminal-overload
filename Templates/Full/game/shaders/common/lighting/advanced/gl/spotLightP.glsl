@@ -28,9 +28,9 @@
 #include "softShadow.glsl"
 #include "../../../gl/lighting.glsl"
 
-varying float4 wsEyeDir;
-varying float4 ssPos;
-varying float4 vsEyeDir;
+varying vec4 wsEyeDir;
+varying vec4 ssPos;
+varying vec4 vsEyeDir;
 
 #define IN_wsEyeDir wsEyeDir
 #define IN_ssPos ssPos
@@ -46,44 +46,44 @@ uniform sampler2D cookieMap;
 uniform sampler2D prePassBuffer;
 uniform sampler2D shadowMap;
 
-uniform float4 rtParams0;
+uniform vec4 rtParams0;
 
-uniform float3 lightPosition;
-uniform float4 lightColor;
+uniform vec3 lightPosition;
+uniform vec4 lightColor;
 uniform float  lightBrightness;
 uniform float  lightRange;
-uniform float2 lightAttenuation;
-uniform float3 lightDirection;
-uniform float4 lightSpotParams;
-uniform float4 lightMapParams;
+uniform vec2 lightAttenuation;
+uniform vec3 lightDirection;
+uniform vec4 lightSpotParams;
+uniform vec4 lightMapParams;
 
-uniform float4 vsFarPlane;
-uniform float4x4 viewToLightProj;
+uniform vec4 vsFarPlane;
+uniform mat4 viewToLightProj;
 
-uniform float4 lightParams;
+uniform vec4 lightParams;
 uniform float shadowSoftness;
 
 void main()
 {   
    // Compute scene UV
-   float3 ssPos = IN_ssPos.xyz / IN_ssPos.w;
-   float2 uvScene = getUVFromSSPos( ssPos, rtParams0 );
+   vec3 ssPos = IN_ssPos.xyz / IN_ssPos.w;
+   vec2 uvScene = getUVFromSSPos( ssPos, rtParams0 );
    
    // Sample/unpack the normal/z data
-   float4 prepassSample = prepassUncondition( prePassBuffer, uvScene );
-   float3 normal = prepassSample.rgb;
+   vec4 prepassSample = prepassUncondition( prePassBuffer, uvScene );
+   vec3 normal = prepassSample.rgb;
    float depth = prepassSample.a;
    
    // Eye ray - Eye -> Pixel
-   float3 eyeRay = getDistanceVectorToPlane( -vsFarPlane.w, IN_vsEyeDir.xyz, vsFarPlane );
-   float3 viewSpacePos = eyeRay * depth;
+   vec3 eyeRay = getDistanceVectorToPlane( -vsFarPlane.w, IN_vsEyeDir.xyz, vsFarPlane );
+   vec3 viewSpacePos = eyeRay * depth;
       
    // Build light vec, get length, clip pixel if needed
-   float3 lightToPxlVec = viewSpacePos - lightPosition;
+   vec3 lightToPxlVec = viewSpacePos - lightPosition;
    float lenLightV = length( lightToPxlVec );
    lightToPxlVec /= lenLightV;
 
-   //lightDirection = float3( -lightDirection.xy, lightDirection.z ); //float3( 0, 0, -1 );
+   //lightDirection = vec3( -lightDirection.xy, lightDirection.z ); //vec3( 0, 0, -1 );
    float cosAlpha = dot( lightDirection, lightToPxlVec );   
    clip( cosAlpha - lightSpotParams.x );
    clip( lightRange - lenLightV );
@@ -96,8 +96,8 @@ void main()
    float nDotL = dot( normal, -lightToPxlVec );
 
    // Get the shadow texture coordinate
-   float4 pxlPosLightProj = mul( viewToLightProj, float4( viewSpacePos, 1 ) );
-   float2 shadowCoord = ( ( pxlPosLightProj.xy / pxlPosLightProj.w ) * 0.5 ) + float2( 0.5, 0.5 );
+   vec4 pxlPosLightProj = mul( viewToLightProj, vec4( viewSpacePos, 1 ) );
+   vec2 shadowCoord = ( ( pxlPosLightProj.xy / pxlPosLightProj.w ) * 0.5 ) + vec2( 0.5, 0.5 );
    shadowCoord.y = 1.0f - shadowCoord.y;
 
    #ifdef NO_SHADOW
@@ -122,7 +122,7 @@ void main()
    #ifdef USE_COOKIE_TEX
 
       // Lookup the cookie sample.
-      float4 cookie = tex2D( cookieMap, shadowCoord );
+      vec4 cookie = texture2D( cookieMap, shadowCoord );
 
       // Multiply the light with the cookie tex.
       lightColor.rgb *= cookie.rgb;
@@ -143,8 +143,8 @@ void main()
                                        normalize( -eyeRay ) ) * lightBrightness * atten * shadowed;
 
    float Sat_NL_Att = saturate( nDotL * atten * shadowed ) * lightBrightness;
-   float3 lightColorOut = lightMapParams.rgb * lightColor.rgb;
-   float4 addToResult = float4(0.0);
+   vec3 lightColorOut = lightMapParams.rgb * lightColor.rgb;
+   vec4 addToResult = vec4(0.0);
 
    // TODO: This needs to be removed when lightmapping is disabled
    // as its extra work per-pixel on dynamic lit scenes.
@@ -156,8 +156,8 @@ void main()
       shadowed = nDotL < 0.0f ? 1.0f : shadowed;
 
       Sat_NL_Att = 1.0f;
-      shadowed = lerp( 1.0f, shadowed, atten );
-      lightColorOut = float3(shadowed);
+      shadowed = mix( 1.0f, shadowed, atten );
+      lightColorOut = vec3(shadowed);
       specular *= lightBrightness;
       addToResult = ( 1.0 - shadowed ) * abs(lightMapParams);
    }

@@ -107,7 +107,7 @@ void main()
    vec3 vViewTS   = normalize( vViewTS  );
    vec3 vLightTS  = normalize( vLightTS );
      
-   vec4 cResultColor = float4( 0, 0, 0, 1 );
+   vec4 cResultColor = vec4( 0, 0, 0, 1 );
     
    vec2 texSample = IN_texCoord12.xy;
    
@@ -120,7 +120,7 @@ void main()
    //return noise2;
       
    vec3 noiseNormal = normalize( noise1 + noise2 ).xyz;
-   //return float4( noiseNormal, 1.0 );
+   //return vec4( noiseNormal, 1.0 );
    
    float noiseHeight = noise1.a * noise2.a * ( cloudCoverage / 2.0 + 0.5 );         
 

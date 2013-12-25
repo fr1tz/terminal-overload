@@ -22,10 +22,10 @@
 
 uniform sampler2D colorTarget0Texture ;
 
-float4 main( float2 ScreenPos : VPOS ) : COLOR0
+vec4 main( vec2 ScreenPos : VPOS ) : COLOR0
 {
-   float2 TexCoord = ScreenPos;
-   float4 diffuse;
+   vec2 TexCoord = ScreenPos;
+   vec4 diffuse;
    asm { tfetch2D diffuse, TexCoord, colorTarget0Texture, UnnormalizedTextureCoords = true };
    return diffuse;
 }

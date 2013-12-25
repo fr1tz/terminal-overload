@@ -23,12 +23,12 @@
 #include "../../../gl/hlslCompat.glsl"
 #include "shadergen:/autogenConditioners.h"
 
-varying float2 uv0;
+varying vec2 uv0;
 #define IN_uv0 uv0
 
 uniform sampler2D edgeBuffer;
 
 void main()
 {
-   gl_FragColor = float4( tex2D( edgeBuffer, IN_uv0 ).rrr, 1.0 );
+   gl_FragColor = vec4( texture2D( edgeBuffer, IN_uv0 ).rrr, 1.0 );
 }

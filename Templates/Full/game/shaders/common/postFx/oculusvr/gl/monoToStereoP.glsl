@@ -26,13 +26,13 @@
 
 uniform sampler2D backBuffer : register(S0);
 
-uniform float2 LensXOffsets;
+uniform vec2 LensXOffsets;
 
-float4 main( PFXVertToPix IN ) : COLOR0  
+vec4 main( PFXVertToPix IN ) : COLOR0  
 {
-   float2 texCoord;
+   vec2 texCoord;
    float xOffset;
-   float2 lensCenter;
+   vec2 lensCenter;
    lensCenter.y = 0.5;
    if(IN.uv0.x < 0.5)
    {
@@ -54,7 +54,7 @@ float4 main( PFXVertToPix IN ) : COLOR0
    texCoord.x *= 0.5;
    texCoord.x += 0.25;
    
-   float4 color = tex2D(backBuffer, texCoord);
+   vec4 color = texture2D(backBuffer, texCoord);
 
    return color;    
 }

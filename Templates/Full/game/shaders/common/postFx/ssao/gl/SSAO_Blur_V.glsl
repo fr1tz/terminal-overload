@@ -30,28 +30,28 @@ attribute vec2 vTexCoord0;
 #define IN_pos  vPosition
 #define _IN_uv  vTexCoord0
 
-uniform float2 texSize0;
-uniform float4 rtParams0;
-uniform float2 oneOverTargetSize; 
+uniform vec2 texSize0;
+uniform vec4 rtParams0;
+uniform vec2 oneOverTargetSize; 
 
 #define OUT_hpos gl_Position
 
-varying float4 uv0;
+varying vec4 uv0;
 #define OUT_uv0 uv0
-varying float2 uv1;
+varying vec2 uv1;
 #define OUT_uv1 uv1
-varying float2 uv2;
+varying vec2 uv2;
 #define OUT_uv2 uv2
-varying float2 uv3;
+varying vec2 uv3;
 #define OUT_uv3 uv3
 
-varying float2 uv4;
+varying vec2 uv4;
 #define OUT_uv4 uv4
-varying float2 uv5;
+varying vec2 uv5;
 #define OUT_uv5 uv5
-varying float2 uv6;
+varying vec2 uv6;
 #define OUT_uv6 uv6
-varying float2 uv7;
+varying vec2 uv7;
 #define OUT_uv7 uv7
 
 
@@ -59,11 +59,11 @@ void main()
 {
    OUT_hpos = IN_pos;
    
-   float2 IN_uv = viewportCoordToRenderTarget( _IN_uv, rtParams0 );
+   vec2 IN_uv = viewportCoordToRenderTarget( _IN_uv, rtParams0 );
    
-   //float4 step = float4( 3.5, 2.5, 1.5, 0.5 );
-   //float4 step = float4( 4.0, 3.0, 2.0, 1.0 );
-   float4 step = float4( 9.0, 5.0, 2.5, 0.5 );
+   //vec4 step = vec4( 3.5, 2.5, 1.5, 0.5 );
+   //vec4 step = vec4( 4.0, 3.0, 2.0, 1.0 );
+   vec4 step = vec4( 9.0, 5.0, 2.5, 0.5 );
    
    // I don't know why this offset is necessary, but it is.
    //IN_uv = IN_uv * oneOverTargetSize;

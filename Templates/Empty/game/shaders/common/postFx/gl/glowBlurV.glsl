@@ -26,24 +26,24 @@
 attribute vec4 vPosition;
 attribute vec2 vTexCoord0;
 
-uniform float2 texSize0;
+uniform vec2 texSize0;
 
-varying float4 hpos; //POSITION;
-varying float2 uv0; //TEXCOORD0;
-varying float2 uv1; //TEXCOORD1;
-varying float2 uv2; //TEXCOORD2;
-varying float2 uv3; //TEXCOORD3;
-varying float2 uv4; //TEXCOORD4;
-varying float2 uv5; //TEXCOORD5;
-varying float2 uv6; //TEXCOORD6;
-varying float2 uv7; //TEXCOORD7;
+varying vec4 hpos; //POSITION;
+varying vec2 uv0; //TEXCOORD0;
+varying vec2 uv1; //TEXCOORD1;
+varying vec2 uv2; //TEXCOORD2;
+varying vec2 uv3; //TEXCOORD3;
+varying vec2 uv4; //TEXCOORD4;
+varying vec2 uv5; //TEXCOORD5;
+varying vec2 uv6; //TEXCOORD6;
+varying vec2 uv7; //TEXCOORD7;
 
 void main()
 {  
    gl_Position = vPosition;
    hpos = gl_Position;
    
-   float2 uv = vTexCoord0 + (0.5f / texSize0);
+   vec2 uv = vTexCoord0 + (0.5f / texSize0);
 
    uv0 = uv + ( ( BLUR_DIR * 3.5f ) / texSize0 );
    uv1 = uv + ( ( BLUR_DIR * 2.5f ) / texSize0 );

@@ -27,6 +27,6 @@ uniform sampler2D depthViz;
 
 void main()
 {
-   float depth = saturate( tex2D( shadowMap, uv0 ).r );
-   gl_FragColor = float4( tex2D( depthViz, vec2(depth, 1.0) ).rgb, 1 );
+   float depth = saturate( texture2D( shadowMap, uv0 ).r );
+   gl_FragColor = vec4( texture2D( depthViz, vec2(depth, 1.0) ).rgb, 1 );
 }

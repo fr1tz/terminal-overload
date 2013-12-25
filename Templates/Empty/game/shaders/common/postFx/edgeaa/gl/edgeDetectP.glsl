@@ -24,44 +24,44 @@
 #include "shadergen:/autogenConditioners.h"
 
 // GPU Gems 3, pg 443-444
-float GetEdgeWeight(float2 uv0, in sampler2D prepassBuffer, in float2 targetSize)
+float GetEdgeWeight(vec2 uv0, in sampler2D prepassBuffer, in vec2 targetSize)
 {
-   float2 offsets[9] = float2[](
-      float2( 0.0,  0.0),
-      float2(-1.0, -1.0),
-      float2( 0.0, -1.0),
-      float2( 1.0, -1.0),
-      float2( 1.0,  0.0),
-      float2( 1.0,  1.0),
-      float2( 0.0,  1.0),
-      float2(-1.0,  1.0),
-      float2(-1.0,  0.0)
+   vec2 offsets[9] = vec2[](
+      vec2( 0.0,  0.0),
+      vec2(-1.0, -1.0),
+      vec2( 0.0, -1.0),
+      vec2( 1.0, -1.0),
+      vec2( 1.0,  0.0),
+      vec2( 1.0,  1.0),
+      vec2( 0.0,  1.0),
+      vec2(-1.0,  1.0),
+      vec2(-1.0,  0.0)
    );
    
    
-   float2 PixelSize = 1.0 / targetSize;
+   vec2 PixelSize = 1.0 / targetSize;
    
    float Depth[9];
-   float3 Normal[9];
+   vec3 Normal[9];
    
    for(int i = 0; i < 9; i++)
    {
-      float2 uv = uv0 + offsets[i] * PixelSize;
-      float4 gbSample = prepassUncondition( prepassBuffer, uv );
+      vec2 uv = uv0 + offsets[i] * PixelSize;
+      vec4 gbSample = prepassUncondition( prepassBuffer, uv );
       Depth[i] = gbSample.a;
       Normal[i] = gbSample.rgb;
    }
    
-   float4 Deltas1 = float4(Depth[1], Depth[2], Depth[3], Depth[4]);
-   float4 Deltas2 = float4(Depth[5], Depth[6], Depth[7], Depth[8]);
+   vec4 Deltas1 = vec4(Depth[1], Depth[2], Depth[3], Depth[4]);
+   vec4 Deltas2 = vec4(Depth[5], Depth[6], Depth[7], Depth[8]);
    
    Deltas1 = abs(Deltas1 - Depth[0]);
    Deltas2 = abs(Depth[0] - Deltas2);
    
-   float4 maxDeltas = max(Deltas1, Deltas2);
-   float4 minDeltas = max(min(Deltas1, Deltas2), 0.00001);
+   vec4 maxDeltas = max(Deltas1, Deltas2);
+   vec4 minDeltas = max(min(Deltas1, Deltas2), 0.00001);
    
-   float4 depthResults = step(minDeltas * 25.0, maxDeltas);
+   vec4 depthResults = step(minDeltas * 25.0, maxDeltas);
    
    Deltas1.x = dot(Normal[1], Normal[0]);
    Deltas1.y = dot(Normal[2], Normal[0]);
@@ -75,20 +75,20 @@ float GetEdgeWeight(float2 uv0, in sampler2D prepassBuffer, in float2 targetSize
    
    Deltas1 = abs(Deltas1 - Deltas2);
    
-   float4 normalResults = step(0.4, Deltas1);
+   vec4 normalResults = step(0.4, Deltas1);
    
    normalResults = max(normalResults, depthResults);
    
-   return dot(normalResults, float4(1.0, 1.0, 1.0, 1.0)) * 0.25;
+   return dot(normalResults, vec4(1.0, 1.0, 1.0, 1.0)) * 0.25;
 }
 
-varying float2 uv0;
+varying vec2 uv0;
 #define IN_uv0 uv0
 
 uniform sampler2D prepassBuffer;
-uniform float2 targetSize;
+uniform vec2 targetSize;
 
 void main()
 {
-   gl_FragColor = float4( GetEdgeWeight(IN_uv0, prepassBuffer, targetSize ) );//rtWidthHeightInvWidthNegHeight.zw);
+   gl_FragColor = vec4( GetEdgeWeight(IN_uv0, prepassBuffer, targetSize ) );//rtWidthHeightInvWidthNegHeight.zw);
 }

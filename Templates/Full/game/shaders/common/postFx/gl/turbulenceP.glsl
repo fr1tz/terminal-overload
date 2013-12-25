@@ -25,8 +25,8 @@
 #include "shadergen:/autogenConditioners.h"
 
 uniform float  accumTime;
-uniform float2 projectionOffset;
-uniform float4 targetViewport;
+uniform vec2 projectionOffset;
+uniform vec4 targetViewport;
 
 uniform sampler2D inputTex;
 
@@ -46,5 +46,5 @@ void main()
 	y = clamp(y, targetViewport.y, targetViewport.w);
 	x = clamp(x, targetViewport.x, targetViewport.z);
 
-   gl_FragColor = tex2D (inputTex, float2(x, y));
+   gl_FragColor = texture2D (inputTex, vec2(x, y));
 }

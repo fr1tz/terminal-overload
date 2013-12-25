@@ -25,7 +25,7 @@
 #include "../../gl/postFX.glsl"
 
 uniform sampler2D inputTex ;
-uniform float2 oneOverTargetSize;
+uniform vec2 oneOverTargetSize;
 uniform float gaussMultiplier;
 uniform float gaussMean;
 uniform float gaussStdDev;
@@ -50,7 +50,7 @@ float computeGaussianValue( float x, float mean, float std_deviation )
 
 void main()
 {
-   float4 color = float4( 0.0f, 0.0f, 0.0f, 0.0f );
+   vec4 color = vec4( 0.0f, 0.0f, 0.0f, 0.0f );
    float offset = 0;
    float weight = 0;
    float x = 0;
@@ -62,8 +62,8 @@ void main()
       offset = (fI - 4.0) * oneOverTargetSize.y;
       x = (fI - 4.0) / 4.0;
       weight = gaussMultiplier * computeGaussianValue( x, gaussMean, gaussStdDev );
-      color += (tex2D( inputTex, IN_uv0 + float2( 0.0f, offset ) ) * weight );
+      color += (texture2D( inputTex, IN_uv0 + vec2( 0.0f, offset ) ) * weight );
    }
 
-   gl_FragColor = float4( color.rgb, 1.0f );
+   gl_FragColor = vec4( color.rgb, 1.0f );
 }

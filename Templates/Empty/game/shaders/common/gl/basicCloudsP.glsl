@@ -24,7 +24,7 @@
 #include "hlslCompat.glsl"
 
 //ConnectData
-varying float2 texCoord;
+varying vec2 texCoord;
 #define IN_texCoord texCoord
 
 
@@ -32,6 +32,6 @@ uniform sampler2D diffuseMap        ;
 
 void main()
 {
-   float4 col = tex2D( diffuseMap, IN_texCoord );
+   vec4 col = texture2D( diffuseMap, IN_texCoord );
    gl_FragColor = hdrEncode( col );
 }

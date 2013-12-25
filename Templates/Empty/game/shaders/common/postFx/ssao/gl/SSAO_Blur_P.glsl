@@ -23,22 +23,22 @@
 #include "../../../gl/hlslCompat.glsl"
 #include "shadergen:/autogenConditioners.h"
 
-varying float4 uv0;
+varying vec4 uv0;
 #define IN_uv0 uv0
-varying float2 uv1;
+varying vec2 uv1;
 #define IN_uv1 uv1
-varying float2 uv2;
+varying vec2 uv2;
 #define IN_uv2 uv2
-varying float2 uv3;
+varying vec2 uv3;
 #define IN_uv3 uv3
 
-varying float2 uv4;
+varying vec2 uv4;
 #define IN_uv4 uv4
-varying float2 uv5;
+varying vec2 uv5;
 #define IN_uv5 uv5
-varying float2 uv6;
+varying vec2 uv6;
 #define IN_uv6 uv6
-varying float2 uv7;
+varying vec2 uv7;
 #define IN_uv7 uv7
 
 uniform sampler2D occludeMap ;
@@ -47,10 +47,10 @@ uniform float blurDepthTol;
 uniform float blurNormalTol;
 
 
-void sample( float2 uv, float weight, float4 centerTap, inout int usedCount, inout float occlusion, inout float total )
+void sample( vec2 uv, float weight, vec4 centerTap, inout int usedCount, inout float occlusion, inout float total )
 {
    //return;
-   float4 tap = prepassUncondition( prepassMap, uv );   
+   vec4 tap = prepassUncondition( prepassMap, uv );   
    
    if ( abs( tap.a - centerTap.a ) < blurDepthTol )
    {
@@ -58,22 +58,22 @@ void sample( float2 uv, float weight, float4 centerTap, inout int usedCount, ino
       {
          usedCount++;
          total += weight;
-         occlusion += tex2D( occludeMap, uv ).r * weight;
+         occlusion += texture2D( occludeMap, uv ).r * weight;
       }
    }   
 }
 
 void main()
 {   
-   //float4 centerTap;
-   float4 centerTap = prepassUncondition( prepassMap, IN_uv0.zw );
+   //vec4 centerTap;
+   vec4 centerTap = prepassUncondition( prepassMap, IN_uv0.zw );
    
    //return centerTap;
    
-   //float centerOcclude = tex2D( occludeMap, IN_uv0.zw ).r;
-   //return float4( centerOcclude.rrr, 1 );
+   //float centerOcclude = texture2D( occludeMap, IN_uv0.zw ).r;
+   //return vec4( centerOcclude.rrr, 1 );
 
-   float4 kernel = float4( 0.175, 0.275, 0.375, 0.475 ); //25f;
+   vec4 kernel = vec4( 0.175, 0.275, 0.375, 0.475 ); //25f;
 
    float occlusion = 0;
    int usedCount = 0;
@@ -89,19 +89,19 @@ void main()
    sample( IN_uv6, kernel.z, centerTap, usedCount, occlusion, total );
    sample( IN_uv7, kernel.w, centerTap, usedCount, occlusion, total );   
    
-   occlusion += tex2D( occludeMap, IN_uv0.zw ).r * 0.5;
+   occlusion += texture2D( occludeMap, IN_uv0.zw ).r * 0.5;
    total += 0.5;
    //occlusion /= 3.0;
    
    //occlusion /= (float)usedCount / 8.0;
    occlusion /= total;
    
-   gl_FragColor = float4( float3(occlusion), 1 );   
+   gl_FragColor = vec4( vec3(occlusion), 1 );   
    
    
-   //return float4( 0,0,0,occlusion );
+   //return vec4( 0,0,0,occlusion );
    
-   //float3 color = tex2D( colorMap, IN_uv0.zw );
+   //vec3 color = texture2D( colorMap, IN_uv0.zw );
       
-   //return float4( color, occlusion );
+   //return vec4( color, occlusion );
 }

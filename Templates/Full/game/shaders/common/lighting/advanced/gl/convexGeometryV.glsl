@@ -26,24 +26,24 @@ attribute vec4 vPosition;
 
 #define IN_pos vPosition
 
-varying float4 wsEyeDir;
-varying float4 ssPos;
-varying float4 vsEyeDir;
+varying vec4 wsEyeDir;
+varying vec4 ssPos;
+varying vec4 vsEyeDir;
 
 #define OUT_hpos gl_Position
 #define OUT_wsEyeDir wsEyeDir
 #define OUT_ssPos ssPos
 #define OUT_vsEyeDir vsEyeDir
 
-uniform float4x4 modelview;
-uniform float4x4 objTrans;
-uniform float4x4 worldViewOnly;
-uniform float3 eyePosWorld;
+uniform mat4 modelview;
+uniform mat4 objTrans;
+uniform mat4 worldViewOnly;
+uniform vec3 eyePosWorld;
 
 void main()
 {
    OUT_hpos = mul( modelview, IN_pos );
-   OUT_wsEyeDir = mul( objTrans, IN_pos ) - float4( eyePosWorld, 0.0 );
+   OUT_wsEyeDir = mul( objTrans, IN_pos ) - vec4( eyePosWorld, 0.0 );
    OUT_vsEyeDir = mul( worldViewOnly, IN_pos );
    OUT_ssPos = OUT_hpos;
 

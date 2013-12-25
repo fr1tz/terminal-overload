@@ -184,7 +184,7 @@ void main()
       // Fade out the shadow at the end of the range.
       vec4 zDist = vec4(zNearFarInvNearFar.x + zNearFarInvNearFar.y * depth);
       float fadeOutAmt = ( zDist.x - fadeStartLength.x ) * fadeStartLength.y;
-      shadowed = lerp( shadowed, 1.0, saturate( fadeOutAmt ) );
+      shadowed = mix( shadowed, 1.0, saturate( fadeOutAmt ) );
 
       #ifdef PSSM_DEBUG_RENDER
          if ( fadeOutAmt > 1.0 )
@@ -219,7 +219,7 @@ void main()
 
    // Sample the AO texture.      
    #ifdef USE_SSAO_MASK
-      float ao = 1.0 - tex2D( ssaoMask, viewportCoordToRenderTarget( uv0.xy, rtParams2 ) ).r;
+      float ao = 1.0 - texture2D( ssaoMask, viewportCoordToRenderTarget( uv0.xy, rtParams2 ) ).r;
       addToResult *= ao;
    #endif
 

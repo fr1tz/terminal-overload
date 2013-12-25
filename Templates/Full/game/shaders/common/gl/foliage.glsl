@@ -124,7 +124,7 @@ void foliageProcessVert( inout vec3 position,
                          in vec3 eyePos )
 {  
    // Assign the normal and tagent values.
-   //normal = float3( 0, 0, 1 );//cross( gc_camUp, gc_camRight );
+   //normal = vec3( 0, 0, 1 );//cross( gc_camUp, gc_camRight );
    T = gc_camRight;
    
    // Pull out local vars we need for work.

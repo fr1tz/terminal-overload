@@ -24,28 +24,28 @@
 #include "../../gl/postFX.glsl"
 
 uniform sampler2D inputTex;
-uniform float2 oneOverTargetSize;
+uniform vec2 oneOverTargetSize;
 
 
-const float2 gTapOffsets[16] = float2[]
+const vec2 gTapOffsets[16] = vec2[]
 (
-   float2( -1.5, -1.5 ), float2( -0.5, -1.5 ), float2( 0.5, -1.5 ), float2( 1.5, -1.5 ),
-   float2( -1.5, -0.5 ), float2( -0.5, -0.5 ), float2( 0.5, -0.5 ), float2( 1.5, -0.5 ),
-   float2( -1.5, 0.5 ),  float2( -0.5, 0.5 ),  float2( 0.5, 0.5 ),  float2( 1.5, 0.5 ),
-   float2( -1.5, 1.5 ),  float2( -0.5, 1.5 ),  float2( 0.5, 1.5 ),  float2( 1.5, 1.5 )
+   vec2( -1.5, -1.5 ), vec2( -0.5, -1.5 ), vec2( 0.5, -1.5 ), vec2( 1.5, -1.5 ),
+   vec2( -1.5, -0.5 ), vec2( -0.5, -0.5 ), vec2( 0.5, -0.5 ), vec2( 1.5, -0.5 ),
+   vec2( -1.5, 0.5 ),  vec2( -0.5, 0.5 ),  vec2( 0.5, 0.5 ),  vec2( 1.5, 0.5 ),
+   vec2( -1.5, 1.5 ),  vec2( -0.5, 1.5 ),  vec2( 0.5, 1.5 ),  vec2( 1.5, 1.5 )
 );
 
 void main()
 {
-   float2 pixelSize = oneOverTargetSize;
+   vec2 pixelSize = oneOverTargetSize;
 
    float average = 0.0;
 
    for ( int i = 0; i < 16; i++ )
    {
-      float lum = tex2D( inputTex, IN_uv0 + ( gTapOffsets[i] * pixelSize ) ).r;
+      float lum = texture2D( inputTex, IN_uv0 + ( gTapOffsets[i] * pixelSize ) ).r;
       average += lum;
    }
 
-   gl_FragColor = float4( average / 16.0, 0.0, 0.0, 1.0 );
+   gl_FragColor = vec4( average / 16.0, 0.0, 0.0, 1.0 );
 }

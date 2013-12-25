@@ -117,7 +117,7 @@ void main()
                        0.0,  0.0,  1.0,  0.0,
                        0.0,  0.0,  0.0,  1.0 );   
 
-   IN_position.z = lerp( IN_position.z, eyePos.z, IN_horizonFactor.x );
+   IN_position.z = mix( IN_position.z, eyePos.z, IN_horizonFactor.x );
       
    OUT_objPos = IN_position;
    OUT_objPos.w = mul( modelMat, IN_position ).z;
@@ -164,7 +164,7 @@ void main()
    
    // Setup the OUT position symantic variable
    OUT_hpos = OUT_posPostWave; 
-   //OUT_hpos.z = lerp( OUT_hpos.z, OUT_hpos.w, IN_horizonFactor.x );
+   //OUT_hpos.z = mix( OUT_hpos.z, OUT_hpos.w, IN_horizonFactor.x );
    
    // if ( IN_horizonFactor.x > 0 )
    // {

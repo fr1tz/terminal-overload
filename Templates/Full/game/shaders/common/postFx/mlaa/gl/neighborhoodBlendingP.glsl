@@ -28,8 +28,8 @@
 
 #include "../../../gl/hlslCompat.glsl"
 
-varying float2 texcoord;
-varying float4 offset[2];
+varying vec2 texcoord;
+varying vec4 offset[2];
 
 uniform sampler2D blendMap;
 uniform sampler2D colorMapL;
@@ -44,42 +44,42 @@ uniform sampler2D edgesMapL;
 void main()
 {
    // Fetch the blending weights for current pixel:
-   float4 topLeft = tex2D(blendMap, texcoord);
-   float bottom = tex2D(blendMap, offset[1].zw).g;
-   float right = tex2D(blendMap, offset[1].xy).a;
-   float4 a = float4(topLeft.r, bottom, topLeft.b, right);
+   vec4 topLeft = texture2D(blendMap, texcoord);
+   float bottom = texture2D(blendMap, offset[1].zw).g;
+   float right = texture2D(blendMap, offset[1].xy).a;
+   vec4 a = vec4(topLeft.r, bottom, topLeft.b, right);
 
    // Up to 4 lines can be crossing a pixel (one in each edge). So, we perform
    // a weighted average, where the weight of each line is 'a' cubed, which
    // favors blending and works well in practice.
-   float4 w = a * a * a;
+   vec4 w = a * a * a;
 
    // There is some blending weight with a value greater than 0.0?
-   float sum = dot(w, float4(1.0));
+   float sum = dot(w, vec4(1.0));
    if (sum < 1e-5)
       discard;
 
-   float4 color = float4(0.0);
+   vec4 color = vec4(0.0);
 
    // Add the contributions of the possible 4 lines that can cross this pixel:
    #ifdef BILINEAR_FILTER_TRICK
-      float4 coords = mad(float4( 0.0, -a.r, 0.0,  a.g), PIXEL_SIZE.yyyy, texcoord.xyxy);
-      color = mad(tex2D(colorMapL, coords.xy), float4(w.r), color);
-      color = mad(tex2D(colorMapL, coords.zw), float4(w.g), color);
+      vec4 coords = mad(vec4( 0.0, -a.r, 0.0,  a.g), PIXEL_SIZE.yyyy, texcoord.xyxy);
+      color = mad(texture2D(colorMapL, coords.xy), vec4(w.r), color);
+      color = mad(texture2D(colorMapL, coords.zw), vec4(w.g), color);
 
-      coords = mad(float4(-a.b,  0.0, a.a,  0.0), PIXEL_SIZE.xxxx, texcoord.xyxy);
-      color = mad(tex2D(colorMapL, coords.xy), float4(w.b), color);
-      color = mad(tex2D(colorMapL, coords.zw), float4(w.a), color);
+      coords = mad(vec4(-a.b,  0.0, a.a,  0.0), PIXEL_SIZE.xxxx, texcoord.xyxy);
+      color = mad(texture2D(colorMapL, coords.xy), vec4(w.b), color);
+      color = mad(texture2D(colorMapL, coords.zw), vec4(w.a), color);
    #else
-      float4 C = tex2D(colorMap, texcoord);
-      float4 Cleft = tex2D(colorMap, offset[0].xy);
-      float4 Ctop = tex2D(colorMap, offset[0].zw);
-      float4 Cright = tex2D(colorMap, offset[1].xy);
-      float4 Cbottom = tex2D(colorMap, offset[1].zw);
-      color = mad(lerp(C, Ctop, a.r), float4(w.r), color);
-      color = mad(lerp(C, Cbottom, a.g), float4(w.g), color);
-      color = mad(lerp(C, Cleft, a.b), float4(w.b), color);
-      color = mad(lerp(C, Cright, a.a), float4(w.a), color);
+      vec4 C = texture2D(colorMap, texcoord);
+      vec4 Cleft = texture2D(colorMap, offset[0].xy);
+      vec4 Ctop = texture2D(colorMap, offset[0].zw);
+      vec4 Cright = texture2D(colorMap, offset[1].xy);
+      vec4 Cbottom = texture2D(colorMap, offset[1].zw);
+      color = mad(mix(C, Ctop, a.r), vec4(w.r), color);
+      color = mad(mix(C, Cbottom, a.g), vec4(w.g), color);
+      color = mad(mix(C, Cleft, a.b), vec4(w.b), color);
+      color = mad(mix(C, Cright, a.a), vec4(w.a), color);
    #endif
 
    // Normalize the resulting color and we are finished!

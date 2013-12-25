@@ -24,11 +24,11 @@
 #include "../../../gl/torque.glsl"
 #include "../../gl/postFX.glsl"
 
-uniform float4 rtParams0;
-uniform float4 rtParams1;
-uniform float4 rtParams2;
-uniform float4 rtParams3;
-uniform float2 oneOverTargetSize;  
+uniform vec4 rtParams0;
+uniform vec4 rtParams1;
+uniform vec4 rtParams2;
+uniform vec4 rtParams3;
+uniform vec2 oneOverTargetSize;  
                      
 void main()
 {        
@@ -60,7 +60,7 @@ void main()
    
    OUT_hpos = IN_pos;
    OUT_uv0 = viewportCoordToRenderTarget( IN_uv, rtParams0 ); 
-   OUT_uv1 = viewportCoordToRenderTarget( IN_uv, rtParams1 ); // + float2( -5, 1 ) * oneOverTargetSize; 
+   OUT_uv1 = viewportCoordToRenderTarget( IN_uv, rtParams1 ); // + vec2( -5, 1 ) * oneOverTargetSize; 
    OUT_uv2 = viewportCoordToRenderTarget( IN_uv, rtParams2 ); 
    OUT_uv3 = viewportCoordToRenderTarget( IN_uv, rtParams3 ); 
    

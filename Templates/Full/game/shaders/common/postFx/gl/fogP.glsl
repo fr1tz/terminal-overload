@@ -26,19 +26,19 @@
 #include "../../gl/torque.glsl"
 
 uniform sampler2D prepassTex ;
-uniform float3    eyePosWorld;
-uniform float4    fogColor;
-uniform float3    fogData;
-uniform float4    rtParams0;
+uniform vec3    eyePosWorld;
+uniform vec4    fogColor;
+uniform vec3    fogData;
+uniform vec4    rtParams0;
 
 varying vec2 uv0;
 varying vec3 wsEyeRay;
 
 void main()
 {   
-   //float2 prepassCoord = ( uv0.xy * rtParams0.zw ) + rtParams0.xy;   
+   //vec2 prepassCoord = ( uv0.xy * rtParams0.zw ) + rtParams0.xy;   
    float depth = prepassUncondition( prepassTex, uv0 ).w;
-   //return float4( depth, 0, 0, 0.7 );
+   //return vec4( depth, 0, 0, 0.7 );
    
    float factor = computeSceneFog( eyePosWorld,
                                    eyePosWorld + ( wsEyeRay * depth ),
@@ -46,5 +46,5 @@ void main()
                                    fogData.y, 
                                    fogData.z );
 
-   gl_FragColor = hdrEncode( float4( fogColor.rgb, 1.0 - saturate( factor ) ) );     
+   gl_FragColor = hdrEncode( vec4( fogColor.rgb, 1.0 - saturate( factor ) ) );     
 }

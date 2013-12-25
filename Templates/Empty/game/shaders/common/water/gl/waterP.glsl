@@ -152,12 +152,12 @@ uniform float        reflectivity;
 void main()
 { 
    // Get the bumpNorm...
-   vec3 bumpNorm = ( tex2D( bumpMap, IN_rippleTexCoord01.xy ).rgb * 2.0 - 1.0 ) * rippleMagnitude.x;
-   bumpNorm       += ( tex2D( bumpMap, IN_rippleTexCoord01.zw ).rgb * 2.0 - 1.0 ) * rippleMagnitude.y;      
-   bumpNorm       += ( tex2D( bumpMap, IN_rippleTexCoord2.xy ).rgb * 2.0 - 1.0 ) * rippleMagnitude.z;         
+   vec3 bumpNorm = ( texture2D( bumpMap, IN_rippleTexCoord01.xy ).rgb * 2.0 - 1.0 ) * rippleMagnitude.x;
+   bumpNorm       += ( texture2D( bumpMap, IN_rippleTexCoord01.zw ).rgb * 2.0 - 1.0 ) * rippleMagnitude.y;      
+   bumpNorm       += ( texture2D( bumpMap, IN_rippleTexCoord2.xy ).rgb * 2.0 - 1.0 ) * rippleMagnitude.z;         
                              
    bumpNorm = normalize( bumpNorm );
-   bumpNorm = lerp( bumpNorm, vec3(0,0,1), 1.0 - rippleMagnitude.w );
+   bumpNorm = mix( bumpNorm, vec3(0,0,1), 1.0 - rippleMagnitude.w );
    bumpNorm = mul( bumpNorm, IN_tangentMat ); 
    
    // Get depth of the water surface (this pixel).
@@ -272,13 +272,13 @@ void main()
    IN_foamTexCoords.xy += foamRippleOffset; 
    IN_foamTexCoords.zw += foamRippleOffset;
    
-   vec4 foamColor = tex2D( foamMap, IN_foamTexCoords.xy );   
-   foamColor += tex2D( foamMap, IN_foamTexCoords.zw ); 
+   vec4 foamColor = texture2D( foamMap, IN_foamTexCoords.xy );   
+   foamColor += texture2D( foamMap, IN_foamTexCoords.zw ); 
    foamColor = saturate( foamColor );
    
    // Modulate foam color by ambient color
    // so we don't have glowing white foam at night.
-   foamColor.rgb = lerp( foamColor.rgb, ambientColor.rgb, FOAM_AMBIENT_LERP );
+   foamColor.rgb = mix( foamColor.rgb, ambientColor.rgb, FOAM_AMBIENT_LERP );
    
    float foamDelta = saturate( delta / FOAM_MAX_DEPTH );      
    float foamAmt = 1 - pow( foamDelta, 2 );
@@ -294,18 +294,18 @@ void main()
    foamColor.rgb *= FOAM_OPACITY * foamAmt * foamColor.a;
    
    // Get reflection map color.
-   vec4 refMapColor = hdrDecode( tex2D( reflectMap, reflectCoord ) );  
+   vec4 refMapColor = hdrDecode( texture2D( reflectMap, reflectCoord ) );  
    
    // If we do not have a reflection texture then we use the cubemap.
-   refMapColor = lerp( refMapColor, texCUBE( skyMap, reflectionVec ), NO_REFLECT );
+   refMapColor = mix( refMapColor, textureCube( skyMap, reflectionVec ), NO_REFLECT );
    
-   fakeColor = ( texCUBE( skyMap, reflectionVec ) );
+   fakeColor = ( textureCube( skyMap, reflectionVec ) );
    fakeColor.a = 1;
    // Combine reflection color and fakeColor.
-   vec4 reflectColor = lerp( refMapColor, fakeColor, fakeColorAmt );
+   vec4 reflectColor = mix( refMapColor, fakeColor, fakeColorAmt );
    
    // Get refract color
-   vec4 refractColor = hdrDecode( tex2D( refractBuff, refractCoord ) );    
+   vec4 refractColor = hdrDecode( texture2D( refractBuff, refractCoord ) );    
    
    // We darken the refraction color a bit to make underwater 
    // elements look wet.  We fade out this darkening near the
@@ -322,15 +322,15 @@ void main()
    float fogAmt = 1.0 - saturate( exp( -FOG_DENSITY * fogDelta )  );
    
    // Calculate the water "base" color based on depth.
-   //vec4 waterBaseColor = baseColor * tex1D( depthGradMap, saturate( delta / depthGradMax ) );
-   vec4 waterBaseColor = baseColor * tex2D( depthGradMap, vec2(saturate( delta / depthGradMax ), 1.0) );
+   //vec4 waterBaseColor = baseColor * texture1D( depthGradMap, saturate( delta / depthGradMax ) );
+   vec4 waterBaseColor = baseColor * texture2D( depthGradMap, vec2(saturate( delta / depthGradMax ), 1.0) );
       
    // Modulate baseColor by the ambientColor.
    waterBaseColor *= vec4( ambientColor.rgb, 1 );     
    
    // calc "diffuse" color by lerping from the water color
    // to refraction image based on the water clarity.
-   vec4 diffuseColor = lerp( refractColor, waterBaseColor, fogAmt );
+   vec4 diffuseColor = mix( refractColor, waterBaseColor, fogAmt );
    
    // fresnel calculation   
    float fresnelTerm = fresnel( ang, FRESNEL_BIAS, FRESNEL_POWER );	
@@ -348,7 +348,7 @@ void main()
    
    // Combine the diffuse color and reflection image via the
    // fresnel term and set out output color.
-   vec4 OUT = lerp( diffuseColor, reflectColor, fresnelTerm );
+   vec4 OUT = mix( diffuseColor, reflectColor, fresnelTerm );
    
    vec3 lightVec = inLightVec;
    
@@ -366,7 +366,7 @@ void main()
    
 #else
 
-   vec4 refractColor = hdrDecode( tex2D( refractBuff, refractCoord ) );   
+   vec4 refractColor = hdrDecode( texture2D( refractBuff, refractCoord ) );   
    vec4 OUT = refractColor;  
    
 #endif
@@ -382,7 +382,7 @@ void main()
                                    fogData.y,
                                    fogData.z );
 
-   OUT.rgb = lerp( OUT.rgb, fogColor.rgb, 1.0 - saturate( factor ) );  
+   OUT.rgb = mix( OUT.rgb, fogColor.rgb, 1.0 - saturate( factor ) );  
    
    //OUT.rgb = fogColor.rgb;
    
