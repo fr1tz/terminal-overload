@@ -210,7 +210,7 @@ void GFXGLEnumTranslate::init()
    GFXGLFillMode[GFXFillSolid] = GL_FILL;
 
    // Extensions
-   if( gglHasExtension(GL_ARB_texture_float) )
+   if( gglHasExtension(ARB_texture_float) )
    {      
       GFXGLTextureInternalFormat[GFXFormatR32F] = GL_R32F;
       GFXGLTextureInternalFormat[GFXFormatR16G16F] = GL_R32F;
@@ -236,7 +236,7 @@ void GFXGLEnumTranslate::init()
       GFXGLTextureType[GFXFormatDXT2] = GL_ZERO;
       GFXGLTextureType[GFXFormatDXT4] = GL_ZERO;
 
-      if( gglHasExtension(GL_ARB_half_float_pixel) )
+      if( gglHasExtension(ARB_half_float_pixel) )
       {
          GFXGLTextureInternalFormat[GFXFormatR16F] = GL_R16F;
          GFXGLTextureFormat[GFXFormatR16F] = GL_RED;
