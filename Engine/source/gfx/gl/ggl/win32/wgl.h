@@ -33,5 +33,8 @@
 #include "GL/glxew.h"
 #endif
 
+
+#define gglHasWExtension(EXTENSION) WGLEW_##EXTENSION
+
 #endif
 

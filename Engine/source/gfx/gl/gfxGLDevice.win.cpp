@@ -258,8 +258,32 @@ void GFXGLDevice::init( const GFXVideoMode &mode, PlatformWindow *window )
       AssertFatal( false, "GFXGLDevice::init - cannot get the one and only pixel format we check for." );
    }
 
+#if TORQUE_DEBUG
+   if( gglHasWExtension(ARB_create_context) )
+   {
+      int const create_attribs[] = {
+               WGL_CONTEXT_MAJOR_VERSION_ARB, 2,
+               WGL_CONTEXT_MINOR_VERSION_ARB, 1,
+               WGL_CONTEXT_FLAGS_ARB, /*WGL_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB |*/ WGL_CONTEXT_DEBUG_BIT_ARB,
+               WGL_CONTEXT_PROFILE_MASK_ARB, WGL_CONTEXT_CORE_PROFILE_BIT_ARB,
+               0
+           };
+
+      mContext = wglCreateContextAttribsARB(hdcGL, 0, create_attribs);
+      if(!mContext)
+      {
+         AssertFatal(0,"");
+      }
+   } 
+   else
+      mContext = wglCreateContext( hdcGL );
+
+#else
+
    // Create a rendering context!
    mContext = wglCreateContext( hdcGL );
+#endif
+
    if( !wglMakeCurrent( hdcGL, (HGLRC)mContext ) )
       AssertFatal( false , "GFXGLDevice::init - cannot make our context current. Or maybe we can't create it." );
 
@@ -280,7 +304,6 @@ void GFXGLDevice::init( const GFXVideoMode &mode, PlatformWindow *window )
 
 bool GFXGLDevice::beginSceneInternal() 
 {
-   glGetError();
    mCanCurrentlyRender = true;
    return true;
 }
