@@ -51,6 +51,9 @@ public:
    
 private:
    friend class GFXGLDevice;
+
+   GLuint mCopyFBO, mBackBufferFBO;
+   GFXTexHandle mBackBufferColorTex, mBackBufferDepthTex;
    Point2I size;   
    GFXDevice* mDevice;
    void* mContext;

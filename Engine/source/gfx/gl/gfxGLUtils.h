@@ -108,4 +108,31 @@ GFXGLPreserveInteger TORQUE_CONCAT(preserve_, __LINE__) (GL_TEXTURE_3D, GL_TEXTU
 GFXGLPreserveInteger TORQUE_CONCAT(preserve_, __LINE__) (GL_READ_FRAMEBUFFER_EXT, GL_READ_FRAMEBUFFER_BINDING_EXT, (GFXGLPreserveInteger::BindFn)glBindFramebufferEXT);\
 GFXGLPreserveInteger TORQUE_CONCAT(preserve2_, __LINE__) (GL_DRAW_FRAMEBUFFER_EXT, GL_DRAW_FRAMEBUFFER_BINDING_EXT, (GFXGLPreserveInteger::BindFn)glBindFramebufferEXT)
 
+// Handy macro for checking the status of a framebuffer.  Framebuffers can fail in 
+// all sorts of interesting ways, these are just the most common.  Further, no existing GL profiling 
+// tool catches framebuffer errors when the framebuffer is created, so we actually need this.
+#define CHECK_FRAMEBUFFER_STATUS()\
+{\
+GLenum status;\
+status = glCheckFramebufferStatusEXT(GL_FRAMEBUFFER_EXT);\
+switch(status) {\
+case GL_FRAMEBUFFER_COMPLETE_EXT:\
+break;\
+case GL_FRAMEBUFFER_UNSUPPORTED_EXT:\
+AssertFatal(false, "Unsupported FBO");\
+break;\
+case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT_EXT:\
+AssertFatal(false, "Incomplete FBO Attachment");\
+break;\
+case GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS_EXT:\
+AssertFatal(false, "Incomplete FBO dimensions");\
+break;\
+case GL_FRAMEBUFFER_INCOMPLETE_FORMATS_EXT:\
+AssertFatal(false, "Incomplete FBO formats");\
+default:\
+/* programming error; will fail on all hardware */\
+AssertFatal(false, "Something really bad happened with an FBO");\
+}\
+}
+
 #endif

@@ -37,6 +37,17 @@
 #include "windowManager/win32/win32Window.h"
 #include "ggl/Win32/wgl.h"
 
+#include "postFx/postEffect.h"
+#include "gfx/gl/gfxGLUtils.h"
+
+GFX_ImplementTextureProfile( BackBufferDepthProfile,
+                             GFXTextureProfile::DiffuseMap, 
+                             GFXTextureProfile::PreserveSize | 
+                             GFXTextureProfile::NoMipmap | 
+                             GFXTextureProfile::ZTarget |
+                             GFXTextureProfile::Pooled,
+                             GFXTextureProfile::NONE );
+
 #define GETHWND(x) static_cast<Win32Window*>(x)->getHWND()
 
 // yonked from winWindow.cc
@@ -366,10 +377,35 @@ GFXFence* GFXGLDevice::_createPlatformSpecificFence()
 
 void GFXGLWindowTarget::makeActive()
 {
+   if(mBackBufferFBO)
+   {
+      glBindFramebufferEXT( GL_FRAMEBUFFER_EXT, mBackBufferFBO);
+   }
+   else
+   {
+      glGenFramebuffersEXT(1, &mBackBufferFBO);
+      glBindFramebufferEXT( GL_FRAMEBUFFER_EXT, mBackBufferFBO);
+      mBackBufferColorTex.set(getSize().x, getSize().y, getFormat(), &PostFxTargetProfile, "backBuffer");
+      GFXGLTextureObject *color = static_cast<GFXGLTextureObject*>(mBackBufferColorTex.getPointer());
+      glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D, color->getHandle(), 0);
+      mBackBufferDepthTex.set(getSize().x, getSize().y, GFXFormatD24S8, &BackBufferDepthProfile, "backBuffer");
+      GFXGLTextureObject *depth = static_cast<GFXGLTextureObject*>(mBackBufferDepthTex.getPointer());
+      glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_TEXTURE_2D, depth->getHandle(), 0);
+
+      CHECK_FRAMEBUFFER_STATUS();
+   }
 }
 
 bool GFXGLWindowTarget::present()
 {
+   PRESERVE_FRAMEBUFFER();
+
+   glBindFramebufferEXT(GL_DRAW_FRAMEBUFFER_EXT, 0);
+   glBindFramebufferEXT(GL_READ_FRAMEBUFFER_EXT, mBackBufferFBO);
+   
+   glBlitFramebufferEXT(0, 0, getSize().x, getSize().y,
+      0, 0, getSize().x, getSize().y, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+
    HWND hwnd = GETHWND(getWindow());
    SwapBuffers(GetDC(hwnd));
    return true;
