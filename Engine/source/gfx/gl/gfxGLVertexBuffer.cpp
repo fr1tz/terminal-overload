@@ -37,11 +37,22 @@ GFXGLVertexBuffer::GFXGLVertexBuffer(  GFXDevice *device,
    :  GFXVertexBuffer( device, numVerts, vertexFormat, vertexSize, bufferType ), 
       mZombieCache(NULL)
 {
-   PRESERVE_VERTEX_BUFFER();
-	// Generate a buffer and allocate the needed memory.
-	glGenBuffers(1, &mBuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, mBuffer);
-	glBufferData(GL_ARRAY_BUFFER, numVerts * vertexSize, NULL, GFXGLBufferType[bufferType]);
+   // Generate a buffer
+   glGenBuffers(1, &mBuffer);
+   mBufferData.setSize(mNumVerts * mVertexSize);
+
+   //and allocate the needed memory
+   if( gglHasExtension(EXT_direct_state_access) )
+   {      
+      glNamedBufferDataEXT(mBuffer, mNumVerts * mVertexSize, NULL, GFXGLBufferType[mBufferType]);    
+   }
+   else
+   {
+      PRESERVE_VERTEX_BUFFER();
+	    
+	   glBindBuffer(GL_ARRAY_BUFFER, mBuffer);
+	   glBufferData(GL_ARRAY_BUFFER, numVerts * vertexSize, NULL, GFXGLBufferType[bufferType]);
+   }
       
    _initVerticesFormat();
 }
@@ -57,23 +68,31 @@ GFXGLVertexBuffer::~GFXGLVertexBuffer()
 
 void GFXGLVertexBuffer::lock( U32 vertexStart, U32 vertexEnd, void **vertexPtr )
 {
-   PRESERVE_VERTEX_BUFFER();
-	// Bind us, get a pointer into the buffer, then
-	// offset it by vertexStart so we act like the D3D layer.
-	glBindBuffer(GL_ARRAY_BUFFER, mBuffer);
-   glBufferData(GL_ARRAY_BUFFER, mNumVerts * mVertexSize, NULL, GFXGLBufferType[mBufferType]);
-	*vertexPtr = (void*)((U8*)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY) + (vertexStart * mVertexSize));
+   PROFILE_SCOPE(GFXGLVertexBuffer_lock);
+   *vertexPtr = (void*)((U8*)mBufferData.address() + (vertexStart * mVertexSize));   
+
 	lockedVertexStart = vertexStart;
 	lockedVertexEnd   = vertexEnd;
 }
 
 void GFXGLVertexBuffer::unlock()
 {
-   PRESERVE_VERTEX_BUFFER();
-	// Unmap the buffer and bind 0 to GL_ARRAY_BUFFER
-   glBindBuffer(GL_ARRAY_BUFFER, mBuffer);
-	bool res = glUnmapBuffer(GL_ARRAY_BUFFER);
-   AssertFatal(res, "GFXGLVertexBuffer::unlock - shouldn't fail!");
+   PROFILE_SCOPE(GFXGLVertexBuffer_unlock);
+
+   U32 offset = lockedVertexStart * mVertexSize;
+   U32 length = (lockedVertexEnd - lockedVertexStart) * mVertexSize;
+
+   if( gglHasExtension(EXT_direct_state_access) )
+   {
+      
+      glNamedBufferSubDataEXT(mBuffer, offset, length, mBufferData.address() + offset );
+   }
+   else
+   {
+      PRESERVE_VERTEX_BUFFER();
+      glBindBuffer(GL_ARRAY_BUFFER, mBuffer);
+      glBufferSubData(GL_ARRAY_BUFFER, offset, length, mBufferData.address() + offset );
+   }
 
    lockedVertexStart = 0;
 	lockedVertexEnd   = 0;
@@ -81,6 +100,8 @@ void GFXGLVertexBuffer::unlock()
 
 void GFXGLVertexBuffer::prepare()
 {
+   PROFILE_SCOPE(GFXGLVertexBuffer_prepare);
+
 	// Bind the buffer...
 	glBindBuffer(GL_ARRAY_BUFFER, mBuffer);
 
@@ -102,6 +123,7 @@ void GFXGLVertexBuffer::prepare()
 
 void GFXGLVertexBuffer::finish()
 {
+   PROFILE_SCOPE(GFXGLVertexBuffer_finish);
    glBindBuffer(GL_ARRAY_BUFFER, 0);
 
    for ( U32 i=0; i < glVerticesFormat.size(); i++ )

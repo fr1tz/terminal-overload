@@ -58,7 +58,7 @@ private:
    friend class GFXGLDevice;
 	/// GL buffer handle
 	GLuint mBuffer;
-   
+   Vector<char> mBufferData;
    U8* mZombieCache;
 
    struct glVertexDecl
