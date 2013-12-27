@@ -166,11 +166,15 @@ bool RenderTexTargetBinManager::_updateTargets()
 
       for( U32 j = 0; j < mNumRenderTargets; j++ )
       {
-         ret &= mTargetChainTextures[i][j].set( mTargetSize.x, mTargetSize.y, mTargetFormat,
-            &GFXDefaultRenderTargetProfile, avar( "%s() - (line %d)", __FUNCTION__, __LINE__ ),
-            1, GFXTextureManager::AA_MATCH_BACKBUFFER );
+         if( mTargetChainTextures[i][j].getWidthHeight() != mTargetSize 
+            || mTargetChainTextures[i][j].getFormat() != mTargetFormat)
+         {
+            ret &= mTargetChainTextures[i][j].set( mTargetSize.x, mTargetSize.y, mTargetFormat,
+               &GFXDefaultRenderTargetProfile, avar( "%s() - (line %d)", __FUNCTION__, __LINE__ ),
+               1, GFXTextureManager::AA_MATCH_BACKBUFFER );
 
-         mTargetChain[i]->attachTexture( GFXTextureTarget::RenderSlot(GFXTextureTarget::Color0 + j), mTargetChainTextures[i][j] );
+            mTargetChain[i]->attachTexture( GFXTextureTarget::RenderSlot(GFXTextureTarget::Color0 + j), mTargetChainTextures[i][j] );
+         }
       }
    }
 
