@@ -69,7 +69,8 @@ GFXGLVertexBuffer::~GFXGLVertexBuffer()
 void GFXGLVertexBuffer::lock( U32 vertexStart, U32 vertexEnd, void **vertexPtr )
 {
    PROFILE_SCOPE(GFXGLVertexBuffer_lock);
-   *vertexPtr = (void*)((U8*)mBufferData.address() + (vertexStart * mVertexSize));   
+   lockedVertexPtr = (void*)((U8*)mBufferData.address() + (vertexStart * mVertexSize));
+   *vertexPtr = lockedVertexPtr;
 
 	lockedVertexStart = vertexStart;
 	lockedVertexEnd   = vertexEnd;
@@ -96,6 +97,7 @@ void GFXGLVertexBuffer::unlock()
 
    lockedVertexStart = 0;
 	lockedVertexEnd   = 0;
+   lockedVertexPtr = NULL;
 }
 
 void GFXGLVertexBuffer::prepare()
