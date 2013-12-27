@@ -113,6 +113,7 @@ void GFXGLDevice::initGLState()
       
    mSupportsAnisotropic = mCardProfiler->queryProfile( "GL::suppAnisotropic" );
 
+#if TORQUE_DEBUG
    if( gglHasExtension(KHR_debug) )
    {
       glEnable(GL_DEBUG_OUTPUT);
@@ -126,6 +127,7 @@ void GFXGLDevice::initGLState()
             &unusedIds,
             GL_TRUE);
    }
+#endif
 }
 
 GFXGLDevice::GFXGLDevice(U32 adapterIndex) :
