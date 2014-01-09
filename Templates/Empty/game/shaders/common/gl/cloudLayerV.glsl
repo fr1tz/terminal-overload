@@ -24,9 +24,9 @@
 
 attribute vec4 vPosition;
 attribute vec3 vNormal;
+attribute vec3 vBinormal;
+attribute vec3 vTangent;
 attribute vec2 vTexCoord0;
-attribute vec2 vTexCoord1;
-attribute vec2 vTexCoord2;
 
 varying vec4 texCoord12;
 #define OUT_texCoord12 texCoord12
@@ -57,9 +57,9 @@ void main()
 {   
    vec4 IN_pos = vPosition;
    vec3 IN_normal = vNormal;
-   vec3 IN_binormal = vTexCoord0.xyz;
-   vec3 IN_tangent = vTexCoord1.xyz;
-   vec2 IN_uv0 = vTexCoord2.st;
+   vec3 IN_binormal = vBinormal;
+   vec3 IN_tangent = vTangent;
+   vec2 IN_uv0 = vTexCoord0.st;
 
    gl_Position = modelview * IN_pos;
    
