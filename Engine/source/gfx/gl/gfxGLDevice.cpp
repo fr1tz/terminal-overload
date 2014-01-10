@@ -454,7 +454,7 @@ void GFXGLDevice::setGlobalAmbientInternal(ColorF color)
 
 void GFXGLDevice::setTextureInternal(U32 textureUnit, const GFXTextureObject*texture)
 {
-   const GFXGLTextureObject *tex = static_cast<const GFXGLTextureObject*>(texture);
+   GFXGLTextureObject *tex = static_cast<GFXGLTextureObject*>(const_cast<GFXTextureObject*>(texture));
    glActiveTexture(GL_TEXTURE0 + textureUnit);
    if (tex)
    {

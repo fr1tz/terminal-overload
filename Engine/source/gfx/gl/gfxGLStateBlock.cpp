@@ -125,44 +125,5 @@ void GFXGLStateBlock::activate(const GFXGLStateBlock* oldState)
 #undef TOGGLE_STATE
 #undef CHECK_TOGGLE_STATE
 
-   // TODO: states added for detail blend
-
-   // Non per object texture mode states
-   for (U32 i = 0; i < getMin(getOwningDevice()->getNumSamplers(), (U32) TEXTURE_STAGE_COUNT); i++)
-   {
-      GFXGLTextureObject* tex = static_cast<GFXGLTextureObject*>(getOwningDevice()->getCurrentTexture(i));
-      const GFXSamplerStateDesc &ssd = mDesc.samplers[i];
-      bool updateTexParam = true;
-      glActiveTexture(GL_TEXTURE0 + i);
-      switch (ssd.textureColorOp)
-      {
-      case GFXTOPDisable :
-         if(!tex)
-            break;
-         updateTexParam = false;
-         break;
-      }
-
-#define SSF(state, enum, value, tex) if(!oldState || oldState->mDesc.samplers[i].state != mDesc.samplers[i].state) glTexParameteri(tex->getBinding(), enum, value)
-#define SSW(state, enum, value, tex) if(!oldState || oldState->mDesc.samplers[i].state != mDesc.samplers[i].state) glTexParameteri(tex->getBinding(), enum, !tex->mIsNPoT2 ? value : GL_CLAMP_TO_EDGE)
-      // Per object texture mode states. 
-      // TODO: Check dirty flag of samplers[i] and don't do this if it's dirty (it'll happen in the texture bind)
-      if (updateTexParam && tex)
-      {
-         SSF(minFilter, GL_TEXTURE_MIN_FILTER, minificationFilter(ssd.minFilter, ssd.mipFilter, tex->mMipLevels), tex);
-         SSF(mipFilter, GL_TEXTURE_MIN_FILTER, minificationFilter(ssd.minFilter, ssd.mipFilter, tex->mMipLevels), tex);
-         SSF(magFilter, GL_TEXTURE_MAG_FILTER, GFXGLTextureFilter[ssd.magFilter], tex);
-         SSW(addressModeU, GL_TEXTURE_WRAP_S, GFXGLTextureAddress[ssd.addressModeU], tex);
-         SSW(addressModeV, GL_TEXTURE_WRAP_T, GFXGLTextureAddress[ssd.addressModeV], tex);
-
-         if( ( !oldState || oldState->mDesc.samplers[i].maxAnisotropy != ssd.maxAnisotropy ) &&
-             static_cast< GFXGLDevice* >( GFX )->supportsAnisotropic() )
-            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, ssd.maxAnisotropy);
-
-         if( ( !oldState || oldState->mDesc.samplers[i].mipLODBias != ssd.mipLODBias ) )
-            glTexEnvf(GL_TEXTURE_FILTER_CONTROL_EXT, GL_TEXTURE_LOD_BIAS_EXT, ssd.mipLODBias);
-      }     
-   }
-#undef SSF
-#undef SSW
+   // TODO: states added for detail blend   
 }

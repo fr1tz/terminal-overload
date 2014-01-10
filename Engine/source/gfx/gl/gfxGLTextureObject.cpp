@@ -37,7 +37,8 @@ GFXGLTextureObject::GFXGLTextureObject(GFXDevice * aDevice, GFXTextureProfile *p
    mBytesPerTexel(4),
    mLockedRectRect(0, 0, 0, 0),
    mGLDevice(static_cast<GFXGLDevice*>(mDevice)),
-   mZombieCache(NULL)
+   mZombieCache(NULL),
+   mNeedInitSamplerState(true)
 {
    AssertFatal(dynamic_cast<GFXGLDevice*>(mDevice), "GFXGLTextureObject::GFXGLTextureObject - Invalid device type, expected GFXGLDevice!");
    glGenTextures(1, &mHandle);
@@ -138,7 +139,22 @@ bool GFXGLTextureObject::copyToBmp(GBitmap * bmp)
    return true;
 }
 
-void GFXGLTextureObject::bind(U32 textureUnit) const
+void GFXGLTextureObject::initSamplerState(const GFXSamplerStateDesc &ssd)
+{
+   glTexParameteri(mBinding, GL_TEXTURE_MIN_FILTER, minificationFilter(ssd.minFilter, ssd.mipFilter, mMipLevels));
+   glTexParameteri(mBinding, GL_TEXTURE_MAG_FILTER, GFXGLTextureFilter[ssd.magFilter]);
+   glTexParameteri(mBinding, GL_TEXTURE_WRAP_S, !mIsNPoT2 ? GFXGLTextureAddress[ssd.addressModeU] : GL_CLAMP_TO_EDGE);
+   glTexParameteri(mBinding, GL_TEXTURE_WRAP_T, !mIsNPoT2 ? GFXGLTextureAddress[ssd.addressModeV] : GL_CLAMP_TO_EDGE);
+   if(mBinding == GL_TEXTURE_3D)
+      glTexParameteri(mBinding, GL_TEXTURE_WRAP_R, GFXGLTextureAddress[ssd.addressModeW]);
+   if(static_cast< GFXGLDevice* >( GFX )->supportsAnisotropic() )
+      glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, ssd.maxAnisotropy);
+
+   mNeedInitSamplerState = false;
+   mSampler = ssd;
+}
+
+void GFXGLTextureObject::bind(U32 textureUnit)
 {
    glActiveTexture(GL_TEXTURE0 + textureUnit);
    glBindTexture(mBinding, mHandle);
@@ -149,12 +165,27 @@ void GFXGLTextureObject::bind(U32 textureUnit) const
       return;
          
    const GFXSamplerStateDesc ssd = sb->getDesc().samplers[textureUnit];
-   glTexParameteri(mBinding, GL_TEXTURE_MIN_FILTER, minificationFilter(ssd.minFilter, ssd.mipFilter, mMipLevels));   
-   glTexParameteri(mBinding, GL_TEXTURE_MAG_FILTER, GFXGLTextureFilter[ssd.magFilter]);   
-   glTexParameteri(mBinding, GL_TEXTURE_WRAP_S, !mIsNPoT2 ? GFXGLTextureAddress[ssd.addressModeU] : GL_CLAMP_TO_EDGE);
-   glTexParameteri(mBinding, GL_TEXTURE_WRAP_T, !mIsNPoT2 ? GFXGLTextureAddress[ssd.addressModeV] : GL_CLAMP_TO_EDGE);
-   if(mBinding == GL_TEXTURE_3D)
+
+   if(mNeedInitSamplerState)
+   {
+      initSamplerState(ssd);
+      return;
+   }
+
+   if(mSampler.minFilter != ssd.minFilter || mSampler.mipFilter != ssd.mipFilter)
+      glTexParameteri(mBinding, GL_TEXTURE_MIN_FILTER, minificationFilter(ssd.minFilter, ssd.mipFilter, mMipLevels));
+   if(mSampler.magFilter != ssd.magFilter)
+      glTexParameteri(mBinding, GL_TEXTURE_MAG_FILTER, GFXGLTextureFilter[ssd.magFilter]);
+   if(mSampler.addressModeU != ssd.addressModeU)
+      glTexParameteri(mBinding, GL_TEXTURE_WRAP_S, !mIsNPoT2 ? GFXGLTextureAddress[ssd.addressModeU] : GL_CLAMP_TO_EDGE);
+   if(mSampler.addressModeV != ssd.addressModeV)
+      glTexParameteri(mBinding, GL_TEXTURE_WRAP_T, !mIsNPoT2 ? GFXGLTextureAddress[ssd.addressModeV] : GL_CLAMP_TO_EDGE);
+   if(mBinding == GL_TEXTURE_3D && mSampler.addressModeW != ssd.addressModeW )
       glTexParameteri(mBinding, GL_TEXTURE_WRAP_R, GFXGLTextureAddress[ssd.addressModeW]);
+   if(mSampler.maxAnisotropy != ssd.maxAnisotropy  && static_cast< GFXGLDevice* >( GFX )->supportsAnisotropic() )
+      glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, ssd.maxAnisotropy);
+
+   mSampler = ssd;
 }
 
 U8* GFXGLTextureObject::getTextureData()
