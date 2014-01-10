@@ -268,14 +268,19 @@ void GFXGLDevice::init( const GFXVideoMode &mode, PlatformWindow *window )
    {
       AssertFatal( false, "GFXGLDevice::init - cannot get the one and only pixel format we check for." );
    }
-
+   
 #if TORQUE_DEBUG
+   int debugFlag = WGL_CONTEXT_DEBUG_BIT_ARB;
+#else
+   int debugFlag = 0;
+#endif
+
    if( gglHasWExtension(ARB_create_context) )
    {
       int const create_attribs[] = {
                WGL_CONTEXT_MAJOR_VERSION_ARB, 2,
                WGL_CONTEXT_MINOR_VERSION_ARB, 1,
-               WGL_CONTEXT_FLAGS_ARB, /*WGL_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB |*/ WGL_CONTEXT_DEBUG_BIT_ARB,
+               WGL_CONTEXT_FLAGS_ARB, /*WGL_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB |*/ debugFlag,
                WGL_CONTEXT_PROFILE_MASK_ARB, WGL_CONTEXT_CORE_PROFILE_BIT_ARB,
                0
            };
@@ -288,12 +293,6 @@ void GFXGLDevice::init( const GFXVideoMode &mode, PlatformWindow *window )
    } 
    else
       mContext = wglCreateContext( hdcGL );
-
-#else
-
-   // Create a rendering context!
-   mContext = wglCreateContext( hdcGL );
-#endif
 
    if( !wglMakeCurrent( hdcGL, (HGLRC)mContext ) )
       AssertFatal( false , "GFXGLDevice::init - cannot make our context current. Or maybe we can't create it." );
@@ -333,9 +332,9 @@ GFXWindowTarget *GFXGLDevice::allocWindowTarget( PlatformWindow *window )
 
    if(!mContext)
    {
-      init(window->getVideoMode(), window);
-      GFXGLWindowTarget *ggwt = new GFXGLWindowTarget(window, this);
-      ggwt->registerResourceWithDevice(this);
+   init(window->getVideoMode(), window);
+   GFXGLWindowTarget *ggwt = new GFXGLWindowTarget(window, this);
+   ggwt->registerResourceWithDevice(this);
       ggwt->mContext = wglCreateContext(hdcGL);
       AssertFatal(ggwt->mContext, "GFXGLDevice::allocWindowTarget - failed to allocate window target!");
 
@@ -364,7 +363,7 @@ GFXWindowTarget *GFXGLDevice::allocWindowTarget( PlatformWindow *window )
    wglMakeCurrent(hdcGL, (HGLRC)ggwt->mContext);
    AssertFatal(res, "GFXGLDevice::allocWindowTarget - wasn't able to share contexts!");
 
-   return ggwt;
+   return ggwt;   
 }
 
 GFXFence* GFXGLDevice::_createPlatformSpecificFence()
@@ -384,7 +383,7 @@ void GFXGLWindowTarget::makeActive()
    else
    {
       glGenFramebuffersEXT(1, &mBackBufferFBO);
-      glBindFramebufferEXT( GL_FRAMEBUFFER_EXT, mBackBufferFBO);
+      glBindFramebufferEXT( GL_FRAMEBUFFER_EXT, mBackBufferFBO);      
       mBackBufferColorTex.set(getSize().x, getSize().y, getFormat(), &PostFxTargetProfile, "backBuffer");
       GFXGLTextureObject *color = static_cast<GFXGLTextureObject*>(mBackBufferColorTex.getPointer());
       glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D, color->getHandle(), 0);
@@ -399,12 +398,12 @@ void GFXGLWindowTarget::makeActive()
 bool GFXGLWindowTarget::present()
 {
    PRESERVE_FRAMEBUFFER();
-
+   
    glBindFramebufferEXT(GL_DRAW_FRAMEBUFFER_EXT, 0);
    glBindFramebufferEXT(GL_READ_FRAMEBUFFER_EXT, mBackBufferFBO);
-   
+
    glBlitFramebufferEXT(0, 0, getSize().x, getSize().y,
-      0, 0, getSize().x, getSize().y, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+         0, 0, getSize().x, getSize().y, GL_COLOR_BUFFER_BIT, GL_NEAREST);
 
    HWND hwnd = GETHWND(getWindow());
    SwapBuffers(GetDC(hwnd));
