@@ -59,9 +59,9 @@ public:
    virtual void deactivate() { }
    virtual GFXAdapterType getAdapterType() { return OpenGL; }
 
-   virtual void enterDebugEvent(ColorI color, const char *name) { }
-   virtual void leaveDebugEvent() { }
-   virtual void setDebugMarker(ColorI color, const char *name) { }
+   virtual void enterDebugEvent(ColorI color, const char *name);
+   virtual void leaveDebugEvent();
+   virtual void setDebugMarker(ColorI color, const char *name);
 
    virtual void enumerateVideoModes();
 
