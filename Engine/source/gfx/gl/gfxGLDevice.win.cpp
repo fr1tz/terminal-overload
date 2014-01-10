@@ -328,42 +328,15 @@ U32 GFXGLDevice::getTotalVideoMemory()
 
 GFXWindowTarget *GFXGLDevice::allocWindowTarget( PlatformWindow *window )
 {
-   HDC hdcGL = GetDC(GETHWND(window));
-
-   if(!mContext)
-   {
+   AssertFatal(!mContext, "");
+   
    init(window->getVideoMode(), window);
    GFXGLWindowTarget *ggwt = new GFXGLWindowTarget(window, this);
    ggwt->registerResourceWithDevice(this);
-      ggwt->mContext = wglCreateContext(hdcGL);
-      AssertFatal(ggwt->mContext, "GFXGLDevice::allocWindowTarget - failed to allocate window target!");
-
-      return ggwt;
-   }
-
-   GFXGLWindowTarget *ggwt = new GFXGLWindowTarget(window, this);
-   ggwt->registerResourceWithDevice(this);
-
-   // Create pixel format descriptor...
-   PIXELFORMATDESCRIPTOR pfd;
-   CreatePixelFormat( &pfd, 16, 16, 8, false ); // 16 bit color, 16 bit depth, 8 bit stencil...everyone can do this
-   if( !SetPixelFormat( hdcGL, ChoosePixelFormat( hdcGL, &pfd ), &pfd ) )
-   {
-      AssertFatal( false, "GFXGLDevice::allocWindowTarget - cannot get the one and only pixel format we check for." );
-   }
-
-   ggwt->mContext = wglCreateContext(hdcGL);
-   DWORD w = GetLastError();
+   ggwt->mContext = mContext;
    AssertFatal(ggwt->mContext, "GFXGLDevice::allocWindowTarget - failed to allocate window target!");
 
-   wglMakeCurrent(NULL, NULL);
-   bool res = wglShareLists((HGLRC)mContext, (HGLRC)ggwt->mContext);
-   w = GetLastError();
-
-   wglMakeCurrent(hdcGL, (HGLRC)ggwt->mContext);
-   AssertFatal(res, "GFXGLDevice::allocWindowTarget - wasn't able to share contexts!");
-
-   return ggwt;   
+   return ggwt;
 }
 
 GFXFence* GFXGLDevice::_createPlatformSpecificFence()
