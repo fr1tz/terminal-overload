@@ -53,15 +53,15 @@ GFXGLVertexBuffer::GFXGLVertexBuffer(  GFXDevice *device,
 	   glBindBuffer(GL_ARRAY_BUFFER, mBuffer);
 	   glBufferData(GL_ARRAY_BUFFER, numVerts * vertexSize, NULL, GFXGLBufferType[bufferType]);
    }
-      
-   _initVerticesFormat();
+   
+      _initVerticesFormat();
 }
 
 GFXGLVertexBuffer::~GFXGLVertexBuffer()
 {
 	// While heavy handed, this does delete the buffer and frees the associated memory.
    glDeleteBuffers(1, &mBuffer);
-   
+
    if( mZombieCache )
       delete [] mZombieCache;
 }
@@ -85,8 +85,10 @@ void GFXGLVertexBuffer::unlock()
 
    if( gglHasExtension(EXT_direct_state_access) )
    {
-      
-      glNamedBufferSubDataEXT(mBuffer, offset, length, mBufferData.address() + offset );
+      if(lockedVertexStart == 0 && lockedVertexEnd == 0)      
+         glNamedBufferDataEXT(mBuffer, length, mBufferData.address(), GFXGLBufferType[mBufferType] );      
+      else
+         glNamedBufferSubDataEXT(mBuffer, offset, length, mBufferData.address() + offset );
    }
    else
    {
@@ -110,7 +112,7 @@ void GFXGLVertexBuffer::prepare()
    // Loop thru the vertex format elements adding the array state...   
    for ( U32 i=0; i < glVerticesFormat.size(); i++ )
    {
-      auto &e = glVerticesFormat[i];
+      glVertexDecl &e = glVerticesFormat[i];
       glEnableVertexAttribArray(e.attrIndex);
       glVertexAttribPointer(
          e.attrIndex,      // attribute
@@ -175,7 +177,7 @@ void GFXGLVertexBuffer::_initVerticesFormat()
    {
       const GFXVertexElement &element = mVertexFormat.getElement( i );
       glVerticesFormat.increment();
-      auto &glElement = glVerticesFormat.last();
+      glVertexDecl &glElement = glVerticesFormat.last();
 
       if ( element.isSemantic( GFXSemantic::POSITION ) )
       {           
