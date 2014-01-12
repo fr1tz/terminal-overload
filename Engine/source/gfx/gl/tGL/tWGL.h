@@ -20,11 +20,19 @@
 // IN THE SOFTWARE.
 //-----------------------------------------------------------------------------
 
-#ifndef GL_GGL_H
-#define GL_GGL_H
-#include "GL/glew.h"
+#ifndef GFX_TORQUE_WGL_H
+#define GFX_TORQUE_WGL_H
 
-#define gglHasExtension(EXTENSION) GLEW_##EXTENSION
+#include "platform/platform.h"
+
+#ifdef TORQUE_OS_WIN32
+
+#include "tGL.h"
+#include "GL/wglew.h"
+
+#define gglHasWExtension(EXTENSION) WGLEW_##EXTENSION
+
+#endif //TORQUE_OS_WIN32
 
 #endif
 

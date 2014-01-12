@@ -24,7 +24,7 @@
 #define _GFXGLTEXTUREOBJECT_H
 
 #include "gfx/gfxTextureObject.h"
-#include "gfx/gl/ggl/ggl.h"
+#include "gfx/gl/tGL/tGL.h"
 #include "gfx/gfxStateBlock.h"
 
 class GFXGLDevice;

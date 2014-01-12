@@ -20,21 +20,22 @@
 // IN THE SOFTWARE.
 //-----------------------------------------------------------------------------
 
-#ifndef GFX_WGL_H
-#define GFX_WGL_H
+#include "tGL.h"
 
-#ifndef GFX_GGL_H
-   #include "../ggl.h"
-#endif
+#include "core/strings/stringFunctions.h"
+#include "console/console.h"
 
-#include "GL/wglew.h"
+namespace GL
+{
+   void gglPerformBinds()
+   {
+      GLenum err = glewInit();
+      AssertFatal(GLEW_OK == err, avar("Error: %s\n", glewGetErrorString(err)) );
+   }
 
-#if TORQUE_OS_LINUX
-#include "GL/glxew.h"
-#endif
-
-
-#define gglHasWExtension(EXTENSION) WGLEW_##EXTENSION
-
-#endif
+   void gglPerformExtensionBinds(void *context)
+   {
+	
+   }
+}
 

@@ -154,10 +154,8 @@ switch( TorqueGenerator::$platform )
      addLibSrcFile( 'glew/src/glew.c' );
      addIncludePath( getAppLibSrcDir() . 'glew/include' );
      addEngineSrcDir( 'gfx/gl' );
-     addEngineSrcDir( 'gfx/gl/ggl' );
-     addEngineSrcDir( 'gfx/gl/ggl/generated' );
+     addEngineSrcDir( 'gfx/gl/tGL' );
      addEngineSrcDir( 'shaderGen/GLSL' );
-     addEngineSrcDir( 'gfx/gl/ggl/win32' );
       break;
    case "360":
       addEngineSrcDir( 'gfx/D3D9' );
@@ -166,15 +164,12 @@ switch( TorqueGenerator::$platform )
       addEngineSrcDir( 'shaderGen/360' );
       break;
    case "mac":
-      addEngineSrcDir( 'gfx/gl/ggl/mac' );
-
       // GFX - GGL
       addProjectDefines( 'TORQUE_OPENGL' );
       addLibSrcFile( 'glew/src/glew.c' );
       addIncludePath( getAppLibSrcDir() . 'glew/include' );
       addEngineSrcDir( 'gfx/gl' );
-      addEngineSrcDir( 'gfx/gl/ggl' );
-      //addEngineSrcDir( 'gfx/gl/ggl/generated' );
+      addEngineSrcDir( 'gfx/gl/tGL' );
       addEngineSrcDir( 'shaderGen/GLSL' );
       break;
    case "linux":
@@ -185,19 +180,14 @@ switch( TorqueGenerator::$platform )
       addIncludePath( getAppLibSrcDir() . 'glew/include' );
       addEngineSrcDir( 'gfx/gl' );
       addEngineSrcDir( 'gfx/gl/x11' );
-      addEngineSrcDir( 'gfx/gl/ggl' );
-      //addEngineSrcDir( 'gfx/gl/ggl/generated' );
-      //addEngineSrcDir( 'gfx/gl/ggl/x11' );
+      addEngineSrcDir( 'gfx/gl/tGL' );
       addEngineSrcDir( 'shaderGen/GLSL' );
       break;
    case "ps3":
-      addEngineSrcDir( 'gfx/gl/ggl/ps3' );
-
       // GFX - GGL
-	  addProjectDefines( 'TORQUE_OPENGL' );
+      addProjectDefines( 'TORQUE_OPENGL' );
       addEngineSrcDir( 'gfx/gl' );
-      addEngineSrcDir( 'gfx/gl/ggl' );
-      addEngineSrcDir( 'gfx/gl/ggl/generated' );
+      addEngineSrcDir( 'gfx/gl/tGL' );
       addEngineSrcDir( 'shaderGen/GLSL' );
       break;
 }

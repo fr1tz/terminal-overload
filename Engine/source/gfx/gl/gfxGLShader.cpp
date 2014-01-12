@@ -31,12 +31,6 @@
 #include "gfx/gfxStructs.h"
 #include "console/console.h"
 
-namespace GL
-{
-   bool hasExtension(const char *name,const char* extensions);
-}
-
-
 class GFXGLShaderConstHandle : public GFXShaderConstHandle
 {
    friend class GFXGLShader;
@@ -870,10 +864,9 @@ bool GFXGLShader::_loadShaderFromStream(  GLuint shader,
    const char *versionDecl = "#version 120\r\n";
    buffers.push_back( dStrdup( versionDecl ) );
    lengths.push_back( dStrlen( versionDecl ) );
-
-   static const char* glExtensions = (const char*)glGetString(GL_EXTENSIONS);
-   static bool hasGL_EXT_gpu_shader4 = GL::hasExtension("GL_EXT_gpu_shader4", glExtensions);
-   static bool hasGL_EXT_gpu_shader5 = GL::hasExtension("GL_EXT_gpu_shader5", glExtensions);
+   
+   static bool hasGL_EXT_gpu_shader4 = gglHasExtension(EXT_gpu_shader4);
+   static bool hasGL_EXT_gpu_shader5 = false; //gglHasExtension(EXT_gpu_shader5);
 
    if(hasGL_EXT_gpu_shader4)
    {

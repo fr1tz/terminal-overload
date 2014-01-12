@@ -25,7 +25,7 @@
 
 #include "core/util/refBase.h"
 #include "gfx/gfxShader.h"
-#include "gfx/gl/ggl/ggl.h"
+#include "gfx/gl/tGL/tGL.h"
 #include "core/util/tSignal.h"
 #include "core/util/tDictionary.h"
 

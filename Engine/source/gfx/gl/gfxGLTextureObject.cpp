@@ -21,7 +21,7 @@
 //-----------------------------------------------------------------------------
 
 #include "console/console.h"
-#include "gfx/gl/ggl/ggl.h"
+#include "gfx/gl/tGL/tGL.h"
 #include "math/mRect.h"
 #include "gfx/gl/gfxGLTextureObject.h"
 #include "gfx/gfxDevice.h"

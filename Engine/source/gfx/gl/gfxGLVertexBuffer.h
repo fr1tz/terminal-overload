@@ -26,9 +26,7 @@
 #ifndef _GFXVERTEXBUFFER_H_
 #include "gfx/gfxVertexBuffer.h"
 #endif
-#ifndef GL_GGL_H
-#include "gfx/gl/ggl/ggl.h"
-#endif
+#include "gfx/gl/tGL/tGL.h"
 
 /// This is a vertex buffer which uses GL_ARB_vertex_buffer_object.
 class GFXGLVertexBuffer : public GFXVertexBuffer 

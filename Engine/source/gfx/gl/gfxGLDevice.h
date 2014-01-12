@@ -28,9 +28,7 @@
 #include "gfx/gfxDevice.h"
 #include "gfx/gfxInit.h"
 
-#ifndef GL_GGL_H
-#include "gfx/gl/ggl/ggl.h"
-#endif
+#include "gfx/gl/tGL/tGL.h"
 
 #include "windowManager/platformWindow.h"
 #include "gfx/gfxFence.h"

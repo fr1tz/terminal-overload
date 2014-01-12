@@ -194,7 +194,7 @@ class Torque3D
         {
 			addIncludePath("/usr/include/freetype2");
 			addProjectDefine( 'LINUX' );			
-			//-ldl -lXxf86vm -lXext -lX11 -lXft -lSDL -lstdc++ -lpthread
+			//-ldl -lXxf86vm -lXext -lX11 -lXft -lSDL -lstdc++ -lpthread -lGL
 			addProjectLibInput('dl');
 			addProjectLibInput('Xxf86vm');
 			addProjectLibInput('Xext');
@@ -203,6 +203,7 @@ class Torque3D
 			addProjectLibInput('SDL');
 			addProjectLibInput('stdc++');
 			addProjectLibInput('pthread');
+         addProjectLibInput('GL');
 			
 			if ( !self::$sharedConfig )
 				addEngineSrcDir( 'main' );

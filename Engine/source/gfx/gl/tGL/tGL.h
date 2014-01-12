@@ -20,23 +20,11 @@
 // IN THE SOFTWARE.
 //-----------------------------------------------------------------------------
 
-#include "wgl.h"
+#ifndef T_GL_H
+#define T_GL_H
+#include "GL/glew.h"
 
-#include "core/strings/stringFunctions.h"
+#define gglHasExtension(EXTENSION) GLEW_##EXTENSION
 
-#include "console/console.h"
-
-namespace GL
-{
-   void gglPerformBinds()
-   {
-      GLenum err = glewInit();
-      AssertFatal(GLEW_OK == err, avar("Error: %s\n", glewGetErrorString(err)) );
-   }
-
-   void gglPerformExtensionBinds(void *context)
-   {
-	
-   }
-}
+#endif
 

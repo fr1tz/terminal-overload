@@ -22,7 +22,7 @@
 
 #include "platform/platform.h"
 #include "gfx/gl/gfxGLOcclusionQuery.h"
-#include "gfx/gl/ggl/ggl.h"
+#include "gfx/gl/tGL/tGL.h"
 
 GFXGLOcclusionQuery::GFXGLOcclusionQuery(GFXDevice* device) : 
    GFXOcclusionQuery(device), mQuery(-1)

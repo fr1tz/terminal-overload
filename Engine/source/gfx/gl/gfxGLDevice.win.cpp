@@ -35,7 +35,7 @@
 #include "gfx/GL/gfxGLCubemap.h"
 #include "gfx/GL/gfxGLCardProfiler.h"
 #include "windowManager/win32/win32Window.h"
-#include "ggl/Win32/wgl.h"
+#include "gfx/gl/tGL/tWGL.h"
 
 #include "postFx/postEffect.h"
 #include "gfx/gl/gfxGLUtils.h"

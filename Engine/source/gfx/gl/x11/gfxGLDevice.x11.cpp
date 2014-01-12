@@ -20,7 +20,7 @@
 // IN THE SOFTWARE.
 //-----------------------------------------------------------------------------
 
-#include "gfx/gl/ggl/x11/glx.h"
+#include "gfx/gl/tGL/tXGL.h"
 #include <X11/extensions/xf86vmode.h>
 
 #include "gfx/gfxCubemap.h"
@@ -81,16 +81,16 @@ void EnumerateVideoModes(Vector<GFXVideoMode>& outModes)
 }
 
 void GFXGLDevice::enumerateAdapters( Vector<GFXAdapter*> &adapterList )
-{    
-    loadGLCore();
+{
+    
 
     // Create a dummy window & openGL context so that gl functions can be used here
     AssertFatal(x86UNIXState->isXWindowsRunning(), "Can not enumerate OpenGL devices without a connection to the X Server");
 
     GLint att[] = {GLX_RGBA, GLX_DEPTH_SIZE, 24, GLX_DOUBLEBUFFER, 0};
     Display* display = x86UNIXState->getDisplayPointer();
-    XVisualInfo* vi = GL::glXChooseVisual(display, 0,  att);
-    GLXContext context = GL::glXCreateContext(display, vi, NULL, GL_TRUE);
+    XVisualInfo* vi = glXChooseVisual(display, 0,  att);
+    GLXContext context = glXCreateContext(display, vi, NULL, GL_TRUE);
 
     Window rootWindow = DefaultRootWindow(display);
     XSetWindowAttributes windowAttributes;
@@ -99,9 +99,10 @@ void GFXGLDevice::enumerateAdapters( Vector<GFXAdapter*> &adapterList )
     Window win = XCreateWindow(display, rootWindow, 0, 0, 1, 1, 0, vi->depth, InputOutput, vi->visual, CWColormap | CWEventMask, &windowAttributes);  
     XMapWindow(display, win);
 
-    GL::glXMakeCurrent(display, win, context);
+    glXMakeCurrent(display, win, context);
 
     // Add the GL renderer
+    loadGLCore();
     loadGLExtensions(0);
     
     GFXAdapter *toAdd = new GFXAdapter;
@@ -129,8 +130,8 @@ void GFXGLDevice::enumerateAdapters( Vector<GFXAdapter*> &adapterList )
     adapterList.push_back(toAdd);
 
     // Cleanup window & open gl context
-    GL::glXMakeCurrent(display, 0, NULL);
-    GL::glXDestroyContext(display, context);
+    glXMakeCurrent(display, 0, NULL);
+    glXDestroyContext(display, context);
     XDestroyWindow(display, win);
 }
 
@@ -149,9 +150,9 @@ void GFXGLDevice::init( const GFXVideoMode &mode, PlatformWindow *window )
     // Create OpenGL context
     Display* display = x86UNIXState->getDisplayPointer();
     GLint att[] = {GLX_RGBA, GLX_DEPTH_SIZE, 24, GLX_DOUBLEBUFFER, 0};   // TODO : get these from GFXVideoMode   
-    XVisualInfo* vi = GL::glXChooseVisual(display, 0,  att);
-    GLXContext ctx = GL::glXCreateContext(display, vi, NULL, GL_TRUE);
-    GL::glXMakeCurrent(display, (GL::GLXDrawable)x11Window->getWindowId(), ctx);
+    XVisualInfo* vi = glXChooseVisual(display, 0,  att);
+    GLXContext ctx = glXCreateContext(display, vi, NULL, GL_TRUE);
+    glXMakeCurrent(display, (GLXDrawable)x11Window->getWindowId(), ctx);
     mContext = ctx;
         
     loadGLCore();
@@ -215,7 +216,7 @@ bool GFXGLWindowTarget::present()
     if(x86UNIXState->isXWindowsRunning() && mContext)
     {
         Display* display = x86UNIXState->getDisplayPointer();
-        GL::glXSwapBuffers(display, (Window)getWindow()->getWindowId());
+        glXSwapBuffers(display, (Window)getWindow()->getWindowId());
         return true;
     }
     return false;
