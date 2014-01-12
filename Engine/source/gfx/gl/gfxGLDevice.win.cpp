@@ -347,6 +347,18 @@ GFXFence* GFXGLDevice::_createPlatformSpecificFence()
 
 //-----------------------------------------------------------------------------
 
+inline void GFXGLWindowTarget::_setupAttachments()
+{
+   glBindFramebufferEXT( GL_FRAMEBUFFER_EXT, mBackBufferFBO);
+   const Point2I dstSize = getSize();
+   mBackBufferColorTex.set(dstSize.x, dstSize.y, getFormat(), &PostFxTargetProfile, "backBuffer");
+   GFXGLTextureObject *color = static_cast<GFXGLTextureObject*>(mBackBufferColorTex.getPointer());
+   glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D, color->getHandle(), 0);
+   mBackBufferDepthTex.set(dstSize.x, dstSize.y, GFXFormatD24S8, &BackBufferDepthProfile, "backBuffer");
+   GFXGLTextureObject *depth = static_cast<GFXGLTextureObject*>(mBackBufferDepthTex.getPointer());
+   glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_TEXTURE_2D, depth->getHandle(), 0);
+}
+
 void GFXGLWindowTarget::makeActive()
 {
    if(mBackBufferFBO)
@@ -356,14 +368,7 @@ void GFXGLWindowTarget::makeActive()
    else
    {
       glGenFramebuffersEXT(1, &mBackBufferFBO);
-      glBindFramebufferEXT( GL_FRAMEBUFFER_EXT, mBackBufferFBO);      
-      mBackBufferColorTex.set(getSize().x, getSize().y, getFormat(), &PostFxTargetProfile, "backBuffer");
-      GFXGLTextureObject *color = static_cast<GFXGLTextureObject*>(mBackBufferColorTex.getPointer());
-      glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D, color->getHandle(), 0);
-      mBackBufferDepthTex.set(getSize().x, getSize().y, GFXFormatD24S8, &BackBufferDepthProfile, "backBuffer");
-      GFXGLTextureObject *depth = static_cast<GFXGLTextureObject*>(mBackBufferDepthTex.getPointer());
-      glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_TEXTURE_2D, depth->getHandle(), 0);
-
+      _setupAttachments();
       CHECK_FRAMEBUFFER_STATUS();
    }
 }
@@ -371,15 +376,24 @@ void GFXGLWindowTarget::makeActive()
 bool GFXGLWindowTarget::present()
 {
    PRESERVE_FRAMEBUFFER();
-   
+
+   const Point2I srcSize = mBackBufferColorTex.getWidthHeight();
+   const Point2I dstSize = getSize();
+
    glBindFramebufferEXT(GL_DRAW_FRAMEBUFFER_EXT, 0);
    glBindFramebufferEXT(GL_READ_FRAMEBUFFER_EXT, mBackBufferFBO);
 
-   glBlitFramebufferEXT(0, 0, getSize().x, getSize().y,
-         0, 0, getSize().x, getSize().y, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+   glBlitFramebufferEXT(
+      0, 0, srcSize.x, srcSize.y,
+      0, 0, dstSize.x, dstSize.y, 
+      GL_COLOR_BUFFER_BIT, GL_NEAREST);
 
    HWND hwnd = GETHWND(getWindow());
    SwapBuffers(GetDC(hwnd));
+
+   if(srcSize != dstSize || mBackBufferDepthTex.getWidthHeight() != dstSize)   
+      _setupAttachments();
+
    return true;
 }
 

@@ -60,6 +60,7 @@ private:
    void* mFullscreenContext;
    void _teardownCurrentMode();
    void _setupNewMode();
+   void _setupAttachments();
 };
 
 #endif

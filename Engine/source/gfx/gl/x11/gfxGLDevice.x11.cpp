@@ -206,6 +206,10 @@ GFXFence* GFXGLDevice::_createPlatformSpecificFence()
 
 
 //-----------------------------------------------------------------------------
+inline void GFXGLWindowTarget::_setupAttachments()
+{
+
+}
 
 void GFXGLWindowTarget::makeActive()
 {
