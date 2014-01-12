@@ -184,6 +184,9 @@ GFXGLDevice::~GFXGLDevice()
       mNewCubemap[i] = NULL;
    }
 
+   mRTStack.clear();
+   mCurrentRT = NULL;
+
    if( mTextureManager )
    {
       mTextureManager->zombify();
