@@ -2,8 +2,8 @@ HKCR
 {
 	NoRemove AppID
 	{
-		'%APPID%' = s 'IEFullPlugin'
-		'IEFullPlugin.DLL'
+		'%APPID%' = s 'IEAlux3DPlugin'
+		'IEAlux3DPlugin.DLL'
 		{
 			val AppID = s '%APPID%'
 		}
