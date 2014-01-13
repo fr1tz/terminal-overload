@@ -1,16 +1,14 @@
-//------------------------------------------------------------------------------
-// Alux Ethernet Prototype
-// Copyright notices are in the file named COPYING.
-//------------------------------------------------------------------------------
+// Copyright information can be found in the file named COPYING
+// located in the root directory of this distribution.
 
-datablock AudioProfile(FrmHoverpodSlideSound)
+datablock SFXProfile(FrmHoverpodSlideSound)
 {
 	filename	 = "content/rotc/p.5.3/sounds/rotc/slide2.wav";
 	description = AudioCloseLooping3D;
 	preload = true;
 };
 
-datablock AudioProfile(FrmHoverpodSlideContactSound)
+datablock SFXProfile(FrmHoverpodSlideContactSound)
 {
 	filename	 = "content/rotc/p.5.3/sounds/rotc/slide1.wav";
 	description = AudioCloseLooping3D;
