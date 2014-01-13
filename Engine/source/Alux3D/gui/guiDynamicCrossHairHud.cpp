@@ -125,7 +125,7 @@ void GuiDynamicCrossHairHud::onRender(Point2I offset, const RectI &updateRect)
 	F32 crosshairOffset = mSize/4;
 
 	ShapeBase::MountedImage* image = control->getImageStruct(0);
-	if(image != NULL)
+	if(image && image->dataBlock)
 	{
 		if(mSize == 0)
 		{
