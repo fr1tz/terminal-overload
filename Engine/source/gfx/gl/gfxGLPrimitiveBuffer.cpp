@@ -31,11 +31,11 @@ GFXGLPrimitiveBuffer::GFXGLPrimitiveBuffer(GFXDevice *device, U32 indexCount, U3
 GFXPrimitiveBuffer(device, indexCount, primitiveCount, bufferType), mZombieCache(NULL) 
 {
    // Generate a buffer and allocate the needed memory
-	glGenBuffers(1, &mBuffer);
+   glGenBuffers(1, &mBuffer);
+   mBufferData.setSize(indexCount * sizeof(U16));
    
    if( gglHasExtension(EXT_direct_state_access) )
    {
-      mBufferData.setSize(indexCount * sizeof(U16));
       glNamedBufferDataEXT(mBuffer, indexCount * sizeof(U16), NULL, GFXGLBufferType[mBufferType]);    
    }
    else
