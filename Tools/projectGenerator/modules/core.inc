@@ -232,7 +232,7 @@ switch( TorqueGenerator::$platform )
       addProjectLibInput("Opengl32.lib");
       break;
    case "linux":
-      addIncludePath( '/usr/include/freetype2/' );
+      addIncludePath( '/usr/include/freetype2' );
       break;
 }
 

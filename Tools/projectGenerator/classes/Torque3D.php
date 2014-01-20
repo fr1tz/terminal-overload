@@ -191,8 +191,7 @@ class Torque3D
         }
 		
 		if (TorqueGenerator::$platform == "linux")
-        {
-			addIncludePath("/usr/include/freetype2");
+        {			
 			addProjectDefine( 'LINUX' );			
 			//-ldl -lXxf86vm -lXext -lX11 -lXft -lSDL -lstdc++ -lpthread -lGL
 			addProjectLibInput('dl');
@@ -203,7 +202,7 @@ class Torque3D
 			addProjectLibInput('SDL');
 			addProjectLibInput('stdc++');
 			addProjectLibInput('pthread');
-         addProjectLibInput('GL');
+			addProjectLibInput('GL');
 			
 			if ( !self::$sharedConfig )
 				addEngineSrcDir( 'main' );
@@ -279,8 +278,8 @@ class Torque3D
               
               if (TorqueGenerator::$platform == "win32" || TorqueGenerator::$platform == "linux")
               {
-                 addSolutionProjectRef( 'libogg' );
-                 addSolutionProjectRef( 'libvorbis' );
+				 addSolutionProjectRef( 'libvorbis' ); 
+                 addSolutionProjectRef( 'libogg' );                 
                  addSolutionProjectRef( 'libtheora' );
               }
               
