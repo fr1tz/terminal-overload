@@ -42,7 +42,7 @@ public:
 
    virtual void print( Stream &stream, bool isVerterShader );
    void printStructDefines( Stream &stream, bool in );
-   virtual void printOnMain( Stream &stream, bool isVerterShader ) override;
+   virtual void printOnMain( Stream &stream, bool isVerterShader );
 };
 
 class AppVertConnectorGLSL : public ShaderConnector
@@ -56,7 +56,7 @@ public:
    virtual void sortVars();
    
    virtual void print( Stream &stream, bool isVerterShader );   
-   virtual void printOnMain( Stream &stream, bool isVerterShader ) override;
+   virtual void printOnMain( Stream &stream, bool isVerterShader );
 };
 
 
