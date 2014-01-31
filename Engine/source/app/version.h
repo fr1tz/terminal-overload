@@ -8,15 +8,16 @@
 /// base engine source we need a way to differentiate which product
 /// this particular game is using.
 ///
-/// TGE       0001
-/// TGEA      0002
-/// TGB       0003
-/// TGEA 360  0004
-/// TGE WII   0005
-/// Torque 3D 0006
-/// Torque 3D MIT 0007
-/// Alux3D    0010
-#define TORQUE_ENGINE_PRODUCT      0010
+/// TGE             0001
+/// TGEA            0002
+/// TGB             0003
+/// TGEA 360        0004
+/// TGE  WII        0005
+/// Torque 3D       0006
+/// Torque 3D MIT   0007
+/// Alux3D          0010
+/// NOTC            0011
+#define TORQUE_ENGINE_PRODUCT      0011
 
 /// This is our global version number for the engine source code that
 /// we are using. See <game>/source/torqueConfig.h for the game's source

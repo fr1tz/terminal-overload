@@ -1,9 +1,9 @@
-Alux3D
-======
+OpenROTC (temporary name until a name has been voted on)
+========================================================
 
-Pretty much nothing to see here yet.
+Free and open-source remake of Revenge Of The Cats: Ethernet
 
-Alux3D is a fork of Torque3D, see Torque 3D [main repository](https://github.com/GarageGames/Torque3D)
+Uses the Torque3D-MIT engine, see Torque 3D [main repository](https://github.com/GarageGames/Torque3D)
 for more information.
 
 License
