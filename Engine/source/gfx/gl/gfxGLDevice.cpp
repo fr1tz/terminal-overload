@@ -17,12 +17,12 @@
 #include "gfx/gl/gfxGLCubemap.h"
 #include "gfx/gl/gfxGLCardProfiler.h"
 #include "gfx/gl/gfxGLWindowTarget.h"
-#include "gfx/gl/ggl/ggl.h" 
 #include "platform/platformDlibrary.h"
 #include "gfx/gl/gfxGLShader.h"
 #include "gfx/primBuilder.h"
 #include "console/console.h"
 #include "gfx/gl/gfxGLOcclusionQuery.h"
+#include "materials/shaderData.h"
 
 GFXAdapter::CreateDeviceInstanceDelegate GFXGLDevice::mCreateDeviceInstance(GFXGLDevice::createInstance); 
 
@@ -58,12 +58,18 @@ void loadGLExtensions(void *context)
    GL::gglPerformExtensionBinds(context);
 }
 
+void STDCALL glDebugCallback(GLenum source, GLenum type, GLuint id,
+   GLenum severity, GLsizei length, const GLchar* message, void* userParam)
+{
+   Con::errorf("OPENGL: %s", message);
+}
+
 void GFXGLDevice::initGLState()
 {  
    // We don't currently need to sync device state with a known good place because we are
    // going to set everything in GFXGLStateBlock, but if we change our GFXGLStateBlock strategy, this may
    // need to happen.
-   
+
    // Deal with the card profiler here when we know we have a valid context.
    mCardProfiler = new GFXGLCardProfiler();
    mCardProfiler->init(); 
@@ -82,10 +88,26 @@ void GFXGLDevice::initGLState()
    
    // MACHAX - Setting mPixelShaderVersion to 3.0 will allow Advanced Lighting
    // to run.  At the time of writing (6/18) it doesn't quite work yet.
-   if(Con::getBoolVariable("$pref::machax::enableAdvancedLighting", false))
+   if(Con::getBoolVariable("$pref::machax::enableAdvancedLighting", false) || dAtof(reinterpret_cast<const char*>(glGetString( GL_SHADING_LANGUAGE_VERSION))) >= 3.0f) //TODO OPENGL
       mPixelShaderVersion = 3.0f;
       
    mSupportsAnisotropic = mCardProfiler->queryProfile( "GL::suppAnisotropic" );
+
+#if TORQUE_DEBUG
+   if( gglHasExtension(KHR_debug) )
+   {
+      glEnable(GL_DEBUG_OUTPUT);
+      glDebugMessageCallback(glDebugCallback, NULL);      
+      glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+      GLuint unusedIds = 0;
+      glDebugMessageControl(GL_DONT_CARE,
+            GL_DONT_CARE,
+            GL_DONT_CARE,
+            0,
+            &unusedIds,
+            GL_TRUE);
+   }
+#endif
 }
 
 GFXGLDevice::GFXGLDevice(U32 adapterIndex) :
@@ -99,7 +121,8 @@ GFXGLDevice::GFXGLDevice(U32 adapterIndex) :
    mPixelShaderVersion(0.0f),
    mMaxShaderTextures(2),
    mMaxFFTextures(2),
-   mClip(0, 0, 0, 0)
+   mClip(0, 0, 0, 0),
+   mCurrentShader( NULL )
 {
    loadGLCore();
 
@@ -114,6 +137,13 @@ GFXGLDevice::GFXGLDevice(U32 adapterIndex) :
 
    for(U32 i = 0; i < TEXTURE_STAGE_COUNT; i++)
       mActiveTextureType[i] = GL_ZERO;
+
+   mTextureCoordStartTop = false;
+   mTexelPixelOffset = false;
+   mVertexStreamSupported = 1;
+
+   for(int i = 0; i < GS_COUNT; ++i)
+      mModelViewProjSC[i] = NULL;
 }
 
 GFXGLDevice::~GFXGLDevice()
@@ -125,6 +155,24 @@ GFXGLDevice::~GFXGLDevice()
       mVolatileVBs[i] = NULL;
    for(U32 i = 0; i < mVolatilePBs.size(); i++)
       mVolatilePBs[i] = NULL;
+
+   // Clear out our current texture references
+   for (U32 i = 0; i < TEXTURE_STAGE_COUNT; i++)
+   {
+      mCurrentTexture[i] = NULL;
+      mNewTexture[i] = NULL;
+      mCurrentCubemap[i] = NULL;
+      mNewCubemap[i] = NULL;
+   }
+
+   mRTStack.clear();
+   mCurrentRT = NULL;
+
+   if( mTextureManager )
+   {
+      mTextureManager->zombify();
+      mTextureManager->kill();
+   }
 
    GFXResource* walk = mResourceListHead;
    while(walk)
@@ -283,7 +331,7 @@ void GFXGLDevice::clear(U32 flags, ColorI color, F32 z, U32 stencil)
 }
 
 // Given a primitive type and a number of primitives, return the number of indexes/vertexes used.
-GLsizei GFXGLDevice::primCountToIndexCount(GFXPrimitiveType primType, U32 primitiveCount)
+inline GLsizei GFXGLDevice::primCountToIndexCount(GFXPrimitiveType primType, U32 primitiveCount)
 {
    switch (primType)
    {
@@ -334,6 +382,7 @@ void GFXGLDevice::drawPrimitive( GFXPrimitiveType primType, U32 vertexStart, U32
 {
    preDrawPrimitive();
    
+   // TODO OPENGL
    // There are some odd performance issues if a buffer is bound to GL_ELEMENT_ARRAY_BUFFER when glDrawArrays is called.  Unbinding the buffer
    // improves performance by 10%.
    if(mCurrentPB)
@@ -374,53 +423,12 @@ void GFXGLDevice::setPB(GFXGLPrimitiveBuffer* pb)
 
 void GFXGLDevice::setLightInternal(U32 lightStage, const GFXLightInfo light, bool lightEnable)
 {
-   if(!lightEnable)
-   {
-      glDisable(GL_LIGHT0 + lightStage);
-      return;
-   }
-
-   if(light.mType == GFXLightInfo::Ambient)
-   {
-      AssertFatal(false, "Instead of setting an ambient light you should set the global ambient color.");
-      return;
-   }
-
-   GLenum lightEnum = GL_LIGHT0 + lightStage;
-   glLightfv(lightEnum, GL_AMBIENT, (GLfloat*)&light.mAmbient);
-   glLightfv(lightEnum, GL_DIFFUSE, (GLfloat*)&light.mColor);
-   glLightfv(lightEnum, GL_SPECULAR, (GLfloat*)&light.mColor);
-
-   F32 pos[4];
-
-   if(light.mType != GFXLightInfo::Vector)
-   {
-      dMemcpy(pos, &light.mPos, sizeof(light.mPos));
-      pos[3] = 1.0;
-   }
-   else
-   {
-      dMemcpy(pos, &light.mDirection, sizeof(light.mDirection));
-      pos[3] = 0.0;
-   }
-   // Harcoded attenuation
-   glLightf(lightEnum, GL_CONSTANT_ATTENUATION, 1.0f);
-   glLightf(lightEnum, GL_LINEAR_ATTENUATION, 0.1f);
-   glLightf(lightEnum, GL_QUADRATIC_ATTENUATION, 0.0f);
-
-   glLightfv(lightEnum, GL_POSITION, (GLfloat*)&pos);
-   glEnable(lightEnum);
+   // ONLY NEEDED ON FFP
 }
 
 void GFXGLDevice::setLightMaterialInternal(const GFXLightMaterial mat)
 {
-   // CodeReview - Setting these for front and back is unnecessary.  We should consider
-   // checking what faces we're culling and setting this only for the unculled faces.
-   glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, (GLfloat*)&mat.ambient);
-   glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, (GLfloat*)&mat.diffuse);
-   glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, (GLfloat*)&mat.specular);
-   glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, (GLfloat*)&mat.emissive);
-   glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, mat.shininess);
+   // ONLY NEEDED ON FFP
 }
 
 void GFXGLDevice::setGlobalAmbientInternal(ColorF color)
@@ -430,23 +438,16 @@ void GFXGLDevice::setGlobalAmbientInternal(ColorF color)
 
 void GFXGLDevice::setTextureInternal(U32 textureUnit, const GFXTextureObject*texture)
 {
-   const GFXGLTextureObject *tex = static_cast<const GFXGLTextureObject*>(texture);
+   GFXGLTextureObject *tex = static_cast<GFXGLTextureObject*>(const_cast<GFXTextureObject*>(texture));
    glActiveTexture(GL_TEXTURE0 + textureUnit);
    if (tex)
    {
-      // GFXGLTextureObject::bind also handles applying the current sampler state.
-      if(mActiveTextureType[textureUnit] != tex->getBinding() && mActiveTextureType[textureUnit] != GL_ZERO)
-      {
-         glBindTexture(mActiveTextureType[textureUnit], 0);
-         glDisable(mActiveTextureType[textureUnit]);
-      }
       mActiveTextureType[textureUnit] = tex->getBinding();
       tex->bind(textureUnit);
    } 
    else if(mActiveTextureType[textureUnit] != GL_ZERO)
    {
       glBindTexture(mActiveTextureType[textureUnit], 0);
-      glDisable(mActiveTextureType[textureUnit]);
       mActiveTextureType[textureUnit] = GL_ZERO;
    }
    
@@ -458,18 +459,12 @@ void GFXGLDevice::setCubemapInternal(U32 textureUnit, const GFXGLCubemap* textur
    glActiveTexture(GL_TEXTURE0 + textureUnit);
    if(texture)
    {
-      if(mActiveTextureType[textureUnit] != GL_TEXTURE_CUBE_MAP && mActiveTextureType[textureUnit] != GL_ZERO)
-      {
-         glBindTexture(mActiveTextureType[textureUnit], 0);
-         glDisable(mActiveTextureType[textureUnit]);
-      }
       mActiveTextureType[textureUnit] = GL_TEXTURE_CUBE_MAP;
       texture->bind(textureUnit);
    }
    else if(mActiveTextureType[textureUnit] != GL_ZERO)
    {
       glBindTexture(mActiveTextureType[textureUnit], 0);
-      glDisable(mActiveTextureType[textureUnit]);
       mActiveTextureType[textureUnit] = GL_ZERO;
    }
 
@@ -478,43 +473,7 @@ void GFXGLDevice::setCubemapInternal(U32 textureUnit, const GFXGLCubemap* textur
 
 void GFXGLDevice::setMatrix( GFXMatrixType mtype, const MatrixF &mat )
 {
-   MatrixF modelview;
-   switch (mtype)
-   {
-      case GFXMatrixWorld :
-         {
-            glMatrixMode(GL_MODELVIEW);
-            m_mCurrentWorld = mat;
-            modelview = m_mCurrentWorld;
-            modelview *= m_mCurrentView;
-            modelview.transpose();
-            glLoadMatrixf((F32*) modelview);
-         }
-         break;
-      case GFXMatrixView :
-         {
-            glMatrixMode(GL_MODELVIEW);
-            m_mCurrentView = mat;
-            modelview = m_mCurrentView;
-            modelview *= m_mCurrentWorld;
-            modelview.transpose();
-            glLoadMatrixf((F32*) modelview);
-         }
-         break;
-      case GFXMatrixProjection :
-         {        
-            glMatrixMode(GL_PROJECTION);
-            MatrixF t(mat);
-            t.transpose();
-            glLoadMatrixf((F32*) t);
-            glMatrixMode(GL_MODELVIEW);
-         }
-         break;
-      // CodeReview - Add support for texture transform matrix types
-      default:
-         AssertFatal(false, "GFXGLDevice::setMatrix - Unknown matrix mode!");
-         return;
-   }
+   // ONLY NEEDED ON FFP
 }
 
 void GFXGLDevice::setClipRect( const RectI &inRect )
@@ -565,8 +524,8 @@ void GFXGLDevice::setClipRect( const RectI &inRect )
    setViewMatrix( mTempMatrix );
    setWorldMatrix( mTempMatrix );
 
-   // Set the viewport to the clip rect (with y flip)
-   RectI viewport(mClip.point.x, size.y - (mClip.point.y + mClip.extent.y), mClip.extent.x, mClip.extent.y);
+   // Set the viewport to the clip rect
+   RectI viewport(mClip.point.x, mClip.point.y, mClip.extent.x, mClip.extent.y); // TODO OPENGL
    setViewport(viewport);
 }
 
@@ -618,11 +577,49 @@ GFXOcclusionQuery* GFXGLDevice::createOcclusionQuery()
 
 void GFXGLDevice::setupGenericShaders( GenericShaderType type ) 
 {
-   TORQUE_UNUSED(type);
-   // We have FF support, use that.
-   disableShaders();
-}
+   AssertFatal(type != GSTargetRestore, "");
+   AssertFatal(type != GSTexture, "");
 
+   if( mGenericShader[GSColor] == NULL )
+   {
+      ShaderData *shaderData;
+
+      shaderData = new ShaderData();
+      shaderData->setField("OGLVertexShaderFile", "shaders/common/fixedFunction/gl/colorV.glsl");
+      shaderData->setField("OGLPixelShaderFile", "shaders/common/fixedFunction/gl/colorP.glsl");
+      shaderData->setField("pixVersion", "2.0");
+      shaderData->registerObject();
+      mGenericShader[GSColor] =  shaderData->getShader();
+      mGenericShaderBuffer[GSColor] = mGenericShader[GSColor]->allocConstBuffer();
+      mModelViewProjSC[GSColor] = mGenericShader[GSColor]->getShaderConstHandle( "$modelView" ); 
+
+      shaderData = new ShaderData();
+      shaderData->setField("OGLVertexShaderFile", "shaders/common/fixedFunction/gl/modColorTextureV.glsl");
+      shaderData->setField("OGLPixelShaderFile", "shaders/common/fixedFunction/gl/modColorTextureP.glsl");
+      shaderData->setSamplerName("$diffuseMap", 0);
+      shaderData->setField("pixVersion", "2.0");
+      shaderData->registerObject();
+      mGenericShader[GSModColorTexture] = shaderData->getShader();
+      mGenericShaderBuffer[GSModColorTexture] = mGenericShader[GSModColorTexture]->allocConstBuffer();
+      mModelViewProjSC[GSModColorTexture] = mGenericShader[GSModColorTexture]->getShaderConstHandle( "$modelView" ); 
+
+      shaderData = new ShaderData();
+      shaderData->setField("OGLVertexShaderFile", "shaders/common/fixedFunction/gl/addColorTextureV.glsl");
+      shaderData->setField("OGLPixelShaderFile", "shaders/common/fixedFunction/gl/addColorTextureP.glsl");
+      shaderData->setSamplerName("$diffuseMap", 0);
+      shaderData->setField("pixVersion", "2.0");
+      shaderData->registerObject();
+      mGenericShader[GSAddColorTexture] = shaderData->getShader();
+      mGenericShaderBuffer[GSAddColorTexture] = mGenericShader[GSAddColorTexture]->allocConstBuffer();
+      mModelViewProjSC[GSAddColorTexture] = mGenericShader[GSAddColorTexture]->getShaderConstHandle( "$modelView" ); 
+   }
+
+   MatrixF tempMatrix =  mProjectionMatrix * mViewMatrix * mWorldMatrix[mWorldStackSize];  
+   mGenericShaderBuffer[type]->setSafe(mModelViewProjSC[type], tempMatrix);
+
+   setShader( mGenericShader[type] );
+   setShaderConstBuffer( mGenericShaderBuffer[type] );
+}
 GFXShader* GFXGLDevice::createShader()
 {
    GFXGLShader* shader = new GFXGLShader();
@@ -632,19 +629,25 @@ GFXShader* GFXGLDevice::createShader()
 
 void GFXGLDevice::setShader( GFXShader *shader )
 {
+   if(mCurrentShader == shader)
+      return;
+
    if ( shader )
    {
       GFXGLShader *glShader = static_cast<GFXGLShader*>( shader );
       glShader->useProgram();
+      mCurrentShader = shader;
    }
    else
+   {
       glUseProgram(0);
+      mCurrentShader = NULL;
+   }
 }
 
 void GFXGLDevice::disableShaders()
 {
-   setShader(NULL);
-   setShaderConstBuffer( NULL );
+   setupGenericShaders();
 }
 
 void GFXGLDevice::setShaderConstBufferInternal(GFXShaderConstBuffer* buffer)
@@ -654,7 +657,7 @@ void GFXGLDevice::setShaderConstBufferInternal(GFXShaderConstBuffer* buffer)
 
 U32 GFXGLDevice::getNumSamplers() const
 {
-   return mPixelShaderVersion > 0.001f ? mMaxShaderTextures : mMaxFFTextures;
+   return getMin((U32)TEXTURE_STAGE_COUNT,mPixelShaderVersion > 0.001f ? mMaxShaderTextures : mMaxFFTextures);
 }
 
 U32 GFXGLDevice::getNumRenderTargets() const 
@@ -728,6 +731,12 @@ GFXFormat GFXGLDevice::selectSupportedFormat(   GFXTextureProfile* profile,
    
    return GFXFormatR8G8B8A8;
 }
+
+#if 1
+void GFXGLDevice::enterDebugEvent(ColorI color, const char *name) {}
+void GFXGLDevice::leaveDebugEvent() {}
+void GFXGLDevice::setDebugMarker(ColorI color, const char *name) {}
+#endif
 
 //
 // Register this device with GFXInit

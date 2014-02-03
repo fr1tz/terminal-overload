@@ -17,6 +17,8 @@
 #include "core/util/safeDelete.h"
 #include "console/console.h"
 
+using namespace Torque;
+
 extern bool gDisassembleAllShaders;
 
 /// D3DXInclude plugin
@@ -1080,11 +1082,13 @@ void GFXD3D9Shader::_getShaderConstants( ID3DXConstantTable *table,
                         desc.constType = GFXSCT_Sampler;
                         desc.arraySize = constantDesc.RegisterIndex;
                         samplerDescriptions.push_back( desc );
+                        mShaderConsts.push_back(desc);
                         break;
                      case D3DXPT_SAMPLERCUBE :
                         desc.constType = GFXSCT_SamplerCube;
                         desc.arraySize = constantDesc.RegisterIndex;
                         samplerDescriptions.push_back( desc );
+                        mShaderConsts.push_back(desc);
                         break;
                   }
                }
@@ -1350,7 +1354,7 @@ GFXShaderConstBufferRef GFXD3D9Shader::allocConstBuffer()
    }
 }
 
-/// Returns a shader constant handle for name, if the variable doesn't exist NULL is returned.
+/// Returns a shader constant handle for name
 GFXShaderConstHandle* GFXD3D9Shader::getShaderConstHandle(const String& name)
 {
    HandleMap::Iterator i = mHandles.find(name);   
@@ -1366,6 +1370,20 @@ GFXShaderConstHandle* GFXD3D9Shader::getShaderConstHandle(const String& name)
       mHandles[name] = handle;
 
       return handle;      
+   }      
+}
+
+/// Returns a shader constant handle for name, if the variable doesn't exist NULL is returned.
+GFXShaderConstHandle* GFXD3D9Shader::findShaderConstHandle(const String& name)
+{
+   HandleMap::Iterator i = mHandles.find(name);   
+   if ( i != mHandles.end() )
+   {
+      return i->value;
+   } 
+   else 
+   {     
+      return NULL;
    }      
 }
 

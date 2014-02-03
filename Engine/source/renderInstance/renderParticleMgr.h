@@ -91,6 +91,9 @@ protected:
       GFXShaderConstHandle *mPrePassTargetParamsSC;
       GFXShaderConstHandle *mAlphaFactorSC;
       GFXShaderConstHandle *mAlphaScaleSC;
+      GFXShaderConstHandle *mSamplerDiffuse;
+      GFXShaderConstHandle *mSamplerPrePassTex;
+      GFXShaderConstHandle *mSamplerParaboloidLightMap;
 
    } mParticleShaderConsts;
 
@@ -98,7 +101,9 @@ protected:
    {
       GFXShaderConstBufferRef mShaderConsts;
       GFXShaderConstHandle *mSystemDepth;
-      GFXShaderConstHandle *mScreenRect;
+      GFXShaderConstHandle *mScreenRect;      
+      GFXShaderConstHandle *mSamplerColorSource;
+      GFXShaderConstHandle *mSamplerEdgeSource;
       GFXShaderConstHandle *mEdgeTargetParamsSC;
       GFXShaderConstHandle *mOffscreenTargetParamsSC;
    } mParticleCompositeShaderConsts;

@@ -79,7 +79,7 @@ void DeferredRTLightingFeatHLSL::processPix( Vector<ShaderComponent*> &component
    uvScene->setName( "uvScene" );
    LangElement *uvSceneDecl = new DecOp( uvScene );
 
-   String rtParamName = String::ToString( "rtParams%d", mLastTexIndex );
+   String rtParamName = String::ToString( "rtParams%s", "lightInfoBuffer" );
    Var *rtParams = (Var*) LangElement::find( rtParamName );
    if( !rtParams )
    {
@@ -187,7 +187,8 @@ void DeferredRTLightingFeatHLSL::setTexData( Material::StageData &stageDat,
       // which cannot deduce the texture unit itself.
       mLastTexIndex = texIndex;
 
-      passData.mTexType[ texIndex ] = Material::TexTarget;
+      passData.mTexType[ texIndex ] = Material::TexTarget;      
+      passData.mSamplerNames[ texIndex ]= "lightInfoBuffer";
       passData.mTexSlot[ texIndex++ ].texTarget = texTarget;
    }
 }
@@ -383,12 +384,14 @@ void DeferredBumpFeatHLSL::setTexData( Material::StageData &stageDat,
            fd.features[MFT_PixSpecular] ) )
    {
       passData.mTexType[ texIndex ] = Material::Bump;
+      passData.mSamplerNames[ texIndex ] = "bumpMap";
       passData.mTexSlot[ texIndex++ ].texObject = stageDat.getTex( MFT_NormalMap );
 
       if (  fd.features[MFT_PrePassConditioner] &&
             fd.features.hasFeature( MFT_DetailNormalMap ) )
       {
          passData.mTexType[ texIndex ] = Material::DetailBump;
+         passData.mSamplerNames[ texIndex ] = "detailBumpMap";
          passData.mTexSlot[ texIndex++ ].texObject = stageDat.getTex( MFT_DetailNormalMap );
       }
    }
@@ -446,6 +449,12 @@ void DeferredPixelSpecularHLSL::processPix(  Vector<ShaderComponent*> &component
       specPow->constSortPos = cspPotentialPrimitive;
    }
 
+   Var *specStrength = new Var;
+   specStrength->setType( "float" );
+   specStrength->setName( "specularStrength" );
+   specStrength->uniform = true;
+   specStrength->constSortPos = cspPotentialPrimitive;
+
    Var *lightInfoSamp = (Var *)LangElement::find( "lightInfoSample" );
    Var *d_specular = (Var*)LangElement::find( "d_specular" );
    Var *d_NL_Att = (Var*)LangElement::find( "d_NL_Att" );
@@ -455,7 +464,7 @@ void DeferredPixelSpecularHLSL::processPix(  Vector<ShaderComponent*> &component
 
    // (a^m)^n = a^(m*n)
    meta->addStatement( new GenOp( "   @ = pow( @, ceil(@ / AL_ConstantSpecularPower)) * @;\r\n", 
-      specDecl, d_specular, specPow, d_NL_Att ) );
+      specDecl, d_specular, specPow, specStrength ) );
 
    LangElement *specMul = new GenOp( "float4( @.rgb, 0 ) * @", specCol, specular );
    LangElement *final = specMul;

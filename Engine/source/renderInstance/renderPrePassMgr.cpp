@@ -267,7 +267,7 @@ void RenderPrePassMgr::render( SceneRenderState *state )
    GFX->clear( GFXClearTarget | GFXClearZBuffer | GFXClearStencil, ColorI::WHITE, 1.0f, 0);
 
    // Restore transforms
-   MatrixSet &matrixSet = getRenderPass()->getMatrixSet();
+   MatrixSet &matrixSet = getRenderPass()->getMatrixSet();   
    matrixSet.restoreSceneViewProjection();
    const MatrixF worldViewXfm = GFX->getWorldMatrix();
 
@@ -304,7 +304,7 @@ void RenderPrePassMgr::render( SceneRenderState *state )
 
       mat->setTransformAndEye(   *ri->objectToWorldXfm,
                                  worldViewXfm,
-                                 GFX->getProjectionMatrix(),
+                                 GFX->getProjectionMatrix(), 
                                  state->getFarPlane() );
 
       while ( mat->setupPass( state, sgData ) )

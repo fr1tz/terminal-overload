@@ -12,6 +12,7 @@
 #include "core/resourceManager.h"
 #include "console/engineAPI.h"
 
+using namespace Torque;
 
 IMPLEMENT_CO_DATABLOCK_V1( SFXProfile );
 

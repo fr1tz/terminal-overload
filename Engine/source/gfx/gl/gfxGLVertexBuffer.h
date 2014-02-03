@@ -7,14 +7,13 @@
 #ifndef _GFXVERTEXBUFFER_H_
 #include "gfx/gfxVertexBuffer.h"
 #endif
-#ifndef GL_GGL_H
-#include "gfx/gl/ggl/ggl.h"
-#endif
+#include "gfx/gl/tGL/tGL.h"
 
 /// This is a vertex buffer which uses GL_ARB_vertex_buffer_object.
 class GFXGLVertexBuffer : public GFXVertexBuffer 
 {
 public:
+
 	GFXGLVertexBuffer(   GFXDevice *device, 
                         U32 numVerts, 
                         const GFXVertexFormat *vertexFormat, 
@@ -38,8 +37,21 @@ private:
    friend class GFXGLDevice;
 	/// GL buffer handle
 	GLuint mBuffer;
-   
+   Vector<char> mBufferData;
    U8* mZombieCache;
+
+   struct glVertexDecl
+   {
+      GLint attrIndex;
+      GLint elementCount; // 1 - 4
+      GLenum type; // GL_FLOAT...
+      GLboolean normalized;
+      GLsizei stride;
+      GLvoid *pointerFirst;
+   };
+
+   Vector<glVertexDecl> glVerticesFormat;  
+   void _initVerticesFormat();
 };
 
 #endif

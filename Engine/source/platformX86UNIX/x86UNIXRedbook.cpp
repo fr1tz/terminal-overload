@@ -1,8 +1,6 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
-// Not needed on dedicated (SDL is not not linked against when dedicated)
-#ifndef TORQUE_DEDICATED
 #include "console/console.h"
 #include "platformX86UNIX/platformX86UNIX.h"
 #include "platform/platformRedBook.h"
@@ -436,4 +434,3 @@ void PollRedbookDevices()
    }
 #endif	// !defined(__FreeBSD__)
 }
-#endif

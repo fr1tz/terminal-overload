@@ -105,6 +105,11 @@ ShaderComponent* ShaderGenComponentFactoryGLSL::createVertexInputConnector( cons
          var = vertComp->getElement( RT_TANGENT );
          var->setName( "T" );
       }
+      else if ( element.isSemantic( GFXSemantic::TANGENTW ) )
+      {
+         var = vertComp->getElement( RT_TANGENTW );
+         var->setName( "tangentW" );
+      }
       else if ( element.isSemantic( GFXSemantic::BINORMAL ) )
       {
          var = vertComp->getElement( RT_BINORMAL );
@@ -133,7 +138,7 @@ ShaderComponent* ShaderGenComponentFactoryGLSL::createVertexInputConnector( cons
       if ( !var )
          continue;
 
-      var->setStructName( "" );
+      var->setStructName( "IN" );
       var->setType( typeToString( element.getType() ) );
    }
 

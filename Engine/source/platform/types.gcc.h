@@ -48,7 +48,7 @@ typedef unsigned long long  U64;
 #  define TORQUE_OS_PS3
 #  include "platform/types.posix.h"
 
-#elif defined(linux)
+#elif defined(linux) || defined(LINUX)
 #  define TORQUE_OS_STRING "Linux"
 #  define TORQUE_OS_LINUX
 #  define TORQUE_SUPPORTS_NASM
@@ -78,7 +78,7 @@ typedef unsigned long long  U64;
 // This could be reconfigured for static builds, though minimal impact
 //#     define TORQUE_SUPPORTS_NASM
 #  endif
-#else 
+#else
 #  error "GCC: Unsupported Operating System"
 #endif
 

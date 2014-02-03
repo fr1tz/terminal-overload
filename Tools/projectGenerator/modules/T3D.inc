@@ -58,7 +58,7 @@ else
 	addEngineSrcDir('T3D/gameBase/std');
 
 // Plstform specific stuff.
-switch( Generator::$platform )
+switch( TorqueGenerator::$platform )
 {
    case "360":
       addEngineSrcDir('ts/arch/360');
@@ -66,7 +66,10 @@ switch( Generator::$platform )
       
    case "win32":
       addEngineSrcDir( 'terrain/hlsl' );
-      addEngineSrcDir( 'forest/hlsl' );
+      addEngineSrcDir( 'forest/hlsl' );	  
+	  
+	  addEngineSrcDir( 'terrain/glsl' );
+      addEngineSrcDir( 'forest/glsl' );
       break;
 
    case "ps3":
@@ -75,7 +78,7 @@ switch( Generator::$platform )
       
    case "mac":
    case "linux":
-   case "linux_dedicated":
+   case "linux_dedicated":	  
       addEngineSrcDir( 'terrain/glsl' );
       addEngineSrcDir( 'forest/glsl' );
       break;

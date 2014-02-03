@@ -190,6 +190,12 @@ public:
       
       /// The device is about to finish rendering a frame
       deEndOfFrame,
+
+      /// The device has started rendering a frame's field (such as for side-by-side rendering)
+      deStartOfField,
+
+      /// The device is about to finish rendering a frame's field
+      deEndOfField,
    };
 
    typedef Signal <bool (GFXDeviceEventType)> DeviceEventSignal;
@@ -568,6 +574,8 @@ protected:
    /// may be more than the device supports.
    static const U32 VERTEX_STREAM_COUNT = 4;
 
+   const U32 getVertexStreamSupported() const { return mVertexStreamSupported; }
+
    StrongRefPtr<GFXVertexBuffer> mCurrentVertexBuffer[VERTEX_STREAM_COUNT];
    bool mVertexBufferDirty[VERTEX_STREAM_COUNT];
    U32 mVertexBufferFrequency[VERTEX_STREAM_COUNT];
@@ -630,12 +638,17 @@ protected:
    /// it must be updated on the next draw/clear.
    bool mViewportDirty;
 
+   U32 mVertexStreamSupported;
+
 public:
 
    /// @name Texture functions
    /// @{
 protected:
    GFXTextureManager * mTextureManager;
+
+   bool mTextureCoordStartTop;
+   bool mTexelPixelOffset;
 
 public:   
    virtual GFXCubemap * createCubemap() = 0;
@@ -676,7 +689,7 @@ public:
    void popActiveRenderTarget();
 
    /// Assign a new active render target.
-   void setActiveRenderTarget( GFXTarget *target );
+   void setActiveRenderTarget( GFXTarget *target, bool updateViewport=true );
 
    /// Returns the current active render target.
    inline GFXTarget* getActiveRenderTarget() { return mCurrentRT; }
@@ -704,6 +717,11 @@ public:
    /// and deleted by the caller.
    /// @see GFXShader::init
    virtual GFXShader* createShader() = 0;
+
+   bool isTextureCoordStartTop() const { return mTextureCoordStartTop; }
+
+   /// For handle with DX9 API texel-to-pixel mapping offset
+   bool hasTexelPixelOffset() const { return mTexelPixelOffset; }
    
    /// @}
  
@@ -716,6 +734,8 @@ public:
    virtual void clear( U32 flags, ColorI color, F32 z, U32 stencil ) = 0;
    virtual bool beginScene();
    virtual void endScene();
+   virtual void beginField();
+   virtual void endField();
 
    virtual GFXTexHandle & getFrontBuffer(){ return mFrontBuffer[mCurrentFrontBufferIdx]; }
 
@@ -1085,5 +1105,11 @@ inline void GFXDevice::setVertexFormat( const GFXVertexFormat *vertexFormat )
    mStateDirty = true;
 }
 
+
+#if defined(TORQUE_DEBUG) && defined(TORQUE_DEBUG_GFX)
+#define GFXAssertFatal(x, error) AssertFatal(x, error)
+#else
+#define GFXAssertFatal(x, error)
+#endif
 
 #endif // _GFXDEVICE_H_

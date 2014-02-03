@@ -551,7 +551,7 @@ bool PxMultiActorData::preload( bool server, String &errorBuffer )
 
    // Register for file change notification to reload the collection
    if ( server )
-      FS::AddChangeNotification( physXStream, this, &PxMultiActorData::_onFileChanged );
+      Torque::FS::AddChangeNotification( physXStream, this, &PxMultiActorData::_onFileChanged );
 
    return true;
 }

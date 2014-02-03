@@ -57,7 +57,7 @@ S32 QSORT_CALLBACK ArrayObject::_valueNumCompare( const void* a, const void* b )
    F32 bCol = dAtof(eb->value);
    F32 result = aCol - bCol;
    S32 res = result < 0 ? -1 : (result > 0 ? 1 : 0);
-   return ( smDecreasing ? res : -res );
+   return ( smDecreasing ? -res : res );
 }
 
 S32 QSORT_CALLBACK ArrayObject::_keyCompare( const void* a, const void* b )
@@ -76,7 +76,7 @@ S32 QSORT_CALLBACK ArrayObject::_keyNumCompare( const void* a, const void* b )
    const char* bCol = eb->key;
    F32 result = dAtof(aCol) - dAtof(bCol);
    S32 res = result < 0 ? -1 : (result > 0 ? 1 : 0);
-   return ( smDecreasing ? res : -res );
+   return ( smDecreasing ? -res : res );
 }
 
 S32 QSORT_CALLBACK ArrayObject::_keyFunctionCompare( const void* a, const void* b )
@@ -91,7 +91,7 @@ S32 QSORT_CALLBACK ArrayObject::_keyFunctionCompare( const void* a, const void* 
    
    S32 result = dAtoi( Con::execute( 3, argv ) );
    S32 res = result < 0 ? -1 : ( result > 0 ? 1 : 0 );
-   return ( smDecreasing ? res : -res );
+   return ( smDecreasing ? -res : res );
 }
 
 S32 QSORT_CALLBACK ArrayObject::_valueFunctionCompare( const void* a, const void* b )
@@ -106,14 +106,14 @@ S32 QSORT_CALLBACK ArrayObject::_valueFunctionCompare( const void* a, const void
    
    S32 result = dAtoi( Con::execute( 3, argv ) );
    S32 res = result < 0 ? -1 : ( result > 0 ? 1 : 0 );
-   return ( smDecreasing ? res : -res );
+   return ( smDecreasing ? -res : res );
 }
 
 
 //-----------------------------------------------------------------------------
 
 ArrayObject::ArrayObject()
-   : mCurrentIndex( NULL ),
+   : mCurrentIndex( 0 ),
      mCaseSensitive( false )
 {
 }
@@ -126,7 +126,7 @@ void ArrayObject::initPersistFields()
       "Makes the keys and values case-sensitive.\n"
       "By default, comparison of key and value strings will be case-insensitive." );
 
-   addProtectedField( "key", TypeCaseString, NULL, &_addKeyFromField, &emptyStringProtectedGetFn, 
+   addProtectedField( "key", TypeCaseString, 0, &_addKeyFromField, &emptyStringProtectedGetFn, 
       "Helper field which allows you to add new key['keyname'] = value pairs." );
 
    Parent::initPersistFields();

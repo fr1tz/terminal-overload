@@ -43,7 +43,7 @@ GFX_ImplementTextureProfile( TerrainLayerTexProfile,
                             GFXTextureProfile::DiffuseMap, 
                             GFXTextureProfile::PreserveSize | 
                             GFXTextureProfile::Dynamic,
-                            GFXTextureProfile::None );
+                            GFXTextureProfile::NONE );
 
 
 void TerrainBlock::_onFlushMaterials()
@@ -187,7 +187,8 @@ void TerrainBlock::_updateBaseTexture( bool writeToCache )
       F32 copyOffsetX = 2.0f * GFX->getFillConventionOffset() / (F32)destSize.x;
       F32 copyOffsetY = 2.0f * GFX->getFillConventionOffset() / (F32)destSize.y;
 
-      const bool needsYFlip = GFX->getAdapterType() == OpenGL;
+      // TODO OPENGL
+      const bool needsYFlip = false; //GFX->getAdapterType() == OpenGL;
 
       GFXVertexPT points[4];
       points[0].point      = Point3F( -1.0 - copyOffsetX, -1.0 + copyOffsetY, 0.0 );
@@ -200,8 +201,12 @@ void TerrainBlock::_updateBaseTexture( bool writeToCache )
       points[3].texCoord   = Point2F(  1.0, needsYFlip ? 0.0f : 1.0f );
 
       vb.set( GFX, 4, GFXBufferTypeVolatile );
-      dMemcpy( vb.lock(), points, sizeof(GFXVertexPT) * 4 );
-      vb.unlock();
+      GFXVertexPT *ptr = vb.lock();
+      if(ptr)
+      {
+         dMemcpy( ptr, points, sizeof(GFXVertexPT) * 4 );
+         vb.unlock();
+      }
    }
 
    GFXTexHandle blendTex;

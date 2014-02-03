@@ -154,7 +154,7 @@ void WaterPlane::unpackUpdate(NetConnection* con, BitStream* stream)
 
 void WaterPlane::setupVBIB( SceneRenderState *state )
 {
-   const Frustum &frustum = state->getFrustum();
+   const Frustum &frustum = state->getCullingFrustum();
    
    // Water base-color, assigned as color for all verts.
    const GFXVertexColor vertCol(mWaterFogData.color);
@@ -689,7 +689,7 @@ void WaterPlane::prepRenderImage( SceneRenderState *state )
 
    mMatrixSet->setSceneView(GFX->getWorldMatrix());
    
-   const Frustum &frustum = state->getFrustum();
+   const Frustum &frustum = state->getCameraFrustum();
 
    if ( mPrimBuff.isNull() || 
         mGenerateVB ||         

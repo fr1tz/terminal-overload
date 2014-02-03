@@ -12,8 +12,6 @@
 #include "core/util/tDictionary.h"
 #endif
 
-using namespace Torque;
-
 class ResourceManager
 {
 public:

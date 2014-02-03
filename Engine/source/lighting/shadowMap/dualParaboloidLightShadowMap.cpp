@@ -40,6 +40,7 @@ void DualParaboloidLightShadowMap::_render(  RenderPassManager* renderPass,
       mShadowMapTex.set(   mTexSize * 2, mTexSize, 
                            ShadowMapFormat, &ShadowMapProfile, 
                            "DualParaboloidLightShadowMap" );
+      mShadowMapDepth = _getDepthTarget( mShadowMapTex->getWidth(), mShadowMapTex->getHeight() );
    }
 
    GFXFrustumSaver frustSaver;
@@ -49,8 +50,7 @@ void DualParaboloidLightShadowMap::_render(  RenderPassManager* renderPass,
    GFX->pushActiveRenderTarget();
 
    mTarget->attachTexture(GFXTextureTarget::Color0, mShadowMapTex);
-   mTarget->attachTexture( GFXTextureTarget::DepthStencil, 
-      _getDepthTarget( mShadowMapTex->getWidth(), mShadowMapTex->getHeight() ) );
+   mTarget->attachTexture( GFXTextureTarget::DepthStencil, mShadowMapDepth );
    GFX->setActiveRenderTarget(mTarget);
    GFX->clear(GFXClearTarget | GFXClearStencil | GFXClearZBuffer, ColorI::WHITE, 1.0f, 0);
 

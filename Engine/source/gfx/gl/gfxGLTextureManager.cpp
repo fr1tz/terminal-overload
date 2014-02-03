@@ -46,6 +46,7 @@ GFXTextureObject *GFXGLTextureManager::_createTextureObject(   U32 height,
       AssertFatal( dynamic_cast<GFXGLTextureObject*>( inTex ), "GFXGLTextureManager::_createTexture() - Bad inTex type!" );
       retTex = static_cast<GFXGLTextureObject*>( inTex );
       retTex->release();
+      retTex->reInit();
    }      
    else
    {

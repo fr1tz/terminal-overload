@@ -6,10 +6,11 @@ beginModule( 'fmod' );
   $allgood = true;
 
 	// Additional includes
-	switch( Generator::$platform )
+	switch( TorqueGenerator::$platform )
    {
       case "win32":
       case "mac":
+	  case "linux":
         //addLibIncludePath( 'fmod/inc' );
         // Look for the optional global from the project.conf.
         global $FMOD_SDK_PATH;

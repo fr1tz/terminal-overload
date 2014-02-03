@@ -16,8 +16,6 @@
 #include "gfx/gfxDrawUtil.h"
 #include "gfx/gfxTransformSaver.h"
 
-#include "scene/mixin/sceneAmbientSoundObject.impl.h"
-#include "scene/mixin/scenePolyhedralObject.impl.h"
 #include "math/mPolyhedron.impl.h"
 
 

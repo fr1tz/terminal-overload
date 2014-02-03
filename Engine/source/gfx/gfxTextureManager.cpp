@@ -16,6 +16,7 @@
 #include "console/consoleTypes.h"
 #include "console/engineAPI.h"
 
+using namespace Torque;
 
 //#define DEBUG_SPEW
 
@@ -1011,7 +1012,7 @@ void GFXTextureManager::_validateTexParams( const U32 width, const U32 height,
    // If the format is non-compressed, and the profile requests a compressed format
    // than change the format.
    GFXFormat testingFormat = inOutFormat;
-   if( profile->getCompression() != GFXTextureProfile::None )
+   if( profile->getCompression() != GFXTextureProfile::NONE )
    {
       const int offset = profile->getCompression() - GFXTextureProfile::DXT1;
       testingFormat = GFXFormat( GFXFormatDXT1 + offset );

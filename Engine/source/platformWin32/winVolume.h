@@ -46,7 +46,7 @@ public:
    ~Win32File();
 
    Path getName() const;
-   Status getStatus() const;
+   NodeStatus getStatus() const;
    bool getAttributes(Attributes*);
    U64 getSize();
 
@@ -67,7 +67,7 @@ private:
    Path     mPath;
    String   mName;
    void     *mHandle;
-   Status   mStatus;
+   NodeStatus   mStatus;
 
    Win32File(const Path &path, String name);
 
@@ -84,7 +84,7 @@ public:
    ~Win32Directory();
 
    Path getName() const;
-   Status getStatus() const;
+   NodeStatus getStatus() const;
    bool getAttributes(Attributes*);
 
    bool open();
@@ -99,7 +99,7 @@ private:
    Path     mPath;
    String   mName;
    void     *mHandle;
-   Status   mStatus;
+   NodeStatus   mStatus;
 
    Win32Directory(const Path &path,String name);
 

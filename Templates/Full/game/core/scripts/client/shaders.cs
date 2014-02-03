@@ -14,6 +14,10 @@ singleton ShaderData( ParticlesShaderData )
    OGLVertexShaderFile     = "shaders/common/gl/particlesV.glsl";
    OGLPixelShaderFile      = "shaders/common/gl/particlesP.glsl";
    
+   samplerNames[0] = "$diffuseMap";
+   samplerNames[1] = "$prepassTex";
+   samplerNames[2] = "$paraboloidLightMap";
+   
    pixVersion = 2.0;
 };
 
@@ -24,6 +28,9 @@ singleton ShaderData( OffscreenParticleCompositeShaderData )
    
    OGLVertexShaderFile     = "shaders/common/gl/particleCompositeV.glsl";
    OGLPixelShaderFile      = "shaders/common/gl/particleCompositeP.glsl";
+   
+   samplerNames[0] = "$colorSource";
+   samplerNames[1] = "$edgeSource";
    
    pixVersion = 2.0;
 };

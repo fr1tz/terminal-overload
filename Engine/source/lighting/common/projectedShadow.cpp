@@ -43,14 +43,14 @@ GFX_ImplementTextureProfile( BLProjectedShadowProfile,
                               GFXTextureProfile::PreserveSize | 
                               GFXTextureProfile::RenderTarget |
                               GFXTextureProfile::Pooled,
-                              GFXTextureProfile::None );
+                              GFXTextureProfile::NONE );
 
 GFX_ImplementTextureProfile( BLProjectedShadowZProfile,
                               GFXTextureProfile::DiffuseMap,
                               GFXTextureProfile::PreserveSize | 
                               GFXTextureProfile::ZTarget |
                               GFXTextureProfile::Pooled,
-                              GFXTextureProfile::None );
+                              GFXTextureProfile::NONE );
 
 
 ProjectedShadow::ProjectedShadow( SceneObject *object )
@@ -305,7 +305,7 @@ bool ProjectedShadow::_updateDecal( const SceneRenderState *state )
    bool shouldClip = lightDirChanged || hasMoved || hasScaled;
 
    // Now, check and see if the object is visible.
-   const Frustum &frust = state->getFrustum();
+   const Frustum &frust = state->getCullingFrustum();
    if ( frust.isCulled( SphereF( mDecalInstance->mPosition, mDecalInstance->mSize * mDecalInstance->mSize ) ) && !shouldClip )
       return false;
 

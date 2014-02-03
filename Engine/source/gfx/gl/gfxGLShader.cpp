@@ -3,6 +3,7 @@
 
 #include "platform/platform.h"
 #include "gfx/gl/gfxGLShader.h"
+#include "gfx/gl/gfxGLVertexAttribLocation.h"
 
 #include "core/frameAllocator.h"
 #include "core/stream/fileStream.h"
@@ -10,7 +11,6 @@
 #include "math/mPoint2.h"
 #include "gfx/gfxStructs.h"
 #include "console/console.h"
-
 
 class GFXGLShaderConstHandle : public GFXShaderConstHandle
 {
@@ -291,8 +291,8 @@ void GFXGLShaderConstBuffer::set(GFXShaderConstHandle* handle, const MatrixF* ma
    AssertFatal(handle->isValid(), "GFXGLShaderConstBuffer::set - Handle is not valid!" );
 
    GFXGLShaderConstHandle* _glHandle = static_cast<GFXGLShaderConstHandle*>(handle);
-   AssertFatal(mShader == _glHandle->mShader, "GFXGLShaderConstBuffer::set - Should only set handles which are owned by our shader");
-   
+   AssertFatal(mShader == _glHandle->mShader, "GFXGLShaderConstBuffer::set - Should only set handles which are owned by our shader");  
+
    switch (matrixType) {
       case GFXSCT_Float4x4:
          dMemcpy(mBuffer + _glHandle->mOffset, (F32*)mat, _glHandle->getSize());
@@ -374,6 +374,9 @@ bool GFXGLShader::_init()
    macros.increment();
    macros.last().name = "TORQUE_SM";
    macros.last().value = String::ToString( mjVer * 10 + mnVer );
+   macros.increment();
+   macros.last().name = "TORQUE_VERTEX_SHADER";
+   macros.last().value = "";   
 
    // Default to true so we're "successful" if a vertex/pixel shader wasn't specified.
    bool compiledVertexShader = true;
@@ -382,12 +385,32 @@ bool GFXGLShader::_init()
    // Compile the vertex and pixel shaders if specified.
    if(!mVertexFile.isEmpty())
       compiledVertexShader = initShader(mVertexFile, true, macros);
+
+   macros.last().name = "TORQUE_PIXEL_SHADER";
    if(!mPixelFile.isEmpty())
       compiledPixelShader = initShader(mPixelFile, false, macros);
       
    // If either shader was present and failed to compile, bail.
    if(!compiledVertexShader || !compiledPixelShader)
       return false;
+
+   //bind vertex attributes
+   glBindAttribLocation(mProgram, Torque::GL_VertexAttrib_Position,    "vPosition");
+   glBindAttribLocation(mProgram, Torque::GL_VertexAttrib_Normal,      "vNormal");
+   glBindAttribLocation(mProgram, Torque::GL_VertexAttrib_Color,       "vColor");
+   glBindAttribLocation(mProgram, Torque::GL_VertexAttrib_Tangent,     "vTangent");
+   glBindAttribLocation(mProgram, Torque::GL_VertexAttrib_TangentW,    "vTangentW");
+   glBindAttribLocation(mProgram, Torque::GL_VertexAttrib_Binormal,    "vBinormal");
+   glBindAttribLocation(mProgram, Torque::GL_VertexAttrib_TexCoord0,   "vTexCoord0");
+   glBindAttribLocation(mProgram, Torque::GL_VertexAttrib_TexCoord1,   "vTexCoord1");
+   glBindAttribLocation(mProgram, Torque::GL_VertexAttrib_TexCoord2,   "vTexCoord2");
+   glBindAttribLocation(mProgram, Torque::GL_VertexAttrib_TexCoord3,   "vTexCoord3");
+   glBindAttribLocation(mProgram, Torque::GL_VertexAttrib_TexCoord4,   "vTexCoord4");
+   glBindAttribLocation(mProgram, Torque::GL_VertexAttrib_TexCoord5,   "vTexCoord5");
+   glBindAttribLocation(mProgram, Torque::GL_VertexAttrib_TexCoord6,   "vTexCoord6");
+   glBindAttribLocation(mProgram, Torque::GL_VertexAttrib_TexCoord7,   "vTexCoord7");
+   glBindAttribLocation(mProgram, Torque::GL_VertexAttrib_TexCoord8,   "vTexCoord8");
+   glBindAttribLocation(mProgram, Torque::GL_VertexAttrib_TexCoord9,   "vTexCoord9");
 
    // Link it!
    glLinkProgram( mProgram );
@@ -444,6 +467,10 @@ void GFXGLShader::initConstantDescs()
    glGetProgramiv(mProgram, GL_ACTIVE_UNIFORMS, &numUniforms);
    GLint maxNameLength;
    glGetProgramiv(mProgram, GL_ACTIVE_UNIFORM_MAX_LENGTH, &maxNameLength);
+
+   if(!maxNameLength)
+      return;
+
    FrameTemp<GLchar> uniformName(maxNameLength);
    
    for(U32 i = 0; i < numUniforms; i++)
@@ -533,11 +560,18 @@ void GFXGLShader::initHandles()
       GFXShaderConstDesc &desc = mConstants[i];            
 
       // Index element 1 of the name to skip the '$' we inserted earier.
-      U32 loc = glGetUniformLocation(mProgram, &desc.name.c_str()[1]);
+      GLint loc = glGetUniformLocation(mProgram, &desc.name.c_str()[1]);
+
+      AssertFatal(loc != -1, "");
 
       HandleMap::Iterator handle = mHandles.find(desc.name);
-      S32 sampler = (desc.constType == GFXSCT_Sampler || desc.constType == GFXSCT_SamplerCube) ?
-         assignedSamplerNum++ : -1;
+      S32 sampler = -1;
+      if(desc.constType == GFXSCT_Sampler || desc.constType == GFXSCT_SamplerCube)
+      {
+         S32 idx = mSamplerNamesOrdered.find_next(desc.name);
+         AssertFatal(idx != -1, "");
+         sampler = idx; //assignedSamplerNum++;
+      }
       if ( handle != mHandles.end() )
       {
          handle->value->reinit( desc, loc, sampler );         
@@ -580,7 +614,7 @@ void GFXGLShader::initHandles()
          // Set sampler number on our program.
          glUniform1i(handle->mLocation, handle->mSamplerNum);
          // Set sampler in constant buffer so it does not get unset later.
-         dMemcpy(mConstBuffer + handle->mOffset, &handle->mLocation, handle->getSize());
+         dMemcpy(mConstBuffer + handle->mOffset, &handle->mSamplerNum, handle->getSize());
       }
    }
    glUseProgram(0);
@@ -597,6 +631,17 @@ GFXShaderConstHandle* GFXGLShader::getShaderConstHandle(const String& name)
       mHandles[ name ] = handle;
       
       return handle;
+   }
+}
+
+GFXShaderConstHandle* GFXGLShader::findShaderConstHandle(const String& name)
+{
+   HandleMap::Iterator i = mHandles.find(name);
+   if(i != mHandles.end())
+      return i->value;
+   else
+   {
+      return NULL;
    }
 }
 
@@ -650,8 +695,11 @@ void GFXGLShader::setConstantsFromBuffer(GFXGLShaderConstBuffer* buffer)
          case GFXSCT_Float4x4:
             glUniformMatrix4fv(handle->mLocation, handle->mDesc.arraySize, true, (GLfloat*)(mConstBuffer + handle->mOffset));
             break;
+         default:
+            AssertFatal(0,"");
+            break;
       }
-   }
+   }   
 }
 
 GFXShaderConstBufferRef GFXGLShader::allocConstBuffer()
@@ -794,13 +842,37 @@ bool GFXGLShader::_loadShaderFromStream(  GLuint shader,
    Vector<U32> lengths;
    
    // The GLSL version declaration must go first!
-   const char *versionDecl = "#version 120\r\n\r\n";
+   const char *versionDecl = "#version 120\r\n";
    buffers.push_back( dStrdup( versionDecl ) );
    lengths.push_back( dStrlen( versionDecl ) );
+   
+   static bool hasGL_EXT_gpu_shader4 = gglHasExtension(EXT_gpu_shader4);
+   static bool hasGL_EXT_gpu_shader5 = false; //gglHasExtension(EXT_gpu_shader5);
+
+   if(hasGL_EXT_gpu_shader4)
+   {
+      const char *extension = "#extension GL_EXT_gpu_shader4 : enable\r\n";
+      buffers.push_back( dStrdup( extension ) );
+      lengths.push_back( dStrlen( extension ) );
+   }
+
+   if(hasGL_EXT_gpu_shader5)
+   {
+      const char *extension = "#extension GL_EXT_gpu_shader5 : enable\r\n";
+      buffers.push_back( dStrdup( extension ) );
+      lengths.push_back( dStrlen( extension ) );
+   }
+
+   const char *newLine = "\r\n";
+   buffers.push_back( dStrdup( newLine ) );
+   lengths.push_back( dStrlen( newLine ) );
 
    // Now add all the macros.
    for( U32 i = 0; i < macros.size(); i++ )
    {
+      if(macros[i].name.isEmpty())  // TODO OPENGL
+         continue;
+
       String define = String::ToString( "#define %s %s\n", macros[i].name.c_str(), macros[i].value.c_str() );
       buffers.push_back( dStrdup( define.c_str() ) );
       lengths.push_back( define.length() );
@@ -816,6 +888,17 @@ bool GFXGLShader::_loadShaderFromStream(  GLuint shader,
    lengths.push_back(shaderLen);
    
    glShaderSource(shader, buffers.size(), (const GLchar**)const_cast<const char**>(buffers.address()), NULL);
+
+#if defined(TORQUE_DEBUG) && defined(TORQUE_DEBUG_GFX)
+   FileStream stream;
+   if ( !stream.open( path.getFullPath()+"_DEBUG", Torque::FS::File::Write ) )
+   {
+      AssertISV(false, avar("GFXGLShader::initShader - failed to write debug shader '%s'.", path.getFullPath().c_str()));
+   }
+
+   for(int i = 0; i < buffers.size(); ++i)
+         stream.writeText(buffers[i]);
+#endif
 
    // Cleanup the shader source buffer.
    for ( U32 i=0; i < buffers.size(); i++ )

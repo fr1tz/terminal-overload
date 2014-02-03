@@ -9,6 +9,7 @@
 
 GFXGLWindowTarget::GFXGLWindowTarget(PlatformWindow *win, GFXDevice *d)
       : GFXWindowTarget(win), mDevice(d), mContext(NULL), mFullscreenContext(NULL)
+      , mCopyFBO(0), mBackBufferFBO(0)
 {      
    win->appEvent.notify(this, &GFXGLWindowTarget::_onAppSignal);
 }
@@ -40,21 +41,32 @@ void GFXGLWindowTarget::resolveTo(GFXTextureObject* obj)
    AssertFatal(dynamic_cast<GFXGLTextureObject*>(obj), "GFXGLTextureTarget::resolveTo - Incorrect type of texture, expected a GFXGLTextureObject");
    GFXGLTextureObject* glTexture = static_cast<GFXGLTextureObject*>(obj);
 
+   if( gglHasExtension(ARB_copy_image) )
+   {
+      if(mBackBufferColorTex.getWidth() == glTexture->getWidth()
+         && mBackBufferColorTex.getHeight() == glTexture->getHeight()
+         && mBackBufferColorTex.getFormat() == glTexture->getFormat())
+      {
+         glCopyImageSubData(
+           static_cast<GFXGLTextureObject*>(mBackBufferColorTex.getPointer())->getHandle(), GL_TEXTURE_2D, 0, 0, 0, 0,
+           glTexture->getHandle(), GL_TEXTURE_2D, 0, 0, 0, 0,
+           getSize().x, getSize().y, 1);
+         return;
+      }
+   }
+
    PRESERVE_FRAMEBUFFER();
+
+   if(!mCopyFBO)
+   {
+      glGenFramebuffersEXT(1, &mCopyFBO);
+   }
    
-   GLuint dest;
-   
-   glGenFramebuffersEXT(1, &dest);
-   
-   glBindFramebufferEXT(GL_DRAW_FRAMEBUFFER_EXT, dest);
+   glBindFramebufferEXT(GL_DRAW_FRAMEBUFFER_EXT, mCopyFBO);
    glFramebufferTexture2DEXT(GL_DRAW_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D, glTexture->getHandle(), 0);
    
-   glBindFramebufferEXT(GL_READ_FRAMEBUFFER_EXT, 0);
+   glBindFramebufferEXT(GL_READ_FRAMEBUFFER_EXT, mBackBufferFBO);
    
    glBlitFramebufferEXT(0, 0, getSize().x, getSize().y,
       0, 0, glTexture->getWidth(), glTexture->getHeight(), GL_COLOR_BUFFER_BIT, GL_NEAREST);
-   
-   glBindFramebufferEXT(GL_DRAW_FRAMEBUFFER_EXT, 0);
-   
-   glDeleteFramebuffersEXT(1, &dest);
 }

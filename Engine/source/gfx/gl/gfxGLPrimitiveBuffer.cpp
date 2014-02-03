@@ -5,17 +5,26 @@
 #include "gfx/gl/gfxGLPrimitiveBuffer.h"
 #include "gfx/gl/gfxGLEnumTranslate.h"
 
-#include "gfx/gl/ggl/ggl.h"
+#include "gfx/gl/tGL/tGL.h"
 #include "gfx/gl/gfxGLUtils.h"
 
 GFXGLPrimitiveBuffer::GFXGLPrimitiveBuffer(GFXDevice *device, U32 indexCount, U32 primitiveCount, GFXBufferType bufferType) :
 GFXPrimitiveBuffer(device, indexCount, primitiveCount, bufferType), mZombieCache(NULL) 
 {
-   PRESERVE_INDEX_BUFFER();
-	// Generate a buffer and allocate the needed memory
-	glGenBuffers(1, &mBuffer);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mBuffer);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexCount * sizeof(U16), NULL, GFXGLBufferType[bufferType]);
+   // Generate a buffer and allocate the needed memory
+   glGenBuffers(1, &mBuffer);
+   mBufferData.setSize(indexCount * sizeof(U16));
+   
+   if( gglHasExtension(EXT_direct_state_access) )
+   {
+      glNamedBufferDataEXT(mBuffer, indexCount * sizeof(U16), NULL, GFXGLBufferType[mBufferType]);    
+   }
+   else
+   {
+      PRESERVE_INDEX_BUFFER();
+	   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mBuffer);
+	   glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexCount * sizeof(U16), NULL, GFXGLBufferType[bufferType]);
+   }
 }
 
 GFXGLPrimitiveBuffer::~GFXGLPrimitiveBuffer()
@@ -29,26 +38,31 @@ GFXGLPrimitiveBuffer::~GFXGLPrimitiveBuffer()
 
 void GFXGLPrimitiveBuffer::lock(U32 indexStart, U32 indexEnd, void **indexPtr)
 {
-	// Preserve previous binding
-   PRESERVE_INDEX_BUFFER();
-   
-   // Bind ourselves and map
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mBuffer);
-   glBufferData(GL_ELEMENT_ARRAY_BUFFER, mIndexCount * sizeof(U16), NULL, GFXGLBufferType[mBufferType]);
-   
-   // Offset the buffer to indexStart
-	*indexPtr = (void*)((U8*)glMapBuffer(GL_ELEMENT_ARRAY_BUFFER, GL_WRITE_ONLY) + (indexStart * sizeof(U16)));
+   lockedIndexStart = indexStart;
+   lockedIndexEnd = indexEnd;
+
+   *indexPtr = (void*)((U8*)mBufferData.address() + (indexStart * sizeof(U16)) );
 }
 
 void GFXGLPrimitiveBuffer::unlock()
 {
-	// Preserve previous binding
-   PRESERVE_INDEX_BUFFER();
+   PROFILE_SCOPE(GFXGLPrimitiveBuffer_unlock);
    
-   // Bind ourselves and unmap
-   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mBuffer);
-	bool res = glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
-   AssertFatal(res, "GFXGLPrimitiveBuffer::unlock - shouldn't fail!");
+   U32 offset = lockedIndexStart * sizeof(U16);
+   U32 length = (lockedIndexEnd - lockedIndexStart) * sizeof(U16);
+   if( gglHasExtension(EXT_direct_state_access) )
+   {      
+      glNamedBufferSubDataEXT(mBuffer, offset, length, mBufferData.address() + offset );
+   }
+   else
+   {
+	   // Preserve previous binding
+      PRESERVE_INDEX_BUFFER();
+   
+      // Bind ourselves and unmap
+      glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mBuffer);
+      glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, offset, length, mBufferData.address() + offset );
+   }
 }
 
 void GFXGLPrimitiveBuffer::prepare()

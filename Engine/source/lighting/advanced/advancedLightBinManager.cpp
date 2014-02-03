@@ -425,7 +425,7 @@ void AdvancedLightBinManager::_deleteLightMaterials()
 void AdvancedLightBinManager::_setupPerFrameParameters( const SceneRenderState *state )
 {
    PROFILE_SCOPE( AdvancedLightBinManager_SetupPerFrameParameters );
-   const Frustum &frustum = state->getFrustum();
+   const Frustum &frustum = state->getCameraFrustum();
 
    MatrixF invCam( frustum.getTransform() );
    invCam.inverse();
@@ -463,12 +463,12 @@ void AdvancedLightBinManager::_setupPerFrameParameters( const SceneRenderState *
    // Now build the quad for drawing full-screen vector light
    // passes.... this is a volatile VB and updates every frame.
    FarFrustumQuadVert verts[4];
-   {
+   {      
       verts[0].point.set( wsFrustumPoints[Frustum::FarBottomLeft] - cameraPos );
       invCam.mulP( wsFrustumPoints[Frustum::FarBottomLeft], &verts[0].normal );
       verts[0].texCoord.set( -1.0, -1.0 );
       verts[0].tangent.set(wsFrustumPoints[Frustum::FarBottomLeft] - cameraOffsetPos);
-
+      
       verts[1].point.set( wsFrustumPoints[Frustum::FarTopLeft] - cameraPos );
       invCam.mulP( wsFrustumPoints[Frustum::FarTopLeft], &verts[1].normal );
       verts[1].texCoord.set( -1.0, 1.0 );
@@ -482,7 +482,7 @@ void AdvancedLightBinManager::_setupPerFrameParameters( const SceneRenderState *
       verts[3].point.set( wsFrustumPoints[Frustum::FarBottomRight] - cameraPos );
       invCam.mulP( wsFrustumPoints[Frustum::FarBottomRight], &verts[3].normal );
       verts[3].texCoord.set( 1.0, -1.0 );
-      verts[3].tangent.set(wsFrustumPoints[Frustum::FarBottomRight] - cameraOffsetPos);
+      verts[3].tangent.set(wsFrustumPoints[Frustum::FarBottomRight] - cameraOffsetPos);      
    }
    mFarFrustumQuadVerts.set( GFX, 4 );
    dMemcpy( mFarFrustumQuadVerts.lock(), verts, sizeof( verts ) );

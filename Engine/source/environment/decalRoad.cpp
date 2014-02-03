@@ -296,7 +296,7 @@ void DecalRoad::initPersistFields()
 
    addGroup( "Internal" );
 
-      addProtectedField( "node", TypeString, NULL, &addNodeFromField, &emptyStringProtectedGetFn, 
+      addProtectedField( "node", TypeString, 0, &addNodeFromField, &emptyStringProtectedGetFn, 
          "Do not modify, for internal use." );
 
    endGroup( "Internal" );
@@ -702,7 +702,7 @@ void DecalRoad::prepRenderImage( SceneRenderState* state )
    if ( !smShowRoad && smEditorOpen )
       return;
 
-   const Frustum &frustum = state->getFrustum();
+   const Frustum &frustum = state->getCameraFrustum();
 
    MeshRenderInst coreRI;
    coreRI.clear();
@@ -1433,7 +1433,8 @@ void DecalRoad::_captureVerts()
    mPB.set( GFX, mTriangleCount * 3, 0, GFXBufferTypeStatic );
 
    // Lock the VertexBuffer
-   GFXVertexPNTBT *vertPtr = mVB.lock();   
+   GFXVertexPNTBT *vertPtr = mVB.lock();
+   if(!vertPtr) return;
    U32 vertIdx = 0;
 
    //

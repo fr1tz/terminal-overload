@@ -9,9 +9,7 @@
 #include "gfx/gfxDevice.h"
 #include "gfx/gfxInit.h"
 
-#ifndef GL_GGL_H
-#include "gfx/gl/ggl/ggl.h"
-#endif
+#include "gfx/gl/tGL/tGL.h"
 
 #include "windowManager/platformWindow.h"
 #include "gfx/gfxFence.h"
@@ -40,9 +38,9 @@ public:
    virtual void deactivate() { }
    virtual GFXAdapterType getAdapterType() { return OpenGL; }
 
-   virtual void enterDebugEvent(ColorI color, const char *name) { }
-   virtual void leaveDebugEvent() { }
-   virtual void setDebugMarker(ColorI color, const char *name) { }
+   virtual void enterDebugEvent(ColorI color, const char *name);
+   virtual void leaveDebugEvent();
+   virtual void setDebugMarker(ColorI color, const char *name);
 
    virtual void enumerateVideoModes();
 
@@ -177,6 +175,11 @@ private:
    
    StrongRefPtr<GFXGLVertexBuffer> mCurrentVB;
    StrongRefPtr<GFXGLPrimitiveBuffer> mCurrentPB;
+   
+   GFXShader* mCurrentShader;
+   GFXShaderRef mGenericShader[GS_COUNT];
+   GFXShaderConstBufferRef mGenericShaderBuffer[GS_COUNT];
+   GFXShaderConstHandle *mModelViewProjSC[GS_COUNT];
    
    /// Since GL does not have separate world and view matrices we need to track them
    MatrixF m_mCurrentWorld;

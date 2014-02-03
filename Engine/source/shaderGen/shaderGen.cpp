@@ -263,6 +263,9 @@ void ShaderGen::_processVertFeatures( Vector<GFXShaderMacro> &macros, bool macro
       }
    }
 
+   if(!GFX->isTextureCoordStartTop()) // TODO OPENGL, NEED API INDEPENDENT
+      mOutput->addStatement( new GenOp( "   gl_Position.y *= -1; //API DEPENDENT CORRECTION correctSSP\r\n" ) ); // TODO OPENGL
+
    ShaderConnector *connect = dynamic_cast<ShaderConnector *>( mComponents[C_CONNECTOR] );
    connect->sortVars();
 }
@@ -390,13 +393,13 @@ void ShaderGen::_printVertShader( Stream &stream )
    _printFeatureList(stream);
 
    // print out structures
-   mComponents[C_VERT_STRUCT]->print( stream );
-   mComponents[C_CONNECTOR]->print( stream );
+   mComponents[C_VERT_STRUCT]->print( stream, true );
+   mComponents[C_CONNECTOR]->print( stream, true );
 
    mPrinter->printMainComment(stream);
 
-   mComponents[C_VERT_MAIN]->print( stream );
-
+   mComponents[C_VERT_MAIN]->print( stream, true );
+   mComponents[C_VERT_STRUCT]->printOnMain( stream, true );
 
    // print out the function
    _printFeatures( stream );
@@ -411,12 +414,13 @@ void ShaderGen::_printPixShader( Stream &stream )
    _printDependencies(stream); // TODO: Split into vert and pix dependencies?
    _printFeatureList(stream);
 
-   mComponents[C_CONNECTOR]->print( stream );
+   mComponents[C_CONNECTOR]->print( stream, false );
 
    mPrinter->printPixelShaderOutputStruct(stream, mFeatureData);
    mPrinter->printMainComment(stream);
 
-   mComponents[C_PIX_MAIN]->print( stream );
+   mComponents[C_PIX_MAIN]->print( stream, false );
+   mComponents[C_CONNECTOR]->printOnMain( stream, false );
 
    // print out the function
    _printFeatures( stream );
@@ -424,9 +428,9 @@ void ShaderGen::_printPixShader( Stream &stream )
    mPrinter->printPixelShaderCloser(stream);
 }
 
-GFXShader* ShaderGen::getShader( const MaterialFeatureData &featureData, const GFXVertexFormat *vertexFormat, const Vector<GFXShaderMacro> *macros )
+GFXShader* ShaderGen::getShader( const MaterialFeatureData &featureData, const GFXVertexFormat *vertexFormat, const Vector<GFXShaderMacro> *macros, const Vector<String> &samplers )
 {
-   PROFILE_SCOPE( ShaderGen_GetShader );
+   PROFILE_SCOPE( ShaderGen_GetShader ); 
 
    const FeatureSet &features = featureData.codify();
 
@@ -469,7 +473,7 @@ GFXShader* ShaderGen::getShader( const MaterialFeatureData &featureData, const G
 
    GFXShader *shader = GFX->createShader();
    shader->mInstancingFormat.copy( mInstancingFormat ); // TODO: Move to init() below!
-   if ( !shader->init( vertFile, pixFile, pixVersion, shaderMacros ) )
+   if ( !shader->init( vertFile, pixFile, pixVersion, shaderMacros, samplers ) )
    {
       delete shader;
       return NULL;

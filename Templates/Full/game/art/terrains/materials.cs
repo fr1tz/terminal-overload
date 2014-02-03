@@ -10,9 +10,12 @@ singleton Material(TerrainFX_grass1)
    mapTo = "grass1";  
    footstepSoundId = 0;  
    terrainMaterials = "1";  
-   ShowDust = "false";  
-   showFootprints = "false"; 
+   ShowDust = "1";  
+   showFootprints = "1"; 
    materialTag0 = "Terrain"; 
+   effectColor[0] = "0.42 0.42 0 1";
+   effectColor[1] = "0.42 0.42 0 1";
+   impactSoundId = "0";
 };  
 
 new TerrainMaterial()
@@ -32,9 +35,10 @@ singleton Material(TerrainFX_grass1dry)
    mapTo = "grass1-dry";  
    footstepSoundId = 0;  
    terrainMaterials = "1";  
-   ShowDust = "false";  
-   showFootprints = "false";
+   ShowDust = "1";  
+   showFootprints = "1";
    materialTag0 = "Terrain";  
+   effectColor[0] = "0.63 0.55 0 1";
 };  
 
 new TerrainMaterial()
@@ -56,9 +60,11 @@ singleton Material(TerrainFX_dirt_grass)
    mapTo = "dirt_grass";  
    footstepSoundId = 0;  
    terrainMaterials = "1";  
-   ShowDust = "false";  
-   showFootprints = "false";
+   ShowDust = "1";  
+   showFootprints = "1";
    materialTag0 = "Terrain";  
+   effectColor[0] = "0.63 0.55 0 1";
+   effectColor[1] = "0.63 0.55 0 0";
 };  
 
 new TerrainMaterial()
@@ -81,11 +87,14 @@ new TerrainMaterial()
 singleton Material(TerrainFX_rocktest)  
 {  
    mapTo = "rocktest";  
-   footstepSoundId = 0;  
+   footstepSoundId = "1";  
    terrainMaterials = "1";  
-   ShowDust = "false";  
-   showFootprints = "false"; 
+   ShowDust = "1";  
+   showFootprints = "1"; 
    materialTag0 = "Terrain"; 
+   impactSoundId = "1";
+   effectColor[0] = "0.25 0.25 0.25 1";
+   effectColor[1] = "0.25 0.25 0.25 0";
 };  
 
 new TerrainMaterial()
@@ -108,11 +117,14 @@ new TerrainMaterial()
 singleton Material(TerrainFX_sand)  
 {  
    mapTo = "sand";  
-   footstepSoundId = 0;  
+   footstepSoundId = "3";  
    terrainMaterials = "1";  
-   ShowDust = "false";  
-   showFootprints = "false"; 
+   ShowDust = "1";  
+   showFootprints = "1"; 
    materialTag0 = "Terrain";  
+   specularPower[0] = "1";
+   effectColor[0] = "0.84 0.71 0.5 1";
+   effectColor[1] = "0.84 0.71 0.5 0.349";
 };  
 
 new TerrainMaterial()

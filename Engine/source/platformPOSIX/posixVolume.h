@@ -49,7 +49,7 @@ class PosixFile: public File
    Path _path;
    String _name;
    FILE* _handle;
-   Status _status;
+   NodeStatus _status;
 
    PosixFile(const Path& path,String name);
    bool _updateInfo();
@@ -59,7 +59,7 @@ public:
    ~PosixFile();
 
    Path getName() const;
-   Status getStatus() const;
+   NodeStatus getStatus() const;
    bool getAttributes(Attributes*);
 
    U32 getPosition();
@@ -84,7 +84,7 @@ class PosixDirectory: public Directory
    Path _path;
    String _name;
    DIR* _handle;
-   Status _status;
+   NodeStatus _status;
 
    PosixDirectory(const Path& path,String name);
    void _updateStatus();
@@ -93,7 +93,7 @@ public:
    ~PosixDirectory();
 
    Path getName() const;
-   Status getStatus() const;
+   NodeStatus getStatus() const;
    bool getAttributes(Attributes*);
 
    bool open();

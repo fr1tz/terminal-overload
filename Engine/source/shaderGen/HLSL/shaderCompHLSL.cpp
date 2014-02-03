@@ -184,7 +184,7 @@ void ShaderConnectorHLSL::reset()
    mCurTexElem = 0;
 }
 
-void ShaderConnectorHLSL::print( Stream &stream )
+void ShaderConnectorHLSL::print( Stream &stream, bool isVertexShader )
 {
    const char * header = "struct ";
    const char * header2 = "\r\n{\r\n";
@@ -250,7 +250,7 @@ void ParamsDefHLSL::assignConstantNumbers()
    }
 }
 
-void VertexParamsDefHLSL::print( Stream &stream )
+void VertexParamsDefHLSL::print( Stream &stream, bool isVerterShader )
 {
    assignConstantNumbers();
 
@@ -286,7 +286,7 @@ void VertexParamsDefHLSL::print( Stream &stream )
    stream.write( dStrlen(closer), closer );
 }
 
-void PixelParamsDefHLSL::print( Stream &stream )
+void PixelParamsDefHLSL::print( Stream &stream, bool isVerterShader )
 {
    assignConstantNumbers();
 
@@ -307,18 +307,19 @@ void PixelParamsDefHLSL::print( Stream &stream )
 
             if( var->sampler )
             {
-               dSprintf( (char*)varNum, sizeof(varNum), "register(S%d)", var->constNum );
+               //dSprintf( (char*)varNum, sizeof(varNum), ": register(S%d)", var->constNum );
+               varNum[0] = NULL;
             }
             else
             {
-               dSprintf( (char*)varNum, sizeof(varNum), "register(C%d)", var->constNum );
+               dSprintf( (char*)varNum, sizeof(varNum), ": register(C%d)", var->constNum );
             }
 
             U8 output[256];
             if (var->arraySize <= 1)
-               dSprintf( (char*)output, sizeof(output), "uniform %-9s %-15s : %s", var->type, var->name, varNum );
+               dSprintf( (char*)output, sizeof(output), "uniform %-9s %-15s %s", var->type, var->name, varNum );
             else
-               dSprintf( (char*)output, sizeof(output), "uniform %-9s %s[%d] : %s", var->type, var->name, var->arraySize, varNum );
+               dSprintf( (char*)output, sizeof(output), "uniform %-9s %s[%d] %s", var->type, var->name, var->arraySize, varNum );
 
             WRITESTR( (char*) output );
          }

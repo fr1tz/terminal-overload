@@ -1,24 +1,32 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
+#include "../../../gl/hlslCompat.glsl"
 #include "farFrustumQuad.glsl"
 
-uniform vec4 renderTargetParams;
+attribute vec4 vPosition;
+attribute vec3 vNormal;
+attribute vec3 vTangent;
+attribute vec2 vTexCoord0;
 
+uniform vec4 rtParams0;
 varying vec4 hpos;
 varying vec2 uv0;
 varying vec3 wsEyeRay;
-
+varying vec3 vsEyeRay;
 
 void main()
-{
-   // Expand the SS coordinate (stored in uv0)
-   hpos = vec4( gl_MultiTexCoord0.st * 2.0 - 1.0, 1.0, 1.0 );
-   gl_Position = hpos;
-   
+{   
+   hpos = vec4( vTexCoord0, 0, 1 );   
+
    // Get a RT-corrected UV from the SS coord
-   uv0 = getUVFromSSPos( hpos.xyz, renderTargetParams );
+   uv0 = getUVFromSSPos( hpos.xyz, rtParams0 );
+   gl_Position = hpos;   
    
-   // Interpolators will generate eye ray from far-frustum corners
-   wsEyeRay = gl_Vertex.xyz;
+   // Interpolators will generate eye rays the 
+   // from far-frustum corners.
+   wsEyeRay = vTangent;
+   vsEyeRay = vNormal;
+   
+   correctSSP(gl_Position);
 }

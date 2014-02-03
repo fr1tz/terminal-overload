@@ -36,7 +36,7 @@ public:
    }
 
    virtual Path   getName() const { return mZipFilename; }
-   virtual Status getStatus() const
+   virtual NodeStatus getStatus() const
    { 
       if (mZipStream) 
       {
@@ -163,7 +163,7 @@ public:
    Torque::Path getName() const { return mPath; }
 
    // getStatus() doesn't appear to be used for directories
-   Status getStatus() const
+   NodeStatus getStatus() const
    {
       return FileNode::Open;
    }
@@ -255,7 +255,7 @@ public:
    Torque::Path getName() const { return mPath; }
 
    // getStatus() doesn't appear to be used for directories
-   Status getStatus() const
+   NodeStatus getStatus() const
    {
       return FileNode::Open;
    }

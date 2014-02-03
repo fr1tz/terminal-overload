@@ -183,8 +183,11 @@ public:
    virtual F32 calcScore( const ReflectParams &params );
    virtual void updateReflection( const ReflectParams &params ); 
 
+   /// Set up the GFX matrices
+   void setGFXMatrices( const MatrixF &camTrans );
+
    /// Set up camera matrix for a reflection on the plane
-   MatrixF getCameraReflection( MatrixF &camTrans );
+   MatrixF getCameraReflection( const MatrixF &camTrans );
 
    /// Oblique frustum clipping - use near plane of zbuffer as a clip plane
    MatrixF getFrustumClipProj( MatrixF &modelview );
@@ -202,7 +205,7 @@ protected:
 public:
 
    GFXTextureTargetRef reflectTarget;
-   GFXTexHandle reflectTex;   
+   GFXTexHandle reflectTex, depthBuff;;   
    PlaneF refplane;
    bool objectSpace;
 };

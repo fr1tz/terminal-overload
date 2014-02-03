@@ -53,11 +53,6 @@ void GFXGLStateBlock::activate(const GFXGLStateBlock* oldState)
    if(STATE_CHANGE(blendOp))
       glBlendEquation(GFXGLBlendOp[mDesc.blendOp]);
 
-   // Alpha testing
-   CHECK_TOGGLE_STATE(alphaTestEnable, GL_ALPHA_TEST);      
-   if(STATE_CHANGE(alphaTestFunc) || STATE_CHANGE(alphaTestRef))
-      glAlphaFunc(GFXGLCmpFunc[mDesc.alphaTestFunc], (F32) mDesc.alphaTestRef * 1.0f/255.0f);
-
    // Color write masks
    if(STATE_CHANGE(colorWriteRed) || STATE_CHANGE(colorWriteBlue) || STATE_CHANGE(colorWriteGreen) || STATE_CHANGE(colorWriteAlpha))
       glColorMask(mDesc.colorWriteRed, mDesc.colorWriteBlue, mDesc.colorWriteGreen, mDesc.colorWriteAlpha);
@@ -102,7 +97,6 @@ void GFXGLStateBlock::activate(const GFXGLStateBlock* oldState)
    // "Misc"
    CHECK_TOGGLE_STATE(ffLighting, GL_LIGHTING);
 
-   glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
    CHECK_TOGGLE_STATE(vertexColorEnable, GL_COLOR_MATERIAL);
 
    if(STATE_CHANGE(fillMode))
@@ -112,57 +106,5 @@ void GFXGLStateBlock::activate(const GFXGLStateBlock* oldState)
 #undef TOGGLE_STATE
 #undef CHECK_TOGGLE_STATE
 
-   // TODO: states added for detail blend
-
-   // Non per object texture mode states
-   for (U32 i = 0; i < getMin(getOwningDevice()->getNumSamplers(), (U32) TEXTURE_STAGE_COUNT); i++)
-   {
-      GFXGLTextureObject* tex = static_cast<GFXGLTextureObject*>(getOwningDevice()->getCurrentTexture(i));
-      const GFXSamplerStateDesc &ssd = mDesc.samplers[i];
-      bool updateTexParam = true;
-      glActiveTexture(GL_TEXTURE0 + i);
-      switch (ssd.textureColorOp)
-      {
-      case GFXTOPDisable :
-         if(!tex)
-            break;
-         glDisable(GL_TEXTURE_2D);
-         updateTexParam = false;
-         break;
-      case GFXTOPModulate :
-         glEnable(GL_TEXTURE_2D);
-         glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-         break;
-      case GFXTOPAdd :
-         glEnable(GL_TEXTURE_2D);
-         glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_ADD);
-         break;
-      default :
-         glEnable(GL_TEXTURE_2D);
-         glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-         break;
-      }
-
-#define SSF(state, enum, value, tex) if(!oldState || oldState->mDesc.samplers[i].state != mDesc.samplers[i].state) glTexParameteri(tex->getBinding(), enum, value)
-#define SSW(state, enum, value, tex) if(!oldState || oldState->mDesc.samplers[i].state != mDesc.samplers[i].state) glTexParameteri(tex->getBinding(), enum, !tex->mIsNPoT2 ? value : GL_CLAMP_TO_EDGE)
-      // Per object texture mode states. 
-      // TODO: Check dirty flag of samplers[i] and don't do this if it's dirty (it'll happen in the texture bind)
-      if (updateTexParam && tex)
-      {
-         SSF(minFilter, GL_TEXTURE_MIN_FILTER, minificationFilter(ssd.minFilter, ssd.mipFilter, tex->mMipLevels), tex);
-         SSF(mipFilter, GL_TEXTURE_MIN_FILTER, minificationFilter(ssd.minFilter, ssd.mipFilter, tex->mMipLevels), tex);
-         SSF(magFilter, GL_TEXTURE_MAG_FILTER, GFXGLTextureFilter[ssd.magFilter], tex);
-         SSW(addressModeU, GL_TEXTURE_WRAP_S, GFXGLTextureAddress[ssd.addressModeU], tex);
-         SSW(addressModeV, GL_TEXTURE_WRAP_T, GFXGLTextureAddress[ssd.addressModeV], tex);
-
-         if( ( !oldState || oldState->mDesc.samplers[i].maxAnisotropy != ssd.maxAnisotropy ) &&
-             static_cast< GFXGLDevice* >( GFX )->supportsAnisotropic() )
-            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, ssd.maxAnisotropy);
-
-         if( ( !oldState || oldState->mDesc.samplers[i].mipLODBias != ssd.mipLODBias ) )
-            glTexEnvf(GL_TEXTURE_FILTER_CONTROL_EXT, GL_TEXTURE_LOD_BIAS_EXT, ssd.mipLODBias);
-      }     
-   }
-#undef SSF
-#undef SSW
+   // TODO: states added for detail blend   
 }

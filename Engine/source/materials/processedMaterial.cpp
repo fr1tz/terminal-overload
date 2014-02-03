@@ -22,7 +22,10 @@ RenderPassData::RenderPassData()
 void RenderPassData::reset()
 {
    for( U32 i = 0; i < Material::MAX_TEX_PER_PASS; ++ i )
+   {
       destructInPlace( &mTexSlot[ i ] );
+      mSamplerNames[ i ].clear();
+   }
 
    dMemset( &mTexSlot, 0, sizeof(mTexSlot) );
    dMemset( &mTexType, 0, sizeof(mTexType) );
@@ -198,13 +201,13 @@ void ProcessedMaterial::_initPassStateBlock( RenderPassData *rpd, GFXStateBlockD
       _setBlendState( rpd->mBlendOp, result );
    }
 
-   if (mMaterial->isDoubleSided())
+   if (mMaterial && mMaterial->isDoubleSided())
    {
       result.cullDefined = true;
       result.cullMode = GFXCullNone;         
    }
 
-   if(mMaterial->mAlphaTest)
+   if(mMaterial && mMaterial->mAlphaTest)
    {
       result.alphaDefined = true;
       result.alphaTestEnable = mMaterial->mAlphaTest;
@@ -216,7 +219,7 @@ void ProcessedMaterial::_initPassStateBlock( RenderPassData *rpd, GFXStateBlockD
    NamedTexTarget *texTarget;
 
    U32 maxAnisotropy = 1;
-   if ( mMaterial->mUseAnisotropic[ rpd->mStageNum ] )
+   if (mMaterial &&  mMaterial->mUseAnisotropic[ rpd->mStageNum ] )
       maxAnisotropy = MATMGR->getDefaultAnisotropy();
 
    for( U32 i=0; i < rpd->mNumTex; i++ )
@@ -259,7 +262,13 @@ void ProcessedMaterial::_initPassStateBlock( RenderPassData *rpd, GFXStateBlockD
          {
             texTarget = mPasses[0]->mTexSlot[i].texTarget;
             if ( texTarget )
-               texTarget->setupSamplerState( &result.samplers[i] );
+            {
+               for(int j = 0; j < TEXTURE_STAGE_COUNT; ++j) // TODO OPENGL
+               {
+                  if(mPasses[0]->mSamplerNames[i].equal(result._samplerNames[j]))
+                     texTarget->setupSamplerState( &result.samplers[j] );
+               }
+            }
             break;
          }
       }

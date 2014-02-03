@@ -1486,7 +1486,8 @@ void WorldEditor::renderSplinePath(SimPath::Path *path)
 
    GFXVertexBufferHandle<GFXVertexPC> vb;
    vb.set(GFX, 3*batchSize, GFXBufferTypeVolatile);
-   vb.lock();
+   void *lockPtr = vb.lock();
+   if(!lockPtr) return;
 
    U32 vIdx=0;
 
@@ -1523,7 +1524,8 @@ void WorldEditor::renderSplinePath(SimPath::Path *path)
 
          // Reset for next pass...
          vIdx = 0;
-         vb.lock();
+         void *lockPtr = vb.lock();
+         if(!lockPtr) return;
       }
    }
 

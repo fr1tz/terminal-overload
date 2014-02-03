@@ -966,7 +966,10 @@ void DiffuseMapFeatHLSL::setTexData(   Material::StageData &stageDat,
 {
    GFXTextureObject *tex = stageDat.getTex( MFT_DiffuseMap );
    if ( tex )
+   {
+      passData.mSamplerNames[ texIndex ] = "diffuseMap";
       passData.mTexSlot[ texIndex++ ].texObject = tex;
+   }
 }
 
 
@@ -1238,6 +1241,7 @@ void LightmapFeatHLSL::setTexData(  Material::StageData &stageDat,
                                     U32 &texIndex )
 {
    GFXTextureObject *tex = stageDat.getTex( MFT_LightMap );
+   passData.mSamplerNames[ texIndex ] = "lightMap";
    if ( tex )
       passData.mTexSlot[ texIndex++ ].texObject = tex;
    else
@@ -1367,6 +1371,7 @@ void TonemapFeatHLSL::setTexData(  Material::StageData &stageDat,
    if ( tex )
    {
       passData.mTexType[ texIndex ] = Material::ToneMapTex;
+      passData.mSamplerNames[ texIndex ] = "toneMap";
       passData.mTexSlot[ texIndex++ ].texObject = tex;
    }
 }
@@ -1557,7 +1562,10 @@ void DetailFeatHLSL::setTexData( Material::StageData &stageDat,
 {
    GFXTextureObject *tex = stageDat.getTex( MFT_DetailMap );
    if ( tex )
+   {
+      passData.mSamplerNames[texIndex] = "detailMap";
       passData.mTexSlot[ texIndex++ ].texObject = tex;
+   }
 }
 
 
@@ -1827,22 +1835,27 @@ void ReflectCubeFeatHLSL::setTexData(  Material::StageData &stageDat,
        !passData.mFeatureData.features[MFT_NormalMap] )
    {
       GFXTextureObject *tex = stageDat.getTex( MFT_DetailMap );
-      if (  tex &&
-            stageFeatures.features[MFT_DiffuseMap] )
+      if (  tex && stageFeatures.features[MFT_DiffuseMap] )
+      {
+         passData.mSamplerNames[ texIndex ] = "diffuseMap";
          passData.mTexSlot[ texIndex++ ].texObject = tex;
+      }
       else
       {
          tex = stageDat.getTex( MFT_NormalMap );
 
-         if (  tex &&
-               stageFeatures.features[ MFT_NormalMap ] )
+         if (  tex && stageFeatures.features[ MFT_NormalMap ] )
+         {
+            passData.mSamplerNames[ texIndex ] = "bumpMap";
             passData.mTexSlot[ texIndex++ ].texObject = tex;
+         }
       }
    }
    
    if( stageDat.getCubemap() )
    {
       passData.mCubeMap = stageDat.getCubemap();
+      passData.mSamplerNames[texIndex] = "cubeMap";
       passData.mTexType[texIndex++] = Material::Cube;
    }
    else
@@ -1850,6 +1863,7 @@ void ReflectCubeFeatHLSL::setTexData(  Material::StageData &stageDat,
       if( stageFeatures.features[MFT_CubeMap] )
       {
          // assuming here that it is a scenegraph cubemap
+         passData.mSamplerNames[texIndex] = "cubeMap";
          passData.mTexType[texIndex++] = Material::SGCube;
       }
    }

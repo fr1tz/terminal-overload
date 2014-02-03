@@ -14,6 +14,7 @@
 #include "platform/profiler.h"
 #include "console/engineAPI.h"
 
+using namespace Torque;
 
 const U32 GBitmap::csFileVersion   = 3;
 

@@ -7,6 +7,9 @@
 #ifndef _SHADERGEN_GLSL_SHADERFEATUREGLSL_H_
 #include "shaderGen/GLSL/shaderFeatureGLSL.h"
 #endif
+#ifndef _LANG_ELEMENT_H_
+#include "shaderGen/langElement.h"
+#endif
 
 struct RenderPassData;
 class MultiLine;
@@ -31,7 +34,6 @@ public:
                             const MaterialFeatureData &fd,
                             RenderPassData &passData,
                             U32 &texIndex );
-
    virtual String getName() { return "Bumpmap"; }
 };
 
@@ -43,9 +45,15 @@ class ParallaxFeatGLSL : public ShaderFeatureGLSL
 {
 protected:
 
-   static Var* _getUniformVar( const char *name, const char *type );
+   static Var* _getUniformVar(   const char *name, 
+                                 const char *type, 
+                                 ConstantSortPosition csp );
+
+   ShaderIncludeDependency mIncludeDep;
 
 public:
+
+   ParallaxFeatGLSL();
 
    // ShaderFeatureGLSL
    virtual void processVert(  Vector<ShaderComponent*> &componentList,
@@ -59,7 +67,6 @@ public:
                               U32 &texIndex );
    virtual String getName() { return "Parallax"; }
 };
-
 
 
 /// This feature is used to render normals to the 

@@ -27,6 +27,8 @@ singleton ShaderData( BL_ProjectedShadowShaderData )
    OGLVertexShaderFile     = "shaders/common/gl/projectedShadowV.glsl";
    OGLPixelShaderFile      = "shaders/common/gl/projectedShadowP.glsl";   
       
+   samplerNames[0] = "inputTex";
+   
    pixVersion = 2.0;
 };
 
@@ -56,7 +58,7 @@ function onActivateBasicLM()
    // Add both to the root group so that it doesn't
    // end up in the MissionCleanup instant group.
    RootGroup.add( BL_ProjectedShadowRPM );
-   RootGroup.add( %meshBin );      
+   RootGroup.add( %meshBin );
 }
 
 function onDeactivateBasicLM()

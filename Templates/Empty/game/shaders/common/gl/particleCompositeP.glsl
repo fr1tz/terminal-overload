@@ -2,6 +2,13 @@
 // located in the root directory of this distribution.
 
 #include "torque.glsl"
+#include "hlslCompat.glsl"
+
+varying vec4 offscreenPos;
+varying vec4 backbufferPos;
+
+#define IN_offscreenPos offscreenPos
+#define IN_backbufferPos backbufferPos
 
 uniform sampler2D colorSource;
 uniform vec4 offscreenTargetParams;
@@ -12,8 +19,6 @@ uniform sampler2D edgeSource;
 uniform vec4 edgeTargetParams;
 #endif
 
-varying vec4 backbufferPos;
-varying vec4 offscreenPos;
 
 void main()
 {  
@@ -29,8 +34,7 @@ void main()
    // Cut out particles along the edges, this will create the stencil mask
 	uvScene.zw = viewportCoordToRenderTarget(uvScene.zw, edgeTargetParams);
 	float edge = texture2D( edgeSource, uvScene.zw ).r;
-   if (-edge < 0.0)
-      discard;
+	clip( -edge );
 #endif
 	
 	// Sample offscreen target and return

@@ -180,13 +180,63 @@ void GFXGLEnumTranslate::init()
    GFXGLTextureType[GFXFormatDXT4] = GL_ZERO;
    GFXGLTextureType[GFXFormatDXT5] = GL_UNSIGNED_BYTE;
 
-   // Cull
-   GFXGLCullMode[GFXCullNone] = GL_BACK;
-   GFXGLCullMode[GFXCullCW] = GL_BACK;
-   GFXGLCullMode[GFXCullCCW] = GL_FRONT;
+   // Cull - Opengl render upside down need to invert cull
+   GFXGLCullMode[GFXCullNone] = GL_FRONT;
+   GFXGLCullMode[GFXCullCW] = GL_FRONT;
+   GFXGLCullMode[GFXCullCCW] = GL_BACK;
    
    // Fill
    GFXGLFillMode[GFXFillPoint] = GL_POINT;
    GFXGLFillMode[GFXFillWireframe] = GL_LINE;
    GFXGLFillMode[GFXFillSolid] = GL_FILL;
+
+   // Extensions
+   if( gglHasExtension(ARB_texture_float) )
+   {      
+      GFXGLTextureInternalFormat[GFXFormatR32F] = GL_R32F;
+      GFXGLTextureInternalFormat[GFXFormatR16G16F] = GL_R32F;
+      GFXGLTextureInternalFormat[GFXFormatR10G10B10A2] = GL_ZERO;
+      GFXGLTextureInternalFormat[GFXFormatR16G16B16A16] = GL_ZERO;      
+      GFXGLTextureInternalFormat[GFXFormatR32G32B32A32F] = GL_RGBA32F_ARB;
+      GFXGLTextureInternalFormat[GFXFormatDXT2] = GL_ZERO;
+      GFXGLTextureInternalFormat[GFXFormatDXT4] = GL_ZERO;   
+      
+      GFXGLTextureFormat[GFXFormatR32F] = GL_RED;
+      GFXGLTextureFormat[GFXFormatR16G16F] = GL_ZERO;
+      GFXGLTextureFormat[GFXFormatR10G10B10A2] = GL_RGBA;
+      GFXGLTextureFormat[GFXFormatR16G16B16A16] = GL_RGBA;      
+      GFXGLTextureFormat[GFXFormatR32G32B32A32F] = GL_RGBA;
+      GFXGLTextureFormat[GFXFormatDXT2] = GL_ZERO;
+      GFXGLTextureFormat[GFXFormatDXT4] = GL_ZERO;   
+      
+      GFXGLTextureType[GFXFormatR32F] = GL_FLOAT;
+      GFXGLTextureType[GFXFormatR16G16F] = GL_FLOAT;
+      GFXGLTextureType[GFXFormatR10G10B10A2] = GL_UNSIGNED_SHORT;
+      GFXGLTextureType[GFXFormatR16G16B16A16] = GL_UNSIGNED_SHORT;
+      GFXGLTextureType[GFXFormatR32G32B32A32F] = GL_FLOAT;
+      GFXGLTextureType[GFXFormatDXT2] = GL_ZERO;
+      GFXGLTextureType[GFXFormatDXT4] = GL_ZERO;
+
+      if( gglHasExtension(ARB_half_float_pixel) )
+      {
+         GFXGLTextureInternalFormat[GFXFormatR16F] = GL_R16F;
+         GFXGLTextureFormat[GFXFormatR16F] = GL_RED;
+         GFXGLTextureType[GFXFormatR16F] = GL_HALF_FLOAT_ARB;
+
+         GFXGLTextureInternalFormat[GFXFormatR16G16B16A16F] = GL_RGBA16F_ARB;
+         GFXGLTextureFormat[GFXFormatR16G16B16A16F] = GL_RGBA;
+         GFXGLTextureType[GFXFormatR16G16B16A16F] = GL_HALF_FLOAT_ARB;
+      }
+      else
+      {
+         GFXGLTextureInternalFormat[GFXFormatR16F] = GL_R32F;
+         GFXGLTextureFormat[GFXFormatR16F] = GL_RED;
+         GFXGLTextureType[GFXFormatR16F] = GL_FLOAT;
+
+         GFXGLTextureInternalFormat[GFXFormatR16G16B16A16F] = GL_RGBA32F_ARB;
+         GFXGLTextureFormat[GFXFormatR16G16B16A16F] = GL_RGBA;
+         GFXGLTextureType[GFXFormatR16G16B16A16F] = GL_FLOAT;
+      }
+   }
+
 }

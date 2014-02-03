@@ -41,7 +41,7 @@
 GFX_ImplementTextureProfile(  GFXTheoraTextureProfile,
                               GFXTextureProfile::DiffuseMap,
                               GFXTextureProfile::NoMipmap | GFXTextureProfile::Dynamic,
-                              GFXTextureProfile::None );
+                              GFXTextureProfile::NONE );
 
 
 //-----------------------------------------------------------------------------

@@ -242,7 +242,7 @@ void ConvexShape::initPersistFields()
 
    addGroup( "Internal" );
 
-      addProtectedField( "surface", TypeRealString, NULL, &protectedSetSurface, &defaultProtectedGetFn, 
+      addProtectedField( "surface", TypeRealString, 0, &protectedSetSurface, &defaultProtectedGetFn, 
          "Do not modify, for internal use.", AbstractClassRep::FIELD_HideInInspectors );
 
    endGroup( "Internal" );
@@ -633,6 +633,29 @@ bool ConvexShape::buildPolyList( PolyListContext context, AbstractPolyList *plis
    // Add Surfaces...
 
    const Vector< ConvexShape::Face > faceList = mGeometry.faces;
+
+   if(context == PLC_Navigation)
+   {
+      for(S32 i = 0; i < faceList.size(); i++)
+      {
+         const ConvexShape::Face &face = faceList[i];
+
+         S32 s = face.triangles.size();
+         for(S32 j = 0; j < s; j++)
+         {
+            plist->begin(0, s*i + j);
+
+            plist->plane(PlaneF(face.centroid, face.normal));
+
+            plist->vertex(base + face.points[face.triangles[j].p0]);
+            plist->vertex(base + face.points[face.triangles[j].p1]);
+            plist->vertex(base + face.points[face.triangles[j].p2]);
+
+            plist->end();
+         }
+      }
+      return true;
+   }
 
    for ( S32 i = 0; i < faceList.size(); i++ )
    {

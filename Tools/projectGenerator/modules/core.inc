@@ -12,7 +12,7 @@ addEngineSrcDir('component');
 addEngineSrcDir('component/interfaces');
 
 // Core
-if (Generator::isApp())
+if (TorqueGenerator::isApp())
 	addSrcDir( '../source' );
     
 addEngineSrcDir('console');
@@ -40,7 +40,7 @@ addEngineSrcDir('math/test');
 addEngineSrcDir('platform');
 addEngineSrcDir('cinterface');
 
-switch( Generator::$platform )
+switch( TorqueGenerator::$platform )
 {
    case "win32":
    case "mac":
@@ -61,7 +61,7 @@ addEngineSrcDir('app/net');
 // Moved this here temporarily because PopupMenu uses on it and is currently in core
 addEngineSrcDir('util/messaging');
 
-switch( Generator::$platform )
+switch( TorqueGenerator::$platform )
 {
    case "win32":
      addEngineSrcDir('platformWin32');
@@ -95,11 +95,18 @@ switch( Generator::$platform )
 
    case "linux_dedicated":
      addEngineSrcDir('windowManager/dedicated');
+     addEngineSrcDir('platformX86UNIX');
+     addEngineSrcDir('platformX86UNIX/threads');
+     addEngineSrcDir('platformPOSIX');
+     break;
 
    case "linux":
      addEngineSrcDir('platformX86UNIX');
      addEngineSrcDir('platformX86UNIX/threads');
+     addEngineSrcDir('platformX86UNIX/nativeDialogs');
+     addEngineSrcDir('platformX86UNIX/menus');
      addEngineSrcDir('platformPOSIX');
+     addEngineSrcDir('windowManager/x11');
      break;
 }
 
@@ -113,7 +120,7 @@ addEngineSrcDir( 'gfx/video' );
 addEngineSrcDir( 'gfx' );
 addEngineSrcDir( 'shaderGen' );
 
-switch( Generator::$platform )
+switch( TorqueGenerator::$platform )
 {
    case "win32":
       //addEngineSrcDir( 'gfx/D3D8' );
@@ -121,6 +128,15 @@ switch( Generator::$platform )
       addEngineSrcDir( 'gfx/D3D9' );
       addEngineSrcDir( 'gfx/D3D9/pc' );
       addEngineSrcDir( 'shaderGen/HLSL' );
+	  
+	  // GFX - GGL
+	  addProjectDefines( 'TORQUE_OPENGL' );
+     addProjectDefines( 'GLEW_STATIC' );
+     addLibSrcFile( 'glew/src/glew.c' );
+     addIncludePath( getAppLibSrcDir() . 'glew/include' );
+     addEngineSrcDir( 'gfx/gl' );
+     addEngineSrcDir( 'gfx/gl/tGL' );
+     addEngineSrcDir( 'shaderGen/GLSL' );
       break;
    case "360":
       addEngineSrcDir( 'gfx/D3D9' );
@@ -129,30 +145,30 @@ switch( Generator::$platform )
       addEngineSrcDir( 'shaderGen/360' );
       break;
    case "mac":
-      addEngineSrcDir( 'gfx/gl/ggl/mac' );
-
       // GFX - GGL
+      addProjectDefines( 'TORQUE_OPENGL' );
+      addLibSrcFile( 'glew/src/glew.c' );
+      addIncludePath( getAppLibSrcDir() . 'glew/include' );
       addEngineSrcDir( 'gfx/gl' );
-      addEngineSrcDir( 'gfx/gl/ggl' );
-      addEngineSrcDir( 'gfx/gl/ggl/generated' );
+      addEngineSrcDir( 'gfx/gl/tGL' );
       addEngineSrcDir( 'shaderGen/GLSL' );
       break;
    case "linux":
    case "linux_dedicated":
-      //addEngineSrcDir( 'gfx/gl/ggl/x11' ); // This one is not yet implemented!
       // GFX - GGL
+	   addProjectDefines( 'TORQUE_OPENGL' );
+      addLibSrcFile( 'glew/src/glew.c' );
+      addIncludePath( getAppLibSrcDir() . 'glew/include' );
       addEngineSrcDir( 'gfx/gl' );
-      addEngineSrcDir( 'gfx/gl/ggl' );
-      addEngineSrcDir( 'gfx/gl/ggl/generated' );
+      addEngineSrcDir( 'gfx/gl/x11' );
+      addEngineSrcDir( 'gfx/gl/tGL' );
       addEngineSrcDir( 'shaderGen/GLSL' );
       break;
    case "ps3":
-      addEngineSrcDir( 'gfx/gl/ggl/ps3' );
-
       // GFX - GGL
+      addProjectDefines( 'TORQUE_OPENGL' );
       addEngineSrcDir( 'gfx/gl' );
-      addEngineSrcDir( 'gfx/gl/ggl' );
-      addEngineSrcDir( 'gfx/gl/ggl/generated' );
+      addEngineSrcDir( 'gfx/gl/tGL' );
       addEngineSrcDir( 'shaderGen/GLSL' );
       break;
 }
@@ -180,14 +196,25 @@ addIncludePath( '../../source' );		   // product source (relative to solution ou
 addIncludePath( getAppEngineSrcDir() );	// main engine source dir relative to app project file 
 addIncludePath( getAppLibSrcDir() ); 	   // main lib source dir relative to app project file
 
-if ( Generator::$platform == "win32" )
+if ( TorqueGenerator::$platform == "win32" )
 {
+}
+
+switch( TorqueGenerator::$platform )
+{
+   case "win32":
    addIncludePath( getAppLibSrcDir() . 'directx8' );
    addIncludePath( getAppLibSrcDir() . 'openal/win32' );
    
    addProjectLibDir( getAppLibSrcDir() . 'SDL/win32' );
    addProjectLibDir( getAppLibSrcDir() . 'unicode' );
    addProjectLibDir( getAppLibSrcDir() . 'directx8' );
+      
+      addProjectLibInput("Opengl32.lib");
+      break;
+   case "linux":
+      addIncludePath( '/usr/include/freetype2' );
+      break;
 }
 
 ?>

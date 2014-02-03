@@ -985,7 +985,7 @@ void DecalManager::prepRenderImage( SceneRenderState* state )
 
    PROFILE_START( DecalManager_RenderDecals_SphereTreeCull );
 
-   const Frustum& rootFrustum = state->getFrustum();
+   const Frustum& rootFrustum = state->getCameraFrustum();
 
    // Populate vector of decal instances to be rendered with all
    // decals from visible decal spheres.
@@ -1162,6 +1162,8 @@ void DecalManager::prepRenderImage( SceneRenderState* state )
 
    if ( mDecalQueue.empty() )
       return;
+
+   GFXDEBUGEVENT_SCOPE_EX( DecalManager, ColorI::GREEN, avar("DecalManager") );
 
    // Sort queued decals...
    // 1. Editor decals - in render priority order first, creation time second, and material third.
@@ -1429,7 +1431,7 @@ void DecalManager::_renderDecalSpheres( ObjectRenderInst* ri, SceneRenderState* 
       DecalSphere *decalSphere = grid[i];
       const SphereF &worldSphere = decalSphere->mWorldSphere;
 
-      if( state->getFrustum().isCulled( worldSphere ) )
+      if( state->getCullingFrustum().isCulled( worldSphere ) )
          continue;
 
       drawUtil->drawSphere( desc, worldSphere.radius, worldSphere.center, sphereColor );

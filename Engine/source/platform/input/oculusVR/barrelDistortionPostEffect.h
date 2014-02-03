@@ -12,6 +12,7 @@ class BarrelDistortionPostEffect : public PostEffect
 
 protected:
    GFXShaderConstHandle *mHmdWarpParamSC;
+   GFXShaderConstHandle *mHmdChromaAbSC;
    GFXShaderConstHandle *mScaleSC;
    GFXShaderConstHandle *mScaleInSC;
    GFXShaderConstHandle *mLensCenterSC;

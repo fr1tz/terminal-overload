@@ -28,6 +28,8 @@ public:
    virtual U32 getDepth() = 0;
    virtual bool hasMips() = 0;
    virtual GLenum getBinding() = 0;
+   virtual GFXFormat getFormat() = 0;
+   virtual bool isCompatible(const GFXGLTextureObject* tex) = 0;
    
    U32 getMipLevel() { return mipLevel; }
    U32 getZOffset() { return zOffset; }
@@ -54,6 +56,14 @@ public:
    virtual U32 getDepth() { return mTex->getDepth(); }
    virtual bool hasMips() { return mTex->mMipLevels != 1; }
    virtual GLenum getBinding() { return mTex->getBinding(); }
+   virtual GFXFormat getFormat() { return mTex->getFormat(); }
+   virtual bool isCompatible(const GFXGLTextureObject* tex)
+   {
+      return mTex->getFormat() == tex->getFormat()
+         && mTex->getWidth() == tex->getWidth()
+         && mTex->getHeight() == tex->getHeight();
+   }
+   GFXGLTextureObject* getTextureObject() const {return mTex; }
    
 private:
    StrongRefPtr<GFXGLTextureObject> mTex;
@@ -76,6 +86,13 @@ public:
    virtual U32 getDepth() { return 0; }
    virtual bool hasMips() { return mTex->getNumMipLevels() != 1; }
    virtual GLenum getBinding() { return GFXGLCubemap::getEnumForFaceNumber(mFace); }
+   virtual GFXFormat getFormat() { return mTex->getFormat(); }
+   virtual bool isCompatible(const GFXGLTextureObject* tex)
+   {
+      return mTex->getFormat() == tex->getFormat()
+         && mTex->getWidth() == tex->getWidth()
+         && mTex->getHeight() == tex->getHeight();
+   }
    
 private:
    StrongRefPtr<GFXGLCubemap> mTex;
@@ -108,33 +125,6 @@ public:
    virtual void makeActive();
    virtual void finish();
 };
-
-// Handy macro for checking the status of a framebuffer.  Framebuffers can fail in 
-// all sorts of interesting ways, these are just the most common.  Further, no existing GL profiling 
-// tool catches framebuffer errors when the framebuffer is created, so we actually need this.
-#define CHECK_FRAMEBUFFER_STATUS()\
-{\
-GLenum status;\
-status = glCheckFramebufferStatusEXT(GL_FRAMEBUFFER_EXT);\
-switch(status) {\
-case GL_FRAMEBUFFER_COMPLETE_EXT:\
-break;\
-case GL_FRAMEBUFFER_UNSUPPORTED_EXT:\
-AssertFatal(false, "Unsupported FBO");\
-break;\
-case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT_EXT:\
-AssertFatal(false, "Incomplete FBO Attachment");\
-break;\
-case GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS_EXT:\
-AssertFatal(false, "Incomplete FBO dimensions");\
-break;\
-case GL_FRAMEBUFFER_INCOMPLETE_FORMATS_EXT:\
-AssertFatal(false, "Incomplete FBO formats");\
-default:\
-/* programming error; will fail on all hardware */\
-AssertFatal(false, "Something really bad happened with an FBO");\
-}\
-}
 
 _GFXGLTextureTargetFBOImpl::_GFXGLTextureTargetFBOImpl(GFXGLTextureTarget* target)
 {
@@ -187,21 +177,26 @@ void _GFXGLTextureTargetFBOImpl::applyState()
 
 void _GFXGLTextureTargetFBOImpl::makeActive()
 {
-   glBindFramebufferEXT(GL_DRAW_FRAMEBUFFER_EXT, mFramebuffer);
-   glBindFramebufferEXT(GL_READ_FRAMEBUFFER_EXT, mFramebuffer);
+   glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, mFramebuffer);
 }
 
 void _GFXGLTextureTargetFBOImpl::finish()
 {
-   glBindFramebufferEXT(GL_DRAW_FRAMEBUFFER_EXT, 0);
-   glBindFramebufferEXT(GL_READ_FRAMEBUFFER_EXT, 0);
+   glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
    
    _GFXGLTargetDesc* color0 = mTarget->getTargetDesc(GFXTextureTarget::Color0);
    if(!color0 || !(color0->hasMips()))
       return;
+
+   if( gglHasExtension(EXT_direct_state_access) )
+   {
+      glGenerateTextureMipmapEXT( color0->getHandle(), GL_TEXTURE_2D );
+      return;
+   }
    
    // Generate mips if necessary
    // Assumes a 2D texture.
+   PRESERVE_2D_TEXTURE();
    glActiveTexture(GL_TEXTURE0);
    PRESERVE_2D_TEXTURE();
    glBindTexture(GL_TEXTURE_2D, color0->getHandle());
@@ -277,7 +272,7 @@ const Point2I GFXGLTextureTarget::getSize()
 
 GFXFormat GFXGLTextureTarget::getFormat()
 {
-   // TODO: Fix me!
+   // TODO OPENGL: Fix me!
    return GFXFormatR8G8B8A8;
 }
 
@@ -289,6 +284,10 @@ void GFXGLTextureTarget::attachTexture( RenderSlot slot, GFXTextureObject *tex, 
    
    if(slot == DepthStencil && tex != GFXTextureTarget::sDefaultDepthStencil)
       _needsAux = false;
+
+   _GFXGLTextureTargetDesc* mTex = static_cast<_GFXGLTextureTargetDesc*>(mTargets[slot].ptr());
+   if( (!tex && !mTex) || (mTex && mTex->getTextureObject() == tex) )         
+      return;   
    
    // Triggers an update when we next render
    invalidateState();
@@ -394,6 +393,17 @@ void GFXGLTextureTarget::resolveTo(GFXTextureObject* obj)
    AssertFatal(dynamic_cast<GFXGLTextureObject*>(obj), "GFXGLTextureTarget::resolveTo - Incorrect type of texture, expected a GFXGLTextureObject");
    GFXGLTextureObject* glTexture = static_cast<GFXGLTextureObject*>(obj);
 
+   if( gglHasExtension(ARB_copy_image) && mTargets[Color0]->isCompatible(glTexture) )
+   {
+      glCopyImageSubData(
+        mTargets[Color0]->getHandle(), GL_TEXTURE_2D, 0, 0, 0, 0,
+        glTexture->getHandle(), GL_TEXTURE_2D, 0, 0, 0, 0,
+        mTargets[Color0]->getWidth(), mTargets[Color0]->getHeight(), 1);
+
+      return;
+   }
+
+   //TODO OPENGL OPTIMIZE
    PRESERVE_FRAMEBUFFER();
    
    GLuint dest;

@@ -20,6 +20,7 @@ class GFXStateBlockData : public SimObject
 
    GFXStateBlockDesc mState;
    GFXSamplerStateData* mSamplerStates[TEXTURE_STAGE_COUNT];
+   String mSamplerNames[TEXTURE_STAGE_COUNT];
 public:
    GFXStateBlockData();
 

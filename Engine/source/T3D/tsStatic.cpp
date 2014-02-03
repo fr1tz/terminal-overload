@@ -30,6 +30,8 @@
 #include "materials/materialFeatureTypes.h"
 #include "console/engineAPI.h"
 
+using namespace Torque;
+
 extern bool gEditingMission;
 
 IMPLEMENT_CO_NETOBJECT_V1(TSStatic);
@@ -504,7 +506,7 @@ void TSStatic::prepRenderImage( SceneRenderState* state )
    Frustum culler;
    if ( mMeshCulling )
    {
-      culler = state->getFrustum();
+      culler = state->getCullingFrustum();
       MatrixF xfm( true );
       xfm.scale( Point3F::One / getScale() );
       xfm.mul( getRenderWorldTransform() );

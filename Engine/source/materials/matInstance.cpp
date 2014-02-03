@@ -223,7 +223,7 @@ void MatInstance::construct()
 {
    mUserObject = NULL;
    mCurPass = -1;
-   mProcessedMaterial = false;
+   mProcessedMaterial = NULL;
    mVertexFormat = NULL;
    mMaxStages = 1;
    mActiveParameters = NULL;

@@ -27,8 +27,10 @@ public:
 private:
 	/// Handle to our GL buffer object
 	GLuint mBuffer;
-   
+   Vector<char> mBufferData;
    U8* mZombieCache;
+
+   U32 lockedIndexEnd, lockedIndexStart;
 };
 
 #endif

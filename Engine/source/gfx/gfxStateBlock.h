@@ -137,6 +137,7 @@ struct GFXStateBlockDesc
    // Sampler states
    bool samplersDefined;
    GFXSamplerStateDesc samplers[TEXTURE_STAGE_COUNT];
+   StringTableEntry _samplerNames[TEXTURE_STAGE_COUNT];
    ColorI textureFactor;
 
    GFXStateBlockDesc();

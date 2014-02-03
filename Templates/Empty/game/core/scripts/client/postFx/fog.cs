@@ -10,8 +10,8 @@ singleton ShaderData( FogPassShader )
    DXVertexShaderFile 	= "shaders/common/postFx/postFxV.hlsl";
    DXPixelShaderFile 	= "shaders/common/postFx/fogP.hlsl";
          
-//   OGLVertexShaderFile  = "shaders/common/postFx/gl//postFxV.glsl";
-//   OGLPixelShaderFile   = "shaders/common/postFx/gl/fogP.glsl";
+   OGLVertexShaderFile  = "shaders/common/postFx/gl/postFxV.glsl";
+   OGLPixelShaderFile   = "shaders/common/postFx/gl/fogP.glsl";
             
    samplerNames[0] = "$prepassTex";
    
@@ -56,10 +56,12 @@ singleton ShaderData( UnderwaterFogPassShader )
    DXVertexShaderFile 	= "shaders/common/postFx/postFxV.hlsl";
    DXPixelShaderFile 	= "shaders/common/postFx/underwaterFogP.hlsl";
          
-//   OGLVertexShaderFile  = "shaders/common/postFx/gl/postFxV.glsl";
-//   OGLPixelShaderFile   = "shaders/common/postFx/gl/fogP.glsl";
+   OGLVertexShaderFile  = "shaders/common/postFx/gl/postFxV.glsl";
+   OGLPixelShaderFile   = "shaders/common/postFx/gl/underwaterFogP.glsl";
             
    samplerNames[0] = "$prepassTex";
+   samplerNames[1] = "$backbuffer";
+   samplerNames[2] = "$waterDepthGradMap";
    
    pixVersion = 2.0;      
 };
@@ -88,6 +90,7 @@ singleton PostEffect( UnderwaterFogPostFx )
   
    shader = UnderwaterFogPassShader;
    stateBlock = UnderwaterFogPassStateBlock;
+   
    texture[0] = "#prepass";
    texture[1] = "$backBuffer";
    texture[2] = "#waterDepthGradMap";
@@ -98,3 +101,16 @@ singleton PostEffect( UnderwaterFogPostFx )
    isEnabled = true;
 };
 
+function UnderwaterFogPostFx::onEnabled( %this )
+{
+   TurbulenceFx.enable();
+   CausticsPFX.enable();
+   return true;
+}
+
+function UnderwaterFogPostFx::onDisabled( %this )
+{
+   TurbulenceFx.disable();
+   CausticsPFX.disable();
+   return false;
+}

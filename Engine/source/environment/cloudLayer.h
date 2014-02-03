@@ -91,6 +91,7 @@ protected:
    GFXShaderConstHandle *mCoverageSC;  
    GFXShaderConstHandle *mExposureSC;  
    GFXShaderConstHandle *mEyePosWorldSC;
+   S8 mNormalHeightMapReg;
 
    GFXVertexBufferHandle<GFXCloudVertex> mVB;
    GFXPrimitiveBufferHandle mPB;

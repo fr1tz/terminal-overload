@@ -5,7 +5,8 @@
 #define _GFXGLTEXTUREOBJECT_H
 
 #include "gfx/gfxTextureObject.h"
-#include "gfx/gl/ggl/ggl.h"
+#include "gfx/gl/tGL/tGL.h"
+#include "gfx/gfxStateBlock.h"
 
 class GFXGLDevice;
 
@@ -13,9 +14,10 @@ class GFXGLTextureObject : public GFXTextureObject
 {
 public:
    GFXGLTextureObject(GFXDevice * aDevice, GFXTextureProfile *profile); 
-   virtual ~GFXGLTextureObject();
+   ~GFXGLTextureObject();
    
    void release();
+   void reInit();
    
    inline GLuint getHandle() const { return mHandle; }
    inline GLenum getBinding() const { return mBinding; }
@@ -26,7 +28,7 @@ public:
    /// Binds the texture to the given texture unit
    /// and applies the current sampler state because GL tracks
    /// filtering and wrapper per object, while GFX tracks per sampler.
-   void bind(U32 textureUnit) const;
+   void bind(U32 textureUnit);
    
    /// @return An array containing the texture data
    /// @note You are responsible for deleting the returned data! (Use delete[])
@@ -54,6 +56,8 @@ public:
    virtual void zombify();
    virtual void resurrect();
    virtual const String describeSelf() const;
+
+   void initSamplerState(const GFXSamplerStateDesc &ssd);
    
 private:
    friend class GFXGLTextureManager;
@@ -61,7 +65,8 @@ private:
    /// Internal GL object
    GLuint mHandle;
    GLuint mBuffer;
-
+   bool mNeedInitSamplerState;
+   GFXSamplerStateDesc mSampler;
    GLenum mBinding;
    
    U32 mBytesPerTexel;
