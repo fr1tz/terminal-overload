@@ -1,35 +1,27 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
+#include "../../../gl/hlslCompat.glsl"
+
 uniform sampler2D diffuseMap;
 
 varying vec2 uv;
 
 uniform vec2 oneOverTargetSize;
 
+const float offset[3] = float[]( 0.0, 1.3846153846, 3.2307692308 );
+const float weight[3] = float[]( 0.2270270270, 0.3162162162, 0.0702702703 );
+
 void main()
 {
-   vec2 sNonUniformTaps[8];
-      
-   sNonUniformTaps[0] = vec2(0.992833, 0.979309);
-   sNonUniformTaps[1] = vec2(-0.998585, 0.985853);
-   sNonUniformTaps[2] = vec2(0.949299, -0.882562);
-   sNonUniformTaps[3] = vec2(-0.941358, -0.893924);
-   sNonUniformTaps[4] = vec2(0.545055, -0.589072);
-   sNonUniformTaps[5] = vec2(0.346526, 0.385821);
-   sNonUniformTaps[6] = vec2(-0.260183, 0.334412);
-   sNonUniformTaps[7] = vec2(0.248676, -0.679605);
+   vec4 OUT = texture2D( diffuseMap, uv ) * weight[0];
    
-   gl_FragColor = vec4(0.0);
-   
-   vec2 texScale = vec2(1.0);
-   
-   for ( int i=0; i < 4; i++ )
+   for ( int i=1; i < 3; i++ )
    {
-      vec2 offset = (oneOverTargetSize * texScale) * sNonUniformTaps[i];
-      gl_FragColor += texture2D( diffuseMap, uv + offset );
+      vec2 sample = (BLUR_DIR * offset[i]) * oneOverTargetSize;
+      OUT += texture2D( diffuseMap, uv + sample ) * weight[i];  
+      OUT += texture2D( diffuseMap, uv - sample ) * weight[i];  
    }
-   
-   gl_FragColor /= vec4(4.0);
-   gl_FragColor.rgb = vec3(0.0);
+
+   gl_FragColor = OUT;
 }

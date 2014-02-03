@@ -1,9 +1,12 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
-//*****************************************************************************
-// Precipitation vertex shader
-//*****************************************************************************
+#include "hlslCompat.glsl"
+
+attribute vec4 vPosition;
+attribute vec4 vColor;
+attribute vec2 vTexCoord0;
+attribute vec2 vTexCoord1;
 
 varying vec2 texCoord;
 varying vec4 color;
@@ -15,11 +18,13 @@ uniform vec3 shadowCasterPosition;
 
 void main()
 {
-   gl_Position = modelview * vec4(gl_Vertex.xyz, 1.0);
+   gl_Position = modelview * vec4(vPosition.xyz, 1.0);
    
-   color = gl_Color;
-   texCoord = gl_MultiTexCoord1.st;
+   color = vColor;
+   texCoord = vTexCoord1.st;
    
-   float fromCasterDist = length(gl_Vertex.xyz - shadowCasterPosition) - shadowLength;
-   fade = 1.0 - clamp(fromCasterDist/shadowLength, 0.0, 1.0);
+   float fromCasterDist = length(vPosition.xyz - shadowCasterPosition) - shadowLength;
+   fade = 1.0 - clamp( fromCasterDist / shadowLength , 0.0, 1.0 );
+   
+   correctSSP(gl_Position);
 }

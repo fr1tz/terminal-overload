@@ -163,7 +163,7 @@ function handleEscape()
       }
    }
 
-   if ($PlayGui.isAwake())
+   if (PlayGui.isAwake())	
       escapeFromGame();	
 }
 

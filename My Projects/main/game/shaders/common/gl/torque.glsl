@@ -98,6 +98,7 @@ mat3x3 quatToMat( vec4 quat )
    return mat;
 }
 
+
 /// The number of additional substeps we take when refining
 /// the results of the offset parallax mapping function below.
 ///
@@ -110,7 +111,8 @@ mat3x3 quatToMat( vec4 quat )
 
 /// Performs fast parallax offset mapping using 
 /// multiple refinement steps.
-////// @param texMap The texture map whos alpha channel we sample the parallax depth.
+///
+/// @param texMap The texture map whos alpha channel we sample the parallax depth.
 /// @param texCoord The incoming texture coordinate for sampling the parallax depth.
 /// @param negViewTS The negative view vector in tangent space.
 /// @param depthScale The parallax factor used to scale the depth result.
@@ -135,7 +137,8 @@ const float HDR_RGB16_MAX = 100.0;
 /// The maximum value for 10bit per component integer HDR encoding.const float HDR_RGB10_MAX = 4.0;
 
 /// Encodes an HDR color for storage into a target.
-vec3 hdrEncode( vec3 sample ){
+vec3 hdrEncode( vec3 sample )
+{
    #if defined( TORQUE_HDR_RGB16 )
 
       return sample / HDR_RGB16_MAX;
@@ -217,6 +220,75 @@ float hdrLuminance( vec3 sample )
    return lum;
 }
 
+float determinant(mat2 m)
+{
+   return m[0][0] * m[1][1] - m[1][0] * m[0][1];
+}
+
+float determinant(mat3 m)
+{
+   return (+ m[0][0] * (m[1][1] * m[2][2] - m[1][2] * m[2][1])
+           - m[0][1] * (m[1][0] * m[2][2] - m[1][2] * m[2][0])
+           + m[0][2] * (m[1][0] * m[2][1] - m[1][1] * m[2][0]));
+}
+
+float determinant(mat4 m)
+{
+   float SubFactor00 = m[2][2] * m[3][3] - m[3][2] * m[2][3];
+   float SubFactor01 = m[2][1] * m[3][3] - m[3][1] * m[2][3];
+   float SubFactor02 = m[2][1] * m[3][2] - m[3][1] * m[2][2];
+   float SubFactor03 = m[2][0] * m[3][3] - m[3][0] * m[2][3];
+   float SubFactor04 = m[2][0] * m[3][2] - m[3][0] * m[2][2];
+   float SubFactor05 = m[2][0] * m[3][1] - m[3][0] * m[2][1];
+   float SubFactor06 = m[1][2] * m[3][3] - m[3][2] * m[1][3];
+   float SubFactor07 = m[1][1] * m[3][3] - m[3][1] * m[1][3];
+   float SubFactor08 = m[1][1] * m[3][2] - m[3][1] * m[1][2];
+   float SubFactor09 = m[1][0] * m[3][3] - m[3][0] * m[1][3];
+   float SubFactor10 = m[1][0] * m[3][2] - m[3][0] * m[1][2];
+   float SubFactor11 = m[1][1] * m[3][3] - m[3][1] * m[1][3];
+   float SubFactor12 = m[1][0] * m[3][1] - m[3][0] * m[1][1];
+   float SubFactor13 = m[1][2] * m[2][3] - m[2][2] * m[1][3];
+   float SubFactor14 = m[1][1] * m[2][3] - m[2][1] * m[1][3];
+   float SubFactor15 = m[1][1] * m[2][2] - m[2][1] * m[1][2];
+   float SubFactor16 = m[1][0] * m[2][3] - m[2][0] * m[1][3];
+   float SubFactor17 = m[1][0] * m[2][2] - m[2][0] * m[1][2];
+   float SubFactor18 = m[1][0] * m[2][1] - m[2][0] * m[1][1];
+
+   vec4 adj_0;
+
+   adj_0[0] = + (m[1][1] * SubFactor00 - m[1][2] * SubFactor01 + m[1][3] * SubFactor02);
+   adj_0[1] = - (m[1][0] * SubFactor00 - m[1][2] * SubFactor03 + m[1][3] * SubFactor04);
+   adj_0[2] = + (m[1][0] * SubFactor01 - m[1][1] * SubFactor03 + m[1][3] * SubFactor05);
+   adj_0[3] = - (m[1][0] * SubFactor02 - m[1][1] * SubFactor04 + m[1][2] * SubFactor05);
+
+   return (+ m[0][0] * adj_0[0]
+           + m[0][1] * adj_0[1]
+           + m[0][2] * adj_0[2]
+           + m[0][3] * adj_0[3]);
+}
+
+#ifdef TORQUE_PIXEL_SHADER
+/// Called from the visibility feature to do screen
+/// door transparency for fading of objects.
+void fizzle(vec2 vpos, float visibility)
+{
+   // NOTE: The magic values below are what give us 
+   // the nice even pattern during the fizzle.
+   //
+   // These values can be changed to get different 
+   // patterns... some better than others.
+   //
+   // Horizontal Blinds - { vpos.x, 0.916, vpos.y, 0 }
+   // Vertical Lines - { vpos.x, 12.9898, vpos.y, 78.233 }
+   //
+   // I'm sure there are many more patterns here to 
+   // discover for different effects.
+   
+   mat2x2 m = mat2x2( vpos.x, vpos.y, 0.916, 0.350 );
+   if( (visibility - fract( determinant( m ) )) < 0 ) //if(a < 0) discard;
+      discard;
+}
+#endif //TORQUE_PIXEL_SHADER
 
 /// Basic assert macro.  If the condition fails, then the shader will output color.
 /// @param condition This should be a bvec[2-4].  If any items is false, condition is considered to fail.

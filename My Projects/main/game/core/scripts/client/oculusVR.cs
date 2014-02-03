@@ -40,11 +40,18 @@ function pointCanvasToOculusVRDisplay()
 function enableOculusVRDisplay(%gameConnection, %trueStereoRendering)
 {
    setOVRHMDAsGameConnectionDisplayDevice(%gameConnection);
-   $PlayGui.renderStyle = "stereo side by side";
+   PlayGui.renderStyle = "stereo side by side";
    
    if(%trueStereoRendering)
    {
-      OVRBarrelDistortionPostFX.isEnabled = true;
+      if($pref::OculusVR::UseChromaticAberrationCorrection)
+      {
+         OVRBarrelDistortionChromaPostFX.isEnabled = true;
+      }
+      else
+      {
+         OVRBarrelDistortionPostFX.isEnabled = true;
+      }
    }
    else
    {
@@ -60,8 +67,9 @@ function enableOculusVRDisplay(%gameConnection, %trueStereoRendering)
 function disableOculusVRDisplay(%gameConnection)
 {
    %gameConnection.clearDisplayDevice();
-   $PlayGui.renderStyle = "standard";
+   PlayGui.renderStyle = "standard";
    OVRBarrelDistortionPostFX.isEnabled = false;
+   OVRBarrelDistortionChromaPostFX.isEnabled = false;
    OVRBarrelDistortionMonoPostFX.isEnabled = false;
 }
 
@@ -93,7 +101,7 @@ function setStandardOculusVRControlScheme(%gameConnection)
 function setVideoModeForOculusVRDisplay(%fullscreen)
 {
    %res = getOVRHMDResolution(0);
-   Canvas.setVideoMode(%res.x, %res.y, %fullscreen, 32, 0);
+   Canvas.setVideoMode(%res.x, %res.y, %fullscreen, 32, 4);
 }
 
 //-----------------------------------------------------------------------------

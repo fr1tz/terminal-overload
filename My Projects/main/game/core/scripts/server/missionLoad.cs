@@ -29,6 +29,11 @@ function loadMission( %missionName, %isFirstMission )
    $Server::MissionFile = %missionName;
    $Server::LoadFailMsg = "";
 
+   // Extract mission info from the mission file,
+   // including the display name and stuff to send
+   // to the client.
+   buildLoadInfo( %missionName );
+
    // Download mission info to the clients
    %count = ClientGroup.getCount();
    for( %cl = 0; %cl < %count; %cl++ ) {

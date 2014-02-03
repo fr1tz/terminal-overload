@@ -2,7 +2,7 @@
 // located in the root directory of this distribution.
 
 #include "./../../torque.hlsl"
-#include "./../postFX.hlsl"
+#include "./../postFx.hlsl"
 
 struct VertToPix
 {
