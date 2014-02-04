@@ -1654,6 +1654,7 @@ DefineEngineMethod(Projectile, presimulate, void, (F32 seconds), (1.0f),
                                        "@note This function is not called if the SimObject::hidden is true.")
 {
 	object->simulate( seconds );
+}
 
 DefineEngineMethod(Projectile, setTrackingAbility, void, (U32 val),,
    "@brief Set projectile tracking ability.\n\n"
