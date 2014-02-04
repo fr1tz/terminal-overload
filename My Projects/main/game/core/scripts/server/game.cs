@@ -15,12 +15,12 @@ function onServerCreated()
    
    // Load up any objects or datablocks saved to the editor managed scripts
    %datablockFiles = new ArrayObject();
-   %datablockFiles.add( "art/particles/managedParticleData.cs" );
-   %datablockFiles.add( "art/particles/managedParticleEmitterData.cs" );
-   %datablockFiles.add( "art/decals/managedDecalData.cs" );
-   %datablockFiles.add( "art/datablocks/managedDatablocks.cs" );
-   %datablockFiles.add( "art/forest/managedItemData.cs" );
-   %datablockFiles.add( "art/datablocks/datablockExec.cs" );   
+   %datablockFiles.add( "content/torque3d/3.0/particles/managedParticleData.cs" );
+   %datablockFiles.add( "content/torque3d/3.0/particles/managedParticleEmitterData.cs" );
+   %datablockFiles.add( "content/torque3d/3.0/decals/managedDecalData.cs" );
+   %datablockFiles.add( "content/torque3d/3.0/datablocks/managedDatablocks.cs" );
+   %datablockFiles.add( "content/torque3d/3.0/forest/managedItemData.cs" );
+   %datablockFiles.add( "content/torque3d/3.0/datablocks/datablockExec.cs" );   
    loadDatablockFiles( %datablockFiles, true );
 
    // Run the other gameplay scripts in this folder

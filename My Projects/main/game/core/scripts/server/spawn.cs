@@ -173,6 +173,7 @@ function GameConnection::spawnCamera(%this, %spawnPoint)
    {
       MissionCleanup.add( %this.camera );
       %this.camera.scopeToClient(%this);
+      %this.camera.client = %this;
 
       %this.setControlObject(%this.camera);
 
