@@ -8,11 +8,11 @@ new SimGroup(MissionGroup) {
       nearClip = "0.1";
       visibleDistance = "6000";
       decalBias = "0.0015";
-      fogColor = "0 1 0.976471 1";
+      fogColor = "0.992157 0.996078 0.996078 1";
       fogDensity = "0.0001";
       fogDensityOffset = "100";
       fogAtmosphereHeight = "400";
-      canvasClearColor = "0 225 255 255";
+      canvasClearColor = "1 1 1 255";
       ambientLightBlendPhase = "1";
       ambientLightBlendCurve = "0 0 -1 -1";
       advancedLightmapSupport = "0";
@@ -164,10 +164,10 @@ new SimGroup(MissionGroup) {
          Direction = "1 1 -1";
    };
    new GroundPlane() {
-      squareSize = "128";
-      scaleU = "32";
-      scaleV = "32";
-      Material = "fr1tz_mis_notc_dm1_grid1FX";
+      squareSize = "1024";
+      scaleU = "256";
+      scaleV = "256";
+      Material = "fr1tz_mis_notc_dm1_mat0";
       canSave = "1";
       canSaveDynamicFields = "1";
          position = "11.402371 24.995518 43.979866";
@@ -242,28 +242,6 @@ new SimGroup(MissionGroup) {
       screenError = "16";
       position = "-128 -128 -510";
       rotation = "1 0 0 0";
-      canSave = "1";
-      canSaveDynamicFields = "1";
-   };
-   new CloudLayer() {
-      texture = "content/torque3d/3.0/skies/clouds/clouds_normal_displacement.png";
-      texScale[0] = "1";
-      texScale[1] = "1";
-      texScale[2] = "1";
-      texDirection[0] = "1 0";
-      texDirection[1] = "0 1";
-      texDirection[2] = "0.5 0";
-      texSpeed[0] = "0.005";
-      texSpeed[1] = "0.005";
-      texSpeed[2] = "0.005";
-      baseColor = "0.996078 0.0784314 0.00784314 1";
-      exposure = "1";
-      coverage = "0.5";
-      windSpeed = "1";
-      height = "4";
-      position = "22.0419 29.6241 52.7457";
-      rotation = "1 0 0 0";
-      scale = "1 1 1";
       canSave = "1";
       canSaveDynamicFields = "1";
    };
