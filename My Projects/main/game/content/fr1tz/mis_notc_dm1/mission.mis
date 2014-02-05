@@ -165,8 +165,8 @@ new SimGroup(MissionGroup) {
    };
    new GroundPlane() {
       squareSize = "128";
-      scaleU = "1";
-      scaleV = "1";
+      scaleU = "32";
+      scaleV = "32";
       Material = "fr1tz_mis_notc_dm1_grid1FX";
       canSave = "1";
       canSaveDynamicFields = "1";

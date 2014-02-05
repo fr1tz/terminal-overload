@@ -14,6 +14,7 @@ singleton Material(fr1tz_mis_notc_dm1_grid1FX)
    diffuseMap[0] = "content/fr1tz/mis_notc_dm1/textures/grid1.png";
    glow[0] = "1";
    emissive[0] = "1";
+   detailScale[0] = "12 12";
 };
 
 new TerrainMaterial()
@@ -22,7 +23,7 @@ new TerrainMaterial()
    diffuseSize = "16";
    detailSize = "4";
    detailDistance = "500";
-   detailMap = "content/fr1tz/mis_notc_dm1/textures/grid1";
-   diffuseMap = "content/fr1tz/mis_notc_dm1/textures/metal";
+   detailMap = "content/fr1tz/mis_notc_dm1/textures/grid2";
+   diffuseMap = "content/fr1tz/mis_notc_dm1/textures/grey";
 };
 
