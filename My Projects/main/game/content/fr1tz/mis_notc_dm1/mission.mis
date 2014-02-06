@@ -22,7 +22,7 @@ new SimGroup(MissionGroup) {
       canSaveDynamicFields = "1";
          desc0 = "TODO";
          levelName = "DM1";
-         missionScript = "notc/server/init_dm.cs";
+         missionScript = "notc/server/init_deathmatch.cs";
    };
    new SimGroup(PlayerDropPoints) {
       canSave = "1";
