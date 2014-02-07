@@ -10,7 +10,7 @@ datablock PlayerData(FrmStandardcat)
    btime = 2000; // script field: how long form is blocked after materialization
    dtime = 5000; // script field: de-materialization time
 
-   allowColorization = true;
+   allowColorization = 1;
 
    renderFirstPerson = false;
 
@@ -43,7 +43,7 @@ datablock PlayerData(FrmStandardcat)
 
    mass = 90;
    drag = 0.0;
-   maxdrag = 0.0;
+   maxdrag = 0;
    density = 10;
    maxDamage = 150;
    maxEnergy =  100;
@@ -52,14 +52,14 @@ datablock PlayerData(FrmStandardcat)
 
    rechargeRate = 0.4;
 
-   runForce = 100 * 90;
+   runForce = "9000";
    runEnergyDrain = 0;
    minRunEnergy = 0;
    maxForwardSpeed = 8;
    maxBackwardSpeed = 8;
    maxSideSpeed = 5;
 
-   sprintForce = 100 * 90;
+   sprintForce = "9000";
    sprintEnergyDrain = 0;
    minSprintEnergy = 0;
    maxSprintForwardSpeed = 15;
@@ -70,7 +70,7 @@ datablock PlayerData(FrmStandardcat)
    sprintPitchScale = "1.0";
    sprintCanJump = true;
 
-   crouchForce = 50 * 90;
+   crouchForce = "4500";
    maxCrouchForwardSpeed = 3.0;
    maxCrouchBackwardSpeed = 1.0;
    maxCrouchSideSpeed = 1.0;
@@ -79,7 +79,7 @@ datablock PlayerData(FrmStandardcat)
    maxUnderwaterBackwardSpeed = 7.8;
    maxUnderwaterSideSpeed = 4.0;
 
-   jumpForce =  8 * 90;
+   jumpForce =  "720";
    jumpEnergyDrain = 0;
    minJumpEnergy = 0;
    jumpDelay = 0;
@@ -112,9 +112,9 @@ datablock PlayerData(FrmStandardcat)
    // Foot Prints
    decalOffset = 0.25;
 
-   footPuffEmitter = "LightPuffEmitter";
-   footPuffNumParts = 10;
-   footPuffRadius = "0.25";
+   footPuffEmitter = "FrmStandardcatFootPuffEmitter";
+   footPuffNumParts = 5;
+   footPuffRadius = "0.2";
 
    dustEmitter = "LightPuffEmitter";
 
@@ -183,7 +183,7 @@ datablock PlayerData(FrmStandardcat)
    observeParameters = "0.5 4.5 4.5";
 
    cameraMinDist = "0";
-   DecalData = "PlayerFootprint";
+   DecalData = "FrmStandardcatFootprint";
 
    // Allowable Inventory Items
    mainWeapon = WpnRaptor;
@@ -236,6 +236,10 @@ datablock PlayerData(FrmStandardcat)
    maxInvWpnBulldogClip = "4";
    maxInvWpnRaptorAmmo = "120";
    maxInvWpnBulldogAmmo = "4";
+   maxInvWpnPineapple = "9999";
+   maxInvWpnSiberion = "1";
+   maxInvWpnCrackpack = "1";
+   maxInvWpnSiberionAmmo = "120";
 };
 
 // *** callback function: called by engine

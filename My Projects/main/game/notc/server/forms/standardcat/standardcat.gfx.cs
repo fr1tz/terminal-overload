@@ -7,50 +7,54 @@
 
 datablock DecalData(FrmStandardcatFootprint)
 {
-	sizeX = "0.18";
-	sizeY = "0.27";
-	textureName = "content/rotc/p.5.3/textures/inf/footprint";
-	SelfIlluminated = false;
+   size = "1";
+   material = fr1tz_notc1_shapes_standardcat_footprint;
+   textureCoordCount = "0";
 };
 
 //----------------------------------------------------------------------------
 // Foot puffs
 //----------------------------------------------------------------------------
 
-datablock ParticleData(FrmStandardcatFootPuff)
+datablock ParticleData(FrmStandardcatFootPuffParticle)
 {
-	dragCoefficient		= 2.0;
-	gravityCoefficient	= -0.01;
-	inheritedVelFactor	= 0.6;
+	dragCoefficient		= "1.99902";
+	gravityCoefficient	= "-0.300366";
+	inheritedVelFactor	= 0.0;
 	constantAcceleration = 0.0;
-	lifetimeMS			  = 800;
-	lifetimeVarianceMS	= 100;
-	useInvAlpha			 = true;
+	lifetimeMS			  = 1200;
+	lifetimeVarianceMS	= 0;
+	useInvAlpha			 = false;
 	spinRandomMin		  = -35.0;
 	spinRandomMax		  = 35.0;
 	colors[0]	  = "1.0 1.0 1.0 1.0";
-	colors[1]	  = "1.0 1.0 1.0 0.0";
-	sizes[0]		= 1.0;
-	sizes[1]		= 2.0;
+	colors[1]	  = "0.992157 0.992157 0.996078 0.496063";
+	colors[2]	  = "0.992157 0.992157 0.992157 0";
+	sizes[0]		= "0.799609";
+	sizes[1]		= "1.19941";
+	sizes[2]		= 0.0;
 	times[0]		= 0.0;
-	times[1]		= 1.0;
-	textureName	= "content/rotc/p.5.3/textures/rotc/dustParticle";
+	times[1]		= "0.498039";
+	times[2]		= 1.0;
+	textureName	= "content/rotc/p.5.3/textures/rotc/smoke_particle";
+   animTexName = "content/rotc/p.5.3/textures/rotc/smoke_particle";
 };
 
 datablock ParticleEmitterData(FrmStandardcatFootPuffEmitter)
 {
 	ejectionPeriodMS = 35;
 	periodVarianceMS = 10;
-	ejectionVelocity = 0.2;
-	velocityVariance = 0.1;
-	ejectionOffset	= 0.0;
-	thetaMin			= 20;
-	thetaMax			= 60;
+	ejectionVelocity = 0;
+	velocityVariance = "0";
+	ejectionOffset   = "0";
+	thetaMin         = 0;
+	thetaMax         = 0;
 	phiReferenceVel  = 0;
 	phiVariance		= 360;
-	overrideAdvances = false;
-	useEmitterColors = true;
-	particles = FrmStandardcatFootPuff;
+	overrideAdvances = 0;
+	useEmitterColors = "1";
+	particles = FrmStandardcatFootPuffParticle;
+   blendStyle = "ADDITIVE";
 };
 
 //----------------------------------------------------------------------------

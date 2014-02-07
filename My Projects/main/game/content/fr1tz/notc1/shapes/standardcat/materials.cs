@@ -1,4 +1,19 @@
 
+new Material(fr1tz_notc1_shapes_standardcat_footprint)
+{
+   diffuseMap[0] = "content/fr1tz/notc1/shapes/standardcat/footprint";
+   vertColor[0] = true;
+   translucent = true;
+   castShadows = "0";
+   translucentZWrite = "1";
+   materialTag0 = "Player";
+   mapTo = "footprint";
+   glow[0] = "0";
+   emissive[0] = "1";
+   translucentBlendOp = "AddAlpha";
+   showFootprints = "0";
+};
+
 singleton Material(fr1tz_notc1_shapes_standardcat_mat2)
 {
    mapTo = "armor_red0024";
