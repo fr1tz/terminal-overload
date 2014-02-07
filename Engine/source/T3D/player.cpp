@@ -1006,6 +1006,30 @@ void PlayerData::initPersistFields()
       addField( "FootBubblesSound", TypeSFXTrackName, Offset(sound[FootBubbles], PlayerData),
          "@brief Sound to play when walking in water and coverage equals 1.0 "
          "(fully underwater).\n\n" );
+
+      addField( "OtherFootSoftSound", TypeSFXTrackName, Offset(sound[OtherFootSoft], PlayerData),
+         "@brief Sound to play when walking on a surface with Material footstepSoundId 0.\n\n" );
+      addField( "OtherFootHardSound", TypeSFXTrackName, Offset(sound[OtherFootHard], PlayerData),
+         "@brief Sound to play when walking on a surface with Material footstepSoundId 1.\n\n" );
+      addField( "OtherFootMetalSound", TypeSFXTrackName, Offset(sound[OtherFootMetal], PlayerData),
+         "@brief Sound to play when walking on a surface with Material footstepSoundId 2.\n\n" );
+      addField( "OtherFootSnowSound", TypeSFXTrackName, Offset(sound[OtherFootSnow], PlayerData),
+         "@brief Sound to play when walking on a surface with Material footstepSoundId 3.\n\n" );
+      addField( "OtherFootShallowSound", TypeSFXTrackName, Offset(sound[OtherFootShallowSplash], PlayerData),
+         "@brief Sound to play when walking in water and coverage is less than "
+         "footSplashHeight.\n\n"
+         "@see footSplashHeight\n" );
+      addField( "OtherFootWadingSound", TypeSFXTrackName, Offset(sound[OtherFootWading], PlayerData),
+         "@brief Sound to play when walking in water and coverage is less than 1, "
+         "but > footSplashHeight.\n\n"
+         "@see footSplashHeight\n" );
+      addField( "OtherFootUnderwaterSound", TypeSFXTrackName, Offset(sound[OtherFootUnderWater], PlayerData),
+         "@brief Sound to play when walking in water and coverage equals 1.0 "
+         "(fully underwater).\n\n" );
+      addField( "OtherFootBubblesSound", TypeSFXTrackName, Offset(sound[OtherFootBubbles], PlayerData),
+         "@brief Sound to play when walking in water and coverage equals 1.0 "
+         "(fully underwater).\n\n" );
+
       addField( "movingBubblesSound", TypeSFXTrackName, Offset(sound[MoveBubbles], PlayerData),
          "@brief Sound to play when in water and coverage equals 1.0 (fully underwater).\n\n"
          "Note that unlike FootUnderwaterSound, this sound plays even if the "
@@ -6770,26 +6794,40 @@ void Player::playFootstepSound( bool triggeredLeft, Material* contactMaterial, S
    {
       // Treading water.
 
-      if ( mWaterCoverage < mDataBlock->footSplashHeight )
-         SFX->playOnce( mDataBlock->sound[ PlayerData::FootShallowSplash ], &footMat );
+      if(mWaterCoverage < mDataBlock->footSplashHeight)
+		{
+			if(triggeredLeft)
+				SFX->playOnce( mDataBlock->sound[ PlayerData::FootShallowSplash ], &footMat );
+			else
+				SFX->playOnce( mDataBlock->sound[ PlayerData::OtherFootShallowSplash ], &footMat );
+		}
       else
       {
-         if ( mWaterCoverage < 1.0 )
-            SFX->playOnce( mDataBlock->sound[ PlayerData::FootWading ], &footMat );
+         if(mWaterCoverage < 1.0)
+			{
+				if(triggeredLeft)
+					SFX->playOnce( mDataBlock->sound[ PlayerData::FootWading ], &footMat );
+				else
+					SFX->playOnce( mDataBlock->sound[ PlayerData::OtherFootWading ], &footMat );
+			}
          else
          {
-            if ( triggeredLeft )
+            if(triggeredLeft)
             {
                SFX->playOnce( mDataBlock->sound[ PlayerData::FootUnderWater ], &footMat );
                SFX->playOnce( mDataBlock->sound[ PlayerData::FootBubbles ], &footMat );
             }
+				else
+				{
+               SFX->playOnce( mDataBlock->sound[ PlayerData::OtherFootUnderWater ], &footMat );
+               SFX->playOnce( mDataBlock->sound[ PlayerData::OtherFootBubbles ], &footMat );
+				}
          }
       }
    }
    else if( contactMaterial && contactMaterial->mFootstepSoundCustom )
    {
       // Footstep sound defined on material.
-
       SFX->playOnce( contactMaterial->mFootstepSoundCustom, &footMat );
    }
    else
@@ -6802,26 +6840,52 @@ void Player::playFootstepSound( bool triggeredLeft, Material* contactMaterial, S
       else if( contactObject && contactObject->getTypeMask() & VehicleObjectType )
          sound = 2;
 
-      switch ( sound )
-      {
-      case 0: // Soft
-         SFX->playOnce( mDataBlock->sound[PlayerData::FootSoft], &footMat );
-         break;
-      case 1: // Hard
-         SFX->playOnce( mDataBlock->sound[PlayerData::FootHard], &footMat );
-         break;
-      case 2: // Metal
-         SFX->playOnce( mDataBlock->sound[PlayerData::FootMetal], &footMat );
-         break;
-      case 3: // Snow
-         SFX->playOnce( mDataBlock->sound[PlayerData::FootSnow], &footMat );
-         break;
-      /*
-      default: //Hard
-         SFX->playOnce( mDataBlock->sound[PlayerData::FootHard], &footMat );
-         break;
-      */
-      }
+		if(triggeredLeft)
+		{
+			switch(sound)
+			{
+				case 0: // Soft
+					SFX->playOnce( mDataBlock->sound[PlayerData::FootSoft], &footMat );
+					break;
+				case 1: // Hard
+					SFX->playOnce( mDataBlock->sound[PlayerData::FootHard], &footMat );
+					break;
+				case 2: // Metal
+					SFX->playOnce( mDataBlock->sound[PlayerData::FootMetal], &footMat );
+					break;
+				case 3: // Snow
+					SFX->playOnce( mDataBlock->sound[PlayerData::FootSnow], &footMat );
+					break;
+				/*
+				default: //Hard
+					SFX->playOnce( mDataBlock->sound[PlayerData::FootHard], &footMat );
+					break;
+				*/
+			}
+		}
+		else
+		{
+			switch(sound)
+			{
+				case 0: // Soft
+					SFX->playOnce( mDataBlock->sound[PlayerData::OtherFootSoft], &footMat );
+					break;
+				case 1: // Hard
+					SFX->playOnce( mDataBlock->sound[PlayerData::OtherFootHard], &footMat );
+					break;
+				case 2: // Metal
+					SFX->playOnce( mDataBlock->sound[PlayerData::OtherFootMetal], &footMat );
+					break;
+				case 3: // Snow
+					SFX->playOnce( mDataBlock->sound[PlayerData::OtherFootSnow], &footMat );
+					break;
+				/*
+				default: //Hard
+					SFX->playOnce( mDataBlock->sound[PlayerData::FootHard], &footMat );
+					break;
+				*/
+			}
+		}
    }
 }
 
