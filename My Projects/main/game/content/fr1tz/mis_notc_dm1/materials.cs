@@ -28,7 +28,7 @@ singleton Material(fr1tz_mis_notc_dm1_mat0)
    diffuseColor[1] = "0.992157 0.992157 0.992157 1";
 };
 
-singleton Material(TerrainFX_fr1tz_mis_notc_dm1_termat1)
+singleton Material(fr1tz_mis_notc_dm1_termat1fx)
 {
    mapTo = "fr1tz_mis_notc_dm1_termat1";
    footstepSoundId = "2";
@@ -36,8 +36,8 @@ singleton Material(TerrainFX_fr1tz_mis_notc_dm1_termat1)
    ShowDust = "true";
    showFootprints = "1";
    materialTag0 = "Terrain";
-   effectColor[0] = "0.992157 0.992157 0.996078 1";
-   effectColor[1] = "0.992157 0.996078 0.992157 1";
+   effectColor[0] = "0.00784314 0.94902 0.996078 1";
+   effectColor[1] = "0.996078 0.00784314 0.901961 1";
    glow[0] = "0";
    emissive[0] = "0";
    detailScale[0] = "64 64";
@@ -61,10 +61,10 @@ singleton Material(TerrainFX_fr1tz_mis_notc_dm1_termat1)
 new TerrainMaterial()
 {
    internalName = "fr1tz_mis_notc_dm1_termat1";
+   diffuseMap = "content/fr1tz/mis_notc_dm1/textures/fr1tz_mis_notc_dm1_termat1";
    diffuseSize = "16";
    detailSize = "4";
    detailDistance = "500";
    detailMap = "content/rotc/p.5.3/textures/rotc/zone.grid";
-   diffuseMap = "content/fr1tz/mis_notc_dm1/textures/grey";
 };
 
