@@ -158,8 +158,16 @@ datablock PlayerData(FrmStandardcat)
    FootShallowSound     = FrmStandardcatLeftFootShallowSplashSound;
    FootWadingSound      = FrmStandardcatLeftFootWadingSound;
    FootUnderwaterSound  = FrmStandardcatFootUnderwaterSound;
-
    //FootBubblesSound     = FootLightBubblesSound;
+   OtherFootSoftSound        = FrmStandardcatRightFootSoftSound;
+   OtherFootHardSound        = FrmStandardcatRightFootHardSound;
+   OtherFootMetalSound       = FrmStandardcatRightFootMetalSound;
+   OtherFootSnowSound        = FrmStandardcatRightFootSnowSound;
+   OtherFootShallowSound     = FrmStandardcatRightFootShallowSplashSound;
+   OtherFootWadingSound      = FrmStandardcatRightFootWadingSound;
+   OtherFootUnderwaterSound  = FrmStandardcatFootUnderwaterSound;
+   //OtherFootBubblesSound     = FootLightBubblesSound;
+   
    //movingBubblesSound   = ArmorMoveBubblesSound;
    //waterBreathSound     = WaterBreathMaleSound;
 
