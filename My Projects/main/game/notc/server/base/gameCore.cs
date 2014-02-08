@@ -580,20 +580,9 @@ function GameCore::loadOut(%game, %player)
    //echo (%game @"\c4 -> "@ %game.class @" -> GameCore::loadOut");
    
    %player.clearWeaponCycle();
-   %player.addToWeaponCycle(WpnRaptor);
-   %player.addToWeaponCycle(WpnBulldog);
+   %player.addToWeaponCycle(WpnSMG1);
 
-   %player.setInventory(WpnRaptor, 1);
-   %player.setInventory(WpnRaptorAmmo, 60);
-   %player.magazine[WpnRaptorImage.getId()] = WpnRaptorImage.magazineCapacity;
-   
-   %player.setInventory(WpnSiberion, 1);
-   %player.setInventory(WpnSiberionAmmo, 120);
-   %player.magazine[WpnSiberionImage.getId()] = WpnSiberionImage.magazineCapacity;
-   
-   %player.setInventory(WpnBulldog, 1);
-
-   %player.setInventory(WpnPineapple, 9999);
+   %player.setInventory(WpnSMG1, 1);
 
    if (%player.getDatablock().mainWeapon.image !$= "")
       %player.mountImage(%player.getDatablock().mainWeapon.image, 0);
