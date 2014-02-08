@@ -194,7 +194,9 @@ datablock PlayerData(FrmStandardcat)
    DecalData = "FrmStandardcatFootprint";
 
    // Allowable Inventory Items
-   mainWeapon = WpnRaptor;
+   mainWeapon = WpnSMG1;
+   
+   maxInv[WpnSMG1] = 1;
 
    maxInv[Lurker] = 1;
    maxInv[LurkerClip] = 20;

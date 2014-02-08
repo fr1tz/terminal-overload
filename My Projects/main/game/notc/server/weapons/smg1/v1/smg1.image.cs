@@ -1,0 +1,146 @@
+// Copyright information can be found in the file named COPYING
+// located in the root directory of this distribution.
+
+datablock ShapeBaseImageData(WpnSMG1Image)
+{
+   // Basic Item properties
+   shapeFile = "content/fr1tz/notc1/shapes/smg1/image/p1/shape.tp.dae";
+   shapeFileFP = "content/fr1tz/notc1/shapes/smg1/image/p1/shape.fp.dae";
+   emap = true;
+
+   imageAnimPrefix = "Rifle";
+   imageAnimPrefixFP = "Rifle";
+
+   // Specify mount point & offset for 3rd person, and eye offset
+   // for first person rendering.
+   mountPoint = 0;
+   firstPerson = true;
+   animateOnServer = true;
+   useEyeNode = "0";
+   eyeOffset = "0.15 0.1 -0.25";
+
+   // When firing from a point offset from the eye, muzzle correction
+   // will adjust the muzzle vector to point to the eye LOS point.
+   correctMuzzleVector = true;
+   correctMuzzleVectorTP = false;
+   
+   // Add the WeaponImage namespace as a parent, WeaponImage namespace
+   // provides some hooks into the inventory system.
+   class = "WeaponImage";
+
+   ammoSource = "Energy";
+   //minEnergy = 0;
+
+   projectile = WpnSMG1Projectile;
+
+   casing = WpnSMG1ProjectileShell;
+   shellExitDir        = "1.0 0.3 1.0";
+   shellExitOffset     = "0.15 -0.56 -0.1";
+   shellExitVariance   = 15.0;
+   shellVelocity       = 3.0;
+
+   // Weapon lights up while firing
+   lightType = "WeaponFireLight";
+   lightColor = "0.992126 0.874016 0 1";
+   lightRadius = "10";
+   lightDuration = "100";
+   lightBrightness = 2;
+
+   // Shake camera while firing.
+   shakeCamera = "0";
+   camShakeFreq = "10.0 11.0 9.0";
+   camShakeAmp = "15.0 15.0 15.0";
+
+   useRemainderDT = false;
+   maxConcurrentSounds = 1;
+   
+   // Script fields
+   reloadImage = WpnSMG1ReloadImage;
+   item = WpnSMG1;
+   ammo = WpnSMG1Ammo;
+   //clip = WpnSMG1Clip;
+   magazineCapacity = 30;
+
+   stateName[0]                     = "Preactivate";
+   stateTransitionGeneric3In[0]     = "Ready";
+   stateTransitionGeneric3Out[0]    = "Activate";
+
+   stateName[1]                     = "Activate";
+   stateArmThread[1]                = "holdblaster";
+   stateTransitionOnTimeout[1]      = "Ready";
+   stateTimeoutValue[1]             = 0.5;
+   stateSequence[1]                 = "idle";
+
+   stateName[2]                     = "Ready";
+   stateArmThread[2]                = "holdblaster";
+   //stateTransitionOnTimeout[2]      = "ReadyFidget";
+   stateTimeoutValue[2]             = 10;
+   stateWaitForTimeout[2]           = false;
+   stateTransitionOnNoAmmo[2]       = "NoAmmo";
+   stateTransitionOnTriggerDown[2]  = "Fire";
+   stateSequence[2]                 = "idle";
+
+   stateName[5]                     = "Fire";
+   stateArmThread[5]                = "aimblaster";
+   stateTransitionOnTriggerUp[5]    = "Ready";
+   stateTransitionOnNoAmmo[5]       = "NoAmmo";
+   stateTransitionOnTimeout[5]      = "Fire";
+   stateTimeoutValue[5]             = 0.128;
+   stateFire[5]                     = true;
+   stateFireProjectile[5]           = WpnSMG1Projectile;
+   stateRecoil[5]                   = "LightRecoil";
+   stateAllowImageChange[5]         = false;
+   stateSequence[5]                 = "fire";
+   stateScaleAnimation[5]           = true;
+   stateSequenceNeverTransition[5]  = true;
+   stateSequenceRandomFlash[5]      = false;        // use muzzle flash sequence
+   stateSound[5]                    = WpnSMG1FireSound;
+   //stateScript[5]                 = "onFire";
+   //stateEmitter[5]                = WpnSMG1FireSmokeEmitter;
+   //stateEmitterTime[5]            = 0.025;
+   stateEjectShell[5]               = false;
+
+   stateName[6]                     = "NoAmmo";
+   stateTransitionGeneric0In[6]     = "SprintEnter";
+   stateTransitionOnMotion[6]       = "NoAmmoMotion";
+   stateTransitionOnAmmo[6]         = "Ready";
+   stateTimeoutValue[6]             = 10;
+   stateWaitForTimeout[6]           = false;
+   stateSequence[6]                 = "empty";
+   stateTransitionOnTriggerDown[6]  = "DryFire";
+
+   stateName[8]                     = "DryFire";
+   stateTransitionGeneric0In[8]     = "SprintEnter";
+   stateWaitForTimeout[8]           = false;
+   stateTimeoutValue[8]             = 0.7;
+   stateTransitionOnTimeout[8]      = "NoAmmo";
+   stateScript[8]                   = "onDryFire";
+};
+
+function WpnSMG1Image::onMount(%this, %obj, %slot)
+{
+   Parent::onMount(%this, %obj, %slot);
+
+   // Set up inaccuracy.
+   %obj.setImageInaccuracy(%slot, "radiusmin", 2.0);
+   %obj.setImageInaccuracy(%slot, "radiusmax", 20.0);
+   %obj.setImageInaccuracy(%slot, "a1", 0.0);
+   %obj.setImageInaccuracy(%slot, "a2", 0.0);
+   %obj.setImageInaccuracy(%slot, "b1", 0.95);
+   %obj.setImageInaccuracy(%slot, "b2", 0.0);
+   %obj.setImageInaccuracy(%slot, "c", 20.0);
+   %obj.setImageInaccuracy(%slot, "d", 0.0);
+   %obj.setImageInaccuracy(%slot, "f1", 1.00);
+   %obj.setImageInaccuracy(%slot, "f2", 1.80);
+   %obj.setImageInaccuracy(%slot, "enabled", true);
+
+   // Set up recoil.
+   %obj.setImageRecoilEnabled(%slot, true);
+   %obj.setImageCurrentRecoil(%slot, 7);
+   %obj.setImageMaxRecoil(%slot, 7);
+   %obj.setImageRecoilAdd(%slot, 0);
+   %obj.setImageRecoilDelta(%slot, -0);
+}
+
+
+
