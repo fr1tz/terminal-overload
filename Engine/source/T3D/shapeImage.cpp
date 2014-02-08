@@ -13,6 +13,7 @@
 #include "lighting/lightInfo.h"
 #include "lighting/lightManager.h"
 #include "T3D/fx/particleEmitter.h"
+#include "T3D/player.h"
 #include "T3D/projectile.h"
 #include "T3D/gameBase/gameConnection.h"
 #include "math/mathIO.h"
@@ -121,6 +122,7 @@ ShapeBaseImageData::StateData::StateData()
    loaded = IgnoreLoaded;
    spin = IgnoreSpin;
    recoil = NoRecoil;
+   armThread = NULL;
    sound = 0;
    emitter = NULL;
    script = 0;
@@ -242,6 +244,7 @@ ShapeBaseImageData::ShapeBaseImageData()
       stateLoaded[i] = StateData::IgnoreLoaded;
       stateSpin[i] = StateData::IgnoreSpin;
       stateRecoil[i] = StateData::NoRecoil;
+		stateArmThread[i] = 0;
       stateSequence[i] = 0;
       stateSequenceRandomFlash[i] = false;
 
@@ -351,6 +354,7 @@ bool ShapeBaseImageData::onAdd()
          s.direction = stateDirection[i];
          s.loaded = stateLoaded[i];
          s.spin = stateSpin[i];
+			s.armThread = stateArmThread[i];
          s.recoil = stateRecoil[i];
 
          s.shapeSequence = stateShapeSequence[i];
@@ -893,6 +897,8 @@ void ShapeBaseImageData::initPersistFields()
          "<li>MediumRecoil: Play the medium_recoil sequence.</li>"
          "<li>HeavyRecoil: Play the heavy_recoil sequence.</li></ul>\n"
          "@see ShapeBaseImageRecoilState");
+      addField( "stateArmThread", TypeString, Offset(stateArmThread, ShapeBaseImageData), MaxStates,
+         "Arm thread to use when mounted by player." );
       addField( "stateSequence", TypeString, Offset(stateSequence, ShapeBaseImageData), MaxStates,
          "Name of the sequence to play on entry to this state." );
       addField( "stateSequenceRandomFlash", TypeBool, Offset(stateSequenceRandomFlash, ShapeBaseImageData), MaxStates,
@@ -1115,6 +1121,9 @@ void ShapeBaseImageData::packData(BitStream* stream)
          stream->writeInt(s.spin,StateData::NumSpinBits);
          stream->writeInt(s.recoil,StateData::NumRecoilBits);
 
+			if(stream->writeFlag(s.armThread && s.armThread[0]))
+				stream->writeString(s.armThread);
+
          for( U32 j=0; j<MaxShapes; ++j )
          {
             if(stream->writeFlag(s.sequence[j] != gDefaultStateData.sequence[j]))
@@ -1318,6 +1327,11 @@ void ShapeBaseImageData::unpackData(BitStream* stream)
          s.loaded = (StateData::LoadedState)stream->readInt(StateData::NumLoadedBits);
          s.spin = (StateData::SpinState)stream->readInt(StateData::NumSpinBits);
          s.recoil = (StateData::RecoilState)stream->readInt(StateData::NumRecoilBits);
+
+			if(stream->readFlag())
+				s.armThread	= stream->readSTString();
+			else
+				s.armThread = NULL;
 
          for( U32 j=0; j<MaxShapes; ++j )
          {
@@ -3010,6 +3024,16 @@ void ShapeBase::setImageState(U32 imageSlot, U32 newState,bool force)
       setMaskBits(ImageMaskN << imageSlot);
       image.reloadCount = (image.reloadCount + 1) & 0x7;
    }
+
+	// Arm thread handling
+	if(stateData.armThread && stateData.armThread[0])
+	{
+		if(this->getTypeMask() & PlayerObjectType)
+		{
+			Player* player = (Player*)this;
+			player->setArmThread(stateData.armThread, false);
+		} 
+	}
 
 	// Fire projectile? (note: this is experimental code -mag)
 	if(stateData.fireProjectile && image.ammo)

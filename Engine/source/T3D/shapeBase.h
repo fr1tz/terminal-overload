@@ -224,6 +224,9 @@ struct ShapeBaseImageData: public GameBaseData {
                                     ///       state which isn't NoRecoil; ie, no differentiation is made between
                                     ///       Light/Medium/Heavy recoils. Player::onImageRecoil() is the place
                                     ///       where this is handled.
+
+		const char* armThread;		   ///< Arm thread to use when mounted by player
+
       bool flashSequence[MaxShapes];///< Is this a muzzle flash sequence?
                                     ///
                                     ///  A muzzle flash sequence is used as a source to randomly display frames from,
@@ -296,6 +299,7 @@ struct ShapeBaseImageData: public GameBaseData {
    StateData::LoadedState  stateLoaded                [MaxStates];
    StateData::SpinState    stateSpin                  [MaxStates];
    StateData::RecoilState  stateRecoil                [MaxStates];
+	const char*             stateArmThread             [MaxStates];
    const char*             stateSequence              [MaxStates];
    bool                    stateSequenceRandomFlash   [MaxStates];
 

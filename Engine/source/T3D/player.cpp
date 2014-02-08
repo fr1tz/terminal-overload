@@ -3654,16 +3654,16 @@ const String& Player::getArmThread() const
    return String::EmptyString;
 }
 
-bool Player::setArmThread(const char* sequence)
+bool Player::setArmThread(const char* sequence, bool updateClients)
 {
    // The arm sequence must be in the action list.
    for (U32 i = 1; i < mDataBlock->actionCount; i++)
       if (!dStricmp(mDataBlock->actionList[i].name,sequence))
-         return setArmThread(i);
+         return setArmThread(i, updateClients);
    return false;
 }
 
-bool Player::setArmThread(U32 action)
+bool Player::setArmThread(U32 action, bool updateClients)
 {
    PlayerData::ActionAnimation &anim = mDataBlock->actionList[action];
    if (anim.sequence != -1 &&
@@ -3671,7 +3671,13 @@ bool Player::setArmThread(U32 action)
    {
       mShapeInstance->setSequence(mArmAnimation.thread,anim.sequence,0);
       mArmAnimation.action = action;
-      setMaskBits(ActionMask);
+
+		if(isGhost())
+			this->advanceTime(0);
+
+		if(isServerObject() && updateClients)
+			setMaskBits(ActionMask);
+
       return true;
    }
    return false;
