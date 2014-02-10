@@ -20,13 +20,14 @@
 #include "ts/tsShape.h"
 #endif
 #ifndef _TSSHAPECACHE_H_
-#include "Alux3d/tsShapeCache.h"
+#include "Alux3D/tsShapeCache.h"
 #endif
 #ifndef _HEXAGONVOLUMECOLLISIONSHAPE_H_
 #include "hexagonVolumeCollisionShape.h"
 #endif
 
 class Grid;
+class HexagonVolume;
 
 //--------------------------------------------------------------------------
 
