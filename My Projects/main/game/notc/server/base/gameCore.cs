@@ -581,8 +581,10 @@ function GameCore::loadOut(%game, %player)
    
    %player.clearWeaponCycle();
    %player.addToWeaponCycle(WpnSMG1);
+   %player.addToWeaponCycle(WpnMGL1);
 
    %player.setInventory(WpnSMG1, 1);
+   %player.setInventory(WpnMGL1, 1);
 
    if (%player.getDatablock().mainWeapon.image !$= "")
       %player.mountImage(%player.getDatablock().mainWeapon.image, 0);

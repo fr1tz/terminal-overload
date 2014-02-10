@@ -1,0 +1,142 @@
+
+singleton Material(fr1tz_notc1_shapes_mgl1_image_p1_mat1)
+{
+   mapTo = "fr1tz_notc1_shapes_mgl1_image_p1_mat1";
+   diffuseColor[0] = "0.360784 0.360784 0.360784 1";
+   specular[0] = "0.996078 0.996078 0.996078 1";
+   specularPower[0] = "1";
+   doubleSided = "0";
+   translucentBlendOp = "None";
+   diffuseColor[1] = "0.00392157 0.00392157 0.00392157 0";
+   castShadows = "0";
+   translucent = "0";
+   showFootprints = "0";
+   glow[0] = "0";
+   emissive[0] = "0";
+   diffuseColor[2] = "0.00392157 0.00392157 0.00392157 0";
+   diffuseColor[3] = "0.00392157 0.00392157 0.00392157 0";
+   detailScale[1] = "1 1";
+   emissive[2] = "0";
+   emissive[3] = "0";
+   animFlags[1] = "0x00000000";
+   scrollDir[1] = "1 0";
+   scrollDir[2] = "0 1";
+   scrollSpeed[1] = "1";
+   scrollSpeed[2] = "1.647";
+   rotSpeed[1] = "1.765";
+   rotPivotOffset[1] = "-0.5 -0.4";
+   waveFreq[1] = "1.094";
+   waveAmp[1] = "1";
+   materialTag0 = "Miscellaneous";
+   specularStrength[1] = "1.76471";
+   emissive[1] = "0";
+   glow[1] = "0";
+   pixelSpecular[0] = "1";
+   detailScale[2] = "1 1";
+   glow[2] = "0";
+   animFlags[2] = "0x00000000";
+   waveFreq[2] = "1.25";
+   waveAmp[2] = "1";
+   glow[3] = "0";
+   animFlags[3] = "0x00000000";
+   scrollDir[3] = "0 1";
+   scrollSpeed[3] = "1";
+   pixelSpecular[2] = "0";
+   scrollDir[0] = "1 0";
+   pixelSpecular[3] = "0";
+   diffuseMap[0] = "content/fr1tz/notc1/textures/white.128.alpha25.png";
+   normalMap[0] = "content/fr1tz/notc1/textures/grid.128.8.h2.n3.png";
+   specularStrength[0] = "0.686275";
+   cubemap = "fr1tz_notc1_cubemaps_chrome1";
+};
+
+singleton Material(fr1tz_notc1_shapes_mgl1_image_p1_mat2)
+{
+   mapTo = "fr1tz_notc1_shapes_mgl1_image_p1_mat2";
+   diffuseColor[0] = "0.996078 0.992157 0.996078 0.643";
+   diffuseColor[1] = "0.00392157 0.00392157 0.00392157 0";
+   diffuseMap[0] = "content/fr1tz/notc1/shapes/mgl1/image/p1/fx1.png";
+   specular[0] = "0.5 0.5 0.5 1";
+   specularPower[0] = "50";
+   glow[0] = "1";
+   emissive[0] = "1";
+   doubleSided = "1";
+   castShadows = "0";
+   translucent = "1";
+   translucentBlendOp = "LerpAlpha";
+   showFootprints = "0";
+   translucentZWrite = "1";
+   materialTag0 = "Miscellaneous";
+   animFlags[0] = "0x00000009";
+   scrollDir[0] = "-0.38 1";
+   scrollSpeed[0] = "2";
+   waveFreq[0] = "0.156";
+   waveAmp[0] = "1";
+   emissive[1] = "1";
+   animFlags[1] = "0x00000005";
+   scrollDir[1] = "1 0.172";
+   scrollSpeed[1] = "1.294";
+   waveFreq[1] = "0.469";
+   waveAmp[1] = "0.719";
+};
+
+singleton Material(fr1tz_notc1_shapes_mgl1_image_p1_mat0)
+{
+   mapTo = "fr1tz_notc1_shapes_mgl1_image_p1_mat0";
+   diffuseColor[0] = "0.00392157 0.00392157 0.00392157 1";
+   specular[0] = "0.5 0.5 0.5 1";
+   specularPower[0] = "50";
+   translucentBlendOp = "None";
+   glow[0] = "0";
+   emissive[0] = "0";
+   diffuseColor[1] = "0.996078 0.603922 0.00784314 1";
+   diffuseColor[2] = "1 0.580392 0 1";
+   diffuseColor[3] = "0.498039 0.498039 0.498039 1";
+   materialTag0 = "Miscellaneous";
+   castShadows = "0";
+   showFootprints = "0";
+   diffuseMap[1] = "content/fr1tz/notc1/shapes/mgl1/image/p1/fx4.png";
+   glow[1] = "1";
+   emissive[1] = "1";
+   diffuseMap[2] = "content/fr1tz/notc1/shapes/mgl1/image/p1/fx3.png";
+   glow[2] = "1";
+   emissive[2] = "1";
+   animFlags[2] = "0x00000001";
+   scrollDir[2] = "1 0";
+   scrollSpeed[2] = "0.588";
+   animFlags[1] = "0x00000001";
+   scrollDir[1] = "0 1";
+   scrollSpeed[1] = "1.059";
+   diffuseMap[3] = "content/fr1tz/notc1/shapes/mgl1/image/p1/plates.png";
+   normalMap[0] = "content/fr1tz/notc1/shapes/mgl1/image/p1/plates.h1.n1.png";
+};
+
+singleton Material(fr1tz_notc1_shapes_mgl1_image_p1_mat4)
+{
+   mapTo = "fr1tz_notc1_shapes_mgl1_image_p1_mat4";
+   diffuseColor[0] = "0.00392157 0.00392157 0.00392157 1";
+   specular[0] = "0.5 0.5 0.5 1";
+   specularPower[0] = "50";
+   translucentBlendOp = "None";
+   glow[0] = "0";
+   emissive[0] = "0";
+   diffuseColor[1] = "0.996078 0.603922 0.00784314 1";
+   diffuseColor[2] = "1 0.580392 0 1";
+   materialTag0 = "Miscellaneous";
+   castShadows = "0";
+   showFootprints = "0";
+   diffuseMap[1] = "content/fr1tz/notc1/shapes/mgl1/image/p1/fx4.png";
+   glow[1] = "1";
+   emissive[1] = "1";
+   diffuseMap[2] = "content/fr1tz/notc1/shapes/mgl1/image/p1/fx3.png";
+   glow[2] = "1";
+   emissive[2] = "1";
+   animFlags[2] = "0x00000001";
+   scrollDir[2] = "1 0";
+   scrollSpeed[2] = "0.588";
+   animFlags[1] = "0x00000001";
+   scrollDir[1] = "0 1";
+   scrollSpeed[1] = "1.059";
+   normalMap[0] = "content/fr1tz/notc1/shapes/mgl1/image/p1/plates.h1.n1.png";
+};
+

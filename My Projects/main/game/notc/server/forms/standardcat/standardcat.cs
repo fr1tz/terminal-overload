@@ -197,6 +197,7 @@ datablock PlayerData(FrmStandardcat)
    mainWeapon = WpnSMG1;
    
    maxInv[WpnSMG1] = 1;
+   maxInv[WpnMGL1] = 1;
 
    maxInv[Lurker] = 1;
    maxInv[LurkerClip] = 20;
