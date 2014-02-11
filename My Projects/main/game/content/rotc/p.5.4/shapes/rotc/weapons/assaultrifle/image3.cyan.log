@@ -1,0 +1,81 @@
+Torque Exporter 0.97 Beta3 
+ Using blender, version 249
+ Exporting...
+ Writing shape to  'D:\mike\rotc\game\share\shapes\rotc\weapons\assaultrifle\image3.cyan.dts'.
+ Processing...
+    Loading sequence 'fire'...
+       Frames: 16 
+       Animates: loc rot 
+    Loaded sequence 'fire'.
+    Loading sequence 'idle'...
+       Frames: 20 
+    Loaded sequence 'idle'.
+    Loading sequence 'spin'...
+       Frames: 21 
+       Animates: rot 
+       Note: Duplicate frames removed,  (was 21,  now 20)
+    Loaded sequence 'spin'.
+    Loading sequence 'ambient'...
+       Frames: 21 
+       Animates: loc rot 
+       Note: Duplicate frames removed,  (was 21,  now 20)
+    Loaded sequence 'ambient'.
+ > Shape Details
+    > Nodes
+      ^^ Bone [Exp-Catch-Root] (parent -1)
+      ^^ Bone [Empty] (parent -1)
+      ^^ Bone [MountPoint] (parent -1)
+      ^^ Bone [MuzzleFlashVisibility] (parent -1)
+      ^^ Bone [MuzzlePoint] (parent -1)
+      ^^ Bone [RetractionPoint] (parent -1)
+      ^^ Bone [fireparticles] (parent -1)
+      ^^ Bone [s_shape] (parent -1)
+       ^^ Bone [s_a] (parent 7)
+       ^^ Bone [s_a_hud] (parent 7)
+       ^^ Bone [s_b] (parent 7)
+       ^^ Bone [s_b_hud] (parent 7)
+       ^^ Bone [s_c] (parent 7)
+       ^^ Bone [s_c_hud] (parent 7)
+      ^^ Bone [z_hudgrip] (parent -1)
+    > Objects
+     's_a' : Null Standard Standard Standard 
+     's_a_hud' : Standard Null Null Null 
+     's_b' : Null Standard Standard Standard 
+     's_b_hud' : Standard Null Null Null 
+     's_c' : Null Standard Standard Null 
+     's_c_hud' : Standard Null Null Null 
+    > Materials
+       image
+       Material
+       projectile.cyan
+    > Detail Levels
+       Detail-1 (size : 1024)
+       Detail-2 (size : 50)
+       Detail-3 (size : 10)
+       Detail-4 (size : 1)
+       Smallest : Detail-4 (size : 1)
+    > Internal Sequences
+     - fire
+        Animates: vis loc rot 
+        Frames: 16
+        Ground Frames: 0
+        Triggers: 0
+     - idle
+        Animates: vis 
+        Frames: 20
+        Ground Frames: 0
+        Triggers: 0
+     - spin
+        Animates: rot 
+        Frames: 20
+        Ground Frames: 0
+        Triggers: 0
+     - ambient
+        Animates: loc rot 
+        Frames: 20
+        Ground Frames: 0
+        Triggers: 0
+ Writing out DTS...
+ Done.
+ Finished.
+ 

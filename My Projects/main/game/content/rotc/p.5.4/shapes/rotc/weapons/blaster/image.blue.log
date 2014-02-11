@@ -1,0 +1,121 @@
+Torque Exporter 0.97 Beta3 
+ Using blender, version 249
+ Exporting...
+   ****************************************************************************
+   Warning: Multiple Blender mesh names in Detail1 all reduce to the same DTS
+    Object name: "Cylinder"
+     The exporter will use the original names for these meshes and any nodes
+     generated from them.  This may result in duplicate or unneccesary nodes,
+     extra animation tracks, and inefficent mesh packing in the exported dts
+     file.
+       Changed dts object and node name for Blender mesh "Cylinder.004"
+         from "Cylinder" to "Cylinder.004".
+       Changed dts object and node name for Blender mesh "Cylinder.003"
+         from "Cylinder" to "Cylinder.003".
+       Changed dts object and node name for Blender mesh "Cylinder.001"
+         from "Cylinder" to "Cylinder.001".
+       Changed dts object and node name for Blender mesh "Cylinder.008"
+         from "Cylinder" to "Cylinder.008".
+       Changed dts object and node name for Blender mesh "Cylinder.007"
+         from "Cylinder" to "Cylinder.007".
+       Changed dts object and node name for Blender mesh "Cylinder.006"
+         from "Cylinder" to "Cylinder.006".
+       Changed dts object and node name for Blender mesh "Cylinder.005"
+         from "Cylinder" to "Cylinder.005".
+       Changed dts object and node name for Blender mesh "Cylinder.002"
+         from "Cylinder" to "Cylinder.002".
+       Changed dts object and node name for Blender mesh "Cylinder"
+         from "Cylinder" to "Cylinder".
+   ****************************************************************************
+
+   ****************************************************************************
+   Warning: Multiple Blender mesh names in Detail1 all reduce to the same DTS
+    Object name: "Plane"
+     The exporter will use the original names for these meshes and any nodes
+     generated from them.  This may result in duplicate or unneccesary nodes,
+     extra animation tracks, and inefficent mesh packing in the exported dts
+     file.
+       Changed dts object and node name for Blender mesh "Plane.007"
+         from "Plane" to "Plane.007".
+       Changed dts object and node name for Blender mesh "Plane.005"
+         from "Plane" to "Plane.005".
+       Changed dts object and node name for Blender mesh "Plane.004"
+         from "Plane" to "Plane.004".
+   ****************************************************************************
+
+ Writing shape to  '/home/mike/current/rotc/rotc-ethernet/ethernet/data/weapons/blaster/image.blue.dts'.
+ Processing...
+    Loading sequence 'fire'...
+       Frames: 6 
+       Animates: loc 
+    Loaded sequence 'fire'.
+    Loading sequence 'idle'...
+       Frames: 5 
+    Loaded sequence 'idle'.
+    Loading sequence 'spin'...
+       Frames: 21 
+       Animates: rot 
+       Note: Duplicate frames removed,  (was 21,  now 20)
+    Loaded sequence 'spin'.
+ > Shape Details
+    > Nodes
+      ^^ Bone [Exp-Catch-Root] (parent -1)
+      ^^ Bone [Cube] (parent -1)
+      ^^ Bone [Cylinder] (parent -1)
+      ^^ Bone [Cylinder.002] (parent -1)
+      ^^ Bone [Cylinder.005] (parent -1)
+      ^^ Bone [Cylinder.006] (parent -1)
+      ^^ Bone [Cylinder.007] (parent -1)
+      ^^ Bone [Cylinder.008] (parent -1)
+      ^^ Bone [Empty] (parent -1)
+       ^^ Bone [Cylinder.001] (parent 8)
+       ^^ Bone [Cylinder.003] (parent 8)
+       ^^ Bone [Cylinder.004] (parent 8)
+       ^^ Bone [Plane.004] (parent 8)
+       ^^ Bone [Plane.005] (parent 8)
+       ^^ Bone [Plane.007] (parent 8)
+      ^^ Bone [MountPoint] (parent -1)
+      ^^ Bone [MuzzleFlashVisibility] (parent -1)
+      ^^ Bone [MuzzlePoint] (parent -1)
+      ^^ Bone [RetractionPoint] (parent -1)
+      ^^ Bone [fireparticles] (parent -1)
+    > Objects
+     'Cube' : Standard 
+     'Cylinder' : Standard 
+     'Cylinder.002' : Standard 
+     'Cylinder.005' : Standard 
+     'Cylinder.006' : Standard 
+     'Cylinder.007' : Standard 
+     'Cylinder.008' : Standard 
+     'Cylinder.001' : Standard 
+     'Cylinder.003' : Standard 
+     'Cylinder.004' : Standard 
+     'Plane.004' : Standard 
+     'Plane.005' : Standard 
+     'Plane.007' : Standard 
+    > Materials
+       image
+       image.barrel.blue
+    > Detail Levels
+       Detail-1 (size : 1)
+       Smallest : Detail-1 (size : 1)
+    > Internal Sequences
+     - fire
+        Animates: loc 
+        Frames: 6
+        Ground Frames: 0
+        Triggers: 0
+     - idle
+        Animates: 
+        Frames: 5
+        Ground Frames: 0
+        Triggers: 0
+     - spin
+        Animates: rot 
+        Frames: 20
+        Ground Frames: 0
+        Triggers: 0
+ Writing out DTS...
+ Done.
+ Finished.
+ 

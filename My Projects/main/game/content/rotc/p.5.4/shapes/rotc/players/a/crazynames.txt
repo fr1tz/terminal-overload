@@ -1,0 +1,10 @@
+Perhaps you're wondering: "What's with the nonsensical directory names here?"
+The answer is simple: The names are kept short because they need to be sent over
+the 'net for every animation each directory contains (which is a lot).
+
+Here are the real names:
+a	arms
+fb	full body
+nm	no *.max files
+tl	torso and legs
+ub	upper body

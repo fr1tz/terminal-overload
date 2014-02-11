@@ -1,0 +1,20 @@
+
+// entity 0
+{
+"classname" "worldspawn"
+"detail_number" "0"
+"min_pixels" "250"
+"geometry_scale" "32.0"
+"light_geometry_scale" "32.0"
+"ambient_color" "0 0 0"
+"emergency_ambient_color" "0 0 0"
+// brush 0
+{
+( 224 208 0 ) ( 224 -176 0 ) ( -160 208 0 ) eth1/SnowIce 0 0 0 1 1 0 0 0
+( 568 3584 64 ) ( 184 3584 64 ) ( 568 3584 -64 ) special/NULL 8 0 0 1 1 0 0 0
+( 3600 -208 64 ) ( 3600 -208 -64 ) ( 3600 -592 64 ) special/NULL 0 0 0 1 1 0 0 0
+( -160 -176 -16 ) ( 224 -176 -16 ) ( -160 208 -16 ) special/NULL 0 0 0 1 1 0 0 0
+( 432 -3584 -64 ) ( 432 -3584 64 ) ( 816 -3584 -64 ) special/NULL 0 0 0 1 1 0 0 0
+( -3584 -240 -64 ) ( -3584 144 -64 ) ( -3584 -240 64 ) special/NULL 0 0 0 1 1 0 0 0
+}
+}

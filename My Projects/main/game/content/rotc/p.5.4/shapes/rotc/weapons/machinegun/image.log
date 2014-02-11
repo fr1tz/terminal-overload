@@ -1,0 +1,93 @@
+Torque Exporter 0.97 Beta3 
+ Using blender, version 249
+ Exporting...
+   ****************************************************************************
+   Warning: Multiple Blender mesh names in Detail1 all reduce to the same DTS
+    Object name: "Cylinder"
+     The exporter will use the original names for these meshes and any nodes
+     generated from them.  This may result in duplicate or unneccesary nodes,
+     extra animation tracks, and inefficent mesh packing in the exported dts
+     file.
+       Changed dts object and node name for Blender mesh "Cylinder.001"
+         from "Cylinder" to "Cylinder.001".
+       Changed dts object and node name for Blender mesh "Cylinder"
+         from "Cylinder" to "Cylinder".
+       Changed dts object and node name for Blender mesh "Cylinder.008"
+         from "Cylinder" to "Cylinder.008".
+   ****************************************************************************
+
+   ****************************************************************************
+   Warning: Multiple Blender mesh names in Detail1 all reduce to the same DTS
+    Object name: "Cube"
+     The exporter will use the original names for these meshes and any nodes
+     generated from them.  This may result in duplicate or unneccesary nodes,
+     extra animation tracks, and inefficent mesh packing in the exported dts
+     file.
+       Changed dts object and node name for Blender mesh "Cube"
+         from "Cube" to "Cube".
+       Changed dts object and node name for Blender mesh "Cube.001"
+         from "Cube" to "Cube.001".
+   ****************************************************************************
+
+ Writing shape to  '/home/mike/current/rotc/rotc-ethernet/ethernet/data/weapons/machinegun/image.dts'.
+ Processing...
+    Loading sequence 'fire'...
+       Frames: 21 
+       Animates: loc 
+    Loaded sequence 'fire'.
+    Loading sequence 'idle'...
+       Frames: 5 
+    Loaded sequence 'idle'.
+    Loading sequence 'spin'...
+       Frames: 31 
+    Loaded sequence 'spin'.
+ > Shape Details
+    > Nodes
+      ^^ Bone [Exp-Catch-Root] (parent -1)
+      ^^ Bone [Cube] (parent -1)
+       ^^ Bone [Cube.001] (parent 1)
+       ^^ Bone [Cylinder] (parent 1)
+       ^^ Bone [Cylinder.001] (parent 1)
+       ^^ Bone [Cylinder.008] (parent 1)
+      ^^ Bone [MountPoint] (parent -1)
+      ^^ Bone [MuzzleFlash1] (parent -1)
+      ^^ Bone [MuzzleFlashSide] (parent -1)
+      ^^ Bone [MuzzleFlashVisibility] (parent -1)
+      ^^ Bone [MuzzlePoint] (parent -1)
+      ^^ Bone [RetractionPoint] (parent -1)
+      ^^ Bone [fireparticles] (parent -1)
+    > Objects
+     'Cube' : Standard 
+     'Cube.001' : Standard 
+     'Cylinder' : Standard 
+     'Cylinder.001' : Standard 
+     'Cylinder.008' : Standard 
+     'MuzzleFlash1' : Standard 
+     'MuzzleFlashSide' : Standard 
+    > Materials
+       image
+       flash.front
+       flash.side
+    > Detail Levels
+       Detail-1 (size : 1)
+       Smallest : Detail-1 (size : 1)
+    > Internal Sequences
+     - fire
+        Animates: vis loc 
+        Frames: 21
+        Ground Frames: 0
+        Triggers: 0
+     - idle
+        Animates: 
+        Frames: 5
+        Ground Frames: 0
+        Triggers: 0
+     - spin
+        Animates: 
+        Frames: 31
+        Ground Frames: 0
+        Triggers: 0
+ Writing out DTS...
+ Done.
+ Finished.
+ 
