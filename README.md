@@ -6,6 +6,8 @@ Free and open-source remake of Revenge Of The Cats: Ethernet
 Uses the Torque3D-MIT engine, see Torque 3D [main repository](https://github.com/GarageGames/Torque3D)
 for more information.
 
+Forum: http://forum.freegamedev.net/viewforum.php?f=87
+
 License
 -------
 
