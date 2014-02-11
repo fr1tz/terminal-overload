@@ -55,6 +55,9 @@ function SoldierHud::tickThread(%this)
       %this.zTickThread = "";
    }
    %this.zTickThread = %this.schedule(32, "tickThread");
+
+   if(!isObject(ServerConnection) || !isObject(ServerConnection.getControlObject()))
+      return;
    
    %magazine = SoldierHudAmmoAmount.zMagazine;
    if(%magazine $= "")
