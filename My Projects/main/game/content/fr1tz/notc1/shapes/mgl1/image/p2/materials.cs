@@ -2,7 +2,7 @@
 singleton Material(fr1tz_notc1_shapes_mgl1_image_p2_mat0)
 {
    mapTo = "fr1tz_notc1_shapes_mgl1_image_p2_mat0";
-   diffuseColor[0] = "0.996078 0.698039 0.00784314 1";
+   diffuseColor[0] = "0.996078 0.996078 0.992157 1";
    specular[0] = "0.5 0.5 0.5 1";
    specularPower[0] = "50";
    translucentBlendOp = "None";
@@ -19,13 +19,13 @@ singleton Material(fr1tz_notc1_shapes_mgl1_image_p2_mat1)
    specularPower[0] = "1";
    doubleSided = "0";
    translucentBlendOp = "None";
-   diffuseColor[1] = "0 0.580392 1 1";
+   diffuseColor[1] = "0.996078 0.764706 0.00784314 1";
    castShadows = "0";
    translucent = "0";
    showFootprints = "0";
    glow[0] = "0";
    emissive[0] = "0";
-   diffuseColor[2] = "0.00392157 0.00392157 0.00392157 0";
+   diffuseColor[2] = "0.552941 0.423529 0.00392157 1";
    diffuseColor[3] = "0.00392157 0.00392157 0.00392157 0";
    detailScale[1] = "1 1";
    emissive[2] = "1";
@@ -41,11 +41,11 @@ singleton Material(fr1tz_notc1_shapes_mgl1_image_p2_mat1)
    waveAmp[1] = "1";
    materialTag0 = "Miscellaneous";
    specularStrength[1] = "2.05882";
-   emissive[1] = "1";
-   glow[1] = "1";
+   emissive[1] = "0";
+   glow[1] = "0";
    pixelSpecular[0] = "1";
    detailScale[2] = "1 1";
-   glow[2] = "0";
+   glow[2] = "1";
    animFlags[2] = "0x00000000";
    waveFreq[2] = "1.25";
    waveAmp[2] = "1";
@@ -66,6 +66,7 @@ singleton Material(fr1tz_notc1_shapes_mgl1_image_p2_mat1)
    diffuseMap[1] = "content/fr1tz/notc1/shapes/mgl1/image/p2/platemask.png";
    specularPower[1] = "1";
    pixelSpecular[1] = "0";
+   diffuseMap[2] = "content/fr1tz/notc1/shapes/mgl1/image/p2/platemask2.png";
 };
 
 singleton Material(fr1tz_notc1_shapes_mgl1_image_p2_mat4)
@@ -77,8 +78,8 @@ singleton Material(fr1tz_notc1_shapes_mgl1_image_p2_mat4)
    translucentBlendOp = "None";
    glow[0] = "0";
    emissive[0] = "0";
-   diffuseColor[1] = "1 0.533333 0 1";
-   diffuseColor[2] = "1 0.627451 0 1";
+   diffuseColor[1] = "0.996078 0.996078 0.992157 1";
+   diffuseColor[2] = "0.996078 0.996078 0.992157 1";
    diffuseColor[3] = "1 1 1 1";
    materialTag0 = "Miscellaneous";
    castShadows = "0";
