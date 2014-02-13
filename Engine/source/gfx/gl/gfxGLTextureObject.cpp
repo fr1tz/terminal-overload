@@ -98,7 +98,7 @@ void GFXGLTextureObject::unlock(U32 mipLevel)
    glBindBuffer(GL_PIXEL_UNPACK_BUFFER_ARB, mBuffer);
    glUnmapBuffer(GL_PIXEL_UNPACK_BUFFER_ARB);
    glTexSubImage2D(GL_TEXTURE_2D, mipLevel, mLockedRectRect.point.x, mLockedRectRect.point.y, 
-      mLockedRectRect.extent.x, mLockedRectRect.extent.y, GL_BGRA, GL_UNSIGNED_BYTE, NULL);
+      mLockedRectRect.extent.x, mLockedRectRect.extent.y, GFXGLTextureFormat[mFormat], GFXGLTextureType[mFormat], NULL);
    glBindBuffer(GL_PIXEL_UNPACK_BUFFER_ARB, 0);
 
    mLockedRect.bits = NULL;
@@ -124,18 +124,13 @@ void GFXGLTextureObject::reInit()
 
 bool GFXGLTextureObject::copyToBmp(GBitmap * bmp)
 {
-   GLint oldTex;
-   glGetIntegerv(0x8069, &oldTex);
+   PRESERVE_2D_TEXTURE();
    glBindTexture(GL_TEXTURE_2D, mHandle);
    
    GLint textureFormat = GFXGLTextureFormat[bmp->getFormat()];
-   // Don't swizzle outgoing textures.
-   if(textureFormat == GL_BGRA)
-      textureFormat = GL_RGBA;
+   GLint textureType = GFXGLTextureType[bmp->getFormat()];
    
-   glGetTexImage(GL_TEXTURE_2D, 0, textureFormat, GL_UNSIGNED_BYTE, bmp->getWritableBits());
-   
-   glBindTexture(GL_TEXTURE_2D, oldTex);
+   glGetTexImage(GL_TEXTURE_2D, 0, textureFormat, textureType, bmp->getWritableBits());
    return true;
 }
 

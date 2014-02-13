@@ -148,8 +148,10 @@ GFXGLDevice::GFXGLDevice(U32 adapterIndex) :
    GFXGLEnumTranslate::init();
 
    GFXVertexColor::setSwizzle( &Swizzles::rgba );
-   mDeviceSwizzle32 = &Swizzles::bgra;
-   mDeviceSwizzle24 = &Swizzles::bgr;
+
+   // OpenGL have native RGB, no need swizzle
+   mDeviceSwizzle32 = &Swizzles::rgba;
+   mDeviceSwizzle24 = &Swizzles::rgb;
 
    mTextureManager = new GFXGLTextureManager();
    gScreenShot = new ScreenShot();

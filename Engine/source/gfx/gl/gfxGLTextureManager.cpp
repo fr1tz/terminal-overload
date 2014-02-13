@@ -210,7 +210,8 @@ bool GFXGLTextureManager::_loadTexture(GFXTextureObject *aTexture, GBitmap *pDL)
    glActiveTexture(GL_TEXTURE0);
    PRESERVE_2D_TEXTURE();
    glBindTexture(texture->getBinding(), texture->getHandle());
-   
+
+   texture->mFormat = pDL->getFormat();
    if(pDL->getFormat() == GFXFormatR8G8B8A8 || pDL->getFormat() == GFXFormatR8G8B8X8)
       _fastTextureLoad(texture, pDL);
    else
@@ -235,6 +236,7 @@ bool GFXGLTextureManager::_loadTexture(GFXTextureObject *aTexture, DDSFile *dds)
    glActiveTexture(GL_TEXTURE0);
    PRESERVE_2D_TEXTURE();
    glBindTexture(texture->getBinding(), texture->getHandle());
+   texture->mFormat = dds->mFormat;
    U32 numMips = dds->mSurfaces[0]->mMips.size();
    if(GFX->getCardProfiler()->queryProfile("GL::Workaround::noManualMips"))
       numMips = 1;
