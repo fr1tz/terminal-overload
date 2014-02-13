@@ -4,8 +4,8 @@
 datablock ShapeBaseImageData(WpnMGL1Image)
 {
    // Basic Item properties
-   shapeFile = "content/fr1tz/notc1/shapes/mgl1/image/p1/shape.tp.dae";
-   shapeFileFP = "content/fr1tz/notc1/shapes/mgl1/image/p1/shape.fp.dae";
+   shapeFile = "content/fr1tz/notc1/shapes/mgl1/image/p2/shape.tp.dae";
+   shapeFileFP = "content/fr1tz/notc1/shapes/mgl1/image/p2/shape.fp.dae";
    emap = true;
 
    imageAnimPrefix = "Rifle";
@@ -17,7 +17,7 @@ datablock ShapeBaseImageData(WpnMGL1Image)
    firstPerson = true;
    animateOnServer = true;
    useEyeNode = "0";
-   eyeOffset = "0.2 -0.1 -0.35";
+   eyeOffset = "0.175 0.05 -0.2";
 
    // When firing from a point offset from the eye, muzzle correction
    // will adjust the muzzle vector to point to the eye LOS point.
@@ -72,7 +72,7 @@ datablock ShapeBaseImageData(WpnMGL1Image)
    stateSequence[1]                 = "idle";
 
    stateName[2]                     = "Ready";
-   stateArmThread[2]                = "holdblaster";
+   stateArmThread[2]                = "holdrifle";
    //stateTransitionOnTimeout[2]      = "ReadyFidget";
    stateTimeoutValue[2]             = 10;
    stateWaitForTimeout[2]           = false;
@@ -81,7 +81,7 @@ datablock ShapeBaseImageData(WpnMGL1Image)
    stateSequence[2]                 = "idle";
 
    stateName[5]                     = "Fire";
-   stateArmThread[5]                = "aimblaster";
+   stateArmThread[5]                = "aimrifle";
    stateTransitionOnTriggerUp[5]    = "Ready";
    stateTransitionOnNoAmmo[5]       = "NoAmmo";
    stateTransitionOnTimeout[5]      = "Fire";
