@@ -83,6 +83,12 @@ void STDCALL glDebugCallback(GLenum source, GLenum type, GLuint id,
    Con::errorf("OPENGL: %s", message);
 }
 
+void STDCALL glAmdDebugCallback(GLuint id, GLenum category, GLenum severity, GLsizei length,
+   const GLchar* message,GLvoid* userParam)
+{
+   Con::errorf("OPENGL: %s",message);
+}
+
 void GFXGLDevice::initGLState()
 {  
    // We don't currently need to sync device state with a known good place because we are
@@ -113,7 +119,7 @@ void GFXGLDevice::initGLState()
    mSupportsAnisotropic = mCardProfiler->queryProfile( "GL::suppAnisotropic" );
 
 #if TORQUE_DEBUG
-   if( gglHasExtension(KHR_debug) )
+   if( gglHasExtension(KHR_debug)||gglHasExtension(ARB_debug_output))
    {
       glEnable(GL_DEBUG_OUTPUT);
       glDebugMessageCallback(glDebugCallback, NULL);      
@@ -125,6 +131,14 @@ void GFXGLDevice::initGLState()
             0,
             &unusedIds,
             GL_TRUE);
+   }
+   else if(gglHasExtension(AMD_debug_output))
+   {
+      glEnable(GL_DEBUG_OUTPUT);
+      glDebugMessageCallbackAMD(glAmdDebugCallback, NULL);      
+      glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+      GLuint unusedIds = 0;
+      glDebugMessageEnableAMD(GL_DONT_CARE, GL_DONT_CARE, 0,&unusedIds, GL_TRUE);
    }
 #endif
 }
