@@ -785,6 +785,34 @@ DefineConsoleFunction( VectorLen, F32, ( VectorF v ),,
 
 //-----------------------------------------------------------------------------
 
+DefineConsoleFunction( getAnglesFromVector, Point2F, ( VectorF v ),,
+   "Returns yaw and pitch angles from a given vector.\n"
+   "@param v A vector.\n"
+   "@return Yaw and pitch angles of vector @a v.\n\n"
+	"@ingroup Vectors" )
+{
+   F32 yaw, pitch;
+   MathUtils::getAnglesFromVector(v, yaw, pitch);
+   return Point2F(yaw, pitch);
+}
+
+//-----------------------------------------------------------------------------
+
+DefineConsoleFunction( getVectorFromAngles, VectorF, ( Point2F angles ),,
+   "Returns vector from given yaw and pitch angles.\n"
+   "@param angles Yaw and pitch angles.\n"
+   "@return Vector from given angles.\n\n"
+	"@ingroup Vectors" )
+{
+   VectorF v;
+   F32 yaw = angles.x;
+   F32 pitch = angles.y;
+   MathUtils::getVectorFromAngles(v, yaw, pitch);
+	return v;
+}
+
+//-----------------------------------------------------------------------------
+
 DefineConsoleFunction( VectorOrthoBasis, MatrixF, ( AngAxisF aa ),,
    "Create an orthogonal basis from the given vector.\n"
    "@param aaf The vector to create the orthogonal basis from.\n"
@@ -859,6 +887,19 @@ DefineConsoleFunction( MatrixCreateFromEuler, TransformF, ( Point3F angles ),,
    AngAxisF aa;
    aa.set(rotQ);
 
+   return TransformF( Point3F::Zero, aa );
+}
+
+//-----------------------------------------------------------------------------
+
+DefineConsoleFunction( createOrientFromDir, TransformF, ( Point3F dir ),,
+	"@Creates orientation matrix from a direction vector.  Assumes ( 0 0 1 ) is up.\n\n"
+   "@param Vector3F dir vector.\n"
+   "@return Orientation matrix.\n"
+   "@ingroup Matrices" )
+{
+   MatrixF m = MathUtils::createOrientFromDir(dir);
+   AngAxisF aa(m);
    return TransformF( Point3F::Zero, aa );
 }
 
