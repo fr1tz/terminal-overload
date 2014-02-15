@@ -31,7 +31,7 @@ datablock ShapeBaseImageData(WpnMGL1Image)
    ammoSource = "Energy";
    //minEnergy = 0;
 
-   projectile = WpnMGL1Projectile;
+   projectile = WpnMGL1PseudoProjectile;
 
    casing = WpnMGL1ProjectileShell;
    shellExitDir        = "1.0 0.3 1.0";
@@ -87,7 +87,7 @@ datablock ShapeBaseImageData(WpnMGL1Image)
    stateTransitionOnTimeout[5]      = "Fire";
    stateTimeoutValue[5]             = 0.128;
    stateFire[5]                     = true;
-   stateFireProjectile[5]           = WpnMGL1Projectile;
+   stateFireProjectile[5]           = WpnMGL1PseudoProjectile;
    stateRecoil[5]                   = "LightRecoil";
    stateAllowImageChange[5]         = false;
    stateSequence[5]                 = "fire";

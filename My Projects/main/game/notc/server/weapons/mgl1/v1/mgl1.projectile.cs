@@ -26,9 +26,9 @@ datablock DecalData(WpnMGL1ProjectileDecal)
    textureCoords[3] = "0.5 0.5 0.5 0.5";
 };
 
-datablock ShotgunProjectileData(WpnMGL1Projectile)
+datablock ShotgunProjectileData(WpnMGL1PseudoProjectile)
 {
-   projectileShapeName = "content/fr1tz/notc1/shapes/smg1/projectile/p1/shape.dae";
+   //projectileShapeName = "content/fr1tz/oldshapes/siberion/projectile/p1/shape.dae";
 
    // ShotgunProjectileData fields
 	numBullets = 1;
@@ -37,27 +37,77 @@ datablock ShotgunProjectileData(WpnMGL1Projectile)
 	referenceSpreadRadius = 0.0;
 	referenceSpreadDistance = 50;
 
+   muzzleVelocity      = 9999;
+   velInheritFactor    = 0;
+};
+
+function WpnMGL1PseudoProjectile::onAdd(%this, %obj)
+{
+   // Create actual projectile.
+   %data = WpnMGL1Projectile;
+	%player = %obj.sourceObject;
+	%slot = %obj.sourceSlot;
+ 
+   %muzzleVector = %player.getMuzzleVector(0);
+	%muzzlePoint = %player.getMuzzlePoint(0);
+
+   %muzzleTransform = createOrientFromDir(%muzzleVector);
+
+	%pos[0] = "0 0 0";
+	%vec[0] = "0 1 0.005";
+	%pos[1] = "0 0 0.1";
+	%vec[1] = "0 1 0.025";
+
+	for(%i = 0; %i < 2; %i++)
+	{
+		%position =	VectorAdd(
+			%muzzlePoint,
+			MatrixMulVector(%muzzleTransform, %pos[%i])
+		);
+		%velocity = VectorScale(MatrixMulVector(%muzzleTransform, %vec[%i]), %data.muzzleVelocity);
+
+		// create the projectile object...
+		%p = new Projectile() {
+			dataBlock       = %data;
+			teamId          = %obj.teamId;
+			initialVelocity = %velocity;
+			initialPosition = %position;
+			sourceObject    = %player;
+			sourceSlot      = %slot;
+			client          = %player.client;
+		};
+		MissionCleanup.add(%p);
+	}
+
+	// no need to ghost pseudo projectile to clients...
+	//%obj.delete();
+}
+
+datablock ProjectileData(WpnMGL1Projectile)
+{
+   projectileShapeName = "content/fr1tz/notc1/shapes/mgl1/projectile/p1/shape.dae";
+
    //lightDesc = BulletProjectileLightDesc;
 
-   directDamage        = 15;
-   radiusDamage        = 0;
-   damageRadius        = 0.5;
-   areaImpulse         = 0.5;
-   impactForce         = 600;
+   directDamage        = 0;
+   radiusDamage        = 30;
+   damageRadius        = 2;
+   areaImpulse         = 0;
+   impactForce         = 2500;
 
    explosion           = "WpnMGL1ProjectileExplosion";
    decal               = "WpnMGL1ProjectileDecal";
 
-   muzzleVelocity      = 5;
-   velInheritFactor    = 0;
+   muzzleVelocity      = 150;
+   velInheritFactor    = 0.75;
 
    armingDelay         = 0;
-   lifetime            = 992;
-   fadeDelay           = 1472;
+   lifetime            = 5000;
+   fadeDelay           = 5000;
    bounceElasticity    = 0;
    bounceFriction      = 0;
    isBallistic         = false;
-   gravityMod          = 1;
+   gravityMod          = 5.0;
    //lightDesc = "WpnMGL1ProjectileLightDesc";
 };
 
