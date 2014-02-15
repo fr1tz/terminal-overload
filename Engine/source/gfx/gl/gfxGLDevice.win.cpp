@@ -383,9 +383,11 @@ bool GFXGLWindowTarget::present()
    glBindFramebufferEXT(GL_DRAW_FRAMEBUFFER_EXT, 0);
    glBindFramebufferEXT(GL_READ_FRAMEBUFFER_EXT, mBackBufferFBO);
 
+   // OpenGL render upside down for make render more similar to DX.
+   // Final screen are corrected here
    glBlitFramebufferEXT(
       0, 0, srcSize.x, srcSize.y,
-      0, 0, dstSize.x, dstSize.y, 
+      0, dstSize.y, dstSize.x, 0, // Y inverted
       GL_COLOR_BUFFER_BIT, GL_NEAREST);
 
    HWND hwnd = GETHWND(getWindow());
