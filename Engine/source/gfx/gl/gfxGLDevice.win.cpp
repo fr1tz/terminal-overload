@@ -108,7 +108,7 @@ void GFXGLDevice::enumerateAdapters( Vector<GFXAdapter*> &adapterList )
 
    // Create pixel format descriptor...
    PIXELFORMATDESCRIPTOR pfd;
-   CreatePixelFormat( &pfd, 16, 24, 8, false ); // 16 bit color, 16 bit depth, 8 bit stencil...everyone can do this // TODO OPENGL
+   CreatePixelFormat( &pfd, 32, 0, 0, false );
    if( !SetPixelFormat( tempDC, ChoosePixelFormat( tempDC, &pfd ), &pfd ) )
       AssertFatal( false, "I don't know who's responcible for this, but I want caught..." );
 
@@ -255,7 +255,7 @@ void GFXGLDevice::init( const GFXVideoMode &mode, PlatformWindow *window )
 
    // Create pixel format descriptor...
    PIXELFORMATDESCRIPTOR pfd;
-   CreatePixelFormat( &pfd, 16, 16, 8, false ); // 16 bit color, 16 bit depth, 8 bit stencil...everyone can do this
+   CreatePixelFormat( &pfd, 32, 0, 0, false ); // 32 bit color... We do not need depth or stencil, OpenGL renders into a FBO and then copy the image to window
    if( !SetPixelFormat( hdcGL, ChoosePixelFormat( hdcGL, &pfd ), &pfd ) )
    {
       AssertFatal( false, "GFXGLDevice::init - cannot get the one and only pixel format we check for." );
