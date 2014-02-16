@@ -61,6 +61,7 @@ private:
    void _teardownCurrentMode();
    void _setupNewMode();
    void _setupAttachments();
+   void _WindowPresent();
 };
 
 #endif

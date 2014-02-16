@@ -25,6 +25,15 @@
 #include "gfx/gl/gfxGLWindowTarget.h"
 #include "gfx/gl/gfxGLTextureObject.h"
 #include "gfx/gl/gfxGLUtils.h"
+#include "postFx/postEffect.h"
+
+GFX_ImplementTextureProfile( BackBufferDepthProfile,
+                             GFXTextureProfile::DiffuseMap,
+                             GFXTextureProfile::PreserveSize |
+                             GFXTextureProfile::NoMipmap |
+                             GFXTextureProfile::ZTarget |
+                             GFXTextureProfile::Pooled,
+                             GFXTextureProfile::NONE );
 
 GFXGLWindowTarget::GFXGLWindowTarget(PlatformWindow *win, GFXDevice *d)
       : GFXWindowTarget(win), mDevice(d), mContext(NULL), mFullscreenContext(NULL)
@@ -88,4 +97,55 @@ void GFXGLWindowTarget::resolveTo(GFXTextureObject* obj)
    
    glBlitFramebufferEXT(0, 0, getSize().x, getSize().y,
       0, 0, glTexture->getWidth(), glTexture->getHeight(), GL_COLOR_BUFFER_BIT, GL_NEAREST);
+}
+
+inline void GFXGLWindowTarget::_setupAttachments()
+{
+   glBindFramebufferEXT( GL_FRAMEBUFFER_EXT, mBackBufferFBO);
+   const Point2I dstSize = getSize();
+   mBackBufferColorTex.set(dstSize.x, dstSize.y, getFormat(), &PostFxTargetProfile, "backBuffer");
+   GFXGLTextureObject *color = static_cast<GFXGLTextureObject*>(mBackBufferColorTex.getPointer());
+   glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D, color->getHandle(), 0);
+   mBackBufferDepthTex.set(dstSize.x, dstSize.y, GFXFormatD24S8, &BackBufferDepthProfile, "backBuffer");
+   GFXGLTextureObject *depth = static_cast<GFXGLTextureObject*>(mBackBufferDepthTex.getPointer());
+   glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_TEXTURE_2D, depth->getHandle(), 0);
+}
+
+void GFXGLWindowTarget::makeActive()
+{
+   if(mBackBufferFBO)
+   {
+      glBindFramebufferEXT( GL_FRAMEBUFFER_EXT, mBackBufferFBO);
+   }
+   else
+   {
+      glGenFramebuffersEXT(1, &mBackBufferFBO);
+      _setupAttachments();
+      CHECK_FRAMEBUFFER_STATUS();
+   }
+}
+
+bool GFXGLWindowTarget::present()
+{
+    PRESERVE_FRAMEBUFFER();
+
+   const Point2I srcSize = mBackBufferColorTex.getWidthHeight();
+   const Point2I dstSize = getSize();
+
+   glBindFramebufferEXT(GL_DRAW_FRAMEBUFFER_EXT, 0);
+   glBindFramebufferEXT(GL_READ_FRAMEBUFFER_EXT, mBackBufferFBO);
+
+   // OpenGL render upside down for make render more similar to DX.
+   // Final screen are corrected here
+   glBlitFramebufferEXT(
+      0, 0, srcSize.x, srcSize.y,
+      0, dstSize.y, dstSize.x, 0, // Y inverted
+      GL_COLOR_BUFFER_BIT, GL_NEAREST);
+
+   _WindowPresent();
+
+   if(srcSize != dstSize || mBackBufferDepthTex.getWidthHeight() != dstSize)
+      _setupAttachments();
+
+   return true;
 }

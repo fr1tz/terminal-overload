@@ -206,24 +206,11 @@ GFXFence* GFXGLDevice::_createPlatformSpecificFence()
 
 
 //-----------------------------------------------------------------------------
-inline void GFXGLWindowTarget::_setupAttachments()
-{
 
-}
-
-void GFXGLWindowTarget::makeActive()
+void GFXGLWindowTarget::_WindowPresent()
 {
-}
-
-bool GFXGLWindowTarget::present()
-{
-    if(x86UNIXState->isXWindowsRunning() && mContext)
-    {
-        Display* display = x86UNIXState->getDisplayPointer();
-        glXSwapBuffers(display, (Window)getWindow()->getWindowId());
-        return true;
-    }
-    return false;
+   Display* display = x86UNIXState->getDisplayPointer();
+   glXSwapBuffers(display, (Window)getWindow()->getWindowId());
 }
 
 void GFXGLWindowTarget::_teardownCurrentMode()
