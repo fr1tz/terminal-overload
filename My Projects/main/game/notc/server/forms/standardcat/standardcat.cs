@@ -58,6 +58,13 @@ datablock PlayerData(FrmStandardcat)
    maxForwardSpeed = 8;
    maxBackwardSpeed = 8;
    maxSideSpeed = 5;
+   
+	slideForce = 20 * 90;
+	slideEnergyDrain = 0;
+	minSlideEnergy = 0;
+	maxSlideForwardSpeed = 30;
+	maxSlideBackwardSpeed = 25;
+	maxSlideSideSpeed = 12;
 
    sprintForce = "9000";
    sprintEnergyDrain = 0;
@@ -79,11 +86,13 @@ datablock PlayerData(FrmStandardcat)
    maxUnderwaterBackwardSpeed = 7.8;
    maxUnderwaterSideSpeed = 4.0;
 
-   jumpForce =  "720";
+   jumpForce =  720;
    jumpEnergyDrain = 0;
    minJumpEnergy = 0;
    jumpDelay = 0;
-   airControl = 0.1;
+   
+   glideForce = 10 * 90;
+   airControl = 0.0;
 
    fallingSpeedThreshold = -6.0;
 
@@ -130,6 +139,17 @@ datablock PlayerData(FrmStandardcat)
    mediumSplashSoundVelocity = 10.0;
    hardSplashSoundVelocity = 20.0;
    exitSplashSoundVelocity = 5.0;
+   
+	// slide emitters
+	slideParticleFootEmitter[0] = FrmStandardcatSlideFootEmitter;
+	//slideParticleTrailEmitter[0] = BlueSlideEmitter;
+	//slideContactParticleFootEmitter[0] = RedSlideEmitter;
+	slideContactParticleTrailEmitter[0] = FrmStandardcatSlideContactTrailEmitter;
+ 
+   // skid emitters
+	skidParticleFootEmitter[0] = FrmStandardcatSkidFootEmitter;
+	skidParticleTrailEmitter[0] = CatSkidTrailEmitter0;
+	skidParticleTrailEmitter[1] = CatSkidTrailEmitter1;
 
    // Controls over slope of runnable/jumpable surfaces
    runSurfaceAngle  = 40;
@@ -175,6 +195,10 @@ datablock PlayerData(FrmStandardcat)
    impactHardSound      = FrmStandardcatImpactHardSound;
    impactMetalSound     = FrmStandardcatImpactMetalSound;
    impactSnowSound      = FrmStandardcatImpactSnowSound;
+   
+	slideSound        = FrmStandardcatSlideSound;
+	slideContactSound = FrmStandardcatSlideContactSound;
+	skidSound         = FrmStandardcatSkidSound;
 
    //impactWaterEasy      = ImpactLightWaterEasySound;
    //impactWaterMedium    = ImpactLightWaterMediumSound;

@@ -433,3 +433,558 @@ datablock ExplosionData(FrmStandardcatSpawnExplosion)
 	lightEndColor = "0.0 0.0 0.0";
 };
 
+//------------------------------------------------------------------------------
+// light images...
+
+datablock ShapeBaseImageData(FrmStandardcatLightImage)
+{
+	// basic item properties
+	shapeFile = "content/rotc/p.5.3/shapes/rotc/misc/nothing.dts";
+	emap = true;
+
+	// mount point & mount offset...
+	mountPoint  = 4;
+	offset = "0 0 0";
+
+	// light properties...
+	lightType = "ConstantLight";
+	lightColor = "1 0 0";
+	lightTime = 1000;
+	lightRadius = 4;
+	lightCastsShadows = false;
+	lightAffectsShapes = false;
+
+	stateName[0] = "DoNothing";
+};
+
+//------------------------------------------------------------------------------
+// damage buffer particle emitter...
+
+datablock ParticleData(FrmStandardcatDamageBufferEmitter_Particle)
+{
+	dragCoefficient		= 1.0;
+	gravityCoefficient	= -3.0;
+	inheritedVelFactor	= 0.0;
+	constantAcceleration = 0.0;
+	lifetimeMS			  = 500;
+	lifetimeVarianceMS	= 0;
+	colors[0]	  = "1.0 1.0 1.0 1.0";
+	colors[1]	  = "1.0 1.0 1.0 0.2";
+	colors[2]	  = "1.0 1.0 1.0 0.0";
+	sizes[0]		= 1.0;
+	sizes[1]		= 1.0;
+	sizes[2]		= 1.0;
+	times[0]		= 0.0;
+	times[1]		= 0.5;
+	times[2]		= 1.0;
+	spinRandomMin = 0.0;
+	spinRandomMax = 0.0;
+	textureName	= "content/rotc/p.5.3/textures/rotc/corona";
+	allowLighting = false;
+};
+
+datablock ParticleEmitterData(FrmStandardcatDamageBufferEmitter)
+{
+	ejectionPeriodMS = 10;
+	periodVarianceMS = 0;
+	ejectionVelocity = 5;
+	velocityVariance = 0;
+	ejectionOffset	= 0.0;
+	thetaMin			= 90;
+	thetaMax			= 90;
+	phiReferenceVel  = 0;
+	phiVariance		= 360;
+	overrideAdvance  = false;
+	orientParticles  = false;
+	lifetimeMS		 = 0; // forever
+	particles = FrmStandardcatDamageBufferEmitter_Particle;
+};
+
+//------------------------------------------------------------------------------
+// damage repair particle emitter...
+
+datablock ParticleData(FrmStandardcatRepairEmitter_Particle)
+{
+	dragCoefficient		= 0.0;
+	gravityCoefficient	= 0.0;
+	inheritedVelFactor	= 0.0;
+	constantAcceleration = 0.0;
+	lifetimeMS			  = 220;
+	lifetimeVarianceMS	= 0;
+	colors[0]	  = "1.0 0.5 0.0 0.0";
+	colors[1]	  = "1.0 0.5 0.0 1.0";
+	colors[2]	  = "1.0 0.5 0.0 1.0";
+	sizes[0]		= 3.0;
+	sizes[1]		= 2.0;
+	sizes[2]		= 0.0;
+	times[0]		= 0.0;
+	times[1]		= 0.5;
+	times[2]		= 1.0;
+	spinRandomMin = 0.0;
+	spinRandomMax = 0.0;
+	textureName	= "content/rotc/p.5.3/textures/rotc/cross1";
+	allowLighting = false;
+};
+
+datablock ParticleEmitterData(FrmStandardcatRepairEmitter)
+{
+	ejectionPeriodMS = 10;
+	periodVarianceMS = 0;
+	ejectionVelocity = -20.0;
+	velocityVariance = 0.0;
+	ejectionOffset	= 4.0;
+	thetaMin			= 30;
+	thetaMax			= 70;
+	phiReferenceVel  = 0;
+	phiVariance		= 360;
+	overrideAdvance  = false;
+	orientParticles  = false;
+	lifetimeMS		 = 0; // forever
+	particles = FrmStandardcatRepairEmitter_Particle;
+};
+
+//------------------------------------------------------------------------------
+// buffer repair particle emitter...
+
+datablock ParticleData(FrmStandardcatBufferRepairEmitter_Particle)
+{
+	dragCoefficient		= 0.0;
+	gravityCoefficient	= 0.0;
+	inheritedVelFactor	= 0.0;
+	constantAcceleration = 0.0;
+	lifetimeMS			  = 220;
+	lifetimeVarianceMS	= 0;
+	colors[0]	  = "1.0 1.0 1.0 0.0";
+	colors[1]	  = "1.0 1.0 1.0 1.0";
+	colors[2]	  = "1.0 1.0 1.0 1.0";
+	sizes[0]		= 3.0;
+	sizes[1]		= 2.0;
+	sizes[2]		= 0.0;
+	times[0]		= 0.0;
+	times[1]		= 0.5;
+	times[2]		= 1.0;
+	spinRandomMin = 0.0;
+	spinRandomMax = 0.0;
+	textureName	= "content/rotc/p.5.3/textures/rotc/cross1";
+	allowLighting = false;
+};
+
+datablock ParticleEmitterData(FrmStandardcatBufferRepairEmitter)
+{
+	ejectionPeriodMS = 10;
+	periodVarianceMS = 0;
+	ejectionVelocity = -20.0;
+	velocityVariance = 0;
+	ejectionOffset	= 4.0;
+	thetaMin			= 30;
+	thetaMax			= 70;
+	phiReferenceVel  = 0;
+	phiVariance		= 360;
+	overrideAdvance  = false;
+	orientParticles  = false;
+	lifetimeMS		 = 0; // forever
+	particles = FrmStandardcatBufferRepairEmitter_Particle;
+};
+
+//------------------------------------------------------------------------------
+// damage particle emitter
+
+datablock ParticleData(FrmStandardcatDamageEmitter_Particle)
+{
+	spinSpeed = 200;
+	spinRandomMin = -200.0;
+	spinRandomMax =  200.0;
+	dragCoefficient		= 1;
+	gravityCoefficient	= 3.0;
+	windCoefficient		= 0.0;
+	inheritedVelFactor	= 0.0;
+	constantAcceleration = 0.0;
+	lifetimeMS			  = 1000;
+	lifetimeVarianceMS	= 0;
+	textureName = "content/rotc/p.5.3/shapes/rotc/misc/debris1.red";
+	colors[0]	  = "1.0 1.0 1.0 1.0";
+	colors[1]	  = "1.0 1.0 1.0 1.0";
+	colors[2]	  = "1.0 1.0 1.0 0.0";
+	sizes[0]		= 0.25;
+	sizes[1]		= 0.25;
+	sizes[2]		= 0.25;
+	times[0]		= 0.0;
+	times[1]		= 0.5;
+	times[2]		= 1.0;
+	useInvAlpha =  false;
+	allowLighting = false;
+};
+
+datablock ParticleEmitterData(FrmStandardcatDamageEmitter)
+{
+	ejectionPeriodMS = 10;
+	periodVarianceMS = 0;
+	ejectionVelocity = 15.0;
+	velocityVariance = 5.0;
+	ejectionOffset	= 0.0;
+	thetaMin			= 0;
+	thetaMax			= 50;
+	phiReferenceVel  = 0;
+	phiVariance		= 360;
+	lifetimeMS		 = 0; // forever
+	lifetimeVarianceMS = 0;
+	overrideAdvances = false;
+	orientParticles  = true;
+	particles = "FrmStandardcatDamageEmitter_Particle";
+};
+
+//------------------------------------------------------------------------------
+// buffer damage particle emitter
+
+datablock ParticleData(FrmStandardcatBufferDamageEmitter_Particle)
+{
+	spinSpeed = 200;
+	spinRandomMin = -200.0;
+	spinRandomMax =  200.0;
+	dragCoefficient		= 1;
+	gravityCoefficient	= 3.0;
+	windCoefficient		= 0.0;
+	inheritedVelFactor	= 0.0;
+	constantAcceleration = 0.0;
+	lifetimeMS			  = 1000;
+	lifetimeVarianceMS	= 0;
+	textureName = "content/rotc/p.5.3/shapes/rotc/misc/debris1.white";
+	colors[0]	  = "1.0 1.0 1.0 1.0";
+	colors[1]	  = "1.0 1.0 1.0 1.0";
+	colors[2]	  = "1.0 1.0 1.0 0.0";
+	sizes[0]		= 0.25;
+	sizes[1]		= 0.25;
+	sizes[2]		= 0.25;
+	times[0]		= 0.0;
+	times[1]		= 0.5;
+	times[2]		= 1.0;
+	useInvAlpha =  false;
+	allowLighting = false;
+};
+
+datablock ParticleEmitterData(FrmStandardcatBufferDamageEmitter)
+{
+	ejectionPeriodMS = 10;
+	periodVarianceMS = 0;
+	ejectionVelocity = 15.0;
+	velocityVariance = 5.0;
+	ejectionOffset	= 0.0;
+	thetaMin			= 0;
+	thetaMax			= 50;
+	phiReferenceVel  = 0;
+	phiVariance		= 360;
+	lifetimeMS		 = 0; // forever
+	lifetimeVarianceMS = 0;
+	overrideAdvances = false;
+	orientParticles  = true;
+	particles = "FrmStandardcatBufferDamageEmitter_Particle";
+};
+
+//------------------------------------------------------------------------------
+// damage debris...
+
+datablock DebrisData(FrmStandardcatDamageDebris)
+{
+    // 2d billboard...
+    render2D = true;
+    texture = "content/rotc/p.5.3/textures/rotc/halo1.red.png";
+    textureWidth = 0.5;
+
+	// shape...
+	shapeFile = "content/rotc/p.5.3/shapes/rotc/misc/debris1.red.dts";
+
+	// bounce...
+	staticOnMaxBounce = true;
+	numBounces = 5;
+
+	// physics...
+	gravModifier = 2.0;
+	elasticity = 0.6;
+	friction = 0.1;
+
+	// spin...
+	minSpinSpeed = 60;
+	maxSpinSpeed = 600;
+
+	// lifetime...
+	lifetime = 4.0;
+	lifetimeVariance = 1.0;
+};
+
+//------------------------------------------------------------------------------
+// buffer damage debris...
+
+datablock DebrisData(FrmStandardcatBufferDamageDebris)
+{
+    // 2d billboard...
+    render2D = true;
+    texture = "content/rotc/p.5.3/textures/rotc/halo1.white.png";
+    textureWidth = 0.5;
+
+	// shape...
+	shapeFile = "content/rotc/p.5.3/shapes/rotc/misc/debris1.white.dts";
+
+	// bounce...
+	staticOnMaxBounce = true;
+	numBounces = 5;
+
+	// physics...
+	gravModifier = 2.0;
+	elasticity = 0.6;
+	friction = 0.1;
+
+	// spin...
+	minSpinSpeed = 60;
+	maxSpinSpeed = 600;
+
+	// lifetime...
+	lifetime = 2.0;
+	lifetimeVariance = 1.0;
+};
+
+//-----------------------------------------------------------------------------
+// jump explosion
+
+datablock ParticleData(FrmStandardcatJumpExplosion_Cloud)
+{
+	dragCoeffiecient	  = 0.4;
+	gravityCoefficient	= 0;
+	inheritedVelFactor	= 0.025;
+
+	lifetimeMS			  = 600;
+	lifetimeVarianceMS	= 0;
+
+	useInvAlpha = false;
+	spinRandomMin = -200.0;
+	spinRandomMax =  200.0;
+
+	textureName = "content/rotc/p.5.3/textures/rotc/corona.png";
+
+	colors[0]	  = "1.0 1.0 1.0 1.0";
+	colors[1]	  = "1.0 1.0 1.0 0.0";
+	colors[2]	  = "1.0 1.0 1.0 0.0";
+	sizes[0]		= 2.0;
+	sizes[1]		= 2.0;
+	sizes[2]		= 0.5;
+	times[0]		= 0.0;
+	times[1]		= 0.2;
+	times[2]		= 1.0;
+
+	allowLighting = true;
+};
+
+datablock ParticleEmitterData(FrmStandardcatJumpExplosion_CloudEmitter)
+{
+	ejectionPeriodMS = 1;
+	periodVarianceMS = 0;
+
+	ejectionVelocity = 0.25;
+	velocityVariance = 0.25;
+
+	thetaMin			= 0.0;
+	thetaMax			= 90.0;
+
+	lifetimeMS		 = 100;
+
+	particles = "FrmStandardcatJumpExplosion_Cloud";
+};
+
+datablock ParticleData(FrmStandardcatJumpExplosion_Dust)
+{
+	dragCoefficient		= 1.0;
+	gravityCoefficient	= -0.01;
+	inheritedVelFactor	= 0.0;
+	constantAcceleration = 0.0;
+	lifetimeMS			  = 1000;
+	lifetimeVarianceMS	= 100;
+	useInvAlpha			 = true;
+	spinRandomMin		  = -90.0;
+	spinRandomMax		  = 500.0;
+	textureName			 = "content/rotc/p.5.3/textures/rotc/smoke_particle.png";
+	colors[0]	  = "0.9 0.9 0.9 0.5";
+	colors[1]	  = "0.9 0.9 0.9 0.5";
+	colors[2]	  = "0.9 0.9 0.9 0.0";
+	sizes[0]		= 0.9;
+	sizes[1]		= 1.5;
+	sizes[2]		= 1.6;
+	times[0]		= 0.0;
+	times[1]		= 0.7;
+	times[2]		= 1.0;
+	allowLighting = true;
+};
+
+datablock ParticleEmitterData(FrmStandardcatJumpExplosion_DustEmitter)
+{
+	ejectionPeriodMS = 10;
+	periodVarianceMS = 0;
+	ejectionVelocity = 2.0;
+	velocityVariance = 0.0;
+	ejectionOffset	= 0.0;
+	thetaMin			= 0;
+	thetaMax			= 180;
+	phiReferenceVel  = 0;
+	phiVariance		= 360;
+	overrideAdvances = false;
+	lifetimeMS		 = 50;
+	particles = "FrmStandardcatJumpExplosion_Dust";
+};
+
+
+datablock ParticleData(FrmStandardcatJumpExplosion_Smoke)
+{
+	dragCoeffiecient	  = 0.4;
+	gravityCoefficient	= -0.5;	// rises slowly
+	inheritedVelFactor	= 0.025;
+
+	lifetimeMS			  = 1250;
+	lifetimeVarianceMS	= 0;
+
+	useInvAlpha =  true;
+	spinRandomMin = -200.0;
+	spinRandomMax =  200.0;
+
+	textureName = "content/rotc/p.5.3/textures/rotc/smoke_particle.png";
+
+	colors[0]	  = "0.9 0.9 0.9 0.4";
+	colors[1]	  = "0.9 0.9 0.9 0.2";
+	colors[2]	  = "0.9 0.9 0.9 0.0";
+	sizes[0]		= 0.6;
+	sizes[1]		= 2.0;
+	sizes[2]		= 0.6;
+	times[0]		= 0.0;
+	times[1]		= 0.5;
+	times[2]		= 1.0;
+
+	allowLighting = true;
+};
+
+datablock ParticleEmitterData(FrmStandardcatJumpExplosion_SmokeEmitter)
+{
+	ejectionPeriodMS = 2;
+	periodVarianceMS = 0;
+
+	ejectionVelocity = 2.0;
+	velocityVariance = 0.25;
+
+	thetaMin			= 0.0;
+	thetaMax			= 180.0;
+
+	lifetimeMS		 = 250;
+
+	particles = "FrmStandardcatJumpExplosion_Smoke";
+};
+
+datablock ParticleData(FrmStandardcatJumpExplosion_Sparks)
+{
+	dragCoefficient		= 1;
+	gravityCoefficient	= 0.0;
+	inheritedVelFactor	= 0.2;
+	constantAcceleration = 0.0;
+	lifetimeMS			  = 500;
+	lifetimeVarianceMS	= 350;
+	textureName			 = "content/rotc/p.5.3/textures/rotc/particle1.png";
+	colors[0]	  = "0.56 0.36 0.26 1.0";
+	colors[1]	  = "0.56 0.36 0.26 1.0";
+	colors[2]	  = "1.0 0.36 0.26 0.0";
+	sizes[0]		= 0.5;
+	sizes[1]		= 0.5;
+	sizes[2]		= 0.75;
+	times[0]		= 0.0;
+	times[1]		= 0.5;
+	times[2]		= 1.0;
+	allowLighting = false;
+};
+
+datablock ParticleEmitterData(FrmStandardcatJumpExplosion_SparksEmitter)
+{
+	ejectionPeriodMS = 10;
+	periodVarianceMS = 0;
+	ejectionVelocity = 4;
+	velocityVariance = 1;
+	ejectionOffset	= 0.0;
+	thetaMin			= 0;
+	thetaMax			= 60;
+	phiReferenceVel  = 0;
+	phiVariance		= 360;
+	overrideAdvances = false;
+	orientParticles  = true;
+	lifetimeMS		 = 100;
+	particles = "FrmStandardcatJumpExplosion_Sparks";
+};
+
+datablock MultiNodeLaserBeamData(FrmStandardcatJumpExplosion_Debris_LaserTrail)
+{
+	hasLine = true;
+	lineColor	= "1.00 1.00 0.00 0.5";
+
+	hasInner = false;
+	innerColor = "1.00 1.00 0.00 0.3";
+	innerWidth = "0.20";
+
+	hasOuter = false;
+	outerColor = "1.00 1.00 0.00 0.3";
+	outerWidth = "0.40";
+
+//	bitmap = "content/rotc/p.5.3/shapes/rotc/weapons/hegrenade/lasertrail";
+//	bitmapWidth = 0.1;
+
+	blendMode = 1;
+	renderMode = $MultiNodeLaserBeamRenderMode::FaceViewer;
+	fadeTime = 500;
+};
+
+datablock DebrisData(FrmStandardcatJumpExplosion_Debris)
+{
+//	shapeFile = "content/rotc/p.5.3/shapes/rotc/weapons/hegrenade/grenade.dts";
+//	emitters[0] = GrenadeLauncherParticleEmitter;
+
+	laserTrail = FrmStandardcatJumpExplosion_Debris_LaserTrail;
+
+	// bounce...
+	numBounces = 3;
+	explodeOnMaxBounce = true;
+
+	// physics...
+	gravModifier = 5.0;
+	elasticity = 0.6;
+	friction = 0.1;
+
+	lifetime = 5.0;
+	lifetimeVariance = 0.02;
+};
+
+datablock ExplosionData(FrmStandardcatJumpExplosion)
+{
+	soundProfile = FrmStandardcatJumpExplosionSound;
+
+	lifetimeMS = 200;
+
+	debris = 0; //FrmStandardcatJumpExplosion_Debris;
+	debrisThetaMin = 0;
+	debrisThetaMax = 180;
+	debrisNum = 3;
+	debrisVelocity = 50.0;
+	debrisVelocityVariance = 10.0;
+
+	particleEmitter = FrmStandardcatJumpExplosion_CloudEmitter;
+	particleDensity = 50;
+	particleRadius = 1;
+
+	emitter[0] = FrmStandardcatJumpExplosion_DustEmitter;
+	emitter[1] = 0; // FrmStandardcatJumpExplosion_SmokeEmitter;
+	emitter[2] = 0; // FrmStandardcatJumpExplosion_SparksEmitter;
+
+	// Camera shake
+	shakeCamera = true;
+	camShakeFreq = "10.0 6.0 9.0";
+	camShakeAmp = "10.0 0.0 0.0";
+	camShakeDuration = 0.5;
+	camShakeRadius = 1.0;
+
+	// Dynamic light
+	lightStartRadius = 15;
+	lightEndRadius = 0;
+	lightStartColor = "1.0 0.8 0.2 1.0";
+	lightEndColor = "1.0 0.8 0.2 0.3";
+};
+

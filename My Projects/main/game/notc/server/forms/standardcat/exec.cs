@@ -3,5 +3,7 @@
 
 exec("./standardcat.sfx.cs");
 exec("./standardcat.gfx.cs");
+exec("./standardcat.gfx.slide.cs");
+exec("./standardcat.gfx.skid.cs");
 exec("./standardcat.cs");
 
