@@ -267,20 +267,31 @@ moveMap.bindCmd(gamepad, dpadr, "toggleLightSpecularViz();", "");
 // Stance/pose
 // ----------------------------------------------------------------------------
 
+$mvTriggerCount5 = true; // sprint by default
+
 function doCrouch(%val)
 {
    $mvTriggerCount3++;
 }
-
-moveMap.bind(keyboard, lcontrol, doCrouch);
-moveMap.bind(gamepad, btn_b, doCrouch);
 
 function doSprint(%val)
 {
    $mvTriggerCount5++;
 }
 
-moveMap.bind(keyboard, lshift, doSprint);
+function doWalk(%val)
+{
+   $mvTriggerCount5 = !%val;
+}
+
+function doSlide(%val)
+{
+   $mvTriggerCount6++;
+}
+
+moveMap.bind(keyboard, lshift, doWalk);
+moveMap.bind(keyboard, lcontrol, doSlide);
+moveMap.bind(gamepad, btn_b, doSlide);
 
 //------------------------------------------------------------------------------
 // Mouse Trigger
