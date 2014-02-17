@@ -139,6 +139,11 @@ class ParticleEmitter : public GameBase
    /// is turned on, it will delete itself as soon as it's particle count drops to zero.
    void deleteWhenEmpty();
 
+	/// Makes the emitted particles stay relative to another obj's position
+   void moveParticlesWithObject(SceneObject* obj);
+
+   virtual void setTransform(const MatrixF & mat);
+
    /// @name Particle Emission
    /// Main interface for creating particles.  The emitter does _not_ track changes
    ///  in axis or velocity over the course of a single update, so this should be called
@@ -203,6 +208,7 @@ class ParticleEmitter : public GameBase
   protected:
    bool onAdd();
    void onRemove();
+	void onDeleteNotify(SimObject* obj);
 
    void processTick(const Move *move);
    void advanceTime(F32 dt);
@@ -226,6 +232,10 @@ class ParticleEmitter : public GameBase
    static const F32 AgedSpinToRadians;
 
    ParticleEmitterData* mDataBlock;
+
+   /// This is used so we only update our transform/bounding box
+   /// on ticks, to minimize calls to setTransform.
+   bool      mNeedTransformUpdate;
 
    U32       mInternalClock;
 
@@ -262,6 +272,7 @@ class ParticleEmitter : public GameBase
    S32        n_parts;
    S32       mCurBuffSize;
 
+   SceneObject* mMoveParticlesWithObject;
 };
 
 #endif // _H_PARTICLE_EMITTER

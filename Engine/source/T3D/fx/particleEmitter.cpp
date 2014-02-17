@@ -695,6 +695,8 @@ void ParticleEmitterData::allocPrimBuffer( S32 overrideSize )
 //-----------------------------------------------------------------------------
 ParticleEmitter::ParticleEmitter()
 {
+	mNeedTransformUpdate = true;
+
    mDeleteWhenEmpty  = false;
    mDeleteOnTick     = false;
 
@@ -717,6 +719,8 @@ ParticleEmitter::ParticleEmitter()
 
    mDead = false;
    mDataBlock = NULL;
+
+   mMoveParticlesWithObject = NULL;
 
    // ParticleEmitter should be allocated on the client only.
    mNetFlags.set( IsGhost );
@@ -768,6 +772,15 @@ void ParticleEmitter::onRemove()
    Parent::onRemove();
 }
 
+//-----------------------------------------------------------------------------
+// onDeleteNotify
+//-----------------------------------------------------------------------------
+void ParticleEmitter::onDeleteNotify(SimObject* obj)
+{
+	Parent::onDeleteNotify(obj);
+	if(obj == mMoveParticlesWithObject)
+		mMoveParticlesWithObject = NULL;
+}
 
 //-----------------------------------------------------------------------------
 // onNewDataBlock
@@ -958,6 +971,27 @@ void ParticleEmitter::deleteWhenEmpty()
 }
 
 //-----------------------------------------------------------------------------
+// moveParticlesWithObject
+//-----------------------------------------------------------------------------
+void ParticleEmitter::moveParticlesWithObject(SceneObject* obj)
+{
+	if(mMoveParticlesWithObject)
+		this->clearNotify(mMoveParticlesWithObject);
+
+	mMoveParticlesWithObject = obj;
+	this->deleteNotify(mMoveParticlesWithObject);
+}
+
+//-----------------------------------------------------------------------------
+// setTransform
+//-----------------------------------------------------------------------------
+void ParticleEmitter::setTransform(const MatrixF & mat)
+{     
+   mNeedTransformUpdate = false;
+   Parent::setTransform(mat);
+}
+
+//-----------------------------------------------------------------------------
 // emitParticles
 //-----------------------------------------------------------------------------
 void ParticleEmitter::emitParticles(const Point3F& point,
@@ -1114,8 +1148,11 @@ void ParticleEmitter::emitParticles(const Point3F& start,
 
    // DMMFIX: Lame and slow...
    if( particlesAdded == true )
+	{
       updateBBox();
-
+		if(mMoveParticlesWithObject)
+			mNeedTransformUpdate = true;
+	}
 
    if( n_parts > 0 && getSceneManager() == NULL )
    {
@@ -1143,7 +1180,6 @@ void ParticleEmitter::emitParticles(const Point3F& rCenter,
    {
       return;
    }
-
 
    Point3F axisx, axisy;
    Point3F axisz = rNormal;
@@ -1181,10 +1217,13 @@ void ParticleEmitter::emitParticles(const Point3F& rCenter,
       addParticle(pos, axis, velocity, axisz);
    }
 
-   // Set world bounding box
-   mObjBox.minExtents = rCenter - Point3F(radius, radius, radius);
-   mObjBox.maxExtents = rCenter + Point3F(radius, radius, radius);
-   resetWorldBox();
+   if(!mMoveParticlesWithObject)
+   {
+      // Set world bounding box
+      mObjBox.minExtents = rCenter - Point3F(radius, radius, radius);
+      mObjBox.maxExtents = rCenter + Point3F(radius, radius, radius);
+      resetWorldBox();
+   }
 
    // Make sure we're part of the world
    if( n_parts > 0 && getSceneManager() == NULL )
@@ -1201,6 +1240,9 @@ void ParticleEmitter::emitParticles(const Point3F& rCenter,
 //-----------------------------------------------------------------------------
 void ParticleEmitter::updateBBox()
 {
+   if(mMoveParticlesWithObject)
+		return;
+
    Point3F minPt(1e10,   1e10,  1e10);
    Point3F maxPt(-1e10, -1e10, -1e10);
 
@@ -1278,6 +1320,9 @@ void ParticleEmitter::addParticle(const Point3F& pos,
    pNew->acc.set(0, 0, 0);
    pNew->currentAge = 0;
 
+   if(mMoveParticlesWithObject)
+	   pNew->moveWithObjectLastPos = mMoveParticlesWithObject->getRenderPosition();
+
    // Choose a new particle datablack randomly from the list
    U32 dBlockIndex = gRandGen.randI() % mDataBlock->particleDataBlocks.size();
    mDataBlock->particleDataBlocks[dBlockIndex]->initializeParticle(pNew, vel);
@@ -1291,6 +1336,12 @@ void ParticleEmitter::addParticle(const Point3F& pos,
 //-----------------------------------------------------------------------------
 void ParticleEmitter::processTick(const Move*)
 {
+   if(mNeedTransformUpdate)
+   {
+      // Force update our transform.
+      setTransform(getTransform());
+   }
+
    if( mDeleteOnTick == true )
    {
       mDead = true;
@@ -1343,12 +1394,19 @@ void ParticleEmitter::advanceTime(F32 dt)
    if (n_parts < 1 && mDeleteWhenEmpty)
    {
       mDeleteOnTick = true;
-      return;
    }
+	else
+	{
+      if( numMSToUpdate != 0 && n_parts > 0 )
+      {
+         update( numMSToUpdate );
+      }
+	}
 
-   if( numMSToUpdate != 0 && n_parts > 0 )
+   if(mMoveParticlesWithObject)
    {
-      update( numMSToUpdate );
+      mObjBox = mMoveParticlesWithObject->getRenderWorldBox();
+      mNeedTransformUpdate = true;
    }
 }
 
@@ -1419,6 +1477,13 @@ void ParticleEmitter::update( U32 ms )
 
       part->vel += a * t;
       part->pos += part->vel * t;
+
+      if(mMoveParticlesWithObject)
+      {
+         const Point3F& currPos = mMoveParticlesWithObject->getRenderPosition();
+         part->pos += currPos - part->moveWithObjectLastPos;
+         part->moveWithObjectLastPos = currPos;
+      }
 
       updateKeyData( part );
    }

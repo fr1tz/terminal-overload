@@ -103,6 +103,9 @@ struct Particle
    F32              size;
 
    F32              spinSpeed;
+
+   Point3F moveWithObjectLastPos; // the position of the object this particle
+                                  // is moving with on the particle's last update
    Particle *       next;
 };
 
