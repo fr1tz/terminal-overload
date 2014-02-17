@@ -67,6 +67,7 @@ static U32 sMoveRetryCount = 5;
 static F32 sMaxImpulseVelocity = 200.0f;
 
 // Move triggers
+static S32 sSlideTrigger = 6;
 static S32 sJumpTrigger = 2;
 static S32 sCrouchTrigger = 3;
 static S32 sProneTrigger = 4;
@@ -148,6 +149,7 @@ PlayerData::ActionAnimationDef PlayerData::ActionAnimationList[NumTableActionAni
 
    // These are set explicitly based on player actions
    { "fall" },       // FallAnim
+   { "slide" },      // SlideAnim 
    { "jump" },       // JumpAnim
    { "standjump" },  // StandJumpAnim
    { "land" },       // LandAnim
@@ -275,6 +277,14 @@ PlayerData::PlayerData()
    maxBackwardSpeed = 10.0f;
    maxSideSpeed = 10.0f;
 
+	// Sliding
+   slideForce = 20.0f * 9.0f;
+   slideEnergyDrain = 0.0f;
+   minSlideEnergy = 0.0f;
+   maxSlideForwardSpeed = 15.0f;  
+   maxSlideBackwardSpeed = 10.0f; 
+   maxSlideSideSpeed = 10.0f;
+
    // Jumping
    jumpForce = 75.0f;
    jumpEnergyDrain = 0.0f;
@@ -382,6 +392,9 @@ PlayerData::PlayerData()
    dMemset( splashEmitterList, 0, sizeof( splashEmitterList ) );
    dMemset( splashEmitterIDList, 0, sizeof( splashEmitterIDList ) );
 
+   for (S32 i = 0; i < NumSlideEmitters; i++)
+      slideEmitter[i] = NULL;
+
    groundImpactMinSpeed = 10.0f;
    groundImpactShakeFreq.set( 10.0f, 10.0f, 10.0f );
    groundImpactShakeAmp.set( 20.0f, 20.0f, 20.0f );
@@ -389,6 +402,7 @@ PlayerData::PlayerData()
    groundImpactShakeFalloff = 10.0f;
 
    // Air control
+	glideForce = 0.0f;
    airControl = 0.0f;
 
    jumpTowardsNormal = true;
@@ -412,6 +426,10 @@ bool PlayerData::preload(bool server, String &errorStr)
          if( !sfxResolve( &sound[ i ], errorStr ) )
             Con::errorf( "PlayerData::preload: %s", errorStr.c_str() );
       }
+
+      for(int i=0; i < NumSlideEmitters; i++)
+         if(slideEmitter[i])
+            Sim::findObject(SimObjectId(slideEmitter[i]), slideEmitter[i]);
    }
 
    //
@@ -746,6 +764,28 @@ void PlayerData::initPersistFields()
          "@see upResistSpeed\n" );
 
    endGroup( "Movement" );
+
+   addGroup( "Movement: Sliding" );
+
+      addField( "slideForce", TypeF32, Offset(slideForce, PlayerData),
+         "@brief Force used to accelerate the player when sliding.\n\n" );
+      addField( "slideEnergyDrain", TypeF32, Offset(slideEnergyDrain, PlayerData),
+         "@brief Energy value drained each tick that the player is sliding.\n\n"
+         "The player will not be able to slide when his energy falls below "
+         "minSlideEnergy.\n"
+         "@note Setting this to zero will disable any energy drain.\n"
+         "@see minSlideEnergy\n");
+      addField( "minSlideEnergy", TypeF32, Offset(minSlideEnergy, PlayerData),
+         "@brief Minimum energy level required to slide.\n\n"
+         "@see slideEnergyDrain\n");
+      addField( "maxSlideForwardSpeed", TypeF32, Offset(maxSlideForwardSpeed, PlayerData),
+         "@brief Maximum forward speed when sliding." );
+      addField( "maxSlideBackwardSpeed", TypeF32, Offset(maxSlideBackwardSpeed, PlayerData),
+         "@brief Maximum backward speed when sliding." );
+      addField( "maxSlideSideSpeed", TypeF32, Offset(maxSlideSideSpeed, PlayerData),
+         "@brief Maximum sideways speed when sliding." );
+
+   endGroup( "Movement: Sliding" );
    
    addGroup( "Movement: Jumping" );
 
@@ -771,8 +811,11 @@ void PlayerData::initPersistFields()
          "@brief Angle from vertical (in degrees) where the player can jump.\n\n" );
       addField( "jumpDelay", TypeS32, Offset(jumpDelay, PlayerData),
          "@brief Delay time in number of ticks ticks between jumps.\n\n" );
+      addField( "glideForce", TypeF32, Offset(glideForce, PlayerData),
+         "@brief Force used to accel player while in air and not sliding.\n\n");
       addField( "airControl", TypeF32, Offset(airControl, PlayerData),
          "@brief Amount of movement control the player has when in the air.\n\n"
+			"Only used when glideForce is 0.\n"
          "This is applied as a multiplier to the player's x and y motion.\n");
       addField( "jumpTowardsNormal", TypeBool, Offset(jumpTowardsNormal, PlayerData),
          "@brief Controls the direction of the jump impulse.\n"
@@ -1065,6 +1108,11 @@ void PlayerData::initPersistFields()
          "@brief Sound to play when exiting the water with velocity >= exitSplashSoundVelocity.\n\n"
          "@see exitSplashSoundVelocity\n");
 
+      addField( "slideSound", TypeSFXTrackName, Offset(sound[Slide], PlayerData),
+         "@brief Sound to play while sliding.\n\n" );
+      addField( "slideContactSound", TypeSFXTrackName, Offset(sound[SlideContact], PlayerData),
+         "@brief Sound to play while sliding and being in contact with a surface.\n\n" );
+
    endGroup( "Interaction: Sounds" );
 
    addGroup( "Interaction: Splashes" );
@@ -1128,6 +1176,19 @@ void PlayerData::initPersistFields()
          "This is how to fade the camera shake over the duration.\n");
 
    endGroup( "Interaction: Ground Impact" );
+
+   addGroup( "Interaction: Slide emitters" );
+
+      addField( "slideParticleTrailEmitter", TYPEID< ParticleEmitterData >(), Offset(slideEmitter[PlayerData::Trail1], PlayerData), 3,
+         "@brief Particle emitters.\n\n" );
+      addField( "slideContactParticleTrailEmitter", TYPEID< ParticleEmitterData >(), Offset(slideEmitter[PlayerData::ContactTrail1], PlayerData), 3,
+         "@brief Particle emitters.\n\n" );
+      addField( "slideParticleFootEmitter", TYPEID< ParticleEmitterData >(), Offset(slideEmitter[PlayerData::Relative1], PlayerData), 3,
+         "@brief Particle emitters.\n\n" );
+      addField( "slideContactParticleFootEmitter", TYPEID< ParticleEmitterData >(), Offset(slideEmitter[PlayerData::ContactRelative1], PlayerData), 3,
+         "@brief Particle emitters.\n\n" );
+
+	endGroup( "Interaction: Slide emitters" );
 
    addGroup( "Physics" );
 
@@ -1215,6 +1276,14 @@ void PlayerData::packData(BitStream* stream)
    stream->write(landSequenceTime);
    stream->write(transitionToLand);
 
+	// Sliding
+   stream->write(slideForce);
+   stream->write(slideEnergyDrain);
+   stream->write(minSlideEnergy);
+	stream->write(maxSlideForwardSpeed);
+	stream->write(maxSlideBackwardSpeed);
+	stream->write(maxSlideSideSpeed);
+
    // Jumping
    stream->write(jumpForce);
    stream->write(jumpEnergyDrain);
@@ -1300,6 +1369,11 @@ void PlayerData::packData(BitStream* stream)
    stream->write( footPuffNumParts );
    stream->write( footPuffRadius );
 
+   for(U32 i = 0; i < NumSlideEmitters; i++)
+      if (stream->writeFlag(slideEmitter[i]))
+         stream->writeRangedU32(packed? SimObjectId(slideEmitter[i]):
+            slideEmitter[i]->getId(),DataBlockObjectIdFirst,DataBlockObjectIdLast);
+
    if( stream->writeFlag( decalData ) )
    {
       stream->writeRangedU32( decalData->getId(), DataBlockObjectIdFirst,  DataBlockObjectIdLast );
@@ -1337,6 +1411,7 @@ void PlayerData::packData(BitStream* stream)
    stream->write(groundImpactShakeFalloff);
 
    // Air control
+	stream->write(glideForce);
    stream->write(airControl);
 
    // Jump off at normal
@@ -1395,6 +1470,14 @@ void PlayerData::unpackData(BitStream* stream)
    stream->read(&recoverRunForceScale);
    stream->read(&landSequenceTime);
    stream->read(&transitionToLand);
+
+	// Sliding
+   stream->read(&slideForce);
+   stream->read(&slideEnergyDrain);
+   stream->read(&minSlideEnergy);
+   stream->read(&maxSlideForwardSpeed);
+   stream->read(&maxSlideBackwardSpeed);
+   stream->read(&maxSlideSideSpeed);
 
    // Jumping
    stream->read(&jumpForce);
@@ -1481,6 +1564,14 @@ void PlayerData::unpackData(BitStream* stream)
    stream->read(&footPuffNumParts);
    stream->read(&footPuffRadius);
 
+	for(U32 i = 0; i < NumSlideEmitters; i++) 
+	{
+		slideEmitter[i] = NULL;
+		if(stream->readFlag())
+			slideEmitter[i] = (ParticleEmitterData*)stream->readRangedU32(DataBlockObjectIdFirst,
+                               DataBlockObjectIdLast);
+   }
+
    if( stream->readFlag() )
    {
       decalID = (S32) stream->readRangedU32(DataBlockObjectIdFirst, DataBlockObjectIdLast);
@@ -1517,6 +1608,7 @@ void PlayerData::unpackData(BitStream* stream)
    stream->read(&groundImpactShakeFalloff);
 
    // Air control
+	stream->read(&glideForce);
    stream->read(&airControl);
 
    // Jump off at normal
@@ -1607,13 +1699,16 @@ Player::Player()
    mFalling = false;
    mSwimming = false;
    mInWater = false;
+	mWantsToSlide = false;
    mPose = StandPose;
+   mSlideContact = 0;
    mContactTimer = 0;
    mJumpDelay = 0;
    mJumpSurfaceLastContact = 0;
    mJumpSurfaceNormal.set(0.0f, 0.0f, 1.0f);
    mControlObject = 0;
    dMemset( mSplashEmitter, 0, sizeof( mSplashEmitter ) );
+   dMemset( mSlideEmitter, 0, sizeof( mSlideEmitter ) );
 
    mUseHeadZCalc = true;
 
@@ -1627,6 +1722,8 @@ Player::Player()
 
    mMoveBubbleSound = 0;
    mWaterBreathSound = 0;   
+   mSlideSound = 0;
+   mSlideContactSound = 0;
 
    mConvex.init(this);
    mWorkingQueryBox.minExtents.set(-1e9f, -1e9f, -1e9f);
@@ -1765,6 +1862,8 @@ void Player::onRemove()
    {
       SFX_DELETE( mMoveBubbleSound );
       SFX_DELETE( mWaterBreathSound );
+      SFX_DELETE( mSlideSound );
+      SFX_DELETE( mSlideContactSound );
    }
 
    U32 i;
@@ -1777,10 +1876,19 @@ void Player::onRemove()
       }
    }
 
+   for( i=0; i<PlayerData::NumSlideEmitters; i++ )
+   {
+      if(mSlideEmitter[i])
+      {
+         mSlideEmitter[i]->deleteWhenEmpty();
+         mSlideEmitter[i] = NULL;
+      }
+   }
+
    mWorkingQueryBox.minExtents.set(-1e9f, -1e9f, -1e9f);
    mWorkingQueryBox.maxExtents.set(-1e9f, -1e9f, -1e9f);
 
-   SAFE_DELETE( mPhysicsRep );		
+   SAFE_DELETE( mPhysicsRep );	
 
    Parent::onRemove();
 }
@@ -1911,13 +2019,49 @@ bool Player::onNewDataBlock( GameBaseData *dptr, bool reload )
 
       SFX_DELETE( mMoveBubbleSound );
       SFX_DELETE( mWaterBreathSound );
+		SFX_DELETE( mSlideSound );
+		SFX_DELETE( mSlideContactSound );
 
       if ( mDataBlock->sound[PlayerData::MoveBubbles] )
          mMoveBubbleSound = SFX->createSource( mDataBlock->sound[PlayerData::MoveBubbles] );
 
       if ( mDataBlock->sound[PlayerData::WaterBreath] )
          mWaterBreathSound = SFX->createSource( mDataBlock->sound[PlayerData::WaterBreath] );
+
+      if ( mDataBlock->sound[PlayerData::Slide] )
+         mSlideSound = SFX->createSource( mDataBlock->sound[PlayerData::Slide] );
+
+      if ( mDataBlock->sound[PlayerData::SlideContact] )
+         mSlideContactSound = SFX->createSource( mDataBlock->sound[PlayerData::SlideContact] );
    }
+
+   if(this->isGhost())
+   {
+      for(U32 i=0; i<PlayerData::NumSlideEmitters; i++ )
+      {
+         if(mSlideEmitter[i] != NULL) 
+				mSlideEmitter[i]->deleteWhenEmpty();
+
+			mSlideEmitter[i] = NULL;
+
+			if(!mDataBlock->slideEmitter[i])
+				continue;
+
+         mSlideEmitter[i] = new ParticleEmitter;
+         mSlideEmitter[i]->onNewDataBlock( mDataBlock->slideEmitter[i], true );
+         if( !mSlideEmitter[i]->registerObject() )
+         {
+            Con::warnf( ConsoleLogEntry::General, "Could not register slide particle emitter for class: %s", mDataBlock->getName() );
+            delete mSlideEmitter[i];
+            mSlideEmitter[i] = NULL;
+         }
+         else
+         {
+            if(i >= PlayerData::Relative1)
+               mSlideEmitter[i]->moveParticlesWithObject(this);
+         }
+      }
+	}
 
    mObjBox.maxExtents.x = mDataBlock->boxSize.x * 0.5f;
    mObjBox.maxExtents.y = mDataBlock->boxSize.y * 0.5f;
@@ -2212,6 +2356,8 @@ void Player::advanceTime(F32 dt)
    updateSplash();
    updateFroth(dt);
    updateWaterSounds(dt);
+   updateSlideParticles(dt);
+   updateSlideSound(dt);
 
    mLastPos = getPosition();
 
@@ -2491,6 +2637,7 @@ void Player::allowAllPoses()
    mAllowCrouching = true;
    mAllowProne = true;
    mAllowSwimming = true;
+	mAllowSliding = true;
 }
 
 void Player::updateMove(const Move* move)
@@ -2514,6 +2661,9 @@ void Player::updateMove(const Move* move)
          mSwimming = swimming;
       }
    }
+
+	// Does the player want to slide?
+	mWantsToSlide = move->trigger[sSlideTrigger];
 
    // Trigger images
    if (mDamageState == Enabled) 
@@ -2697,6 +2847,9 @@ void Player::updateMove(const Move* move)
          if ( mSwimming )
             moveSpeed = getMax(mDataBlock->maxUnderwaterForwardSpeed * move->y,
                                mDataBlock->maxUnderwaterSideSpeed * mFabs(move->x));
+			else if(this->isSliding())
+            moveSpeed = getMax(mDataBlock->maxSlideForwardSpeed * move->y,
+                               mDataBlock->maxSlideSideSpeed * mFabs(move->x));
          else if ( mPose == PronePose )
             moveSpeed = getMax(mDataBlock->maxProneForwardSpeed * move->y,
                                mDataBlock->maxProneSideSpeed * mFabs(move->x));
@@ -2716,6 +2869,9 @@ void Player::updateMove(const Move* move)
          if ( mSwimming )
             moveSpeed = getMax(mDataBlock->maxUnderwaterBackwardSpeed * mFabs(move->y),
                                mDataBlock->maxUnderwaterSideSpeed * mFabs(move->x));
+			else if(this->isSliding())
+            moveSpeed = getMax(mDataBlock->maxSlideBackwardSpeed * mFabs(move->y),
+                               mDataBlock->maxSlideSideSpeed * mFabs(move->x));
          else if ( mPose == PronePose )
             moveSpeed = getMax(mDataBlock->maxProneBackwardSpeed * mFabs(move->y),
                                mDataBlock->maxProneSideSpeed * mFabs(move->x));
@@ -2753,6 +2909,19 @@ void Player::updateMove(const Move* move)
       findContact( &runSurface, &jumpSurface, &contactNormal );
    if ( jumpSurface )
       mJumpSurfaceNormal = contactNormal;
+
+   // The slide-contact check is a simple ray-cast.
+   {
+	   RayInfo rInfo;
+	   Point3F start = this->getPosition();
+	   Point3F end = start + Point3F(0, 0, -9999);
+	   this->disableCollision();
+	   if(getContainer()->castRay(start, end, sCollisionMoveMask, &rInfo))
+			mSlideContact = (rInfo.point - start).len();
+	   else
+		   mSlideContact = 9999;
+	   this->enableCollision();
+   }
    
    // If we don't have a runSurface but we do have a contactNormal,
    // then we are standing on something that is too steep.
@@ -2762,25 +2931,26 @@ void Player::updateMove(const Move* move)
    if ( !runSurface && !contactNormal.isZero() )  
       acc = ( acc - 2 * contactNormal * mDot( acc, contactNormal ) );   
 
-   // Acceleration on run surface
-   if (runSurface && !mSwimming) {
-      mContactTimer = 0;
-
-      // Remove acc into contact surface (should only be gravity)
-      // Clear out floating point acc errors, this will allow
-      // the player to "rest" on the ground.
-      // However, no need to do that if we're using a physics library.
-      // It will take care of itself.
-      if (!mPhysicsRep)
-      {
-         F32 vd = -mDot(acc,contactNormal);
-         if (vd > 0.0f) {
-            VectorF dv = contactNormal * (vd + 0.002f);
-            acc += dv;
-            if (acc.len() < 0.0001f)
-               acc.set(0.0f, 0.0f, 0.0f);
-         }
+   // Remove acc into contact surface (should only be gravity)
+   // Clear out floating point acc errors, this will allow
+   // the player to "rest" on the ground.
+   // However, no need to do that if we're using a physics library.
+   // It will take care of itself.
+   if(runSurface && !mPhysicsRep)
+   {
+      F32 vd = -mDot(acc,contactNormal);
+      if (vd > 0.0f) {
+         VectorF dv = contactNormal * (vd + 0.002f);
+         acc += dv;
+         if (acc.len() < 0.0001f)
+            acc.set(0.0f, 0.0f, 0.0f);
       }
+   }
+
+   // Acceleration on run surface
+   if(runSurface && !mSwimming && !this->isSliding())
+   {
+      mContactTimer = 0;
 
       // Force a 0 move if there is no energy, and only drain
       // move energy if we're moving.
@@ -2858,6 +3028,49 @@ void Player::updateMove(const Move* move)
       if (mDataBlock->isJumpAction(mActionAnimation.action))
          mActionAnimation.action = PlayerData::NullAnimation;
    }
+   else if(this->isSliding())
+   {
+      mContactTimer++;
+
+      VectorF pv = moveVec;
+      F32 pvl = pv.len();
+
+      if(pvl)
+         pv *= moveSpeed / pvl;
+
+      Point3F acVec = pv;
+      F32 acSpeed = acVec.len();
+
+      F32 maxAcc;
+      maxAcc = (mDataBlock->slideForce / mMass) * TickSec;
+      this->setEnergyLevel(mEnergy - mDataBlock->slideEnergyDrain);
+
+      if(acSpeed > maxAcc)
+         acVec *= maxAcc / acSpeed;
+
+      acc += acVec;
+	}
+   else if(!mSwimming && mDataBlock->glideForce > 0)
+   {
+      mContactTimer++;
+
+      VectorF pv = moveVec;
+      F32 pvl = pv.len();
+
+      if(pvl)
+         pv *= moveSpeed / pvl;
+
+      Point3F acVec = pv;
+      F32 acSpeed = acVec.len();
+
+      F32 maxAcc;
+      maxAcc = (mDataBlock->glideForce / mMass) * TickSec;
+
+      if(acSpeed > maxAcc)
+         acVec *= maxAcc / acSpeed;
+
+      acc += acVec;
+	}
    else if (!mSwimming && mDataBlock->airControl > 0.0f)
    {
       VectorF pv;
@@ -3013,10 +3226,13 @@ void Player::updateMove(const Move* move)
          mEnergy -= mDataBlock->jumpEnergyDrain;
 
          // If we don't have a StandJumpAnim, just play the JumpAnim...
-         S32 seq = (mVelocity.len() < 0.5) ? PlayerData::StandJumpAnim: PlayerData::JumpAnim; 
-         if ( mDataBlock->actionList[seq].sequence == -1 )
-            seq = PlayerData::JumpAnim;         
-         setActionThread( seq, true, false, true );
+         if(!this->isSliding())
+         {
+            S32 seq = (mVelocity.len() < 0.5) ? PlayerData::StandJumpAnim: PlayerData::JumpAnim; 
+            if ( mDataBlock->actionList[seq].sequence == -1 )
+               seq = PlayerData::JumpAnim;         
+            setActionThread( seq, true, false, true );
+			}
 
          mJumpSurfaceLastContact = JumpSkipContactsMax;
       }
@@ -3239,6 +3455,23 @@ bool Player::checkDismountPosition(const MatrixF& oldMat, const MatrixF& mat)
    return true;
 }
 
+
+//----------------------------------------------------------------------------
+
+bool Player::canSlide()
+{
+   return (mAllowSliding 
+		  && mState == MoveState
+		  && mDamageState == Enabled
+		  && !isMounted() 
+		  && mEnergy >= mDataBlock->minSlideEnergy 
+		  && mDataBlock->slideForce != 0.0f);
+}
+
+bool Player::isSliding()
+{
+   return (mWantsToSlide && this->canSlide());
+}
 
 //----------------------------------------------------------------------------
 
@@ -3980,6 +4213,10 @@ void Player::pickActionAnimation()
       // Play the jetting animation
       action = PlayerData::JetAnim;
    }
+	else if(this->isSliding())
+	{
+		action = PlayerData::SlideAnim;
+	}
    else if (mFalling)
    {
       // Not in contact with any surface and falling
@@ -6367,6 +6604,7 @@ DefineEngineMethod( Player, allowAllPoses, void, (),,
    "and swimming.  It also includes being able to jump and jet jump.  While this "
    "is allowing these poses to occur it doesn't mean that they all can due to other "
    "conditions.  We're just not manually blocking them from being allowed.\n"
+	"@see allowSliding()\n"
    "@see allowJumping()\n"
    "@see allowJetJumping()\n"
    "@see allowSprinting()\n"
@@ -6375,6 +6613,17 @@ DefineEngineMethod( Player, allowAllPoses, void, (),,
    "@see allowSwimming()\n" )
 {
    object->allowAllPoses();
+}
+
+DefineEngineMethod( Player, allowSliding, void, (bool state),,
+   "@brief Set if the Player is allowed to slide.\n\n"
+   "The default is to allow sliding unless there are other environmental concerns "
+   "that prevent it.  This method is mainly used to explicitly disallow sliding "
+   "at any time.\n"
+   "@param state Set to true to allow sliding, false to disable it.\n"
+   "@see allowAllPoses()\n" )
+{
+   object->allowSliding(state);
 }
 
 DefineEngineMethod( Player, allowJumping, void, (bool state),,
@@ -6721,6 +6970,9 @@ void Player::consoleInit()
 	   "@ingroup GameObjects\n");
 
    // Move triggers
+   Con::addVariable("$player::slideTrigger", TypeS32, &sSlideTrigger, 
+      "@brief The move trigger index used for player sliding.\n\n"
+	   "@ingroup GameObjects\n");
    Con::addVariable("$player::jumpTrigger", TypeS32, &sJumpTrigger, 
       "@brief The move trigger index used for player jumping.\n\n"
 	   "@ingroup GameObjects\n");
@@ -7069,6 +7321,103 @@ void Player::updateWaterSounds(F32 dt)
          mWaterBreathSound->play();
 
       mWaterBreathSound->setTransform( getTransform() );
+   }
+}
+
+void Player::updateSlideParticles(F32 dt)
+{
+	Point3F emissionPoint = getRenderPosition();
+	Point3F moveDir = getVelocity();
+
+	if(!this->isSliding() || mDamageState != Enabled)
+		return;
+
+	if(mSlideContact < 2)
+	{
+		F32 amount = 1 - mSlideContact / 2;
+		for(int i = PlayerData::ContactTrail1; i <= PlayerData::ContactTrail3; i++)
+		{
+			if(mSlideEmitter[i])
+				mSlideEmitter[i]->emitParticles(mLastPos, emissionPoint,
+					Point3F( 0.0, 0.0, 1.0 ), moveDir, (U32)(amount * dt * 1000.0));	
+		}
+		for(int i = PlayerData::ContactRelative1; i <= PlayerData::ContactRelative3; i++)
+		{
+			if(mSlideEmitter[i])
+				mSlideEmitter[i]->emitParticles(mLastPos, emissionPoint,
+					Point3F( 0.0, 0.0, 1.0 ), moveDir, (U32)(amount * dt * 1000.0));	
+		}
+	}
+
+	for(int i = PlayerData::Trail1; i <= PlayerData::Trail3; i++)
+	{
+		if(mSlideEmitter[i])
+		{
+			mSlideEmitter[i]->emitParticles(mLastPos, emissionPoint,
+				Point3F( 0.0, 0.0, 1.0 ), moveDir, (U32)(dt * 1000.0));
+		}
+	}
+	for(int i = PlayerData::Relative1; i <= PlayerData::Relative3; i++)
+	{
+		if(mSlideEmitter[i])
+		{
+			mSlideEmitter[i]->emitParticles(mLastPos, emissionPoint,
+				Point3F( 0.0, 0.0, 1.0 ), moveDir, (U32)(dt * 1000.0));
+		}
+	}
+}
+
+void Player::updateSlideSound(F32 dt)
+{
+   if(this->isSliding() && mDamageState == Enabled)
+   {
+      if(mSlideSound)
+      {
+         if(!mSlideSound->isPlaying())
+         {
+            //Con::printf("%s: Starting slide sound!", isGhost() ? "CLNT" : "SRVR");
+            mSlideSound->play();
+         }
+         mSlideSound->setTransform(this->getTransform());
+      }
+
+      if(mSlideContactSound)
+      {
+         if(mSlideContact < 2)
+         {
+            if(!mSlideContactSound->isPlaying())
+            {
+               //Con::printf("%s: Starting slide contact sound!", isGhost() ? "CLNT" : "SRVR");
+               mSlideContactSound->play();
+            }
+
+            F32 gain = 1 - mSlideContact/2;
+            mSlideContactSound->setTransform(this->getRenderTransform());
+            mSlideContactSound->setVolume(gain);
+         }
+         else
+         {
+            if(mSlideContactSound->isPlaying())
+            {
+               //Con::printf("%s: Stopping slide contact sound!", isGhost() ? "CLNT" : "SRVR");
+               mSlideContactSound->stop();
+            }
+         }
+      }
+   }
+   else
+   {
+      if(mSlideSound)
+      {
+         //Con::printf("%s: Stopping slide sound!", isGhost() ? "CLNT" : "SRVR");
+         mSlideSound->stop();
+      }
+
+      if(mSlideContactSound)
+      {
+         //Con::printf("%s: Stopping slide contact sound!", isGhost() ? "CLNT" : "SRVR");
+         mSlideContactSound->stop();
+      }
    }
 }
 

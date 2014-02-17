@@ -32,6 +32,7 @@ struct PlayerData: public ShapeBaseData {
       ImpactBits = 3,
       NUM_SPLASH_EMITTERS = 3,
       BUBBLE_EMITTER = 2,
+      NumSlideEmitters = 12
    };
    bool renderFirstPerson;    ///< Render the player shape in first person
 
@@ -93,6 +94,14 @@ struct PlayerData: public ShapeBaseData {
    F32 maxForwardSpeed;       ///< Maximum forward speed when running
    F32 maxBackwardSpeed;      ///< Maximum backward speed when running
    F32 maxSideSpeed;          ///< Maximum side speed when running
+
+	// Sliding
+   F32 slideForce;            ///< Force used to accel player while sliding
+   F32 slideEnergyDrain;      ///< Energy drain/tick
+   F32 minSlideEnergy;        ///< Minimum energy required to slide
+   F32 maxSlideForwardSpeed;  ///< Maximum forward speed when sliding
+   F32 maxSlideBackwardSpeed; ///< Maximum backward speed when sliding
+   F32 maxSlideSideSpeed;     ///< Maximum side speed when sliding
 
    // Jumping
    F32 jumpForce;             ///< Force exerted per jump
@@ -193,6 +202,8 @@ struct PlayerData: public ShapeBaseData {
       ImpactWaterMedium,
       ImpactWaterHard,
       ExitWater,
+      Slide,
+      SlideContact,
       MaxSounds
    };
    SFXTrack* sound[MaxSounds];
@@ -252,6 +263,7 @@ struct PlayerData: public ShapeBaseData {
 
       // These are set explicitly based on player actions
       FallAnim,
+		SlideAnim,
       JumpAnim,
       StandJumpAnim,
       LandAnim,
@@ -278,6 +290,21 @@ struct PlayerData: public ShapeBaseData {
    enum Impacts {
       ImpactNone,
       ImpactNormal,
+   };
+
+   enum SlideEmitters {
+      Trail1,
+      Trail2,
+		Trail3,
+      ContactTrail1,
+      ContactTrail2,
+		ContactTrail3,
+      Relative1,
+		Relative2,
+		Relative3,
+      ContactRelative1,
+		ContactRelative2,
+		ContactRelative3,
    };
 
    enum Recoil {
@@ -317,7 +344,8 @@ struct PlayerData: public ShapeBaseData {
    F32 footSplashHeight;
 
    // Air control
-   F32 airControl;
+	F32 glideForce; ///< Force used to accel player while in air and not sliding 
+   F32 airControl; ///< Air control (if glideForce is 0)
 
    // Jump off surfaces at their normal rather than straight up
    bool jumpTowardsNormal;
@@ -327,6 +355,8 @@ struct PlayerData: public ShapeBaseData {
 
    ParticleEmitterData* splashEmitterList[NUM_SPLASH_EMITTERS];
    S32 splashEmitterIDList[NUM_SPLASH_EMITTERS];
+
+   ParticleEmitterData* slideEmitter[NumSlideEmitters];
    /// @}
 
    //
@@ -390,6 +420,8 @@ protected:
    SimObjectPtr<ParticleEmitter> mSplashEmitter[PlayerData::NUM_SPLASH_EMITTERS];
    F32 mBubbleEmitterTime;
 
+   ParticleEmitter* mSlideEmitter[PlayerData::NumSlideEmitters];
+
    /// Client interpolation/warp data
    struct StateDelta {
       Move move;                    ///< Last move from server
@@ -441,6 +473,7 @@ protected:
    };
    ActionState mState;              ///< What is the player doing? @see ActionState
    bool mFalling;                   ///< Falling in mid-air?
+   F32 mSlideContact;               ///< FIXME insert desc
    S32 mJumpDelay;                  ///< Delay till next jump   
    
    Pose  mPose;
@@ -450,6 +483,9 @@ protected:
    bool  mAllowCrouching;
    bool  mAllowProne;
    bool  mAllowSwimming;
+
+	bool  mAllowSliding;
+	bool  mWantsToSlide;
    
    S32 mContactTimer;               ///< Ticks since last contact
 
@@ -459,6 +495,8 @@ protected:
 
    SFXSource* mMoveBubbleSound;   ///< Sound for moving bubbles
    SFXSource* mWaterBreathSound;  ///< Sound for underwater breath
+	SFXSource* mSlideSound;        ///< Slide sound
+	SFXSource* mSlideContactSound; ///< Slide contact sound
 
    SimObjectPtr<ShapeBase> mControlObject; ///< Controlling object
 
@@ -650,6 +688,8 @@ protected:
    void updateSplash();                             ///< Update the splash effect
    void updateFroth( F32 dt );                      ///< Update any froth
    void updateWaterSounds( F32 dt );                ///< Update water sounds
+   void updateSlideParticles( F32 dt);              ///< Update slide particles
+   void updateSlideSound( F32 dt );                 ///< Update slide sound
    void createSplash( Point3F &pos, F32 speed );    ///< Creates a splash
    bool collidingWithWater( Point3F &waterHeight ); ///< Are we colliding with water?
    /// @}
@@ -697,6 +737,10 @@ public:
    void allowCrouching(bool state) { mAllowCrouching = state; }
    void allowProne(bool state) { mAllowProne = state; }
    void allowSwimming(bool state) { mAllowSwimming = state; }
+	void allowSliding(bool state) { mAllowSliding = state; }
+
+	bool canSlide();
+	bool isSliding();
 
    bool canJump();                                         ///< Can the player jump?
    bool canJetJump();                                      ///< Can the player jet?
