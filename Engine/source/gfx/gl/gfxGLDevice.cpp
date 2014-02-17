@@ -599,7 +599,6 @@ GFXOcclusionQuery* GFXGLDevice::createOcclusionQuery()
 void GFXGLDevice::setupGenericShaders( GenericShaderType type ) 
 {
    AssertFatal(type != GSTargetRestore, "");
-   AssertFatal(type != GSTexture, "");
 
    if( mGenericShader[GSColor] == NULL )
    {
@@ -633,6 +632,16 @@ void GFXGLDevice::setupGenericShaders( GenericShaderType type )
       mGenericShader[GSAddColorTexture] = shaderData->getShader();
       mGenericShaderBuffer[GSAddColorTexture] = mGenericShader[GSAddColorTexture]->allocConstBuffer();
       mModelViewProjSC[GSAddColorTexture] = mGenericShader[GSAddColorTexture]->getShaderConstHandle( "$modelView" ); 
+
+      shaderData = new ShaderData();
+      shaderData->setField("OGLVertexShaderFile", "shaders/common/fixedFunction/gl/textureV.glsl");
+      shaderData->setField("OGLPixelShaderFile", "shaders/common/fixedFunction/gl/textureP.glsl");
+      shaderData->setSamplerName("$diffuseMap", 0);
+      shaderData->setField("pixVersion", "2.0");
+      shaderData->registerObject();
+      mGenericShader[GSTexture] = shaderData->getShader();
+      mGenericShaderBuffer[GSTexture] = mGenericShader[GSTexture]->allocConstBuffer();
+      mModelViewProjSC[GSTexture] = mGenericShader[GSTexture]->getShaderConstHandle( "$modelView" );
    }
 
    MatrixF tempMatrix =  mProjectionMatrix * mViewMatrix * mWorldMatrix[mWorldStackSize];  
