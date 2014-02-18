@@ -1,6 +1,11 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
+datablock StaticShapeData(FrmStandardcatEtherboard)
+{
+   shapeFile = "content/fr1tz/notc1/shapes/standardcat/etherboard/p1/shape.dae";
+};
+
 //------------------------------------------------------------------------------
 
 datablock PlayerData(FrmStandardcat)
@@ -86,7 +91,7 @@ datablock PlayerData(FrmStandardcat)
    maxUnderwaterBackwardSpeed = 7.8;
    maxUnderwaterSideSpeed = 4.0;
 
-   jumpForce =  720;
+   jumpForce =  720*4;
    jumpEnergyDrain = 0;
    minJumpEnergy = 0;
    jumpDelay = 0;
@@ -141,10 +146,10 @@ datablock PlayerData(FrmStandardcat)
    exitSplashSoundVelocity = 5.0;
    
 	// slide emitters
-	slideParticleFootEmitter[0] = FrmStandardcatSlideFootEmitter;
+	//slideParticleFootEmitter[0] = FrmStandardcatSlideFootEmitter;
 	//slideParticleTrailEmitter[0] = BlueSlideEmitter;
 	//slideContactParticleFootEmitter[0] = RedSlideEmitter;
-	slideContactParticleTrailEmitter[0] = FrmStandardcatSlideContactTrailEmitter;
+	//slideContactParticleTrailEmitter[0] = FrmStandardcatSlideContactTrailEmitter;
  
    // skid emitters
 	skidParticleFootEmitter[0] = FrmStandardcatSkidFootEmitter;
@@ -277,7 +282,7 @@ datablock PlayerData(FrmStandardcat)
    maxInvWpnSiberionAmmo = "120";
 };
 
-// *** callback function: called by engine
+// callback function: called by engine
 function FrmStandardcat::onAdd(%this, %obj)
 {
    Parent::onAdd(%this, %obj);
@@ -286,8 +291,23 @@ function FrmStandardcat::onAdd(%this, %obj)
    
    %obj.setEnergyLevel(%this.maxEnergy);
    
+   %obj.etherboard = new StaticShape() {
+      dataBlock = FrmStandardcatEtherboard;
+   };
+   %obj.mountObject(%obj.etherboard, 8);
+   %obj.etherboard.startFade(0, 0, true);
+   
 	%obj.isCAT = true;
 	%obj.getTeamObject().numCATs++;
+}
+
+// callback function: called by engine
+function FrmStandardcat::onRemove(%this, %obj)
+{
+   Parent::onRemove(%this, %obj);
+   
+   if(isObject(%obj.etherboard))
+      %obj.etherboard.delete();
 }
 
 // callback function: called by engine
@@ -340,6 +360,28 @@ function FrmStandardcat::onTrigger(%this, %obj, %triggerNum, %val)
 	// as the jump key.
  
    Parent::onTrigger(%this, %obj, %triggerNum, %val);
+   
+   if(%triggerNum == 6)
+   {
+      if(!isObject(%obj.etherboard))
+         return;
+         
+      if(%val)
+      {
+         %obj.etherboard.playThread(0, "activate");
+         %obj.etherboard.setThreadTimeScale(0, 4);
+         %obj.etherboard.setThreadDir(0, true);
+         %obj.etherboard.startFade(500, 0, false);
+      }
+      else
+      {
+         %obj.etherboard.playThread(0, "activate");
+         %obj.etherboard.setThreadTimeScale(0, 4);
+         %obj.etherboard.setThreadPosition(0, 1);
+         %obj.etherboard.setThreadDir(0, false);
+         %obj.etherboard.startFade(100, 0, true);
+      }
+   }
    
    if(!%val || %triggerNum != 2)
       return;

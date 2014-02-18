@@ -10,22 +10,22 @@ datablock SFXProfile(FrmStandardcatSpawnSound)
 
 datablock SFXProfile(FrmStandardcatSlideSound)
 {
-	filename	 = "content/rotc/p.5.4/sounds/rotc/slide3.wav";
-	description = AudioCloseLooping3D;
+	filename	 = "content/rotc/p.5.4/shapes/rotc/players/standardcat/slide.wav";
+	description = AudioCloseLoop3D;
 	preload = true;
 };
 
 datablock SFXProfile(FrmStandardcatSlideContactSound)
 {
-	filename	 = "content/rotc/p.5.4/sounds/rotc/slide3a.wav";
-	description = AudioCloseLooping3D;
+	filename	 = "content/rotc/p.5.4/shapes/rotc/players/standardcat/slidecontact.wav";
+	description = AudioCloseLoop3D;
 	preload = true;
 };
 
 datablock SFXProfile(FrmStandardcatSkidSound)
 {
 	filename	 = "content/rotc/p.5.4/shapes/rotc/players/standardcat/slidecontact.wav";
-	description = AudioCloseLooping3D;
+	description = AudioCloseLoop3D;
 	preload = true;
 };
 
