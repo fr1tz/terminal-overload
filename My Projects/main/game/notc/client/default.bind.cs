@@ -457,6 +457,8 @@ moveMap.bind(keyboard, "alt c", toggleCamera);
 moveMap.bind( gamepad, btn_start, toggleCamera );
 moveMap.bind( gamepad, btn_x, toggleFirstPerson );
 
+moveMap.bind(keyboard, "p", toggleFirstPerson );
+
 // ----------------------------------------------------------------------------
 // Misc. Player stuff
 // ----------------------------------------------------------------------------
@@ -570,7 +572,7 @@ moveMap.bind(keyboard, u, toggleMessageHud );
 //moveMap.bind(keyboard, y, teamMessageHud );
 moveMap.bind(keyboard, "pageUp", pageMessageHudUp );
 moveMap.bind(keyboard, "pageDown", pageMessageHudDown );
-moveMap.bind(keyboard, "p", resizeMessageHud );
+//moveMap.bind(keyboard, "p", resizeMessageHud );
 
 //------------------------------------------------------------------------------
 // Demo recording functions
