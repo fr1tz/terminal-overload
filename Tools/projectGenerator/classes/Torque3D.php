@@ -130,7 +130,7 @@ class Torque3D
           includeModule( 'theora' );
         }
        
-        if(TorqueGenerator::$platform == "mac" || TorqueGenerator::$platform == "win32")
+        if(TorqueGenerator::$platform == "mac" || TorqueGenerator::$platform == "win32" || TorqueGenerator::$platform == "linux")
            includeModule( 'openal' );
 
    
