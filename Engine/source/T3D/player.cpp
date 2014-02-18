@@ -6241,7 +6241,7 @@ void Player::writePacketData(GameConnection *connection, BitStream *stream)
       stream->write(mVelocity.z);
       stream->writeInt(mJumpSurfaceLastContact > 15 ? 15 : mJumpSurfaceLastContact, 4);
 
-      if (stream->writeFlag(!mAllowSprinting || !mAllowCrouching || !mAllowProne || !mAllowJumping || !mAllowJetJumping || !mAllowSwimming))
+      if (stream->writeFlag(!mAllowSprinting || !mAllowCrouching || !mAllowProne || !mAllowJumping || !mAllowJetJumping || !mAllowSwimming || !mAllowSliding))
       {
          stream->writeFlag(mAllowJumping);
          stream->writeFlag(mAllowJetJumping);
@@ -6249,6 +6249,7 @@ void Player::writePacketData(GameConnection *connection, BitStream *stream)
          stream->writeFlag(mAllowCrouching);
          stream->writeFlag(mAllowProne);
          stream->writeFlag(mAllowSwimming);
+			stream->writeFlag(mAllowSliding);
       }
    }
    stream->write(mHead.x);
@@ -6305,6 +6306,7 @@ void Player::readPacketData(GameConnection *connection, BitStream *stream)
          mAllowCrouching = stream->readFlag();
          mAllowProne = stream->readFlag();
          mAllowSwimming = stream->readFlag();
+			mAllowSliding = stream->readFlag();
       }
       else
       {
@@ -6314,6 +6316,7 @@ void Player::readPacketData(GameConnection *connection, BitStream *stream)
          mAllowCrouching = true;
          mAllowProne = true;
          mAllowSwimming = true;
+			mAllowSliding = true;
       }
    }
    else
