@@ -493,7 +493,22 @@ protected:
 
    Point3F mJumpSurfaceNormal;      ///< Normal of the surface the player last jumped on
    U32 mJumpSurfaceLastContact;     ///< How long it's been since the player landed (ticks)
+
    F32  mWeaponBackFraction;        ///< Amount to slide the weapon back (if it's up against something)
+
+   /// @name First person weapon bobbing
+   /// @{
+   struct FirstPersonWeaponBob
+	{
+      enum State {
+         NoBob,
+         BobSideways
+      } state;
+		Point3F pos;
+		F32 counter;
+	} mFirstPersonWeaponBob;
+	void updateFirstPersonWeaponBob(F32 dt);
+   /// @}
 
    SFXSource* mMoveBubbleSound;   ///< Sound for moving bubbles
    SFXSource* mWaterBreathSound;  ///< Sound for underwater breath

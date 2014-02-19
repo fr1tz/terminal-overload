@@ -1734,6 +1734,10 @@ Player::Player()
 
    mWeaponBackFraction = 0.0f;
 
+   mFirstPersonWeaponBob.state = FirstPersonWeaponBob::NoBob;
+	mFirstPersonWeaponBob.pos.set(0, 0, 0);
+	mFirstPersonWeaponBob.counter = 0;
+
    mInMissionArea = true;
 
    mBubbleEmitterTime = 10.0;
@@ -2378,6 +2382,7 @@ void Player::advanceTime(F32 dt)
    updateWaterSounds(dt);
    updateSlideParticles(dt);
    updateSlideSound(dt);
+	updateFirstPersonWeaponBob(dt);
 
    mLastPos = getPosition();
 
@@ -4023,6 +4028,67 @@ void Player::setActionThread(U32 action,bool forward,bool hold,bool wait,bool fs
             mActionAnimation.forward ? 0.0f : 1.0f);
       }
    }
+
+	// Initialize first person weapon bobbing.
+	if(mFirstPersonWeaponBob.state == FirstPersonWeaponBob::NoBob)
+	{
+      switch(action)
+      {
+         case PlayerData::RunForwardAnim:
+         case PlayerData::SprintForwardAnim:
+         case PlayerData::CrouchForwardAnim:
+         case PlayerData::ProneForwardAnim:
+         case PlayerData::BackBackwardAnim:
+         case PlayerData::SprintBackwardAnim:
+         case PlayerData::CrouchBackwardAnim:
+         case PlayerData::ProneBackwardAnim:
+            mFirstPersonWeaponBob.state = FirstPersonWeaponBob::BobSideways;
+            mFirstPersonWeaponBob.counter = M_PI; // bob to left first
+            break;
+
+         case PlayerData::SideLeftAnim:
+         case PlayerData::SprintLeftAnim:
+         case PlayerData::CrouchLeftAnim:
+            mFirstPersonWeaponBob.state = FirstPersonWeaponBob::BobSideways;
+            if(forward) // sidestep left
+               mFirstPersonWeaponBob.counter = M_PI; // bob to left first
+            else // sidestep right
+               mFirstPersonWeaponBob.counter = 0; // bob to right first
+            break;
+
+         case PlayerData::SideRightAnim:
+         case PlayerData::SprintRightAnim:
+         case PlayerData::CrouchRightAnim:
+            mFirstPersonWeaponBob.state = FirstPersonWeaponBob::BobSideways;
+            if(forward) // sidestep right
+               mFirstPersonWeaponBob.counter = 0; // bob to right first
+            else // sidestep right
+               mFirstPersonWeaponBob.counter = M_PI; // bob to left first
+            break;
+      }
+   }
+
+   switch(action)
+   {
+      case PlayerData::RootAnim:
+      case PlayerData::SprintRootAnim:
+      case PlayerData::CrouchRootAnim:
+      case PlayerData::ProneRootAnim:
+      case PlayerData::SwimRootAnim:
+      case PlayerData::SwimForwardAnim:
+      case PlayerData::SwimBackwardAnim:
+      case PlayerData::SwimLeftAnim:
+      case PlayerData::SwimRightAnim:
+      case PlayerData::FallAnim:
+      case PlayerData::SlideAnim:
+      case PlayerData::JumpAnim:
+      case PlayerData::StandJumpAnim:
+      case PlayerData::LandAnim:
+      case PlayerData::JetAnim:
+         mFirstPersonWeaponBob.state = FirstPersonWeaponBob::NoBob;
+         mFirstPersonWeaponBob.counter = 0;
+         break;
+   }
 }
 
 void Player::updateActionThread()
@@ -4271,6 +4337,7 @@ void Player::pickActionAnimation()
    {
       pickBestMoveAction(PlayerData::SprintRootAnim, PlayerData::SprintRightAnim, &action, &forward);
    }
+
    setActionThread(action,forward,false,false,fsp);
 }
 
@@ -5961,7 +6028,9 @@ void Player::renderMountedImage( U32 imageSlot, TSRenderState &rstate, SceneRend
       {
          MatrixF nmat;
          getRenderEyeBaseTransform(&nmat, mDataBlock->mountedImagesBank);
-         world.mul(nmat,data.eyeOffset);
+         MatrixF offset = data.eyeOffset;
+         offset.setPosition(offset.getPosition() + mFirstPersonWeaponBob.pos);
+         world.mul(nmat, offset);
       }
 
       if ( imageSlot == 0 )
@@ -7448,6 +7517,22 @@ void Player::updateSlideSound(F32 dt)
          //Con::printf("%s: Stopping slide contact sound!", isGhost() ? "CLNT" : "SRVR");
          mSlideContactSound->stop();
       }
+   }
+}
+
+void Player::updateFirstPersonWeaponBob(F32 dt)
+{
+   if(mFirstPersonWeaponBob.state == FirstPersonWeaponBob::NoBob)
+   {
+      mFirstPersonWeaponBob.pos *= 0.95 * (1-dt);
+      if(mFirstPersonWeaponBob.pos.len() < 0.01)
+         mFirstPersonWeaponBob.pos.set(0,0,0);
+   }
+   else
+   {
+      F32 vel = this->getVelocity().len();
+      mFirstPersonWeaponBob.counter += vel * 0.5 * dt;
+      mFirstPersonWeaponBob.pos.x = 0.075 * mSin(mFirstPersonWeaponBob.counter);
    }
 }
 
