@@ -315,6 +315,8 @@ struct PlayerData: public ShapeBaseData {
    };
    S32 recoilSequence[NumRecoilSequences];
 
+   S32 wingsSequence;
+
    /// @name Particles
    /// All of the data relating to environmental effects
    /// @{
@@ -525,6 +527,7 @@ protected:
    TSThread* mHeadHThread;
    TSThread* mRecoilThread;
    TSThread* mImageStateThread;
+   TSThread* mWingsThread;
    /// @}
 
    bool mInMissionArea;       ///< Are we in the mission area?

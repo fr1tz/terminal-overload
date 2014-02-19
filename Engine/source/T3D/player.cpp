@@ -524,6 +524,9 @@ bool PlayerData::preload(bool server, String &errorStr)
       recoilSequence[0] = mShape->findSequence("light_recoil");
       recoilSequence[1] = mShape->findSequence("medium_recoil");
       recoilSequence[2] = mShape->findSequence("heavy_recoil");
+
+      // Wings animation
+      wingsSequence = mShape->findSequence("wings");
    }
 
    // Convert pickupRadius to a delta of boundingBox
@@ -1681,7 +1684,7 @@ Player::Player()
    mHead = delta.head;
    mVelocity.set(0.0f, 0.0f, 0.0f);
    mDataBlock = 0;
-   mHeadHThread = mHeadVThread = mRecoilThread = mImageStateThread = 0;
+   mHeadHThread = mHeadVThread = mRecoilThread = mImageStateThread = mWingsThread = 0;
    mArmAnimation.action = PlayerData::NullAnimation;
    mArmAnimation.thread = 0;
    mActionAnimation.action = PlayerData::NullAnimation;
@@ -1973,6 +1976,18 @@ bool Player::onNewDataBlock( GameBaseData *dptr, bool reload )
             mShapeInstance->setTimeScale(mRecoilThread, 0);
             break;
          }
+
+   // Create wings thread.
+   // Note that the server player does not play this animation.
+   mWingsThread = 0;
+   if(this->isGhost())
+   {
+      if(mDataBlock->wingsSequence != -1)
+      {
+         mWingsThread = mShapeInstance->addThread();
+         mShapeInstance->setSequence(mWingsThread, mDataBlock->wingsSequence, 0);
+      }
+	}
 
    // Reset the image state driven animation thread.  This will be properly built
    // in onImageStateAnimation() when needed.
@@ -4745,6 +4760,13 @@ void Player::updateAnimation(F32 dt)
       mShapeInstance->advanceTime(dt,mRecoilThread);
    if (mImageStateThread)
       mShapeInstance->advanceTime(dt,mImageStateThread);
+
+	// Wings animation
+   if(mShapeInstance && mWingsThread)
+   {
+      bool open = (mContactTimer > 0 || this->isSliding());
+      mShapeInstance->advanceTime(open ? dt : -dt, mWingsThread);
+   }
 
    // If we are the client's player on this machine, then we need
    // to make sure the transforms are up to date as they are used
