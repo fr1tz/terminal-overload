@@ -96,6 +96,9 @@ datablock PlayerData(FrmStandardcat)
    minJumpEnergy = 0;
    jumpDelay = 0;
    
+	skidSpeed = 20;
+	skidFactor = 0.4;
+   
    glideForce = 10 * 90;
    airControl = 0.0;
 
@@ -153,8 +156,8 @@ datablock PlayerData(FrmStandardcat)
  
    // skid emitters
 	skidParticleFootEmitter[0] = FrmStandardcatSkidFootEmitter;
-	skidParticleTrailEmitter[0] = CatSkidTrailEmitter0;
-	skidParticleTrailEmitter[1] = CatSkidTrailEmitter1;
+	skidParticleTrailEmitter[0] = FrmStandardcatSkidTrailEmitter0;
+	skidParticleTrailEmitter[1] = FrmStandardcatSkidTrailEmitter1;
 
    // Controls over slope of runnable/jumpable surfaces
    runSurfaceAngle  = 40;
@@ -203,6 +206,7 @@ datablock PlayerData(FrmStandardcat)
    
 	slideSound        = FrmStandardcatSlideSound;
 	slideContactSound = FrmStandardcatSlideContactSound;
+ 
 	skidSound         = FrmStandardcatSkidSound;
 
    //impactWaterEasy      = ImpactLightWaterEasySound;
