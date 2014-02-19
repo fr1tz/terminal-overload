@@ -1786,7 +1786,12 @@ bool Player::onAdd()
 
    if (serverAnim.action != PlayerData::NullAnimation)
    {
-      setActionThread(serverAnim.action, true, serverAnim.holdAtEnd, true, false, true);
+      setActionThread(serverAnim.action,
+                      serverAnim.forward,
+                      serverAnim.holdAtEnd,
+                      serverAnim.waitForEnd,
+                      serverAnim.firstPerson,
+                      true);
       if (serverAnim.atEnd)
       {
          mShapeInstance->clearTransition(mActionAnimation.thread);
