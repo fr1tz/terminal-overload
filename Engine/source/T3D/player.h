@@ -66,6 +66,9 @@ struct PlayerData: public ShapeBaseData {
    /// @name Physics constants
    /// @{
 
+   F32 skidSpeed;             ///< Velocity at which player starts skidding
+   F32 skidFactor;            ///< FIXME: add description
+
    F32 maxStepHeight;         ///< Maximum height the player can step up
    F32 runSurfaceAngle;       ///< Maximum angle from vertical in degrees the player can run up
 
@@ -204,6 +207,7 @@ struct PlayerData: public ShapeBaseData {
       ExitWater,
       Slide,
       SlideContact,
+		Skid,
       MaxSounds
    };
    SFXTrack* sound[MaxSounds];
@@ -307,6 +311,16 @@ struct PlayerData: public ShapeBaseData {
 		ContactRelative3,
    };
 
+   enum SkidEmitters {
+      SkidTrail1,
+      SkidTrail2,
+		SkidTrail3,
+      SkidRelative1,
+		SkidRelative2,
+		SkidRelative3,
+		NumSkidEmitters
+   };
+
    enum Recoil {
       LightRecoil,
       MediumRecoil,
@@ -359,6 +373,8 @@ struct PlayerData: public ShapeBaseData {
    S32 splashEmitterIDList[NUM_SPLASH_EMITTERS];
 
    ParticleEmitterData* slideEmitter[NumSlideEmitters];
+
+	ParticleEmitterData* skidEmitter[NumSkidEmitters];
    /// @}
 
    //
@@ -423,6 +439,8 @@ protected:
    F32 mBubbleEmitterTime;
 
    ParticleEmitter* mSlideEmitter[PlayerData::NumSlideEmitters];
+
+	ParticleEmitter* mSkidEmitter[PlayerData::NumSlideEmitters];
 
    /// Client interpolation/warp data
    struct StateDelta {
@@ -514,6 +532,7 @@ protected:
    SFXSource* mWaterBreathSound;  ///< Sound for underwater breath
 	SFXSource* mSlideSound;        ///< Slide sound
 	SFXSource* mSlideContactSound; ///< Slide contact sound
+	SFXSource* mSkidSound;         ///< Sound when skidding
 
    SimObjectPtr<ShapeBase> mControlObject; ///< Controlling object
 
@@ -712,6 +731,9 @@ protected:
    bool collidingWithWater( Point3F &waterHeight ); ///< Are we colliding with water?
    /// @}
 
+   void updateSkidParticles( F32 dt);              ///< Update skid particles
+   void updateSkidSound( F32 dt );                 ///< Update skid sound
+
    void disableHeadZCalc() { mUseHeadZCalc = false; }
    void enableHeadZCalc() { mUseHeadZCalc = true; }
 
@@ -759,6 +781,8 @@ public:
 
 	bool canSlide();
 	bool isSliding();
+
+	bool isSkidding();
 
    bool canJump();                                         ///< Can the player jump?
    bool canJetJump();                                      ///< Can the player jet?

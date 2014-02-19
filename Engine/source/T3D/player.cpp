@@ -259,6 +259,9 @@ PlayerData::PlayerData()
    drag = 0.3f;         // from ShapeBase
    density = 1.1f;      // from ShapeBase
 
+   skidSpeed = 9999;
+   skidFactor = 1.0;
+
    maxStepHeight = 1.0f;
    runSurfaceAngle = 80.0f;
 
@@ -395,6 +398,9 @@ PlayerData::PlayerData()
    for (S32 i = 0; i < NumSlideEmitters; i++)
       slideEmitter[i] = NULL;
 
+   for (S32 i = 0; i < NumSkidEmitters; i++)
+      skidEmitter[i] = NULL;
+
    groundImpactMinSpeed = 10.0f;
    groundImpactShakeFreq.set( 10.0f, 10.0f, 10.0f );
    groundImpactShakeAmp.set( 20.0f, 20.0f, 20.0f );
@@ -430,6 +436,10 @@ bool PlayerData::preload(bool server, String &errorStr)
       for(int i=0; i < NumSlideEmitters; i++)
          if(slideEmitter[i])
             Sim::findObject(SimObjectId(slideEmitter[i]), slideEmitter[i]);
+
+      for(int i=0; i < NumSkidEmitters; i++)
+         if(skidEmitter[i])
+            Sim::findObject(SimObjectId(skidEmitter[i]), skidEmitter[i]);
    }
 
    //
@@ -695,6 +705,12 @@ void PlayerData::initPersistFields()
    endGroup( "Camera" );
 
    addGroup( "Movement" );
+
+      addField( "skidSpeed", TypeF32, Offset(skidSpeed, PlayerData),
+         "@brief Velocity at which player starts skidding.\n\n" );
+
+      addField( "skidFactor", TypeF32, Offset(skidFactor, PlayerData),
+         "@brief FIXME: add description.\n\n" );
 
       addField( "maxStepHeight", TypeF32, Offset(maxStepHeight, PlayerData),
          "@brief Maximum height the player can step up.\n\n"
@@ -1116,6 +1132,9 @@ void PlayerData::initPersistFields()
       addField( "slideContactSound", TypeSFXTrackName, Offset(sound[SlideContact], PlayerData),
          "@brief Sound to play while sliding and being in contact with a surface.\n\n" );
 
+      addField( "skidSound", TypeSFXTrackName, Offset(sound[Skid], PlayerData),
+         "@brief Sound to play while skidding.\n\n" );
+
    endGroup( "Interaction: Sounds" );
 
    addGroup( "Interaction: Splashes" );
@@ -1193,6 +1212,15 @@ void PlayerData::initPersistFields()
 
 	endGroup( "Interaction: Slide emitters" );
 
+   addGroup( "Interaction: Skid emitters" );
+
+      addField( "skidParticleTrailEmitter", TYPEID< ParticleEmitterData >(), Offset(skidEmitter[PlayerData::SkidTrail1], PlayerData), 3,
+         "@brief Particle emitters.\n\n" );
+      addField( "skidParticleFootEmitter", TYPEID< ParticleEmitterData >(), Offset(skidEmitter[PlayerData::SkidRelative1], PlayerData), 3,
+         "@brief Particle emitters.\n\n" );
+
+	endGroup( "Interaction: Skid emitters" );
+
    addGroup( "Physics" );
 
       // PhysicsPlayer
@@ -1261,6 +1289,9 @@ void PlayerData::packData(BitStream* stream)
    stream->write(maxEnergy);
    stream->write(drag);
    stream->write(density);
+
+   stream->write(skidSpeed);
+   stream->write(skidFactor);
 
    stream->write(maxStepHeight);
 
@@ -1377,6 +1408,11 @@ void PlayerData::packData(BitStream* stream)
          stream->writeRangedU32(packed? SimObjectId(slideEmitter[i]):
             slideEmitter[i]->getId(),DataBlockObjectIdFirst,DataBlockObjectIdLast);
 
+   for(U32 i = 0; i < NumSkidEmitters; i++)
+      if (stream->writeFlag(skidEmitter[i]))
+         stream->writeRangedU32(packed? SimObjectId(skidEmitter[i]):
+            skidEmitter[i]->getId(),DataBlockObjectIdFirst,DataBlockObjectIdLast);
+
    if( stream->writeFlag( decalData ) )
    {
       stream->writeRangedU32( decalData->getId(), DataBlockObjectIdFirst,  DataBlockObjectIdLast );
@@ -1457,6 +1493,9 @@ void PlayerData::unpackData(BitStream* stream)
    stream->read(&maxEnergy);
    stream->read(&drag);
    stream->read(&density);
+
+   stream->read(&skidSpeed);
+   stream->read(&skidFactor);
 
    stream->read(&maxStepHeight);
 
@@ -1573,6 +1612,14 @@ void PlayerData::unpackData(BitStream* stream)
 		if(stream->readFlag())
 			slideEmitter[i] = (ParticleEmitterData*)stream->readRangedU32(DataBlockObjectIdFirst,
                                DataBlockObjectIdLast);
+   }
+
+   for(U32 i = 0; i < NumSkidEmitters; i++) 
+   {
+      skidEmitter[i] = NULL;
+      if(stream->readFlag())
+         skidEmitter[i] = (ParticleEmitterData*)stream->readRangedU32(DataBlockObjectIdFirst,
+                           DataBlockObjectIdLast);
    }
 
    if( stream->readFlag() )
@@ -1712,6 +1759,7 @@ Player::Player()
    mControlObject = 0;
    dMemset( mSplashEmitter, 0, sizeof( mSplashEmitter ) );
    dMemset( mSlideEmitter, 0, sizeof( mSlideEmitter ) );
+	dMemset( mSkidEmitter, 0, sizeof( mSkidEmitter ) );
 
    mUseHeadZCalc = true;
 
@@ -1727,6 +1775,7 @@ Player::Player()
    mWaterBreathSound = 0;   
    mSlideSound = 0;
    mSlideContactSound = 0;
+	mSkidSound = 0;
 
    mConvex.init(this);
    mWorkingQueryBox.minExtents.set(-1e9f, -1e9f, -1e9f);
@@ -1876,6 +1925,7 @@ void Player::onRemove()
       SFX_DELETE( mWaterBreathSound );
       SFX_DELETE( mSlideSound );
       SFX_DELETE( mSlideContactSound );
+		SFX_DELETE( mSkidSound );
    }
 
    U32 i;
@@ -1894,6 +1944,15 @@ void Player::onRemove()
       {
          mSlideEmitter[i]->deleteWhenEmpty();
          mSlideEmitter[i] = NULL;
+      }
+   }
+
+   for( i=0; i<PlayerData::NumSkidEmitters; i++ )
+   {
+      if(mSkidEmitter[i])
+      {
+         mSkidEmitter[i]->deleteWhenEmpty();
+         mSkidEmitter[i] = NULL;
       }
    }
 
@@ -2045,6 +2104,7 @@ bool Player::onNewDataBlock( GameBaseData *dptr, bool reload )
       SFX_DELETE( mWaterBreathSound );
 		SFX_DELETE( mSlideSound );
 		SFX_DELETE( mSlideContactSound );
+		SFX_DELETE( mSkidSound );
 
       if ( mDataBlock->sound[PlayerData::MoveBubbles] )
          mMoveBubbleSound = SFX->createSource( mDataBlock->sound[PlayerData::MoveBubbles] );
@@ -2057,6 +2117,9 @@ bool Player::onNewDataBlock( GameBaseData *dptr, bool reload )
 
       if ( mDataBlock->sound[PlayerData::SlideContact] )
          mSlideContactSound = SFX->createSource( mDataBlock->sound[PlayerData::SlideContact] );
+
+      if ( mDataBlock->sound[PlayerData::Skid] )
+         mSkidSound = SFX->createSource( mDataBlock->sound[PlayerData::Skid] );
    }
 
    if(this->isGhost())
@@ -2083,6 +2146,34 @@ bool Player::onNewDataBlock( GameBaseData *dptr, bool reload )
          {
             if(i >= PlayerData::Relative1)
                mSlideEmitter[i]->moveParticlesWithObject(this);
+         }
+      }
+	}
+
+   if(this->isGhost())
+   {
+      for(U32 i=0; i<PlayerData::NumSkidEmitters; i++ )
+      {
+         if(mSkidEmitter[i] != NULL) 
+				mSkidEmitter[i]->deleteWhenEmpty();
+
+			mSkidEmitter[i] = NULL;
+
+			if(!mDataBlock->skidEmitter[i])
+				continue;
+
+         mSkidEmitter[i] = new ParticleEmitter;
+         mSkidEmitter[i]->onNewDataBlock( mDataBlock->skidEmitter[i], true );
+         if( !mSkidEmitter[i]->registerObject() )
+         {
+            Con::warnf( ConsoleLogEntry::General, "Could not register skid particle emitter for class: %s", mDataBlock->getName() );
+            delete mSkidEmitter[i];
+            mSkidEmitter[i] = NULL;
+         }
+         else
+         {
+            if(i >= PlayerData::SkidRelative1)
+               mSkidEmitter[i]->moveParticlesWithObject(this);
          }
       }
 	}
@@ -2382,6 +2473,8 @@ void Player::advanceTime(F32 dt)
    updateWaterSounds(dt);
    updateSlideParticles(dt);
    updateSlideSound(dt);
+   updateSkidParticles(dt);
+   updateSkidSound(dt);
 	updateFirstPersonWeaponBob(dt);
 
    mLastPos = getPosition();
@@ -3047,6 +3140,13 @@ void Player::updateMove(const Move* move)
          maxAcc *= mDataBlock->recoverRunForceScale;
       if (runSpeed > maxAcc)
          runAcc *= maxAcc / runSpeed;
+
+      if(this->isSkidding())
+      {
+         F32 f = mDataBlock->skidSpeed / mVelocity.len();
+         runAcc *= f * mDataBlock->skidFactor;
+      }
+
       acc += runAcc;
 
       // If we are running on the ground, then we're not jumping
@@ -3480,7 +3580,6 @@ bool Player::checkDismountPosition(const MatrixF& oldMat, const MatrixF& mat)
    return true;
 }
 
-
 //----------------------------------------------------------------------------
 
 bool Player::canSlide()
@@ -3496,6 +3595,13 @@ bool Player::canSlide()
 bool Player::isSliding()
 {
    return (mWantsToSlide && this->canSlide());
+}
+
+//----------------------------------------------------------------------------
+
+bool Player::isSkidding()
+{
+   return (mContactTimer == 0 && mVelocity.len() > mDataBlock->skidSpeed && !this->isSliding());
 }
 
 //----------------------------------------------------------------------------
@@ -4299,7 +4405,7 @@ void Player::pickActionAnimation()
       // Play the jetting animation
       action = PlayerData::JetAnim;
    }
-	else if(this->isSliding())
+	else if(this->isSliding() || this->isSkidding())
 	{
 		action = PlayerData::SlideAnim;
 	}
@@ -7518,6 +7624,47 @@ void Player::updateSlideSound(F32 dt)
          mSlideContactSound->stop();
       }
    }
+}
+
+void Player::updateSkidParticles(F32 dt)
+{
+   if(!this->isSkidding())
+      return;
+
+   Point3F emissionPoint = getRenderPosition();
+   Point3F moveDir = getVelocity();
+  
+   F32 amount = 1 - mDataBlock->skidSpeed / moveDir.len();
+   for(int i = 0; i <= PlayerData::NumSkidEmitters; i++)
+   {
+      if(mSkidEmitter[i])
+         mSkidEmitter[i]->emitParticles(mLastPos, emissionPoint,
+            Point3F( 0.0, 0.0, 1.0 ), moveDir, (U32)(amount * dt * 1000.0));	
+   }
+}
+
+void Player::updateSkidSound(F32 dt)
+{
+	if(!mSkidSound)
+		return;
+
+   if(this->isSkidding())
+	{
+      if(!mSkidSound->isPlaying())
+      {
+         //Con::printf("%s: Starting skid sound!", isGhost() ? "CLNT" : "SRVR");
+         mSkidSound->play();
+      }
+      mSkidSound->setTransform(this->getTransform());
+ 	}
+	else
+	{
+      if(mSkidSound->isPlaying())
+      {
+         //Con::printf("%s: Stopping skid sound!", isGhost() ? "CLNT" : "SRVR");
+         mSkidSound->stop();
+      }
+ 	}
 }
 
 void Player::updateFirstPersonWeaponBob(F32 dt)
