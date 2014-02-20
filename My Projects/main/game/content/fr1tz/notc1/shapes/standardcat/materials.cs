@@ -14,6 +14,31 @@ new Material(fr1tz_notc1_shapes_standardcat_footprint)
    showFootprints = "0";
 };
 
+new Material(fr1tz_notc1_shapes_standardcat_slidedecalmat)
+{
+   diffuseMap[0] = "content/fr1tz/notc1/shapes/standardcat/slidedecal.png";
+   vertColor[0] = true;
+   translucent = true;
+   castShadows = "0";
+   translucentZWrite = "1";
+   materialTag0 = "Player";
+   mapTo = "footprint";
+   glow[0] = "0";
+   emissive[0] = "1";
+   translucentBlendOp = "AddAlpha";
+   showFootprints = "0";
+   diffuseColor[0] = "0.996078 0.698039 0.00784314 1";
+};
+
+singleton Material(fr1tz_notc1_shapes_standardcat_skiddecalmat)
+{
+   mapTo = "fr1tz_notc1_shapes_standardcat_skiddecal";
+   diffuseMap[0] = "content/fr1tz/notc1/textures/smashdecal2.png";
+   emissive[0] = "1";
+   translucent = "1";
+   translucentBlendOp = "AddAlpha";
+};
+
 singleton Material(fr1tz_notc1_shapes_standardcat_mat2)
 {
    mapTo = "armor_red0024";
