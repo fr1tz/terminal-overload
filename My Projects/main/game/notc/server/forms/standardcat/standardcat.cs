@@ -127,8 +127,8 @@ datablock PlayerData(FrmStandardcat)
    boxHeadFrontPercentage        = 0.60;
 
    // Foot Prints
+   decalData = FrmStandardcatFootprint;
    decalOffset = 0.25;
-
    footPuffEmitter = "FrmStandardcatFootPuffEmitter";
    footPuffNumParts = 5;
    footPuffRadius = "0.2";
@@ -148,16 +148,19 @@ datablock PlayerData(FrmStandardcat)
    hardSplashSoundVelocity = 20.0;
    exitSplashSoundVelocity = 5.0;
    
-	// slide emitters
+	// Slide visuals
 	//slideParticleFootEmitter[0] = FrmStandardcatSlideFootEmitter;
 	//slideParticleTrailEmitter[0] = BlueSlideEmitter;
 	//slideContactParticleFootEmitter[0] = RedSlideEmitter;
 	//slideContactParticleTrailEmitter[0] = FrmStandardcatSlideContactTrailEmitter;
+   slideDecal = FrmStandardcatSlideDecal;
  
-   // skid emitters
-	skidParticleFootEmitter[0] = FrmStandardcatSkidFootEmitter;
+   // Skid visuals
+	skidParticleFootEmitter[0] = FrmStandardcatSkidFootEmitter0;
+	skidParticleFootEmitter[1] = FrmStandardcatSkidFootEmitter1;
 	skidParticleTrailEmitter[0] = FrmStandardcatSkidTrailEmitter0;
-	skidParticleTrailEmitter[1] = FrmStandardcatSkidTrailEmitter1;
+	//skidParticleTrailEmitter[1] = FrmStandardcatSkidTrailEmitter1;
+   skidDecal = FrmStandardcatSkidDecal;
 
    // Controls over slope of runnable/jumpable surfaces
    runSurfaceAngle  = 40;
@@ -205,7 +208,7 @@ datablock PlayerData(FrmStandardcat)
    impactSnowSound      = FrmStandardcatImpactSnowSound;
    
 	slideSound        = FrmStandardcatSlideSound;
-	slideContactSound = FrmStandardcatSlideContactSound;
+	//slideContactSound = FrmStandardcatSlideContactSound;
  
 	skidSound         = FrmStandardcatSkidSound;
 
@@ -224,7 +227,6 @@ datablock PlayerData(FrmStandardcat)
    observeParameters = "0.5 4.5 4.5";
 
    cameraMinDist = "0";
-   DecalData = "FrmStandardcatFootprint";
 
    // Allowable Inventory Items
    mainWeapon = WpnSMG1;

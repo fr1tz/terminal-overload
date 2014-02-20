@@ -2,6 +2,51 @@
 // located in the root directory of this distribution.
 
 //----------------------------------------------------------------------------
+// Slide decal
+//----------------------------------------------------------------------------
+
+datablock DecalData(FrmStandardcatSlideDecal)
+{
+   size = "2";
+   material = fr1tz_notc1_shapes_standardcat_slidedecalmat;
+   textureCoordCount = "0";
+   lifeSpan = "250";
+   fadeTime = "1500";
+};
+
+//----------------------------------------------------------------------------
+// Skid decal
+//----------------------------------------------------------------------------
+
+datablock DecalData(FrmStandardcatSkidDecal)
+{
+   Material = fr1tz_notc1_shapes_standardcat_skiddecalmat;
+   size = "3";
+   lifeSpan = "3000";
+   randomize = "1";
+   texRows = "4";
+   texCols = "2";
+   textureCoordCount = "7";
+   textureCoords[0] = "0 0 0.25 0.5";
+   textureCoords[1] = "0.25 0 0.25 0.5";
+   textureCoords[2] = "0.5 0 0.25 0.5";
+   textureCoords[3] = "0.75 0 0.25 0.5";
+   textureCoords[4] = "0 0.5 0.25 0.5";
+   textureCoords[5] = "0.25 0.5 0.25 0.5";
+   textureCoords[6] = "0.5 0.5 0.25 0.5";
+   textureCoords[7] = "0.75 0.5 0.25 0.5";
+   textureCoords[8] = "0 0.5 0.25 0.25";
+   textureCoords[9] = "0.25 0.5 0.25 0.25";
+   textureCoords[10] = "0.5 0.5 0.25 0.25";
+   textureCoords[11] = "0.75 0.5 0.25 0.25";
+   textureCoords[12] = "0 0.75 0.25 0.25";
+   textureCoords[13] = "0.25 0.75 0.25 0.25";
+   textureCoords[14] = "0.5 0.75 0.25 0.25";
+   textureCoords[15] = "0.75 0.75 0.25 0.25";
+   fadeTime = "3000";
+};
+
+//----------------------------------------------------------------------------
 // Foot prints
 //----------------------------------------------------------------------------
 
