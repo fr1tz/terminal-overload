@@ -343,6 +343,12 @@ struct PlayerData: public ShapeBaseData {
    DecalData* decalData;
    S32 decalID;
 
+   DecalData* slideDecal;
+	S32 slideDecalID;
+
+   DecalData* skidDecal;
+	S32 skidDecalID;
+
    ParticleEmitterData * dustEmitter;
    S32 dustID;
 

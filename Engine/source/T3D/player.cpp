@@ -350,6 +350,12 @@ PlayerData::PlayerData()
    decalID        = 0;
    decalOffset      = 0.0f;
 
+   slideDecal = NULL;
+	slideDecalID = 0;
+
+   skidDecal = NULL;
+	skidDecalID = 0;
+
    lookAction = 0;
 
    // size of bounding box
@@ -564,6 +570,14 @@ bool PlayerData::preload(bool server, String &errorStr)
    if (!decalData && decalID != 0 )
       if (!Sim::findObject(decalID, decalData))
          Con::errorf(ConsoleLogEntry::General, "PlayerData::preload Invalid packet, bad datablockId(decalData): 0x%x", decalID);
+
+   if(!slideDecal && slideDecalID != 0)
+      if(!Sim::findObject(slideDecalID, slideDecal))
+         Con::errorf(ConsoleLogEntry::General, "PlayerData::preload Invalid packet, bad datablockId(slideDecal): 0x%x", slideDecalID);
+
+   if(!skidDecal && skidDecalID != 0)
+      if(!Sim::findObject(skidDecalID, skidDecal))
+         Con::errorf(ConsoleLogEntry::General, "PlayerData::preload Invalid packet, bad datablockId(skidDecal): 0x%x", skidDecalID);
 
    if (!dustEmitter && dustID != 0 )
       if (!Sim::findObject(dustID, dustEmitter))
@@ -1199,7 +1213,7 @@ void PlayerData::initPersistFields()
 
    endGroup( "Interaction: Ground Impact" );
 
-   addGroup( "Interaction: Slide emitters" );
+   addGroup( "Interaction: Sliding" );
 
       addField( "slideParticleTrailEmitter", TYPEID< ParticleEmitterData >(), Offset(slideEmitter[PlayerData::Trail1], PlayerData), 3,
          "@brief Particle emitters.\n\n" );
@@ -1210,16 +1224,22 @@ void PlayerData::initPersistFields()
       addField( "slideContactParticleFootEmitter", TYPEID< ParticleEmitterData >(), Offset(slideEmitter[PlayerData::ContactRelative1], PlayerData), 3,
          "@brief Particle emitters.\n\n" );
 
-	endGroup( "Interaction: Slide emitters" );
+      addField( "slideDecal", TYPEID< DecalData >(), Offset(slideDecal, PlayerData),
+         "@brief Decal to place on the ground when sliding.\n\n" );
 
-   addGroup( "Interaction: Skid emitters" );
+	endGroup( "Interaction: Sliding" );
+
+   addGroup( "Interaction: Skidding" );
 
       addField( "skidParticleTrailEmitter", TYPEID< ParticleEmitterData >(), Offset(skidEmitter[PlayerData::SkidTrail1], PlayerData), 3,
          "@brief Particle emitters.\n\n" );
       addField( "skidParticleFootEmitter", TYPEID< ParticleEmitterData >(), Offset(skidEmitter[PlayerData::SkidRelative1], PlayerData), 3,
          "@brief Particle emitters.\n\n" );
 
-	endGroup( "Interaction: Skid emitters" );
+      addField( "skidDecal", TYPEID< DecalData >(), Offset(skidDecal, PlayerData),
+         "@brief Decal to place on the ground when skidding.\n\n" );
+
+	endGroup( "Interaction: Skidding" );
 
    addGroup( "Physics" );
 
@@ -1418,6 +1438,16 @@ void PlayerData::packData(BitStream* stream)
       stream->writeRangedU32( decalData->getId(), DataBlockObjectIdFirst,  DataBlockObjectIdLast );
    }
    stream->write(decalOffset);
+
+   if( stream->writeFlag( slideDecal ) )
+   {
+      stream->writeRangedU32( slideDecal->getId(), DataBlockObjectIdFirst,  DataBlockObjectIdLast );
+   }
+
+   if( stream->writeFlag( skidDecal ) )
+   {
+      stream->writeRangedU32( skidDecal->getId(), DataBlockObjectIdFirst,  DataBlockObjectIdLast );
+   }
 
    if( stream->writeFlag( dustEmitter ) )
    {
@@ -1627,6 +1657,16 @@ void PlayerData::unpackData(BitStream* stream)
       decalID = (S32) stream->readRangedU32(DataBlockObjectIdFirst, DataBlockObjectIdLast);
    }
    stream->read(&decalOffset);
+
+   if( stream->readFlag() )
+   {
+      slideDecalID = (S32) stream->readRangedU32(DataBlockObjectIdFirst, DataBlockObjectIdLast);
+   }
+
+   if( stream->readFlag() )
+   {
+      skidDecalID = (S32) stream->readRangedU32(DataBlockObjectIdFirst, DataBlockObjectIdLast);
+   }
 
    if( stream->readFlag() )
    {
@@ -4227,7 +4267,45 @@ void Player::updateActionThread()
          offset = mDataBlock->decalOffset * getScale().x;
       }
 
-      if( triggeredLeft || triggeredRight )
+      if(this->isSliding() && mDataBlock->slideDecal)
+      {
+         Point3F rot, pos;
+         RayInfo rInfo;
+         MatrixF mat = getRenderTransform();
+         mat.getColumn( 1, &rot );
+         mat.mulP( Point3F( offset, 0.0f, 0.0f), &pos );
+
+         if( gClientContainer.castRay( Point3F( pos.x, pos.y, pos.z + 0.01f ),
+               Point3F( pos.x, pos.y, pos.z - 2.0f ),
+               STATIC_COLLISION_TYPEMASK | VehicleObjectType, &rInfo ) )
+         {
+            Point3F normal;
+            Point3F tangent;
+            mObjToWorld.getColumn( 0, &tangent );
+            mObjToWorld.getColumn( 2, &normal );
+            gDecalManager->addDecal( rInfo.point, normal, tangent, mDataBlock->slideDecal, getScale().y );
+         }
+      }
+      else if(this->isSkidding() && mDataBlock->skidDecal)
+      {
+         Point3F rot, pos;
+         RayInfo rInfo;
+         MatrixF mat = getRenderTransform();
+         mat.getColumn( 1, &rot );
+         mat.mulP( Point3F( offset, 0.0f, 0.0f), &pos );
+
+         if( gClientContainer.castRay( Point3F( pos.x, pos.y, pos.z + 0.01f ),
+               Point3F( pos.x, pos.y, pos.z - 2.0f ),
+               STATIC_COLLISION_TYPEMASK | VehicleObjectType, &rInfo ) )
+         {
+            Point3F normal;
+            Point3F tangent;
+            mObjToWorld.getColumn( 0, &tangent );
+            mObjToWorld.getColumn( 2, &normal );
+            gDecalManager->addDecal( rInfo.point, normal, tangent, mDataBlock->skidDecal, getScale().y );
+         }
+      }
+      else if( triggeredLeft || triggeredRight )
       {
          Point3F rot, pos;
          RayInfo rInfo;
