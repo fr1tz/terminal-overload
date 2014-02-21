@@ -615,6 +615,13 @@ function sendMsgClientKilled_Default( %msgType, %client, %sourceClient, %damLoc 
       messageAll( %msgType, '%1 gets nailed by %2!', %client.playerName, %sourceClient.playerName );
 }
 
+function GameCore::onUnitDestroyed(%game, %obj)
+{
+   //echo(%game @"\c4 -> "@ %game.class @" -> GameCore::onUnitDestroyed");
+   if(isObject(%obj.client))
+      %obj.client.onDeath();
+}
+
 function GameCore::onDeath(%game, %client, %sourceObject, %sourceClient, %damageType, %damLoc)
 {
    //echo (%game @"\c4 -> "@ %game.class @" -> GameCore::onDeath");
