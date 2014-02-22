@@ -6,6 +6,5 @@ singleton TSShapeConstructor(Blaster_tpDts)
 
 function Blaster_tpDts::onLoad(%this)
 {
-   %this.setDetailLevelSize("50", "-2");
    %this.setDetailLevelSize("1024", "0");
 }

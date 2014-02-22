@@ -20,6 +20,10 @@ singleton Material(fr1tz_rotc_hack_shapes_mat2)
    emissive[1] = "1";
    translucent = "1";
    translucentBlendOp = "AddAlpha";
+   glow[0] = "1";
+   emissive[0] = "1";
+   castShadows = "0";
+   showFootprints = "0";
 };
 
 singleton Material(fr1tz_rotc_hack_shapes_mat3)
@@ -71,14 +75,16 @@ singleton Material(fr1tz_rotc_hack_shapes_mat5)
 singleton Material(fr1tz_rotc_hack_shapes_mat6)
 {
    mapTo = "image.barrel.red";
-   diffuseMap[0] = "content/rotc/p.5.3/shapes/rotc/weapons/blaster/image.barrel.red.png";
-   glow[0] = "1";
+   diffuseMap[0] = "content/fr1tz/notc1/textures/grid.128.8.png";
+   glow[0] = "0";
    emissive[0] = "1";
    castShadows = "0";
    translucent = "1";
    translucentBlendOp = "AddAlpha";
    showFootprints = "0";
    materialTag0 = "Miscellaneous";
+   specularStrength[0] = "1.25";
+   doubleSided = "1";
 };
 
 singleton Material(fr1tz_rotc_hack_shapes_mat7)
