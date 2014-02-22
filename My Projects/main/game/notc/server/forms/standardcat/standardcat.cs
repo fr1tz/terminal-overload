@@ -233,6 +233,10 @@ datablock PlayerData(FrmStandardcat)
    
    maxInv[WpnSMG1] = 1;
    maxInv[WpnMGL1] = 1;
+   maxInv[WpnSG1] = 1;
+   maxInv[WpnSR1] = 1;
+   maxInv[WpnMG1] = 1;
+   maxInv[WpnML1] = 1;
 
    maxInv[Lurker] = 1;
    maxInv[LurkerClip] = 20;
