@@ -51,7 +51,7 @@ datablock ItemData(WpnMGL1)
    className = "Weapon";
 
    // Basic Item properties
-   shapeFile = "content/fr1tz/notc1/shapes/mgl1/image/p1/shape.tp.dae";
+   shapeFile = "content/fr1tz/rotc_hack/shapes/assaultrifle.tp.dts";
    mass = 1;
    elasticity = 0.2;
    friction = 0.6;

@@ -4,8 +4,8 @@
 datablock ShapeBaseImageData(WpnMGL1Image)
 {
    // Basic Item properties
-   shapeFile = "content/fr1tz/notc1/shapes/mgl1/image/p2/shape.tp.dae";
-   shapeFileFP = "content/fr1tz/notc1/shapes/mgl1/image/p2/shape.fp.dae";
+   shapeFile = "content/fr1tz/rotc_hack/shapes/assaultrifle.tp.dts";
+   shapeFileFP = "content/fr1tz/rotc_hack/shapes/assaultrifle.fp.dts";
    emap = true;
 
    imageAnimPrefix = "Rifle";
@@ -17,7 +17,7 @@ datablock ShapeBaseImageData(WpnMGL1Image)
    firstPerson = true;
    animateOnServer = true;
    useEyeNode = "0";
-   eyeOffset = "0.175 0.05 -0.2";
+   eyeOffset = "0.275 0.1 -0.05";
 
    // When firing from a point offset from the eye, muzzle correction
    // will adjust the muzzle vector to point to the eye LOS point.
@@ -61,60 +61,76 @@ datablock ShapeBaseImageData(WpnMGL1Image)
    //clip = WpnMGL1Clip;
    magazineCapacity = 30;
 
-   stateName[0]                     = "Preactivate";
-   stateTransitionGeneric3In[0]     = "Ready";
-   stateTransitionGeneric3Out[0]    = "Activate";
+	//-------------------------------------------------
+	// image states...
+	//
+		// preactivation...
+		stateName[0]                     = "Preactivate";
+		stateTransitionOnAmmo[0]         = "Activate";
+		stateTransitionOnNoAmmo[0]		 = "NoAmmo";
+		stateTimeoutValue[0]             = 0.25;
+		stateSequence[0]                 = "idle";
 
-   stateName[1]                     = "Activate";
-   stateArmThread[1]                = "holdblaster";
-   stateTransitionOnTimeout[1]      = "Ready";
-   stateTimeoutValue[1]             = 0.5;
-   stateSequence[1]                 = "idle";
+		// when mounted...
+		stateName[1]                     = "Activate";
+		stateTransitionOnTimeout[1]      = "Ready";
+		stateTimeoutValue[1]             = 0.25;
+		stateSequence[1]                 = "idle";
+		stateSpinThread[1]               = "SpinUp";
 
-   stateName[2]                     = "Ready";
-   stateArmThread[2]                = "holdrifle";
-   //stateTransitionOnTimeout[2]      = "ReadyFidget";
-   stateTimeoutValue[2]             = 10;
-   stateWaitForTimeout[2]           = false;
-   stateTransitionOnNoAmmo[2]       = "NoAmmo";
-   stateTransitionOnTriggerDown[2]  = "Fire";
-   stateSequence[2]                 = "idle";
+		// ready to fire, just waiting for the trigger...
+		stateName[2]                     = "Ready";
+		stateTransitionOnNoAmmo[2]       = "NoAmmo";
+  		stateTransitionOnNotLoaded[2]    = "Disabled";
+		stateTransitionOnTriggerDown[2]  = "Fire";
+      stateArmThread[2]                = "holdrifle";
+		stateSpinThread[2]               = "FullSpeed";
+		stateSequence[2]                 = "idle";
 
-   stateName[5]                     = "Fire";
-   stateArmThread[5]                = "aimrifle";
-   stateTransitionOnTriggerUp[5]    = "Ready";
-   stateTransitionOnNoAmmo[5]       = "NoAmmo";
-   stateTransitionOnTimeout[5]      = "Fire";
-   stateTimeoutValue[5]             = 0.128;
-   stateFire[5]                     = true;
-   stateFireProjectile[5]           = WpnMGL1PseudoProjectile;
-   stateRecoil[5]                   = "LightRecoil";
-   stateAllowImageChange[5]         = false;
-   stateSequence[5]                 = "fire";
-   stateScaleAnimation[5]           = true;
-   stateSequenceNeverTransition[5]  = true;
-   stateSequenceRandomFlash[5]      = false;        // use muzzle flash sequence
-   stateSound[5]                    = WpnMGL1FireSound;
-   //stateScript[5]                 = "onFire";
-   //stateEmitter[5]                = WpnMGL1FireSmokeEmitter;
-   //stateEmitterTime[5]            = 0.025;
-   stateEjectShell[5]               = false;
+		stateName[3]                     = "Fire";
+		stateTransitionOnTimeout[3]      = "AfterFire";
+		stateTimeoutValue[3]             = 0.0;
+		stateFire[3]                     = true;
+		stateFireProjectile[3]           = WpnMGL1PseudoProjectile;
+		stateRecoil[3]                   = MediumRecoil;
+		stateAllowImageChange[3]         = false;
+		stateEjectShell[3]               = true;
+		stateArmThread[3]                = "aimrifle";
+		stateSequence[3]                 = "Fire";
+		stateSound[3]                    = WpnMGL1FireSound;
 
-   stateName[6]                     = "NoAmmo";
-   stateTransitionGeneric0In[6]     = "SprintEnter";
-   stateTransitionOnMotion[6]       = "NoAmmoMotion";
-   stateTransitionOnAmmo[6]         = "Ready";
-   stateTimeoutValue[6]             = 10;
-   stateWaitForTimeout[6]           = false;
-   stateSequence[6]                 = "empty";
-   stateTransitionOnTriggerDown[6]  = "DryFire";
+		// after fire...
+		stateName[8]                     = "AfterFire";
+		stateTransitionOnTriggerUp[8]    = "KeepAiming";
+		stateTimeoutValue[8]             = 0.16;
+		stateWaitForTimeout[8]           = true;
 
-   stateName[8]                     = "DryFire";
-   stateTransitionGeneric0In[8]     = "SprintEnter";
-   stateWaitForTimeout[8]           = false;
-   stateTimeoutValue[8]             = 0.7;
-   stateTransitionOnTimeout[8]      = "NoAmmo";
-   stateScript[8]                   = "onDryFire";
+		stateName[4]                     = "KeepAiming";
+		stateTransitionOnNoAmmo[4]       = "NoAmmo";
+		stateTransitionOnNotLoaded[4]    = "Disabled";
+		stateTransitionOnTriggerDown[4]  = "Fire";
+		stateTransitionOnTimeout[4]      = "Ready";
+		stateWaitForTimeout[4]           = false;
+		stateTimeoutValue[4]             = 2.00;
+
+        // no ammo...
+		stateName[5]                     = "NoAmmo";
+		stateTransitionOnAmmo[5]         = "Ready";
+      stateTransitionOnTriggerDown[5]  = "DryFire";
+		stateTimeoutValue[5]             = 0.50;
+
+        // dry fire...
+		stateName[6]                     = "DryFire";
+		stateTransitionOnTriggerUp[6]    = "NoAmmo";
+		stateSound[6]                    = WeaponEmptySound;
+
+		// disabled...
+		stateName[7]                     = "Disabled";
+		stateTransitionOnLoaded[7]       = "Ready";
+		stateAllowImageChange[7]         = false;
+	//
+	// ...end of image states
+	//-------------------------------------------------
 };
 
 function WpnMGL1Image::onMount(%this, %obj, %slot)
