@@ -111,6 +111,7 @@ ShapeBaseImageData::StateData::StateData()
    transition.altTrigger[0] = transition.altTrigger[1] = -1;
    transition.wet[0] = transition.wet[1] = -1;
    transition.motion[0] = transition.motion[1] = -1;
+   transition.charged[0] = transition.charged[1] = -1;
    transition.timeout = -1;
    waitForTimeout = true;
    timeoutValue = 0;
@@ -122,6 +123,7 @@ ShapeBaseImageData::StateData::StateData()
    loaded = IgnoreLoaded;
    spin = IgnoreSpin;
    recoil = NoRecoil;
+   charge = false;
    armThread = NULL;
    sound = 0;
    emitter = NULL;
@@ -170,6 +172,8 @@ ShapeBaseImageData::ShapeBaseImageData()
    mass = 0;
 
    minEnergy = 2;
+   minCharge = 0;
+
    accuFire = false;
 
    projectile = NULL;
@@ -210,6 +214,8 @@ ShapeBaseImageData::ShapeBaseImageData()
       stateTransitionNotWet[i] = 0;
       stateTransitionMotion[i] = 0;
       stateTransitionNoMotion[i] = 0;
+      stateTransitionCharged[i] = 0;
+      stateTransitionNotCharged[i] = 0;
       stateTransitionTriggerUp[i] = 0;
       stateTransitionTriggerDown[i] = 0;
       stateTransitionAltTriggerUp[i] = 0;
@@ -244,6 +250,7 @@ ShapeBaseImageData::ShapeBaseImageData()
       stateLoaded[i] = StateData::IgnoreLoaded;
       stateSpin[i] = StateData::IgnoreSpin;
       stateRecoil[i] = StateData::NoRecoil;
+      stateCharge[i] = false;
 		stateArmThread[i] = 0;
       stateSequence[i] = 0;
       stateSequenceRandomFlash[i] = false;
@@ -321,6 +328,8 @@ bool ShapeBaseImageData::onAdd()
          s.transition.wet[1] = lookupState(stateTransitionWet[i]);
          s.transition.motion[0] = lookupState(stateTransitionNoMotion[i]);
          s.transition.motion[1] = lookupState(stateTransitionMotion[i]);
+         s.transition.charged[0] = lookupState(stateTransitionNotCharged[i]);
+         s.transition.charged[1] = lookupState(stateTransitionCharged[i]);
          s.transition.trigger[0] = lookupState(stateTransitionTriggerUp[i]);
          s.transition.trigger[1] = lookupState(stateTransitionTriggerDown[i]);
          s.transition.altTrigger[0] = lookupState(stateTransitionAltTriggerUp[i]);
@@ -353,6 +362,7 @@ bool ShapeBaseImageData::onAdd()
          s.sequenceTransitionTime = stateSequenceTransitionTime[i];
          s.direction = stateDirection[i];
          s.loaded = stateLoaded[i];
+         s.charge = stateCharge[i];
          s.spin = stateSpin[i];
 			s.armThread = stateArmThread[i];
          s.recoil = stateRecoil[i];
@@ -712,6 +722,9 @@ void ShapeBaseImageData::initPersistFields()
       "@brief Minimum Image energy for it to be operable.\n\n"
       "@see ammoSource");
 
+   addField( "minCharge", TypeF32, Offset(minCharge, ShapeBaseImageData),
+      "@brief Minimum Image charge for it to be considered charged." );
+
    addField( "accuFire", TypeBool, Offset(accuFire, ShapeBaseImageData),
       "@brief Flag to control whether the Image's aim is automatically converged with "
       "the crosshair.\n\n"
@@ -798,6 +811,10 @@ void ShapeBaseImageData::initPersistFields()
          "Name of the state to transition to when the Player moves." );
       addField( "stateTransitionOnNoMotion", TypeString, Offset(stateTransitionNoMotion, ShapeBaseImageData), MaxStates,
          "Name of the state to transition to when the Player stops moving." );
+      addField( "stateTransitionOnCharged", TypeString, Offset(stateTransitionCharged, ShapeBaseImageData), MaxStates,
+         "Name of the state to transition to when the Image is charged." );
+      addField( "stateTransitionOnNotCharged", TypeString, Offset(stateTransitionNotCharged, ShapeBaseImageData), MaxStates,
+         "Name of the state to transition to when the Image is not charged." );
       addField( "stateTransitionOnTriggerUp", TypeString, Offset(stateTransitionTriggerUp, ShapeBaseImageData), MaxStates,
          "Name of the state to transition to when the trigger state of the Image "
          "changes to true (fire button down)." );
@@ -897,6 +914,8 @@ void ShapeBaseImageData::initPersistFields()
          "<li>MediumRecoil: Play the medium_recoil sequence.</li>"
          "<li>HeavyRecoil: Play the heavy_recoil sequence.</li></ul>\n"
          "@see ShapeBaseImageRecoilState");
+      addField( "stateCharge", TypeBool, Offset(stateCharge, ShapeBaseImageData), MaxStates,
+         "If true, Image gets charged while in this state." );
       addField( "stateArmThread", TypeString, Offset(stateArmThread, ShapeBaseImageData), MaxStates,
          "Arm thread to use when mounted by player." );
       addField( "stateSequence", TypeString, Offset(stateSequence, ShapeBaseImageData), MaxStates,
@@ -1004,6 +1023,7 @@ void ShapeBaseImageData::packData(BitStream* stream)
    stream->write(mass);
 
    stream->write(minEnergy);
+   stream->write(minCharge);
 
    for( U32 j=0; j<MaxShapes; ++j)
    {
@@ -1077,6 +1097,14 @@ void ShapeBaseImageData::packData(BitStream* stream)
             stream->writeInt(s.transition.motion[1]+1,NumStateBits);
          }
 
+         // Most states don't make use of the charged transition.
+         if (stream->writeFlag(s.transition.charged[0] != -1 || s.transition.charged[1] != -1))
+         {
+            // This state does
+            stream->writeInt(s.transition.charged[0]+1,NumStateBits);
+            stream->writeInt(s.transition.charged[1]+1,NumStateBits);
+         }
+
          // Most states don't make use of the generic trigger transitions.  Don't transmit
          // if that is the case here.
          for (U32 j=0; j<MaxGenericTriggers; ++j)
@@ -1120,6 +1148,8 @@ void ShapeBaseImageData::packData(BitStream* stream)
          stream->writeInt(s.loaded,StateData::NumLoadedBits);
          stream->writeInt(s.spin,StateData::NumSpinBits);
          stream->writeInt(s.recoil,StateData::NumRecoilBits);
+
+         stream->writeFlag(s.charge);
 
 			if(stream->writeFlag(s.armThread && s.armThread[0]))
 				stream->writeString(s.armThread);
@@ -1198,6 +1228,7 @@ void ShapeBaseImageData::unpackData(BitStream* stream)
    stream->read(&mass);
    
    stream->read(&minEnergy);
+   stream->read(&minCharge);
 
    for( U32 j=0; j<MaxShapes; ++j )
    {
@@ -1272,6 +1303,18 @@ void ShapeBaseImageData::unpackData(BitStream* stream)
             s.transition.motion[1] = -1;
          }
 
+         // Charged transition
+         if (stream->readFlag())
+         {
+            s.transition.charged[0] = stream->readInt(NumStateBits) - 1;
+            s.transition.charged[1] = stream->readInt(NumStateBits) - 1;
+         }
+         else
+         {
+            s.transition.charged[0] = -1;
+            s.transition.charged[1] = -1;
+         }
+
          // Generic triggers
          for (U32 j=0; j<MaxGenericTriggers; ++j)
          {
@@ -1327,6 +1370,8 @@ void ShapeBaseImageData::unpackData(BitStream* stream)
          s.loaded = (StateData::LoadedState)stream->readInt(StateData::NumLoadedBits);
          s.spin = (StateData::SpinState)stream->readInt(StateData::NumSpinBits);
          s.recoil = (StateData::RecoilState)stream->readInt(StateData::NumRecoilBits);
+
+         s.charge = stream->readFlag();
 
 			if(stream->readFlag())
 				s.armThread	= stream->readSTString();
@@ -1404,6 +1449,9 @@ ShapeBase::MountedImage::MountedImage()
 	maxRecoil = 0;
 	recoilAdd = 0;
 	recoilDelta = 0;
+
+   charge = 0;
+   charged = false;
 
    for (U32 i=0; i<ShapeBaseImageData::MaxShapes; ++i)
    {
@@ -1651,6 +1699,9 @@ bool ShapeBase::isImageReady(U32 imageSlot,U32 ns,U32 depth)
    if ((ns = stateData.transition.motion[image.motion]) != -1)
       if (isImageReady(imageSlot,ns,depth))
          return true;
+   if ((ns = stateData.transition.charged[image.charged]) != -1)
+      if (isImageReady(imageSlot,ns,depth))
+         return true;
    if ((ns = stateData.transition.trigger[1]) != -1)
       if (isImageReady(imageSlot,ns,depth))
          return true;
@@ -1820,6 +1871,27 @@ bool ShapeBase::getImageLoadedState(U32 imageSlot)
    if (!image.dataBlock)
       return false;
    return image.loaded;
+}
+
+void ShapeBase::setImageCharge(U32 imageSlot, F32 charge)
+{
+   MountedImage& image = mMountedImageList[imageSlot];
+   if(image.dataBlock && image.charge != charge)
+   {
+      setMaskBits(ImageMaskN << imageSlot);
+      image.charge = charge;
+      image.charged = image.charge >= image.dataBlock->minCharge;
+      image.controllingClientUpdate.enabled = true;
+   }
+}
+
+F32 ShapeBase::getImageCharge(U32 imageSlot)
+{
+   MountedImage& image = mMountedImageList[imageSlot];
+   if (!image.dataBlock)
+      return 0.0;
+
+   return image.charge;
 }
 
 // Added for Alux3D
@@ -2524,6 +2596,10 @@ void ShapeBase::setImage(  U32 imageSlot,
    image.inaccuracy.enabled = false;
    image.recoilEnabled = false;
 
+
+   image.charge = 0;
+   image.charged = false;
+
    for (U32 i=0; i<ShapeBaseImageData::MaxShapes; ++i)
    {
       if (image.dataBlock->shapeIsValid[i])
@@ -2993,6 +3069,12 @@ void ShapeBase::setImageState(U32 imageSlot, U32 newState,bool force)
          setImageState(imageSlot, ns);
          return;
       }
+      // Only transition immediately based on image
+      // charge if the state is *not* a charge state!
+      if( !stateData.charge && (ns = stateData.transition.charged[image.charged]) != -1) {
+         setImageState(imageSlot, ns);
+         return;
+      } 
       if ((ns = stateData.transition.trigger[image.triggerDown]) != -1) {
          setImageState(imageSlot,ns);
          return;
@@ -3226,14 +3308,21 @@ void ShapeBase::setImageState(U32 imageSlot, U32 newState,bool force)
       onImageStateAnimation(imageSlot, stateData.shapeSequence, stateData.direction, stateData.shapeSequenceScale, stateData.timeoutValue);
    }
 
-   // Delete any loooping sounds that were in the previous state.
-   if (lastState->sound && lastState->sound->getDescription()->mIsLooping)  
+   // Stop any looping sounds used in the last state.
+	// Also stop any sound from last state if it was a charge state.
+   if((lastState->sound && lastState->sound->getDescription()->mIsLooping)
+      || lastState->charge)  
    {  
       for(Vector<SFXSource*>::iterator i = image.mSoundSources.begin(); i != image.mSoundSources.end(); i++)      
          SFX_DELETE((*i));    
 
       image.mSoundSources.clear();  
    }  
+
+   // Reset charge if we're entering a charging state and
+   // weren't charging before...
+   if(stateData.charge == true && lastState->charge == false)
+      image.charge = 0;
 
    // Play sound
    if( stateData.sound && isGhost() )
@@ -3538,6 +3627,11 @@ TICKAGAIN:
 			image.currentRecoil = newRecoil;
 	}
 
+   // Charge management.
+   if(stateData.charge)
+      image.charge += dt;
+   image.charged = image.charge >= imageData.minCharge;
+
    // Energy management
 	F32 oldEnergy = this->getEnergyLevel();
 	F32 newEnergy = this->getEnergyLevel() - stateData.energyDrain * dt;
@@ -3648,6 +3742,8 @@ TICKAGAIN:
       else if ((ns = stateData.transition.wet[image.wet]) != -1)
          setImageState(imageSlot,ns);
       else if ((ns = stateData.transition.motion[image.motion]) != -1)
+         setImageState(imageSlot,ns);
+      else if ((ns = stateData.transition.charged[image.charged]) != -1)
          setImageState(imageSlot,ns);
       else if ((ns = stateData.transition.trigger[image.triggerDown]) != -1)
          setImageState(imageSlot,ns);

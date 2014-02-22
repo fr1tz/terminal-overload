@@ -3189,6 +3189,7 @@ U32 ShapeBase::packUpdate(NetConnection *con, U32 mask, BitStream *stream)
             stream->writeFlag(image.motion);
             stream->writeFlag(image.ammo);
             stream->writeFlag(image.loaded);
+            stream->writeFlag(image.charged);
             stream->writeFlag(image.target);
             stream->writeFlag(image.triggerDown);
             stream->writeFlag(image.altTriggerDown);
@@ -3379,6 +3380,8 @@ void ShapeBase::unpackUpdate(NetConnection *con, BitStream *stream)
 				image.ammo = stream->readFlag();
 
 				image.loaded = stream->readFlag();
+
+				image.charged = stream->readFlag();
 
 				image.target = stream->readFlag();
 
@@ -4376,6 +4379,31 @@ DefineEngineMethod( ShapeBase, setImageLoaded, bool, ( S32 slot, bool state ),,
    if (slot >= 0 && slot < ShapeBase::MaxMountedImages) {
       object->setImageLoadedState(slot, state);
       return state;
+   }
+   return false;
+}
+
+DefineEngineMethod( ShapeBase, getImageCharge, F32, ( S32 slot ),,
+   "@brief Get the charge amount of the Image mounted in the specified slot.\n\n"
+
+   "@param slot Image slot to query\n"
+   "@return the Image's current charge amount\n\n" )
+{
+   if (slot >= 0 && slot < ShapeBase::MaxMountedImages)
+      return object->getImageCharge(slot);
+   return 0.0;
+}
+
+DefineEngineMethod( ShapeBase, setImageCharge, bool, ( S32 slot, F32 charge ),,
+   "@brief Set the charge amount of the Image mounted in the specified slot.\n\n"
+
+   "@param slot Image slot to modify\n"
+   "@param charge New amount of charge for the Image\n"
+   "@return whether new charge has been set successfully\n\n" )
+{
+   if (slot >= 0 && slot < ShapeBase::MaxMountedImages) {
+      object->setImageCharge(slot, charge);
+      return true;
    }
    return false;
 }

@@ -162,6 +162,7 @@ struct ShapeBaseImageData: public GameBaseData {
          S32 altTrigger[2];         ///< Second trigger up/down
          S32 wet[2];                ///< wet/notWet
          S32 motion[2];             ///< NoMotion/Motion
+         S32 charged[2];            ///< Charged 
          S32 timeout;               ///< Transition after delay
          S32 genericTrigger[ShapeBaseImageData::MaxGenericTriggers][2];    ///< Generic trigger Out/In
       } transition;
@@ -225,6 +226,8 @@ struct ShapeBaseImageData: public GameBaseData {
                                     ///       Light/Medium/Heavy recoils. Player::onImageRecoil() is the place
                                     ///       where this is handled.
 
+      bool charge;                  ///< Charge on this state?
+
 		const char* armThread;		   ///< Arm thread to use when mounted by player
 
       bool flashSequence[MaxShapes];///< Is this a muzzle flash sequence?
@@ -266,6 +269,8 @@ struct ShapeBaseImageData: public GameBaseData {
    const char*             stateTransitionNotWet      [MaxStates];
    const char*             stateTransitionMotion      [MaxStates];
    const char*             stateTransitionNoMotion    [MaxStates];
+   const char*             stateTransitionCharged     [MaxStates];
+   const char*             stateTransitionNotCharged  [MaxStates];
    const char*             stateTransitionTriggerUp   [MaxStates];
    const char*             stateTransitionTriggerDown [MaxStates];
    const char*             stateTransitionAltTriggerUp[MaxStates];
@@ -299,6 +304,7 @@ struct ShapeBaseImageData: public GameBaseData {
    StateData::LoadedState  stateLoaded                [MaxStates];
    StateData::SpinState    stateSpin                  [MaxStates];
    StateData::RecoilState  stateRecoil                [MaxStates];
+   bool                    stateCharge                [MaxStates];
 	const char*             stateArmThread             [MaxStates];
    const char*             stateSequence              [MaxStates];
    bool                    stateSequenceRandomFlash   [MaxStates];
@@ -378,6 +384,7 @@ struct ShapeBaseImageData: public GameBaseData {
 
    F32   mass;                      ///< Mass!
    F32   minEnergy;                 ///< Minimum energy for the weapon to be operable.
+   F32   minCharge;                 ///< min charge to be considered charged.
    bool  accuFire;                  ///< Should we automatically make image's aim converge with the crosshair?
    bool  cloakable;                 ///< Is this image cloakable when mounted?
 
@@ -826,6 +833,9 @@ public:
 		                ///  a state where stateRecoil != NoRecoil
 		S32  recoilDelta; ///< How much gets added to currentRecoil every second
 		/// @}
+
+      F32 charge;                   ///< Current amount of charge
+      bool charged;                 ///< Is the image charged?
 
       bool loaded;                  ///< Is the image loaded?
       bool nextLoaded;              ///< Is the next state going to result in the image being loaded?
@@ -1632,6 +1642,15 @@ public:
    /// Returns true if object is loaded with ammo
    /// @param   imageSlot   Image slot
    bool getImageLoadedState(U32 imageSlot);
+
+   /// Sets image charge 
+   /// @param   imageSlot   Image slot
+   /// @param   charge      Charge amount
+   void setImageCharge(U32 imageSlot, F32 charge);
+
+   /// Returns image charge
+   /// @param   imageSlot   Image slot
+   F32 getImageCharge(U32 imageSlot);
 
    /// Set the script animation prefix for the image
    /// @param   imageSlot        Image slot id
