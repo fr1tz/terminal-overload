@@ -39,6 +39,7 @@ singleton Material(fr1tz_notc1_shapes_standardcat_skiddecalmat)
    translucentBlendOp = "AddAlpha";
    castShadows = "0";
    showFootprints = "0";
+   vertColor[0] = "1";
 };
 
 singleton Material(fr1tz_notc1_shapes_standardcat_mat2)
