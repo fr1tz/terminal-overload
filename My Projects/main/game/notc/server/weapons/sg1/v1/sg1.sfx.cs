@@ -22,7 +22,7 @@ datablock SFXProfile(WpnSG1SwitchinSound)
    preload = true;
 };
 
-datablock SFXProfile(WpnSG1ProjectileImpactSound)
+datablock SFXProfile(WpnSG1ProjectileExplosionSound)
 {
    filename = "content/rotc/p.5.4/sounds/rotc/impact1";
    description = AudioClose3D;

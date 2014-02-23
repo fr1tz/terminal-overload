@@ -93,7 +93,7 @@ datablock ShapeBaseImageData(WpnSG1Image)
 		stateFireProjectile[3]           = WpnSG1Projectile;
 		stateRecoil[3]                   = MediumRecoil;
 		stateAllowImageChange[3]         = false;
-		stateEjectShell[3]               = true;
+		stateEjectShell[3]               = false;
 		stateArmThread[3]                = "aimblaster";
 		stateSequence[3]                 = "fire";
 		stateSound[3]                    = WpnSG1FireSound;
