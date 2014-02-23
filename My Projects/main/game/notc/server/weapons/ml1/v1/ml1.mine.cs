@@ -32,9 +32,6 @@ datablock StaticShapeData(WpnML1Mine)
 	bypassDamageBuffer  = true;
 
    shapeFile = "content/fr1tz/rotc_hack/shapes/mine.dts";
-
-	// script fields...
-	light = ;
 };
 
 function WpnML1Mine::onAdd(%this, %obj)

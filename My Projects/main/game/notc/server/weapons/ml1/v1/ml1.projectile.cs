@@ -33,7 +33,7 @@ datablock ProjectileData(WpnML1Projectile)
    
 	energyDrain = 2; // how much energy does firing this projectile drain?
 
-   explosion = "WpnML1ProjectileExplosion";
+   //explosion = "WpnML1ProjectileExplosion";
    decal     = "WpnML1ProjectileDecal";
    lightDesc = "WpnML1ProjectileLightDesc";
 
@@ -49,12 +49,12 @@ datablock ProjectileData(WpnML1Projectile)
    gravityMod          = 10.0;
 };
 
-function WpnML1Projectile::onCollision(%this,%obj,%col,%fade,%pos,%normal,%dist)
+function WpnML1Projectile::onExplode(%this, %obj, %pos, %fade)
 {
 	//Parent::onCollision(%this,%obj,%col,%fade,%pos,%normal,%dist);
  
 	%p = new StaticShape() {
-		dataBlock       = %this.mine;
+		dataBlock       = WpnML1Mine;
 		teamId          = %obj.teamId;
 		client          = %obj.client;
 	};
@@ -67,3 +67,7 @@ function WpnML1Projectile::onCollision(%this,%obj,%col,%fade,%pos,%normal,%dist)
 	%p.zNormal = %normal;
 }
 
+function WpnML1Projectile::onCollision(%this,%obj,%col,%fade,%pos,%normal,%dist)
+{
+
+}
