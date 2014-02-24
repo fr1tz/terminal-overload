@@ -142,6 +142,12 @@ singleton GuiControlProfile (HudTextBoldProfile : HudTextNormalProfile)
    fontType = "ArialBold";
 };
 
+singleton GuiControlProfile (HudTextCenterBoldProfile : HudTextNormalProfile)
+{
+   fontType = "ArialBold";
+   justify = "Center";
+};
+
 // -----------------------------------------------------------------------------
 // Numerical health text
 // -----------------------------------------------------------------------------

@@ -15,6 +15,32 @@ function refreshCenterTextCtrl()
 
 //-----------------------------------------------------------------------------
 
+function HudGameTimer::setTimeLeft(%this, %timeLeft)
+{
+   %this.zTimeLeft = %timeLeft;
+   %this.updateThread();
+   %this.visible = true;
+}
+
+function HudGameTimer::updateThread(%this)
+{
+   if(%this.zUpdateThread !$= "")
+   {
+      cancel(%this.zUpdateThread);
+      %this.zUpdateThread = "";
+   }
+   
+   %this.text = mFloatLength(%this.zTimeLeft, 1);
+   %this.zTimeLeft -= 0.1;
+
+   if(%this.zTimeLeft < 0)
+      %this.zTimeLeft = 0;
+   else
+      %this.zUpdateThread = %this.schedule(100, "updateThread");
+}
+
+//-----------------------------------------------------------------------------
+
 function Iris::setDeltaX(%this, %dt)
 {
    %this.zSizeDeltaX = %dt;

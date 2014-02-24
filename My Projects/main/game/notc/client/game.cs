@@ -8,6 +8,7 @@
 function clientCmdGameStart(%seq)
 {
    PlayerListGui.zeroScores();
+   HudGameTimer.visible = false;
 }
 
 function clientCmdGameEnd(%seq)

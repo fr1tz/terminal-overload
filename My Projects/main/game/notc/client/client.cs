@@ -25,6 +25,10 @@ function clientCmdSyncClock(%time)
    // Time update from the server, this is only sent at the start of a mission
    // or when a client joins a game in progress.
 }
+function clientCmdGameTimer(%timeLeft)
+{
+   HudGameTimer.setTimeLeft(%timeLeft);
+}
 
 function clientCmdGridCreateExplosions(%grid, %datablock, %griddata)
 {
