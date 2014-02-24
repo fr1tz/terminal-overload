@@ -26,6 +26,8 @@
       enabled = "1";
       helpTag = "0";
       noCursor = "1";
+      zTeamId = "0";
+      zTickThread = "220902";
 
    new GuiDynamicCrossHairHud(SoldierHudCrosshairSharp) {
       size = "0";
@@ -66,6 +68,7 @@
       canSaveDynamicFields = "0";
    };
    new GuiTextCtrl(SoldierHudAmmoAmount) {
+      text = "Ammo: 0/0";
       maxLength = "255";
       margin = "0 0 0 0";
       padding = "0 0 0 0";
@@ -223,6 +226,29 @@
          canSave = "1";
          canSaveDynamicFields = "0";
       };
+   };
+   new GuiHealthBarHud() {
+      fillColor = "0 0 0 0.5";
+      frameColor = "0.992157 0.996078 0.992157 1";
+      damageFillColor = "0.286275 0.286275 0.286275 1";
+      pulseRate = "250";
+      pulseThreshold = "0";
+      showFill = "1";
+      showFrame = "1";
+      displayEnergy = "1";
+      position = "600 80";
+      extent = "32 320";
+      minExtent = "8 2";
+      horizSizing = "left";
+      vertSizing = "center";
+      profile = "GuiDefaultProfile";
+      visible = "1";
+      active = "1";
+      tooltipProfile = "GuiToolTipProfile";
+      hovertime = "1000";
+      isContainer = "0";
+      canSave = "1";
+      canSaveDynamicFields = "0";
    };
 };
 //--- OBJECT WRITE END ---
