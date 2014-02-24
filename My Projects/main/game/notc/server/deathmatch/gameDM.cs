@@ -81,7 +81,13 @@ function DeathMatchGame::onClientEnterGame(%game, %client)
 {
    //echo (%game @"\c4 -> "@ %game.class @" -> DeathMatchGame::onClientEnterGame");
 
-   parent::onClientEnterGame(%game, %client);
+   Parent::onClientEnterGame(%game, %client);
+   
+   if($Game::Duration)
+   {
+      %timeLeft = ($Game::StartTime + $Game::Duration) - $Sim::Time;
+      commandToClient(%client, 'GameTimer', %timeLeft);
+   }
 }
 
 function DeathMatchGame::onClientLeaveGame(%game, %client)
