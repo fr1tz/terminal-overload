@@ -91,3 +91,30 @@ function DeathMatchGame::onClientLeaveGame(%game, %client)
    parent::onClientLeaveGame(%game, %client);
 
 }
+
+function DeathMatchGame::loadOut(%game, %player)
+{
+   //echo (%game @"\c4 -> "@ %game.class @" -> DeathMatchGame::loadOut");
+   
+   Parent::loadOut(%game, %player);
+
+   %player.clearWeaponCycle();
+   %player.addToWeaponCycle(WpnSMG1);
+   %player.addToWeaponCycle(WpnMGL1);
+   %player.addToWeaponCycle(WpnSG1);
+   %player.addToWeaponCycle(WpnSR1);
+   %player.addToWeaponCycle(WpnMG1);
+   //%player.addToWeaponCycle(WpnML1);
+
+   %player.setInventory(WpnSMG1, 1);
+   %player.setInventory(WpnMGL1, 1);
+   %player.setInventory(WpnSG1, 1);
+   %player.setInventory(WpnSR1, 1);
+   %player.setInventory(WpnMG1, 1);
+   //%player.setInventory(WpnML1, 1);
+
+   if (%player.getDatablock().mainWeapon.image !$= "")
+      %player.mountImage(%player.getDatablock().mainWeapon.image, 0);
+   else
+      %player.mountImage(WpnBadgerImage, 0);
+}
