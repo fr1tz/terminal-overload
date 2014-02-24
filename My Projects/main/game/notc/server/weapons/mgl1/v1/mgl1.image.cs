@@ -29,7 +29,7 @@ datablock ShapeBaseImageData(WpnMGL1Image)
    class = "WeaponImage";
 
    ammoSource = "Energy";
-   //minEnergy = 0;
+   minEnergy = 16;
 
    projectile = WpnMGL1PseudoProjectile;
 
@@ -136,6 +136,15 @@ datablock ShapeBaseImageData(WpnMGL1Image)
 function WpnMGL1Image::onMount(%this, %obj, %slot)
 {
    Parent::onMount(%this, %obj, %slot);
+   
+   // Set up recoil
+   %obj.setImageRecoilEnabled(%slot, true);
+   %obj.setImageCurrentRecoil(%slot, 80);
+   %obj.setImageMaxRecoil(%slot, 80);
+   %obj.setImageRecoilAdd(%slot, 0);
+   %obj.setImageRecoilDelta(%slot, -0);
+   
+   return;
 
    // Set up inaccuracy.
    %obj.setImageInaccuracy(%slot, "radiusmin", 2.0);
@@ -149,13 +158,6 @@ function WpnMGL1Image::onMount(%this, %obj, %slot)
    %obj.setImageInaccuracy(%slot, "f1", 1.00);
    %obj.setImageInaccuracy(%slot, "f2", 1.80);
    %obj.setImageInaccuracy(%slot, "enabled", true);
-
-   // Set up recoil.
-   %obj.setImageRecoilEnabled(%slot, true);
-   %obj.setImageCurrentRecoil(%slot, 7);
-   %obj.setImageMaxRecoil(%slot, 7);
-   %obj.setImageRecoilAdd(%slot, 0);
-   %obj.setImageRecoilDelta(%slot, -0);
 }
 
 
