@@ -361,6 +361,9 @@ function GameCore::startGame(%game)
       error("startGame: End the game first!");
       return;
    }
+   
+   // Keep track of when the game started
+   $Game::StartTime = $Sim::Time;
 
    // Inform the client we're starting up
    for (%clientIndex = 0; %clientIndex < ClientGroup.getCount(); %clientIndex++)

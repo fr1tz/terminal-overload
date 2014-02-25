@@ -32,9 +32,6 @@ function onServerCreated()
    loadDatablockFiles( %datablockFiles, true );
 
    exec("./deathmatch/exec.cs");
-
-   // Keep track of when the game started
-   $Game::StartTime = $Sim::Time;
 }
 
 function onServerDestroyed()
