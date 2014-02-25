@@ -53,7 +53,7 @@ function DeathMatchGame::initGameVars(%game)
    %game.duration = 10 * 60;
    %game.endgameScore = 0;
    %game.endgamePause = 10;
-   %game.allowCycling = false;   // Is mission cycling allowed?
+   %game.allowCycling = true;   // Is mission cycling allowed?
 }
 
 function DeathMatchGame::startGame(%game)
