@@ -269,7 +269,12 @@ package GameCore
       }
       $Server::PlayerCount++;
    }
-
+   
+   function GameConnection::prepareMission(%this)
+   {
+      Game.prepareClient(%this);
+   }
+   
    function GameConnection::onClientEnterGame(%this)
    {
       Game.onClientEnterGame(%this);
@@ -465,6 +470,11 @@ function GameCore::initGameVars(%game)
 // ----------------------------------------------------------------------------
 //  Client Management
 // ----------------------------------------------------------------------------
+
+function GameCore::prepareClient(%game, %client)
+{
+   //echo (%game @"\c4 -> "@ %game.class @" -> GameCore::prepareClient");
+}
 
 function GameCore::onClientEnterGame(%game, %client)
 {

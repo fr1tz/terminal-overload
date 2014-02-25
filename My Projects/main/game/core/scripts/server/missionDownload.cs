@@ -8,6 +8,7 @@
 
 //--------------------------------------------------------------------------
 // Loading Phases:
+// Phase 0: Prepare client for mission
 // Phase 1: Transmit Datablocks
 //          Transmit targets
 // Phase 2: Transmit Ghost Objects
@@ -29,6 +30,8 @@ function GameConnection::loadMission(%this)
    }
    else
    {
+      %this.prepareMission();
+   
       commandToClient(%this, 'MissionStartPhase1', $missionSequence,
          $Server::MissionFile, MissionGroup.musicTrack);
       echo("*** Sending mission load to client: " @ $Server::MissionFile);

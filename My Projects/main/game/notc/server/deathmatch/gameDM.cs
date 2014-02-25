@@ -77,6 +77,13 @@ function DeathMatchGame::onGameDurationEnd(%game)
    parent::onGameDurationEnd(%game);
 }
 
+function DeathMatchGame::prepareClient(%game, %client)
+{
+   //echo (%game @"\c4 -> "@ %game.class @" -> DeathMatchGame::prepareClient");
+
+   Parent::prepareClient(%game, %client);
+}
+
 function DeathMatchGame::onClientEnterGame(%game, %client)
 {
    //echo (%game @"\c4 -> "@ %game.class @" -> DeathMatchGame::onClientEnterGame");
