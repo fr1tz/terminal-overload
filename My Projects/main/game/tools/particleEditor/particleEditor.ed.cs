@@ -28,7 +28,7 @@ function ParticleEditor::initEditor( %this )
    };
    datablock ParticleData(PE_ParticleEditor_NotDirtyParticle)
    {
-      textureName = "content/torque3d/3.0/particles/defaultParticle";
+      textureName = "content/xa/torque3d/3.0/particles/defaultParticle";
    };
    
    PE_UnlistedEmitters.add( PE_EmitterEditor_NotDirtyEmitter );

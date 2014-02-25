@@ -17,8 +17,8 @@ datablock ParticleData(SoilBuildEmitterTeam2Particle : DefaultParticle)
    dragCoefficient = "0";
    inheritedVelFactor = "0";
    spinSpeed = "0";
-   textureName = "content/torque3d/3.0//particles/smoke.png";
-   animTexName = "content/torque3d/3.0//particles/smoke.png";
+   textureName = "content/xa/torque3d/3.0//particles/smoke.png";
+   animTexName = "content/xa/torque3d/3.0//particles/smoke.png";
    colors[0] = "0 0 1 1";
    colors[1] = "0 0 1 0.637795";
    colors[2] = "0 0 1 0";
@@ -49,8 +49,8 @@ datablock ParticleData(SoilBuildEmitterTeam1Particle : DefaultParticle)
    dragCoefficient = "0";
    inheritedVelFactor = "0";
    spinSpeed = "0";
-   textureName = "content/torque3d/3.0//particles/smoke.png";
-   animTexName = "content/torque3d/3.0//particles/smoke.png";
+   textureName = "content/xa/torque3d/3.0//particles/smoke.png";
+   animTexName = "content/xa/torque3d/3.0//particles/smoke.png";
    colors[0] = "0.996078 0.00784314 0.0313726 1";
    colors[1] = "0.996078 0.00784314 0.0313726 0.637795";
    colors[2] = "0.996078 0.00784314 0.0313726 0";
@@ -81,8 +81,8 @@ datablock ParticleData(SoilBuildEmitterTeam0Particle : DefaultParticle)
    dragCoefficient = "0";
    inheritedVelFactor = "0";
    spinSpeed = "0";
-   textureName = "content/fr1tz/alux1/textures/core/particle1.png";
-   animTexName = "content/fr1tz/alux1/textures/core/particle1.png";
+   textureName = "content/xa/alux1/textures/core/particle1.png";
+   animTexName = "content/xa/alux1/textures/core/particle1.png";
    colors[0] = "0.996078 0.996078 0.992157 1";
    colors[1] = "0.996078 0.972549 0.00784314 1";
    colors[2] = "0.992157 0.996078 0.992157 0";
@@ -108,7 +108,7 @@ datablock ParticleEmitterData(SoilBuildEmitterTeam0 : DefaultEmitter)
 
 datablock ParticleData(SoilPopupExplosionDustParticle)
 {
-   textureName          = "content/torque3d/3.0/particles/impact";
+   textureName          = "content/xa/torque3d/3.0/particles/impact";
    dragCoefficient      = "1";
    gravityCoefficient   = "0.25";
    windCoefficient      = 0;
@@ -131,7 +131,7 @@ datablock ParticleData(SoilPopupExplosionDustParticle)
    times[0]      = 0.0;
    times[1]      = "0.498039";
    times[2]      = 1.0;
-   animTexName = "content/torque3d/3.0/particles/impact";
+   animTexName = "content/xa/torque3d/3.0/particles/impact";
 };
 
 datablock ParticleEmitterData(SoilPopupExplosionDustEmitter)

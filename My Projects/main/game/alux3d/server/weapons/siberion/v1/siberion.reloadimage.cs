@@ -4,8 +4,8 @@
 datablock ShapeBaseImageData(WpnSiberionReloadImage)
 {
    // Basic Item properties
-   shapeFile = "content/fr1tz/oldshapes/raptor/image/p1/TP_Raptor.DAE";
-   shapeFileFP = "content/fr1tz/oldshapes/raptor/image/p3/shape.fp.dae";
+   shapeFile = "content/xa/oldshapes/raptor/image/p1/TP_Raptor.DAE";
+   shapeFileFP = "content/xa/oldshapes/raptor/image/p3/shape.fp.dae";
    emap = true;
 
    imageAnimPrefix = "Rifle";

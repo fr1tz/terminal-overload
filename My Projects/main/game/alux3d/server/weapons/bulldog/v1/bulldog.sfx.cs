@@ -3,49 +3,49 @@
 
 datablock SFXProfile(WpnBulldogFireSound)
 {
-   filename = "content/cat5/p.1/sounds/cat5/gunshot2";
+   filename = "content/xa/cat5/p.1/sounds/cat5/gunshot2";
    description = AudioClose3D;
    preload = true;
 };
 
 datablock SFXProfile(WpnBulldogPumpSound)
 {
-	filename = "content/cat5/p.1/sounds/cat5/pumpgun1.wav";
+	filename = "content/xa/cat5/p.1/sounds/cat5/pumpgun1.wav";
    description = AudioClose3D;
    preload = true;
 };
 
 datablock SFXProfile(WpnBulldogDryFireSound)
 {
-   filename = "content/rotc/p.5.3/sounds/rotc/weaponEmpty";
+   filename = "content/xa/rotc/p.5.3/sounds/rotc/weaponEmpty";
    description = AudioClose3D;
    preload = true;
 };
 
 datablock SFXProfile(WpnBulldogReloadSound)
 {
-   filename = "content/torque3d/3.0/sound/weapons/wpn_lurker_reload";
+   filename = "content/xa/torque3d/3.0/sound/weapons/wpn_lurker_reload";
    description = AudioClose3D;
    preload = true;
 };
 
 datablock SFXProfile(WpnBulldogIdleSound)
 {
-   filename = "content/torque3d/3.0/sound/weapons/wpn_lurker_idle";
+   filename = "content/xa/torque3d/3.0/sound/weapons/wpn_lurker_idle";
    description = AudioClose3D;
    preload = true;
 };
 
 datablock SFXProfile(WpnBulldogSwitchinSound)
 {
-   filename = "content/torque3d/3.0/sound/weapons/wpn_lurker_switchin";
+   filename = "content/xa/torque3d/3.0/sound/weapons/wpn_lurker_switchin";
    description = AudioClose3D;
    preload = true;
 };
 
 datablock SFXProfile(WpnBulldogGrenadeFireSound)
 {
-   filename = "content/torque3d/3.0/sound/weapons/wpn_lurker_grenadelaunch";
+   filename = "content/xa/torque3d/3.0/sound/weapons/wpn_lurker_grenadelaunch";
    description = AudioClose3D;
    preload = true;
 };

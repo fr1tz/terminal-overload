@@ -14,7 +14,7 @@ datablock ParticleData(FrmSoldierpodExplosion_Cloud)
 	spinRandomMin = -200.0;
 	spinRandomMax =  200.0;
 
-	textureName = "content/rotc/p.5.3/textures/rotc/corona.png";
+	textureName = "content/xa/rotc/p.5.3/textures/rotc/corona.png";
 
 	colors[0]	  = "1.0 1.0 1.0 0.5";
 	colors[1]	  = "1.0 1.0 1.0 0.25";
@@ -56,7 +56,7 @@ datablock ParticleData(FrmSoldierpodExplosion_Dust)
 	useInvAlpha			 = true;
 	spinRandomMin		  = -90.0;
 	spinRandomMax		  = 500.0;
-	textureName			 = "content/rotc/p.5.3/textures/rotc/smoke_particle.png";
+	textureName			 = "content/xa/rotc/p.5.3/textures/rotc/smoke_particle.png";
 	colors[0]	  = "0.9 0.9 0.9 0.5";
 	colors[1]	  = "0.9 0.9 0.9 0.5";
 	colors[2]	  = "0.9 0.9 0.9 0.0";
@@ -99,7 +99,7 @@ datablock ParticleData(FrmSoldierpodExplosion_Smoke)
 	spinRandomMin = -200.0;
 	spinRandomMax =  200.0;
 
-	textureName = "content/rotc/p.5.3/textures/rotc/smoke_particle.png";
+	textureName = "content/xa/rotc/p.5.3/textures/rotc/smoke_particle.png";
 
 	colors[0]	  = "0.9 0.9 0.9 0.4";
 	colors[1]	  = "0.9 0.9 0.9 0.2";
@@ -138,7 +138,7 @@ datablock ParticleData(FrmSoldierpodExplosion_Sparks)
 	constantAcceleration = 0.0;
 	lifetimeMS			  = 2000;
 	lifetimeVarianceMS	= 0;
-	textureName			 = "content/rotc/p.5.3/textures/rotc/corona";
+	textureName			 = "content/xa/rotc/p.5.3/textures/rotc/corona";
 	colors[0]	  = "1 1 1 1.0";
 	colors[1]	  = "1 1 1 1.0";
 	colors[2]	  = "1 1 1 0.0";

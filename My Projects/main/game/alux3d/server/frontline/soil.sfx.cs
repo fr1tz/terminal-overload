@@ -3,7 +3,7 @@
 
 datablock SFXProfile(SoilPopupExplosionSound)
 {
-   filename = "content/cat5/p.1/sounds/cat5/explosion2";
+   filename = "content/xa/cat5/p.1/sounds/cat5/explosion2";
    description = AudioDefault3D;
    preload = true;
 };

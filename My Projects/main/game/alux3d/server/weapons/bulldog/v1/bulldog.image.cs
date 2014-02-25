@@ -4,8 +4,8 @@
 datablock ShapeBaseImageData(WpnBulldogImage)
 {
    // Basic Item properties
-   shapeFile = "content/fr1tz/oldshapes/bulldog/image/p1/TP_Bulldog.DAE";
-   shapeFileFP = "content/fr1tz/oldshapes/bulldog/image/p1/FP_Bulldog.DAE";
+   shapeFile = "content/xa/oldshapes/bulldog/image/p1/TP_Bulldog.DAE";
+   shapeFileFP = "content/xa/oldshapes/bulldog/image/p1/FP_Bulldog.DAE";
    emap = true;
 
    imageAnimPrefix = "Rifle";

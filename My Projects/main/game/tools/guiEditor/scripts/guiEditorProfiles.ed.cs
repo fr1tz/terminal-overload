@@ -2,7 +2,7 @@
 // located in the root directory of this distribution.
 
 
-$GUI_EDITOR_DEFAULT_PROFILE_FILENAME = "content/torque3d/3.0/gui/customProfiles.cs";
+$GUI_EDITOR_DEFAULT_PROFILE_FILENAME = "content/xa/torque3d/3.0/gui/customProfiles.cs";
 $GUI_EDITOR_DEFAULT_PROFILE_CATEGORY = "Other";
 
 

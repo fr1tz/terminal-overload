@@ -3,14 +3,14 @@
 
 datablock SFXProfile(FrmHoverpodSlideSound)
 {
-	filename	 = "content/rotc/p.5.3/sounds/rotc/slide2.wav";
+	filename	 = "content/xa/rotc/p.5.3/sounds/rotc/slide2.wav";
 	description = AudioCloseLooping3D;
 	preload = true;
 };
 
 datablock SFXProfile(FrmHoverpodSlideContactSound)
 {
-	filename	 = "content/rotc/p.5.3/sounds/rotc/slide1.wav";
+	filename	 = "content/xa/rotc/p.5.3/sounds/rotc/slide1.wav";
 	description = AudioCloseLooping3D;
 	preload = true;
 };

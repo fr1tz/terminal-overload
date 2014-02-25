@@ -1,1 +1,0 @@
-This directory contains content modules with files from the MIT-licensed version of Torque3D (http://garagegames.com)

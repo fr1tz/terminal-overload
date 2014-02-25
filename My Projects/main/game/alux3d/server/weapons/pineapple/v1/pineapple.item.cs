@@ -12,7 +12,7 @@ datablock ItemData(WpnPineapple)
    className = "Weapon";
 
    // Basic Item properties
-   shapeFile = "content/fr1tz/oldshapes/raptor/magazine/p1/shape.dae";
+   shapeFile = "content/xa/oldshapes/raptor/magazine/p1/shape.dae";
    mass = 1;
    elasticity = 0.2;
    friction = 0.6;

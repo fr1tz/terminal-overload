@@ -9,7 +9,7 @@ datablock DecalData(FrmSoldierFootprint)
 {
 	sizeX = "0.18";
 	sizeY = "0.27";
-	textureName = "content/rotc/p.5.3/textures/inf/footprint";
+	textureName = "content/xa/rotc/p.5.3/textures/inf/footprint";
 	SelfIlluminated = false;
 };
 
@@ -34,7 +34,7 @@ datablock ParticleData(FrmSoldierFootPuff)
 	sizes[1]		= 2.0;
 	times[0]		= 0.0;
 	times[1]		= 1.0;
-	textureName	= "content/rotc/p.5.3/textures/rotc/dustParticle";
+	textureName	= "content/xa/rotc/p.5.3/textures/rotc/dustParticle";
 };
 
 datablock ParticleEmitterData(FrmSoldierFootPuffEmitter)
@@ -70,7 +70,7 @@ datablock ParticleData(FrmSoldierSpawnExplosion_Cloud)
 	spinRandomMin = -200.0;
 	spinRandomMax =  200.0;
 
-	textureName = "content/rotc/p.5.3/textures/rotc/corona.png";
+	textureName = "content/xa/rotc/p.5.3/textures/rotc/corona.png";
 
 	colors[0]	  = "1.0 1.0 1.0 1.0";
 	colors[1]	  = "1.0 1.0 1.0 0.0";
@@ -112,7 +112,7 @@ datablock ParticleData(FrmSoldierSpawnExplosion_Dust)
 	useInvAlpha			 = true;
 	spinRandomMin		  = -90.0;
 	spinRandomMax		  = 500.0;
-	textureName			 = "content/rotc/p.5.3/textures/rotc/smoke_particle.png";
+	textureName			 = "content/xa/rotc/p.5.3/textures/rotc/smoke_particle.png";
 	colors[0]	  = "0.9 0.9 0.9 0.5";
 	colors[1]	  = "0.9 0.9 0.9 0.5";
 	colors[2]	  = "0.9 0.9 0.9 0.0";
@@ -155,7 +155,7 @@ datablock ParticleData(FrmSoldierSpawnExplosion_Smoke)
 	spinRandomMin = -200.0;
 	spinRandomMax =  200.0;
 
-	textureName = "content/rotc/p.5.3/textures/rotc/smoke_particle.png";
+	textureName = "content/xa/rotc/p.5.3/textures/rotc/smoke_particle.png";
 
 	colors[0]	  = "0.9 0.9 0.9 0.4";
 	colors[1]	  = "0.9 0.9 0.9 0.2";
@@ -194,7 +194,7 @@ datablock ParticleData(FrmSoldierSpawnExplosion_Sparks)
 	constantAcceleration = 0.0;
 	lifetimeMS			  = 500;
 	lifetimeVarianceMS	= 350;
-	textureName			 = "content/rotc/p.5.3/textures/rotc/particle1.png";
+	textureName			 = "content/xa/rotc/p.5.3/textures/rotc/particle1.png";
 	colors[0]	  = "0.56 0.36 0.26 1.0";
 	colors[1]	  = "0.56 0.36 0.26 1.0";
 	colors[2]	  = "1.0 0.36 0.26 0.0";
@@ -227,7 +227,7 @@ datablock ParticleEmitterData(FrmSoldierSpawnExplosion_SparksEmitter)
 datablock DebrisData(FrmSoldierSpawnExplosion_SmallDebris)
 {
 	// shape...
-	shapeFile = "content/rotc/p.5.3/shapes/rotc/misc/debris1.white.dts";
+	shapeFile = "content/xa/rotc/p.5.3/shapes/rotc/misc/debris1.white.dts";
 
 	// bounce...
 	staticOnMaxBounce = true;
@@ -260,7 +260,7 @@ datablock MultiNodeLaserBeamData(FrmSoldierSpawnExplosion_LargeDebris_LaserTrail
 	outerColor = "1.00 1.00 1.00 0.2";
 	outerWidth = "0.40";
 
-//	bitmap = "content/rotc/p.5.3/shapes/rotc/weapons/missilelauncher/explosion.trail";
+//	bitmap = "content/xa/rotc/p.5.3/shapes/rotc/weapons/missilelauncher/explosion.trail";
 //	bitmapWidth = 0.25;
 
 	blendMode = 1;
@@ -277,7 +277,7 @@ datablock ParticleData(FrmSoldierSpawnExplosion_LargeDebris_Particles2)
 	constantAcceleration = 0.0;
 	lifetimeMS			  = 1000;
 	lifetimeVarianceMS	= 0;
-	textureName			 = "content/rotc/p.5.3/textures/rotc/cross1";
+	textureName			 = "content/xa/rotc/p.5.3/textures/rotc/cross1";
 	colors[0]	  = "1.0 1.0 1.0 0.6";
 	colors[1]	  = "1.0 1.0 1.0 0.4";
 	colors[2]	  = "1.0 1.0 1.0 0.2";
@@ -318,7 +318,7 @@ datablock ParticleData(FrmSoldierSpawnExplosion_LargeDebris_Particles1)
 	constantAcceleration = 0.0;
 	lifetimeMS			  = 100;
 	lifetimeVarianceMS	= 0;
-	textureName			 = "content/rotc/p.5.3/textures/rotc/cross1";
+	textureName			 = "content/xa/rotc/p.5.3/textures/rotc/cross1";
 	colors[0]	  = "1.0 1.0 1.0 1.0";
 	colors[1]	  = "1.0 1.0 1.0 1.0";
 	colors[2]	  = "1.0 1.0 1.0 0.5";
@@ -365,7 +365,7 @@ datablock ExplosionData(FrmSoldierSpawnExplosion_LargeDebris_Explosion)
 datablock DebrisData(FrmSoldierSpawnExplosion_LargeDebris)
 {
 	// shape...
-	shapeFile = "content/rotc/p.5.3/shapes/rotc/misc/debris2.white.dts";
+	shapeFile = "content/xa/rotc/p.5.3/shapes/rotc/misc/debris2.white.dts";
 
 	explosion = FrmSoldierSpawnExplosion_LargeDebris_Explosion;
 

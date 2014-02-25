@@ -10,7 +10,7 @@ datablock LightDescription(WpnMGL1ProjectileLightDesc : BulletProjectileLightDes
 
 datablock DecalData(WpnMGL1ProjectileDecal)
 {
-   Material = "fr1tz_notc1_shapes_smg1_projectile_p1_decalmat";
+   Material = "xa_notc1_shapes_smg1_projectile_p1_decalmat";
    size = "0.25";
    lifeSpan = "5000";
    randomize = "1";
@@ -28,7 +28,7 @@ datablock DecalData(WpnMGL1ProjectileDecal)
 
 datablock ShotgunProjectileData(WpnMGL1PseudoProjectile)
 {
-   //projectileShapeName = "content/fr1tz/oldshapes/siberion/projectile/p1/shape.dae";
+   //projectileShapeName = "content/xa/oldshapes/siberion/projectile/p1/shape.dae";
 
    // ShotgunProjectileData fields
 	numBullets = 1;
@@ -85,7 +85,7 @@ function WpnMGL1PseudoProjectile::onAdd(%this, %obj)
 
 datablock ProjectileData(WpnMGL1Projectile)
 {
-   projectileShapeName = "content/fr1tz/notc1/shapes/mgl1/projectile/p1/shape.dae";
+   projectileShapeName = "content/xa/notc1/shapes/mgl1/projectile/p1/shape.dae";
 
    //lightDesc = BulletProjectileLightDesc;
 

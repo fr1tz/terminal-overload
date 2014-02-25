@@ -1,1 +1,0 @@
-This directory contains content modules with files from the game Cat5 (http://cat5.wasted.ch)

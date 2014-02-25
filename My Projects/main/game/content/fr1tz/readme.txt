@@ -1,1 +1,0 @@
-This directory contains content modules that are maintained by Michael "fr1tz" Goldener <mg@wasted.ch>

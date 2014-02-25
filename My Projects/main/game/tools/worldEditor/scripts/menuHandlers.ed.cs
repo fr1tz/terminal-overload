@@ -373,7 +373,7 @@ function EditorSaveMissionAs( %missionName )
          // moved to the correct place.
          
          if( EditorGui.saveAs && %terrainFilePath $= "tools/art/terrains" )
-            %terrainFilePath = "content/torque3d/3.0/terrains";
+            %terrainFilePath = "content/xa/torque3d/3.0/terrains";
          
          // Try and follow the existing naming convention.
          // If we can't, use systematic terrain file names.

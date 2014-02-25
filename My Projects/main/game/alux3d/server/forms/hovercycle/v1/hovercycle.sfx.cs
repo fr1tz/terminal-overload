@@ -3,7 +3,7 @@
 
 datablock SFXProfile(FrmHovercycleEngineSound)
 {
-	filename	 = "content/rotc/p.5.3/sounds/rotc/slide3.wav";
+	filename	 = "content/xa/rotc/p.5.3/sounds/rotc/slide3.wav";
 	description = AudioDefaultLooping3D;
 	preload = true;
 };

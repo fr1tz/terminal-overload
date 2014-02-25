@@ -10,7 +10,7 @@ singleton Material(DECAL_WpnRaptorProjectile)
    translucentZWrite = "0";
    mapTo = "rBlast";
    diffuseColor[0] = "0 1 0.929412 1";
-   diffuseMap[0] = "content/torque3d/3.0/decals/rBlast.png";
+   diffuseMap[0] = "content/xa/torque3d/3.0/decals/rBlast.png";
    glow[0] = "0";
    emissive[0] = "0";
    castShadows = "0";
@@ -21,11 +21,11 @@ singleton Material(DECAL_WpnRaptorProjectile)
    showFootprints = "0";
 };
 
-singleton Material(fr1tz_notc1_mis_notc_dm1_skybox)
+singleton Material(xa_notc1_mis_notc_dm1_skybox)
 {
    mapTo = "unmapped_mat";
    materialTag0 = "Skies";
-   cubemap = "fr1tz_notc1_skies_skybox1";
+   cubemap = "xa_notc1_skies_skybox1";
 };
 
 new CubemapData(xxx2)
@@ -38,13 +38,13 @@ new CubemapData(xxx2)
    cubeFace[5] = "content/tmp/night-skyboxes/night-skyboxes/PondNight/7.jpg";
 };
 
-new CubemapData(fr1tz_notc1_skies_skybox1)
+new CubemapData(xa_notc1_skies_skybox1)
 {
-   cubeFace[0] = "content/fr1tz/notc1/skies/skybox1/right.png";
-   cubeFace[1] = "content/fr1tz/notc1/skies/skybox1/left.png";
-   cubeFace[2] = "content/fr1tz/notc1/skies/skybox1/back.png";
-   cubeFace[3] = "content/fr1tz/notc1/skies/skybox1/front.png";
-   cubeFace[4] = "content/fr1tz/notc1/skies/skybox1/top.png";
-   cubeFace[5] = "content/fr1tz/notc1/skies/skybox1/top.png";
+   cubeFace[0] = "content/xa/notc1/skies/skybox1/right.png";
+   cubeFace[1] = "content/xa/notc1/skies/skybox1/left.png";
+   cubeFace[2] = "content/xa/notc1/skies/skybox1/back.png";
+   cubeFace[3] = "content/xa/notc1/skies/skybox1/front.png";
+   cubeFace[4] = "content/xa/notc1/skies/skybox1/top.png";
+   cubeFace[5] = "content/xa/notc1/skies/skybox1/top.png";
 };
 

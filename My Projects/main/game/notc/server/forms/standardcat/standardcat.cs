@@ -3,7 +3,7 @@
 
 datablock StaticShapeData(FrmStandardcatEtherboard)
 {
-   shapeFile = "content/fr1tz/notc1/shapes/standardcat/etherboard/p1/shape.dae";
+   shapeFile = "content/xa/notc1/shapes/standardcat/etherboard/p1/shape.dae";
 };
 
 //------------------------------------------------------------------------------
@@ -22,13 +22,13 @@ datablock PlayerData(FrmStandardcat)
    computeCRC = false;
 
    // Third person shape
-   shapeFile = "content/fr1tz/notc1/shapes/standardcat/old.dts";
+   shapeFile = "content/xa/notc1/shapes/standardcat/old.dts";
    cameraMaxDist = 3;
    allowImageStateAnimation = true;
 
    // First person arms
    imageAnimPrefixFP = "soldier";
-   //shapeNameFP[0] = "content/torque3d/3.0/shapes/actors/Soldier/FP/FP_SoldierArms.DAE";
+   //shapeNameFP[0] = "content/xa/torque3d/3.0/shapes/actors/Soldier/FP/FP_SoldierArms.DAE";
 
    canObserve = 1;
    cmdCategory = "Clients";
@@ -37,7 +37,7 @@ datablock PlayerData(FrmStandardcat)
    cameraMinFov = "80";
    cameraMaxFov = "180";
 
-   debrisShapeName = "content/torque3d/3.0/shapes/actors/common/debris_player.dts";
+   debrisShapeName = "content/xa/torque3d/3.0/shapes/actors/common/debris_player.dts";
    debris = PlayerDebris;
 
    throwForce = 30;

@@ -3,7 +3,7 @@
 
 datablock StaticShapeData(FrmLightPointerShape)
 {
-   shapeFile = "content/fr1tz/alux1/shapes/light/pointer.dae";
+   shapeFile = "content/xa/alux1/shapes/light/pointer.dae";
 };
 
 datablock LightFlareData(FrmLightLightFlare)
@@ -11,7 +11,7 @@ datablock LightFlareData(FrmLightLightFlare)
    overallScale = "1";
    flareEnabled = true;
    renderReflectPass = true;
-   flareTexture = "content/torque3d/3.0/lights/lensFlareSheet1.png";
+   flareTexture = "content/xa/torque3d/3.0/lights/lensFlareSheet1.png";
 
    elementRect[0] = "512 512 512 512";
    elementDist[0] = 0.0;
@@ -82,7 +82,7 @@ datablock EtherformData(FrmLight)
 	thirdPersonOnly = true;
 
     //category = "Vehicles"; don't appear in mission editor
-	shapeFile = "content/fr1tz/alux1/shapes/light/shape.dae";
+	shapeFile = "content/xa/alux1/shapes/light/shape.dae";
 	//emap = true;
  
 	cameraDefaultFov = 90.0;

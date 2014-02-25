@@ -3,7 +3,7 @@
 
 datablock StaticShapeData(UnfinishedSoilTile)
 {
-   shapeFile = "content/fr1tz/oldshapes/soil/unfinished1.dae";
+   shapeFile = "content/xa/oldshapes/soil/unfinished1.dae";
    emap = true;
    //dynamicType = $TypeMasks::NextFreeObjectType;
 };

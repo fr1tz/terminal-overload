@@ -11,20 +11,20 @@ function LightHud::onWake(%this)
    
    if(%teamId == 1)
    {
-      %ownSoilMat = fr1tz_alux1_shapes_soil_mat1;
-      %enemySoilMat = fr1tz_alux1_shapes_soil_mat2;
-      %friendlyMaterials[0] = fr1tz_alux1_shapes_brick_mat1;
+      %ownSoilMat = xa_alux1_shapes_soil_mat1;
+      %enemySoilMat = xa_alux1_shapes_soil_mat2;
+      %friendlyMaterials[0] = xa_alux1_shapes_brick_mat1;
       %friendlyMaterials[1] = Mat_Team1_Soldier_Main;
-      %enemyMaterials[0] = fr1tz_alux1_shapes_brick_mat2;
+      %enemyMaterials[0] = xa_alux1_shapes_brick_mat2;
       %enemyMaterials[1] = Mat_Team2_Soldier_Main;
    }
    else
    {
-      %ownSoilMat = fr1tz_alux1_shapes_soil_mat2;
-      %enemySoilMat = fr1tz_alux1_shapes_soil_mat1;
-      %friendlyMaterials[0] = fr1tz_alux1_shapes_brick_mat2;
+      %ownSoilMat = xa_alux1_shapes_soil_mat2;
+      %enemySoilMat = xa_alux1_shapes_soil_mat1;
+      %friendlyMaterials[0] = xa_alux1_shapes_brick_mat2;
       %friendlyMaterials[1] = Mat_Team2_Soldier_Main;
-      %enemyMaterials[0] = fr1tz_alux1_shapes_brick_mat1;
+      %enemyMaterials[0] = xa_alux1_shapes_brick_mat1;
       %enemyMaterials[1] = Mat_Team1_Soldier_Main;
    }
    
@@ -92,10 +92,10 @@ function LightHud::onSleep(%this)
    TurbulenceFx.disable();
    $HDRPostFX::colorCorrectionRamp = "core/scripts/client/postFx/null_color_ramp.png";
 
-   %mat[0] = fr1tz_alux1_shapes_soil_mat1;
-   %mat[1] = fr1tz_alux1_shapes_soil_mat2;
-   %mat[2] = fr1tz_alux1_shapes_brick_mat1;
-   %mat[3] = fr1tz_alux1_shapes_brick_mat2;
+   %mat[0] = xa_alux1_shapes_soil_mat1;
+   %mat[1] = xa_alux1_shapes_soil_mat2;
+   %mat[2] = xa_alux1_shapes_brick_mat1;
+   %mat[3] = xa_alux1_shapes_brick_mat2;
    %mat[4] = Mat_Team1_Soldier_Main;
    %mat[5] = Mat_Team2_Soldier_Main;
    

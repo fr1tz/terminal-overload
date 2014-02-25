@@ -17,7 +17,7 @@ datablock FlyingVehicleData(FrmSoldierpod)
    // @}
 
 //   category = "Vehicles"; don't appear in mission editor
-   shapeFile = "content/fr1tz/alux1/shapes/soldier/fdv/p1/shape.dae";
+   shapeFile = "content/xa/alux1/shapes/soldier/fdv/p1/shape.dae";
    emap = true;
 
 	//hudImageNameFriendly = "~/client/ui/hud/pixmaps/teammate.cat.png";

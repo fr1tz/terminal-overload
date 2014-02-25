@@ -7,7 +7,7 @@
 datablock ShapeBaseImageData(WpnML1MineLightImage)
 {
 	// basic item properties
-	shapeFile = "content/rotc/p.5.4/shapes/rotc/misc/nothing.dts";
+	shapeFile = "content/xa/rotc/p.5.4/shapes/rotc/misc/nothing.dts";
 	emap = true;
 
 	// mount point & mount offset...
@@ -31,7 +31,7 @@ datablock StaticShapeData(WpnML1Mine)
    splashDamageFalloff = $SplashDamageFalloff::None;
 	bypassDamageBuffer  = true;
 
-   shapeFile = "content/fr1tz/rotc_hack/shapes/mine.dts";
+   shapeFile = "content/xa/rotc_hack/shapes/mine.dts";
 };
 
 function WpnML1Mine::onAdd(%this, %obj)

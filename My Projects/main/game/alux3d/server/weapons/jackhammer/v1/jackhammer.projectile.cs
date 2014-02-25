@@ -28,7 +28,7 @@ datablock DecalData(WpnJackhammerProjectileDecal)
 
 datablock ShotgunProjectileData(WpnJackhammerPseudoProjectile)
 {
-   //projectileShapeName = "content/fr1tz/oldshapes/jackhammer/projectile/p1/shape.dae";
+   //projectileShapeName = "content/xa/oldshapes/jackhammer/projectile/p1/shape.dae";
 
    // ShotgunProjectileData fields
 	numBullets = 1;
@@ -68,7 +68,7 @@ function WpnJackhammerPseudoProjectile::onAdd(%this,%obj)
 
 datablock ProjectileData(WpnJackhammerProjectile)
 {
-   projectileShapeName = "content/fr1tz/oldshapes/jackhammer/projectile/p1/shape.dae";
+   projectileShapeName = "content/xa/oldshapes/jackhammer/projectile/p1/shape.dae";
 
    directDamage        = 30;
    radiusDamage        = 0;

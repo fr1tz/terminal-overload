@@ -3,7 +3,7 @@
 
 datablock SFXProfile(FrmBrickSpawnSound)
 {
-	filename = "content/cat5/p.1/sounds/cat5/explosion2.wav";
+	filename = "content/xa/cat5/p.1/sounds/cat5/explosion2.wav";
 	description = AudioClose3D;
 	preload = true;
 };

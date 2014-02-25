@@ -57,9 +57,9 @@ function RiverEditorGui::createRiver( %this )
 
       baseColor = "45 108 171 255";
       
-      rippleTex = "content/torque3d/3.0/water/ripple.dds";
-      foamTex = "content/torque3d/3.0/water/foam";
-      depthGradientTex = "content/torque3d/3.0/water/depthcolor_ramp";
+      rippleTex = "content/xa/torque3d/3.0/water/ripple.dds";
+      foamTex = "content/xa/torque3d/3.0/water/foam";
+      depthGradientTex = "content/xa/torque3d/3.0/water/depthcolor_ramp";
    };
    
    return %river;

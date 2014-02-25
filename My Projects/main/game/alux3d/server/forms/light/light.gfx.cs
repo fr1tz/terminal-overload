@@ -17,8 +17,8 @@ datablock ParticleData(FrmLightTeam1Particle : DefaultParticle)
    dragCoefficient = "0";
    inheritedVelFactor = "0";
    spinSpeed = "0";
-   textureName = "content/fr1tz/alux1/textures/ring.png";
-   animTexName = "content/fr1tz/alux1/textures/ring.png";
+   textureName = "content/xa/alux1/textures/ring.png";
+   animTexName = "content/xa/alux1/textures/ring.png";
    colors[0] = "1 0 0 0.5";
    colors[1] = "1 0 0 0.25";
    colors[2] = "1 0 0 0";
@@ -52,8 +52,8 @@ datablock ParticleData(FrmLightTeam2Particle : DefaultParticle)
    dragCoefficient = "0";
    inheritedVelFactor = "0";
    spinSpeed = "0";
-   textureName = "content/fr1tz/alux1/textures/ring.png";
-   animTexName = "content/fr1tz/alux1/textures/ring.png";
+   textureName = "content/xa/alux1/textures/ring.png";
+   animTexName = "content/xa/alux1/textures/ring.png";
    colors[0] = "0 0 1 0.5";
    colors[1] = "0 0 1 0.25";
    colors[2] = "0 0 1 0";

@@ -3,7 +3,7 @@
 
 datablock StaticShapeData(WpnCrackpackStaticShape)
 {
-   shapeFile = "content/fr1tz/alux1/shapes/crackpack/p1/shape.dae";
+   shapeFile = "content/xa/alux1/shapes/crackpack/p1/shape.dae";
    
    maxDamage = 100;
 };

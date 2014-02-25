@@ -4,8 +4,8 @@
 datablock ShapeBaseImageData(WpnCrackpackImage)
 {
    // Basic Item properties
-   shapeFile = "content/fr1tz/alux1/shapes/crackpack/p1/shape.dae";
-   shapeFileFP = "content/fr1tz/alux1/shapes/crackpack/p1/image.fp.dae";
+   shapeFile = "content/xa/alux1/shapes/crackpack/p1/shape.dae";
+   shapeFileFP = "content/xa/alux1/shapes/crackpack/p1/image.fp.dae";
    emap = true;
 
    imageAnimPrefix = "ProxMine";

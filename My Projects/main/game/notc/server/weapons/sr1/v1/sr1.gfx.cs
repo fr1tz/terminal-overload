@@ -41,8 +41,8 @@ datablock ParticleData(WpnSR1ProjectileExplosionSparkParticle : DefaultParticle)
    times[1] = "0.5";
    times[2] = "1";
    spinSpeed = "0";
-   textureName = "content/torque3d/3.0/particles/droplet.png";
-   animTexName = "content/torque3d/3.0/particles/droplet.png";
+   textureName = "content/xa/torque3d/3.0/particles/droplet.png";
+   animTexName = "content/xa/torque3d/3.0/particles/droplet.png";
    inheritedVelFactor = "0";
    lifetimeMS = "100";
    lifetimeVarianceMS = "25";
@@ -69,7 +69,7 @@ datablock ParticleEmitterData(WpnSR1ProjectileExplosionSparkEmitter : DefaultEmi
 
 datablock ParticleData(WpnSR1ProjectileExplosionPlasmaParticles)
 {
-   textureName          = "content/torque3d/3.0/particles/ricochet.png";
+   textureName          = "content/xa/torque3d/3.0/particles/ricochet.png";
    dragCoefficient      = "0.99218";
    gravityCoefficient   = "0";
    windCoefficient      = 0;
@@ -92,7 +92,7 @@ datablock ParticleData(WpnSR1ProjectileExplosionPlasmaParticles)
    times[0]      = 0.0;
    times[1]      = "0.494118";
    times[2]      = 1.0;
-   animTexName = "content/torque3d/3.0/particles/ricochet.png";
+   animTexName = "content/xa/torque3d/3.0/particles/ricochet.png";
    colors[3] = "1 0.835294 0 1";
 };
 
@@ -119,8 +119,8 @@ datablock ParticleData(WpnSR1ProjectileExplosionCloudParticle : DefaultParticle)
    sizes[3] = "0";
    times[1] = "1";
    times[2] = "1";
-   textureName = "content/fr1tz/alux1/textures/particle1.png";
-   animTexName = "content/fr1tz/alux1/textures/particle1.png";
+   textureName = "content/xa/alux1/textures/particle1.png";
+   animTexName = "content/xa/alux1/textures/particle1.png";
    lifetimeMS = "50";
    lifetimeVarianceMS = "0";
    spinSpeed = "0";
@@ -165,7 +165,7 @@ datablock ExplosionData(WpnSR1ProjectileExplosion)
 
 datablock DebrisData(WpnSR1ProjectileShell)
 {
-   shapeFile = "content/torque3d/3.0/shapes/weapons/shared/RifleShell.DAE";
+   shapeFile = "content/xa/torque3d/3.0/shapes/weapons/shared/RifleShell.DAE";
    lifetime = 6.0;
    minSpinSpeed = 300.0;
    maxSpinSpeed = 400.0;

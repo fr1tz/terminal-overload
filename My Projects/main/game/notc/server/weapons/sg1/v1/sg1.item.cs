@@ -12,7 +12,7 @@ datablock ItemData(WpnSG1)
    className = "Weapon";
 
    // Basic Item properties
-   shapeFile = "content/fr1tz/rotc_hack/shapes/assaultrifle.tp.dts";
+   shapeFile = "content/xa/rotc_hack/shapes/assaultrifle.tp.dts";
    mass = 1;
    elasticity = 0.2;
    friction = 0.6;

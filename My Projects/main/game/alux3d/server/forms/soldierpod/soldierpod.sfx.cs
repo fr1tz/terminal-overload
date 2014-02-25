@@ -3,14 +3,14 @@
 
 datablock SFXProfile(FrmSoldierpodEngineSound)
 {
-   filename = "content/rotc/p.5.3/sounds/rotc/slide2.wav";
+   filename = "content/xa/rotc/p.5.3/sounds/rotc/slide2.wav";
    description = AudioCloseLoop3D;
 	preload = true;
 };
 
 datablock SFXProfile(FrmSoldierpodExplosionSound)
 {
-	filename = "content/rotc/p.5.3/sounds/rotc/explosion1.wav";
+	filename = "content/xa/rotc/p.5.3/sounds/rotc/explosion1.wav";
 	description = AudioClose3D;
 	preload = true;
 };

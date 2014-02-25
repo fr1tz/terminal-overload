@@ -12,7 +12,7 @@ datablock ItemData(WpnCrackpack)
    className = "Weapon";
 
    // Basic Item properties
-   shapeFile = "content/fr1tz/alux1/shapes/crackpack/p1/shape.dae";
+   shapeFile = "content/xa/alux1/shapes/crackpack/p1/shape.dae";
    mass = 1;
    elasticity = 0.2;
    friction = 0.6;

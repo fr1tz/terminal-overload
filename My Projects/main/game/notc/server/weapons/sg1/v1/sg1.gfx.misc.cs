@@ -3,7 +3,7 @@
 
 datablock DebrisData(WpnSG1Shell)
 {
-   shapeFile = "content/torque3d/3.0/shapes/weapons/shared/RifleShell.DAE";
+   shapeFile = "content/xa/torque3d/3.0/shapes/weapons/shared/RifleShell.DAE";
    lifetime = 6.0;
    minSpinSpeed = 300.0;
    maxSpinSpeed = 400.0;

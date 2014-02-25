@@ -28,7 +28,7 @@ datablock DecalData(WpnRaptorProjectileDecal)
 
 datablock ShotgunProjectileData(WpnRaptorProjectile)
 {
-   projectileShapeName = "content/fr1tz/oldshapes/raptor/projectile/p1/shape.dae";
+   projectileShapeName = "content/xa/oldshapes/raptor/projectile/p1/shape.dae";
 
    // ShotgunProjectileData fields
 	numBullets = 1;

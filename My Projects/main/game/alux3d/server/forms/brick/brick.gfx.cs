@@ -3,6 +3,6 @@
 
 datablock StaticShapeData(FrmBrickSpawnEffectShape)
 {
-   shapeFile = "content/fr1tz/alux1/shapes/brick/brick-spawn.dae";
+   shapeFile = "content/xa/alux1/shapes/brick/brick-spawn.dae";
 };
 

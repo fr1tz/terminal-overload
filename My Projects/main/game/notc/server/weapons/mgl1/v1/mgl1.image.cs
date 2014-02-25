@@ -4,8 +4,8 @@
 datablock ShapeBaseImageData(WpnMGL1Image)
 {
    // Basic Item properties
-   shapeFile = "content/fr1tz/rotc_hack/shapes/assaultrifle.tp.dts";
-   shapeFileFP = "content/fr1tz/rotc_hack/shapes/assaultrifle.fp.dts";
+   shapeFile = "content/xa/rotc_hack/shapes/assaultrifle.tp.dts";
+   shapeFileFP = "content/xa/rotc_hack/shapes/assaultrifle.fp.dts";
    emap = true;
 
    imageAnimPrefix = "Rifle";

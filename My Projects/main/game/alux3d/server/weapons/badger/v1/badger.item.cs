@@ -11,7 +11,7 @@ datablock ItemData(WpnBadgerClip)
    className = "AmmoClip";
 
    // Basic Item properties
-   shapeFile = "content/torque3d/3.0/shapes/weapons/Ryder/TP_Ryder.DAE";
+   shapeFile = "content/xa/torque3d/3.0/shapes/weapons/Ryder/TP_Ryder.DAE";
    mass = 1;
    elasticity = 0.2;
    friction = 0.6;
@@ -32,7 +32,7 @@ datablock ItemData(WpnBadgerAmmo)
    className = "Ammo";
 
    // Basic Item properties
-   shapeFile = "content/torque3d/3.0/shapes/weapons/Ryder/TP_Ryder.DAE";
+   shapeFile = "content/xa/torque3d/3.0/shapes/weapons/Ryder/TP_Ryder.DAE";
    mass = 1;
    elasticity = 0.2;
    friction = 0.6;
@@ -54,7 +54,7 @@ datablock ItemData(WpnBadger)
    className = "Weapon";
 
    // Basic Item properties
-   shapeFile = "content/fr1tz/oldshapes/badger/image/p1/TP_Badger.DAE";
+   shapeFile = "content/xa/oldshapes/badger/image/p1/TP_Badger.DAE";
    mass = 1;
    elasticity = 0.2;
    friction = 0.6;

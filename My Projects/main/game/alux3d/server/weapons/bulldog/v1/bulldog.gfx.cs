@@ -14,8 +14,8 @@ datablock ParticleData(WpnBulldogProjectileParticles : DefaultParticle)
    lifetimeVarianceMS = "0";
    dragCoefficient = "0";
    spinSpeed = "0";
-   textureName = "content/fr1tz/alux1/textures/ring.png";
-   animTexName = "content/fr1tz/alux1/textures/ring.png";
+   textureName = "content/xa/alux1/textures/ring.png";
+   animTexName = "content/xa/alux1/textures/ring.png";
    colors[1] = "0.988235 0.0862745 0.0156863 0.552";
    colors[2] = "0.996078 0.0784314 0.00784314 0";
    colors[3] = "1 0.0705882 0 0";
@@ -42,7 +42,7 @@ datablock ParticleEmitterData(WpnBulldogProjectileEmitter : DefaultEmitter)
 
 datablock ParticleData(WpnBulldogProjectileExplosionPlasmaParticles)
 {
-   textureName          = "content/torque3d/3.0/particles/ricochet.png";
+   textureName          = "content/xa/torque3d/3.0/particles/ricochet.png";
    dragCoefficient      = "0.99218";
    gravityCoefficient   = "0";
    windCoefficient      = 0;
@@ -65,7 +65,7 @@ datablock ParticleData(WpnBulldogProjectileExplosionPlasmaParticles)
    times[0]      = 0.0;
    times[1]      = "0.494118";
    times[2]      = 1.0;
-   animTexName = "content/torque3d/3.0/particles/ricochet.png";
+   animTexName = "content/xa/torque3d/3.0/particles/ricochet.png";
    colors[3] = "1 0.835294 0 1";
 };
 
@@ -92,8 +92,8 @@ datablock ParticleData(WpnBulldogProjectileExplosionCloudParticle : DefaultParti
    sizes[3] = "0";
    times[1] = "0.5";
    times[2] = "1";
-   textureName = "content/torque3d/3.0/particles/dustParticle.png";
-   animTexName = "content/torque3d/3.0/particles/dustParticle.png";
+   textureName = "content/xa/torque3d/3.0/particles/dustParticle.png";
+   animTexName = "content/xa/torque3d/3.0/particles/dustParticle.png";
    lifetimeMS = "150";
    lifetimeVarianceMS = "0";
    spinSpeed = "0";
@@ -136,7 +136,7 @@ datablock ExplosionData(WpnBulldogProjectileExplosion)
 
 datablock DebrisData(WpnBulldogProjectileShell)
 {
-   shapeFile = "content/torque3d/3.0/shapes/weapons/shared/RifleShell.DAE";
+   shapeFile = "content/xa/torque3d/3.0/shapes/weapons/shared/RifleShell.DAE";
    lifetime = 6.0;
    minSpinSpeed = 300.0;
    maxSpinSpeed = 400.0;
@@ -157,8 +157,8 @@ datablock ParticleData(WpnBulldogProjectileParticle : DefaultParticle)
    lifetimeMS = "1000";
    lifetimeVarianceMS = "0";
    spinSpeed = "0";
-   textureName = "content/fr1tz/alux1/textures/ring.png";
-   animTexName = "content/fr1tz/alux1/textures/ring.png";
+   textureName = "content/xa/alux1/textures/ring.png";
+   animTexName = "content/xa/alux1/textures/ring.png";
    colors[1] = "0.992157 0.0862745 0.0156863 0";
    colors[2] = "0.996078 0.0784314 0.00784314 0.330709";
    colors[3] = "1 0.0705882 0 0";

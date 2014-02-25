@@ -507,7 +507,7 @@ function MaterialEditorGui::setMaterialDirty(%this)
       }
       else
       {
-         matEd_PersistMan.setDirty(MaterialEditorGui.currentMaterial, "content/torque3d/3.0/materials.cs");
+         matEd_PersistMan.setDirty(MaterialEditorGui.currentMaterial, "content/xa/torque3d/3.0/materials.cs");
       }
    }
    else
@@ -1583,7 +1583,7 @@ function MaterialEditorGui::createNewCubemap( %this, %cubemap )
       parentGroup = RootGroup;
    };
 
-   matEd_cubemapEdPerMan.setDirty( %cubemap, "content/torque3d/3.0/materials.cs" );
+   matEd_cubemapEdPerMan.setDirty( %cubemap, "content/xa/torque3d/3.0/materials.cs" );
    matEd_cubemapEdPerMan.saveDirty();
 
    return %cubemap;
@@ -1600,7 +1600,7 @@ function MaterialEditorGui::setCubemapDirty(%this)
 
    // materials created in the materail selector are given that as its filename, so we run another check
    if( MaterialEditorGui.isMatEditorMaterial( %cubemap ) )
-      matEd_cubemapEdPerMan.setDirty(%cubemap, "content/torque3d/3.0/materials.cs");
+      matEd_cubemapEdPerMan.setDirty(%cubemap, "content/xa/torque3d/3.0/materials.cs");
    else
       matEd_cubemapEdPerMan.setDirty(%cubemap);
 }

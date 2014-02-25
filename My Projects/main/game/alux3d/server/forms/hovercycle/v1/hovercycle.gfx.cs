@@ -21,7 +21,7 @@ datablock ParticleData(FrmHovercycleDustEmitter_Particle)
 	times[0]		= 0.0;
 	times[1]		= 0.5;
 	times[2]		= 1.0;
-	textureName	= "content/rotc/p.5.3/textures/rotc/dustParticle";
+	textureName	= "content/xa/rotc/p.5.3/textures/rotc/dustParticle";
 	useInvAlpha = true;
 	allowLighting = false;
 };

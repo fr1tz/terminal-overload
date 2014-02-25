@@ -10,8 +10,8 @@ datablock ParticleData(WpnCrackpackActivationExplosionSparkParticle : DefaultPar
    times[1] = "0.498039";
    times[2] = "1";
    spinSpeed = "0";
-   textureName = "content/torque3d/3.0/particles/droplet.png";
-   animTexName = "content/torque3d/3.0/particles/droplet.png";
+   textureName = "content/xa/torque3d/3.0/particles/droplet.png";
+   animTexName = "content/xa/torque3d/3.0/particles/droplet.png";
    inheritedVelFactor = "0";
    lifetimeMS = "100";
    lifetimeVarianceMS = "25";
@@ -38,7 +38,7 @@ datablock ParticleEmitterData(WpnCrackpackActivationExplosionSparkEmitter : Defa
 
 datablock ParticleData(WpnCrackpackActivationExplosionPlasmaParticles)
 {
-   textureName          = "content/torque3d/3.0/particles/ricochet.png";
+   textureName          = "content/xa/torque3d/3.0/particles/ricochet.png";
    dragCoefficient      = "0.99218";
    gravityCoefficient   = "0";
    windCoefficient      = 0;
@@ -61,7 +61,7 @@ datablock ParticleData(WpnCrackpackActivationExplosionPlasmaParticles)
    times[0]      = 0.0;
    times[1]      = "0.494118";
    times[2]      = 1.0;
-   animTexName = "content/torque3d/3.0/particles/ricochet.png";
+   animTexName = "content/xa/torque3d/3.0/particles/ricochet.png";
    colors[3] = "1 0.835294 0 1";
 };
 
@@ -88,8 +88,8 @@ datablock ParticleData(WpnCrackpackActivationExplosionCloudParticle : DefaultPar
    sizes[3] = "0";
    times[1] = "1";
    times[2] = "1";
-   textureName = "content/fr1tz/alux1/textures/particle1.png";
-   animTexName = "content/fr1tz/alux1/textures/particle1.png";
+   textureName = "content/xa/alux1/textures/particle1.png";
+   animTexName = "content/xa/alux1/textures/particle1.png";
    lifetimeMS = "2000";
    lifetimeVarianceMS = "0";
    spinSpeed = "0";
@@ -144,7 +144,7 @@ datablock ParticleData(WpnCrackpackDestroyedExplosion_Cloud)
 	spinRandomMin = -200.0;
 	spinRandomMax =  200.0;
 
-	textureName = "content/rotc/p.5.3/textures/rotc/corona.png";
+	textureName = "content/xa/rotc/p.5.3/textures/rotc/corona.png";
 
 	colors[0]	  = "1.0 1.0 1.0 1.0";
 	colors[1]	  = "1.0 1.0 1.0 0.0";
@@ -186,7 +186,7 @@ datablock ParticleData(WpnCrackpackDestroyedExplosion_Dust)
 	useInvAlpha			 = true;
 	spinRandomMin		  = -90.0;
 	spinRandomMax		  = 500.0;
-	textureName			 = "content/rotc/p.5.3/textures/rotc/smoke_particle.png";
+	textureName			 = "content/xa/rotc/p.5.3/textures/rotc/smoke_particle.png";
 	colors[0]	  = "0.9 0.9 0.9 0.5";
 	colors[1]	  = "0.9 0.9 0.9 0.5";
 	colors[2]	  = "0.9 0.9 0.9 0.0";
@@ -229,7 +229,7 @@ datablock ParticleData(WpnCrackpackDestroyedExplosion_Smoke)
 	spinRandomMin = -200.0;
 	spinRandomMax =  200.0;
 
-	textureName = "content/rotc/p.5.3/textures/rotc/smoke_particle.png";
+	textureName = "content/xa/rotc/p.5.3/textures/rotc/smoke_particle.png";
 
 	colors[0]	  = "0.9 0.9 0.9 0.4";
 	colors[1]	  = "0.9 0.9 0.9 0.2";
@@ -268,7 +268,7 @@ datablock ParticleData(WpnCrackpackDestroyedExplosion_Sparks)
 	constantAcceleration = 0.0;
 	lifetimeMS			  = 500;
 	lifetimeVarianceMS	= 350;
-	textureName			 = "content/rotc/p.5.3/textures/rotc/particle1.png";
+	textureName			 = "content/xa/rotc/p.5.3/textures/rotc/particle1.png";
 	colors[0]	  = "0.56 0.36 0.26 1.0";
 	colors[1]	  = "0.56 0.36 0.26 1.0";
 	colors[2]	  = "1.0 0.36 0.26 0.0";
@@ -301,7 +301,7 @@ datablock ParticleEmitterData(WpnCrackpackDestroyedExplosion_SparksEmitter)
 datablock DebrisData(WpnCrackpackDestroyedExplosion_SmallDebris)
 {
 	// shape...
-	shapeFile = "content/rotc/p.5.3/shapes/rotc/misc/debris1.white.dts";
+	shapeFile = "content/xa/rotc/p.5.3/shapes/rotc/misc/debris1.white.dts";
 
 	// bounce...
 	staticOnMaxBounce = true;
@@ -334,7 +334,7 @@ datablock MultiNodeLaserBeamData(WpnCrackpackDestroyedExplosion_LargeDebris_Lase
 	outerColor = "1.00 1.00 1.00 0.2";
 	outerWidth = "0.40";
 
-//	bitmap = "content/rotc/p.5.3/shapes/rotc/weapons/missilelauncher/explosion.trail";
+//	bitmap = "content/xa/rotc/p.5.3/shapes/rotc/weapons/missilelauncher/explosion.trail";
 //	bitmapWidth = 0.25;
 
 	blendMode = 1;
@@ -351,7 +351,7 @@ datablock ParticleData(WpnCrackpackDestroyedExplosion_LargeDebris_Particles2)
 	constantAcceleration = 0.0;
 	lifetimeMS			  = 1000;
 	lifetimeVarianceMS	= 0;
-	textureName			 = "content/rotc/p.5.3/textures/rotc/cross1";
+	textureName			 = "content/xa/rotc/p.5.3/textures/rotc/cross1";
 	colors[0]	  = "1.0 1.0 1.0 0.6";
 	colors[1]	  = "1.0 1.0 1.0 0.4";
 	colors[2]	  = "1.0 1.0 1.0 0.2";
@@ -392,7 +392,7 @@ datablock ParticleData(WpnCrackpackDestroyedExplosion_LargeDebris_Particles1)
 	constantAcceleration = 0.0;
 	lifetimeMS			  = 100;
 	lifetimeVarianceMS	= 0;
-	textureName			 = "content/rotc/p.5.3/textures/rotc/cross1";
+	textureName			 = "content/xa/rotc/p.5.3/textures/rotc/cross1";
 	colors[0]	  = "1.0 1.0 1.0 1.0";
 	colors[1]	  = "1.0 1.0 1.0 1.0";
 	colors[2]	  = "1.0 1.0 1.0 0.5";
@@ -439,7 +439,7 @@ datablock ExplosionData(WpnCrackpackDestroyedExplosion_LargeDebris_Explosion)
 datablock DebrisData(WpnCrackpackDestroyedExplosion_LargeDebris)
 {
 	// shape...
-	shapeFile = "content/rotc/p.5.3/shapes/rotc/misc/debris2.white.dts";
+	shapeFile = "content/xa/rotc/p.5.3/shapes/rotc/misc/debris2.white.dts";
 
 	explosion = WpnCrackpackDestroyedExplosion_LargeDebris_Explosion;
 

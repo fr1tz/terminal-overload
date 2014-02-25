@@ -3,7 +3,7 @@
 
 datablock ProjectileData(WpnMG1Projectile)
 {
-   projectileShapeName = "content/fr1tz/notc1/shapes/mg1/projectile/p1/shape.dae";
+   projectileShapeName = "content/xa/notc1/shapes/mg1/projectile/p1/shape.dae";
 
    //lightDesc = BulletProjectileLightDesc;
 

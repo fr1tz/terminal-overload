@@ -742,7 +742,7 @@ function OptAudioUpdateMasterVolume( %volume )
    $pref::SFX::masterVolume = %volume;
    
    if( !isObject( $AudioTestHandle ) )
-      $AudioTestHandle = sfxPlayOnce( AudioChannel, "content/torque3d/3.0/sound/ui/volumeTest.wav" );
+      $AudioTestHandle = sfxPlayOnce( AudioChannel, "content/xa/torque3d/3.0/sound/ui/volumeTest.wav" );
 }
 
 function OptAudioUpdateChannelVolume( %description, %volume )
@@ -758,7 +758,7 @@ function OptAudioUpdateChannelVolume( %description, %volume )
    if( !isObject( $AudioTestHandle ) )
    {
       $AudioTestDescription.volume = %volume;
-      $AudioTestHandle = sfxPlayOnce( $AudioTestDescription, "content/torque3d/3.0/sound/ui/volumeTest.wav" );
+      $AudioTestHandle = sfxPlayOnce( $AudioTestDescription, "content/xa/torque3d/3.0/sound/ui/volumeTest.wav" );
    }
 }
 

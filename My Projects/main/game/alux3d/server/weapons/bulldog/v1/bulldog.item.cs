@@ -11,7 +11,7 @@ datablock ItemData(WpnBulldogAmmo)
    className = "Ammo";
 
    // Basic Item properties
-   shapeFile = "content/fr1tz/oldshapes/bulldog/magazine/p1/shape.dae";
+   shapeFile = "content/xa/oldshapes/bulldog/magazine/p1/shape.dae";
    mass = 1;
    elasticity = 0.2;
    friction = 0.6;
@@ -31,7 +31,7 @@ datablock ItemData(WpnBulldogClip)
    className = "AmmoClip";
 
    // Basic Item properties
-   shapeFile = "content/fr1tz/oldshapes/bulldog/magazine/p1/shape.dae";
+   shapeFile = "content/xa/oldshapes/bulldog/magazine/p1/shape.dae";
    mass = 1;
    elasticity = 0.2;
    friction = 0.6;
@@ -51,7 +51,7 @@ datablock ItemData(WpnBulldog)
    className = "Weapon";
 
    // Basic Item properties
-   shapeFile = "content/fr1tz/oldshapes/bulldog/image/p1/TP_Bulldog.DAE";
+   shapeFile = "content/xa/oldshapes/bulldog/image/p1/TP_Bulldog.DAE";
    mass = 1;
    elasticity = 0.2;
    friction = 0.6;
