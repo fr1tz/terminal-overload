@@ -10,7 +10,7 @@ datablock LightDescription(WpnSMG1ProjectileLightDesc : BulletProjectileLightDes
 
 datablock DecalData(WpnSMG1ProjectileDecal)
 {
-   Material = "xa_notc1_shapes_smg1_projectile_p1_decalmat";
+   Material = "xa_notc_core_shapes_smg1_projectile_p1_decalmat";
    size = "0.25";
    lifeSpan = "5000";
    randomize = "1";
@@ -28,7 +28,7 @@ datablock DecalData(WpnSMG1ProjectileDecal)
 
 datablock ShotgunProjectileData(WpnSMG1Projectile)
 {
-   projectileShapeName = "content/xa/notc1/shapes/smg1/projectile/p1/shape.dae";
+   projectileShapeName = "content/xa/notc/core/shapes/smg1/projectile/p1/shape.dae";
 
    // ShotgunProjectileData fields
 	numBullets = 1;

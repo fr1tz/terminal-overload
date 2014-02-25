@@ -8,7 +8,7 @@
 datablock DecalData(FrmStandardcatSlideDecal)
 {
    size = "2";
-   material = xa_notc1_shapes_standardcat_slidedecalmat;
+   material = xa_notc_core_shapes_standardcat_slidedecalmat;
    textureCoordCount = "0";
    lifeSpan = "250";
    fadeTime = "1500";
@@ -20,7 +20,7 @@ datablock DecalData(FrmStandardcatSlideDecal)
 
 datablock DecalData(FrmStandardcatSkidDecal)
 {
-   Material = xa_notc1_shapes_standardcat_skiddecalmat;
+   Material = xa_notc_core_shapes_standardcat_skiddecalmat;
    size = "3";
    lifeSpan = "3000";
    randomize = "1";
@@ -53,7 +53,7 @@ datablock DecalData(FrmStandardcatSkidDecal)
 datablock DecalData(FrmStandardcatFootprint)
 {
    size = "1";
-   material = xa_notc1_shapes_standardcat_footprint;
+   material = xa_notc_core_shapes_standardcat_footprint;
    textureCoordCount = "0";
 };
 

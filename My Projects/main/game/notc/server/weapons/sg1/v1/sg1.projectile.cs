@@ -3,7 +3,7 @@
 
 datablock ShotgunProjectileData(WpnSG1Projectile)
 {
-   //projectileShapeName = "content/xa/notc1/shapes/smg1/projectile/p1/shape.dae";
+   //projectileShapeName = "content/xa/notc/core/shapes/smg1/projectile/p1/shape.dae";
 
    // ShotgunProjectileData fields
 	numBullets = 9;

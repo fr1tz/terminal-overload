@@ -3,7 +3,7 @@
 
 datablock StaticShapeData(FrmStandardcatEtherboard)
 {
-   shapeFile = "content/xa/notc1/shapes/standardcat/etherboard/p1/shape.dae";
+   shapeFile = "content/xa/notc/core/shapes/standardcat/etherboard/p1/shape.dae";
 };
 
 //------------------------------------------------------------------------------
@@ -22,7 +22,7 @@ datablock PlayerData(FrmStandardcat)
    computeCRC = false;
 
    // Third person shape
-   shapeFile = "content/xa/notc1/shapes/standardcat/old.dts";
+   shapeFile = "content/xa/notc/core/shapes/standardcat/old.dts";
    cameraMaxDist = 3;
    allowImageStateAnimation = true;
 

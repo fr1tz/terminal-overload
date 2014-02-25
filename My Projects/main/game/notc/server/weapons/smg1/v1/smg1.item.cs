@@ -12,7 +12,7 @@ datablock ItemData(WpnSMG1)
    className = "Weapon";
 
    // Basic Item properties
-   shapeFile = "content/xa/notc1/shapes/smg1/image/p1/shape.tp.dae";
+   shapeFile = "content/xa/notc/core/shapes/smg1/image/p1/shape.tp.dae";
    mass = 1;
    elasticity = 0.2;
    friction = 0.6;

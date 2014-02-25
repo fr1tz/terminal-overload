@@ -47,7 +47,7 @@ singleton Material(xa_rotc_hack_shapes_mat4)
    diffuseMap[0] = "content/xa/rotc/p.5.3/shapes/rotc/weapons/minigun/image";
    glow[1] = "0";
    emissive[1] = "1";
-   diffuseMap[1] = "content/xa/notc1/textures/grid.128.8.png";
+   diffuseMap[1] = "content/xa/notc/core/textures/grid.128.8.png";
    scrollDir[1] = "0 0.138";
    rotSpeed[1] = "1.529";
    castShadows = "0";
@@ -75,7 +75,7 @@ singleton Material(xa_rotc_hack_shapes_mat5)
 singleton Material(xa_rotc_hack_shapes_mat6)
 {
    mapTo = "image.barrel.red";
-   diffuseMap[0] = "content/xa/notc1/textures/grid.128.8.png";
+   diffuseMap[0] = "content/xa/notc/core/textures/grid.128.8.png";
    glow[0] = "0";
    emissive[0] = "1";
    castShadows = "0";
@@ -92,7 +92,7 @@ singleton Material(xa_rotc_hack_shapes_mat7)
    mapTo = "image2";
    diffuseMap[0] = "content/xa/rotc/p.5.3/shapes/rotc/weapons/disc/image2.png";
    showFootprints = "0";
-   diffuseMap[1] = "content/xa/notc1/textures/grid.128.8.png";
+   diffuseMap[1] = "content/xa/notc/core/textures/grid.128.8.png";
 };
 
 singleton Material(xa_rotc_hack_shapes_mat8)

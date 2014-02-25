@@ -3,7 +3,7 @@
 
 datablock DecalData(WpnSG1ProjectileDecal)
 {
-   Material = "xa_notc1_shapes_sg1_projectile_p1_decalmat";
+   Material = "xa_notc_core_shapes_sg1_projectile_p1_decalmat";
    size = "1";
    lifeSpan = "0";
    randomize = "0";
@@ -37,8 +37,8 @@ datablock ParticleData(WpnSG1ProjectileEmitterParticle : DefaultParticle)
    times[2] = "1";
    dragCoefficient = "0.997067";
    inheritedVelFactor = "0";
-   textureName = "content/xa/notc1/textures/grid.128.4.glow.png";
-   animTexName = "content/xa/notc1/textures/grid.128.4.glow.png";
+   textureName = "content/xa/notc/core/textures/grid.128.4.glow.png";
+   animTexName = "content/xa/notc/core/textures/grid.128.4.glow.png";
    colors[0] = "0.996078 0.92549 0.00784314 1";
    colors[1] = "0.996078 0.835294 0.0156863 0";
    lifetimeMS = "500";

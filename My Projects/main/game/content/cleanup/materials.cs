@@ -21,11 +21,11 @@ singleton Material(DECAL_WpnRaptorProjectile)
    showFootprints = "0";
 };
 
-singleton Material(xa_notc1_mis_notc_dm1_skybox)
+singleton Material(xa_notc_core_mis_notc_dm1_skybox)
 {
    mapTo = "unmapped_mat";
    materialTag0 = "Skies";
-   cubemap = "xa_notc1_skies_skybox1";
+   cubemap = "xa_notc_core_skies_skybox1";
 };
 
 new CubemapData(xxx2)
@@ -38,13 +38,13 @@ new CubemapData(xxx2)
    cubeFace[5] = "content/tmp/night-skyboxes/night-skyboxes/PondNight/7.jpg";
 };
 
-new CubemapData(xa_notc1_skies_skybox1)
+new CubemapData(xa_notc_core_skies_skybox1)
 {
-   cubeFace[0] = "content/xa/notc1/skies/skybox1/right.png";
-   cubeFace[1] = "content/xa/notc1/skies/skybox1/left.png";
-   cubeFace[2] = "content/xa/notc1/skies/skybox1/back.png";
-   cubeFace[3] = "content/xa/notc1/skies/skybox1/front.png";
-   cubeFace[4] = "content/xa/notc1/skies/skybox1/top.png";
-   cubeFace[5] = "content/xa/notc1/skies/skybox1/top.png";
+   cubeFace[0] = "content/xa/notc/core/skies/skybox1/right.png";
+   cubeFace[1] = "content/xa/notc/core/skies/skybox1/left.png";
+   cubeFace[2] = "content/xa/notc/core/skies/skybox1/back.png";
+   cubeFace[3] = "content/xa/notc/core/skies/skybox1/front.png";
+   cubeFace[4] = "content/xa/notc/core/skies/skybox1/top.png";
+   cubeFace[5] = "content/xa/notc/core/skies/skybox1/top.png";
 };
 

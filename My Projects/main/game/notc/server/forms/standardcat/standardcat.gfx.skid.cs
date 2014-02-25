@@ -56,7 +56,7 @@ datablock ParticleData(FrmStandardcatSkidFootEmitter1_Particle)
 	times[0]		= 0.0;
 	times[1]		= 0.5;
 	times[2]		= 1.0;
-	textureName	= "content/xa/notc1/textures/spark02";
+	textureName	= "content/xa/notc/core/textures/spark02";
 	useInvAlpha = false;
 	allowLighting = false;
 };
