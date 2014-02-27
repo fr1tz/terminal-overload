@@ -1,5 +1,5 @@
 //--- OBJECT WRITE BEGIN ---
-%guiContent = new GuiControl(OverlayHud) {
+%guiContent = new GuiControl(MiscHud) {
    position = "0 0";
    extent = "640 480";
    minExtent = "8 8";
@@ -162,7 +162,7 @@
    new GuiIrisHud(Iris) {
       sizeX = "2.24208e-044";
       sizeY = "0";
-      bitmap = "notc/client/graphics/iris.png";
+      bitmap = "./graphics/iris.png";
       wrap = "0";
       position = "0 0";
       extent = "640 480";

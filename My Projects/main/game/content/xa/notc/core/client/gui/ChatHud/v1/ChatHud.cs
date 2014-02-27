@@ -1,9 +1,10 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
-//-----------------------------------------------------------------------------
+
+//---------------------------------------------------------------------------
 // Message Hud
-//-----------------------------------------------------------------------------
+//---------------------------------------------------------------------------
 
 // chat hud sizes in lines
 $outerChatLenY[1] = 4;
@@ -25,14 +26,14 @@ function playMessageSound(%message, %voice, %pitch)
    }
 
    %wav = getSubStr(%message, %wavStart + 2, 1000);
-   
+
    if (%voice !$= "")
    {
       %wavFile = "content/xa/torque3d/3.0/sound/voice/" @ %voice @ "/" @ %wav;
    }
    else
       %wavFile = "content/xa/torque3d/3.0/sound/" @ %wav;
-   
+
    if (strstr(%wavFile, ".wav") != (strlen(%wavFile) - 4))
       %wavFile = %wavFile @ ".wav";
 
@@ -171,7 +172,7 @@ function ChatHud::addLine(%this,%text)
    %textHeight = %this.profile.fontSize + %this.lineSpacing;
    if (%textHeight <= 0)
       %textHeight = 12;
-      
+
    %scrollBox = %this.getGroup();
    %chatScrollHeight = getWord(%scrollBox.extent, 1) - 2 * %scrollBox.profile.borderThickness;
    %chatPosition = getWord(%this.extent, 1) - %chatScrollHeight + getWord(%this.position, 1) - %scrollBox.profile.borderThickness;
@@ -302,3 +303,114 @@ function cycleMessageHudSize()
 {
    MainChatHud.nextChatHudLen();
 }
+
+//----------------------------------------------------------------------------
+// Enter Chat Message Hud
+//----------------------------------------------------------------------------
+
+//------------------------------------------------------------------------------
+
+function MessageHud::open(%this)
+{
+   %offset = 6;
+
+   if(%this.isVisible())
+      return;
+
+   if(%this.isTeamMsg)
+      %text = "TEAM:";
+   else
+      %text = "GLOBAL:";
+
+   MessageHud_Text.setValue(%text);
+
+   %windowPos = "0 " @ ( getWord( outerChatHud.position, 1 ) + getWord( outerChatHud.extent, 1 ) + 1 );
+   %windowExt = getWord( OuterChatHud.extent, 0 ) @ " " @ getWord( MessageHud_Frame.extent, 1 );
+
+   %textExtent = getWord(MessageHud_Text.extent, 0) + 14;
+   %ctrlExtent = getWord(MessageHud_Frame.extent, 0);
+
+   Canvas.pushDialog(%this);
+
+   messageHud_Frame.position = %windowPos;
+   messageHud_Frame.extent = %windowExt;
+   MessageHud_Edit.position = setWord(MessageHud_Edit.position, 0, %textExtent + %offset);
+   MessageHud_Edit.extent = setWord(MessageHud_Edit.extent, 0, %ctrlExtent - %textExtent - (2 * %offset));
+
+   %this.setVisible(true);
+   deactivateKeyboard();
+   MessageHud_Edit.makeFirstResponder(true);
+}
+
+//------------------------------------------------------------------------------
+
+function MessageHud::close(%this)
+{
+   if(!%this.isVisible())
+      return;
+
+   Canvas.popDialog(%this);
+   %this.setVisible(false);
+   if ( $enableDirectInput )
+      activateKeyboard();
+   MessageHud_Edit.setValue("");
+}
+
+
+//------------------------------------------------------------------------------
+
+function MessageHud::toggleState(%this)
+{
+   if(%this.isVisible())
+      %this.close();
+   else
+      %this.open();
+}
+
+//------------------------------------------------------------------------------
+
+function MessageHud_Edit::onEscape(%this)
+{
+   MessageHud.close();
+}
+
+//------------------------------------------------------------------------------
+
+function MessageHud_Edit::eval(%this)
+{
+   %text = collapseEscape(trim(%this.getValue()));
+
+   if(%text !$= "")
+   {
+      if(MessageHud.isTeamMsg)
+         commandToServer('teamMessageSent', %text);
+      else
+         commandToServer('messageSent', %text);
+   }
+
+   MessageHud.close();
+}
+
+
+//----------------------------------------------------------------------------
+// MessageHud key handlers
+
+function toggleMessageHud(%make)
+{
+   if(%make)
+   {
+      MessageHud.isTeamMsg = false;
+      MessageHud.toggleState();
+   }
+}
+
+function teamMessageHud(%make)
+{
+   if(%make)
+   {
+      MessageHud.isTeamMsg = true;
+      MessageHud.toggleState();
+   }
+}
+
+

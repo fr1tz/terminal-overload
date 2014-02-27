@@ -1,7 +1,7 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
-function SoldierHud::onWake(%this)
+function CatGui::onWake(%this)
 {
    // Turn off any shell sounds...
    // sfxStop( ... );
@@ -12,7 +12,7 @@ function SoldierHud::onWake(%this)
    // Message hud dialog
    if ( isObject( MainChatHud ) )
    {
-      Canvas.pushDialog( OverlayHud );
+      Canvas.pushDialog( MiscHud );
       Canvas.pushDialog( MainChatHud );
       chatHud.attach(HudMessageVector);
    }      
@@ -30,7 +30,7 @@ function SoldierHud::onWake(%this)
       schedule(0, 0, "refreshBottomTextCtrl");
 }
 
-function SoldierHud::onSleep(%this)
+function CatGui::onSleep(%this)
 {
    if ( isObject( MainChatHud ) )
       Canvas.popDialog( MainChatHud );
@@ -39,7 +39,7 @@ function SoldierHud::onSleep(%this)
    moveMap.pop();
 }
 
-function SoldierHud::clearHud( %this )
+function CatGui::clearHud( %this )
 {
    Canvas.popDialog( MainChatHud );
 
@@ -47,7 +47,7 @@ function SoldierHud::clearHud( %this )
       %this.getObject( 0 ).delete();
 }
 
-function SoldierHud::tickThread(%this)
+function CatGui::tickThread(%this)
 {
    if(%this.zTickThread !$= "")
    {
@@ -58,14 +58,6 @@ function SoldierHud::tickThread(%this)
 
    if(!isObject(ServerConnection) || !isObject(ServerConnection.getControlObject()))
       return;
-   
-   %magazine = SoldierHudAmmoAmount.zMagazine;
-   if(%magazine $= "")
-      %magazine = ServerConnection.getControlObject().getImageMagazineRounds(0);
-      
-   %spare = SoldierHudAmmoAmount.zSpare;
-   
-   SoldierHudAmmoAmount.setText("Ammo: " @ %magazine @ "/" @ %spare);
 }
 
 //-----------------------------------------------------------------------------

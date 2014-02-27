@@ -58,23 +58,13 @@ function initClient()
 
    // Load up the Game GUIs
    exec("notc/client/shell/defaultGameProfiles.cs");
-   exec("notc/client/shell/ChatHud.gui");
-   exec("notc/client/shell/playerList.gui");
    exec("notc/client/shell/hudlessGui.gui");
-   exec("notc/client/hud/overlayHud.gui");
-   exec("notc/client/hud/overlayHud.cs");
-   exec("notc/client/hud/lightHud.gui");
-   exec("notc/client/hud/lightHud.cs");
-   exec("notc/client/hud/soldierHud.gui");
-   exec("notc/client/hud/soldierHud.cs");
-   $PlayGui = SoldierHud;
    $SB::WODec = 0.015; // HACK HACK HACK: server should decide how
                        // fast whiteout flash decays.
 
    // Load up the shell GUIs
    exec("notc/client/shell/mainMenuGui.gui");
    exec("notc/client/shell/joinServerDlg.gui");
-   exec("notc/client/shell/endGameGui.gui");
    exec("notc/client/shell/StartupGui.gui");
    exec("notc/client/shell/chooseLevelDlg.gui");
    exec("notc/client/shell/loadingGui.gui");
@@ -82,19 +72,13 @@ function initClient()
    exec("notc/client/shell/remapDlg.gui");
    
    // Gui scripts
-   exec("./playerList.cs");
-   exec("./chatHud.cs");
-   exec("./messageHud.cs");
-   exec("notc/client/shell/playGui.cs");
    exec("notc/client/shell/startupGui.cs");
    exec("notc/client/shell/chooseLevelDlg.cs");
    exec("notc/client/shell/loadingGui.cs");
    exec("notc/client/shell/optionsDlg.cs");
 
    // Client scripts
-   exec("./hearing.cs");
    exec("./client.cs");
-   exec("./game.cs");
    exec("./missionDownload.cs");
    exec("./serverConnection.cs");
 

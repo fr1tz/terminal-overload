@@ -82,6 +82,24 @@ function DeathMatchGame::prepareClient(%game, %client)
    //echo (%game @"\c4 -> "@ %game.class @" -> DeathMatchGame::prepareClient");
 
    Parent::prepareClient(%game, %client);
+   
+   %files = "xa/notc/core/client/audio/Descriptions/v1/exec.cs" TAB
+            "xa/notc/core/client/audio/Hearing/v1/exec.cs" TAB
+            "xa/notc/core/client/gui/CatGui/v1/exec.cs" TAB
+            "xa/notc/core/client/gui/ChatHud/v1/exec.cs" TAB
+            "xa/notc/core/client/gui/GuiChanger/v1/exec.cs" TAB
+            "xa/notc/core/client/gui/MiscHud/v1/exec.cs" TAB
+            "xa/notc/core/client/misc/Commands/v1/exec.cs" TAB
+            "xa/notc/core/client/postfx/ChromaticLens/v1/exec.cs" TAB
+            "xa/notc/deathmatch/client/gui/EndGameGui/v1/exec.cs" TAB
+            "xa/notc/deathmatch/client/gui/PlayerList/v1/exec.cs";
+
+   %fieldCount = getFieldCount(%files);
+   for(%i = 0; %i < %fieldCount; %i++)
+   {
+      %file = getField(%files, %i);
+      commandToClient(%client, 'ExecContentScript', %file);
+   }
 }
 
 function DeathMatchGame::onClientEnterGame(%game, %client)

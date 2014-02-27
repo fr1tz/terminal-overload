@@ -116,10 +116,11 @@ function GameConnection::control(%client, %obj)
    if(%obj.fovDelta !$= "")
       commandToClient(%client, 'SetFovDelta', %obj.fovDelta);
       
-   %hud = "SoldierHud";
+   %hud = "CatGui";
    if(%obj.viewHud !$= "")
       %hud = %obj.viewHud;
-   commandToClient(%client, 'ViewSetHud', %hud, %obj.teamId);
+   commandToClient(%client, 'SetPlayGui', %hud);
+   commandToClient(%client, 'CanvasSetContent', %hud);
       
    if(%obj.viewIrisSizeX !$= ""
    || %obj.viewIrisSizeY !$= ""
