@@ -1,6 +1,18 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
+// Called by the mission editor.
+function TriggerData::create(%data)
+{
+   %obj = new Trigger()
+   {
+      polyhedron = "-0.5 0.5 0.0 1.0 0.0 0.0 0.0 -1.0 0.0 0.0 0.0 1.0";
+      dataBlock = %data;
+   };
+
+   return %obj;
+}
+
 //-----------------------------------------------------------------------------
 // DefaultTrigger is used by the mission editor.  This is also an example
 // of trigger methods and callbacks.

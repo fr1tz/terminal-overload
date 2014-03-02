@@ -12,10 +12,14 @@ function executeBaseServerScripts()
    exec("./item.cs");
    exec("./misc.cs");
    exec("./observerCamera.cs");
+   exec("./pathCamera.cs");
+   exec("./packetline.gfx.cs");
+   exec("./packetline.cs");
    exec("./player.cs");
    exec("./projectile.cs");
    exec("./radiusDamage.cs");
    exec("./shapeBase.cs");
+   exec("./staticShape.cs");
    exec("./teleporter.cs");
    exec("./triggers.cs");
    exec("./turret.cs");

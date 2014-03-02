@@ -91,7 +91,7 @@ datablock PlayerData(FrmStandardcat)
    maxUnderwaterBackwardSpeed = 7.8;
    maxUnderwaterSideSpeed = 4.0;
 
-   jumpForce =  720*4;
+   jumpForce = 8 * 90;
    jumpEnergyDrain = 0;
    minJumpEnergy = 0;
    jumpDelay = 0;
@@ -370,6 +370,13 @@ function FrmStandardcat::onTrigger(%this, %obj, %triggerNum, %val)
 	// as the jump key.
  
    Parent::onTrigger(%this, %obj, %triggerNum, %val);
+   
+   // Distort player view
+   %max = "0 -0.25 0.25";
+   %mode = "1 1 1";
+   %dt = "0.0 0.1 0.1";
+   %rnd = "0.05 0.05 0.05";
+   //commandToClient(%obj.client, 'EnableChromaticLens', %max, %mode, %dt, %rnd);
    
    if(%triggerNum == 6)
    {

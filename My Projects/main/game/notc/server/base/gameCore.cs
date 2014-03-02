@@ -496,6 +496,12 @@ function GameCore::onClientEnterGame(%game, %client)
    %cameraSpawnPoint = pickCameraSpawnPoint($Game::DefaultCameraSpawnGroups);
    // Spawn a camera for this client using the found %spawnPoint
    %client.spawnCamera(%cameraSpawnPoint);
+   
+   %client.packetLineCamera = new PathCamera() {
+      dataBlock = PacketLineCamera;
+      position = "0 0 0 1 0 0 0";
+      client = %client;
+   };
 
    // Setup game parameters, the onConnect method currently starts
    // everyone with a 0 score.
