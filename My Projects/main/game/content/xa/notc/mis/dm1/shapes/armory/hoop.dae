@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
+  <asset>
+    <contributor>
+      <author>Blender User</author>
+      <authoring_tool>Blender 2.67.0 r57141</authoring_tool>
+    </contributor>
+    <created>2014-03-03T00:11:53</created>
+    <modified>2014-03-03T00:11:53</modified>
+    <unit name="meter" meter="1"/>
+    <up_axis>Z_UP</up_axis>
+  </asset>
+  <library_images/>
+  <library_effects>
+    <effect id="xa_notc_mis_dm1_shapes_armory_hoop_mat1-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color sid="emission">1 1 1 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.64 0.563579 0 1</color>
+            </diffuse>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </lambert>
+        </technique>
+        <extra>
+          <technique profile="GOOGLEEARTH">
+            <double_sided>1</double_sided>
+          </technique>
+        </extra>
+      </profile_COMMON>
+      <extra><technique profile="MAX3D"><double_sided>1</double_sided></technique></extra>
+    </effect>
+  </library_effects>
+  <library_materials>
+    <material id="xa_notc_mis_dm1_shapes_armory_hoop_mat1-material" name="xa_notc_mis_dm1_shapes_armory_hoop_mat1">
+      <instance_effect url="#xa_notc_mis_dm1_shapes_armory_hoop_mat1-effect"/>
+    </material>
+  </library_materials>
+  <library_geometries>
+    <geometry id="Cylinder_026-mesh" name="Cylinder.026">
+      <mesh>
+        <source id="Cylinder_026-mesh-positions">
+          <float_array id="Cylinder_026-mesh-positions-array" count="144">0 1.798108 -0.7807865 1.420282 0.9781076 -0.7807865 1.420282 -0.6618924 -0.7807865 -1.37755e-7 -1.481892 -0.7807865 -1.420282 -0.6618922 -0.7807865 -1.420282 0.9781075 -0.7807865 0 1.798108 0.6586151 1.420282 0.9781076 0.6586151 1.420282 -0.6618924 0.6586151 -1.37755e-7 -1.481892 0.6586151 -1.420282 -0.6618922 0.6586151 -1.420282 0.9781075 0.6586151 -1.420282 -0.6618922 -0.7807865 -1.420282 0.9781075 -0.7807865 -1.37755e-7 -1.481892 -0.7807865 -1.420282 -0.6618922 -0.7807865 0 1.798108 -0.7807865 1.420282 0.9781076 -0.7807865 1.420282 -0.6618924 -0.7807865 -1.37755e-7 -1.481892 -0.7807865 1.420282 0.9781076 -0.7807865 1.420282 -0.6618924 -0.7807865 -1.420282 0.9781075 -0.7807865 0 1.798108 -0.7807865 -0.9596422 -3.14404 -0.7807865 -0.9596422 -3.14404 0.6586151 -2.379924 -2.32404 0.6586151 -2.379924 -2.32404 -0.7807865 -2.379923 2.640255 -0.7807865 -2.379923 2.640255 0.6586151 -0.9596418 3.460256 0.6586151 -0.9596418 3.460256 -0.7807865 0.9596417 3.460256 -0.7807865 0.9596417 3.460256 0.6586151 2.379923 2.640256 0.6586151 2.379923 2.640256 -0.7807865 2.379923 -2.324041 -0.7807865 2.379923 -2.324041 0.6586151 0.9596415 -3.144041 0.6586151 0.9596415 -3.144041 -0.7807865 -3.339565 -0.6618922 -0.7807865 -3.339565 -0.6618922 0.6586151 -3.339565 0.9781075 0.6586151 -3.339565 0.9781075 -0.7807865 3.339565 0.9781076 -0.7807865 3.339565 0.9781076 0.6586151 3.339565 -0.6618924 0.6586151 3.339565 -0.6618924 -0.7807865</float_array>
+          <technique_common>
+            <accessor source="#Cylinder_026-mesh-positions-array" count="48" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Cylinder_026-mesh-normals">
+          <float_array id="Cylinder_026-mesh-normals-array" count="252">0 0 0 0 0 0 0 0 0 0 0 0 -1 0 0 0 0 0 -0.5 -0.8660254 0 0.5000001 -0.8660253 0 1 0 0 0 0 0 0.5000001 0.8660253 0 -0.4999999 0.8660254 0 -0.5000001 -0.8660253 0 0.8660253 -0.5000002 0 0 0 1 -0.8660253 0.5000002 0 0 0 -1 -0.5000001 0.8660253 0 -0.8660253 -0.5000001 0 0 0 1 0.8660253 0.5000001 0 0 0 -1 0.5 0.8660254 0 -0.8660255 0.5 0 0 0 1 0.8660255 -0.4999999 0 0 0 -1 0.4999999 -0.8660254 0 0.8660255 0.4999999 0 0 0 1 -0.8660255 -0.4999999 0 0 0 -1 -1 0 0 0 -1 0 0 0 1 0 1 0 0 0 -1 1 0 0 0 1 0 0 0 1 0 -1 0 0 0 -1 0 0 0 0 0 0 0 0 0 0 0 0 -1 0 0 0 0 0 -0.5 -0.8660254 0 0.5000001 -0.8660253 0 1 0 0 0 0 0 0.5000001 0.8660253 0 -0.4999999 0.8660254 0 -0.5000001 -0.8660253 0 0.8660253 -0.5000002 0 0 0 1 -0.8660253 0.5000002 0 0 0 -1 -0.5000001 0.8660253 0 -0.8660253 -0.5000001 0 0 0 1 0.8660253 0.5000001 0 0 0 -1 0.5 0.8660254 0 -0.8660255 0.5 0 0 0 1 0.8660255 -0.4999999 0 0 0 -1 0.4999999 -0.8660254 0 0.8660255 0.4999999 0 0 0 1 -0.8660255 -0.4999999 0 0 0 -1 -1 0 0 0 -1 0 0 0 1 0 1 0 0 0 -1 1 0 0 0 1 0 0 0 1 0 -1 0 0 0 -1</float_array>
+          <technique_common>
+            <accessor source="#Cylinder_026-mesh-normals-array" count="84" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Cylinder_026-mesh-map-0">
+          <float_array id="Cylinder_026-mesh-map-0-array" count="504">0 0 1 0 1 1 0 0 1 0 1 1 0 0 1 0 1 1 0 0 1 0 1 1 0 0 1 0 0 1 0 0 1 0 1 1 0 0 1 0 0 1 0 0 1 0 1 1 0 0 1 0 1 1 0 0 1 0 1 1 0 0 1 0 1 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 1 1 0 0 1 0 1 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 1 1 0 0 1 0 1 1 0 0 1 0 0 1 0 0 1 0 1 1 0 0 1 0 0 1 0 0 1 0 1 1 0 0 1 0 1 1 0 0 1 0 0 1 0 0 1 0 1 1 0 0 1 0 1 1 0 0 1 0 1 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 1 1 0 0 1 0 1 1 0 0 1 0 1 1 0 0 1 0 0 1 0 0 1 0 1 1 0 0 1 0 1 1 0 0 1 0 1 1 0 0 1 0 1 1 0 0 1 0 0 1 0 1 0 0 1 1 0 1 0 0 1 1 0 1 0 0 1 1 0 1 0 0 1 1 1 0 1 1 0 1 0 1 0 0 1 1 1 0 1 1 0 1 0 1 0 0 1 1 0 1 0 0 1 1 0 1 0 0 1 1 0 1 0 0 1 1 1 0 1 1 0 1 1 0 1 1 0 1 0 1 0 0 1 1 0 1 0 0 1 1 1 0 1 1 0 1 1 0 1 1 0 1 1 0 1 1 0 1 1 0 1 1 0 1 0 1 0 0 1 1 0 1 0 0 1 1 1 0 1 1 0 1 0 1 0 0 1 1 1 0 1 1 0 1 0 1 0 0 1 1 0 1 0 0 1 1 1 0 1 1 0 1 0 1 0 0 1 1 0 1 0 0 1 1 0 1 0 0 1 1 1 0 1 1 0 1 1 0 1 1 0 1 1 0 1 1 0 1 0 1 0 0 1 1 0 1 0 0 1 1 0 1 0 0 1 1 1 0 1 1 0 1 0 1 0 0 1 1 0 1 0 0 1 1 0 1 0 0 1 1 0 1 0 0 1 1 1 0 1 1 0 1</float_array>
+          <technique_common>
+            <accessor source="#Cylinder_026-mesh-map-0-array" count="252" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Cylinder_026-mesh-vertices">
+          <input semantic="POSITION" source="#Cylinder_026-mesh-positions"/>
+        </vertices>
+        <polylist material="xa_notc_mis_dm1_shapes_armory_hoop_mat1-material" count="84">
+          <input semantic="VERTEX" source="#Cylinder_026-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Cylinder_026-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Cylinder_026-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 </vcount>
+          <p>5 0 0 13 0 1 12 0 2 4 1 3 15 1 4 14 1 5 1 2 6 17 2 7 16 2 8 3 3 9 19 3 10 18 3 11 7 4 12 20 4 13 8 4 14 2 5 15 21 5 16 20 5 17 6 6 18 23 6 19 7 6 20 16 7 21 6 7 22 11 7 23 10 8 24 15 8 25 13 8 26 0 9 27 23 9 28 22 9 29 10 10 30 9 10 31 19 10 32 8 11 33 2 11 34 9 11 35 24 12 36 25 12 37 27 12 38 9 13 39 25 13 40 24 13 41 10 14 42 26 14 43 25 14 44 4 15 45 27 15 46 10 15 47 3 16 48 24 16 49 4 16 50 28 17 51 29 17 52 31 17 53 11 18 54 29 18 55 5 18 56 6 19 57 30 19 58 29 19 59 0 20 60 31 20 61 30 20 62 5 21 63 28 21 64 0 21 65 32 22 66 33 22 67 34 22 68 6 23 69 33 23 70 0 23 71 7 24 72 34 24 73 33 24 74 1 25 75 35 25 76 34 25 77 0 26 78 32 26 79 1 26 80 36 27 81 37 27 82 38 27 83 8 28 84 37 28 85 36 28 86 9 29 87 38 29 88 37 29 89 3 30 90 39 30 91 9 30 92 2 31 93 36 31 94 3 31 95 40 32 96 41 32 97 43 32 98 10 33 99 41 33 100 40 33 101 11 34 102 42 34 103 41 34 104 5 35 105 43 35 106 42 35 107 4 36 108 40 36 109 5 36 110 44 37 111 45 37 112 46 37 113 7 38 114 45 38 115 44 38 116 8 39 117 46 39 118 45 39 119 2 40 120 47 40 121 46 40 122 1 41 123 44 41 124 2 41 125 4 42 126 5 42 127 12 42 128 3 43 129 4 43 130 14 43 131 0 44 132 1 44 133 16 44 134 2 45 135 3 45 136 18 45 137 20 46 138 18 46 139 8 46 140 1 47 141 2 47 142 20 47 143 23 48 144 17 48 145 7 48 146 22 49 147 16 49 148 11 49 149 11 50 150 10 50 151 13 50 152 5 51 153 0 51 154 22 51 155 12 52 156 10 52 157 19 52 158 2 53 159 14 53 160 9 53 161 25 54 162 26 54 163 27 54 164 3 55 165 9 55 166 24 55 167 9 56 168 10 56 169 25 56 170 27 57 171 26 57 172 10 57 173 24 58 174 27 58 175 4 58 176 29 59 177 30 59 178 31 59 179 29 60 180 28 60 181 5 60 182 11 61 183 6 61 184 29 61 185 6 62 186 0 62 187 30 62 188 28 63 189 31 63 190 0 63 191 35 64 192 32 64 193 34 64 194 33 65 195 32 65 196 0 65 197 6 66 198 7 66 199 33 66 200 7 67 201 1 67 202 34 67 203 32 68 204 35 68 205 1 68 206 39 69 207 36 69 208 38 69 209 2 70 210 8 70 211 36 70 212 8 71 213 9 71 214 37 71 215 39 72 216 38 72 217 9 72 218 36 73 219 39 73 220 3 73 221 41 74 222 42 74 223 43 74 224 4 75 225 10 75 226 40 75 227 10 76 228 11 76 229 41 76 230 11 77 231 5 77 232 42 77 233 40 78 234 43 78 235 5 78 236 47 79 237 44 79 238 46 79 239 1 80 240 7 80 241 44 80 242 7 81 243 8 81 244 45 81 245 8 82 246 2 82 247 46 82 248 44 83 249 47 83 250 2 83 251</p>
+        </polylist>
+      </mesh>
+      <extra><technique profile="MAYA"><double_sided>1</double_sided></technique></extra>
+    </geometry>
+  </library_geometries>
+  <library_controllers/>
+  <library_visual_scenes>
+    <visual_scene id="Scene" name="Scene">
+      <node id="Cylinder_017" name="Cylinder_017" type="NODE">
+        <matrix sid="transform">1 0 0 -1.06062e-7 0 1 0 -0.1583538 0 0 1 0 0 0 0 1</matrix>
+        <instance_geometry url="#Cylinder_026-mesh">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="xa_notc_mis_dm1_shapes_armory_hoop_mat1-material" target="#xa_notc_mis_dm1_shapes_armory_hoop_mat1-material"/>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene"/>
+  </scene>
+</COLLADA>
