@@ -29,7 +29,7 @@
 
 uniform sampler2D prepassMap ;
 uniform sampler2D randNormalTex ;
-uniform sampler2D powTable ; // TODO sampler1D
+uniform sampler1D powTable ;
 
 uniform vec2 nearFar;
 uniform vec2 worldToScreenScale;
@@ -96,7 +96,7 @@ float getOcclusion( float depthDiff, float depthMin, float depthMax, float depth
       
    normalDiff *= 1.0 - ( dt * 0.5 + 0.5 );
    
-   return ( 1.0 - texture2D( powTable, vec2(delta, 1.0f) ).r ) * normalDiff;   
+   return ( 1.0 - texture1D( powTable, delta ).r ) * normalDiff;   
 }
 
 

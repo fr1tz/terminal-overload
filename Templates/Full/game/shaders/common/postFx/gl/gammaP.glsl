@@ -25,7 +25,7 @@
 #include "shadergen:/autogenConditioners.h"
 
 uniform sampler2D backBuffer;
-uniform sampler2D colorCorrectionTex; // ToDo sampler1D not supported
+uniform sampler1D colorCorrectionTex;
 
 uniform float OneOverGamma;
 
@@ -36,9 +36,9 @@ void main()
     vec4 color = texture2D(backBuffer, uv0.xy);
 
    // Apply the color correction.
-   color.r = texture2D( colorCorrectionTex, vec2(color.r, 1.0) ).r;
-   color.g = texture2D( colorCorrectionTex, vec2(color.g, 1.0) ).g;
-   color.b = texture2D( colorCorrectionTex, vec2(color.b, 1.0) ).b;
+   color.r = texture1D( colorCorrectionTex, color.r ).r;
+   color.g = texture1D( colorCorrectionTex, color.g ).g;
+   color.b = texture1D( colorCorrectionTex, color.b ).b;
 
    // Apply gamma correction
    color.rgb = pow( abs(color.rgb), vec3(OneOverGamma) );

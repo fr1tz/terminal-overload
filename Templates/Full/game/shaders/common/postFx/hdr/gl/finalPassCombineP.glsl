@@ -27,7 +27,7 @@
 uniform sampler2D sceneTex;
 uniform sampler2D luminanceTex;
 uniform sampler2D bloomTex;
-uniform sampler2D colorCorrectionTex; // TODO implement sampler1D
+uniform sampler1D colorCorrectionTex;
 
 uniform vec2 texSize0;
 uniform vec2 texSize2;
@@ -85,9 +85,9 @@ void main()
    sample += g_fBloomScale * bloom;
 
    // Apply the color correction.
-   sample.r = texture2D( colorCorrectionTex, vec2(sample.r, 1.0f) ).r;
-   sample.g = texture2D( colorCorrectionTex, vec2(sample.g, 1.0f) ).g;
-   sample.b = texture2D( colorCorrectionTex, vec2(sample.b, 1.0f) ).b;
+   sample.r = texture1D( colorCorrectionTex, sample.r ).r;
+   sample.g = texture1D( colorCorrectionTex, sample.g ).g;
+   sample.b = texture1D( colorCorrectionTex, sample.b ).b;
 
    // Apply gamma correction
    sample.rgb = pow( abs(sample.rgb), vec3(g_fOneOverGamma) );

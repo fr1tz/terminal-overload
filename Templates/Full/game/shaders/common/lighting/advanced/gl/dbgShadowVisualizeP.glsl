@@ -23,10 +23,10 @@
 
 varying vec2 uv0;
 uniform sampler2D shadowMap;
-uniform sampler2D depthViz;
+uniform sampler1D depthViz;
 
 void main()
 {
    float depth = saturate( texture2D( shadowMap, uv0 ).r );
-   gl_FragColor = vec4( texture2D( depthViz, vec2(depth, 1.0) ).rgb, 1 );
+   gl_FragColor = vec4( texture1D( depthViz, depth ).rgb, 1 );
 }

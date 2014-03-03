@@ -41,7 +41,7 @@
 
 uniform sampler2D prepassTex ; 
 uniform sampler2D backbuffer ;
-uniform sampler2D waterDepthGradMap ; // TODO sampler1D
+uniform sampler1D waterDepthGradMap;
 uniform vec3    eyePosWorld;
 uniform vec3    ambientColor;     
 uniform vec4    waterColor;       
@@ -124,7 +124,7 @@ void main()
    //return vec4( fogAmt.rrr, 1 );
 
    // Calculate the water "base" color based on depth.
-   vec4 fogColor = waterColor * texture2D( waterDepthGradMap, vec2(saturate( delta / waterDepthGradMax ), 1.0) );      
+   vec4 fogColor = waterColor * texture1D( waterDepthGradMap, saturate( delta / waterDepthGradMax ) );      
    // Modulate baseColor by the ambientColor.
    fogColor *= vec4( ambientColor.rgb, 1 );
    

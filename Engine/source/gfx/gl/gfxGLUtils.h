@@ -96,6 +96,10 @@ GFXGLPreserveInteger TORQUE_CONCAT(preserve_, __LINE__) (GL_ARRAY_BUFFER, GL_ARR
 #define PRESERVE_INDEX_BUFFER() \
 GFXGLPreserveInteger TORQUE_CONCAT(preserve_, __LINE__) (GL_ELEMENT_ARRAY_BUFFER, GL_ELEMENT_ARRAY_BUFFER_BINDING, (GFXGLPreserveInteger::BindFn)glBindBuffer)
 
+/// Helper macro to preserve the current 1D texture binding.
+#define PRESERVE_1D_TEXTURE() \
+GFXGLPreserveInteger TORQUE_CONCAT(preserve_, __LINE__) (GL_TEXTURE_1D, GL_TEXTURE_BINDING_1D, (GFXGLPreserveInteger::BindFn)glBindTexture)
+
 /// Helper macro to preserve the current 2D texture binding.
 #define PRESERVE_2D_TEXTURE() \
 GFXGLPreserveInteger TORQUE_CONCAT(preserve_, __LINE__) (GL_TEXTURE_2D, GL_TEXTURE_BINDING_2D, (GFXGLPreserveInteger::BindFn)glBindTexture)
@@ -103,6 +107,12 @@ GFXGLPreserveInteger TORQUE_CONCAT(preserve_, __LINE__) (GL_TEXTURE_2D, GL_TEXTU
 /// Helper macro to preserve the current 3D texture binding.
 #define PRESERVE_3D_TEXTURE() \
 GFXGLPreserveInteger TORQUE_CONCAT(preserve_, __LINE__) (GL_TEXTURE_3D, GL_TEXTURE_BINDING_3D, (GFXGLPreserveInteger::BindFn)glBindTexture)
+
+#define _GET_TEXTURE_BINDING(binding) \
+binding == GL_TEXTURE_2D ? GL_TEXTURE_BINDING_2D : (binding == GL_TEXTURE_3D ?  GL_TEXTURE_BINDING_3D : GL_TEXTURE_BINDING_1D )
+
+#define PRESERVE_TEXTURE(binding) \
+GFXGLPreserveInteger TORQUE_CONCAT(preserve_, __LINE__) (binding, _GET_TEXTURE_BINDING(binding), (GFXGLPreserveInteger::BindFn)glBindTexture)
 
 #define PRESERVE_FRAMEBUFFER() \
 GFXGLPreserveInteger TORQUE_CONCAT(preserve_, __LINE__) (GL_READ_FRAMEBUFFER_EXT, GL_READ_FRAMEBUFFER_BINDING_EXT, (GFXGLPreserveInteger::BindFn)glBindFramebufferEXT);\

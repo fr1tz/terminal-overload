@@ -121,8 +121,7 @@ uniform sampler2D    reflectMap;
 uniform sampler2D      refractBuff;
 uniform samplerCube  skyMap;
 uniform sampler2D      foamMap;
-//uniform sampler1D    depthGradMap;
-uniform sampler2D    depthGradMap;
+uniform sampler1D    depthGradMap;
 uniform vec4         specularParams;
 uniform vec4       baseColor;
 uniform vec4       miscParams;
@@ -322,8 +321,7 @@ void main()
    float fogAmt = 1.0 - saturate( exp( -FOG_DENSITY * fogDelta )  );
    
    // Calculate the water "base" color based on depth.
-   //vec4 waterBaseColor = baseColor * texture1D( depthGradMap, saturate( delta / depthGradMax ) );
-   vec4 waterBaseColor = baseColor * texture2D( depthGradMap, vec2(saturate( delta / depthGradMax ), 1.0) );
+   vec4 waterBaseColor = baseColor * texture1D( depthGradMap, saturate( delta / depthGradMax ) );
       
    // Modulate baseColor by the ambientColor.
    waterBaseColor *= vec4( ambientColor.rgb, 1 );     

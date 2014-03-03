@@ -217,7 +217,6 @@ void _GFXGLTextureTargetFBOImpl::finish()
    // Assumes a 2D texture.
    PRESERVE_2D_TEXTURE();
    glActiveTexture(GL_TEXTURE0);
-   PRESERVE_2D_TEXTURE();
    glBindTexture(GL_TEXTURE_2D, color0->getHandle());
    glGenerateMipmapEXT(GL_TEXTURE_2D);
 }

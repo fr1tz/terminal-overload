@@ -90,20 +90,24 @@ void GFXGLTextureObject::unlock(U32 mipLevel)
    if(!mLockedRect.bits)
       return;
 
-   glActiveTexture(GL_TEXTURE0);
-   U32 boundTexture;
-   glGetIntegerv(GL_TEXTURE_BINDING_2D, (GLint*)&boundTexture);
+   PRESERVE_TEXTURE(mBinding);
 
-   glBindTexture(GL_TEXTURE_2D, mHandle);
+   glActiveTexture(GL_TEXTURE0);
+   
+
+   glBindTexture(mBinding, mHandle);
    glBindBuffer(GL_PIXEL_UNPACK_BUFFER_ARB, mBuffer);
    glUnmapBuffer(GL_PIXEL_UNPACK_BUFFER_ARB);
-   glTexSubImage2D(GL_TEXTURE_2D, mipLevel, mLockedRectRect.point.x, mLockedRectRect.point.y, 
-      mLockedRectRect.extent.x, mLockedRectRect.extent.y, GFXGLTextureFormat[mFormat], GFXGLTextureType[mFormat], NULL);
+   if(mBinding == GL_TEXTURE_2D)
+	   glTexSubImage2D(mBinding, mipLevel, mLockedRectRect.point.x, mLockedRectRect.point.y, 
+		  mLockedRectRect.extent.x, mLockedRectRect.extent.y, GFXGLTextureFormat[mFormat], GFXGLTextureType[mFormat], NULL);
+   else if(mBinding == GL_TEXTURE_1D)
+		glTexSubImage1D(mBinding, mipLevel, (mLockedRectRect.point.x > 1 ? mLockedRectRect.point.x : mLockedRectRect.point.y), 
+		  (mLockedRectRect.extent.x > 1 ? mLockedRectRect.extent.x : mLockedRectRect.extent.y), GFXGLTextureFormat[mFormat], GFXGLTextureType[mFormat], NULL);
+   
    glBindBuffer(GL_PIXEL_UNPACK_BUFFER_ARB, 0);
 
    mLockedRect.bits = NULL;
-
-   glBindTexture(GL_TEXTURE_2D, boundTexture);
 }
 
 void GFXGLTextureObject::release()
@@ -124,13 +128,13 @@ void GFXGLTextureObject::reInit()
 
 bool GFXGLTextureObject::copyToBmp(GBitmap * bmp)
 {
-   PRESERVE_2D_TEXTURE();
-   glBindTexture(GL_TEXTURE_2D, mHandle);
+   PRESERVE_TEXTURE(mBinding);
+   glBindTexture(mBinding, mHandle);
    
    GLint textureFormat = GFXGLTextureFormat[bmp->getFormat()];
    GLint textureType = GFXGLTextureType[bmp->getFormat()];
    
-   glGetTexImage(GL_TEXTURE_2D, 0, textureFormat, textureType, bmp->getWritableBits());
+   glGetTexImage(mBinding, 0, textureFormat, textureType, bmp->getWritableBits());
    return true;
 }
 
@@ -143,7 +147,7 @@ void GFXGLTextureObject::initSamplerState(const GFXSamplerStateDesc &ssd)
    if(mBinding == GL_TEXTURE_3D)
       glTexParameteri(mBinding, GL_TEXTURE_WRAP_R, GFXGLTextureAddress[ssd.addressModeW]);
    if(static_cast< GFXGLDevice* >( GFX )->supportsAnisotropic() )
-      glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, ssd.maxAnisotropy);
+      glTexParameterf(mBinding, GL_TEXTURE_MAX_ANISOTROPY_EXT, ssd.maxAnisotropy);
 
    mNeedInitSamplerState = false;
    mSampler = ssd;
@@ -178,7 +182,7 @@ void GFXGLTextureObject::bind(U32 textureUnit)
    if(mBinding == GL_TEXTURE_3D && mSampler.addressModeW != ssd.addressModeW )
       glTexParameteri(mBinding, GL_TEXTURE_WRAP_R, GFXGLTextureAddress[ssd.addressModeW]);
    if(mSampler.maxAnisotropy != ssd.maxAnisotropy  && static_cast< GFXGLDevice* >( GFX )->supportsAnisotropic() )
-      glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, ssd.maxAnisotropy);
+      glTexParameterf(mBinding, GL_TEXTURE_MAX_ANISOTROPY_EXT, ssd.maxAnisotropy);
 
    mSampler = ssd;
 }
@@ -186,8 +190,8 @@ void GFXGLTextureObject::bind(U32 textureUnit)
 U8* GFXGLTextureObject::getTextureData()
 {
    U8* data = new U8[mTextureSize.x * mTextureSize.y * mBytesPerTexel];
-   glBindTexture(GL_TEXTURE_2D, mHandle);
-   glGetTexImage(GL_TEXTURE_2D, 0, GL_BGRA, GL_UNSIGNED_INT_8_8_8_8_REV, data);
+   glBindTexture(mBinding, mHandle);
+   glGetTexImage(mBinding, 0, GL_BGRA, GL_UNSIGNED_INT_8_8_8_8_REV, data);
    return data;
 }
 
@@ -219,7 +223,11 @@ void GFXGLTextureObject::reloadFromCache()
    }
    
    glBindTexture(mBinding, mHandle);
-   glTexSubImage2D(mBinding, 0, 0, 0, mTextureSize.x, mTextureSize.y, GFXGLTextureFormat[mFormat], GFXGLTextureType[mFormat], mZombieCache);
+
+   if(mBinding == GL_TEXTURE_2D)
+		glTexSubImage2D(mBinding, 0, 0, 0, mTextureSize.x, mTextureSize.y, GFXGLTextureFormat[mFormat], GFXGLTextureType[mFormat], mZombieCache);
+   else if(mBinding == GL_TEXTURE_1D)
+		glTexSubImage1D(mBinding, 0, 0, (mTextureSize.x > 1 ? mTextureSize.x : mTextureSize.y), GFXGLTextureFormat[mFormat], GFXGLTextureType[mFormat], mZombieCache);
    
    if(GFX->getCardProfiler()->queryProfile("GL::Workaround::needsExplicitGenerateMipmap") && mMipLevels != 1)
       glGenerateMipmapEXT(mBinding);

@@ -99,15 +99,14 @@ void GFXGLTextureManager::innerCreateTexture( GFXGLTextureObject *retTex,
    retTex->mIsZombie = false;
    retTex->mIsNPoT2 = false;
    
-   GLenum binding = (depth == 0) ? GL_TEXTURE_2D : GL_TEXTURE_3D;
+   GLenum binding = (height == 1 || width == 1) ? GL_TEXTURE_1D : ( (depth == 0) ? GL_TEXTURE_2D : GL_TEXTURE_3D );
    if((profile->testFlag(GFXTextureProfile::RenderTarget) || profile->testFlag(GFXTextureProfile::ZTarget)) && (!isPow2(width) || !isPow2(height)) && !depth)
       retTex->mIsNPoT2 = true;
    retTex->mBinding = binding;
    
    // Bind it
    glActiveTexture(GL_TEXTURE0);
-   PRESERVE_2D_TEXTURE();
-   PRESERVE_3D_TEXTURE();
+   PRESERVE_TEXTURE(binding);
    glBindTexture(binding, retTex->getHandle());
    
    // Create it
@@ -141,8 +140,10 @@ void GFXGLTextureManager::innerCreateTexture( GFXGLTextureObject *retTex,
    AssertFatal(GFXGLTextureFormat[format] != GL_ZERO, "GFXGLTextureManager::innerCreateTexture - invalid format");
    AssertFatal(GFXGLTextureType[format] != GL_ZERO, "GFXGLTextureManager::innerCreateTexture - invalid type");
    
-   if(binding != GL_TEXTURE_3D)
+   if(binding == GL_TEXTURE_2D)
       glTexImage2D(binding, 0, GFXGLTextureInternalFormat[format], width, height, 0, GFXGLTextureFormat[format], GFXGLTextureType[format], NULL);
+   else if(binding == GL_TEXTURE_1D)
+      glTexImage1D(binding, 0, GFXGLTextureInternalFormat[format], (width > 1 ? width : height), 0, GFXGLTextureFormat[format], GFXGLTextureType[format], NULL);
    else
       glTexImage3D(GL_TEXTURE_3D, 0, GFXGLTextureInternalFormat[format], width, height, depth, 0, GFXGLTextureFormat[format], GFXGLTextureType[format], NULL);
    
@@ -182,25 +183,31 @@ static void _fastTextureLoad(GFXGLTextureObject* texture, GBitmap* pDL)
       dMemcpy(pboMemory, pDL->getBits(0), bufSize);
    
    glUnmapBuffer(GL_PIXEL_UNPACK_BUFFER_ARB);
-   
-   glTexSubImage2D(texture->getBinding(), 0, 0, 0, pDL->getWidth(0), pDL->getHeight(0), GFXGLTextureFormat[pDL->getFormat()], GFXGLTextureType[pDL->getFormat()], NULL);
+
+   if(texture->getBinding() == GL_TEXTURE_2D)
+	   glTexSubImage2D(texture->getBinding(), 0, 0, 0, pDL->getWidth(0), pDL->getHeight(0), GFXGLTextureFormat[pDL->getFormat()], GFXGLTextureType[pDL->getFormat()], NULL);
+   else
+	   glTexSubImage1D(texture->getBinding(), 0, 0, (pDL->getWidth(0) > 1 ? pDL->getWidth(0) : pDL->getHeight(0)), GFXGLTextureFormat[pDL->getFormat()], GFXGLTextureType[pDL->getFormat()], NULL);
    
    glBindBuffer(GL_PIXEL_UNPACK_BUFFER_ARB, 0);
 }
 
 static void _slowTextureLoad(GFXGLTextureObject* texture, GBitmap* pDL)
 {
-   glTexSubImage2D(texture->getBinding(), 0, 0, 0, pDL->getWidth(0), pDL->getHeight(0), GFXGLTextureFormat[pDL->getFormat()], GFXGLTextureType[pDL->getFormat()], pDL->getBits(0));
+	if(texture->getBinding() == GL_TEXTURE_2D)
+		glTexSubImage2D(texture->getBinding(), 0, 0, 0, pDL->getWidth(0), pDL->getHeight(0), GFXGLTextureFormat[pDL->getFormat()], GFXGLTextureType[pDL->getFormat()], pDL->getBits(0));
+	else
+		glTexSubImage1D(texture->getBinding(), 0, 0, (pDL->getWidth(0) > 1 ? pDL->getWidth(0) : pDL->getHeight(0)), GFXGLTextureFormat[pDL->getFormat()], GFXGLTextureType[pDL->getFormat()], pDL->getBits(0));
 }
 
 bool GFXGLTextureManager::_loadTexture(GFXTextureObject *aTexture, GBitmap *pDL)
 {
    GFXGLTextureObject *texture = static_cast<GFXGLTextureObject*>(aTexture);
    
-   AssertFatal(texture->getBinding() == GL_TEXTURE_2D, 
-      "GFXGLTextureManager::_loadTexture(GBitmap) - This method can only be used with 2D textures");
+   AssertFatal(texture->getBinding() == GL_TEXTURE_1D || texture->getBinding() == GL_TEXTURE_2D, 
+      "GFXGLTextureManager::_loadTexture(GBitmap) - This method can only be used with 1D/2D textures");
       
-   if(texture->getBinding() != GL_TEXTURE_2D)
+   if(texture->getBinding() == GL_TEXTURE_3D)
       return false;
          
    // No 24bit formats.
@@ -208,7 +215,7 @@ bool GFXGLTextureManager::_loadTexture(GFXTextureObject *aTexture, GBitmap *pDL)
       pDL->setFormat(GFXFormatR8G8B8A8);
    // Bind to edit
    glActiveTexture(GL_TEXTURE0);
-   PRESERVE_2D_TEXTURE();
+   PRESERVE_TEXTURE(texture->getBinding());
    glBindTexture(texture->getBinding(), texture->getHandle());
 
    texture->mFormat = pDL->getFormat();
@@ -234,7 +241,7 @@ bool GFXGLTextureManager::_loadTexture(GFXTextureObject *aTexture, DDSFile *dds)
       return false;
    
    glActiveTexture(GL_TEXTURE0);
-   PRESERVE_2D_TEXTURE();
+   PRESERVE_TEXTURE(texture->getBinding());
    glBindTexture(texture->getBinding(), texture->getHandle());
    texture->mFormat = dds->mFormat;
    U32 numMips = dds->mSurfaces[0]->mMips.size();
