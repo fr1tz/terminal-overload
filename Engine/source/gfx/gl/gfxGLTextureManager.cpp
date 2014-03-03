@@ -154,6 +154,11 @@ void GFXGLTextureManager::innerCreateTexture( GFXGLTextureObject *retTex,
    glTexParameteri(binding, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
    if(binding == GL_TEXTURE_3D)
       glTexParameteri(binding, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+   if(retTex->mMipLevels)
+	   glTexParameteri(binding, GL_TEXTURE_MAX_LEVEL, retTex->mMipLevels-1); //first Opengl mipmap is 0
+   else
+       glTexParameteri(binding, GL_TEXTURE_MAX_LEVEL, getMaxMipmaps(width, height, depth) );
    
    // Get the size from GL (you never know...)
    GLint texHeight, texWidth, texDepth = 0;
