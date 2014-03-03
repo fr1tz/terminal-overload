@@ -684,14 +684,8 @@ void GFXGLDevice::setShader( GFXShader *shader )
    }
    else
    {
-      glUseProgram(0);
-      mCurrentShader = NULL;
+      setupGenericShaders();
    }
-}
-
-void GFXGLDevice::disableShaders()
-{
-   setupGenericShaders();
 }
 
 void GFXGLDevice::setShaderConstBufferInternal(GFXShaderConstBuffer* buffer)

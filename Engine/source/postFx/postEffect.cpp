@@ -1239,7 +1239,7 @@ void PostEffect::process(  const SceneRenderState *state,
       GFX->setShaderConstBuffer( mShaderConsts );
    }
    else
-      GFX->disableShaders();
+      GFX->setupGenericShaders();
 
    Frustum frustum;
    if ( state )
