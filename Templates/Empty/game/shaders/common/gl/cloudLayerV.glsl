@@ -85,7 +85,7 @@ void main()
    vec3 vBinormalWS = -IN_binormal;
    
    // Compute position in world space:
-   vec4 vPositionWS = IN_pos + vec4( eyePosWorld, 1 ); //mul( IN_pos, objTrans );
+   vec4 vPositionWS = IN_pos + vec4( eyePosWorld, 1 ); //tMul( IN_pos, objTrans );
 
    // Compute and output the world view vector (unnormalized):
    vec3 vViewWS = eyePosWorld - vPositionWS.xyz;

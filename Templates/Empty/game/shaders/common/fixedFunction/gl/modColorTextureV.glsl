@@ -31,7 +31,7 @@ varying vec2 texCoord;
 
 void main()
 {
-   gl_Position = mul(modelview, vPosition);
+   gl_Position = tMul(modelview, vPosition);
    correctSSP(gl_Position);
    color = vColor;
    texCoord = vTexCoord0.st;

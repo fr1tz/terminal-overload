@@ -325,7 +325,7 @@ void DeferredBumpFeatGLSL::processPix( Vector<ShaderComponent*> &componentList,
 
       // Normalize is done later... 
       // Note: The reverse mul order is intentional. Affine matrix.
-      meta->addStatement( new GenOp( "   @ = half3(mul( @.xyz, @ ));\r\n", gbNormalDecl, bumpNorm, viewToTangent ) );
+      meta->addStatement( new GenOp( "   @ = half3(tMul( @.xyz, @ ));\r\n", gbNormalDecl, bumpNorm, viewToTangent ) );
 
       output = meta;
       return;

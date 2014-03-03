@@ -92,12 +92,7 @@ mat4 mat4FromRow( float r0c0, float r0c1, float r0c2, float r0c3,
 
 #define round( n ) (sign( n ) * floor( abs( n ) + 0.5 ))
 
-vec4 mul( mat4 m1, vec4 v1) { return m1*v1; }
-vec4 mul( vec4 v1, mat4 m1) { return v1*m1; }
-vec3 mul( vec3 v1, mat3 m1) { return v1*m1; }
-vec3 mul( mat3 m1, vec3 v1) { return m1*v1; }
-vec2 mul( mat2 m1, vec2 v1) { return m1*v1; }
-mat3 mul( mat3 m1, mat3 m2) { return m1*m2; }
+#define tMul(a, b) (a*b)
 
 #define inversesqrt( n ) inversesqrt( n )
 

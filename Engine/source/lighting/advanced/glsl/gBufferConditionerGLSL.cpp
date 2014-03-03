@@ -111,7 +111,7 @@ void GBufferConditionerGLSL::processVert( Vector<ShaderComponent*> &componentLis
       dummy.mInstancingFormat = mInstancingFormat;
       Var *worldViewOnly = dummy.getWorldView( componentList, fd.features[MFT_UseInstancing], meta );
 
-      meta->addStatement(  new GenOp("   @ = mul(@, float4( normalize(@), 0.0 ) ).xyz;\r\n", 
+      meta->addStatement(  new GenOp("   @ = tMul(@, float4( normalize(@), 0.0 ) ).xyz;\r\n", 
                               outNormal, worldViewOnly, inNormal ) );
    }
    else

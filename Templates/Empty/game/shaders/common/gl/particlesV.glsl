@@ -44,8 +44,8 @@ uniform mat4 fsModelViewProj;
 
 void main()
 {
-   OUT_hpos = mul( modelViewProj, In_pos );
-	OUT_pos = mul( fsModelViewProj, In_pos );
+   OUT_hpos = tMul( modelViewProj, In_pos );
+	OUT_pos = tMul( fsModelViewProj, In_pos );
 	OUT_color = In_color;
 	OUT_uv0 = In_uv0;
 	

@@ -55,7 +55,7 @@ void main()
    OUT_position = IN_pos;
    
    vec2 uv = viewportCoordToRenderTarget( IN_tc, rtParams0 ); 
-   //OUT_position = mul( IN_pos, modelView );  
+   //OUT_position = tMul( IN_pos, modelView );  
    OUT_tcColor1 = uv + vec2( +1.0, -0.0 ) * oneOverTargetSize;  
    OUT_tcColor0 = uv + vec2( -1.0, -0.0 ) * oneOverTargetSize;  
    OUT_tcDepth0 = uv + vec2( -0.5, -0.0 ) * oneOverTargetSize;    

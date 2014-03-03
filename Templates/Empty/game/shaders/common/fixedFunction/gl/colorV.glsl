@@ -29,7 +29,7 @@ varying vec4 color;
 
 void main()
 {
-   gl_Position = mul(modelview, vPosition);
+   gl_Position = tMul(modelview, vPosition);
    correctSSP(gl_Position);
    color = vColor;
 }

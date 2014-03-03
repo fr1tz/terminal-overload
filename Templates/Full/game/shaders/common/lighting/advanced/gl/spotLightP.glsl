@@ -96,7 +96,7 @@ void main()
    float nDotL = dot( normal, -lightToPxlVec );
 
    // Get the shadow texture coordinate
-   vec4 pxlPosLightProj = mul( viewToLightProj, vec4( viewSpacePos, 1 ) );
+   vec4 pxlPosLightProj = tMul( viewToLightProj, vec4( viewSpacePos, 1 ) );
    vec2 shadowCoord = ( ( pxlPosLightProj.xy / pxlPosLightProj.w ) * 0.5 ) + vec2( 0.5, 0.5 );
    shadowCoord.y = 1.0f - shadowCoord.y;
 

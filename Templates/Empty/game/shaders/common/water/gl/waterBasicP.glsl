@@ -140,7 +140,7 @@ void main()
  #else
 
    vec3 eyeVec = IN_objPos.xyz - eyePos;
-   eyeVec = mul( mat3(modelMat), eyeVec );
+   eyeVec = tMul( mat3(modelMat), eyeVec );
    vec3 reflectionVec = reflect( eyeVec, bumpNorm ); 
 
    // Color that replaces the reflection color when we do not

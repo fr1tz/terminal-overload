@@ -91,7 +91,7 @@ void main()
    #else
 
       // Compute shadow map coordinate
-      vec4 pxlPosLightProj = mul(worldToLightProj, worldPos);
+      vec4 pxlPosLightProj = tMul(worldToLightProj, worldPos);
       vec2 baseShadowCoord = pxlPosLightProj.xy / pxlPosLightProj.w;   
 
       // Distance to light, in shadowmap space

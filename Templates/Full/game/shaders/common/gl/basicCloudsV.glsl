@@ -40,7 +40,7 @@ varying vec2 texCoord;
 
 void main()
 {  
-   gl_Position = mul(modelview, IN_pos);
+   gl_Position = tMul(modelview, IN_pos);
    
    vec2 uv = IN_uv0;
    uv += texOffset;

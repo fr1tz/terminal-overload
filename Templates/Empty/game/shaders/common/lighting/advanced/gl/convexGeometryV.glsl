@@ -42,9 +42,9 @@ uniform vec3 eyePosWorld;
 
 void main()
 {
-   OUT_hpos = mul( modelview, IN_pos );
-   OUT_wsEyeDir = mul( objTrans, IN_pos ) - vec4( eyePosWorld, 0.0 );
-   OUT_vsEyeDir = mul( worldViewOnly, IN_pos );
+   OUT_hpos = tMul( modelview, IN_pos );
+   OUT_wsEyeDir = tMul( objTrans, IN_pos ) - vec4( eyePosWorld, 0.0 );
+   OUT_vsEyeDir = tMul( worldViewOnly, IN_pos );
    OUT_ssPos = OUT_hpos;
 
    correctSSP(gl_Position);

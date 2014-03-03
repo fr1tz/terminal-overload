@@ -158,7 +158,7 @@ void main()
                              
    bumpNorm = normalize( bumpNorm );
    bumpNorm = mix( bumpNorm, vec3(0,0,1), 1.0 - rippleMagnitude.w );
-   bumpNorm = mul( bumpNorm, IN_tangentMat ); 
+   bumpNorm = tMul( bumpNorm, IN_tangentMat ); 
    
    // Get depth of the water surface (this pixel).
    // Convert from WorldSpace to EyeSpace.
@@ -248,8 +248,8 @@ void main()
    
    vec4 fakeColor = vec4(ambientColor,1);   
    vec3 eyeVec = IN_objPos.xyz - eyePos;
-   eyeVec = mul( mat3(modelMat), eyeVec );
-   eyeVec = mul( IN_tangentMat, eyeVec );
+   eyeVec = tMul( mat3(modelMat), eyeVec );
+   eyeVec = tMul( IN_tangentMat, eyeVec );
    vec3 reflectionVec = reflect( eyeVec, bumpNorm );   
    
    // Use fakeColor for ripple-normals that are angled towards the camera   
