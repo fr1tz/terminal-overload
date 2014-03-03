@@ -19,6 +19,7 @@ function PacketLineCamera::onNode(%this, %obj, %node)
       %obj.startFade(0, 0, true);
       %player = %obj.client.player;
       %player.setTransform(%obj.zOutPos);
+      %player.setVelocity("0 0 0");
       %obj.client.control(%player);
    }
 }
@@ -149,21 +150,34 @@ function PacketLineIn::prepareCamera(%this, %obj, %camera)
 
    %numNodes = %line.getCount();
    //echo(%numNodes SPC "nodes");
-
    for(%i = 0; %i < %numNodes; %i++)
    {
-      %nodeObj = %line.getObject(%i);
-      %transform = %nodeObj.getTransform();
-      if((%type = %nodeObj.type) $= "")
-         %type = "Kink";
-      if((%path = %node.smoothing) $= "")
-         %path = "Linear";
-      %speed = 200;
+      %currentNode = %line.getObject(%i);
+      %nextNode = %line.getObject(%i+1);
+      %transform = %currentNode.getTransform();
       //echo(%transform);
+      %speed = 200;
+      if(%nextNode !$= "" && %currentNode.msToNext != 0)
+      {
+         %pos1 = %currentNode.getPosition();
+         %pos2 = %nextNode.getPosition();
+         %dist = VectorLen(VectorSub(%pos2, %pos1));
+         %time = %currentNode.msToNext;
+         %speed = %dist / (%time/1000);
+         //echo("pos1:" SPC %pos1);
+         //echo("pos2:" SPC %pos2);
+         //echo("dist:" SPC %dist);
+         //echo("time:" SPC %time);
+         //echo("speed:" SPC %speed);
+      }
+      if((%type = %currentNode.type) $= "")
+         %type = "Kink";
+      if((%path = %currentNode.smoothingType) $= "")
+         %path = "Linear";
       %camera.pushBack(%transform, %speed, %type, %path);
       %camera.zOutPos = %transform;
    }
-
+   
    %camera.popFront();
 
    %camera.startFade(0, 0, true);
@@ -214,6 +228,7 @@ function PacketLineActivationTrigger::onEnterTrigger(%this, %obj, %enter)
    //%camera.setTarget(1.0);
    
    %client.setControlObject(%camera);
+   %client.setControlCameraFov(120);
 
    %player = %client.player;
    %player.setTransform("99999 99999 99999"); // yuck ;)
