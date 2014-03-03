@@ -105,8 +105,8 @@ function PacketLineIn::updateAssetsThread(%this, %obj)
       {
          polyhedron = "-0.5 0.5 0.0 1.0 0.0 0.0 0.0 -1.0 0.0 0.0 0.0 1.0";
          dataBlock = PacketLineActivationTrigger;
-         position = VectorAdd(%obj.getWorldBoxCenter(), "0 0 -0.5");
-         scale = "1 1 1";
+         position = VectorAdd(%obj.getWorldBoxCenter(), "0 0 -1");
+         scale = "2 2 2";
          locked = true;
          zLineIn = %obj;
       };
@@ -145,8 +145,6 @@ function PacketLineIn::prepareCamera(%this, %obj, %camera)
    %line = getWord(%obj.lines, getRandom(0, %numLines-1));
    if(!isObject(%line))
       return;
-//   if(%camera.zPreparedLine $= %line)
-//      return;
 
    %numNodes = %line.getCount();
    //echo(%numNodes SPC "nodes");
@@ -222,7 +220,7 @@ function PacketLineActivationTrigger::onEnterTrigger(%this, %obj, %enter)
    if(strstr(%obj.lines, %camera.zPreparedLine) == 0)
       %obj.zLineIn.getDataBlock().prepareCamera(%obj.zLineIn, %camera);
 
-   %camera.startFade(1000, 0, false);
+   %camera.startFade(0, 0, false);
    %camera.setPosition(0.0);
    %camera.setState("forward");
    //%camera.setTarget(1.0);
