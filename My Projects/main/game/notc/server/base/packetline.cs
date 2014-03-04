@@ -47,6 +47,9 @@ function PacketLineIn::onAdd(%this, %obj)
 {
    //echo("PacketLineIn::onAdd()");
    %obj.zLastUpdatePosition = "";
+   %obj.zParticleEmitter = "";
+   %obj.zActivationTrigger = "";
+   %obj.zProximityTrigger = "";
    %this.updateAssetsThread(%obj);
 }
 
@@ -151,9 +154,10 @@ function PacketLineIn::prepareCamera(%this, %obj, %camera)
    for(%i = 0; %i < %numNodes; %i++)
    {
       %currentNode = %line.getObject(%i);
-      %nextNode = %line.getObject(%i+1);
+      if(%i < %numNodes-1)
+         %nextNode = %line.getObject(%i+1);
       %transform = %currentNode.getTransform();
-      //echo(%transform);
+      echo(%transform);
       %speed = 200;
       if(%nextNode !$= "" && %currentNode.msToNext != 0)
       {
@@ -166,8 +170,8 @@ function PacketLineIn::prepareCamera(%this, %obj, %camera)
          //echo("pos2:" SPC %pos2);
          //echo("dist:" SPC %dist);
          //echo("time:" SPC %time);
-         //echo("speed:" SPC %speed);
       }
+      //echo("speed:" SPC %speed);
       if((%type = %currentNode.type) $= "")
          %type = "Kink";
       if((%path = %currentNode.smoothingType) $= "")
