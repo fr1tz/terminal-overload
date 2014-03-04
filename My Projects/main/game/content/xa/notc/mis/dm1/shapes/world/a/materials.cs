@@ -25,3 +25,17 @@ singleton Material(shape_xa_notc_mis_dm1_shapes_world_a_mat2)
    emissive[0] = "1";
    castShadows = "0";
 };
+
+singleton Material(shape_xa_notc_mis_dm1_shapes_world_a_mat0)
+{
+   mapTo = "xa_notc_mis_dm1_shapes_world_a_mat0";
+   diffuseColor[0] = "0.00392157 0.00392157 0.00392157 1";
+   doubleSided = "0";
+   translucentBlendOp = "None";
+   diffuseMap[0] = "content/xa/notc/core/textures/white.128.png";
+   detailMap[0] = "content/xa/notc/core/textures/grid128.12.h1.png";
+   detailScale[0] = "8 8";
+   emissive[0] = "1";
+   castShadows = "0";
+   showFootprints = "0";
+};
