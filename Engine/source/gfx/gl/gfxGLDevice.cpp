@@ -770,12 +770,6 @@ GFXFormat GFXGLDevice::selectSupportedFormat(   GFXTextureProfile* profile,
    return GFXFormatR8G8B8A8;
 }
 
-#if 1
-void GFXGLDevice::enterDebugEvent(ColorI color, const char *name) {}
-void GFXGLDevice::leaveDebugEvent() {}
-void GFXGLDevice::setDebugMarker(ColorI color, const char *name) {}
-#endif
-
 //
 // Register this device with GFXInit
 //

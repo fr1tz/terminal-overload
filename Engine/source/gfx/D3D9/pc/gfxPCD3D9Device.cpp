@@ -534,34 +534,6 @@ void GFXPCD3D9Device::init( const GFXVideoMode &mode, PlatformWindow *window /* 
    // regenStates();
 }
 
-//------------------------------------------------------------------------------
-void GFXPCD3D9Device::enterDebugEvent(ColorI color, const char *name)
-{
-   // BJGFIX
-   WCHAR  eventName[260];
-   MultiByteToWideChar( CP_ACP, 0, name, -1, eventName, 260 );
-
-   D3DPERF_BeginEvent(D3DCOLOR_ARGB(color.alpha, color.red, color.green, color.blue),
-      (LPCWSTR)&eventName);
-}
-
-//------------------------------------------------------------------------------
-void GFXPCD3D9Device::leaveDebugEvent()
-{
-   D3DPERF_EndEvent();
-}
-
-//------------------------------------------------------------------------------
-void GFXPCD3D9Device::setDebugMarker(ColorI color, const char *name)
-{
-   // BJGFIX
-   WCHAR  eventName[260];
-   MultiByteToWideChar( CP_ACP, 0, name, -1, eventName, 260 );
-
-   D3DPERF_SetMarker(D3DCOLOR_ARGB(color.alpha, color.red, color.green, color.blue), 
-      (LPCWSTR)&eventName);
-}
-
 //-----------------------------------------------------------------------------
 
 void GFXPCD3D9Device::setMatrix( GFXMatrixType mtype, const MatrixF &mat ) 
