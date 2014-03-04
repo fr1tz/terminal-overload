@@ -21,9 +21,10 @@ singleton Material(xa_notc_mis_dm1_shapes_heap_mat0)
    mapTo = "xa_notc_mis_dm1_shapes_heap_mat0";
    diffuseColor[0] = "0.00784314 0.533333 0.996078 1";
    doubleSided = "1";
-   translucentBlendOp = "AddAlpha";
+   translucentBlendOp = "None";
    diffuseMap[0] = "content/xa/notc/mis/dm1/shapes/heap/funnel.png";
    glow[0] = "1";
    emissive[0] = "1";
-   translucent = "1";
+   translucent = "0";
+   materialTag0 = "Skies";
 };

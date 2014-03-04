@@ -30,7 +30,7 @@ singleton Material(xa_notc_mis_dm1_mat0)
 
 singleton Material(xa_notc_mis_dm1_termat1fx)
 {
-   mapTo = "fr1tz_mis_notc_dm1_termat1";
+   mapTo = "xa_notc_mis_dm1_termat1";
    footstepSoundId = "2";
    terrainMaterials = "1";
    ShowDust = "true";

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
+  <asset>
+    <contributor>
+      <author>Blender User</author>
+      <authoring_tool>Blender 2.67.0 r57141</authoring_tool>
+    </contributor>
+    <created>2014-03-04T04:24:00</created>
+    <modified>2014-03-04T04:24:00</modified>
+    <unit name="meter" meter="1"/>
+    <up_axis>Z_UP</up_axis>
+  </asset>
+  <library_images/>
+  <library_effects>
+    <effect id="xa_notc_mis_dm1_shapes_world_c_mat1-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color sid="emission">1 1 1 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.007726632 0.64 0.02626775 1</color>
+            </diffuse>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </lambert>
+        </technique>
+        <extra>
+          <technique profile="GOOGLEEARTH">
+            <double_sided>1</double_sided>
+          </technique>
+        </extra>
+      </profile_COMMON>
+      <extra><technique profile="MAX3D"><double_sided>1</double_sided></technique></extra>
+    </effect>
+  </library_effects>
+  <library_materials>
+    <material id="xa_notc_mis_dm1_shapes_world_c_mat1-material" name="xa_notc_mis_dm1_shapes_world_c_mat1">
+      <instance_effect url="#xa_notc_mis_dm1_shapes_world_c_mat1-effect"/>
+    </material>
+  </library_materials>
+  <library_geometries>
+    <geometry id="Plane_002-mesh" name="Plane.002">
+      <mesh>
+        <source id="Plane_002-mesh-positions">
+          <float_array id="Plane_002-mesh-positions-array" count="30">0.6908088 0.2244539 -1.90735e-6 0.6908088 -0.2244539 -1.90735e-6 0.426943 -0.5876361 -1.90735e-6 0 -0.7263583 -1.90735e-6 -0.426943 -0.5876361 -1.90735e-6 -0.6908088 -0.2244539 -1.90735e-6 -0.6908088 0.2244539 -1.90735e-6 -0.426943 0.5876361 -1.90735e-6 0 0.7263583 -1.90735e-6 0.426943 0.5876361 -1.90735e-6</float_array>
+          <technique_common>
+            <accessor source="#Plane_002-mesh-positions-array" count="10" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane_002-mesh-normals">
+          <float_array id="Plane_002-mesh-normals-array" count="24">0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#Plane_002-mesh-normals-array" count="8" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Plane_002-mesh-map-0">
+          <float_array id="Plane_002-mesh-map-0-array" count="48">0.5 2.6 1.734349 2.198935 -0.7343487 2.198936 1.734349 2.198935 2.497219 1.148936 -0.7343487 2.198936 2.497219 1.148936 2.497219 -0.1489357 -0.7343487 2.198936 2.497219 -0.1489357 1.734349 -1.198936 -0.7343487 2.198936 1.734349 -1.198936 0.4999998 -1.6 -0.7343487 2.198936 0.4999998 -1.6 -0.7343494 -1.198936 -0.7343487 2.198936 -0.7343494 -1.198936 -1.497219 -0.1489357 -1.497219 1.148936 -0.7343487 2.198936 -0.7343494 -1.198936 -1.497219 1.148936</float_array>
+          <technique_common>
+            <accessor source="#Plane_002-mesh-map-0-array" count="24" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Plane_002-mesh-vertices">
+          <input semantic="POSITION" source="#Plane_002-mesh-positions"/>
+        </vertices>
+        <polylist material="xa_notc_mis_dm1_shapes_world_c_mat1-material" count="8">
+          <input semantic="VERTEX" source="#Plane_002-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Plane_002-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Plane_002-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 3 3 3 3 3 3 </vcount>
+          <p>0 0 0 9 0 1 1 0 2 9 1 3 8 1 4 1 1 5 8 2 6 7 2 7 1 2 8 7 3 9 6 3 10 1 3 11 6 4 12 5 4 13 1 4 14 5 5 15 4 5 16 1 5 17 4 6 18 3 6 19 2 6 20 1 7 21 4 7 22 2 7 23</p>
+        </polylist>
+      </mesh>
+      <extra><technique profile="MAYA"><double_sided>1</double_sided></technique></extra>
+    </geometry>
+  </library_geometries>
+  <library_controllers/>
+  <library_visual_scenes>
+    <visual_scene id="Scene" name="Scene">
+      <node id="c" name="c" type="NODE">
+        <matrix sid="transform">0.9499635 0.3123609 0 4.74212e-8 -0.3123609 0.9499635 0 0 0 0 1 0.5 0 0 0 1</matrix>
+        <instance_geometry url="#Plane_002-mesh">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="xa_notc_mis_dm1_shapes_world_c_mat1-material" target="#xa_notc_mis_dm1_shapes_world_c_mat1-material"/>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene"/>
+  </scene>
+</COLLADA>
