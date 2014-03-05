@@ -28,11 +28,12 @@
 #include "gfx/gl/gfxGLUtils.h"
 
 GFXGLPrimitiveBuffer::GFXGLPrimitiveBuffer(GFXDevice *device, U32 indexCount, U32 primitiveCount, GFXBufferType bufferType) :
-GFXPrimitiveBuffer(device, indexCount, primitiveCount, bufferType), mZombieCache(NULL) 
+   GFXPrimitiveBuffer(device, indexCount, primitiveCount, bufferType), mZombieCache(NULL),
+   mFrameAllocatorMark(0),
+   mFrameAllocatorPtr(NULL)
 {
    // Generate a buffer and allocate the needed memory
    glGenBuffers(1, &mBuffer);
-   mBufferData.setSize(indexCount * sizeof(U16));
    
    if( gglHasExtension(EXT_direct_state_access) )
    {
@@ -57,10 +58,17 @@ GFXGLPrimitiveBuffer::~GFXGLPrimitiveBuffer()
 
 void GFXGLPrimitiveBuffer::lock(U32 indexStart, U32 indexEnd, void **indexPtr)
 {
+   AssertFatal(!mFrameAllocatorMark && !mFrameAllocatorPtr, "");
+   mFrameAllocatorMark = FrameAllocator::getWaterMark();
+   mFrameAllocatorPtr = (U8*)FrameAllocator::alloc( mIndexCount * sizeof(U16) );
+#if TORQUE_DEBUG
+   mFrameAllocatorMarkGuard = FrameAllocator::getWaterMark();
+#endif
+
    lockedIndexStart = indexStart;
    lockedIndexEnd = indexEnd;
 
-   *indexPtr = (void*)((U8*)mBufferData.address() + (indexStart * sizeof(U16)) );
+   *indexPtr = (void*)(mFrameAllocatorPtr + (indexStart * sizeof(U16)) );
 }
 
 void GFXGLPrimitiveBuffer::unlock()
@@ -71,7 +79,7 @@ void GFXGLPrimitiveBuffer::unlock()
    U32 length = (lockedIndexEnd - lockedIndexStart) * sizeof(U16);
    if( gglHasExtension(EXT_direct_state_access) )
    {      
-      glNamedBufferSubDataEXT(mBuffer, offset, length, mBufferData.address() + offset );
+      glNamedBufferSubDataEXT(mBuffer, offset, length, mFrameAllocatorPtr + offset );
    }
    else
    {
@@ -80,8 +88,15 @@ void GFXGLPrimitiveBuffer::unlock()
    
       // Bind ourselves and unmap
       glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mBuffer);
-      glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, offset, length, mBufferData.address() + offset );
+      glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, offset, length, mFrameAllocatorPtr + offset );
    }
+
+#if TORQUE_DEBUG
+   AssertFatal(mFrameAllocatorMarkGuard == FrameAllocator::getWaterMark(), "");
+#endif
+   FrameAllocator::setWaterMark(mFrameAllocatorMark);
+   mFrameAllocatorMark = 0;
+   mFrameAllocatorPtr = NULL;
 }
 
 void GFXGLPrimitiveBuffer::prepare()

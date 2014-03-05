@@ -46,10 +46,16 @@ public:
 private:
 	/// Handle to our GL buffer object
 	GLuint mBuffer;
-   Vector<char> mBufferData;
    U8* mZombieCache;
 
    U32 lockedIndexEnd, lockedIndexStart;
+
+   //FrameAllocator
+   U32 mFrameAllocatorMark;
+#if TORQUE_DEBUG
+   U32 mFrameAllocatorMarkGuard;
+#endif
+   U8 *mFrameAllocatorPtr;
 };
 
 #endif

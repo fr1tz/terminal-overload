@@ -38,7 +38,9 @@ GFXGLTextureObject::GFXGLTextureObject(GFXDevice * aDevice, GFXTextureProfile *p
    mLockedRectRect(0, 0, 0, 0),
    mGLDevice(static_cast<GFXGLDevice*>(mDevice)),
    mZombieCache(NULL),
-   mNeedInitSamplerState(true)
+   mNeedInitSamplerState(true),
+   mFrameAllocatorMark(0),
+   mFrameAllocatorPtr(NULL)
 {
    AssertFatal(dynamic_cast<GFXGLDevice*>(mDevice), "GFXGLTextureObject::GFXGLTextureObject - Invalid device type, expected GFXGLDevice!");
    glGenTextures(1, &mHandle);
@@ -72,12 +74,16 @@ GFXLockedRect* GFXGLTextureObject::lock(U32 mipLevel, RectI *inRect)
    }
    
    mLockedRect.pitch = mLockedRectRect.extent.x * mBytesPerTexel;
-   
-   glBindBuffer(GL_PIXEL_UNPACK_BUFFER_ARB, mBuffer);
+
    // CodeReview [ags 12/19/07] This one texel boundary is necessary to keep the clipmap code from crashing.  Figure out why.
-   glBufferData(GL_PIXEL_UNPACK_BUFFER_ARB, (mLockedRectRect.extent.x + 1) * (mLockedRectRect.extent.y + 1) * mBytesPerTexel, NULL, GL_STREAM_DRAW);
-   mLockedRect.bits = (U8*)glMapBuffer(GL_PIXEL_UNPACK_BUFFER_ARB, GL_WRITE_ONLY);
-   glBindBuffer(GL_PIXEL_UNPACK_BUFFER_ARB, 0);
+   U32 size = (mLockedRectRect.extent.x + 1) * (mLockedRectRect.extent.y + 1) * mBytesPerTexel;
+   AssertFatal(!mFrameAllocatorMark && !mFrameAllocatorPtr, "");
+   mFrameAllocatorMark = FrameAllocator::getWaterMark();
+   mFrameAllocatorPtr = (U8*)FrameAllocator::alloc( size );
+   mLockedRect.bits = mFrameAllocatorPtr;
+#if TORQUE_DEBUG
+   mFrameAllocatorMarkGuard = FrameAllocator::getWaterMark();
+#endif
    
    if( !mLockedRect.bits )
       return NULL;
@@ -93,11 +99,11 @@ void GFXGLTextureObject::unlock(U32 mipLevel)
    PRESERVE_TEXTURE(mBinding);
 
    glActiveTexture(GL_TEXTURE0);
-   
 
    glBindTexture(mBinding, mHandle);
    glBindBuffer(GL_PIXEL_UNPACK_BUFFER_ARB, mBuffer);
-   glUnmapBuffer(GL_PIXEL_UNPACK_BUFFER_ARB);
+   glBufferData(GL_PIXEL_UNPACK_BUFFER_ARB, (mLockedRectRect.extent.x + 1) * (mLockedRectRect.extent.y + 1) * mBytesPerTexel, mFrameAllocatorPtr, GL_STREAM_DRAW);
+
    if(mBinding == GL_TEXTURE_2D)
 	   glTexSubImage2D(mBinding, mipLevel, mLockedRectRect.point.x, mLockedRectRect.point.y, 
 		  mLockedRectRect.extent.x, mLockedRectRect.extent.y, GFXGLTextureFormat[mFormat], GFXGLTextureType[mFormat], NULL);
@@ -108,6 +114,12 @@ void GFXGLTextureObject::unlock(U32 mipLevel)
    glBindBuffer(GL_PIXEL_UNPACK_BUFFER_ARB, 0);
 
    mLockedRect.bits = NULL;
+#if TORQUE_DEBUG
+   AssertFatal(mFrameAllocatorMarkGuard == FrameAllocator::getWaterMark(), "");
+#endif
+   FrameAllocator::setWaterMark(mFrameAllocatorMark);
+   mFrameAllocatorMark = 0;
+   mFrameAllocatorPtr = NULL;
 }
 
 void GFXGLTextureObject::release()

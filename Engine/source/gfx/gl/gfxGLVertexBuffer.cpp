@@ -35,12 +35,13 @@ GFXGLVertexBuffer::GFXGLVertexBuffer(  GFXDevice *device,
                                        U32 vertexSize, 
                                        GFXBufferType bufferType )
    :  GFXVertexBuffer( device, numVerts, vertexFormat, vertexSize, bufferType ), 
-      mZombieCache(NULL)
+      mZombieCache(NULL),
+      mFrameAllocatorMark(0),
+      mFrameAllocatorPtr(NULL)
 {
    // Generate a buffer
    mDivisor = 0;
    glGenBuffers(1, &mBuffer);
-   mBufferData.setSize(mNumVerts * mVertexSize);
 
    //and allocate the needed memory
    if( gglHasExtension(EXT_direct_state_access) )
@@ -70,7 +71,15 @@ GFXGLVertexBuffer::~GFXGLVertexBuffer()
 void GFXGLVertexBuffer::lock( U32 vertexStart, U32 vertexEnd, void **vertexPtr )
 {
    PROFILE_SCOPE(GFXGLVertexBuffer_lock);
-   lockedVertexPtr = (void*)((U8*)mBufferData.address() + (vertexStart * mVertexSize));
+
+   AssertFatal(!mFrameAllocatorMark && !mFrameAllocatorPtr, "");
+   mFrameAllocatorMark = FrameAllocator::getWaterMark();
+   mFrameAllocatorPtr = (U8*)FrameAllocator::alloc( mNumVerts * mVertexSize );
+#if TORQUE_DEBUG
+   mFrameAllocatorMarkGuard = FrameAllocator::getWaterMark();
+#endif
+
+   lockedVertexPtr = (void*)(mFrameAllocatorPtr + (vertexStart * mVertexSize));
    *vertexPtr = lockedVertexPtr;
 
 	lockedVertexStart = vertexStart;
@@ -87,20 +96,27 @@ void GFXGLVertexBuffer::unlock()
    if( gglHasExtension(EXT_direct_state_access) )
    {
       if(lockedVertexStart == 0 && lockedVertexEnd == 0)      
-         glNamedBufferDataEXT(mBuffer, length, mBufferData.address(), GFXGLBufferType[mBufferType] );      
+         glNamedBufferDataEXT(mBuffer, length, mFrameAllocatorPtr, GFXGLBufferType[mBufferType] );      
       else
-         glNamedBufferSubDataEXT(mBuffer, offset, length, mBufferData.address() + offset );
+         glNamedBufferSubDataEXT(mBuffer, offset, length, mFrameAllocatorPtr + offset );
    }
    else
    {
       PRESERVE_VERTEX_BUFFER();
       glBindBuffer(GL_ARRAY_BUFFER, mBuffer);
-      glBufferSubData(GL_ARRAY_BUFFER, offset, length, mBufferData.address() + offset );
+      glBufferSubData(GL_ARRAY_BUFFER, offset, length, mFrameAllocatorPtr + offset );
    }
 
    lockedVertexStart = 0;
 	lockedVertexEnd   = 0;
    lockedVertexPtr = NULL;
+
+#if TORQUE_DEBUG
+   AssertFatal(mFrameAllocatorMarkGuard == FrameAllocator::getWaterMark(), "");
+#endif
+   FrameAllocator::setWaterMark(mFrameAllocatorMark);
+   mFrameAllocatorMark = 0;
+   mFrameAllocatorPtr = NULL;
 }
 
 void GFXGLVertexBuffer::prepare()

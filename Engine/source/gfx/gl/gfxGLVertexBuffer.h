@@ -57,7 +57,6 @@ private:
    friend class GFXGLDevice;
 	/// GL buffer handle
 	GLuint mBuffer;
-   Vector<char> mBufferData;
    U8* mZombieCache;
 
    struct glVertexDecl
@@ -72,6 +71,13 @@ private:
 
    Vector<glVertexDecl> glVerticesFormat;  
    void _initVerticesFormat();
+
+   //FrameAllocator
+   U32 mFrameAllocatorMark;
+#if TORQUE_DEBUG
+   U32 mFrameAllocatorMarkGuard;
+#endif
+   U8 *mFrameAllocatorPtr;
 };
 
 #endif
