@@ -177,7 +177,7 @@ new SimGroup(MissionGroup) {
             zLastUpdatePosition = "0 0.2174 9970.75";
             zParticleEmitter = "4399";
             zProximityTrigger = "4401";
-            zUpdateAssetsThread = "162982";
+            zUpdateAssetsThread = "98975";
       };
       new TSStatic() {
          shapeName = "content/xa/notc/mis/dm1/shapes/heap/shape.dae";
@@ -196,10 +196,49 @@ new SimGroup(MissionGroup) {
          canSaveDynamicFields = "1";
       };
    };
+   new Path() {
+      isLooping = "1";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+
+      new Marker() {
+         seqNum = "0";
+         type = "Normal";
+         msToNext = "2000";
+         smoothingType = "Linear";
+         position = "0 0 5500";
+         rotation = "1 0 0 90";
+         scale = "1 1 1";
+         canSave = "1";
+         canSaveDynamicFields = "1";
+      };
+      new Marker() {
+         seqNum = "1";
+         type = "Normal";
+         msToNext = "1000";
+         smoothingType = "Linear";
+         position = "-1000 -1000 3000";
+         rotation = "0.585983 -0.572929 0.573041 119.251";
+         scale = "1 1 1";
+         canSave = "1";
+         canSaveDynamicFields = "1";
+      };
+      new Marker() {
+         seqNum = "2";
+         type = "Normal";
+         msToNext = "0";
+         smoothingType = "Linear";
+         position = "0 0 272";
+         rotation = "1 0 0 90";
+         scale = "1 1 1";
+         canSave = "1";
+         canSaveDynamicFields = "1";
+      };
+   };
    new SimGroup(SpawnLine) {
       canSave = "1";
       canSaveDynamicFields = "1";
-         zLastUsedSubLineIndex = "1";
+         zLastUsedSubLineIndex = "0";
 
       new Path() {
          isLooping = "1";
@@ -209,8 +248,8 @@ new SimGroup(MissionGroup) {
          new Marker() {
             seqNum = "0";
             type = "Normal";
-            msToNext = "2000";
-            smoothingType = "Linear";
+            msToNext = "1000";
+            smoothingType = "Spline";
             position = "0 0 5500";
             rotation = "1 0 0 90";
             scale = "1 1 1";
@@ -221,9 +260,9 @@ new SimGroup(MissionGroup) {
             seqNum = "1";
             type = "Normal";
             msToNext = "1000";
-            smoothingType = "Linear";
-            position = "1000 1000 3000";
-            rotation = "0.585983 -0.572929 0.573041 119.251";
+            smoothingType = "Spline";
+            position = "1000 1000 4000";
+            rotation = "0.707107 0 0.707107 109.471";
             scale = "1 1 1";
             canSave = "1";
             canSaveDynamicFields = "1";
@@ -234,53 +273,14 @@ new SimGroup(MissionGroup) {
             msToNext = "0";
             smoothingType = "Linear";
             position = "24 34 271";
-            rotation = "0.585983 -0.572929 0.573041 119.251";
-            scale = "1 1 1";
-            canSave = "1";
-            canSaveDynamicFields = "1";
-         };
-      };
-      new Path() {
-         isLooping = "1";
-         canSave = "1";
-         canSaveDynamicFields = "1";
-
-         new Marker() {
-            seqNum = "0";
-            type = "Normal";
-            msToNext = "2000";
-            smoothingType = "Linear";
-            position = "0 0 5500";
-            rotation = "1 0 0 90";
-            scale = "1 1 1";
-            canSave = "1";
-            canSaveDynamicFields = "1";
-         };
-         new Marker() {
-            seqNum = "1";
-            type = "Normal";
-            msToNext = "1000";
-            smoothingType = "Linear";
-            position = "-1000 -1000 3000";
-            rotation = "0.585983 -0.572929 0.573041 119.251";
-            scale = "1 1 1";
-            canSave = "1";
-            canSaveDynamicFields = "1";
-         };
-         new Marker() {
-            seqNum = "2";
-            type = "Normal";
-            msToNext = "0";
-            smoothingType = "Linear";
-            position = "0 0 272";
-            rotation = "1 0 0 90";
+            rotation = "0.707107 0 0.707107 180";
             scale = "1 1 1";
             canSave = "1";
             canSaveDynamicFields = "1";
          };
       };
       new Marker() {
-         seqNum = "0";
+         seqNum = "1";
          type = "Normal";
          msToNext = "0";
          smoothingType = "Linear";
@@ -289,10 +289,10 @@ new SimGroup(MissionGroup) {
          scale = "1 1 1";
          canSave = "1";
          canSaveDynamicFields = "1";
-            Speed = "2500";
+            Speed = "2000";
       };
       new Marker() {
-         seqNum = "1";
+         seqNum = "2";
          type = "Normal";
          msToNext = "0";
          smoothingType = "Linear";
