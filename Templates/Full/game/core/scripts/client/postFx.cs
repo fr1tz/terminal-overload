@@ -25,19 +25,6 @@ singleton ShaderData( PFX_PassthruShader )
    pixVersion = 2.0;
 };
 
-singleton ShaderData( PFX_FinalPassthruShader )
-{   
-   DXVertexShaderFile 	= "shaders/common/postFx/postFxV.hlsl";
-   DXPixelShaderFile 	= "shaders/common/postFx/passthruP.hlsl";
-         
-   OGLVertexShaderFile  = "shaders/common/postFx/gl/finalPassthruV.glsl";
-   OGLPixelShaderFile   = "shaders/common/postFx/gl/passthruP.glsl";
-      
-   samplerNames[0] = "$inputTex";
-   
-   pixVersion = 2.0;
-};
-
 function initPostEffects()
 {
    // First exec the scripts for the different light managers

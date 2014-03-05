@@ -630,7 +630,10 @@ S16 TranslateOSString(XKeyEvent* evt)
     char c[64];
     KeySym k;
     XLookupString(evt, c, sizeof(c), &k, NULL);
-    return c[0];
+    if (c[0] > 31 && c[0] < 127)
+        return c[0];
+    else
+        return 0;
 }
 
 U32 TranslateModifiersToWindowManagerInput(XKeyEvent* evt)

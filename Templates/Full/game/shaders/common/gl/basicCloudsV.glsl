@@ -27,7 +27,7 @@ attribute vec4 vPosition;
 attribute vec2 vTexCoord0;
 
 #define IN_pos       vPosition
-#define IN_uv0       gvTexCoord0
+#define IN_uv0       vTexCoord0
 
 uniform mat4  modelview;
 uniform float     accumTime;

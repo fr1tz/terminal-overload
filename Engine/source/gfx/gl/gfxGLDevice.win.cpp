@@ -21,14 +21,6 @@
 #include "postFx/postEffect.h"
 #include "gfx/gl/gfxGLUtils.h"
 
-GFX_ImplementTextureProfile( BackBufferDepthProfile,
-                             GFXTextureProfile::DiffuseMap, 
-                             GFXTextureProfile::PreserveSize | 
-                             GFXTextureProfile::NoMipmap | 
-                             GFXTextureProfile::ZTarget |
-                             GFXTextureProfile::Pooled,
-                             GFXTextureProfile::NONE );
-
 #define GETHWND(x) static_cast<Win32Window*>(x)->getHWND()
 
 // yonked from winWindow.cc
@@ -97,7 +89,7 @@ void GFXGLDevice::enumerateAdapters( Vector<GFXAdapter*> &adapterList )
 
    // Create pixel format descriptor...
    PIXELFORMATDESCRIPTOR pfd;
-   CreatePixelFormat( &pfd, 16, 24, 8, false ); // 16 bit color, 16 bit depth, 8 bit stencil...everyone can do this // TODO OPENGL
+   CreatePixelFormat( &pfd, 32, 0, 0, false );
    if( !SetPixelFormat( tempDC, ChoosePixelFormat( tempDC, &pfd ), &pfd ) )
       AssertFatal( false, "I don't know who's responcible for this, but I want caught..." );
 
@@ -244,7 +236,7 @@ void GFXGLDevice::init( const GFXVideoMode &mode, PlatformWindow *window )
 
    // Create pixel format descriptor...
    PIXELFORMATDESCRIPTOR pfd;
-   CreatePixelFormat( &pfd, 16, 16, 8, false ); // 16 bit color, 16 bit depth, 8 bit stencil...everyone can do this
+   CreatePixelFormat( &pfd, 32, 0, 0, false ); // 32 bit color... We do not need depth or stencil, OpenGL renders into a FBO and then copy the image to window
    if( !SetPixelFormat( hdcGL, ChoosePixelFormat( hdcGL, &pfd ), &pfd ) )
    {
       AssertFatal( false, "GFXGLDevice::init - cannot get the one and only pixel format we check for." );
@@ -327,55 +319,10 @@ GFXFence* GFXGLDevice::_createPlatformSpecificFence()
 
 
 //-----------------------------------------------------------------------------
-
-inline void GFXGLWindowTarget::_setupAttachments()
+void GFXGLWindowTarget::_WindowPresent()
 {
-   glBindFramebufferEXT( GL_FRAMEBUFFER_EXT, mBackBufferFBO);
-   const Point2I dstSize = getSize();
-   mBackBufferColorTex.set(dstSize.x, dstSize.y, getFormat(), &PostFxTargetProfile, "backBuffer");
-   GFXGLTextureObject *color = static_cast<GFXGLTextureObject*>(mBackBufferColorTex.getPointer());
-   glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D, color->getHandle(), 0);
-   mBackBufferDepthTex.set(dstSize.x, dstSize.y, GFXFormatD24S8, &BackBufferDepthProfile, "backBuffer");
-   GFXGLTextureObject *depth = static_cast<GFXGLTextureObject*>(mBackBufferDepthTex.getPointer());
-   glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_TEXTURE_2D, depth->getHandle(), 0);
-}
-
-void GFXGLWindowTarget::makeActive()
-{
-   if(mBackBufferFBO)
-   {
-      glBindFramebufferEXT( GL_FRAMEBUFFER_EXT, mBackBufferFBO);
-   }
-   else
-   {
-      glGenFramebuffersEXT(1, &mBackBufferFBO);
-      _setupAttachments();
-      CHECK_FRAMEBUFFER_STATUS();
-   }
-}
-
-bool GFXGLWindowTarget::present()
-{
-   PRESERVE_FRAMEBUFFER();
-
-   const Point2I srcSize = mBackBufferColorTex.getWidthHeight();
-   const Point2I dstSize = getSize();
-
-   glBindFramebufferEXT(GL_DRAW_FRAMEBUFFER_EXT, 0);
-   glBindFramebufferEXT(GL_READ_FRAMEBUFFER_EXT, mBackBufferFBO);
-
-   glBlitFramebufferEXT(
-      0, 0, srcSize.x, srcSize.y,
-      0, 0, dstSize.x, dstSize.y, 
-      GL_COLOR_BUFFER_BIT, GL_NEAREST);
-
    HWND hwnd = GETHWND(getWindow());
    SwapBuffers(GetDC(hwnd));
-
-   if(srcSize != dstSize || mBackBufferDepthTex.getWidthHeight() != dstSize)   
-      _setupAttachments();
-
-   return true;
 }
 
 void GFXGLWindowTarget::_teardownCurrentMode()

@@ -19,35 +19,17 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 // IN THE SOFTWARE.
 //-----------------------------------------------------------------------------
+#include "../../gl/hlslCompat.glsl"
 
-#include "hlslCompat.glsl"
-
-//CloudVert
 attribute vec4 vPosition;
 attribute vec2 vTexCoord0;
 
-#define IN_pos       vPosition
-#define IN_uv0       vTexCoord0
-
-uniform mat4  modelview;
-uniform float     accumTime;
-uniform float     texScale;
-uniform vec2    texDirection;
-uniform vec2    texOffset;
-
+uniform mat4 modelview;
 varying vec2 texCoord;
-#define OUT_texCoord texCoord
 
 void main()
-{  
-   gl_Position = mul(modelview, IN_pos);
-   
-   vec2 uv = IN_uv0;
-   uv += texOffset;
-   uv *= texScale;
-   uv += accumTime * texDirection;
-
-   OUT_texCoord = uv;   
-   
+{
+   gl_Position = mul(modelview, vPosition);
    correctSSP(gl_Position);
+   texCoord = vTexCoord0.st;
 }

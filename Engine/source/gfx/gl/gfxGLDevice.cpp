@@ -64,6 +64,12 @@ void STDCALL glDebugCallback(GLenum source, GLenum type, GLuint id,
    Con::errorf("OPENGL: %s", message);
 }
 
+void STDCALL glAmdDebugCallback(GLuint id, GLenum category, GLenum severity, GLsizei length,
+   const GLchar* message,GLvoid* userParam)
+{
+   Con::errorf("OPENGL: %s",message);
+}
+
 void GFXGLDevice::initGLState()
 {  
    // We don't currently need to sync device state with a known good place because we are
@@ -94,7 +100,7 @@ void GFXGLDevice::initGLState()
    mSupportsAnisotropic = mCardProfiler->queryProfile( "GL::suppAnisotropic" );
 
 #if TORQUE_DEBUG
-   if( gglHasExtension(KHR_debug) )
+   if( gglHasExtension(KHR_debug)||gglHasExtension(ARB_debug_output))
    {
       glEnable(GL_DEBUG_OUTPUT);
       glDebugMessageCallback(glDebugCallback, NULL);      
@@ -106,6 +112,14 @@ void GFXGLDevice::initGLState()
             0,
             &unusedIds,
             GL_TRUE);
+   }
+   else if(gglHasExtension(AMD_debug_output))
+   {
+      glEnable(GL_DEBUG_OUTPUT);
+      glDebugMessageCallbackAMD(glAmdDebugCallback, NULL);      
+      glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+      GLuint unusedIds = 0;
+      glDebugMessageEnableAMD(GL_DONT_CARE, GL_DONT_CARE, 0,&unusedIds, GL_TRUE);
    }
 #endif
 }
@@ -129,8 +143,10 @@ GFXGLDevice::GFXGLDevice(U32 adapterIndex) :
    GFXGLEnumTranslate::init();
 
    GFXVertexColor::setSwizzle( &Swizzles::rgba );
-   mDeviceSwizzle32 = &Swizzles::bgra;
-   mDeviceSwizzle24 = &Swizzles::bgr;
+
+   // OpenGL have native RGB, no need swizzle
+   mDeviceSwizzle32 = &Swizzles::rgba;
+   mDeviceSwizzle24 = &Swizzles::rgb;
 
    mTextureManager = new GFXGLTextureManager();
    gScreenShot = new ScreenShot();
@@ -578,7 +594,6 @@ GFXOcclusionQuery* GFXGLDevice::createOcclusionQuery()
 void GFXGLDevice::setupGenericShaders( GenericShaderType type ) 
 {
    AssertFatal(type != GSTargetRestore, "");
-   AssertFatal(type != GSTexture, "");
 
    if( mGenericShader[GSColor] == NULL )
    {
@@ -612,6 +627,16 @@ void GFXGLDevice::setupGenericShaders( GenericShaderType type )
       mGenericShader[GSAddColorTexture] = shaderData->getShader();
       mGenericShaderBuffer[GSAddColorTexture] = mGenericShader[GSAddColorTexture]->allocConstBuffer();
       mModelViewProjSC[GSAddColorTexture] = mGenericShader[GSAddColorTexture]->getShaderConstHandle( "$modelView" ); 
+
+      shaderData = new ShaderData();
+      shaderData->setField("OGLVertexShaderFile", "shaders/common/fixedFunction/gl/textureV.glsl");
+      shaderData->setField("OGLPixelShaderFile", "shaders/common/fixedFunction/gl/textureP.glsl");
+      shaderData->setSamplerName("$diffuseMap", 0);
+      shaderData->setField("pixVersion", "2.0");
+      shaderData->registerObject();
+      mGenericShader[GSTexture] = shaderData->getShader();
+      mGenericShaderBuffer[GSTexture] = mGenericShader[GSTexture]->allocConstBuffer();
+      mModelViewProjSC[GSTexture] = mGenericShader[GSTexture]->getShaderConstHandle( "$modelView" );
    }
 
    MatrixF tempMatrix =  mProjectionMatrix * mViewMatrix * mWorldMatrix[mWorldStackSize];  
