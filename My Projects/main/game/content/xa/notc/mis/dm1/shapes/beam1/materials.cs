@@ -1,5 +1,5 @@
 
-singleton Material(shape_xa_notc_mis_dm1_shapes_beam1_mat1)
+singleton Material(xa_notc_mis_dm1_shapes_beam1_mat1)
 {
    mapTo = "xa_notc_mis_dm1_shapes_beam1_mat1";
    diffuseColor[0] = "0.176206 0.0250199 0.168775 1";
