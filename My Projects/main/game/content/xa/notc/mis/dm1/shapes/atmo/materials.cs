@@ -19,7 +19,7 @@ singleton Material(shape_xa_notc_mis_dm1_shapes_atmo_mat4)
    doubleSided = "0";
    translucentBlendOp = "AddAlpha";
    diffuseMap[0] = "content/xa/notc/core/textures/white.128.png";
-   detailMap[0] = "content/xa/notc/core/textures/grid128.12.h1.png";
+   detailMap[0] = "content/xa/notc/mis/dm1/shapes/atmo/grid1.png";
    detailScale[0] = "64 64";
    glow[0] = "1";
    emissive[0] = "1";
@@ -35,7 +35,7 @@ singleton Material(shape_xa_notc_mis_dm1_shapes_atmo_mat3)
    doubleSided = "0";
    translucentBlendOp = "AddAlpha";
    diffuseMap[0] = "content/xa/notc/core/textures/white.128.png";
-   detailMap[0] = "content/xa/notc/core/textures/grid128.12.h1.png";
+   detailMap[0] = "content/xa/notc/mis/dm1/shapes/atmo/grid1.png";
    detailScale[0] = "32 32";
    glow[0] = "1";
    emissive[0] = "1";
@@ -52,7 +52,7 @@ singleton Material(shape_xa_notc_mis_dm1_shapes_atmo_mat2)
    doubleSided = "0";
    translucentBlendOp = "AddAlpha";
    diffuseMap[0] = "content/xa/notc/core/textures/white.128.png";
-   detailMap[0] = "content/xa/notc/core/textures/grid128.12.h1.png";
+   detailMap[0] = "content/xa/notc/mis/dm1/shapes/atmo/grid1.png";
    detailScale[0] = "16 16";
    glow[0] = "1";
    emissive[0] = "1";
@@ -68,7 +68,7 @@ singleton Material(shape_xa_notc_mis_dm1_shapes_atmo_mat1)
    doubleSided = "0";
    translucentBlendOp = "AddAlpha";
    diffuseMap[0] = "content/xa/notc/core/textures/white.128.png";
-   detailMap[0] = "content/xa/notc/core/textures/grid128.12.h1.png";
+   detailMap[0] = "content/xa/notc/mis/dm1/shapes/atmo/grid1.png";
    detailScale[0] = "8 8";
    glow[0] = "1";
    emissive[0] = "1";
