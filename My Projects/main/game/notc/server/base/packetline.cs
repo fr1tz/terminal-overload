@@ -7,6 +7,9 @@
 datablock PathCameraData(PacketLineCamera)
 {
    shapeFile = "content/xa/notc/core/shapes/packet/p1/shape.dae";
+   cameraDefaultFov = "120";
+   cameraMinFov = "120";
+   cameraMaxFov = "120";
 };
 
 function PacketLineCamera::onNode(%this, %obj, %node)
@@ -151,15 +154,19 @@ function PacketLineIn::prepareCamera(%this, %obj, %camera)
 
    %numNodes = %line.getCount();
    //echo(%numNodes SPC "nodes");
+  %speed = 200;
    for(%i = 0; %i < %numNodes; %i++)
    {
       %currentNode = %line.getObject(%i);
       if(%i < %numNodes-1)
          %nextNode = %line.getObject(%i+1);
       %transform = %currentNode.getTransform();
-      echo(%transform);
-      %speed = 200;
-      if(%nextNode !$= "" && %currentNode.msToNext != 0)
+      //echo(%transform);
+      if(%currentNode.speed !$= "")
+      {
+         %speed = %currentNode.speed;
+      }
+      else if(%nextNode !$= "" && %currentNode.msToNext != 0)
       {
          %pos1 = %currentNode.getPosition();
          %pos2 = %nextNode.getPosition();
@@ -230,7 +237,6 @@ function PacketLineActivationTrigger::onEnterTrigger(%this, %obj, %enter)
    //%camera.setTarget(1.0);
    
    %client.setControlObject(%camera);
-   %client.setControlCameraFov(120);
 
    %player = %client.player;
    %player.setTransform("99999 99999 99999"); // yuck ;)
