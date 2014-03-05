@@ -89,21 +89,3 @@ singleton PostEffect( AL_FormatCopy )
    texture[0] = "$inTex";
    target = "$backbuffer";
 };
-
-if(GFXInit::getDeviceType() $= "OpenGL")
-{
-   singleton PostEffect( PFX_FinalPassthru )
-   {
-      isEnabled = true;
-      allowReflectPass = true;
-      
-      shader = PFX_FinalPassthruShader;
-      stateBlock = AL_FormatTokenState;
-      
-      texture[0] = "$backbuffer";
-      target = "$backbuffer";
-      
-      renderTime = "PFXEndOfFrame";
-      renderPriority = -9999; //must be the last PostFX
-   };
-}
