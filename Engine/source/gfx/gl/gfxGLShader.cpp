@@ -59,10 +59,11 @@ public:
    U32 mOffset;
    U32 mSize;  
    S32 mSamplerNum; 
+   bool mInstancingConstant;
 };
 
 GFXGLShaderConstHandle::GFXGLShaderConstHandle( GFXGLShader *shader )
- : mShader( shader ), mSamplerNum(-1)
+ : mShader( shader ), mSamplerNum(-1), mInstancingConstant(false)
 {
    mValid = false;
 }
@@ -98,7 +99,7 @@ static U32 shaderConstTypeSize(GFXShaderConstType type)
 }
 
 GFXGLShaderConstHandle::GFXGLShaderConstHandle( GFXGLShader *shader, const GFXShaderConstDesc &desc, GLuint loc, S32 samplerNum ) 
- : mShader(shader)
+ : mShader(shader), mInstancingConstant(false)
 {
    reinit(desc, loc, samplerNum);
 }
@@ -109,6 +110,7 @@ void GFXGLShaderConstHandle::reinit( const GFXShaderConstDesc& desc, GLuint loc,
    mLocation = loc;
    mSamplerNum = samplerNum;
    mOffset = 0;
+   mInstancingConstant = false;
    
    U32 elemSize = shaderConstTypeSize(mDesc.constType);
    AssertFatal(elemSize, "GFXGLShaderConst::GFXGLShaderConst - elemSize is 0");
@@ -156,8 +158,12 @@ void GFXGLShaderConstBuffer::internalSet(GFXShaderConstHandle* handle, const Con
 
    GFXGLShaderConstHandle* _glHandle = static_cast<GFXGLShaderConstHandle*>(handle);
    AssertFatal(mShader == _glHandle->mShader, "GFXGLShaderConstBuffer::set - Should only set handles which are owned by our shader");
-   
-   dMemcpy(mBuffer + _glHandle->mOffset, &param, sizeof(ConstType));
+   U8 *buf = mBuffer + _glHandle->mOffset;
+
+   if(_glHandle->mInstancingConstant)            
+      buf = mInstPtr + _glHandle->mOffset;
+
+   dMemcpy(buf, &param, sizeof(ConstType));
 }
 
 void GFXGLShaderConstBuffer::set(GFXShaderConstHandle* handle, const F32 fv)
@@ -219,6 +225,7 @@ void GFXGLShaderConstBuffer::internalSet(GFXShaderConstHandle* handle, const Ali
 
    GFXGLShaderConstHandle* _glHandle = static_cast<GFXGLShaderConstHandle*>(handle);
    AssertFatal(mShader == _glHandle->mShader, "GFXGLShaderConstBuffer::set - Should only set handles which are owned by our shader");
+   AssertFatal(!_glHandle->mInstancingConstant, "GFXGLShaderConstBuffer::set - Instancing not supported for array");
    const U8* fvBuffer = static_cast<const U8*>(fv.getBuffer());
    for(U32 i = 0; i < fv.size(); ++i)
    {
@@ -275,6 +282,7 @@ void GFXGLShaderConstBuffer::set(GFXShaderConstHandle* handle, const MatrixF& ma
 
    GFXGLShaderConstHandle* _glHandle = static_cast<GFXGLShaderConstHandle*>(handle);
    AssertFatal(mShader == _glHandle->mShader, "GFXGLShaderConstBuffer::set - Should only set handles which are owned by our shader");
+   AssertFatal(!_glHandle->mInstancingConstant || matType == GFXSCT_Float4x4, "GFXGLShaderConstBuffer::set - Only support GFXSCT_Float4x4 for instancing"); // TODO OPENGL
    
    switch(matType)
    {
@@ -296,8 +304,18 @@ void GFXGLShaderConstBuffer::set(GFXShaderConstHandle* handle, const MatrixF& ma
       reinterpret_cast<F32*>(mBuffer + _glHandle->mOffset)[8] = mat[10];
       break;
    case GFXSCT_Float4x4:
+   {      
+      if(_glHandle->mInstancingConstant)
+      {
+         MatrixF transposed;   
+         mat.transposeTo(transposed);
+         dMemcpy( mInstPtr + _glHandle->mOffset, (const F32*)transposed, sizeof(MatrixF) );
+         return;
+      }
+      
       dMemcpy(mBuffer + _glHandle->mOffset, (const F32*)mat, sizeof(MatrixF));
       break;
+   }
    default:
       AssertFatal(false, "GFXGLShaderConstBuffer::set - Invalid matrix type");
       break;
@@ -311,6 +329,7 @@ void GFXGLShaderConstBuffer::set(GFXShaderConstHandle* handle, const MatrixF* ma
 
    GFXGLShaderConstHandle* _glHandle = static_cast<GFXGLShaderConstHandle*>(handle);
    AssertFatal(mShader == _glHandle->mShader, "GFXGLShaderConstBuffer::set - Should only set handles which are owned by our shader");  
+   AssertFatal(!_glHandle->mInstancingConstant, "GFXGLShaderConstBuffer::set - Instancing not supported for matrix arrays");
 
    switch (matrixType) {
       case GFXSCT_Float4x4:
@@ -637,6 +656,65 @@ void GFXGLShader::initHandles()
       }
    }
    glUseProgram(0);
+
+   //instancing
+   U32 offset = 0;
+   for ( U32 i=0; i < mInstancingFormat.getElementCount(); i++ )
+   {
+      const GFXVertexElement &element = mInstancingFormat.getElement( i );
+      
+      String constName = String::ToString( "$%s", element.getSemantic().c_str() );
+
+      HandleMap::Iterator handle = mHandles.find(constName);      
+      if ( handle != mHandles.end() )
+      {          
+         AssertFatal(0, "");
+      } 
+      else 
+      {
+         GFXShaderConstDesc desc;
+         desc.name = constName;
+         desc.arraySize = 1;
+         switch(element.getType())
+         {
+         case GFXDeclType::GFXDeclType_Float4:
+            desc.constType = GFXShaderConstType::GFXSCT_Float4;
+            break;
+
+         default:
+            desc.constType = GFXShaderConstType::GFXSCT_Float;
+            break;
+         }
+         
+         GFXGLShaderConstHandle *h = new GFXGLShaderConstHandle( this, desc, -1, -1 );
+         h->mInstancingConstant = true;
+         h->mOffset = offset;
+         mHandles[constName] =  h;
+
+         offset += element.getSizeInBytes();
+         ++i;
+
+         // If this is a matrix we will have 2 or 3 more of these
+         // semantics with the same name after it.
+         for ( ; i < mInstancingFormat.getElementCount(); i++ )
+         {
+            const GFXVertexElement &nextElement = mInstancingFormat.getElement( i );
+            if ( nextElement.getSemantic() != element.getSemantic() )
+            {
+               i--;
+               break;
+            }
+            ++desc.arraySize;
+            if(desc.arraySize == 4 && desc.constType == GFXShaderConstType::GFXSCT_Float4)
+            {
+               desc.arraySize = 1;
+               desc.constType = GFXShaderConstType::GFXSCT_Float4x4;
+            }
+            offset += nextElement.getSizeInBytes();
+         }
+      }
+
+   }
 }
 
 GFXShaderConstHandle* GFXGLShader::getShaderConstHandle(const String& name)
@@ -670,6 +748,9 @@ void GFXGLShader::setConstantsFromBuffer(GFXGLShaderConstBuffer* buffer)
    {
       GFXGLShaderConstHandle* handle = *i;
       AssertFatal(handle, "GFXGLShader::setConstantsFromBuffer - Null handle");
+
+      if(handle->mInstancingConstant)
+         continue;
       
       // Don't set if the value has not be changed.
       if(dMemcmp(mConstBuffer + handle->mOffset, buffer->mBuffer + handle->mOffset, handle->getSize()) == 0)

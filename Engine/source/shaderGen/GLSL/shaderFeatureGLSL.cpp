@@ -552,13 +552,13 @@ Var* ShaderFeatureGLSL::getObjTrans(   Vector<ShaderComponent*> &componentList,
       mInstancingFormat->addElement( "objTrans", GFXDeclType_Float4, instObjTrans->constNum+3 );
 
       objTrans = new Var;
-      objTrans->setType( "float4x4" );
+      objTrans->setType( "mat4x4" );
       objTrans->setName( "objTrans" );
-      meta->addStatement( new GenOp( "   @ = { // Instancing!\r\n", new DecOp( objTrans ), instObjTrans ) );
-      meta->addStatement( new GenOp( "      tGetMatrix4Row(@, 0),\r\n", instObjTrans ) );
-      meta->addStatement( new GenOp( "      tGetMatrix4Row(@, 1),\r\n", instObjTrans ) );
-      meta->addStatement( new GenOp( "      tGetMatrix4Row(@, 2),\r\n",instObjTrans ) );
-      meta->addStatement( new GenOp( "      tGetMatrix4Row(@, 3) };\r\n", instObjTrans ) );
+      meta->addStatement( new GenOp( "   @ = mat4x4( // Instancing!\r\n", new DecOp( objTrans ), instObjTrans ) );
+      meta->addStatement( new GenOp( "      @[0],\r\n", instObjTrans ) );
+      meta->addStatement( new GenOp( "      @[1],\r\n", instObjTrans ) );
+      meta->addStatement( new GenOp( "      @[2],\r\n",instObjTrans ) );
+      meta->addStatement( new GenOp( "      @[3] );\r\n", instObjTrans ) );
    }
    else
    {

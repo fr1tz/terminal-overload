@@ -38,6 +38,7 @@ GFXGLVertexBuffer::GFXGLVertexBuffer(  GFXDevice *device,
       mZombieCache(NULL)
 {
    // Generate a buffer
+   mDivisor = 0;
    glGenBuffers(1, &mBuffer);
    mBufferData.setSize(mNumVerts * mVertexSize);
 
@@ -122,6 +123,7 @@ void GFXGLVertexBuffer::prepare()
          e.stride,         // no extra data between each position
          e.pointerFirst    // offset of first element
       );
+      glVertexAttribDivisor( e.attrIndex, mDivisor );
    }
 }
 
@@ -285,6 +287,7 @@ void GFXGLVertexBuffer::_initVerticesFormat()
       {
          String name = element.getSemantic();
          glElement.elementCount = element.getSizeInBytes() / 4;
+         texCoordIndex = getMax(texCoordIndex, element.getSemanticIndex());
          glElement.attrIndex = Torque::GL_VertexAttrib_TexCoord0 + texCoordIndex;
          if(glElement.attrIndex == -1)     
          {
@@ -302,4 +305,6 @@ void GFXGLVertexBuffer::_initVerticesFormat()
          ++texCoordIndex;
       }
    }
+
+   AssertFatal(mVertexSize == (U8)buffer, "");
 }

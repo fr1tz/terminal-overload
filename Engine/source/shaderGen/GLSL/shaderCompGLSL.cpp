@@ -137,8 +137,12 @@ void AppVertConnectorGLSL::print( Stream &stream, bool isVertexShader )
       Var *var = mElementList[i];
       U8 output[256];
       
-      dSprintf( (char*)output, sizeof(output), "attribute %s %s;\r\n", var->type, var->connectName );
-      stream.write( dStrlen((char*)output), output );      
+      for(int j = 0; j < var->arraySize; ++j)
+      {        
+         const char *name = j == 0 ? var->connectName : avar("vTexCoord%d", var->constNum + j) ;
+         dSprintf( (char*)output, sizeof(output), "attribute %s %s;\r\n", var->type, name );
+         stream.write( dStrlen((char*)output), output );
+      }
    }
    const char* newLine ="\r\n";
    stream.write( dStrlen((char*)newLine), newLine );
@@ -305,8 +309,23 @@ void AppVertConnectorGLSL::printOnMain( Stream &stream, bool isVerterShader )
       Var *var = mElementList[i];
       U8 output[256];  
 
-      dSprintf((char*)output, sizeof(output), "   %s IN_%s = %s;\r\n", var->type, var->name, var->connectName);
-      stream.write( dStrlen((char*)output), output );
+      if(var->arraySize <= 1)
+      {
+         dSprintf((char*)output, sizeof(output), "   %s IN_%s = %s;\r\n", var->type, var->name, var->connectName);
+         stream.write( dStrlen((char*)output), output );
+      }
+      else
+      {
+         dSprintf((char*)output, sizeof(output), "   %s IN_%s[%d];\r\n", var->type, var->name, var->arraySize);
+         stream.write( dStrlen((char*)output), output );
+
+         for(int j = 0; j < var->arraySize; ++j)
+         {
+            const char *name = j == 0 ? var->connectName : avar("vTexCoord%d", var->constNum + j) ;
+            dSprintf((char*)output, sizeof(output), "   IN_%s[%d] = %s;\r\n", var->name, j, name );
+            stream.write( dStrlen((char*)output), output );
+         }
+      }
    }
 
    stream.write( dStrlen((char*)header), header );

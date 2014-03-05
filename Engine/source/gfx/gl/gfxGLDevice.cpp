@@ -141,12 +141,17 @@ void GFXGLDevice::initGLState()
       glDebugMessageEnableAMD(GL_DONT_CARE, GL_DONT_CARE, 0,&unusedIds, GL_TRUE);
    }
 #endif
+
+   //OpenGL 3 need a binded VAO for render
+   GLuint vao;
+   glGenVertexArrays(1, &vao);
+   glBindVertexArray(vao);
 }
 
 GFXGLDevice::GFXGLDevice(U32 adapterIndex) :
    mAdapterIndex(adapterIndex),
-   mCurrentVB(NULL),
    mCurrentPB(NULL),
+   mDrawInstancesCount(0),
    m_mCurrentWorld(true),
    m_mCurrentView(true),
    mContext(NULL),
@@ -157,6 +162,9 @@ GFXGLDevice::GFXGLDevice(U32 adapterIndex) :
    mClip(0, 0, 0, 0),
    mCurrentShader( NULL )
 {
+   for(int i = 0; i < MAX_STREAMS; ++i)      
+      mCurrentVB[i] = NULL;   
+
    loadGLCore();
 
    GFXGLEnumTranslate::init();
@@ -175,7 +183,7 @@ GFXGLDevice::GFXGLDevice(U32 adapterIndex) :
 
    mTextureCoordStartTop = false;
    mTexelPixelOffset = false;
-   mVertexStreamSupported = 1;
+   mVertexStreamSupported = MAX_STREAMS;
 
    for(int i = 0; i < GS_COUNT; ++i)
       mModelViewProjSC[i] = NULL;
@@ -184,8 +192,11 @@ GFXGLDevice::GFXGLDevice(U32 adapterIndex) :
 GFXGLDevice::~GFXGLDevice()
 {
    mCurrentStateBlock = NULL;
+
+   for(int i = 0; i < MAX_STREAMS; ++i)      
+      mCurrentVB[i] = NULL;
    mCurrentPB = NULL;
-   mCurrentVB = NULL;
+   
    for(U32 i = 0; i < mVolatileVBs.size(); i++)
       mVolatileVBs[i] = NULL;
    for(U32 i = 0; i < mVolatilePBs.size(); i++)
@@ -225,10 +236,13 @@ GFXGLDevice::~GFXGLDevice()
 void GFXGLDevice::zombify()
 {
    mTextureManager->zombify();
-   if(mCurrentVB)
-      mCurrentVB->finish();
+
+   for(int i = 0; i < MAX_STREAMS; ++i)   
+      if(mCurrentVB[i])
+         mCurrentVB[i]->finish();
    if(mCurrentPB)
-      mCurrentPB->finish();
+         mCurrentPB->finish();
+   
    //mVolatileVBs.clear();
    //mVolatilePBs.clear();
    GFXResource* walk = mResourceListHead;
@@ -247,10 +261,12 @@ void GFXGLDevice::resurrect()
       walk->resurrect();
       walk = walk->getNextResource();
    }
-   if(mCurrentVB)
-      mCurrentVB->prepare();
+   for(int i = 0; i < MAX_STREAMS; ++i)   
+      if(mCurrentVB[i])
+         mCurrentVB[i]->prepare();
    if(mCurrentPB)
       mCurrentPB->prepare();
+   
    mTextureManager->resurrect();
 }
 
@@ -306,22 +322,26 @@ GFXPrimitiveBuffer *GFXGLDevice::allocPrimitiveBuffer( U32 numIndices, U32 numPr
    return buf;
 }
 
-void GFXGLDevice::setVertexStream( U32 stream, GFXVertexBuffer *buffer )
+void GFXGLDevice::setVertexStream( U32 stream, GFXVertexBuffer *buffer, U32 frequency )
 {
-   AssertFatal( stream == 0, "GFXGLDevice::setVertexStream - We don't support multiple vertex streams!" );
-
    // Reset the state the old VB required, then set the state the new VB requires.
-   if ( mCurrentVB ) 
-      mCurrentVB->finish();
+   if ( mCurrentVB[stream] ) 
+      mCurrentVB[stream]->finish();
 
-   mCurrentVB = static_cast<GFXGLVertexBuffer*>( buffer );
-   if ( mCurrentVB )
-      mCurrentVB->prepare();
-}
+   mCurrentVB[stream] = static_cast<GFXGLVertexBuffer*>( buffer );   
 
-void GFXGLDevice::setVertexStreamFrequency( U32 stream, U32 frequency )
-{
-   // We don't support vertex stream frequency or mesh instancing in OGL yet.
+   if ( mCurrentVB[stream])
+   {
+      if(frequency == 1 && stream) // never get instanced data on stream 0
+         mCurrentVB[stream]->mDivisor = 1; // is istances data
+      else
+      {
+         mCurrentVB[stream]->mDivisor = 0; // non instanced, is vertex buffer
+         mDrawInstancesCount = frequency; // instances count
+      }
+
+      mCurrentVB[stream]->prepare();
+   }
 }
 
 GFXCubemap* GFXGLDevice::createCubemap()
@@ -411,6 +431,7 @@ inline void GFXGLDevice::postDrawPrimitive(U32 primitiveCount)
 {
    mDeviceStatistics.mDrawCalls++;
    mDeviceStatistics.mPolyCount += primitiveCount;
+   mDrawInstancesCount = 0;
 }
 
 void GFXGLDevice::drawPrimitive( GFXPrimitiveType primType, U32 vertexStart, U32 primitiveCount ) 
@@ -423,7 +444,10 @@ void GFXGLDevice::drawPrimitive( GFXPrimitiveType primType, U32 vertexStart, U32
    if(mCurrentPB)
       mCurrentPB->finish();
 
-   glDrawArrays(GFXGLPrimType[primType], vertexStart, primCountToIndexCount(primType, primitiveCount));
+   if(mDrawInstancesCount)
+      glDrawArraysInstanced(GFXGLPrimType[primType], vertexStart, primCountToIndexCount(primType, primitiveCount), mDrawInstancesCount);
+   else
+      glDrawArrays(GFXGLPrimType[primType], vertexStart, primCountToIndexCount(primType, primitiveCount));
    
    if(mCurrentPB)
       mCurrentPB->prepare();
@@ -444,7 +468,10 @@ void GFXGLDevice::drawIndexedPrimitive(   GFXPrimitiveType primType,
 
    U16* buf = (U16*)static_cast<GFXGLPrimitiveBuffer*>(mCurrentPrimitiveBuffer.getPointer())->getBuffer() + startIndex;
 
-   glDrawElements(GFXGLPrimType[primType], primCountToIndexCount(primType, primitiveCount), GL_UNSIGNED_SHORT, buf);
+   if(mDrawInstancesCount)
+      glDrawElementsInstanced(GFXGLPrimType[primType], primCountToIndexCount(primType, primitiveCount), GL_UNSIGNED_SHORT, buf, mDrawInstancesCount);
+   else
+      glDrawElements(GFXGLPrimType[primType], primCountToIndexCount(primType, primitiveCount), GL_UNSIGNED_SHORT, buf);
 
    postDrawPrimitive(primitiveCount);
 }

@@ -175,8 +175,7 @@ protected:
 
    virtual void setVertexDecl( const GFXVertexDecl *decl ) { }
 
-   virtual void setVertexStream( U32 stream, GFXVertexBuffer *buffer );
-   virtual void setVertexStreamFrequency( U32 stream, U32 frequency );
+   virtual void setVertexStream( U32 stream, GFXVertexBuffer *buffer, U32 frequency );
 
 private:
    typedef GFXDevice Parent;
@@ -190,9 +189,10 @@ private:
    static GFXAdapter::CreateDeviceInstanceDelegate mCreateDeviceInstance; 
 
    U32 mAdapterIndex;
-   
-   StrongRefPtr<GFXGLVertexBuffer> mCurrentVB;
+   static const U32 MAX_STREAMS = 4; // TODO OPENGL revise
+   StrongRefPtr<GFXGLVertexBuffer> mCurrentVB[MAX_STREAMS];
    StrongRefPtr<GFXGLPrimitiveBuffer> mCurrentPB;
+   U32 mDrawInstancesCount;
    
    GFXShader* mCurrentShader;
    GFXShaderRef mGenericShader[GS_COUNT];

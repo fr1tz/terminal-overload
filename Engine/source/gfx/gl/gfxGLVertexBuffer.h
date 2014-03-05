@@ -51,7 +51,8 @@ public:
    // GFXResource interface
    virtual void zombify();
    virtual void resurrect();
-   
+   GLuint mDivisor;
+
 private:
    friend class GFXGLDevice;
 	/// GL buffer handle
