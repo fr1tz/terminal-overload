@@ -27,6 +27,83 @@ function PacketLineCamera::onNode(%this, %obj, %node)
    }
 }
 
+function PacketLineCamera::addLine(%this, %camera, %line)
+{
+   //echo("PacketLineCamera::addLine()");
+   //echo("line:" SPC %line);
+
+   %subLines = new SimSet();
+   %speed = 200;
+   
+   %numNodes = %line.getCount();
+   //echo(%numNodes SPC "nodes");
+   for(%i = 0; %i < %numNodes; %i++)
+   {
+      %currentNode = %line.getObject(%i);
+      
+      if(%currentNode.isMethod("getCount")) 
+      {
+         if(%currentNode.getCount() > 0)
+            %subLines.add(%currentNode);
+         continue;
+      }
+      
+      if(%i < %numNodes-1)
+         %nextNode = %line.getObject(%i+1);
+      %transform = %currentNode.getTransform();
+      //echo("---------------");
+      //echo(%transform);
+      if(%currentNode.speed !$= "")
+      {
+         %speed = %currentNode.speed;
+      }
+      else if(%nextNode !$= "" && %currentNode.msToNext != 0)
+      {
+         %pos1 = %currentNode.getPosition();
+         %pos2 = %nextNode.getPosition();
+         %dist = VectorLen(VectorSub(%pos2, %pos1));
+         %time = %currentNode.msToNext;
+         %speed = %dist / (%time/1000);
+         //echo("pos1:" SPC %pos1);
+         //echo("pos2:" SPC %pos2);
+         //echo("dist:" SPC %dist);
+         //echo("time:" SPC %time);
+      }
+      //echo("speed:" SPC %speed);
+      if((%type = %currentNode.type) $= "")
+         %type = "Kink";
+      if((%path = %currentNode.smoothingType) $= "")
+         %path = "Linear";
+      %camera.pushBack(%transform, %speed, %type, %path);
+      %camera.zOutPos = %transform;
+      %camera.zNumNodes++;
+   }
+   
+   %numSubLines = %subLines.getCount();
+   //echo("numSubLines:" SPC %numSubLines);
+   if(%numSubLines > 0)
+   {
+      %idx = 0;
+      if(%line.zLastUsedSubLineIndex !$= "")
+         %idx = %line.zLastUsedSubLineIndex+1;
+      if(%idx >= %numSubLines)
+         %idx = 0;
+      //echo("subLine index:" SPC %idx);
+      %subLine = %subLines.getObject(%idx);
+      %line.zLastUsedSubLineIndex = %idx;
+      if(isObject(%subLine))
+         %this.addLine(%camera, %subLine);
+   }
+   else
+   {
+      // Add additional terminal node to avoid slowing down at the end.
+      %camera.pushBack(%camera.zOutPos, 0, "Normal", "Linear");
+      %camera.zNumNodes++;
+   }
+
+   %subLines.delete();
+}
+
 //------------------------------------------------------------------------------
 // Packet Line In Marker
 
@@ -151,49 +228,14 @@ function PacketLineIn::prepareCamera(%this, %obj, %camera)
    %line = getWord(%obj.lines, getRandom(0, %numLines-1));
    if(!isObject(%line))
       return;
-
-   %numNodes = %line.getCount();
-   //echo(%numNodes SPC "nodes");
-  %speed = 200;
-   for(%i = 0; %i < %numNodes; %i++)
-   {
-      %currentNode = %line.getObject(%i);
-      if(%i < %numNodes-1)
-         %nextNode = %line.getObject(%i+1);
-      %transform = %currentNode.getTransform();
-      //echo(%transform);
-      if(%currentNode.speed !$= "")
-      {
-         %speed = %currentNode.speed;
-      }
-      else if(%nextNode !$= "" && %currentNode.msToNext != 0)
-      {
-         %pos1 = %currentNode.getPosition();
-         %pos2 = %nextNode.getPosition();
-         %dist = VectorLen(VectorSub(%pos2, %pos1));
-         %time = %currentNode.msToNext;
-         %speed = %dist / (%time/1000);
-         //echo("pos1:" SPC %pos1);
-         //echo("pos2:" SPC %pos2);
-         //echo("dist:" SPC %dist);
-         //echo("time:" SPC %time);
-      }
-      //echo("speed:" SPC %speed);
-      if((%type = %currentNode.type) $= "")
-         %type = "Kink";
-      if((%path = %currentNode.smoothingType) $= "")
-         %path = "Linear";
-      %camera.pushBack(%transform, %speed, %type, %path);
-      %camera.zOutPos = %transform;
-   }
-   
+      
+   %camera.getDataBlock().addLine(%camera, %line);
    %camera.popFront();
 
    %camera.startFade(0, 0, true);
    %camera.setPosition(0.0);
    %camera.setState("stop");
 
-   %camera.zNumNodes = %numNodes;
    %camera.zPreparedLine = %line;
 }
 

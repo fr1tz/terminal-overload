@@ -43,4 +43,30 @@ datablock ParticleEmitterData(PacketLineEntryEmitter : DefaultEmitter)
    alignDirection = "0 0 1";
 };
 
+datablock ParticleData(PacketLineSparkParticle : DefaultParticle)
+{
+   sizes[0] = "10";
+   sizes[1] = "0";
+   sizes[2] = "1";
+   sizes[3] = "1";
+   times[1] = "1";
+   times[2] = "1";
+   textureName = "content/xa/rotc/p.5.4/textures/rotc/corona.png";
+   animTexName = "content/xa/rotc/p.5.4/textures/rotc/corona.png";
+   colors[0] = "0.996078 0.992157 0.992157 1";
+   colors[1] = "0.996078 0.996078 0.996078 1";
+   dragCoefficient = "0";
+   inheritedVelFactor = "0";
+   lifetimeMS = "1000";
+};
+
+datablock ParticleEmitterData(PacketLineSparkEmitter : DefaultEmitter)
+{
+   particles = "PacketLineSparkParticle";
+   ejectionOffset = "0";
+   thetaMax = "180";
+   ejectionPeriodMS = "5";
+   ejectionVelocity = "100";
+   velocityVariance = "5";
+};
 
