@@ -5,14 +5,14 @@
       <author>Blender User</author>
       <authoring_tool>Blender 2.67.0 r57141</authoring_tool>
     </contributor>
-    <created>2014-03-04T08:25:21</created>
-    <modified>2014-03-04T08:25:21</modified>
+    <created>2014-03-05T06:32:49</created>
+    <modified>2014-03-05T06:32:49</modified>
     <unit name="meter" meter="1"/>
     <up_axis>Z_UP</up_axis>
   </asset>
   <library_images/>
   <library_effects>
-    <effect id="xa_notc_mis_dm1_shapes_world_c_mat1-effect">
+    <effect id="xa_notc_mis_dm1_shapes_clouds_mat1-effect">
       <profile_COMMON>
         <technique sid="common">
           <lambert>
@@ -23,7 +23,7 @@
               <color sid="ambient">0 0 0 1</color>
             </ambient>
             <diffuse>
-              <color sid="diffuse">0.007726632 0.64 0.02626775 1</color>
+              <color sid="diffuse">0 0.132489 0.64 1</color>
             </diffuse>
             <index_of_refraction>
               <float sid="index_of_refraction">1</float>
@@ -40,8 +40,8 @@
     </effect>
   </library_effects>
   <library_materials>
-    <material id="xa_notc_mis_dm1_shapes_world_c_mat1-material" name="xa_notc_mis_dm1_shapes_world_c_mat1">
-      <instance_effect url="#xa_notc_mis_dm1_shapes_world_c_mat1-effect"/>
+    <material id="xa_notc_mis_dm1_shapes_clouds_mat1-material" name="xa_notc_mis_dm1_shapes_clouds_mat1">
+      <instance_effect url="#xa_notc_mis_dm1_shapes_clouds_mat1-effect"/>
     </material>
   </library_materials>
   <library_geometries>
@@ -68,7 +68,7 @@
           </technique_common>
         </source>
         <source id="Cube_003-mesh-map-0">
-          <float_array id="Cube_003-mesh-map-0-array" count="12">0 0 0 1 1 1 1 0 0 0 1 1</float_array>
+          <float_array id="Cube_003-mesh-map-0-array" count="12">-4.5 -4.5 -4.5 5.5 5.5 5.5 5.5 -4.5 -4.5 -4.5 5.5 5.5</float_array>
           <technique_common>
             <accessor source="#Cube_003-mesh-map-0-array" count="6" stride="2">
               <param name="S" type="float"/>
@@ -79,7 +79,7 @@
         <vertices id="Cube_003-mesh-vertices">
           <input semantic="POSITION" source="#Cube_003-mesh-positions"/>
         </vertices>
-        <polylist material="xa_notc_mis_dm1_shapes_world_c_mat1-material" count="2">
+        <polylist material="xa_notc_mis_dm1_shapes_clouds_mat1-material" count="2">
           <input semantic="VERTEX" source="#Cube_003-mesh-vertices" offset="0"/>
           <input semantic="NORMAL" source="#Cube_003-mesh-normals" offset="1"/>
           <input semantic="TEXCOORD" source="#Cube_003-mesh-map-0" offset="2" set="0"/>
@@ -94,11 +94,11 @@
   <library_visual_scenes>
     <visual_scene id="Scene" name="Scene">
       <node id="c" name="c" type="NODE">
-        <matrix sid="transform">1 0 0 9.91443e-8 0 1 0 -5.17232e-8 0 0 1 0.467542 0 0 0 1</matrix>
+        <matrix sid="transform">1 0 0 9.91443e-8 0 1 0 -5.17232e-8 0 0 1 0 0 0 0 1</matrix>
         <instance_geometry url="#Cube_003-mesh">
           <bind_material>
             <technique_common>
-              <instance_material symbol="xa_notc_mis_dm1_shapes_world_c_mat1-material" target="#xa_notc_mis_dm1_shapes_world_c_mat1-material"/>
+              <instance_material symbol="xa_notc_mis_dm1_shapes_clouds_mat1-material" target="#xa_notc_mis_dm1_shapes_clouds_mat1-material"/>
             </technique_common>
           </bind_material>
         </instance_geometry>

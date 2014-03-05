@@ -64,6 +64,18 @@ new SimGroup(MissionGroup) {
          canSave = "1";
          canSaveDynamicFields = "1";
       };
+      new CameraBookmark() {
+         isAIControlled = "0";
+         dataBlock = "CameraBookmarkMarker";
+         client = "-1";
+         teamId = "0";
+         position = "6.2315 73.5708 288.111";
+         rotation = "0.010203 -0.098773 0.995058 168.263";
+         scale = "1 1 1";
+         internalName = "NewCamera_0";
+         canSave = "1";
+         canSaveDynamicFields = "1";
+      };
    };
    new SimGroup(PlayerDropPoints) {
       canSave = "1";
@@ -141,7 +153,7 @@ new SimGroup(MissionGroup) {
       baseTexSize = "1024";
       lightMapSize = "256";
       screenError = "16";
-      position = "-128 -128 -510";
+      position = "-128 -128 -242.641";
       rotation = "1 0 0 0";
       canSave = "1";
       canSaveDynamicFields = "1";
@@ -161,11 +173,11 @@ new SimGroup(MissionGroup) {
          canSave = "1";
          canSaveDynamicFields = "1";
             lines = "PacketLine1";
-            zActivationTrigger = "4386";
+            zActivationTrigger = "4398";
             zLastUpdatePosition = "0 0.2174 9970.75";
-            zParticleEmitter = "4385";
-            zProximityTrigger = "4387";
-            zUpdateAssetsThread = "156136";
+            zParticleEmitter = "4397";
+            zProximityTrigger = "4399";
+            zUpdateAssetsThread = "99427";
       };
       new TSStatic() {
          shapeName = "content/xa/notc/mis/dm1/shapes/heap/shape.dae";
@@ -195,7 +207,7 @@ new SimGroup(MissionGroup) {
 
          new Marker() {
             seqNum = "0";
-            type = "Normal";
+            type = "Kink";
             msToNext = "1000";
             smoothingType = "Linear";
             position = "0 0 10000";
@@ -206,7 +218,7 @@ new SimGroup(MissionGroup) {
          };
          new Marker() {
             seqNum = "1";
-            type = "Normal";
+            type = "Kink";
             msToNext = "1000";
             smoothingType = "Linear";
             position = "0 0 8000";
@@ -217,21 +229,10 @@ new SimGroup(MissionGroup) {
          };
          new Marker() {
             seqNum = "2";
-            type = "Normal";
-            msToNext = "1000";
-            smoothingType = "Linear";
-            position = "0 0 1000";
-            rotation = "1 0 0 90";
-            scale = "1 1 1";
-            canSave = "1";
-            canSaveDynamicFields = "1";
-         };
-         new Marker() {
-            seqNum = "3";
-            type = "Normal";
+            type = "Kink";
             msToNext = "0";
             smoothingType = "Linear";
-            position = "0 0 4";
+            position = "0 0 272";
             rotation = "1 0 0 90";
             scale = "1 1 1";
             canSave = "1";
@@ -240,23 +241,7 @@ new SimGroup(MissionGroup) {
       };
    };
    new TSStatic() {
-      shapeName = "content/xa/notc/mis/dm1/shapes/world/a/shape.dae";
-      playAmbient = "1";
-      meshCulling = "0";
-      originSort = "0";
-      collisionType = "Collision Mesh";
-      decalType = "Collision Mesh";
-      allowPlayerStep = "1";
-      renderNormals = "0";
-      forceDetail = "-1";
-      position = "0 0 0";
-      rotation = "1 0 0 0";
-      scale = "9000 9000 9000";
-      canSave = "1";
-      canSaveDynamicFields = "1";
-   };
-   new TSStatic() {
-      shapeName = "content/xa/notc/mis/dm1/shapes/world/b/shape.dae";
+      shapeName = "content/xa/notc/mis/dm1/shapes/world/shape.dae";
       playAmbient = "1";
       meshCulling = "0";
       originSort = "0";
@@ -272,7 +257,7 @@ new SimGroup(MissionGroup) {
       canSaveDynamicFields = "1";
    };
    new TSStatic() {
-      shapeName = "content/xa/notc/mis/dm1/shapes/world/c/shape.dae";
+      shapeName = "content/xa/notc/mis/dm1/shapes/clouds1/shape.dae";
       playAmbient = "1";
       meshCulling = "0";
       originSort = "0";
@@ -281,11 +266,12 @@ new SimGroup(MissionGroup) {
       allowPlayerStep = "1";
       renderNormals = "0";
       forceDetail = "-1";
-      position = "0 0 2000";
+      position = "0 0 7600";
       rotation = "1 0 0 0";
       scale = "9000 9000 1";
       canSave = "1";
       canSaveDynamicFields = "1";
+         xa_notc_mis_dm1_shapes_clouds_mat1 = "xa_notc_mis_dm1_shapes_clouds_mat1_mat";
    };
    new TSStatic() {
       shapeName = "content/xa/notc/mis/dm1/shapes/atmo/shape.dae";
@@ -297,11 +283,165 @@ new SimGroup(MissionGroup) {
       allowPlayerStep = "1";
       renderNormals = "0";
       forceDetail = "-1";
-      position = "0 0 4000";
+      position = "0 0 1000";
       rotation = "1 0 0 0";
-      scale = "9000 9000 1000";
+      scale = "9000 9000 1500";
       canSave = "1";
       canSaveDynamicFields = "1";
+   };
+   new SimGroup(City) {
+      canSave = "1";
+      canSaveDynamicFields = "1";
+
+      new TSStatic() {
+         shapeName = "content/xa/notc/mis/dm1/shapes/dais1/shape.dae";
+         playAmbient = "1";
+         meshCulling = "0";
+         originSort = "0";
+         collisionType = "Visible Mesh";
+         decalType = "Visible Mesh";
+         allowPlayerStep = "1";
+         renderNormals = "0";
+         forceDetail = "-1";
+         position = "-17.3804 -18.2383 149.414";
+         rotation = "0 0 1 76.759";
+         scale = "2000 2000 9000";
+         canSave = "1";
+         canSaveDynamicFields = "1";
+      };
+      new SimGroup(Arena) {
+         canSave = "1";
+         canSaveDynamicFields = "1";
+
+         new TSStatic() {
+            shapeName = "content/xa/notc/mis/dm1/shapes/cube1/shape.dae";
+            playAmbient = "1";
+            meshCulling = "0";
+            originSort = "0";
+            collisionType = "Visible Mesh";
+            decalType = "Visible Mesh";
+            allowPlayerStep = "1";
+            renderNormals = "0";
+            forceDetail = "-1";
+            position = "72 0 258";
+            rotation = "1 0 0 0";
+            scale = "40 40 10";
+            canSave = "1";
+            canSaveDynamicFields = "1";
+         };
+         new TSStatic() {
+            shapeName = "content/xa/notc/mis/dm1/shapes/wedge1/shape.dae";
+            playAmbient = "1";
+            meshCulling = "0";
+            originSort = "0";
+            collisionType = "Visible Mesh";
+            decalType = "Visible Mesh";
+            allowPlayerStep = "1";
+            renderNormals = "0";
+            forceDetail = "-1";
+            position = "72 -80 258";
+            rotation = "0 0 1 180";
+            scale = "40 40 10";
+            canSave = "1";
+            canSaveDynamicFields = "1";
+         };
+         new TSStatic() {
+            shapeName = "content/xa/notc/mis/dm1/shapes/wedge1/shape.dae";
+            playAmbient = "1";
+            meshCulling = "0";
+            originSort = "0";
+            collisionType = "Visible Mesh";
+            decalType = "Visible Mesh";
+            allowPlayerStep = "1";
+            renderNormals = "0";
+            forceDetail = "-1";
+            position = "72 80 258";
+            rotation = "0 0 1 90";
+            scale = "40 40 10";
+            canSave = "1";
+            canSaveDynamicFields = "1";
+         };
+         new TSStatic() {
+            shapeName = "content/xa/notc/mis/dm1/shapes/wedge1/shape.dae";
+            playAmbient = "1";
+            meshCulling = "0";
+            originSort = "0";
+            collisionType = "Visible Mesh";
+            decalType = "Visible Mesh";
+            allowPlayerStep = "1";
+            renderNormals = "0";
+            forceDetail = "-1";
+            position = "-72 79.9999 258";
+            rotation = "1 0 0 0";
+            scale = "40 40 10";
+            canSave = "1";
+            canSaveDynamicFields = "1";
+         };
+         new TSStatic() {
+            shapeName = "content/xa/notc/mis/dm1/shapes/cube1/shape.dae";
+            playAmbient = "1";
+            meshCulling = "0";
+            originSort = "0";
+            collisionType = "Visible Mesh";
+            decalType = "Visible Mesh";
+            allowPlayerStep = "1";
+            renderNormals = "0";
+            forceDetail = "-1";
+            position = "-72 7.86049e-005 258";
+            rotation = "0 0 1 180";
+            scale = "40 40 10";
+            canSave = "1";
+            canSaveDynamicFields = "1";
+         };
+         new TSStatic() {
+            shapeName = "content/xa/notc/mis/dm1/shapes/wedge1/shape.dae";
+            playAmbient = "1";
+            meshCulling = "0";
+            originSort = "0";
+            collisionType = "Visible Mesh";
+            decalType = "Visible Mesh";
+            allowPlayerStep = "1";
+            renderNormals = "0";
+            forceDetail = "-1";
+            position = "-72 -79.9998 258";
+            rotation = "-0 0 -1 90";
+            scale = "40 40 10";
+            canSave = "1";
+            canSaveDynamicFields = "1";
+         };
+         new TSStatic() {
+            shapeName = "content/xa/notc/mis/dm1/shapes/cube1/shape.dae";
+            playAmbient = "1";
+            meshCulling = "0";
+            originSort = "0";
+            collisionType = "Visible Mesh";
+            decalType = "Visible Mesh";
+            allowPlayerStep = "1";
+            renderNormals = "0";
+            forceDetail = "-1";
+            position = "0 -80 258";
+            rotation = "1 0 0 0";
+            scale = "32 40 10";
+            canSave = "1";
+            canSaveDynamicFields = "1";
+         };
+         new TSStatic() {
+            shapeName = "content/xa/notc/mis/dm1/shapes/cube1/shape.dae";
+            playAmbient = "1";
+            meshCulling = "0";
+            originSort = "0";
+            collisionType = "Visible Mesh";
+            decalType = "Visible Mesh";
+            allowPlayerStep = "1";
+            renderNormals = "0";
+            forceDetail = "-1";
+            position = "0 80 258";
+            rotation = "1 0 0 0";
+            scale = "32 40 10";
+            canSave = "1";
+            canSaveDynamicFields = "1";
+         };
+      };
    };
 };
 //--- OBJECT WRITE END ---
