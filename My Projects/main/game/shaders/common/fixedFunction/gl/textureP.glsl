@@ -20,35 +20,10 @@
 // IN THE SOFTWARE.
 //-----------------------------------------------------------------------------
 
-#include "../../../gl/hlslCompat.glsl"
-#include "shadergen:/autogenConditioners.h"
-#include "../../gl/postFx.glsl"
-
-uniform sampler2D backBuffer;   // The original backbuffer.
-uniform sampler2D prepassTex;   // The pre-pass depth and normals.
-
-uniform float brightScalar;
-
-const vec3 LUMINANCE_VECTOR = vec3(0.3125f, 0.6154f, 0.0721f);
-
+uniform sampler2D diffuseMap;
+varying vec2 texCoord;
 
 void main()
 {
-    vec4 col = vec4( 0, 0, 0, 1 );
-    
-    // Get the depth at this pixel.
-    float depth = prepassUncondition( prepassTex, IN_uv0 ).w;
-    
-    // If the depth is equal to 1.0, read from the backbuffer
-    // and perform the exposure calculation on the result.
-    if ( depth >= 0.999 )
-    {
-        col = texture2D( backBuffer, IN_uv0 );
-
-        //col = 1 - exp(-120000 * col);
-        col += dot( vec3(col), LUMINANCE_VECTOR ) + 0.0001f;
-        col *= brightScalar;
-    }
-    
-    gl_FragColor = col;
+   gl_FragColor = texture2D(diffuseMap, texCoord);
 }
