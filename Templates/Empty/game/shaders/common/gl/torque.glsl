@@ -153,7 +153,8 @@ vec2 parallaxOffset( sampler2D texMap, vec2 texCoord, vec3 negViewTS, float dept
 
 /// The maximum value for 16bit per component integer HDR encoding.
 const float HDR_RGB16_MAX = 100.0;
-/// The maximum value for 10bit per component integer HDR encoding.const float HDR_RGB10_MAX = 4.0;
+/// The maximum value for 10bit per component integer HDR encoding.
+const float HDR_RGB10_MAX = 4.0;
 
 /// Encodes an HDR color for storage into a target.
 vec3 hdrEncode( vec3 sample )
