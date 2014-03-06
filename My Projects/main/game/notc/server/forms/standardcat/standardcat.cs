@@ -57,7 +57,7 @@ datablock PlayerData(FrmStandardcat)
 
    rechargeRate = 0.4;
 
-   runForce = "9000";
+   runForce = 9000*2;
    runEnergyDrain = 0;
    minRunEnergy = 0;
    maxForwardSpeed = 8;
@@ -71,7 +71,7 @@ datablock PlayerData(FrmStandardcat)
 	maxSlideBackwardSpeed = 25;
 	maxSlideSideSpeed = 12;
 
-   sprintForce = "9000";
+   sprintForce = 9000*2;
    sprintEnergyDrain = 0;
    minSprintEnergy = 0;
    maxSprintForwardSpeed = 15;
