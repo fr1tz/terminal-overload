@@ -47,7 +47,7 @@ GFXGLStateBlock::GFXGLStateBlock(const GFXStateBlockDesc& desc) :
 	for(int i = 0; i < TEXTURE_STAGE_COUNT; ++i)
 	{
 		GLuint &id = mSamplerObjects[i];
-		auto &ssd = mDesc.samplers[i];
+		GFXSamplerStateDesc &ssd = mDesc.samplers[i];
       Map<GFXSamplerStateDesc, U32>::Iterator itr =  mSamplersMap.find(ssd);
       if(itr == mSamplersMap.end())
       {
