@@ -35,16 +35,9 @@ GFXGLPrimitiveBuffer::GFXGLPrimitiveBuffer(GFXDevice *device, U32 indexCount, U3
    // Generate a buffer and allocate the needed memory
    glGenBuffers(1, &mBuffer);
    
-   if( gglHasExtension(EXT_direct_state_access) )
-   {
-      glNamedBufferDataEXT(mBuffer, indexCount * sizeof(U16), NULL, GFXGLBufferType[mBufferType]);    
-   }
-   else
-   {
-      PRESERVE_INDEX_BUFFER();
-	   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mBuffer);
-	   glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexCount * sizeof(U16), NULL, GFXGLBufferType[bufferType]);
-   }
+   PRESERVE_INDEX_BUFFER();
+   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mBuffer);
+   glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexCount * sizeof(U16), NULL, GFXGLBufferType[bufferType]);   
 }
 
 GFXGLPrimitiveBuffer::~GFXGLPrimitiveBuffer()
@@ -77,20 +70,14 @@ void GFXGLPrimitiveBuffer::unlock()
    
    U32 offset = lockedIndexStart * sizeof(U16);
    U32 length = (lockedIndexEnd - lockedIndexStart) * sizeof(U16);
-   if( gglHasExtension(EXT_direct_state_access) )
-   {      
-      glNamedBufferSubDataEXT(mBuffer, offset, length, mFrameAllocatorPtr + offset );
-   }
-   else
-   {
-	   // Preserve previous binding
-      PRESERVE_INDEX_BUFFER();
    
-      // Bind ourselves and unmap
-      glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mBuffer);
-      glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, offset, length, mFrameAllocatorPtr + offset );
-   }
-
+   // Preserve previous binding
+   PRESERVE_INDEX_BUFFER();
+   
+   // Bind ourselves and unmap
+   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mBuffer);
+   glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, offset, length, mFrameAllocatorPtr + offset );
+   
 #if TORQUE_DEBUG
    AssertFatal(mFrameAllocatorMarkGuard == FrameAllocator::getWaterMark(), "");
 #endif
@@ -102,13 +89,16 @@ void GFXGLPrimitiveBuffer::unlock()
 void GFXGLPrimitiveBuffer::prepare()
 {
 	// Bind
-	static_cast<GFXGLDevice*>(mDevice)->setPB(this);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mBuffer);
+   GFXGLDevice* glDevice = static_cast<GFXGLDevice*>(mDevice);
+   glDevice->setPB(this);
+   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mBuffer);
+   glDevice->getOpenglCache()->setCacheBinded(GL_ELEMENT_ARRAY_BUFFER, mBuffer);
 }
 
 void GFXGLPrimitiveBuffer::finish()
 {
    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+   static_cast<GFXGLDevice*>(mDevice)->getOpenglCache()->setCacheBinded(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
 GLvoid* GFXGLPrimitiveBuffer::getBuffer()

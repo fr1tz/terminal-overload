@@ -42,6 +42,7 @@
 #include "console/console.h"
 #include "gfx/gl/gfxGLOcclusionQuery.h"
 #include "materials/shaderData.h"
+#include "gfx/gl/gfxGLStateCache.h"
 
 GFXAdapter::CreateDeviceInstanceDelegate GFXGLDevice::mCreateDeviceInstance(GFXGLDevice::createInstance); 
 
@@ -187,6 +188,8 @@ GFXGLDevice::GFXGLDevice(U32 adapterIndex) :
 
    for(int i = 0; i < GS_COUNT; ++i)
       mModelViewProjSC[i] = NULL;
+
+   mOpenglStateCache = new GFXGLStateCache;
 }
 
 GFXGLDevice::~GFXGLDevice()
@@ -231,6 +234,8 @@ GFXGLDevice::~GFXGLDevice()
       SAFE_DELETE( mCardProfiler );
 
    SAFE_DELETE( gScreenShot );
+
+   SAFE_DELETE( mOpenglStateCache );
 }
 
 void GFXGLDevice::zombify()
@@ -501,7 +506,6 @@ void GFXGLDevice::setGlobalAmbientInternal(ColorF color)
 void GFXGLDevice::setTextureInternal(U32 textureUnit, const GFXTextureObject*texture)
 {
    GFXGLTextureObject *tex = static_cast<GFXGLTextureObject*>(const_cast<GFXTextureObject*>(texture));
-   glActiveTexture(GL_TEXTURE0 + textureUnit);
    if (tex)
    {
       mActiveTextureType[textureUnit] = tex->getBinding();
@@ -509,16 +513,15 @@ void GFXGLDevice::setTextureInternal(U32 textureUnit, const GFXTextureObject*tex
    } 
    else if(mActiveTextureType[textureUnit] != GL_ZERO)
    {
+      glActiveTexture(GL_TEXTURE0 + textureUnit);
       glBindTexture(mActiveTextureType[textureUnit], 0);
+      getOpenglCache()->setCacheBindedTex(textureUnit, mActiveTextureType[textureUnit], 0);
       mActiveTextureType[textureUnit] = GL_ZERO;
    }
-   
-   glActiveTexture(GL_TEXTURE0);
 }
 
 void GFXGLDevice::setCubemapInternal(U32 textureUnit, const GFXGLCubemap* texture)
 {
-   glActiveTexture(GL_TEXTURE0 + textureUnit);
    if(texture)
    {
       mActiveTextureType[textureUnit] = GL_TEXTURE_CUBE_MAP;
@@ -526,11 +529,11 @@ void GFXGLDevice::setCubemapInternal(U32 textureUnit, const GFXGLCubemap* textur
    }
    else if(mActiveTextureType[textureUnit] != GL_ZERO)
    {
+      glActiveTexture(GL_TEXTURE0 + textureUnit);
       glBindTexture(mActiveTextureType[textureUnit], 0);
+      getOpenglCache()->setCacheBindedTex(textureUnit, mActiveTextureType[textureUnit], 0);
       mActiveTextureType[textureUnit] = GL_ZERO;
    }
-
-   glActiveTexture(GL_TEXTURE0);
 }
 
 void GFXGLDevice::setMatrix( GFXMatrixType mtype, const MatrixF &mat )

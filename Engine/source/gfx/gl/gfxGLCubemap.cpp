@@ -56,7 +56,7 @@ GFXGLCubemap::~GFXGLCubemap()
 
 void GFXGLCubemap::fillCubeTextures(GFXTexHandle* faces)
 {
-   glActiveTexture(GL_TEXTURE0);
+   PRESERVE_CUBEMAP_TEXTURE();
    glBindTexture(GL_TEXTURE_CUBE_MAP, mCubemap);
    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_GENERATE_MIPMAP, GL_TRUE);
    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -89,9 +89,6 @@ void GFXGLCubemap::fillCubeTextures(GFXTexHandle* faces)
          0, GFXGLTextureFormat[faceFormat], GFXGLTextureType[faceFormat], buf);
       delete[] buf;
    }
-   
-   glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
-   glBindBuffer(GL_PIXEL_UNPACK_BUFFER_ARB, 0);
 }
 
 void GFXGLCubemap::initStatic(GFXTexHandle* faces)
@@ -128,7 +125,7 @@ void GFXGLCubemap::initStatic( DDSFile *dds )
 
    glGenTextures(1, &mCubemap);
 
-   glActiveTexture(GL_TEXTURE0);
+   PRESERVE_CUBEMAP_TEXTURE();
    glBindTexture(GL_TEXTURE_CUBE_MAP, mCubemap);
    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_GENERATE_MIPMAP, GL_TRUE);
    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -162,9 +159,6 @@ void GFXGLCubemap::initStatic( DDSFile *dds )
       glCompressedTexImage2D( faceList[i], 0, GFXGLTextureInternalFormat[mFaceFormat], 
                               mWidth, mHeight, 0, surfaceSize, buffer );
    }
-   
-   glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
-   glBindBuffer(GL_PIXEL_UNPACK_BUFFER_ARB, 0);
 }
 
 void GFXGLCubemap::initDynamic(U32 texSize, GFXFormat faceFormat)
@@ -173,6 +167,7 @@ void GFXGLCubemap::initDynamic(U32 texSize, GFXFormat faceFormat)
    mFaceFormat = faceFormat;
 
    glGenTextures(1, &mCubemap);
+   PRESERVE_CUBEMAP_TEXTURE();
    glBindTexture(GL_TEXTURE_CUBE_MAP, mCubemap);
    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
@@ -187,7 +182,6 @@ void GFXGLCubemap::initDynamic(U32 texSize, GFXFormat faceFormat)
       glTexImage2D(  faceList[i], 0, GFXGLTextureInternalFormat[faceFormat], texSize, texSize, 
                      0, GFXGLTextureFormat[faceFormat], GFXGLTextureType[faceFormat], NULL);
    }
-   glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 }
 
 void GFXGLCubemap::zombify()

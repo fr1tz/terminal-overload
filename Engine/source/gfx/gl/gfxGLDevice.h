@@ -39,6 +39,7 @@ class GFXGLVertexBuffer;
 class GFXGLPrimitiveBuffer;
 class GFXGLTextureTarget;
 class GFXGLCubemap;
+class GFXGLStateCache;
 
 class GFXGLDevice : public GFXDevice
 {
@@ -132,7 +133,9 @@ public:
    
    ///
    bool supportsAnisotropic() const { return mSupportsAnisotropic; }
-   
+
+   GFXGLStateCache* getOpenglCache() { return mOpenglStateCache; }
+      
 protected:   
    /// Called by GFXDevice to create a device specific stateblock
    virtual GFXStateBlockRef createStateBlockInternal(const GFXStateBlockDesc& desc);
@@ -234,6 +237,9 @@ private:
    GFXFence* _createPlatformSpecificFence(); ///< If our platform (e.g. OS X) supports a fence extenstion (e.g. GL_APPLE_fence) this will create one, otherwise returns NULL
    
    void setPB(GFXGLPrimitiveBuffer* pb); ///< Sets mCurrentPB
+
+   GFXGLStateCache *mOpenglStateCache;
 };
 
+#define GFXGL static_cast<GFXGLDevice*>(GFXDevice::get())
 #endif

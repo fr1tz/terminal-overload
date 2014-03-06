@@ -102,6 +102,7 @@ void GFXGLWindowTarget::resolveTo(GFXTextureObject* obj)
 inline void GFXGLWindowTarget::_setupAttachments()
 {
    glBindFramebufferEXT( GL_FRAMEBUFFER_EXT, mBackBufferFBO);
+   GFXGL->getOpenglCache()->setCacheBinded(GL_FRAMEBUFFER_EXT, mBackBufferFBO);
    const Point2I dstSize = getSize();
    mBackBufferColorTex.set(dstSize.x, dstSize.y, getFormat(), &PostFxTargetProfile, "backBuffer");
    GFXGLTextureObject *color = static_cast<GFXGLTextureObject*>(mBackBufferColorTex.getPointer());
@@ -116,6 +117,7 @@ void GFXGLWindowTarget::makeActive()
    if(mBackBufferFBO)
    {
       glBindFramebufferEXT( GL_FRAMEBUFFER_EXT, mBackBufferFBO);
+      GFXGL->getOpenglCache()->setCacheBinded(GL_FRAMEBUFFER_EXT, mBackBufferFBO);
    }
    else
    {

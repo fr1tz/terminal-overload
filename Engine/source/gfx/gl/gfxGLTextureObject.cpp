@@ -97,9 +97,6 @@ void GFXGLTextureObject::unlock(U32 mipLevel)
       return;
 
    PRESERVE_TEXTURE(mBinding);
-
-   glActiveTexture(GL_TEXTURE0);
-
    glBindTexture(mBinding, mHandle);
    glBindBuffer(GL_PIXEL_UNPACK_BUFFER_ARB, mBuffer);
    glBufferData(GL_PIXEL_UNPACK_BUFFER_ARB, (mLockedRectRect.extent.x + 1) * (mLockedRectRect.extent.y + 1) * mBytesPerTexel, mFrameAllocatorPtr, GL_STREAM_DRAW);
@@ -169,6 +166,7 @@ void GFXGLTextureObject::bind(U32 textureUnit)
 {
    glActiveTexture(GL_TEXTURE0 + textureUnit);
    glBindTexture(mBinding, mHandle);
+   GFXGL->getOpenglCache()->setCacheBindedTex(textureUnit, mBinding, mHandle);
 
    if( gglHasExtension(ARB_sampler_objects) )
 	   return;
@@ -205,6 +203,7 @@ void GFXGLTextureObject::bind(U32 textureUnit)
 U8* GFXGLTextureObject::getTextureData()
 {
    U8* data = new U8[mTextureSize.x * mTextureSize.y * mBytesPerTexel];
+   PRESERVE_TEXTURE(mBinding);
    glBindTexture(mBinding, mHandle);
    glGetTexImage(mBinding, 0, GL_BGRA, GL_UNSIGNED_INT_8_8_8_8_REV, data);
    return data;
@@ -212,6 +211,7 @@ U8* GFXGLTextureObject::getTextureData()
 
 void GFXGLTextureObject::copyIntoCache()
 {
+   PRESERVE_TEXTURE(mBinding);
    glBindTexture(mBinding, mHandle);
    U32 cacheSize = mTextureSize.x * mTextureSize.y;
    if(mBinding == GL_TEXTURE_3D)
@@ -221,7 +221,6 @@ void GFXGLTextureObject::copyIntoCache()
    mZombieCache = new U8[cacheSize];
    
    glGetTexImage(mBinding, 0, GFXGLTextureFormat[mFormat], GFXGLTextureType[mFormat], mZombieCache);
-   glBindTexture(mBinding, 0);
 }
 
 void GFXGLTextureObject::reloadFromCache()
@@ -237,6 +236,7 @@ void GFXGLTextureObject::reloadFromCache()
       return;
    }
    
+   PRESERVE_TEXTURE(mBinding);
    glBindTexture(mBinding, mHandle);
 
    if(mBinding == GL_TEXTURE_2D)

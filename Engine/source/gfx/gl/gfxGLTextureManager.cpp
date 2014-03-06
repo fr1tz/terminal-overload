@@ -105,9 +105,8 @@ void GFXGLTextureManager::innerCreateTexture( GFXGLTextureObject *retTex,
    retTex->mBinding = binding;
    
    // Bind it
-   glActiveTexture(GL_TEXTURE0);
    PRESERVE_TEXTURE(binding);
-   glBindTexture(binding, retTex->getHandle());
+   glBindTexture(retTex->getBinding(), retTex->getHandle());
    
    // Create it
    // TODO: Reenable mipmaps on render targets when Apple fixes their drivers
@@ -223,7 +222,6 @@ bool GFXGLTextureManager::_loadTexture(GFXTextureObject *aTexture, GBitmap *pDL)
    if(pDL->getFormat() == GFXFormatR8G8B8)
       pDL->setFormat(GFXFormatR8G8B8A8);
    // Bind to edit
-   glActiveTexture(GL_TEXTURE0);
    PRESERVE_TEXTURE(texture->getBinding());
    glBindTexture(texture->getBinding(), texture->getHandle());
 
@@ -232,8 +230,6 @@ bool GFXGLTextureManager::_loadTexture(GFXTextureObject *aTexture, GBitmap *pDL)
       _fastTextureLoad(texture, pDL);
    else
       _slowTextureLoad(texture, pDL);
-   
-   glBindTexture(texture->getBinding(), 0);
    
    return true;
 }
@@ -249,7 +245,6 @@ bool GFXGLTextureManager::_loadTexture(GFXTextureObject *aTexture, DDSFile *dds)
    if(texture->getBinding() != GL_TEXTURE_2D)
       return false;
    
-   glActiveTexture(GL_TEXTURE0);
    PRESERVE_TEXTURE(texture->getBinding());
    glBindTexture(texture->getBinding(), texture->getHandle());
    texture->mFormat = dds->mFormat;
@@ -285,7 +280,6 @@ bool GFXGLTextureManager::_loadTexture(GFXTextureObject *aTexture, DDSFile *dds)
       else
          glTexSubImage2D(texture->getBinding(), i, 0, 0, dds->getWidth(i), dds->getHeight(i), GFXGLTextureFormat[dds->mFormat], GFXGLTextureType[dds->mFormat], dds->mSurfaces[0]->mMips[i]);
    }
-   glBindTexture(texture->getBinding(), 0);
    
    return true;
 }
@@ -297,11 +291,9 @@ bool GFXGLTextureManager::_loadTexture(GFXTextureObject *aTexture, void *raw)
    
    GFXGLTextureObject* texture = static_cast<GFXGLTextureObject*>(aTexture);
    
-   glActiveTexture(GL_TEXTURE0);
    PRESERVE_3D_TEXTURE();
-   glBindTexture(GL_TEXTURE_3D, texture->getHandle());
+   glBindTexture(texture->getBinding(), texture->getHandle());
    glTexSubImage3D(GL_TEXTURE_3D, 0, 0, 0, 0, texture->getWidth(), texture->getHeight(), texture->getDepth(), GFXGLTextureFormat[texture->mFormat], GFXGLTextureType[texture->mFormat], raw);
-   glBindTexture(GL_TEXTURE_3D, 0);
    
    return true;
 }

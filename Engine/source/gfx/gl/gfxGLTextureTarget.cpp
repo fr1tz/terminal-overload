@@ -160,6 +160,7 @@ void _GFXGLTextureTargetFBOImpl::applyState()
 {   
    // REMINDER: When we implement MRT support, check against GFXGLDevice::getNumRenderTargets()
    
+   PRESERVE_FRAMEBUFFER();
    glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, mFramebuffer);
    
    _GFXGLTargetDesc* color0 = mTarget->getTargetDesc(GFXTextureTarget::Color0);
@@ -190,18 +191,18 @@ void _GFXGLTextureTargetFBOImpl::applyState()
       // Clears the texture (note that the binding is irrelevent)
       glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_TEXTURE_2D, 0, 0);
    }
-   
-   glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
 }
 
 void _GFXGLTextureTargetFBOImpl::makeActive()
 {
    glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, mFramebuffer);
+   GFXGL->getOpenglCache()->setCacheBinded(GL_FRAMEBUFFER_EXT, mFramebuffer);
 }
 
 void _GFXGLTextureTargetFBOImpl::finish()
 {
    glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
+   GFXGL->getOpenglCache()->setCacheBinded(GL_FRAMEBUFFER_EXT, 0);
    
    _GFXGLTargetDesc* color0 = mTarget->getTargetDesc(GFXTextureTarget::Color0);
    if(!color0 || !(color0->hasMips()))
@@ -215,9 +216,8 @@ void _GFXGLTextureTargetFBOImpl::finish()
    
    // Generate mips if necessary
    // Assumes a 2D texture.
-   PRESERVE_2D_TEXTURE();
-   glActiveTexture(GL_TEXTURE0);
-   glBindTexture(GL_TEXTURE_2D, color0->getHandle());
+   PRESERVE_TEXTURE(color0->getBinding());
+   glBindTexture(color0->getBinding(), color0->getHandle());
    glGenerateMipmapEXT(GL_TEXTURE_2D);
 }
 
@@ -253,7 +253,6 @@ void _GFXGLTextureTargetAUXBufferImpl::finish()
    // Bind the Color0 texture
    _GFXGLTargetDesc* color0 = mTarget->getTargetDesc(GFXTextureTarget::Color0);
    
-   glActiveTexture(GL_TEXTURE0);
    // Assume we're a 2D texture for now.
    PRESERVE_2D_TEXTURE();
    glBindTexture(color0->getBinding(), color0->getHandle());
@@ -438,9 +437,6 @@ void GFXGLTextureTarget::resolveTo(GFXTextureObject* obj)
    
    glBlitFramebufferEXT(0, 0, mTargets[Color0]->getWidth(), mTargets[Color0]->getHeight(),
       0, 0, glTexture->getWidth(), glTexture->getHeight(), GL_COLOR_BUFFER_BIT, GL_NEAREST);
-   
-   glBindFramebufferEXT(GL_DRAW_FRAMEBUFFER_EXT, 0);
-   glBindFramebufferEXT(GL_READ_FRAMEBUFFER_EXT, 0);
    
    glDeleteFramebuffersEXT(1, &dest);
    glDeleteFramebuffersEXT(1, &src);

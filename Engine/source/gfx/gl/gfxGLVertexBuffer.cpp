@@ -44,19 +44,11 @@ GFXGLVertexBuffer::GFXGLVertexBuffer(  GFXDevice *device,
    glGenBuffers(1, &mBuffer);
 
    //and allocate the needed memory
-   if( gglHasExtension(EXT_direct_state_access) )
-   {      
-      glNamedBufferDataEXT(mBuffer, mNumVerts * mVertexSize, NULL, GFXGLBufferType[mBufferType]);    
-   }
-   else
-   {
-      PRESERVE_VERTEX_BUFFER();
-	    
-	   glBindBuffer(GL_ARRAY_BUFFER, mBuffer);
-	   glBufferData(GL_ARRAY_BUFFER, numVerts * vertexSize, NULL, GFXGLBufferType[bufferType]);
-   }
+   PRESERVE_VERTEX_BUFFER();
+   glBindBuffer(GL_ARRAY_BUFFER, mBuffer);
+   glBufferData(GL_ARRAY_BUFFER, numVerts * vertexSize, NULL, GFXGLBufferType[bufferType]);
    
-      _initVerticesFormat();
+   _initVerticesFormat();
 }
 
 GFXGLVertexBuffer::~GFXGLVertexBuffer()
@@ -92,20 +84,10 @@ void GFXGLVertexBuffer::unlock()
 
    U32 offset = lockedVertexStart * mVertexSize;
    U32 length = (lockedVertexEnd - lockedVertexStart) * mVertexSize;
-
-   if( gglHasExtension(EXT_direct_state_access) )
-   {
-      if(lockedVertexStart == 0 && lockedVertexEnd == 0)      
-         glNamedBufferDataEXT(mBuffer, length, mFrameAllocatorPtr, GFXGLBufferType[mBufferType] );      
-      else
-         glNamedBufferSubDataEXT(mBuffer, offset, length, mFrameAllocatorPtr + offset );
-   }
-   else
-   {
-      PRESERVE_VERTEX_BUFFER();
-      glBindBuffer(GL_ARRAY_BUFFER, mBuffer);
-      glBufferSubData(GL_ARRAY_BUFFER, offset, length, mFrameAllocatorPtr + offset );
-   }
+   
+   PRESERVE_VERTEX_BUFFER();
+   glBindBuffer(GL_ARRAY_BUFFER, mBuffer);
+   glBufferSubData(GL_ARRAY_BUFFER, offset, length, mFrameAllocatorPtr + offset );   
 
    lockedVertexStart = 0;
 	lockedVertexEnd   = 0;
@@ -124,7 +106,8 @@ void GFXGLVertexBuffer::prepare()
    PROFILE_SCOPE(GFXGLVertexBuffer_prepare);
 
 	// Bind the buffer...
-	glBindBuffer(GL_ARRAY_BUFFER, mBuffer);
+   glBindBuffer(GL_ARRAY_BUFFER, mBuffer);
+   GFXGL->getOpenglCache()->setCacheBinded(GL_ARRAY_BUFFER, mBuffer);
 
    // Loop thru the vertex format elements adding the array state...   
    for ( U32 i=0; i < glVerticesFormat.size(); i++ )
@@ -147,6 +130,7 @@ void GFXGLVertexBuffer::finish()
 {
    PROFILE_SCOPE(GFXGLVertexBuffer_finish);
    glBindBuffer(GL_ARRAY_BUFFER, 0);
+   GFXGL->getOpenglCache()->setCacheBinded(GL_ARRAY_BUFFER, 0);
 
    for ( U32 i=0; i < glVerticesFormat.size(); i++ )
       glDisableVertexAttribArray(glVerticesFormat[i].attrIndex);
