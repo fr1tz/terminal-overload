@@ -147,11 +147,7 @@ void GFXGLStateBlock::activate(const GFXGLStateBlock* oldState)
       glStencilOp(GFXGLStencilOp[mDesc.stencilFailOp], GFXGLStencilOp[mDesc.stencilZFailOp], GFXGLStencilOp[mDesc.stencilPassOp]);
    if(STATE_CHANGE(stencilWriteMask))
       glStencilMask(mDesc.stencilWriteMask);
-
-   // "Misc"
-   CHECK_TOGGLE_STATE(ffLighting, GL_LIGHTING);
-
-   CHECK_TOGGLE_STATE(vertexColorEnable, GL_COLOR_MATERIAL);
+   
 
    if(STATE_CHANGE(fillMode))
       glPolygonMode(GL_FRONT_AND_BACK, GFXGLFillMode[mDesc.fillMode]);
