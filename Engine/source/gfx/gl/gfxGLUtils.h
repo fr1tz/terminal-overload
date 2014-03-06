@@ -32,7 +32,7 @@ inline U32 getMaxMipmaps(U32 width, U32 height, U32 depth)
    return getMax( getBinLog2(depth), getMax(getBinLog2(width), getBinLog2(height)));
 }
 
-static inline GLenum minificationFilter(U32 minFilter, U32 mipFilter, U32 /*mipLevels*/)
+inline GLenum minificationFilter(U32 minFilter, U32 mipFilter, U32 /*mipLevels*/)
 {
    // the compiler should interpret this as array lookups
    switch( minFilter ) 
@@ -57,6 +57,42 @@ static inline GLenum minificationFilter(U32 minFilter, U32 mipFilter, U32 /*mipL
          return GL_NEAREST;
          }
    }
+}
+
+// Check if format is compressed format.
+// Even though dxt2/4 are not supported, they are included because they are a compressed format.
+// Assert checks on supported formats are done elsewhere.
+inline bool isCompressedFormat( GFXFormat format )
+{
+   bool compressed = false;
+   if(format == GFXFormatDXT1 || format == GFXFormatDXT2
+         || format == GFXFormatDXT3
+         || format == GFXFormatDXT4
+         || format == GFXFormatDXT5 )
+   {
+      compressed = true;
+   }
+
+   return compressed;
+}
+
+//Get the surface size of a compressed mip map level - see ddsLoader.cpp
+inline U32 getCompressedSurfaceSize(GFXFormat format,U32 width, U32 height, U32 mipLevel=0 )
+{
+   if(!isCompressedFormat(format))
+      return 0;
+
+   // Bump by the mip level.
+   height = getMax(U32(1), height >> mipLevel);
+   width = getMax(U32(1), width >> mipLevel);
+
+   U32 sizeMultiple = 0;
+   if(format == GFXFormatDXT1)
+      sizeMultiple = 8;
+   else
+      sizeMultiple = 16;
+
+   return getMax(U32(1), width/4) * getMax(U32(1), height/4) * sizeMultiple;
 }
 
 /// Simple class which preserves a given GL integer.
