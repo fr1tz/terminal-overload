@@ -157,57 +157,57 @@ const float HDR_RGB16_MAX = 100.0;
 const float HDR_RGB10_MAX = 4.0;
 
 /// Encodes an HDR color for storage into a target.
-vec3 hdrEncode( vec3 sample )
+vec3 hdrEncode( vec3 _sample )
 {
    #if defined( TORQUE_HDR_RGB16 )
 
-      return sample / HDR_RGB16_MAX;
+      return _sample / HDR_RGB16_MAX;
 
    #elif defined( TORQUE_HDR_RGB10 ) 
 
-      return sample / HDR_RGB10_MAX;
+      return _sample / HDR_RGB10_MAX;
 
    #else
 
       // No encoding.
-      return sample;
+      return _sample;
 
    #endif
 }
 
 /// Encodes an HDR color for storage into a target.
-vec4 hdrEncode( vec4 sample )
+vec4 hdrEncode( vec4 _sample )
 {
-   return vec4( hdrEncode( sample.rgb ), sample.a );
+   return vec4( hdrEncode( _sample.rgb ), _sample.a );
 }
 
 /// Decodes an HDR color from a target.
-vec3 hdrDecode( vec3 sample )
+vec3 hdrDecode( vec3 _sample )
 {
    #if defined( TORQUE_HDR_RGB16 )
 
-      return sample * HDR_RGB16_MAX;
+      return _sample * HDR_RGB16_MAX;
 
    #elif defined( TORQUE_HDR_RGB10 )
 
-      return sample * HDR_RGB10_MAX;
+      return _sample * HDR_RGB10_MAX;
 
    #else
 
       // No encoding.
-      return sample;
+      return _sample;
 
    #endif
 }
 
 /// Decodes an HDR color from a target.
-vec4 hdrDecode( vec4 sample )
+vec4 hdrDecode( vec4 _sample )
 {
-   return vec4( hdrDecode( sample.rgb ), sample.a );
+   return vec4( hdrDecode( _sample.rgb ), _sample.a );
 }
 
 /// Returns the luminance for an HDR pixel.
-float hdrLuminance( vec3 sample )
+float hdrLuminance( vec3 _sample )
 {
    // There are quite a few different ways to
    // calculate luminance from an rgb value.
@@ -220,7 +220,7 @@ float hdrLuminance( vec3 sample )
    //
    // Max component luminance.
    //
-   //float lum = max( sample.r, max( sample.g, sample.b ) );
+   //float lum = max( _sample.r, max( _sample.g, _sample.b ) );
 
    ////////////////////////////////////////////////////////////////////////////
    // The perceptual relative luminance.
@@ -228,14 +228,14 @@ float hdrLuminance( vec3 sample )
    // See http://en.wikipedia.org/wiki/Luminance_(relative)
    //
    const vec3 RELATIVE_LUMINANCE = vec3( 0.2126, 0.7152, 0.0722 );
-   float lum = dot( sample, RELATIVE_LUMINANCE );
+   float lum = dot( _sample, RELATIVE_LUMINANCE );
   
    ////////////////////////////////////////////////////////////////////////////
    //
    // The average component luminance.
    //
    //const vec3 AVERAGE_LUMINANCE = vec3( 0.3333, 0.3333, 0.3333 );
-   //float lum = dot( sample, AVERAGE_LUMINANCE );
+   //float lum = dot( _sample, AVERAGE_LUMINANCE );
 
    return lum;
 }

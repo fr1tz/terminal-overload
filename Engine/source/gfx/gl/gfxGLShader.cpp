@@ -945,20 +945,17 @@ bool GFXGLShader::_loadShaderFromStream(  GLuint shader,
    const char *versionDecl = "#version 120\r\n";
    buffers.push_back( dStrdup( versionDecl ) );
    lengths.push_back( dStrlen( versionDecl ) );
-   
-   static bool hasGL_EXT_gpu_shader4 = gglHasExtension(EXT_gpu_shader4);
-   static bool hasGL_EXT_gpu_shader5 = false; //gglHasExtension(EXT_gpu_shader5);
 
-   if(hasGL_EXT_gpu_shader4)
+   if(gglHasExtension(EXT_gpu_shader4))
    {
       const char *extension = "#extension GL_EXT_gpu_shader4 : enable\r\n";
       buffers.push_back( dStrdup( extension ) );
       lengths.push_back( dStrlen( extension ) );
    }
 
-   if(hasGL_EXT_gpu_shader5)
+   if(gglHasExtension(ARB_gpu_shader5))
    {
-      const char *extension = "#extension GL_EXT_gpu_shader5 : enable\r\n";
+      const char *extension = "#extension GL_ARB_gpu_shader5 : enable\r\n";
       buffers.push_back( dStrdup( extension ) );
       lengths.push_back( dStrlen( extension ) );
    }
