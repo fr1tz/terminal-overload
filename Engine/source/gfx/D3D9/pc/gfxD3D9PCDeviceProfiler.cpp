@@ -123,7 +123,7 @@ GFXProfiler<D3DTimer> gfxProfiler;
 
 DefineConsoleFunction(printGFXD3DTimers, void,(), ,"")
 {
-   gfxProfiler.printTimes = true;
+   gfxProfiler.printTimes();
 }
 
 bool initD3D9PCProfiler(GFXDevice::GFXDeviceEventType ev)

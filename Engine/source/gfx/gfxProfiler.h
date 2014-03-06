@@ -37,22 +37,24 @@ public:
    void leaveDebugEvent();
    void reset();
 
-   bool enable_Profiler;   
+   bool mEnableProfiler;
 
    typedef Map<StringTableEntry, Vector<TYPE> > TimerMap;  
 
-   GFXProfiler() : printTimes(false), timers(0), enable_Profiler(false) {}
-   bool printTimes;
+   GFXProfiler() : mPrintTimes(false), mTimers(0), mEnableProfiler(false) {}
+
+   void printTimes() { mPrintTimes = true; }
 protected:
+   bool mPrintTimes;
    TYPE getQueryTimer(GFXDevice* d, const StringTableEntry name);   
 
-   Vector<TYPE> timeQueries;
-   Vector<TYPE> freetimeQueries;
-   TimerMap queryMap;
+   Vector<TYPE> mTimeQueries;
+   Vector<TYPE> mFreetimeQueries;
+   TimerMap mQueryMap;
    
-   Vector<TYPE> timerStack;
-   Vector<StringTableEntry> activeTimers;
-   S32 timers;
+   Vector<TYPE> mTimerStack;
+   Vector<StringTableEntry> mActiveTimers;
+   S32 mTimers;
    typename TYPE::DataType mData;
 
    Map<StringTableEntry, F64> mCampturesTimes;
@@ -63,27 +65,27 @@ protected:
 template<class TYPE>
 inline TYPE GFXProfiler<TYPE>::getQueryTimer(GFXDevice* d, const StringTableEntry name)
 {
-   if(!freetimeQueries.size())
+   if(!mFreetimeQueries.size())
    {
       const int size = 100;
-      timeQueries.reserve( timeQueries.capacity() + size );
-      freetimeQueries.reserve( freetimeQueries.capacity() + size );
+      mTimeQueries.reserve( mTimeQueries.capacity() + size );
+      mFreetimeQueries.reserve( mFreetimeQueries.capacity() + size );
       for(int i = 0; i < size; ++i)
       {
          TYPE timer(GFX, mData);
-         timeQueries.push_back(timer);
-         freetimeQueries.push_back(timer);
+         mTimeQueries.push_back(timer);
+         mFreetimeQueries.push_back(timer);
       }
    }
 
    TimerMap::Iterator itr;
-   itr = queryMap.find(name);
-   if(itr == queryMap.end())
-      queryMap[name] = Vector<TYPE>();
+   itr = mQueryMap.find(name);
+   if(itr == mQueryMap.end())
+      mQueryMap[name] = Vector<TYPE>();
 
-   TYPE queryID = freetimeQueries.last();
-   freetimeQueries.pop_back();
-   queryMap[name].push_back(queryID);
+   TYPE queryID = mFreetimeQueries.last();
+   mFreetimeQueries.pop_back();
+   mQueryMap[name].push_back(queryID);
 
    return queryID;
 }
@@ -92,12 +94,13 @@ template<class TYPE>
 inline F64 GFXProfiler<TYPE>::getQueryTime(StringTableEntry name)
 {
    F64 timeTotal = 0.0;
-   TimerMap::Iterator itr = queryMap.find(name);
-   if(itr != queryMap.end())
+   TimerMap::Iterator itr = mQueryMap.find(name);
+   if(itr != mQueryMap.end())
    {
-      for(auto i : itr->value)
+      Vector<TYPE> &vec = itr->value;
+      for(int i = 0; i < vec.size(); ++i)
       {            
-         timeTotal += i.getTime();
+         timeTotal += vec[i].getTime();
       }      
    }
 
@@ -109,9 +112,9 @@ inline void GFXProfiler<TYPE>::PrintQueriesTimes()
 {
    Con::printf("");
    F64 allTimers = 0;
-   for(int i = 0; i < activeTimers.size(); ++i)
+   for(int i = 0; i < mActiveTimers.size(); ++i)
    {
-      StringTableEntry name = activeTimers[i];
+      StringTableEntry name = mActiveTimers[i];
       F64 time = mCampturesTimes[name]/mCapturedFrames;
 
       if(time >= 0.1f)
@@ -119,7 +122,7 @@ inline void GFXProfiler<TYPE>::PrintQueriesTimes()
       allTimers += time;      
    }
 
-   Con::printf("All timers Total : %f\n", allTimers);
+   Con::printf("All mTimers Total : %f\n", allTimers);
 }
 
 template<class TYPE>
@@ -134,10 +137,10 @@ inline void GFXProfiler<TYPE>::onEndFrame(bool start)
 {
    if(start)
    {     
-      if(printTimes && !enable_Profiler)
-         enable_Profiler = true;
+      if(mPrintTimes && !mEnableProfiler)
+         mEnableProfiler = true;
          
-      if(!enable_Profiler)
+      if(!mEnableProfiler)
          return;
 
       mData.onBeginFrame();
@@ -145,85 +148,85 @@ inline void GFXProfiler<TYPE>::onEndFrame(bool start)
       return;
    }
 
-   if(!enable_Profiler)
+   if(!mEnableProfiler)
       return;
 
-   AssertFatal(timerStack.size() == 1, avar("GFXDEBUGEVENT not ended :%s", timerStack[1].mName) );
-   AssertFatal(timerStack[0].mName == StringTable->insert("RENDER_FRAME"), avar("GFXDEBUGEVENT not ended :%s", timerStack[0].mName));
+   AssertFatal(mTimerStack.size() == 1, avar("GFXDEBUGEVENT not ended :%s", mTimerStack[1].mName) );
+   AssertFatal(mTimerStack[0].mName == StringTable->insert("RENDER_FRAME"), avar("GFXDEBUGEVENT not ended :%s", mTimerStack[0].mName));
    GFXDEBUGEVENT_END(); //RENDER_FRAME
    mData.onEndFrame();
 
-   AssertFatal(timerStack.size() == 0, "");
-   AssertFatal(timers == 0, "");
+   AssertFatal(mTimerStack.size() == 0, "");
+   AssertFatal(mTimers == 0, "");
 
 
    ++mCapturedFrames;
-   for(int i = 0; i<activeTimers.size(); ++i )
+   for(int i = 0; i<mActiveTimers.size(); ++i )
    {
-      StringTableEntry name = activeTimers[i];
+      StringTableEntry name = mActiveTimers[i];
       F64 totalTime = mCampturesTimes[name];
       mCampturesTimes[name] = totalTime + getQueryTime(name);
    }
 
-   if(printTimes && mCapturedFrames == 30)
+   if(mPrintTimes && mCapturedFrames == 30)
    {      
       PrintQueriesTimes();      
       reset();
 
-      printTimes = false;
-      enable_Profiler = false;
+      mPrintTimes = false;
+      mEnableProfiler = false;
    }
-   activeTimers.clear();
-   freetimeQueries = timeQueries;
-   for(auto itr : queryMap)
+   mActiveTimers.clear();
+   mFreetimeQueries = mTimeQueries;
+   for(TimerMap::Iterator itr = mQueryMap.begin(); itr != mQueryMap.end(); ++itr)
    {
-      auto &vec = itr.value;
+      Vector<TYPE> &vec = itr->value;
       vec.clear();
       AssertFatal(!vec.size(), "" );
    }
-   queryMap.clear();
+   mQueryMap.clear();
 }
 
 template<class TYPE>
 inline void GFXProfiler<TYPE>::enterDebugEvent(ColorI color, const char *_name)
 {
-   if(!enable_Profiler)
+   if(!mEnableProfiler)
       return;
 
-   ++timers;
+   ++mTimers;
    StringTableEntry nameSte = StringTable->insert(_name);
   
    TYPE timer = getQueryTimer(GFX, nameSte);
 
    //check stack
-   if(timerStack.size())
+   if(mTimerStack.size())
    {
-      timerStack.last().end();
+      mTimerStack.last().end();
    }
 
    timer.mName = nameSte;
    timer.begin();   
 
-   activeTimers.push_back_unique(nameSte);
-   timerStack.push_back(timer);
+   mActiveTimers.push_back_unique(nameSte);
+   mTimerStack.push_back(timer);
 }
 
 template<class TYPE>
 inline void GFXProfiler<TYPE>::leaveDebugEvent()
 {
-   if(!enable_Profiler)
+   if(!mEnableProfiler)
       return;
 
-   --timers;
+   --mTimers;
 
-   timerStack.last().end();
-   AssertFatal(timerStack.size(), "");
-   timerStack.pop_back();
+   mTimerStack.last().end();
+   AssertFatal(mTimerStack.size(), "");
+   mTimerStack.pop_back();
 
    //check stack
-   if(timerStack.size())
+   if(mTimerStack.size())
    {      
-      timerStack.last().begin();
+      mTimerStack.last().begin();
    }
 }
 

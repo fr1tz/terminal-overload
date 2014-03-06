@@ -84,7 +84,7 @@ GFXProfiler<GLTimer> gfxProfiler;
 
 DefineConsoleFunction(printGFXGLTimers, void,(), ,"")
 {
-   gfxProfiler.printTimes = true;
+   gfxProfiler.printTimes();
 }
 
 bool initGLProfiler(GFXDevice::GFXDeviceEventType ev)
