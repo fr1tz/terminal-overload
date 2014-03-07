@@ -951,6 +951,7 @@ protected:
    F32 mMass;                       ///< Mass.
    F32 mOneOverMass;                ///< Inverse of mass.
                                     /// @note This is used to optimize certain physics calculations.
+	F32 mBallast;                    ///< Ballast.
 
    /// @}
 
@@ -1977,7 +1978,7 @@ public:
 
    void setCurrentWaterObject( WaterObject *obj );
 
-   virtual F32 getMass() const { return mMass; }
+   virtual F32 getMass() const { return mMass + mBallast; }
 
    /// @name Network
    /// @{

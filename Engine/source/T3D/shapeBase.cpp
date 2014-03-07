@@ -4,6 +4,7 @@
 #include "platform/platform.h"
 #include "T3D/shapeBase.h"
 
+#include "Alux3D/ballastShape.h"
 #include "core/dnet.h"
 #include "sfx/sfxSystem.h"
 #include "sfx/sfxSource.h"
@@ -901,6 +902,7 @@ ShapeBase::ShapeBase()
    mShapeBaseMount( NULL ),
    mMass( 1.0f ),
    mOneOverMass( 1.0f ),
+	mBallast( 0.0f ),
    mMoveMotion( false ),
    mIsAiControlled( false )
 {
@@ -1208,6 +1210,18 @@ void ShapeBase::processTick(const Move* move)
    Parent::processTick(move);
 
    PROFILE_SCOPE( ShapeBase_ProcessTick );
+
+	// Compute ballast.
+	mBallast = 0;
+	for(U32 i = 0; i < this->getMountedObjectCount(); i++)
+	{
+		SceneObject* obj = this->getMountedObject(i);
+		if(!obj)
+			continue;
+		BallastShape* ballast = dynamic_cast<BallastShape*>(obj);
+		if(ballast)
+			mBallast += ballast->getMass();
+	}
 
    // Energy management
    if (mDamageState == Enabled && mDataBlock->inheritEnergyFromMount == false) {
