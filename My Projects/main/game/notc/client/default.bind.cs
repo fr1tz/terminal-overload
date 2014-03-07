@@ -499,6 +499,7 @@ moveMap.bindCmd(keyboard, "F8", "commandToServer('action', 18);", "");
 moveMap.bindCmd(keyboard, "q", "commandToServer('action', 19);", "");
 moveMap.bindCmd(keyboard, "e", "commandToServer('action', 20);", "");
 moveMap.bindCmd(keyboard, "r", "commandToServer('action', 21);", "");
+moveMap.bindCmd(keyboard, "c", "commandToServer('action', 22);", "");
 
 function unmountWeapon(%val)
 {

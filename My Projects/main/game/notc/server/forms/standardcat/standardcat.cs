@@ -64,7 +64,7 @@ datablock PlayerData(FrmStandardcat)
    maxBackwardSpeed = 8;
    maxSideSpeed = 5;
    
-	slideForce = 20 * 90;
+	slideForce = 20 * 90 *2;
 	slideEnergyDrain = 0;
 	minSlideEnergy = 0;
 	maxSlideForwardSpeed = 30;
@@ -91,15 +91,15 @@ datablock PlayerData(FrmStandardcat)
    maxUnderwaterBackwardSpeed = 7.8;
    maxUnderwaterSideSpeed = 4.0;
 
-   jumpForce = 8 * 90;
+   jumpForce = 24 * 90;
    jumpEnergyDrain = 0;
    minJumpEnergy = 0;
    jumpDelay = 0;
-   
+
 	skidSpeed = 20;
 	skidFactor = 0.4;
    
-   glideForce = 10 * 90;
+   glideForce = 10 * 90 * 2;
    airControl = 0.0;
 
    fallingSpeedThreshold = -6.0;
@@ -230,7 +230,9 @@ datablock PlayerData(FrmStandardcat)
 
    // Allowable Inventory Items
    mainWeapon = WpnSMG1;
-   
+
+   maxInv[ItemBallast] = 1;
+
    maxInv[WpnSMG1] = 1;
    maxInv[WpnMGL1] = 1;
    maxInv[WpnSG1] = 1;
@@ -378,6 +380,15 @@ function FrmStandardcat::onTrigger(%this, %obj, %triggerNum, %val)
    %rnd = "0.05 0.05 0.05";
    //commandToClient(%obj.client, 'EnableChromaticLens', %max, %mode, %dt, %rnd);
    
+   
+   if(%triggerNum == 5)
+   {
+      if(%val)
+         %obj.zBalastLimit = 0.02;
+      else
+         %obj.zBalastLimit = 1.0;
+   }
+ 
    if(%triggerNum == 6)
    {
       if(!isObject(%obj.etherboard))
@@ -441,6 +452,16 @@ function FrmStandardcat::onUnmount(%this, %obj, %vehicle, %node)
 // Called by script
 function FrmStandardcat::clientAction(%this, %obj, %nr)
 {
+   //echo("FrmStandardcat::clientAction()");
+   
+   if(%nr == 22)
+   {
+      if(isObject(%obj.ballast))
+      {
+         %obj.ballast.setLevel(%obj.ballast.getLevel()/2);
+      }
+   }
+
    Parent::clientAction(%this, %obj, %nr);
 
    if(%nr == 1)

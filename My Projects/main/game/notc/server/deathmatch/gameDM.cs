@@ -149,3 +149,14 @@ function DeathMatchGame::loadOut(%game, %player)
    else
       %player.mountImage(WpnBadgerImage, 0);
 }
+
+function DeathMatchGame::clientAction(%game, %client, %nr)
+{
+   echo(%game @"\c4 -> "@ %game.class @" -> DeathMatchGame::clientAction");
+
+   %obj = %client.getControlObject();
+   if(!isObject(%obj))
+      return;
+
+   %obj.getDataBlock().clientAction(%obj, %nr);
+}
