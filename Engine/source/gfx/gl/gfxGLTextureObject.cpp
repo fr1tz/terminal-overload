@@ -137,13 +137,56 @@ void GFXGLTextureObject::reInit()
 
 bool GFXGLTextureObject::copyToBmp(GBitmap * bmp)
 {
+   if (!bmp)
+      return false;
+
+   // check format limitations
+   // at the moment we only support RGBA for the source (other 4 byte formats should
+   // be easy to add though)
+   AssertFatal(mFormat == GFXFormatR8G8B8A8, "GFXGLTextureObject::copyToBmp - invalid format");
+   AssertFatal(bmp->getFormat() == GFXFormatR8G8B8A8 || bmp->getFormat() == GFXFormatR8G8B8, "GFXGLTextureObject::copyToBmp - invalid format");
+   if(mFormat != GFXFormatR8G8B8A8)
+      return false;
+
+   if(bmp->getFormat() != GFXFormatR8G8B8A8 && bmp->getFormat() != GFXFormatR8G8B8)
+      return false;
+
+   AssertFatal(bmp->getWidth() == getWidth(), "GFXGLTextureObject::copyToBmp - invalid size");
+   AssertFatal(bmp->getHeight() == getHeight(), "GFXGLTextureObject::copyToBmp - invalid size");
+
+   PROFILE_START(GFXGLTextureObject_copyToBmp);
+
    PRESERVE_TEXTURE(mBinding);
    glBindTexture(mBinding, mHandle);
+
+   U8 dstBytesPerPixel = GFXFormat_getByteSize( bmp->getFormat() );
+   U8 srcBytesPerPixel = GFXFormat_getByteSize( mFormat );
+   if(dstBytesPerPixel == srcBytesPerPixel)
+   {
+      glGetTexImage(mBinding, 0, GFXGLTextureFormat[mFormat], GFXGLTextureType[mFormat], bmp->getWritableBits());
+      return true;
+   }
+
+   FrameAllocatorMarker mem;
    
-   GLint textureFormat = GFXGLTextureFormat[bmp->getFormat()];
-   GLint textureType = GFXGLTextureType[bmp->getFormat()];
+   U32 srcPixelCount = mTextureSize.x * mTextureSize.y;
+   U8 *dest = bmp->getWritableBits();
+   U8 *orig = (U8*)mem.alloc(srcPixelCount * srcBytesPerPixel);
+
+   glGetTexImage(mBinding, 0, GFXGLTextureFormat[mFormat], GFXGLTextureType[mFormat], orig);
    
-   glGetTexImage(mBinding, 0, textureFormat, textureType, bmp->getWritableBits());
+   for(int i = 0; i < srcPixelCount; ++i)
+   {
+      dest[0] = orig[0];
+      dest[1] = orig[1];
+      dest[2] = orig[2];
+      if(dstBytesPerPixel == 4)
+         dest[3] = orig[3];
+
+      orig += srcBytesPerPixel;
+      dest += dstBytesPerPixel;
+   }
+
    return true;
 }
 

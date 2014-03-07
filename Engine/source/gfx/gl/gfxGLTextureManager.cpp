@@ -99,7 +99,7 @@ void GFXGLTextureManager::innerCreateTexture( GFXGLTextureObject *retTex,
    retTex->mIsZombie = false;
    retTex->mIsNPoT2 = false;
    
-   GLenum binding = (height == 1 || width == 1) ? GL_TEXTURE_1D : ( (depth == 0) ? GL_TEXTURE_2D : GL_TEXTURE_3D );
+   GLenum binding = ( (height == 1 || width == 1) && ( height != width ) ) ? GL_TEXTURE_1D : ( (depth == 0) ? GL_TEXTURE_2D : GL_TEXTURE_3D );
    if((profile->testFlag(GFXTextureProfile::RenderTarget) || profile->testFlag(GFXTextureProfile::ZTarget)) && (!isPow2(width) || !isPow2(height)) && !depth)
       retTex->mIsNPoT2 = true;
    retTex->mBinding = binding;
