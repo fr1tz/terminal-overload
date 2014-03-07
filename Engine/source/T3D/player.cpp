@@ -3207,7 +3207,7 @@ void Player::updateMove(const Move* move)
       F32 acSpeed = acVec.len();
 
       F32 maxAcc;
-      maxAcc = (mDataBlock->slideForce / mMass) * TickSec;
+      maxAcc = (mDataBlock->slideForce / this->getMass()) * TickSec;
       this->setEnergyLevel(mEnergy - mDataBlock->slideEnergyDrain);
 
       if(acSpeed > maxAcc)
@@ -3229,7 +3229,7 @@ void Player::updateMove(const Move* move)
       F32 acSpeed = acVec.len();
 
       F32 maxAcc;
-      maxAcc = (mDataBlock->glideForce / mMass) * TickSec;
+      maxAcc = (mDataBlock->glideForce / this->getMass()) * TickSec;
 
       if(acSpeed > maxAcc)
          acVec *= maxAcc / acSpeed;
