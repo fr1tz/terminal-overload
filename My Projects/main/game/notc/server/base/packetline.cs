@@ -10,6 +10,8 @@ datablock PathCameraData(PacketLineCamera)
    cameraDefaultFov = "120";
    cameraMinFov = "120";
    cameraMaxFov = "120";
+   cameraMaxDist = "2.21079";
+   useEyePoint = "1";
 };
 
 function PacketLineCamera::onNode(%this, %obj, %node)
