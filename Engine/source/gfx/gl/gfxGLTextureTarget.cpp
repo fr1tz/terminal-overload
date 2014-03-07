@@ -148,12 +148,12 @@ public:
 _GFXGLTextureTargetFBOImpl::_GFXGLTextureTargetFBOImpl(GFXGLTextureTarget* target)
 {
    mTarget = target;
-   glGenFramebuffersEXT(1, &mFramebuffer);
+   glGenFramebuffers(1, &mFramebuffer);
 }
 
 _GFXGLTextureTargetFBOImpl::~_GFXGLTextureTargetFBOImpl()
 {
-   glDeleteFramebuffersEXT(1, &mFramebuffer);
+   glDeleteFramebuffers(1, &mFramebuffer);
 }
 
 void _GFXGLTextureTargetFBOImpl::applyState()
@@ -161,20 +161,20 @@ void _GFXGLTextureTargetFBOImpl::applyState()
    // REMINDER: When we implement MRT support, check against GFXGLDevice::getNumRenderTargets()
    
    PRESERVE_FRAMEBUFFER();
-   glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, mFramebuffer);
+   glBindFramebuffer(GL_FRAMEBUFFER, mFramebuffer);
    
    _GFXGLTargetDesc* color0 = mTarget->getTargetDesc(GFXTextureTarget::Color0);
    if(color0)
    {
       if(color0->getDepth() == 0)
-         glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, color0->getBinding(), color0->getHandle(), color0->getMipLevel());
+         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, color0->getBinding(), color0->getHandle(), color0->getMipLevel());
       else
-         glFramebufferTexture3DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, color0->getBinding(), color0->getHandle(), color0->getMipLevel(), color0->getZOffset());
+         glFramebufferTexture3D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, color0->getBinding(), color0->getHandle(), color0->getMipLevel(), color0->getZOffset());
    }
    else
    {
       // Clears the texture (note that the binding is irrelevent)
-      glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D, 0, 0);
+      glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, 0, 0);
    }
    
    _GFXGLTargetDesc* depthStecil = mTarget->getTargetDesc(GFXTextureTarget::DepthStencil);
@@ -182,27 +182,27 @@ void _GFXGLTextureTargetFBOImpl::applyState()
    {
       // Certain drivers have issues with depth only FBOs.  That and the next two asserts assume we have a color target.
       AssertFatal(color0, "GFXGLTextureTarget::applyState() - Cannot set DepthStencil target without Color0 target!");
-      AssertFatal(depthStecil->getWidth() == color0->getWidth(), "GFXGLTextureTarget::applyState() - DepthStencil and Color0 targets MUST have the same width!");
-      AssertFatal(depthStecil->getHeight() == color0->getHeight(), "GFXGLTextureTarget::applyState() - DepthStencil and Color0 targets MUST have the same height!");
-      glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, depthStecil->getBinding(), depthStecil->getHandle(), depthStecil->getMipLevel());
+      glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, depthStecil->getBinding(), depthStecil->getHandle(), depthStecil->getMipLevel());
    }
    else
    {
       // Clears the texture (note that the binding is irrelevent)
-      glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_TEXTURE_2D, 0, 0);
+      glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, 0, 0);
    }
+
+   CHECK_FRAMEBUFFER_STATUS();
 }
 
 void _GFXGLTextureTargetFBOImpl::makeActive()
 {
-   glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, mFramebuffer);
-   GFXGL->getOpenglCache()->setCacheBinded(GL_FRAMEBUFFER_EXT, mFramebuffer);
+   glBindFramebuffer(GL_FRAMEBUFFER, mFramebuffer);
+   GFXGL->getOpenglCache()->setCacheBinded(GL_FRAMEBUFFER, mFramebuffer);
 }
 
 void _GFXGLTextureTargetFBOImpl::finish()
 {
-   glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
-   GFXGL->getOpenglCache()->setCacheBinded(GL_FRAMEBUFFER_EXT, 0);
+   glBindFramebuffer(GL_FRAMEBUFFER, 0);
+   GFXGL->getOpenglCache()->setCacheBinded(GL_FRAMEBUFFER, 0);
    
    _GFXGLTargetDesc* color0 = mTarget->getTargetDesc(GFXTextureTarget::Color0);
    if(!color0 || !(color0->hasMips()))
@@ -426,18 +426,18 @@ void GFXGLTextureTarget::resolveTo(GFXTextureObject* obj)
    GLuint dest;
    GLuint src;
    
-   glGenFramebuffersEXT(1, &dest);
-   glGenFramebuffersEXT(1, &src);
+   glGenFramebuffers(1, &dest);
+   glGenFramebuffers(1, &src);
    
-   glBindFramebufferEXT(GL_DRAW_FRAMEBUFFER_EXT, dest);
-   glFramebufferTexture2DEXT(GL_DRAW_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D, glTexture->getHandle(), 0);
+   glBindFramebuffer(GL_DRAW_FRAMEBUFFER, dest);
+   glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, glTexture->getHandle(), 0);
    
-   glBindFramebufferEXT(GL_READ_FRAMEBUFFER_EXT, src);
-   glFramebufferTexture2DEXT(GL_READ_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D,mTargets[Color0]->getHandle(), 0);
+   glBindFramebuffer(GL_READ_FRAMEBUFFER, src);
+   glFramebufferTexture2D(GL_READ_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D,mTargets[Color0]->getHandle(), 0);
    
-   glBlitFramebufferEXT(0, 0, mTargets[Color0]->getWidth(), mTargets[Color0]->getHeight(),
+   glBlitFramebuffer(0, 0, mTargets[Color0]->getWidth(), mTargets[Color0]->getHeight(),
       0, 0, glTexture->getWidth(), glTexture->getHeight(), GL_COLOR_BUFFER_BIT, GL_NEAREST);
    
-   glDeleteFramebuffersEXT(1, &dest);
-   glDeleteFramebuffersEXT(1, &src);
+   glDeleteFramebuffers(1, &dest);
+   glDeleteFramebuffers(1, &src);
 }

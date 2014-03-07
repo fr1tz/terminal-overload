@@ -3,7 +3,7 @@
 
 
 /// GFXGLStateCache store OpenGL state to avoid performance penalities of glGet* calls
-/// GL_TEXTURE_1D/2D/3D, GL_FRAMEBUFFER_EXT, GL_ARRAY_BUFFER, GL_ELEMENT_ARRAY_BUFFER
+/// GL_TEXTURE_1D/2D/3D, GL_FRAMEBUFFER, GL_ARRAY_BUFFER, GL_ELEMENT_ARRAY_BUFFER
 class GFXGLStateCache
 {
 public:
@@ -67,13 +67,13 @@ public:
       case GL_TEXTURE_CUBE_MAP:
          mTextureUnits[mActiveTexture].mTextureCube = handle;
          break;
-      case GL_FRAMEBUFFER_EXT:
+      case GL_FRAMEBUFFER:
          mBindedFBO_W = mBindedFBO_R = handle;
          break;
-      case GL_DRAW_FRAMEBUFFER_EXT:
+      case GL_DRAW_FRAMEBUFFER:
          mBindedFBO_W = handle;
          break;
-      case GL_READ_FRAMEBUFFER_EXT:
+      case GL_READ_FRAMEBUFFER:
          mBindedFBO_R = handle;
          break;
       case GL_ARRAY_BUFFER:
@@ -100,9 +100,9 @@ public:
          return mTextureUnits[mActiveTexture].mTexture1D;
       case GL_TEXTURE_CUBE_MAP:
          return mTextureUnits[mActiveTexture].mTextureCube;
-      case GL_DRAW_FRAMEBUFFER_EXT:
+      case GL_DRAW_FRAMEBUFFER:
          return mBindedFBO_W;
-      case GL_READ_FRAMEBUFFER_EXT:
+      case GL_READ_FRAMEBUFFER:
          return mBindedFBO_R;
       case GL_ARRAY_BUFFER:
          return mBindedVBO;

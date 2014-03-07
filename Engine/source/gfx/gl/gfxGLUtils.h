@@ -207,8 +207,8 @@ binding == GL_TEXTURE_2D ? GL_TEXTURE_BINDING_2D : (binding == GL_TEXTURE_3D ?  
 GFXGLPreserveTexture TORQUE_CONCAT(preserve_, __LINE__) (binding, _GET_TEXTURE_BINDING(binding), (GFXGLPreserveInteger::BindFn)glBindTexture)
 
 #define PRESERVE_FRAMEBUFFER() \
-GFXGLPreserveInteger TORQUE_CONCAT(preserve_, __LINE__) (GL_READ_FRAMEBUFFER_EXT, GL_READ_FRAMEBUFFER_BINDING_EXT, (GFXGLPreserveInteger::BindFn)glBindFramebufferEXT);\
-GFXGLPreserveInteger TORQUE_CONCAT(preserve2_, __LINE__) (GL_DRAW_FRAMEBUFFER_EXT, GL_DRAW_FRAMEBUFFER_BINDING_EXT, (GFXGLPreserveInteger::BindFn)glBindFramebufferEXT)
+GFXGLPreserveInteger TORQUE_CONCAT(preserve_, __LINE__) (GL_READ_FRAMEBUFFER, GL_READ_FRAMEBUFFER_BINDING, (GFXGLPreserveInteger::BindFn)glBindFramebuffer);\
+GFXGLPreserveInteger TORQUE_CONCAT(preserve2_, __LINE__) (GL_DRAW_FRAMEBUFFER, GL_DRAW_FRAMEBUFFER_BINDING, (GFXGLPreserveInteger::BindFn)glBindFramebuffer)
 
 // Handy macro for checking the status of a framebuffer.  Framebuffers can fail in 
 // all sorts of interesting ways, these are just the most common.  Further, no existing GL profiling 
@@ -216,21 +216,25 @@ GFXGLPreserveInteger TORQUE_CONCAT(preserve2_, __LINE__) (GL_DRAW_FRAMEBUFFER_EX
 #define CHECK_FRAMEBUFFER_STATUS()\
 {\
 GLenum status;\
-status = glCheckFramebufferStatusEXT(GL_FRAMEBUFFER_EXT);\
+status = glCheckFramebufferStatus(GL_FRAMEBUFFER);\
 switch(status) {\
-case GL_FRAMEBUFFER_COMPLETE_EXT:\
+case GL_FRAMEBUFFER_COMPLETE:\
 break;\
-case GL_FRAMEBUFFER_UNSUPPORTED_EXT:\
+case GL_FRAMEBUFFER_UNSUPPORTED:\
 AssertFatal(false, "Unsupported FBO");\
 break;\
-case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT_EXT:\
+case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT:\
 AssertFatal(false, "Incomplete FBO Attachment");\
 break;\
-case GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS_EXT:\
-AssertFatal(false, "Incomplete FBO dimensions");\
+case GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT:\
+AssertFatal(false, "Incomplete FBO Missing Attachment");\
 break;\
-case GL_FRAMEBUFFER_INCOMPLETE_FORMATS_EXT:\
-AssertFatal(false, "Incomplete FBO formats");\
+case GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER:\
+AssertFatal(false, "Incomplete FBO Draw buffer");\
+break;\
+case GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER:\
+AssertFatal(false, "Incomplete FBO Read buffer");\
+break;\
 default:\
 /* programming error; will fail on all hardware */\
 AssertFatal(false, "Something really bad happened with an FBO");\
