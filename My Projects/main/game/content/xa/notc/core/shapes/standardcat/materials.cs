@@ -12,6 +12,7 @@ new Material(xa_notc_core_shapes_standardcat_footprint)
    emissive[0] = "1";
    translucentBlendOp = "AddAlpha";
    showFootprints = "0";
+   diffuseColor[0] = "1 0.882353 0 1";
 };
 
 new Material(xa_notc_core_shapes_standardcat_slidedecalmat)
