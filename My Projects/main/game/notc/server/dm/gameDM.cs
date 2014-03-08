@@ -137,12 +137,9 @@ function DeathMatchGame::loadOut(%game, %player)
    %player.addToWeaponCycle(WpnMG1);
    //%player.addToWeaponCycle(WpnML1);
 
-   %player.setInventory(WpnSMG1, 1);
-   %player.setInventory(WpnMGL1, 1);
-   %player.setInventory(WpnSG1, 1);
-   %player.setInventory(WpnSR1, 1);
-   %player.setInventory(WpnMG1, 1);
-   //%player.setInventory(WpnML1, 1);
+   %player.setInventory(ItemBallast, 1);
+   %player.setInventory(ItemEtherboard, 1);
+   %player.setInventory(WpnSMG, 1);
 
    if (%player.getDatablock().mainWeapon.image !$= "")
       %player.mountImage(%player.getDatablock().mainWeapon.image, 0);
