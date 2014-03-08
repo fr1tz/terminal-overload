@@ -565,6 +565,7 @@ public:
    F32 density;
    F32 maxEnergy;
    F32 maxDamage;
+   F32 damageBuffer;
    F32 repairRate;                  ///< Rate per tick.
 
    F32 disabledLevel;
@@ -605,6 +606,7 @@ public:
    S32 mountPointNode[SceneObject::NumMountPoints];  ///< Node index of mountPoint
    S32 debrisDetail;                    ///< Detail level used to generate debris
    S32 damageSequence;                  ///< Damage level decals
+	S32 damageBufferSequence;            ///< Damage buffer level anim
    S32 hulkSequence;                    ///< Destroyed hulk
 
    bool              observeThroughObject;   // observe this object through its camera transform and default fov
@@ -947,6 +949,9 @@ protected:
 
    F32 mEnergy;                     ///< Current enery level.
    F32 mRechargeRate;               ///< Energy recharge rate (in units/tick).
+	F32 mDamageBuffer;               ///< Current damage buffer level
+	F32 mDamageBufferRechargeRate;   ///< Damage buffer recharge rate (in units/tick)
+	F32 mDamageBufferDischargeRate;  ///< Damage buffer discharge rate (in units/tick)
 
    F32 mMass;                       ///< Mass.
    F32 mOneOverMass;                ///< Inverse of mass.
@@ -1027,6 +1032,7 @@ protected:
    F32  mRepairReserve;
    DamageState mDamageState;
    TSThread *mDamageThread;
+	TSThread *mDamageBufferThread;
    TSThread *mHulkThread;
    VectorF damageDir;
    /// @}
@@ -1329,10 +1335,21 @@ public:
    /// Returns damage amount.
    F32  getDamageLevel()  { return mDamage; }
 
+   /// Sets damage buffer amount.
+   void setDamageBufferLevel(F32 damage);
+
+   /// Returns damage buffer amount.
+   F32 getDamageBufferLevel() { return mDamageBuffer; }
+
    /// Returns the damage percentage.
    ///
    /// @return Damage factor, between 0.0 - 1.0
    F32  getDamageValue();
+
+   /// Returns damage buffer in percentage.
+   ///
+   /// @return damage buffer amount factor
+	F32  getDamageBufferValue();
  
    /// Returns the datablock.maxDamage value  
    F32 getMaxDamage(); 
@@ -1341,8 +1358,9 @@ public:
    F32  getRepairRate() { return mRepairRate; }
 
    /// Adds damage to an object
-   /// @param   amount   Amount of of damage to add
-   void applyDamage(F32 amount);
+   /// @param  amount   Amount of of damage to add
+	/// @return amount of damage added
+   F32 applyDamage(F32 amount);
 
    /// Removes damage to an object
    /// @param   amount   Amount to repair object by
@@ -1368,6 +1386,26 @@ public:
 
    /// Returns the recharge rate
    F32  getRechargeRate() { return mRechargeRate; }
+
+   /// Sets the rate at which the damage buffer replentishes itself
+   /// @param   rate   Rate at which energy restores
+   void setDamageBufferRechargeRate(F32 rate) {
+	   mDamageBufferRechargeRate = rate; 
+	   this->setMaskBits(RareUpdatesMask);
+   }
+
+   /// Returns the damage buffer recharge rate
+   F32 getDamageBufferRechargeRate() { return mDamageBufferRechargeRate; }
+
+   /// Sets the rate at which the damage buffer leaks
+   /// @param   rate   Rate at which energy restores
+   void setDamageBufferDischargeRate(F32 rate) {
+	   mDamageBufferDischargeRate = rate;
+	   this->setMaskBits(RareUpdatesMask);
+   }
+
+   /// Returns the damage buffer discharge rate
+   F32 getDamageBufferDischargeRate() { return mDamageBufferDischargeRate; }
 
    /// Makes the shape explode.
    virtual void blowUp();

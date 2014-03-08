@@ -140,6 +140,7 @@ ShapeBaseData::ShapeBaseData()
    density( 1.0f ),
    maxEnergy( 0.0f ),
    maxDamage( 1.0f ),
+	damageBuffer( 0.0f ),
    disabledLevel( 1.0f ),
    destroyedLevel( 1.0f ),
    repairRate( 0.0033f ),
@@ -147,6 +148,7 @@ ShapeBaseData::ShapeBaseData()
    earNode( -1 ),
    cameraNode( -1 ),
    damageSequence( -1 ),
+	damageBufferSequence( -1 ),
    hulkSequence( -1 ),
    cameraMaxDist( 0.0f ),
    cameraMinDist( 0.2f ),
@@ -183,6 +185,7 @@ struct ShapeBaseDataProto
    F32 drag;
    F32 density;
    F32 maxEnergy;
+	F32 damageBuffer;
    F32 cameraMaxDist;
    F32 cameraMinDist;
    F32 cameraDefaultFov;
@@ -196,6 +199,7 @@ struct ShapeBaseDataProto
       drag = 0;
       density = 1;
       maxEnergy = 0;
+		damageBuffer = 0;
       cameraMaxDist = 0;
       cameraMinDist = 0.2f;
       cameraDefaultFov = 75.f;
@@ -386,6 +390,7 @@ bool ShapeBaseData::preload(bool server, String &errorStr)
       //
       hulkSequence = mShape->findSequence("Visibility");
       damageSequence = mShape->findSequence("Damage");
+		damageBufferSequence = mShape->findSequence("DamageBuffer");
 
       //
       F32 w = mShape->bounds.len_y() / 2;
@@ -493,6 +498,8 @@ void ShapeBaseData::initPersistFields()
          "Maximum energy level for this object." );
       addField( "maxDamage", TypeF32, Offset(maxDamage, ShapeBaseData),
          "Maximum damage level for this object." );
+      addField( "damageBuffer", TypeF32, Offset(damageBuffer, ShapeBaseData),
+         "Normal damage buffer level for this object." );
       addField( "disabledLevel", TypeF32, Offset(disabledLevel, ShapeBaseData),
          "Damage level above which the object is disabled.\n"
          "Currently unused." );
@@ -666,6 +673,8 @@ void ShapeBaseData::packData(BitStream* stream)
       stream->write(density);
    if(stream->writeFlag(maxEnergy != gShapeBaseDataProto.maxEnergy))
       stream->write(maxEnergy);
+   if(stream->writeFlag(damageBuffer != gShapeBaseDataProto.damageBuffer))
+      stream->write(damageBuffer);
    if(stream->writeFlag(cameraMaxDist != gShapeBaseDataProto.cameraMaxDist))
       stream->write(cameraMaxDist);
    if(stream->writeFlag(cameraMinDist != gShapeBaseDataProto.cameraMinDist))
@@ -752,6 +761,11 @@ void ShapeBaseData::unpackData(BitStream* stream)
       stream->read(&maxEnergy);
    else
       maxEnergy = gShapeBaseDataProto.maxEnergy;
+
+   if(stream->readFlag())
+      stream->read(&damageBuffer);
+   else
+      damageBuffer = gShapeBaseDataProto.damageBuffer;
 
    if(stream->readFlag())
       stream->read(&cameraMaxDist);
@@ -868,11 +882,15 @@ ShapeBase::ShapeBase()
    mShapeInstance( NULL ),
    mEnergy( 0.0f ),
    mRechargeRate( 0.0f ),
+	mDamageBuffer( 0.0f),
+	mDamageBufferRechargeRate( 0.0f ),
+	mDamageBufferDischargeRate( 0.0f ),
    mDamage( 0.0f ),
    mRepairRate( 0.0f ),
    mRepairReserve( 0.0f ),
    mDamageState( Enabled ),
    mDamageThread( NULL ),
+   mDamageBufferThread( NULL ),
    mHulkThread( NULL ),
    mLastRenderFrame( 0 ),
    mLastRenderDistance( 0.0f ),
@@ -1085,6 +1103,7 @@ bool ShapeBase::onNewDataBlock( GameBaseData *dptr, bool reload )
 
    setMaskBits(DamageMask);
    mDamageThread = 0;
+	mDamageBufferThread = 0;
    mHulkThread = 0;
 
    // Even if loadShape succeeds, there may not actually be
@@ -1140,6 +1159,11 @@ bool ShapeBase::onNewDataBlock( GameBaseData *dptr, bool reload )
          mDamageThread = mShapeInstance->addThread();
          mShapeInstance->setSequence(mDamageThread,
                                      mDataBlock->damageSequence,0);
+      }
+      if (mDataBlock->damageBufferSequence != -1) {
+         mDamageBufferThread = mShapeInstance->addThread();
+         mShapeInstance->setSequence(mDamageBufferThread,
+                                     mDataBlock->damageBufferSequence,0);
       }
       if (mDataBlock->hulkSequence != -1) {
          mHulkThread = mShapeInstance->addThread();
@@ -1237,6 +1261,23 @@ void ShapeBase::processTick(const Move* move)
       // decide whether they really want to set the energy mask bit.
       if (mEnergy != store)
          setEnergyLevel(mEnergy);
+   }
+
+	// Damage buffer management
+	if(mDamageState == Enabled)
+	{
+		F32 store = mDamageBuffer;
+
+		if(mDamageBuffer > mDataBlock->damageBuffer)
+			mDamageBuffer -= mDamageBufferDischargeRate;
+		else
+			mDamageBuffer += mDamageBufferRechargeRate;
+
+		if(mDamageBuffer < 0)
+			mDamageBuffer = 0;
+
+		if(mDamageBuffer != store)
+			updateDamageLevel();
    }
 
    // Repair management
@@ -1645,10 +1686,31 @@ void ShapeBase::applyRepair(F32 amount)
       mRepairReserve = mDamage;
 }
 
-void ShapeBase::applyDamage(F32 amount)
+F32 ShapeBase::applyDamage(F32 amount)
 {
-   if (amount > 0)
-      setDamageLevel(mDamage + amount);
+	F32 damageDealt = 0;
+
+	F32 realDamage = amount - mDamageBuffer;
+
+	mDamageBuffer -= amount;
+	if(mDamageBuffer < 0)
+		mDamageBuffer = 0;
+
+   if(realDamage > 0)
+	{
+		F32 newDamageLevel = mDamage + realDamage;
+
+		if(newDamageLevel > mDataBlock->maxDamage)
+			damageDealt = mDataBlock->maxDamage - mDamage;
+		else
+			damageDealt = realDamage;
+
+      setDamageLevel(newDamageLevel);
+	}
+
+	setMaskBits(DamageMask);
+	
+	return damageDealt;
 }
 
 F32 ShapeBase::getDamageValue()
@@ -1660,6 +1722,27 @@ F32 ShapeBase::getDamageValue()
 F32 ShapeBase::getMaxDamage()
 {
    return mDataBlock->maxDamage;
+}
+
+void ShapeBase::setDamageBufferLevel(F32 level)
+{
+	if(level != mDamageBuffer) 
+	{
+		mDamageBuffer = level;
+		if(isServerObject())
+		{
+			setMaskBits(DamageMask);
+		}
+	}
+}
+
+F32 ShapeBase::getDamageBufferValue()
+{
+	// Return damage value...
+	if(mDataBlock->damageBuffer != 0)
+		return mDamageBuffer / mDataBlock->damageBuffer;
+	else
+		return 0;
 }
 
 void ShapeBase::updateDamageLevel()
@@ -1674,7 +1757,13 @@ void ShapeBase::updateDamageLevel()
       } else {
          mShapeInstance->setPos(mDamageThread, mDamage / mDataBlock->destroyedLevel);
       }
-   }      
+   }     
+
+   if(mDamageBufferThread)
+   {
+      F32 db = mClampF(this->getDamageBufferValue(), 0, 1);
+      mShapeInstance->setPos(mDamageBufferThread, db);
+   }
 }
 
 
@@ -3060,6 +3149,8 @@ void ShapeBase::writePacketData(GameConnection *connection, BitStream *stream)
 
    stream->write(getEnergyLevel());
    stream->write(mRechargeRate);
+
+	stream->write(mDamageBuffer);
 }
 
 void ShapeBase::readPacketData(GameConnection *connection, BitStream *stream)
@@ -3069,8 +3160,9 @@ void ShapeBase::readPacketData(GameConnection *connection, BitStream *stream)
    F32 energy;
    stream->read(&energy);
    setEnergyLevel(energy);
-
    stream->read(&mRechargeRate);
+
+	stream->read(&mDamageBuffer);
 }
 
 F32 ShapeBase::getUpdatePriority(CameraScopeQuery *camInfo, U32 updateMask, S32 updateSkips)
@@ -3114,15 +3206,24 @@ U32 ShapeBase::packUpdate(NetConnection *con, U32 mask, BitStream *stream)
             mask &= ~(ImageMaskN << i);
    }
 
-   if(!stream->writeFlag(mask & (NameMask | DamageMask | SoundMask | MeshHiddenMask |
+   if(!stream->writeFlag(mask & (RareUpdatesMask | NameMask | DamageMask | SoundMask | MeshHiddenMask |
          ThreadMask | ImageMask | CloakMask | InvincibleMask |
          ShieldMask | SkinMask)))
       return retMask;
 
+   // Rare updates
+   if(stream->writeFlag(mask & RareUpdatesMask))
+   {
+      stream->write(mDamageBufferRechargeRate);
+      stream->write(mDamageBufferDischargeRate);
+	}
+
+	// Damage 
    if (stream->writeFlag(mask & DamageMask)) {
       stream->writeFloat(mClampF(mDamage / mDataBlock->maxDamage, 0.f, 1.f), DamageLevelBits);
       stream->writeInt(mDamageState,NumDamageStateBits);
       stream->writeNormalVector( damageDir, 8 );
+		stream->write(mDamageBuffer);
    }
 
    if (stream->writeFlag(mask & ThreadMask)) {
@@ -3309,11 +3410,19 @@ void ShapeBase::unpackUpdate(NetConnection *con, BitStream *stream)
    if(!stream->readFlag())
       return;
 
+   // Rare updates
+   if(stream->readFlag())
+   {
+      stream->read(&mDamageBufferRechargeRate);
+      stream->read(&mDamageBufferDischargeRate);
+   }
+
    if (stream->readFlag()) {
       mDamage = mClampF(stream->readFloat(DamageLevelBits) * mDataBlock->maxDamage, 0.f, mDataBlock->maxDamage);
       DamageState prevState = mDamageState;
       mDamageState = DamageState(stream->readInt(NumDamageStateBits));
       stream->readNormalVector( &damageDir, 8 );
+      stream->read(&mDamageBuffer);
       if (prevState != Destroyed && mDamageState == Destroyed && isProperlyAdded())
          blowUp();
       updateDamageLevel();
@@ -4846,6 +4955,26 @@ DefineEngineMethod( ShapeBase, getEnergyPercent, F32, (),,
    return object->getEnergyValue();
 }
 
+DefineEngineMethod( ShapeBase, setDamageBufferLevel, void, ( F32 level ),,
+   "@brief Set the object's current damage buffer level.\n\n"
+
+   "@param level new damage buffer level\n"
+   
+   "@see getDamageBufferLevel()\n")
+{
+   object->setDamageBufferLevel(level);
+}
+
+DefineEngineMethod( ShapeBase, getDamageBufferLevel, F32, (),,
+   "@brief Get the object's current damage buffer level.\n\n"
+
+   "@return damage buffer level\n"
+   
+   "@see setDamageBufferLevel()\n")
+{
+   return object->getDamageBufferLevel();
+}
+
 DefineEngineMethod( ShapeBase, setDamageLevel, void, ( F32 level ),,
    "@brief Set the object's current damage level.\n\n"
 
@@ -4943,12 +5072,13 @@ DefineEngineMethod(ShapeBase, blowUp, void, (),, "@brief Explodes an object into
 	object->blowUp();
 }
 
-DefineEngineMethod( ShapeBase, applyDamage, void, ( F32 amount ),,
+DefineEngineMethod( ShapeBase, applyDamage, F32, ( F32 amount ),,
    "@brief Increment the current damage level by the specified amount.\n\n"
 
-   "@param amount value to add to current damage level\n" )
+   "@param amount value to add to current damage level\n"
+	"@return amount of damage actually added")
 {
-   object->applyDamage( amount );
+   return object->applyDamage(amount);
 }
 
 DefineEngineMethod( ShapeBase, applyRepair, void, ( F32 amount ),,
@@ -5010,6 +5140,52 @@ DefineEngineMethod( ShapeBase, getRechargeRate, F32, (),,
    "@see setRechargeRate()\n")
 {
    return object->getRechargeRate();
+}
+
+DefineEngineMethod( ShapeBase, setDamageBufferRechargeRate, void, ( F32 rate ),,
+   "@brief Set the damage buffer recharge rate.\n\n"
+
+   "The recharge rate is added to the object's current damage buffer level each tick, "
+   "up to the damageBuffer level set in the ShapeBaseData datablock.\n"
+   
+   "@param rate the recharge rate (per tick)\n"
+   
+   "@see getDamageBufferRechargeRate()\n")
+{
+   object->setDamageBufferRechargeRate(rate);
+}
+
+DefineEngineMethod( ShapeBase, getDamageBufferRechargeRate, F32, (),,
+   "@brief Get the current damage buffer recharge rate.\n\n"
+
+   "@return the damage buffer recharge rate (per tick)\n"
+   
+   "@see setDamageBufferRechargeRate()\n")
+{
+   return object->getDamageBufferRechargeRate();
+}
+
+DefineEngineMethod( ShapeBase, setDamageBufferDischargeRate, void, ( F32 rate ),,
+   "@brief Set the damage buffer discharge rate.\n\n"
+
+   "The discharge rate is subtracted from the object's current damage buffer level each tick, "
+   "down to the damageBuffer level set in the ShapeBaseData datablock.\n"
+   
+   "@param rate the discharge rate (per tick)\n"
+   
+   "@see getDamageBufferDischargeRate()\n")
+{
+   object->setDamageBufferDischargeRate(rate);
+}
+
+DefineEngineMethod( ShapeBase, getDamageBufferDischargeRate, F32, (),,
+   "@brief Get the current damage buffer discharge rate.\n\n"
+
+   "@return the damage buffer discharge rate (per tick)\n"
+   
+   "@see setDamageBufferDischargeRate()\n")
+{
+   return object->getDamageBufferDischargeRate();
 }
 
 DefineEngineMethod( ShapeBase, getControllingClient, S32, (),,
