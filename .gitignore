@@ -174,6 +174,5 @@ pip-log.txt
 #############
 *.dso
 console.log
-*.cached.dts
 !Engine/bin
 
