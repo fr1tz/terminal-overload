@@ -25,13 +25,12 @@ datablock ItemData(ItemBallast)
 
 function ItemBallast::onInventory(%this, %obj, %amount)
 {
-   echo("yay");
    %obj.ballast = new BallastShape() {
       dataBlock = ItemBallastShape;
    };
    %obj.mountObject(%obj.ballast, 3);
    MissionCleanup.add(%obj.ballast);
    
-   $ballast = %obj.ballast;
-   $player = %obj;
+   //$ballast = %obj.ballast;
+   //$player = %obj;
 }
