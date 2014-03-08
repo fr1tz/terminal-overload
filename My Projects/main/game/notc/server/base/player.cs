@@ -17,6 +17,8 @@ function PlayerData::onAdd(%this, %obj)
    %obj.mountVehicle = true;
 
    // Default dynamic armor stats
+   %obj.setDamageBufferRechargeRate(%this.damageBufferRechargeRate);
+   %obj.setDamageBufferDischargeRate(%this.damageBufferDischargeRate);
    %obj.setRechargeRate(%this.rechargeRate);
    %obj.setRepairRate(0);
 }
