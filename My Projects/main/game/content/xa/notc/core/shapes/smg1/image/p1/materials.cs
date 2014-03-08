@@ -7,13 +7,13 @@ singleton Material(xa_notc_core_shapes_smg1_image_p1_mat1)
    specularPower[0] = "50";
    doubleSided = "0";
    translucentBlendOp = "LerpAlpha";
-   diffuseColor[1] = "0.556863 0 1 1";
+   diffuseColor[1] = "0.392157 0.392157 0.392157 1";
    castShadows = "0";
    translucent = "0";
    showFootprints = "0";
    glow[0] = "0";
    emissive[0] = "0";
-   diffuseColor[2] = "0.996078 0.486275 0.996078 1";
+   diffuseColor[2] = "0.996078 0.854902 0.00784314 1";
    diffuseColor[3] = "0.992157 0.996078 0.996078 1";
    diffuseMap[2] = "content/xa/notc/core/shapes/smg1/image/p1/grid1.png";
    diffuseMap[3] = "content/xa/notc/core/shapes/smg1/image/p1/grid0.png";
@@ -32,7 +32,8 @@ singleton Material(xa_notc_core_shapes_smg1_image_p1_mat1)
    materialTag0 = "Miscellaneous";
    diffuseMap[1] = "content/xa/rotc/p.5.3/textures/rotc/heating.png";
    specularStrength[1] = "1.76471";
-   emissive[1] = "1";
+   emissive[1] = "0";
+   specularStrength[2] = "1.75";
 };
 
 singleton Material(xa_notc_core_shapes_smg1_image_p1_mat1)
@@ -80,12 +81,13 @@ singleton Material(xa_notc_core_shapes_smg1_image_p1_mat2)
    diffuseMap[0] = "content/xa/notc/core/shapes/smg1/image/p1/muzzleflash.png";
    specular[0] = "0.5 0.5 0.5 1";
    specularPower[0] = "50";
-   glow[0] = "1";
+   glow[0] = "0";
    emissive[0] = "1";
    doubleSided = "1";
    castShadows = "0";
    translucent = "1";
    translucentBlendOp = "AddAlpha";
    showFootprints = "0";
-   translucentZWrite = "1";
+   translucentZWrite = "0";
+   materialTag0 = "Miscellaneous";
 };

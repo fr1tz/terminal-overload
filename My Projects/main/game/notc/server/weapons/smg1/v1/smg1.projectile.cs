@@ -11,19 +11,23 @@ datablock LightDescription(WpnSMG1ProjectileLightDesc : BulletProjectileLightDes
 datablock DecalData(WpnSMG1ProjectileDecal)
 {
    Material = "xa_notc_core_shapes_smg1_projectile_p1_decalmat";
-   size = "0.25";
+   size = "1";
    lifeSpan = "5000";
    randomize = "1";
-   texRows = "2";
+   texRows = "4";
    texCols = "2";
    screenStartRadius = "20";
    screenEndRadius = "5";
    clippingAngle = "180";
-   textureCoordCount = "3";
-   textureCoords[0] = "0 0 0.5 0.5";
-   textureCoords[1] = "0.5 0 0.5 0.5";
-   textureCoords[2] = "0 0.5 0.5 0.5";
-   textureCoords[3] = "0.5 0.5 0.5 0.5";
+   textureCoordCount = "7";
+   textureCoords[0] = "0 0 0.25 0.5";
+   textureCoords[1] = "0.25 0 0.25 0.5";
+   textureCoords[2] = "0.5 0 0.25 0.5";
+   textureCoords[3] = "0.75 0 0.25 0.5";
+   textureCoords[4] = "0 0.5 0.25 0.5";
+   textureCoords[5] = "0.25 0.5 0.25 0.5";
+   textureCoords[6] = "0.5 0.5 0.25 0.5";
+   textureCoords[7] = "0.75 0.5 0.25 0.5";
 };
 
 datablock ShotgunProjectileData(WpnSMG1Projectile)

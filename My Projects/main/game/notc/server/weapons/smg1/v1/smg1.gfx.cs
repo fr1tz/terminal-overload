@@ -3,22 +3,22 @@
 
 datablock ParticleData(WpnSMG1ProjectileExplosionSparkParticle : DefaultParticle)
 {
-   sizes[0] = "0.25";
-   sizes[1] = "0.5";
+   sizes[0] = "2.08333";
+   sizes[1] = "0";
    sizes[2] = "0";
    sizes[3] = "0";
-   times[1] = "0.5";
+   times[1] = "0.498039";
    times[2] = "1";
    spinSpeed = "0";
    textureName = "content/xa/torque3d/3.0/particles/droplet.png";
    animTexName = "content/xa/torque3d/3.0/particles/droplet.png";
    inheritedVelFactor = "0";
-   lifetimeMS = "100";
-   lifetimeVarianceMS = "25";
+   lifetimeMS = "200";
+   lifetimeVarianceMS = "100";
    useInvAlpha = "0";
-   colors[0] = "0.996078 0.992157 0.992157 1";
-   colors[1] = "0.00784314 0.996078 0.92549 0.552";
-   colors[2] = "0 1 0.929412 0";
+   colors[0] = "0.992126 0.992126 0.992126 1";
+   colors[1] = "1 0.792157 0 0.551181";
+   colors[2] = "1 0.792157 0 0";
    colors[3] = "1 0 1 1";
 };
 
@@ -119,17 +119,17 @@ datablock ParticleEmitterData(WpnSMG1ProjectileExplosionCloudEmitter : DefaultEm
 datablock ExplosionData(WpnSMG1ProjectileExplosion)
 {
    lifetimeMS = "96";
-   lightStartRadius = "0.941176";
+   lightStartRadius = "0.862745";
    lightStartColor = "0 1 0.874016 1";
    lightEndColor = "0 1 0.874016 1";
-   lightStartBrightness = "1.96078";
+   lightStartBrightness = "1.88235";
    lightEndBrightness = "0";
    particleRadius = "0.1";
    particleDensity = "2";
    ParticleEmitter = "BulletDirtDustEmitter";
    soundProfile = "WpnSMG1ProjectileExplosionSound";
    lightEndRadius = "0";
-   emitter[0] = "WpnSMG1ProjectileExplosionCloudEmitter";
+   emitter[0] = "WpnSMG1ProjectileExplosionSparkEmitter";
 };
 
 datablock DebrisData(WpnSMG1ProjectileShell)
