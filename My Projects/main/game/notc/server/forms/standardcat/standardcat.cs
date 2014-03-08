@@ -1,13 +1,6 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
-datablock StaticShapeData(FrmStandardcatEtherboard)
-{
-   shapeFile = "content/xa/notc/core/shapes/standardcat/etherboard/p1/shape.dae";
-};
-
-//------------------------------------------------------------------------------
-
 datablock PlayerData(FrmStandardcat)
 {
    proxy = FrmStandardcatProxy; // script field
@@ -235,6 +228,7 @@ datablock PlayerData(FrmStandardcat)
    mainWeapon = WpnSMG1;
 
    maxInv[ItemBallast] = 1;
+   maxInv[ItemEtherboard] = 1;
 
    maxInv[WpnSMG1] = 1;
    maxInv[WpnMGL1] = 1;
@@ -301,17 +295,14 @@ datablock PlayerData(FrmStandardcat)
 function FrmStandardcat::onAdd(%this, %obj)
 {
    Parent::onAdd(%this, %obj);
-   
+
+   %obj.allowJetJumping(false);
+   %obj.allowCrouching(false);
+   %obj.allowProne(false);
+   %obj.allowSwimming(false);
+   %obj.allowSliding(false);
    %obj.playAudio(0, SoldierSpawnGaspSound);
-   
    %obj.setEnergyLevel(%this.maxEnergy);
-   
-   %obj.etherboard = new StaticShape() {
-      dataBlock = FrmStandardcatEtherboard;
-   };
-   %obj.mountObject(%obj.etherboard, 8);
-   %obj.etherboard.startFade(0, 0, true);
-   
 	%obj.isCAT = true;
 	%obj.getTeamObject().numCATs++;
 }
@@ -320,9 +311,6 @@ function FrmStandardcat::onAdd(%this, %obj)
 function FrmStandardcat::onRemove(%this, %obj)
 {
    Parent::onRemove(%this, %obj);
-   
-   if(isObject(%obj.etherboard))
-      %obj.etherboard.delete();
 }
 
 // callback function: called by engine
@@ -392,28 +380,6 @@ function FrmStandardcat::onTrigger(%this, %obj, %triggerNum, %val)
          %obj.zBalastLimit = 1.0;
    }
  
-   if(%triggerNum == 6)
-   {
-      if(!isObject(%obj.etherboard))
-         return;
-         
-      if(%val)
-      {
-         %obj.etherboard.playThread(0, "activate");
-         %obj.etherboard.setThreadTimeScale(0, 4);
-         %obj.etherboard.setThreadDir(0, true);
-         %obj.etherboard.startFade(500, 0, false);
-      }
-      else
-      {
-         %obj.etherboard.playThread(0, "activate");
-         %obj.etherboard.setThreadTimeScale(0, 4);
-         %obj.etherboard.setThreadPosition(0, 1);
-         %obj.etherboard.setThreadDir(0, false);
-         %obj.etherboard.startFade(100, 0, true);
-      }
-   }
-   
    if(!%val || %triggerNum != 2)
       return;
 
@@ -450,6 +416,30 @@ function FrmStandardcat::onUnmount(%this, %obj, %vehicle, %node)
    %vehicle.getDataBlock().updateSSC(%vehicle);
    if(!isObject(%obj.getMountedImage(0)))
       %obj.useWeapon(1);
+}
+
+// Called by engine
+function FrmStandardcat::onStartSliding(%this, %obj)
+{
+   //echo("FrmStandardcat::onStartSliding()");
+   
+   if(isObject(%obj.etherboard))
+      %obj.etherboard.getDataBlock().activate(%obj);
+}
+
+// Called by engine
+function FrmStandardcat::onStopSliding(%this, %obj)
+{
+   //echo("FrmStandardcat::onStopSliding()");
+   
+   if(isObject(%obj.etherboard))
+      %obj.etherboard.getDataBlock().deactivate(%obj);
+}
+
+// Called by engine
+function FrmStandardcat::onJump(%this, %obj)
+{
+   //echo("FrmStandardcat::onJump()");
 }
 
 // Called by script

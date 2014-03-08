@@ -33,35 +33,6 @@ function Weapon::onUse(%data, %obj)
          else
             messageClient(%obj.client, 'MsgWeaponUsed', '\c0Weapon selected');
       }
-      
-      // If this is a Player class object then allow the weapon to modify allowed poses
-      if (%obj.isInNamespaceHierarchy("Player"))
-      {
-         // Start by allowing everything
-         %obj.allowAllPoses();
-         
-         // Now see what isn't allowed by the weapon
-         
-         %image = %data.image;
-         
-         if (%image.jumpingDisallowed)
-            %obj.allowJumping(false);
-         
-         if (%image.jetJumpingDisallowed)
-            %obj.allowJetJumping(false);
-         
-         if (%image.sprintDisallowed)
-            %obj.allowSprinting(false);
-         
-         if (%image.crouchDisallowed)
-            %obj.allowCrouching(false);
-         
-         if (%image.proneDisallowed)
-            %obj.allowProne(false);
-         
-         if (%image.swimmingDisallowed)
-            %obj.allowSwimming(false);
-      }
    }
 }
 
