@@ -447,15 +447,14 @@ function FrmStandardcat::clientAction(%this, %obj, %nr)
 {
    //echo("FrmStandardcat::clientAction()");
    
+   Parent::clientAction(%this, %obj, %nr);
+   
    if(%nr == 22)
    {
-      if(isObject(%obj.ballast))
-      {
-         %obj.ballast.setLevel(%obj.ballast.getLevel()/2);
-      }
+      %ballast = %obj.ballast;
+      if(isObject(%ballast))
+         %ballast.getDataBlock().drop(%ballast);
    }
-
-   Parent::clientAction(%this, %obj, %nr);
 
    if(%nr == 1)
       %obj.use(WpnBadger);

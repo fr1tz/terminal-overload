@@ -21,7 +21,7 @@ function ItemBallastShape::onUnmount(%this, %obj, %mountObj, %node)
 
 function ItemBallastShape::drop(%this, %obj)
 {
-   echo("ItemBallastShape::drop()");
+   //echo("ItemBallastShape::drop()");
    
    %level = %obj.getLevel();
    
@@ -77,8 +77,7 @@ function ItemBallastShape::updateThread(%this, %obj)
    {
       %level += 0.01;
       %level -= %speed/200;
-      if(%level < 0.02)
-         %level = 0.02;
+      %level = mClamp(%level, 0.02, 1.0);
    }
    
    //echo(%mount.zBalastLimit);
