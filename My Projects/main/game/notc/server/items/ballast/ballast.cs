@@ -19,6 +19,26 @@ function ItemBallastShape::onUnmount(%this, %obj, %mountObj, %node)
    %obj.schedule(0, "delete");
 }
 
+function ItemBallastShape::drop(%this, %obj)
+{
+   echo("ItemBallastShape::drop()");
+   
+   %level = %obj.getLevel();
+   
+   if(%level < 0.005)
+      return;
+   
+   if(%level > 0.02)
+      %level = 0.02;
+   else
+      %level = %level-0.01;
+      
+   %level = mClamp(%level, 0.0, 1.0);
+   %obj.setLevel(%level);
+      
+   createExplosion(ItemBallastDropExplosion, %obj.getPosition(), "0 0 1");
+}
+
 function ItemBallastShape::updateThread(%this, %obj)
 {
    //echo("ItemBallastShape::updateThread()");
@@ -43,10 +63,15 @@ function ItemBallastShape::updateThread(%this, %obj)
    %vel = setWord(%vel, 2, 0); // clear out z component
    %speed = VectorLen(%vel);
    
+   if(%mount.zBalastLimit $= "")
+      %mount.zBalastLimit = 0.02;
+   
    if(%level <= 0.02)
    {
       %level += 0.0004;
-      %level -= %speed/50000;
+      %level -= %speed/40000;
+      if(%level > %mount.zBalastLimit)
+         %level = %mount.zBalastLimit;
    }
    else
    {
@@ -55,19 +80,14 @@ function ItemBallastShape::updateThread(%this, %obj)
       if(%level < 0.02)
          %level = 0.02;
    }
-
+   
    //echo(%mount.zBalastLimit);
    //echo("speed:" SPC %speed);
    //echo("level:" SPC %level SPC "(" @ %level * %this.mass @ ")");
-
-   if(%mount.zBalastLimit $= "")
-      %mount.zBalastLimit = 0.02;
    
    if(%level > %mount.zBalastLimit)
-   {
-      // Drop ballast effect
-   }
-   
+      %this.drop(%obj);
+
    %level = mClamp(%level, 0, %mount.zBalastLimit);
    
    %obj.setLevel(%level);
