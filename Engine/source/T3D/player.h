@@ -402,6 +402,9 @@ struct PlayerData: public ShapeBaseData {
    DECLARE_CALLBACK( void, onStopSwim, ( Player* obj ) );
    DECLARE_CALLBACK( void, onStartSprintMotion, ( Player* obj ) );
    DECLARE_CALLBACK( void, onStopSprintMotion, ( Player* obj ) );
+   DECLARE_CALLBACK( void, onStartSliding, ( Player* obj ) );
+   DECLARE_CALLBACK( void, onStopSliding, ( Player* obj ) );
+   DECLARE_CALLBACK( void, onJump, ( Player* obj ) );
    DECLARE_CALLBACK( void, doDismount, ( Player* obj ) );
    DECLARE_CALLBACK( void, onEnterLiquid, ( Player* obj, F32 coverage, const char* type ) );
    DECLARE_CALLBACK( void, onLeaveLiquid, ( Player* obj, const char* type ) );

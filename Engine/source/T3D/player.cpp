@@ -192,6 +192,18 @@ IMPLEMENT_CALLBACK( PlayerData, onStopSprintMotion, void, ( Player* obj ), ( obj
    "@brief Called when the player stops moving while in a Sprint pose.\n\n"
    "@param obj The Player object\n" );
 
+IMPLEMENT_CALLBACK( PlayerData, onStartSliding, void, ( Player* obj ), ( obj ),
+   "@brief Called when the player starts sliding.\n\n"
+   "@param obj The Player object\n" );
+
+IMPLEMENT_CALLBACK( PlayerData, onStopSliding, void, ( Player* obj ), ( obj ),
+   "@brief Called when the player stops sliding.\n\n"
+   "@param obj The Player object\n" );
+
+IMPLEMENT_CALLBACK( PlayerData, onJump, void, ( Player* obj ), ( obj ),
+   "@brief Called when the player jumps.\n\n"
+   "@param obj The Player object\n" );
+
 IMPLEMENT_CALLBACK( PlayerData, doDismount, void, ( Player* obj ), ( obj ),
    "@brief Called when attempting to dismount the player from a vehicle.\n\n"
    "It is up to the doDismount() method to actually perform the dismount.  Often "
@@ -2410,6 +2422,8 @@ void Player::processTick(const Move* move)
       if (!isGhost())
          updateAnimation(TickSec);
 
+      bool wasSliding = this->isSliding();
+
       PROFILE_START(Player_PhysicsSection);
       if ( isServerObject() || didRenderLastRender() || getControllingClient() )
       {
@@ -2441,6 +2455,15 @@ void Player::processTick(const Move* move)
          // client and must be ticked on the server.
          updateActionThread();
          updateAnimationTree(true);
+
+         // Check if sliding has changed.
+         if(this->isSliding() != wasSliding)
+         {
+            if(this->isSliding())
+               mDataBlock->onStartSliding_callback(this);
+            else
+               mDataBlock->onStopSliding_callback(this);
+         }
 
          // Check for sprinting motion changes
          Pose currentPose = getPose();
@@ -3400,6 +3423,9 @@ void Player::updateMove(const Move* move)
 			}
 
          mJumpSurfaceLastContact = JumpSkipContactsMax;
+
+         if(!isGhost())
+            mDataBlock->onJump_callback(this);
       }
    }
    else
