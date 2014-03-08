@@ -31,7 +31,7 @@ function onServerCreated()
    %datablockFiles.add( "content/xa/torque3d/3.0/datablocks/datablockExec.cs" );   
    loadDatablockFiles( %datablockFiles, true );
 
-   exec("./deathmatch/exec.cs");
+   exec("./dm/exec.cs");
 }
 
 function onServerDestroyed()

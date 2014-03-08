@@ -22,7 +22,7 @@ new SimGroup(MissionGroup) {
       canSaveDynamicFields = "1";
          desc0 = "TODO";
          levelName = "DM1";
-         missionScript = "notc/server/init_deathmatch.cs";
+         missionScript = "notc/server/init_dm.cs";
    };
    new SimGroup(CameraBookmarks) {
       canSave = "1";
@@ -85,7 +85,7 @@ new SimGroup(MissionGroup) {
       new SpawnSphere() {
          autoSpawn = "0";
          spawnTransform = "0";
-         radius = "10";
+         radius = "2";
          sphereWeight = "1";
          indoorWeight = "1";
          outdoorWeight = "1";
@@ -93,8 +93,8 @@ new SimGroup(MissionGroup) {
          dataBlock = "SpawnSphereMarker";
          client = "-1";
          teamId = "0";
-         position = "0 0.2174 9221.55";
-         rotation = "1 0 0 90";
+         position = "2 -32 275";
+         rotation = "0.0440049 0.0442842 -0.998049 90.4743";
          scale = "1 1 1";
          canSave = "1";
          canSaveDynamicFields = "1";
@@ -173,11 +173,11 @@ new SimGroup(MissionGroup) {
          canSave = "1";
          canSaveDynamicFields = "1";
             lines = "SpawnLine";
-            zActivationTrigger = "6199";
+            zActivationTrigger = "4402";
             zLastUpdatePosition = "0 0.2174 9173.61";
-            zParticleEmitter = "6198";
-            zProximityTrigger = "6200";
-            zUpdateAssetsThread = "753826";
+            zParticleEmitter = "4401";
+            zProximityTrigger = "4403";
+            zUpdateAssetsThread = "15043";
       };
       new TSStatic() {
          shapeName = "content/xa/notc/mis/dm1/shapes/heap/shape.dae";
@@ -269,7 +269,7 @@ new SimGroup(MissionGroup) {
          };
       };
       new Marker() {
-         seqNum = "0";
+         seqNum = "1";
          type = "Normal";
          msToNext = "0";
          smoothingType = "Linear";
@@ -281,7 +281,7 @@ new SimGroup(MissionGroup) {
             Speed = "200";
       };
       new Marker() {
-         seqNum = "1";
+         seqNum = "2";
          type = "Normal";
          msToNext = "0";
          smoothingType = "Linear";
@@ -292,7 +292,7 @@ new SimGroup(MissionGroup) {
          canSaveDynamicFields = "1";
       };
       new Marker() {
-         seqNum = "5";
+         seqNum = "3";
          type = "Normal";
          msToNext = "0";
          smoothingType = "Linear";
@@ -303,7 +303,7 @@ new SimGroup(MissionGroup) {
          canSaveDynamicFields = "1";
       };
       new Marker() {
-         seqNum = "3";
+         seqNum = "4";
          type = "Normal";
          msToNext = "0";
          smoothingType = "Linear";
@@ -656,6 +656,32 @@ new SimGroup(MissionGroup) {
             canSaveDynamicFields = "1";
          };
       };
+   };
+   new Item() {
+      static = "1";
+      rotate = "1";
+      isAIControlled = "0";
+      dataBlock = "ItemBallast";
+      client = "-1";
+      teamId = "0";
+      position = "11.999 -31.993 272.997";
+      rotation = "1 0 0 0";
+      scale = "1 1 1";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+   };
+   new Item() {
+      static = "1";
+      rotate = "1";
+      isAIControlled = "0";
+      dataBlock = "ItemEtherboard";
+      client = "-1";
+      teamId = "0";
+      position = "8 -32.0237 272.982";
+      rotation = "1 0 0 0";
+      scale = "1 1 1";
+      canSave = "1";
+      canSaveDynamicFields = "1";
    };
 };
 //--- OBJECT WRITE END ---
