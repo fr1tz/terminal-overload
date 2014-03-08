@@ -154,7 +154,7 @@ bool GFXGLTextureObject::copyToBmp(GBitmap * bmp)
    AssertFatal(bmp->getWidth() == getWidth(), "GFXGLTextureObject::copyToBmp - invalid size");
    AssertFatal(bmp->getHeight() == getHeight(), "GFXGLTextureObject::copyToBmp - invalid size");
 
-   PROFILE_START(GFXGLTextureObject_copyToBmp);
+   PROFILE_SCOPE(GFXGLTextureObject_copyToBmp);
 
    PRESERVE_TEXTURE(mBinding);
    glBindTexture(mBinding, mHandle);
