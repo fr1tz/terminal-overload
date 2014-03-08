@@ -6,13 +6,8 @@ datablock ItemData(ItemBallast)
    // Mission editor category
    category = "Item";
 
-   // Hook into Item Weapon class hierarchy. The weapon namespace
-   // provides common weapon handling functions in addition to hooks
-   // into the inventory system.
-   className = "Weapon";
-
    // Basic Item properties
-   shapeFile = "content/xa/oldshapes/raptor/magazine/p1/shape.dae";
+   shapeFile = "content/xa/notc/core/shapes/standardcat/ballast/p1/shape.dae";
    mass = 1;
    elasticity = 0.2;
    friction = 0.6;
@@ -25,12 +20,17 @@ datablock ItemData(ItemBallast)
 
 function ItemBallast::onInventory(%this, %obj, %amount)
 {
-   %obj.ballast = new BallastShape() {
-      dataBlock = ItemBallastShape;
-   };
-   %obj.mountObject(%obj.ballast, 3);
-   MissionCleanup.add(%obj.ballast);
-   
-   //$ballast = %obj.ballast;
-   //$player = %obj;
+   if(%amount == 0)
+   {
+      if(isObject(%obj.ballast))
+         %obj.ballast.delete();
+   }
+   else
+   {
+      %obj.ballast = new BallastShape() {
+         dataBlock = ItemBallastShape;
+      };
+      %obj.mountObject(%obj.ballast, 3);
+      MissionCleanup.add(%obj.ballast);
+   }
 }
