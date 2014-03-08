@@ -52,10 +52,13 @@ datablock PlayerData(FrmStandardcat)
    density = 10;
    maxDamage = 150;
    maxEnergy =  100;
-   repairRate = 0.33;
+   damageBuffer = 50;
    energyPerDamagePoint = 75;
 
-   rechargeRate = 0.4;
+	repairRate = 0.8;
+	damageBufferRechargeRate = 0.15;
+	damageBufferDischargeRate = 0.15;
+	rechargeRate = 0.4;
 
    runForce = 9000*2;
    runEnergyDrain = 0;
