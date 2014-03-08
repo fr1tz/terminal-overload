@@ -1419,3 +1419,11 @@ DefineEngineMethod( SceneObject, isGlobalBounds, bool, (),,
 {
    return object->isGlobalBounds();
 }
+
+//-----------------------------------------------------------------------------
+
+DefineEngineMethod( SceneObject, getMass, F32, (),,
+   "Get the object's mass.\n")
+{
+   return object->getMass();
+}
