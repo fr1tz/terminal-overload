@@ -56,8 +56,15 @@ function CatGui::tickThread(%this)
    }
    %this.zTickThread = %this.schedule(32, "tickThread");
 
-   if(!isObject(ServerConnection) || !isObject(ServerConnection.getControlObject()))
+   if(!isObject(ServerConnection))
       return;
+      
+   %control = ServerConnection.getControlObject();
+   if(!isObject(%control))
+      return;
+      
+   CatGuiDamageBufferText.setText(%control.getDamageBufferLevel());
+   CatGuiMassText.setText(%control.getMass());
 }
 
 //-----------------------------------------------------------------------------

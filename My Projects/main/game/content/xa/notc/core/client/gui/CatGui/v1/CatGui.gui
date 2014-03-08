@@ -27,12 +27,12 @@
       helpTag = "0";
       noCursor = "1";
       zTeamId = "0";
-      zTickThread = "220902";
+      zTickThread = "5085";
 
    new GuiDynamicCrossHairHud(CatGuiCrosshairSharp) {
       size = "0";
       alphaFactor = "6";
-      bitmap = "./graphics/crossHairSharp.png";
+      bitmap = "content/xa/notc/core/client/gui/CatGui/v1/graphics/crossHairSharp.png";
       wrap = "0";
       position = "0 0";
       extent = "640 480";
@@ -51,7 +51,7 @@
    new GuiDynamicCrossHairHud(CatGuiCrosshairBlur) {
       size = "0";
       alphaFactor = "0";
-      bitmap = "./graphics/crossHairBlur.png";
+      bitmap = "content/xa/notc/core/client/gui/CatGui/v1/graphics/crossHairBlur.png";
       wrap = "0";
       position = "0 0";
       extent = "640 480";
@@ -67,7 +67,7 @@
       canSave = "1";
       canSaveDynamicFields = "0";
    };
-   new GuiHealthTextHud() {
+   new GuiHealthTextHud(CatGuiHealth) {
       fillColor = "0 0 0 0.65";
       frameColor = "0 0 0 1";
       textColor = "1 1 1 1";
@@ -93,7 +93,53 @@
       canSave = "1";
       canSaveDynamicFields = "0";
    };
-   new GuiHealthBarHud() {
+   new GuiTextCtrl(CatGuiDamageBufferText) {
+      text = "49.9501";
+      maxLength = "1024";
+      margin = "0 0 0 0";
+      padding = "0 0 0 0";
+      anchorTop = "1";
+      anchorBottom = "0";
+      anchorLeft = "0";
+      anchorRight = "0";
+      position = "100 440";
+      extent = "60 40";
+      minExtent = "8 2";
+      horizSizing = "right";
+      vertSizing = "top";
+      profile = "HudTextNormalProfile";
+      visible = "1";
+      active = "1";
+      tooltipProfile = "GuiToolTipProfile";
+      hovertime = "1000";
+      isContainer = "1";
+      canSave = "1";
+      canSaveDynamicFields = "0";
+   };
+   new GuiTextCtrl(CatGuiMassText) {
+      text = "90";
+      maxLength = "1024";
+      margin = "0 0 0 0";
+      padding = "0 0 0 0";
+      anchorTop = "1";
+      anchorBottom = "0";
+      anchorLeft = "0";
+      anchorRight = "0";
+      position = "290 440";
+      extent = "60 40";
+      minExtent = "8 2";
+      horizSizing = "center";
+      vertSizing = "top";
+      profile = "HudTextCenterBoldProfile";
+      visible = "1";
+      active = "1";
+      tooltipProfile = "GuiToolTipProfile";
+      hovertime = "1000";
+      isContainer = "1";
+      canSave = "1";
+      canSaveDynamicFields = "0";
+   };
+   new GuiHealthBarHud(CatGuiEnergy) {
       fillColor = "0 0 0 0.5";
       frameColor = "0.992157 0.996078 0.992157 1";
       damageFillColor = "0.286275 0.286275 0.286275 1";
