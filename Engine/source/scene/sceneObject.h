@@ -32,6 +32,9 @@
 #include "scene/sceneContainer.h"
 #endif
 
+#ifndef _PALETTE_H_
+#include "scene/palette.h"
+#endif
 
 class SceneManager;
 class SceneRenderState;
@@ -46,7 +49,6 @@ class SFXAmbience;
 
 struct ObjectRenderInst;
 struct Move;
-
 
 /// A 3D object.
 ///
@@ -89,7 +91,7 @@ class SceneObject : public NetObject, private SceneContainer::Link, public Proce
          MaxObjectZones = 128,
 
          NumMountPoints = 32,
-         NumMountPointBits = 5,
+         NumMountPointBits = 5
       };
 
 		/// About the 'GhostCleanupMask':
@@ -304,6 +306,13 @@ class SceneObject : public NetObject, private SceneContainer::Link, public Proce
 
       /// Called when the size of the object changes.
       virtual void onScaleChanged() {}
+
+      /// @}
+
+      /// @name Rendering
+      /// @{
+
+      Palette mPalette;
 
       /// @}
 
@@ -678,6 +687,18 @@ class SceneObject : public NetObject, private SceneContainer::Link, public Proce
       /// @name Rendering
       /// @{
 
+      /// Set the object's palette.
+		void setPalette(const Palette& palette) { mPalette = palette; }
+		
+      // Return the object's palette.
+      Palette getPalette() { return mPalette; }
+
+      /// Set a color in the object's palette.
+      void setPaletteColor(U32 slot, const ColorI& color);
+
+      /// Return a color from the object's palette.
+      ColorI getPaletteColor(U32 slot);
+
       /// Called when the SceneManager is ready for the registration of render instances.
       /// @param state Rendering state.
       virtual void prepRenderImage( SceneRenderState* state ) {}
@@ -754,6 +775,7 @@ class SceneObject : public NetObject, private SceneContainer::Link, public Proce
       static bool _setFieldPosition( void *object, const char *index, const char *data );
       static bool _setFieldRotation( void *object, const char *index, const char *data );
       static bool _setFieldScale( void *object, const char *index, const char *data );
+		static bool _setPaletteColors( void *object, const char *index, const char *data );
       static bool _setMountPID( void* object, const char* index, const char* data );
 
       /// @}

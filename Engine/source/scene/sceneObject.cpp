@@ -10,6 +10,7 @@
 #include "console/simPersistID.h"
 #include "sim/netConnection.h"
 #include "core/stream/bitStream.h"
+#include "scene/palette.h"
 #include "scene/sceneManager.h"
 #include "scene/sceneTracker.h"
 #include "scene/sceneRenderState.h"
@@ -561,6 +562,14 @@ void SceneObject::initPersistFields()
 
    endGroup( "Mounting" );
 
+   addGroup( "Rendering" );
+
+      addProtectedField( "paletteColors", TYPEID< ColorI >(), Offset(mPalette.colors, SceneObject), &_setPaletteColors, &defaultProtectedGetFn, Palette::NumSlots,
+         "@brief Dynamic object colorization RGBA values.\n\n"
+         "Whether and how these colors are actually used depends on the object and its materials." );
+
+   endGroup( "Rendering" );
+
    Parent::initPersistFields();
 }
 
@@ -602,6 +611,26 @@ bool SceneObject::_setFieldScale( void *object, const char *index, const char *d
       Point3F scale;
       Con::setData( TypePoint3F, &scale, 0, 1, &data );
       so->setScale( scale );
+   }
+   return false;
+}
+
+//-----------------------------------------------------------------------------
+
+bool SceneObject::_setPaletteColors( void *object, const char *index, const char *data )
+{
+   SceneObject* so = static_cast<SceneObject*>( object );
+   if(so)
+   {
+      U32 i;
+      if(!index)
+         i = 0;
+      else
+         i = dAtoui(index);
+
+		ColorI c;
+		Con::setData(TypeColorI, &c, 0, 1, &data);
+		so->setPaletteColor(i, c);
    }
    return false;
 }
@@ -755,6 +784,13 @@ U32 SceneObject::packUpdate( NetConnection* conn, U32 mask, BitStream* stream )
    if ( stream->writeFlag( mask & RareUpdatesMask ) )
 	{
       stream->writeRangedU32( (U32)mObjectFlags, 0, getObjectFlagMax() );
+
+      ColorI defaultColor;
+      for(U32 i = 0; i < Palette::NumSlots; i++)
+      {
+         if(stream->writeFlag(mPalette.colors[i] != defaultColor))
+            stream->write(mPalette.colors[i]);
+      }
 	}
 
    if ( mask & MountedMask ) 
@@ -796,6 +832,15 @@ void SceneObject::unpackUpdate( NetConnection* conn, BitStream* stream )
    if ( stream->readFlag() )      
 	{
       mObjectFlags = stream->readRangedU32( 0, getObjectFlagMax() );
+
+      ColorI defaultColor;
+      for(U32 i = 0; i < Palette::NumSlots; i++)
+      {
+         if(stream->readFlag())
+            stream->read(&mPalette.colors[i]);
+         else
+            mPalette.colors[i] = defaultColor;
+		}
 	}
 
    // MountedMask
@@ -1156,6 +1201,24 @@ void SceneObject::getRenderMountTransform( F32 delta, S32 index, const MatrixF &
    mountTransform.setPosition( position );
 
    outMat->mul( mRenderObjToWorld, mountTransform );
+}
+
+//-----------------------------------------------------------------------------
+
+void SceneObject::setPaletteColor(U32 slot, const ColorI& color)
+{
+   if(slot >= Palette::NumSlots)
+		return;
+	mPalette.colors[slot] = color;
+	this->setMaskBits(RareUpdatesMask);
+}
+
+ColorI SceneObject::getPaletteColor(U32 slot)
+{
+   if(slot >= Palette::NumSlots)
+      return ColorI(255, 255, 255, 255);
+   else
+      return mPalette.colors[slot];
 }
 
 //=============================================================================

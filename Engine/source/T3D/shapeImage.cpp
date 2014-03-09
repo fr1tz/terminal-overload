@@ -3199,9 +3199,7 @@ void ShapeBase::setImageState(U32 imageSlot, U32 newState,bool force)
 					prj->mSourceObject     = this;
 					prj->mSourceObjectSlot = imageSlot;
 
-#if 0
-					prj->setSceneObjectColorization(this->getSceneObjectColorization());
-#endif
+					prj->setPalette(this->getPalette());
 					prj->onNewDataBlock(shotgunData, false);
 					if(!prj->registerObject())
 					{

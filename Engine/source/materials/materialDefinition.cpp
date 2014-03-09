@@ -94,6 +94,7 @@ Material::Material()
    for( U32 i=0; i<MAX_STAGES; i++ )
    {
       mDiffuse[i].set( 1.0f, 1.0f, 1.0f, 1.0f );
+      mDiffusePaletteSlot[i] = -1;
       mSpecular[i].set( 1.0f, 1.0f, 1.0f, 1.0f );
 
       mSpecularPower[i] = 8.0f;
@@ -187,6 +188,9 @@ void Material::initPersistFields()
       addField("diffuseColor", TypeColorF, Offset(mDiffuse, Material), MAX_STAGES,
          "This color is multiplied against the diffuse texture color.  If no diffuse texture "
          "is present this is the material color." );
+
+      addField("diffuseColorPaletteSlot", TypeS32, Offset(mDiffusePaletteSlot, Material), MAX_STAGES,
+         "Color from the object's palette to be multiplied against the diffuse texture color." );
 
       addField("diffuseMap", TypeImageFilename, Offset(mDiffuseMapFilename, Material), MAX_STAGES,
          "The diffuse color texture map." );

@@ -424,6 +424,12 @@ bool MatInstance::setupPass(SceneRenderState * state, const SceneData &sgData )
    return true;
 }
 
+void MatInstance::updatePalette()
+{
+   if(mProcessedMaterial)
+      mProcessedMaterial->updatePalette(mCurPass);
+}
+
 void MatInstance::setTransforms(const MatrixSet &matrixSet, SceneRenderState *state)
 {
    PROFILE_SCOPE(MatInstance_setTransforms);

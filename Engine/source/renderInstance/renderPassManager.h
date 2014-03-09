@@ -18,6 +18,9 @@
 #ifndef _SCENEMANAGER_H_
 #include "scene/sceneManager.h"
 #endif
+#ifndef _PALETTE_H_
+#include "scene/palette.h"
+#endif
 
 class SceneRenderState;
 class ISceneObject;
@@ -326,6 +329,7 @@ struct MeshRenderInst : public RenderInst
    U8    transFlags;
    bool  reflective;
    F32   visibility;
+   Palette palette;
 
    /// A generic hint value passed from the game
    /// code down to the material for use by shader 

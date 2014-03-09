@@ -9,6 +9,7 @@
 #include "gfx/gfxShader.h"
 #include "gfx/genericConstBuffer.h"
 #include "gfx/gfxPrimitiveBuffer.h"
+#include "scene/palette.h"
 #include "scene/sceneRenderState.h"
 #include "shaderGen/shaderFeature.h"
 #include "shaderGen/shaderGenVars.h"
@@ -414,9 +415,10 @@ void ProcessedShaderMaterial::_determineFeatures(  U32 stageNum,
    }
 
    // If we have a diffuse map and the alpha on the diffuse isn't
-   // zero and the color isn't pure white then multiply the color.
-   else if (   mMaterial->mDiffuse[stageNum].alpha > 0.0f && 
-               mMaterial->mDiffuse[stageNum] != ColorF::WHITE )
+   // zero and the color isn't pure white or gets modified
+   // based on a palette, then multiply the color.
+   else if ( mMaterial->mDiffuse[stageNum].alpha > 0.0f && 
+             (mMaterial->mDiffuse[stageNum] != ColorF::WHITE || mMaterial->mDiffusePaletteSlot[stageNum] >= 0) )
       fd.features.addFeature( MFT_DiffuseColor );
 
    // If lightmaps or tonemaps are enabled or we 
@@ -1108,6 +1110,24 @@ void ProcessedShaderMaterial::_setShaderConstants(SceneRenderState * state, cons
          0.0f, 0.0f ); // TODO: Wrap mode flags?
       shaderConsts->setSafe(handles->mBumpAtlasTileSC, atlasTileParams);
    }
+}
+
+void ProcessedShaderMaterial::updatePalette(U32 pass)
+{
+   PROFILE_SCOPE( ProcessedShaderMaterial_UpdatePalette );
+
+   GFXShaderConstBuffer* shaderConsts = _getShaderConstBuffer(pass);
+   ShaderConstHandles* handles = _getShaderConstHandles(pass);
+   U32 stageNum = getStageFromPass(pass);
+
+	// Update diffuse color
+	ColorF diffuseColor = mMaterial->mDiffuse[stageNum];
+	if(mMaterial->mDiffusePaletteSlot[stageNum] >= 0)
+	{
+		ColorI paletteColor = Palette::active.colors[mMaterial->mDiffusePaletteSlot[stageNum]];
+		diffuseColor *= paletteColor;
+	}
+	shaderConsts->setSafe(handles->mDiffuseColorSC, diffuseColor);
 }
 
 bool ProcessedShaderMaterial::_hasCubemap(U32 pass)

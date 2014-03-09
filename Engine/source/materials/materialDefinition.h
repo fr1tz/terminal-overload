@@ -200,6 +200,7 @@ public:
    /// or if it has a texture it is multiplied against 
    /// the diffuse texture color.
    ColorF mDiffuse[MAX_STAGES];
+   S32 mDiffusePaletteSlot[MAX_STAGES];
 
    ColorF mSpecular[MAX_STAGES];
 

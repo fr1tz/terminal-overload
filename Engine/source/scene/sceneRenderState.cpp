@@ -2,6 +2,7 @@
 // located in the root directory of this distribution.
 
 #include "platform/platform.h"
+#include "scene/palette.h"
 #include "scene/sceneRenderState.h"
 
 #include "renderInstance/renderPassManager.h"
@@ -83,6 +84,7 @@ void SceneRenderState::renderObjects( SceneObject** objects, U32 numObjects )
    for( U32 i = 0; i < numObjects; ++ i )
    {
       SceneObject* object = objects[ i ];
+      Palette::active = object->getPalette();
       object->prepRenderImage( this );
    }
    PROFILE_END();

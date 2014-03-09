@@ -16,6 +16,7 @@
 #include "math/mathIO.h"
 #include "math/mathUtils.h"
 #include "console/console.h"
+#include "scene/palette.h"
 #include "scene/sceneObject.h"
 #include "core/bitRender.h"
 #include "collision/convex.h"
@@ -192,6 +193,7 @@ void TSMesh::innerRender( TSMaterialList *materials, const TSRenderState &rdata,
    coreRI->materialHint = rdata.getMaterialHint();
 
    coreRI->visibility = meshVisibility;  
+   coreRI->palette = Palette::active;
    coreRI->cubemap = rdata.getCubemap();
 
    // NOTICE: SFXBB is removed and refraction is disabled!

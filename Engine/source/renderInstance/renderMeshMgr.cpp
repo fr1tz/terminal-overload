@@ -10,6 +10,7 @@
 #include "materials/sceneData.h"
 #include "materials/processedMaterial.h"
 #include "materials/materialManager.h"
+#include "scene/palette.h"
 #include "scene/sceneRenderState.h"
 #include "gfx/gfxDebugEvent.h"
 #include "math/util/matrixSet.h"
@@ -131,7 +132,7 @@ void RenderMeshMgr::render(SceneRenderState * state)
       lastMiscTex = sgData.miscTex;
       U32 a;
 
-      while( mat && mat->setupPass(state, sgData ) )
+      while(mat && mat->setupPass(state, sgData ))
       {
          for( a=j; a<binSize; a++ )
          {
@@ -144,6 +145,9 @@ void RenderMeshMgr::render(SceneRenderState * state)
                lastLM = NULL;
                break;
             }            
+
+				Palette::active = passRI->palette;
+				mat->updatePalette();
 
             matrixSet.setWorld(*passRI->objectToWorld);
             matrixSet.setView(*passRI->worldToCamera);
