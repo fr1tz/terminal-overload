@@ -146,15 +146,13 @@ void RenderMeshMgr::render(SceneRenderState * state)
                break;
             }            
 
-				Palette::active = passRI->palette;
-				mat->updatePalette();
-
             matrixSet.setWorld(*passRI->objectToWorld);
             matrixSet.setView(*passRI->worldToCamera);
             matrixSet.setProjection(*passRI->projection);
             mat->setTransforms(matrixSet, state);
 
             setupSGData( passRI, sgData );
+            Palette::active = passRI->palette;
             mat->setSceneInfo( state, sgData );
 
             // If we're instanced then don't render yet.

@@ -151,9 +151,6 @@ public:
    /// the specified pass is out of bounds.
    virtual bool setupPass(SceneRenderState *, const SceneData& sgData, U32 pass) = 0;
 
-   /// Update material based on active palette.
-   virtual void updatePalette(U32 pass) {};
-
    // Material parameter methods
    virtual MaterialParameters* allocMaterialParameters() = 0;
    virtual MaterialParameters* getDefaultMaterialParameters() = 0;

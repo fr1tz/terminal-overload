@@ -124,9 +124,6 @@ public:
    ///@endcode
    ///
    virtual bool setupPass( SceneRenderState *state, const SceneData &sgData ) = 0;
-
-	/// Update material based on active palette.
-   virtual void updatePalette() = 0;
    
    /// This initializes the material transforms and should be 
    /// called after setupPass() within the pass loop.

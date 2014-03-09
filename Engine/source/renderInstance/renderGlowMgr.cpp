@@ -183,6 +183,7 @@ void RenderGlowMgr::render( SceneRenderState *state )
             matrixSet.setProjection(*passRI->projection);
             glowMat->setTransforms(matrixSet, state);
 
+            Palette::active = passRI->palette;
             glowMat->setSceneInfo(state, sgData);
             glowMat->setBuffers(passRI->vertBuff, passRI->primBuff);
 

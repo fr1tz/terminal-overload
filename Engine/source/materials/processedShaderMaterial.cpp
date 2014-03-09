@@ -1112,24 +1112,6 @@ void ProcessedShaderMaterial::_setShaderConstants(SceneRenderState * state, cons
    }
 }
 
-void ProcessedShaderMaterial::updatePalette(U32 pass)
-{
-   PROFILE_SCOPE( ProcessedShaderMaterial_UpdatePalette );
-
-   GFXShaderConstBuffer* shaderConsts = _getShaderConstBuffer(pass);
-   ShaderConstHandles* handles = _getShaderConstHandles(pass);
-   U32 stageNum = getStageFromPass(pass);
-
-	// Update diffuse color
-	ColorF diffuseColor = mMaterial->mDiffuse[stageNum];
-	if(mMaterial->mDiffusePaletteSlot[stageNum] >= 0)
-	{
-		ColorI paletteColor = Palette::active.colors[mMaterial->mDiffusePaletteSlot[stageNum]];
-		diffuseColor *= paletteColor;
-	}
-	shaderConsts->setSafe(handles->mDiffuseColorSC, diffuseColor);
-}
-
 bool ProcessedShaderMaterial::_hasCubemap(U32 pass)
 {
    // Only support cubemap on the first stage
@@ -1184,6 +1166,16 @@ void ProcessedShaderMaterial::setSceneInfo(SceneRenderState * state, const Scene
 
    GFXShaderConstBuffer* shaderConsts = _getShaderConstBuffer(pass);
    ShaderConstHandles* handles = _getShaderConstHandles(pass);
+   U32 stageNum = getStageFromPass(pass);
+
+   // Update diffuse color.
+   ColorF diffuseColor = mMaterial->mDiffuse[stageNum];
+   if(mMaterial->mDiffusePaletteSlot[stageNum] >= 0)
+   {
+      ColorI paletteColor = Palette::active.colors[mMaterial->mDiffusePaletteSlot[stageNum]];
+      diffuseColor *= paletteColor;
+   }
+   shaderConsts->setSafe(handles->mDiffuseColorSC, diffuseColor);
 
    // Set cubemap stuff here (it's convenient!)
    const Point3F &eyePosWorld = state->getCameraPosition();
