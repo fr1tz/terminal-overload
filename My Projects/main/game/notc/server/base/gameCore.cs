@@ -484,10 +484,12 @@ function GameCore::onClientEnterGame(%game, %client)
    //echo (%game @"\c4 -> "@ %game.class @" -> GameCore::onClientEntergame");
 
   	%client.ingame = true;
+   
+   %client.color[0] = "0 255 0 255";
 
    // Sync the client's clocks to the server's
    commandToClient(%client, 'SyncClock', $Sim::Time - $Game::StartTime);
-
+   
    // Find a spawn point for the camera
    // This function currently relies on some helper functions defined in
    // core/scripts/server/spawn.cs. For custom spawn behaviors one can either
@@ -908,6 +910,7 @@ function GameCore::spawnPlayer(%game, %client, %spawnPoint, %noControl)
       %client.skin = addTaggedString( getField(%availableSkins, getRandom(%count)) );
    }
 
+   %player.paletteColors[0] = %client.color[0];
    %player.setSkinName(%client.skin);
 
    // Give the client control of the player
