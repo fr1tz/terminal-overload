@@ -12,6 +12,10 @@
 #include "T3D/decal/decalData.h"
 #endif
 
+#ifndef _PALETTE_H_
+#include "scene/palette.h"
+#endif
+
 struct DecalVertex;
 class SceneRenderState;
 
@@ -51,6 +55,8 @@ class DecalInstance
 
       S32 mId;
 
+      Palette mPalette;
+
       GFXTexHandle *mCustomTex;
 
       void getWorldMatrix( MatrixF *outMat, bool flip = false );
@@ -68,7 +74,7 @@ class DecalInstance
       /// Calculates the size of this decal onscreen in pixels, used for LOD.
       F32 calcPixelSize( U32 viewportHeight, const Point3F &cameraPos, F32 worldToScreenScaleY ) const;
    		
-	   DecalInstance() : mId(-1) {}   
+	   DecalInstance() : mId(-1), mPalette(Palette::active) {}   
 };
 
 #endif // _DECALINSTANCE_H_

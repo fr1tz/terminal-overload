@@ -75,6 +75,9 @@ class DecalData : public SimDataBlock
       /// that faces away from the decal projection.
       F32 clippingAngle;
 
+      // Palette slot used to colorize the vertices of the decal mesh.
+      S8 paletteSlot;
+
       /// Skip generating and collecting vertex normals for decals.
       bool skipVertexNormals;
 

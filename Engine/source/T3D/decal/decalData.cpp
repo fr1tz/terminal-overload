@@ -76,6 +76,7 @@ DecalData::DecalData()
    renderPriority = 10;
    clippingMasks = STATIC_COLLISION_TYPEMASK;
    clippingAngle = 89.0f;
+   paletteSlot = -1;
 
    texCoordCount = 1;
 
@@ -158,6 +159,9 @@ void DecalData::initPersistFields()
       addField( "clippingAngle", TypeF32, Offset( clippingAngle, DecalData ),
          "The angle in degrees used to clip geometry that faces away from the "
          "decal projection direction." );
+
+      addField( "paletteSlot", TypeS8, Offset( paletteSlot, DecalData ), 
+         "Palette slot used to colorize the vertices of the decal mesh." );
 
    endGroup( "Rendering" );
 
@@ -253,6 +257,7 @@ void DecalData::packData( BitStream *stream )
    stream->write( renderPriority );
    stream->write( clippingMasks );
    stream->write( clippingAngle );
+   stream->write( paletteSlot );
    
 	stream->write( texRows );
    stream->write( texCols );
@@ -280,7 +285,8 @@ void DecalData::unpackData( BitStream *stream )
    stream->read( &renderPriority );
    stream->read( &clippingMasks );
    stream->read( &clippingAngle );
-   
+   stream->read( &paletteSlot );
+
 	stream->read( &texRows );
    stream->read( &texCols );
 	stream->read( &frame );

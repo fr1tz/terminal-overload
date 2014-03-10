@@ -1145,11 +1145,21 @@ void DecalManager::prepRenderImage( SceneRenderState* state )
          if ( alpha != dinst->mLastAlpha )
          {
             // calculate the swizzles color once, outside the loop.
-            GFXVertexColor color;
-            color.set( 255, 255, 255, (U8)(alpha * 255.0f) );
+            GFXVertexColor vcolor;
+            if(ddata->paletteSlot >= 0)
+            {
+               ColorI color = dinst->mPalette.colors[ddata->paletteSlot];
+               color.alpha = alpha*255.0f;
+               vcolor.set(color);
+            }
+            else
+            {
+               ColorI color( 255, 255, 255, alpha*255.0f );
+               vcolor.set(color);
+            }
 
             for ( U32 v = 0; v < dinst->mVertCount; v++ )
-               dinst->mVerts[v].color = color;
+               dinst->mVerts[v].color = vcolor;
 
             dinst->mLastAlpha = alpha;
          }      
