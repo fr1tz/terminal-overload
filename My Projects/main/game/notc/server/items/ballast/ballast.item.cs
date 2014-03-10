@@ -30,6 +30,7 @@ function ItemBallast::onInventory(%this, %obj, %amount)
       %obj.ballast = new BallastShape() {
          dataBlock = ItemBallastShape;
       };
+      copyPalette(%obj, %obj.ballast);
       %obj.mountObject(%obj.ballast, 3);
       MissionCleanup.add(%obj.ballast);
    }
