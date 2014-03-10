@@ -12,6 +12,7 @@ datablock DecalData(FrmStandardcatSlideDecal)
    textureCoordCount = "0";
    lifeSpan = "250";
    fadeTime = "1500";
+   paletteSlot = 0;
 };
 
 //----------------------------------------------------------------------------
@@ -55,6 +56,7 @@ datablock DecalData(FrmStandardcatFootprint)
    size = "1";
    material = xa_notc_core_shapes_standardcat_footprint;
    textureCoordCount = "0";
+   paletteSlot = 0;
 };
 
 //----------------------------------------------------------------------------
