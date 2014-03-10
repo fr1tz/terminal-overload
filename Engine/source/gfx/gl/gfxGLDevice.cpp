@@ -367,14 +367,24 @@ void GFXGLDevice::clear(U32 flags, ColorI color, F32 z, U32 stencil)
    // Make sure we have flushed our render target state.
    _updateRenderTargets();
    
-   bool zwrite = true;
+   bool writeAllColors = true;
+   bool zwrite = true;   
+   bool stencilWrite = true;
+   const GFXStateBlockDesc *desc = NULL;
    if (mCurrentGLStateBlock)
    {
-      zwrite = mCurrentGLStateBlock->getDesc().zWriteEnable;
-   }   
+      desc = &mCurrentGLStateBlock->getDesc();
+      zwrite = desc->zWriteEnable;
+      writeAllColors = desc->colorWriteRed && desc->colorWriteGreen && desc->colorWriteBlue && desc->colorWriteAlpha;
+      stencilWrite = desc->stencilWriteMask;
+   }
    
+   glColorMask(true, true, true, true);
    glDepthMask(true);
-   ColorF c = color;
+   glStencilMask(true);
+   
+
+   ColorF c = color;   
    glClearColor(c.red, c.green, c.blue, c.alpha);
    glClearDepth(z);
    glClearStencil(stencil);
@@ -385,9 +395,15 @@ void GFXGLDevice::clear(U32 flags, ColorI color, F32 z, U32 stencil)
    clearflags |= (flags & GFXClearStencil)  ? GL_STENCIL_BUFFER_BIT : 0;
 
    glClear(clearflags);
+
+   if(!writeAllColors)
+      glColorMask(desc->colorWriteRed, desc->colorWriteGreen, desc->colorWriteBlue, desc->colorWriteAlpha);
    
    if(!zwrite)
       glDepthMask(false);
+
+   if(!stencilWrite)
+      glStencilMask(false);   
 }
 
 // Given a primitive type and a number of primitives, return the number of indexes/vertexes used.
