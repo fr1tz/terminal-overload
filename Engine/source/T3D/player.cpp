@@ -4278,6 +4278,8 @@ void Player::updateActionThread()
    // Only need to deal with triggers on the client
    if( isGhost() )
    {
+      Palette::active = this->getPalette();
+
       bool triggeredLeft = false;
       bool triggeredRight = false;
       
