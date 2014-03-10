@@ -222,7 +222,7 @@ void _GFXGLTextureTargetFBOImpl::finish()
 }
 
 // Actual GFXGLTextureTarget interface
-GFXGLTextureTarget::GFXGLTextureTarget()
+GFXGLTextureTarget::GFXGLTextureTarget() : mCopyFboSrc(0), mCopyFboDst(0)
 {
    for(U32 i=0; i<MaxRenderSlotId; i++)
       mTargets[i] = NULL;
@@ -230,6 +230,9 @@ GFXGLTextureTarget::GFXGLTextureTarget()
    GFXTextureManager::addEventDelegate( this, &GFXGLTextureTarget::_onTextureEvent );
 
    _impl = new _GFXGLTextureTargetFBOImpl(this);
+    
+   glGenFramebuffers(1, &mCopyFboSrc);
+   glGenFramebuffers(1, &mCopyFboDst);
 }
 
 GFXGLTextureTarget::~GFXGLTextureTarget()
@@ -371,24 +374,14 @@ void GFXGLTextureTarget::resolveTo(GFXTextureObject* obj)
       return;
    }
 
-   //TODO OPENGL OPTIMIZE
    PRESERVE_FRAMEBUFFER();
    
-   GLuint dest;
-   GLuint src;
-   
-   glGenFramebuffers(1, &dest);
-   glGenFramebuffers(1, &src);
-   
-   glBindFramebuffer(GL_DRAW_FRAMEBUFFER, dest);
+   glBindFramebuffer(GL_DRAW_FRAMEBUFFER, mCopyFboDst);
    glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, glTexture->getHandle(), 0);
    
-   glBindFramebuffer(GL_READ_FRAMEBUFFER, src);
+   glBindFramebuffer(GL_READ_FRAMEBUFFER, mCopyFboSrc);
    glFramebufferTexture2D(GL_READ_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D,mTargets[Color0]->getHandle(), 0);
    
    glBlitFramebuffer(0, 0, mTargets[Color0]->getWidth(), mTargets[Color0]->getHeight(),
       0, 0, glTexture->getWidth(), glTexture->getHeight(), GL_COLOR_BUFFER_BIT, GL_NEAREST);
-   
-   glDeleteFramebuffers(1, &dest);
-   glDeleteFramebuffers(1, &src);
 }

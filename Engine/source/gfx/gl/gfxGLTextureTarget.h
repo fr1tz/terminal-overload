@@ -93,6 +93,9 @@ protected:
    
    /// @}
 
+   //copy FBO
+   GLuint mCopyFboSrc, mCopyFboDst;
+
 };
 
 #endif
