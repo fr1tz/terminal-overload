@@ -80,15 +80,19 @@ singleton Material(xa_notc_core_shapes_standardcat_mat2)
 singleton Material(xa_notc_core_shapes_standardcat_mat1)
 {
    mapTo = "base";
-   diffuseMap[0] = "content/xa/notc/core/shapes/standardcat/base.png";
    glow[0] = "0";
    emissive[0] = "0";
-   diffuseColor[1] = "0.996078 0.996078 0.992157 1";
-   diffuseMap[1] = "content/xa/notc/core/textures/grid.128.8.png";
+   diffuseColor[1] = "0.996078 0.996078 0.996078 0.979";
+   diffuseColorPaletteSlot[1] = "1";
+   diffuseMap[1] = "content/xa/notc/core/textures/grid.128.4.png";
    materialTag0 = "Miscellaneous";
    glow[1] = "0";
-   emissive[1] = "0";
+   emissive[1] = "1";
    translucentBlendOp = "None";
    translucentZWrite = "1";
    showFootprints = "0";
+   diffuseColor[0] = "0.486275 0.486275 0.486275 1";
+   diffuseColorPaletteSlot[0] = "1";
+   diffuseColor[2] = "1 1 1 0";
+   diffuseColor[3] = "1 1 1 0";
 };
