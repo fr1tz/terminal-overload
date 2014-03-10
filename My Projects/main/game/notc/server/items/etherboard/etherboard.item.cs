@@ -33,6 +33,7 @@ function ItemEtherboard::onInventory(%this, %obj, %amount)
       %obj.etherboard = new StaticShape() {
          dataBlock = ItemStandardcatEtherboardShape;
       };
+      copyPalette(%obj, %obj.etherboard);
       %obj.mountObject(%obj.etherboard, 8);
       %obj.etherboard.startFade(0, 0, true);
       MissionCleanup.add(%obj.etherboard);
