@@ -369,7 +369,7 @@ void GFXGLDevice::clear(U32 flags, ColorI color, F32 z, U32 stencil)
    
    bool writeAllColors = true;
    bool zwrite = true;   
-   bool stencilWrite = true;
+   bool stencilWrite = 0xFFFFFFFF;
    const GFXStateBlockDesc *desc = NULL;
    if (mCurrentGLStateBlock)
    {
@@ -402,8 +402,8 @@ void GFXGLDevice::clear(U32 flags, ColorI color, F32 z, U32 stencil)
    if(!zwrite)
       glDepthMask(false);
 
-   if(!stencilWrite)
-      glStencilMask(false);   
+   if(stencilWrite != 0xFFFFFFFF)
+      glStencilMask(stencilWrite);
 }
 
 // Given a primitive type and a number of primitives, return the number of indexes/vertexes used.
