@@ -13,6 +13,7 @@ function initBaseServer()
    exec("./clientConnection.cs");
    exec("./kickban.cs");
    exec("./game.cs");
+   exec("./palette.cs");
    exec("./spawn.cs");
    exec("./camera.cs");
    exec("./centerPrint.cs");
