@@ -485,8 +485,8 @@ function GameCore::onClientEnterGame(%game, %client)
 
   	%client.ingame = true;
    
-   %client.paletteColors[0] = "255 0 255 255";
-   %client.paletteColors[1] = "0 255 255 255";
+   %client.paletteColors[0] = "125 125 125 255";
+   %client.paletteColors[1] = "210 210 210 255";
 
    // Sync the client's clocks to the server's
    commandToClient(%client, 'SyncClock', $Sim::Time - $Game::StartTime);
