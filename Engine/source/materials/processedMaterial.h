@@ -276,7 +276,8 @@ protected:
 
    /// This returns the index into the renderState array based on the sgData passed in.
    virtual U32 _getRenderStateIndex(   const SceneRenderState *state, 
-                                       const SceneData &sgData );
+                                       const SceneData &sgData,
+                                       U32 pass );
 
    /// Activates the correct mPasses[currPass].renderState based on scene graph info
    virtual void _setRenderState( const SceneRenderState *state, 

@@ -320,7 +320,8 @@ void ProcessedMaterial::_initRenderStateStateBlocks( RenderPassData *rpd )
 }
 
 U32 ProcessedMaterial::_getRenderStateIndex( const SceneRenderState *sceneState, 
-                                             const SceneData &sgData )
+                                             const SceneData &sgData,
+                                             U32 pass )
 {
    // Based on what the state of the world is, get our render state block
    U32 currState = 0;
@@ -331,6 +332,11 @@ U32 ProcessedMaterial::_getRenderStateIndex( const SceneRenderState *sceneState,
    //
    // For example sgData.visibility would be bad to use
    // in here without changing how RenderMeshMgr works.
+
+   U32 stageNum = getStageFromPass(pass);
+
+   if(mMaterial->mWireframe[stageNum])
+      currState |= RenderPassData::STATE_WIREFRAME;
 
    if ( sgData.binType == SceneData::GlowBin )
       currState |= RenderPassData::STATE_GLOW;
@@ -356,7 +362,7 @@ void ProcessedMaterial::_setRenderState(  const SceneRenderState *state,
    if ( pass >= mPasses.size() )
       return;
 
-   U32 currState = _getRenderStateIndex( state, sgData );
+   U32 currState = _getRenderStateIndex( state, sgData, pass );
 
    GFX->setStateBlock(mPasses[pass]->mRenderStates[currState]);   
 }

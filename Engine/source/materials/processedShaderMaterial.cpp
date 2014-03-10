@@ -247,7 +247,7 @@ U32 ProcessedShaderMaterial::getNumStages()
 
       // If this stage has diffuse color, it's active
       if (  mMaterial->mDiffuse[i].alpha > 0 &&
-            mMaterial->mDiffuse[i] != ColorF::WHITE )
+           (mMaterial->mDiffuse[i] != ColorF::WHITE || mMaterial->mDiffusePaletteSlot[i] >= 0) )
          stageActive = true;
 
       // If we have a Material that is vertex lit

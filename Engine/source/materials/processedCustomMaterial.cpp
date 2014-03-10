@@ -271,7 +271,7 @@ bool ProcessedCustomMaterial::setupPass( SceneRenderState *state, const SceneDat
       return false;
 
    ShaderRenderPassData* rpd = _getRPD( pass );
-   U32 currState = _getRenderStateIndex( state, sgData );
+   U32 currState = _getRenderStateIndex( state, sgData, pass );
    GFX->setStateBlock(rpd->mRenderStates[currState]);      
 
    // activate shader

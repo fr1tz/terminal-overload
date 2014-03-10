@@ -108,6 +108,7 @@ Material::Material()
 
       mGlow[i] = false;
       mEmissive[i] = false;
+      mWireframe[i] = false;
 
       mDetailScale[i].set( 2.0f, 2.0f );
       
@@ -273,6 +274,9 @@ void Material::initPersistFields()
 
       addField("emissive", TypeBool, Offset(mEmissive, Material), MAX_STAGES,
          "Enables emissive lighting for the material." );
+
+      addField("wireframe", TypeBool, Offset(mWireframe, Material), MAX_STAGES,
+         "Enables wireframe rendering for the material." );
 
       addField("doubleSided", TypeBool, Offset(mDoubleSided, Material),
          "Disables backface culling casing surfaces to be double sided. "

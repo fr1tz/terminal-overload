@@ -244,6 +244,7 @@ public:
    
    bool mGlow[MAX_STAGES];          // entire stage glows
    bool mEmissive[MAX_STAGES];
+   bool mWireframe[MAX_STAGES];
 
    Point2I mCellIndex[MAX_STAGES];
    Point2I mCellLayout[MAX_STAGES];
