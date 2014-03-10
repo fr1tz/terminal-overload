@@ -381,7 +381,7 @@ void GFXGLDevice::clear(U32 flags, ColorI color, F32 z, U32 stencil)
    
    glColorMask(true, true, true, true);
    glDepthMask(true);
-   glStencilMask(true);
+   glStencilMask(0xFFFFFFFF);
    
 
    ColorF c = color;   

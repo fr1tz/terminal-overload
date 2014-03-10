@@ -248,7 +248,7 @@ U8* GFXGLTextureObject::getTextureData()
    U8* data = new U8[mTextureSize.x * mTextureSize.y * mBytesPerTexel];
    PRESERVE_TEXTURE(mBinding);
    glBindTexture(mBinding, mHandle);
-   glGetTexImage(mBinding, 0, GL_BGRA, GL_UNSIGNED_INT_8_8_8_8_REV, data);
+   glGetTexImage(mBinding, 0, GFXGLTextureFormat[mFormat], GFXGLTextureType[mFormat], data);
    return data;
 }
 
