@@ -485,7 +485,8 @@ function GameCore::onClientEnterGame(%game, %client)
 
   	%client.ingame = true;
    
-   %client.color[0] = "0 255 0 255";
+   %client.paletteColors[0] = "255 0 255 255";
+   %client.paletteColors[1] = "0 255 255 255";
 
    // Sync the client's clocks to the server's
    commandToClient(%client, 'SyncClock', $Sim::Time - $Game::StartTime);
@@ -910,7 +911,7 @@ function GameCore::spawnPlayer(%game, %client, %spawnPoint, %noControl)
       %client.skin = addTaggedString( getField(%availableSkins, getRandom(%count)) );
    }
 
-   %player.paletteColors[0] = %client.color[0];
+   copyPalette(%client, %player);
    %player.setSkinName(%client.skin);
 
    // Give the client control of the player
