@@ -178,12 +178,12 @@ void RenderGlowMgr::render( SceneRenderState *state )
 
             GFXDEBUGEVENT_SCOPE_EX( RenderGlowMgr_RenderLoop, ColorI::GREEN, avar("%s", passRI->meshName) );
 
+            sgData.palette = passRI->palette;
+
             matrixSet.setWorld(*passRI->objectToWorld);
             matrixSet.setView(*passRI->worldToCamera);
             matrixSet.setProjection(*passRI->projection);
             glowMat->setTransforms(matrixSet, state);
-
-            Palette::active = passRI->palette;
             glowMat->setSceneInfo(state, sgData);
             glowMat->setBuffers(passRI->vertBuff, passRI->primBuff);
 

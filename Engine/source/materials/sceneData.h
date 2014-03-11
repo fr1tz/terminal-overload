@@ -12,6 +12,9 @@
 #ifndef _GFXDEVICE_H_
 #include "gfx/gfxDevice.h"
 #endif
+#ifndef _PALETTE_H_
+#include "scene/palette.h"
+#endif
 
 class GFXTexHandle;
 class GFXCubemap;
@@ -63,6 +66,7 @@ struct SceneData
    const MatrixF *objTrans;
    GFXCubemap *cubemap;
    F32 visibility;
+   Palette palette;
 
    /// Enables wireframe rendering for the object.
    bool wireframe;
@@ -78,6 +82,7 @@ struct SceneData
       dMemset( this, 0, sizeof( SceneData ) );
       objTrans = &MatrixF::Identity;
       visibility = 1.0f;
+      palette.reset();
    }
 
    /// Initializes the data with the scene state setting

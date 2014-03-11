@@ -18,6 +18,8 @@ struct Palette
 
    ColorI colors[NumSlots];
 
+	void reset();
+
 	static Palette active;
 };
 

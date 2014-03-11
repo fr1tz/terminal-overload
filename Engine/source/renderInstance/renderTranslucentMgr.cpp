@@ -210,6 +210,7 @@ void RenderTranslucentMgr::render( SceneRenderState *state )
 
                // Z sorting and stuff is still not working in this mgr...
                setupSGData( passRI, sgData );
+               sgData.palette = passRI->palette;
                mat->setSceneInfo(state, sgData);
                matrixSet.setWorld(*passRI->objectToWorld);
                matrixSet.setView(*passRI->worldToCamera);

@@ -3233,6 +3233,7 @@ void ShapeBase::setImageState(U32 imageSlot, U32 newState,bool force)
 					prj->mSourceObject     = this;
 					prj->mSourceObjectSlot = imageSlot;
 
+					prj->setPalette(this->getPalette());
 					prj->onNewDataBlock(stateData.fireProjectile, false);
 					if(!prj->registerObject())
 					{

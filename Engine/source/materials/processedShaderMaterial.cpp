@@ -1172,7 +1172,7 @@ void ProcessedShaderMaterial::setSceneInfo(SceneRenderState * state, const Scene
    ColorF diffuseColor = mMaterial->mDiffuse[stageNum];
    if(mMaterial->mDiffusePaletteSlot[stageNum] >= 0)
    {
-      ColorI paletteColor = Palette::active.colors[mMaterial->mDiffusePaletteSlot[stageNum]];
+      ColorI paletteColor = sgData.palette.colors[mMaterial->mDiffusePaletteSlot[stageNum]];
       diffuseColor *= paletteColor;
    }
    shaderConsts->setSafe(handles->mDiffuseColorSC, diffuseColor);

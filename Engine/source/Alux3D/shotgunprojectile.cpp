@@ -1030,9 +1030,7 @@ void ShotgunProjectile::clientProcessHits()
 			prj->mSourceObject     = mSourceObject;
 			prj->mSourceObjectSlot = mSourceObjectSlot;
 
-#if 0
-			prj->setSceneObjectColorization(this->getSceneObjectColorization());
-#endif
+			prj->setPalette(this->getPalette());
 			prj->onNewDataBlock(mDataBlock, false);
 			if(!prj->registerObject())
 			{

@@ -345,6 +345,7 @@ void RenderPrePassMgr::render( SceneRenderState *state )
 
             // Set up SG data for this instance.
             setupSGData( passRI, sgData );
+            sgData.palette = passRI->palette;
 
             matrixSet.setWorld(*passRI->objectToWorld);
             matrixSet.setView(*passRI->worldToCamera);

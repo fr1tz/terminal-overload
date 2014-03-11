@@ -152,7 +152,7 @@ void RenderMeshMgr::render(SceneRenderState * state)
             mat->setTransforms(matrixSet, state);
 
             setupSGData( passRI, sgData );
-            Palette::active = passRI->palette;
+            sgData.palette = passRI->palette;
             mat->setSceneInfo( state, sgData );
 
             // If we're instanced then don't render yet.
