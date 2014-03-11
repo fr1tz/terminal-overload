@@ -161,7 +161,7 @@ void DecalData::initPersistFields()
          "decal projection direction." );
 
       addField( "paletteSlot", TypeS8, Offset( paletteSlot, DecalData ), 
-         "Palette slot used to colorize the vertices of the decal mesh." );
+         "Optional palette slot used to colorize the vertices of the decal mesh." );
 
    endGroup( "Rendering" );
 

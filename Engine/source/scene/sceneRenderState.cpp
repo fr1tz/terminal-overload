@@ -86,6 +86,7 @@ void SceneRenderState::renderObjects( SceneObject** objects, U32 numObjects )
       SceneObject* object = objects[ i ];
       Palette::active = object->getPalette();
       object->prepRenderImage( this );
+      Palette::active.reset();
    }
    PROFILE_END();
 

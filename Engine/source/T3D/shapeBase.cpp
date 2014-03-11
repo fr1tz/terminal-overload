@@ -1881,6 +1881,7 @@ void ShapeBase::blowUp()
    if( pointInWater( (Point3F &)center ) && mDataBlock->underwaterExplosion )
    {
       pExplosion = new Explosion;
+      pExplosion->setPalette(this->getPalette());
       pExplosion->onNewDataBlock(mDataBlock->underwaterExplosion, false);
    }
    else
@@ -1888,6 +1889,7 @@ void ShapeBase::blowUp()
       if (mDataBlock->explosion)
       {
          pExplosion = new Explosion;
+         pExplosion->setPalette(this->getPalette());
          pExplosion->onNewDataBlock(mDataBlock->explosion, false);
       }
    }
@@ -1934,6 +1936,7 @@ void ShapeBase::blowUp()
       Debris *debris = new Debris;
       debris->setPartInstance( partList[i] );
       debris->init( center, randomDir );
+      debris->setPalette(this->getPalette());
       debris->onNewDataBlock( mDataBlock->debris, false );
       debris->setTransform( trans );
 

@@ -257,7 +257,6 @@ DecalInstance* DecalDataFile::addDecal( const Point3F& pos, const Point3F& norma
    newDecal->mRenderPriority = 0;
    newDecal->mCustomTex = NULL;
    newDecal->mId = -1;
-   newDecal->mPalette = Palette::active;
 
    newDecal->mPosition = pos;
    newDecal->mNormal = normal;

@@ -28,6 +28,8 @@ class ParticleData : public SimDataBlock
       PDC_NUM_KEYS = 4,
    };
 
+   S8    paletteSlot;
+
    F32   dragCoefficient;
    F32   windCoefficient;
    F32   gravityCoefficient;

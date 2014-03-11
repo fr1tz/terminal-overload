@@ -1152,6 +1152,7 @@ void Explosion::launchDebris( Point3F &axis )
       launchDir *= debrisVel;
 
       Debris *debris = new Debris;
+      debris->setPalette(this->getPalette());
       debris->setDataBlock( mDataBlock->debrisList[0] );
       debris->setTransform( getTransform() );
       debris->init( pos, launchDir );
@@ -1180,6 +1181,7 @@ void Explosion::spawnSubExplosions()
       {
          MatrixF trans = getTransform();
          Explosion* pExplosion = new Explosion;
+         pExplosion->setPalette(this->getPalette());
          pExplosion->setDataBlock( mDataBlock->explosionList[i] );
          pExplosion->setTransform( trans );
          pExplosion->setInitialState( trans.getPosition(), mInitialNormal, 1);
@@ -1223,6 +1225,7 @@ bool Explosion::explode()
 
    if (mDataBlock->particleEmitter) {
       mMainEmitter = new ParticleEmitter;
+      mMainEmitter->setPalette(this->getPalette());
       mMainEmitter->setDataBlock(mDataBlock->particleEmitter);
       mMainEmitter->registerObject();
 
@@ -1235,6 +1238,7 @@ bool Explosion::explode()
       if( mDataBlock->emitterList[i] != NULL )
       {
          ParticleEmitter * pEmitter = new ParticleEmitter;
+         pEmitter->setPalette(this->getPalette());
          pEmitter->setDataBlock( mDataBlock->emitterList[i] );
          if( !pEmitter->registerObject() )
          {

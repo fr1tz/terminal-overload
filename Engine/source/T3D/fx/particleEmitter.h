@@ -88,6 +88,7 @@ class ParticleEmitterData : public GameBaseData
 
    GFXPrimitiveBufferHandle   primBuff;
 
+   S8                    paletteSlot;        ///< Palette slot used to colorize the particles
    S32                   blendStyle;         ///< Pre-define blend factor setting
    bool                  sortParticles;      ///< Particles are sorted back-to-front
    bool                  reverseOrder;       ///< reverses draw order

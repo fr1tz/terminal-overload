@@ -123,6 +123,7 @@ ParticleEmitterData::ParticleEmitterData()
 
    // These members added for support of user defined blend factors
    // and optional particle sorting.
+   paletteSlot = -1;
    blendStyle = ParticleRenderInst::BlendUndefined;
    sortParticles = false;
    renderReflection = true;
@@ -240,6 +241,10 @@ void ParticleEmitterData::initPersistFields()
  
       /// These fields added for support of user defined blend factors and optional particle sorting.
       //@{
+
+      addField( "paletteSlot", TypeS8, Offset(paletteSlot, ParticleEmitterData),
+         "Optional palette slot used to colorize particles." );
+
       addField( "blendStyle", TYPEID< ParticleRenderInst::BlendStyle >(), Offset(blendStyle, ParticleEmitterData),
          "String value that controls how emitted particles blend with the scene." );
 
@@ -338,6 +343,7 @@ void ParticleEmitterData::packData(BitStream* stream)
    stream->writeFlag(highResOnly);
    stream->writeFlag(renderReflection);
    stream->writeInt( blendStyle, 4 );
+   stream->write(paletteSlot);
 }
 
 //-----------------------------------------------------------------------------
@@ -400,6 +406,7 @@ void ParticleEmitterData::unpackData(BitStream* stream)
    highResOnly = stream->readFlag();
    renderReflection = stream->readFlag();
    blendStyle = stream->readInt( 4 );
+   stream->read(&paletteSlot);
 }
 
 //-----------------------------------------------------------------------------
@@ -1441,6 +1448,11 @@ void ParticleEmitter::updateKeyData( Particle *part )
             part->color.interpolate(part->dataBlock->colors[i-1],
                                     part->dataBlock->colors[i],
                                     firstPart);
+         }
+
+         if(mDataBlock->paletteSlot >= 0)
+         {
+            part->color *= mPalette.colors[mDataBlock->paletteSlot];
          }
 
          if( mDataBlock->useEmitterSizes )

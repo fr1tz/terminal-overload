@@ -4278,8 +4278,6 @@ void Player::updateActionThread()
    // Only need to deal with triggers on the client
    if( isGhost() )
    {
-      Palette::active = this->getPalette();
-
       bool triggeredLeft = false;
       bool triggeredRight = false;
       
@@ -4311,7 +4309,9 @@ void Player::updateActionThread()
             Point3F tangent;
             mObjToWorld.getColumn( 0, &tangent );
             mObjToWorld.getColumn( 2, &normal );
-            gDecalManager->addDecal( rInfo.point, normal, tangent, mDataBlock->slideDecal, getScale().y );
+            DecalInstance* dinst = gDecalManager->addDecal( rInfo.point, normal, tangent, mDataBlock->slideDecal, getScale().y );
+            if(dinst)
+               dinst->mPalette = this->getPalette();
          }
       }
       else if(this->isSkidding() && mDataBlock->skidDecal)
@@ -4330,7 +4330,9 @@ void Player::updateActionThread()
             Point3F tangent;
             mObjToWorld.getColumn( 0, &tangent );
             mObjToWorld.getColumn( 2, &normal );
-            gDecalManager->addDecal( rInfo.point, normal, tangent, mDataBlock->skidDecal, getScale().y );
+            DecalInstance* dinst = gDecalManager->addDecal( rInfo.point, normal, tangent, mDataBlock->skidDecal, getScale().y );
+            if(dinst)
+               dinst->mPalette = this->getPalette();
          }
       }
       else if( triggeredLeft || triggeredRight )
@@ -4356,7 +4358,9 @@ void Player::updateActionThread()
                Point3F tangent;
                mObjToWorld.getColumn( 0, &tangent );
                mObjToWorld.getColumn( 2, &normal );
-               gDecalManager->addDecal( rInfo.point, normal, tangent, mDataBlock->decalData, getScale().y );
+               DecalInstance* dinst = gDecalManager->addDecal( rInfo.point, normal, tangent, mDataBlock->decalData, getScale().y );
+               if(dinst)
+                  dinst->mPalette = this->getPalette();
             }
             
             // Emit footpuffs.
@@ -7649,14 +7653,20 @@ void Player::updateSlideParticles(F32 dt)
 		for(int i = PlayerData::ContactTrail1; i <= PlayerData::ContactTrail3; i++)
 		{
 			if(mSlideEmitter[i])
+			{
+				mSlideEmitter[i]->setPalette(this->getPalette());
 				mSlideEmitter[i]->emitParticles(mLastPos, emissionPoint,
 					Point3F( 0.0, 0.0, 1.0 ), moveDir, (U32)(amount * dt * 1000.0));	
+			}
 		}
 		for(int i = PlayerData::ContactRelative1; i <= PlayerData::ContactRelative3; i++)
 		{
 			if(mSlideEmitter[i])
+			{
+				mSlideEmitter[i]->setPalette(this->getPalette());
 				mSlideEmitter[i]->emitParticles(mLastPos, emissionPoint,
 					Point3F( 0.0, 0.0, 1.0 ), moveDir, (U32)(amount * dt * 1000.0));	
+			}
 		}
 	}
 
@@ -7664,6 +7674,7 @@ void Player::updateSlideParticles(F32 dt)
 	{
 		if(mSlideEmitter[i])
 		{
+			mSlideEmitter[i]->setPalette(this->getPalette());
 			mSlideEmitter[i]->emitParticles(mLastPos, emissionPoint,
 				Point3F( 0.0, 0.0, 1.0 ), moveDir, (U32)(dt * 1000.0));
 		}
@@ -7672,6 +7683,7 @@ void Player::updateSlideParticles(F32 dt)
 	{
 		if(mSlideEmitter[i])
 		{
+			mSlideEmitter[i]->setPalette(this->getPalette());
 			mSlideEmitter[i]->emitParticles(mLastPos, emissionPoint,
 				Point3F( 0.0, 0.0, 1.0 ), moveDir, (U32)(dt * 1000.0));
 		}
@@ -7744,8 +7756,11 @@ void Player::updateSkidParticles(F32 dt)
    for(int i = 0; i <= PlayerData::NumSkidEmitters; i++)
    {
       if(mSkidEmitter[i])
+      {
+         mSkidEmitter[i]->setPalette(this->getPalette());
          mSkidEmitter[i]->emitParticles(mLastPos, emissionPoint,
             Point3F( 0.0, 0.0, 1.0 ), moveDir, (U32)(amount * dt * 1000.0));	
+      }
    }
 }
 
@@ -7827,6 +7842,7 @@ void Player::createSplash( Point3F &pos, F32 speed )
       MatrixF trans = getTransform();
       trans.setPosition( pos );
       Splash *splash = new Splash;
+      splash->setPalette(this->getPalette());
       splash->onNewDataBlock( mDataBlock->splash, false );
       splash->setTransform( trans );
       splash->setInitialState( trans.getPosition(), Point3F( 0.0, 0.0, 1.0 ) );

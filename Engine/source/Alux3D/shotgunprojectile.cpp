@@ -1081,6 +1081,7 @@ void ShotgunProjectile::clientProcessHits()
 			if(datablock != NULL)
 			{
 				Explosion* pExplosion = new Explosion;
+				pExplosion->setPalette(this->getPalette());
 				pExplosion->onNewDataBlock(datablock, false);
 
 				Point3F expPos = impactPos + impactNormal*0.1;
@@ -1100,8 +1101,12 @@ void ShotgunProjectile::clientProcessHits()
 
 				if(mDataBlock->decal
 				&& !(sObj->getTypeMask() & Projectile::csmDynamicCollisionMask)
-				&& (hit->object->getTypeMask() & Projectile::csmStaticCollisionMask))	
-					gDecalManager->addDecal(impactPos, impactNormal, 0.0f, mDataBlock->decal );
+				&& (hit->object->getTypeMask() & Projectile::csmStaticCollisionMask))
+				{
+					DecalInstance* dinst = gDecalManager->addDecal(impactPos, impactNormal, 0.0f, mDataBlock->decal );
+					if(dinst)
+						dinst->mPalette = this->getPalette();
+				}
 			}
 		}
 	}

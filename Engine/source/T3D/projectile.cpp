@@ -1048,7 +1048,11 @@ void Projectile::explode( const Point3F &p, const Point3F &n, const U32 collideT
 
       // Client (impact) decal.
       if ( mDataBlock->decal )     
-         gDecalManager->addDecal( p, n, 0.0f, mDataBlock->decal );
+      {
+         DecalInstance* dinst = gDecalManager->addDecal( p, n, 0.0f, mDataBlock->decal );
+         if(dinst)
+            dinst->mPalette = this->getPalette();
+      }
 
       // Client object
       updateSound();
