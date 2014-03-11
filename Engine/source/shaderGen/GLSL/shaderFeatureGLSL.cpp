@@ -1678,7 +1678,7 @@ void ReflectCubeFeatGLSL::processVert( Vector<ShaderComponent*> &componentList,
     cubeVertPos->setType( "vec3" );
    LangElement *cubeVertPosDecl = new DecOp( cubeVertPos );
 
-    meta->addStatement( new GenOp( "   @ = tMul(mat3(@), @).xyz;\r\n", 
+    meta->addStatement( new GenOp( "   @ = tMul(( @ ), vec4(@, 1)).xyz;\r\n",
                        cubeVertPosDecl, cubeTrans, LangElement::find( "position" ) ) );
 
    // cube normal
@@ -1687,8 +1687,8 @@ void ReflectCubeFeatGLSL::processVert( Vector<ShaderComponent*> &componentList,
     cubeNormal->setType( "vec3" );
    LangElement *cubeNormDecl = new DecOp( cubeNormal );
 
-    meta->addStatement( new GenOp( "   @ = normalize( tMul(mat3(@), normalize(@)).xyz );\r\n", 
-                       cubeNormDecl, cubeTrans, inNormal ) );
+    meta->addStatement( new GenOp( "   @ = normalize( tMul( vec4(@, 1), (@) ) ).xyz;\r\n", // TODO OPENGL
+                       cubeNormDecl, inNormal, cubeTrans ) );
 
     // grab the eye position
     Var *eyePos = (Var*)LangElement::find( "eyePosWorld" );
@@ -1705,7 +1705,7 @@ void ReflectCubeFeatGLSL::processVert( Vector<ShaderComponent*> &componentList,
     cubePos->setType( "vec3" );
     LangElement *cubePosDecl = new DecOp( cubePos );
 
-    meta->addStatement( new GenOp( "   @ = float3( @[3][0], @[3][1], @[3][2] );\r\n", 
+    meta->addStatement( new GenOp( "   @ = vec3(0); //float3( @[3][0], @[3][1], @[3][2] );\r\n", // TODO OPENGL
                         cubePosDecl, cubeTrans, cubeTrans, cubeTrans ) );
 
    // eye to vert
