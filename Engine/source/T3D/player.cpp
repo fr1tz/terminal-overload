@@ -4370,6 +4370,7 @@ void Player::updateActionThread()
             {
                // New emitter every time for visibility reasons
                ParticleEmitter * emitter = new ParticleEmitter;
+               emitter->setPalette(this->getPalette());
                emitter->onNewDataBlock( mDataBlock->footPuffEmitter, false );
 
                ColorF colorList[ ParticleData::PDC_NUM_KEYS];
