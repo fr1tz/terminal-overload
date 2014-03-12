@@ -65,43 +65,44 @@ datablock DecalData(FrmStandardcatFootprint)
 
 datablock ParticleData(FrmStandardcatFootPuffParticle)
 {
-	dragCoefficient		= "1.99902";
-	gravityCoefficient	= "-0.300366";
+	dragCoefficient		= "0";
+	gravityCoefficient	= "1.5";
 	inheritedVelFactor	= 0.0;
 	constantAcceleration = 0.0;
-	lifetimeMS			  = 1200;
+	lifetimeMS			  = "600";
 	lifetimeVarianceMS	= 0;
 	useInvAlpha			 = false;
-	spinRandomMin		  = -35.0;
-	spinRandomMax		  = 35.0;
+	spinRandomMin		  = "-100";
+	spinRandomMax		  = "100";
 	colors[0]	  = "1.0 1.0 1.0 1.0";
-	colors[1]	  = "0.992157 0.992157 0.996078 0.496063";
-	colors[2]	  = "0.992157 0.992157 0.992157 0";
-	sizes[0]		= "0.799609";
-	sizes[1]		= "1.19941";
+	colors[1]	  = "1 1 1 0.496063";
+	colors[2]	  = "1.0 1.0 1.0 0.0";
+	sizes[0]		= "1";
+	sizes[1]		= "0.5";
 	sizes[2]		= 0.0;
 	times[0]		= 0.0;
-	times[1]		= "0.498039";
+	times[1]		= "0.494118";
 	times[2]		= 1.0;
-	textureName	= "content/xa/rotc/p.5.3/textures/rotc/smoke_particle";
-   animTexName = "content/xa/rotc/p.5.3/textures/rotc/smoke_particle";
+	textureName	= "content/xa/rotc/p.5.4/textures/rotc/corona.png";
+   animTexName = "content/xa/rotc/p.5.4/textures/rotc/corona.png";
 };
 
 datablock ParticleEmitterData(FrmStandardcatFootPuffEmitter)
 {
 	ejectionPeriodMS = 35;
 	periodVarianceMS = 10;
-	ejectionVelocity = 0;
+	ejectionVelocity = "5";
 	velocityVariance = "0";
 	ejectionOffset   = "0";
-	thetaMin         = 0;
-	thetaMax         = 0;
+	thetaMin         = "30";
+	thetaMax         = "45";
 	phiReferenceVel  = 0;
 	phiVariance		= 360;
 	overrideAdvances = 0;
-	useEmitterColors = "1";
+	useEmitterColors = false;
 	particles = FrmStandardcatFootPuffParticle;
    blendStyle = "ADDITIVE";
+   paletteSlot = 0;
 };
 
 //----------------------------------------------------------------------------
