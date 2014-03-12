@@ -7,16 +7,17 @@ singleton Material(xa_notc_core_shapes_smg1_image_p1_mat1)
    specularPower[0] = "50";
    doubleSided = "0";
    translucentBlendOp = "LerpAlpha";
-   diffuseColor[1] = "0.392157 0.392157 0.392157 1";
+   diffuseColor[1] = "0.992157 0.992157 0.992157 1";
    castShadows = "0";
    translucent = "0";
    showFootprints = "0";
    glow[0] = "0";
    emissive[0] = "0";
-   diffuseColor[2] = "0.996078 0.94902 0.00784314 1";
-   diffuseColor[3] = "0.992157 0.996078 0.996078 1";
-   diffuseMap[2] = "content/xa/notc/core/shapes/smg1/image/p1/grid1.png";
-   diffuseMap[3] = "content/xa/notc/core/shapes/smg1/image/p1/grid0.png";
+   diffuseColor[2] = "0.996078 0.996078 0.996078 1";
+   diffuseColorPaletteSlot[2] = "0";
+   diffuseColor[3] = "0.992157 0.996078 0.996078 0";
+   wireframe[3] = "0";
+   diffuseColorPaletteSlot[3] = "-1";
    detailScale[1] = "1 1";
    emissive[2] = "1";
    emissive[3] = "1";
@@ -30,10 +31,15 @@ singleton Material(xa_notc_core_shapes_smg1_image_p1_mat1)
    waveFreq[1] = "1.094";
    waveAmp[1] = "1";
    materialTag0 = "Miscellaneous";
-   diffuseMap[1] = "content/xa/rotc/p.5.3/textures/rotc/heating.png";
    specularStrength[1] = "1.76471";
-   emissive[1] = "0";
+   emissive[1] = "1";
    specularStrength[2] = "1.75";
+   glow[2] = "1";
+   glow[1] = "1";
+   diffuseColorPaletteSlot[1] = "0";
+   diffuseMap[1] = "content/xa/notc/core/textures/grid.128.4.png";
+   wireframe[2] = "1";
+   diffuseMap[2] = "content/xa/notc/core/textures/grid.128.4.png";
 };
 
 singleton Material(xa_notc_core_shapes_smg1_image_p1_mat2)

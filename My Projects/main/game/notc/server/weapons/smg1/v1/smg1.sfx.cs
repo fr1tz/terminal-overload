@@ -30,7 +30,7 @@ datablock SFXProfile(WpnSMG1SwitchinSound)
 
 datablock SFXProfile(WpnSMG1ProjectileExplosionSound)
 {
-   filename = "content/xa/rotc/p.5.4/sounds/rotc/fire2";
+   filename = "content/xa/rotc/p.5.4/sounds/rotc/debris1";
    description = AudioClose3D;
    preload = true;
 };

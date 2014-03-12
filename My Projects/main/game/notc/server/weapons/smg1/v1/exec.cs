@@ -4,6 +4,8 @@
 exec("./smg1.sfx.cs");
 exec("./smg1.gfx.cs");
 exec("./smg1.item.cs");
+exec("./smg1.projectile.gfx.explosion.cs");
+exec("./smg1.projectile.gfx.misc.cs");
 exec("./smg1.projectile.cs");
 exec("./smg1.image.cs");
 
