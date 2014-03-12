@@ -415,7 +415,7 @@ void NormalsOutFeatGLSL::processVert(  Vector<ShaderComponent*> &componentList,
    {
       // Transform the normal to world space.
       Var *objTrans = getObjTrans( componentList, fd.features[MFT_UseInstancing], meta );
-      meta->addStatement( new GenOp( "   @ = tMul( @, normalize( vec4(@, 0.0) ) );\r\n", outNormal, objTrans, inNormal ) );
+      meta->addStatement( new GenOp( "   @ = tMul( @, normalize( vec4(@, 0.0) ) ).xyz;\r\n", outNormal, objTrans, inNormal ) );
    }
    else
    {
