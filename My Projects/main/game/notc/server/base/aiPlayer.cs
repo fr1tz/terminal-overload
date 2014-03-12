@@ -65,6 +65,52 @@ function DemoPlayer::onEndSequence(%this,%obj,%slot)
 }
 
 //-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+
+function FrmStandardCat::onReachDestination(%this,%obj)
+{
+   //echo( %obj @ " onReachDestination" );
+
+   // Moves to the next node on the path.
+   // Override for all player.  Normally we'd override this for only
+   // a specific player datablock or class of players.
+   if (%obj.path !$= "")
+   {
+      if (%obj.currentNode == %obj.targetNode)
+         %this.onEndOfPath(%obj,%obj.path);
+      else
+         %obj.moveToNextNode();
+   }
+}
+
+function FrmStandardCat::onMoveStuck(%this,%obj)
+{
+   //echo( %obj @ " onMoveStuck" );
+}
+
+function FrmStandardCat::onTargetExitLOS(%this,%obj)
+{
+   //echo( %obj @ " onTargetExitLOS" );
+}
+
+function FrmStandardCat::onTargetEnterLOS(%this,%obj)
+{
+   //echo( %obj @ " onTargetEnterLOS" );
+}
+
+function FrmStandardCat::onEndOfPath(%this,%obj,%path)
+{
+   %obj.nextTask();
+}
+
+function FrmStandardCat::onEndSequence(%this,%obj,%slot)
+{
+   echo("Sequence Done!");
+   %obj.stopThread(%slot);
+   %obj.nextTask();
+}
+
+//-----------------------------------------------------------------------------
 // AIPlayer static functions
 //-----------------------------------------------------------------------------
 
@@ -73,7 +119,7 @@ function AIPlayer::spawnAtLocation(%name, %spawnPoint)
    // Create the demo player object
    %player = new AiPlayer()
    {
-      dataBlock = DemoPlayer;
+      dataBlock = FrmStandardCat;
       path = "";
    };
    MissionCleanup.add(%player);
@@ -104,7 +150,7 @@ function AIPlayer::followPath(%this,%path,%node)
       %this.path = "";
       return;
    }
-
+   
    if (%node > %path.getCount() - 1)
       %this.targetNode = %path.getCount() - 1;
    else
@@ -137,6 +183,9 @@ function AIPlayer::moveToNextNode(%this)
 
 function AIPlayer::moveToNode(%this,%index)
 {
+   //echo("AIPlayer::moveToNode()");
+   //echo(%index);
+   
    // Move to the given path node index
    %this.currentNode = %index;
    %node = %this.path.getObject(%index);
@@ -324,24 +373,27 @@ function AIPlayer::think(%player)
 
 function AIPlayer::spawn(%path)
 {
+   if(%path $= "")
+      %path = "botpath";
+      
    %player = AIPlayer::spawnOnPath("Shootme", %path);
+   
+   %c1 = getRandom(0,255) SPC getRandom(0,255) SPC getRandom(0,255) SPC "255";
+   %c2 = getRandom(0,255) SPC getRandom(0,255) SPC getRandom(0,255) SPC "255";
+   %player.paletteColors[0] = %c1;
+   %player.paletteColors[1] = %c2;
 
    if (isObject(%player))
    {
+      Game.loadOut(%player);
+   
       %player.followPath(%path, -1);
 
       // slow this sucker down, I'm tired of chasing him!
       %player.setMoveSpeed(0.5);
-
-      //%player.mountImage(WpnBadgerImage, 0);
-      %player.mountImage(WpnRaptorImage, 0);
-      //%player.mountImage(WpnBulldogImage, 0);
-      %player.setInventory(WpnBadgerClip, 1000);
-      %player.setInventory(WpnRaptorClip, 1000);
-      %player.setInventory(WpnBulldogClip, 1000);
       %player.think();
       
-      %player.shootingDelay = 200;
+      %player.shootingDelay = 500;
       %player.singleShot();
 
       return %player;
