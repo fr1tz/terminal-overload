@@ -194,6 +194,7 @@ private:
    U32 mAdapterIndex;
    static const U32 MAX_STREAMS = 4; // TODO OPENGL revise
    StrongRefPtr<GFXGLVertexBuffer> mCurrentVB[MAX_STREAMS];
+   bool mNeedUpdateVertexAttrib;
    StrongRefPtr<GFXGLPrimitiveBuffer> mCurrentPB;
    U32 mDrawInstancesCount;
    

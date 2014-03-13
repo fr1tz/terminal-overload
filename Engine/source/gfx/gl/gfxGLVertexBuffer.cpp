@@ -37,7 +37,8 @@ GFXGLVertexBuffer::GFXGLVertexBuffer(  GFXDevice *device,
    :  GFXVertexBuffer( device, numVerts, vertexFormat, vertexSize, bufferType ), 
       mZombieCache(NULL),
       mFrameAllocatorMark(0),
-      mFrameAllocatorPtr(NULL)
+      mFrameAllocatorPtr(NULL),
+      mVertexAttribActiveMask(0)
 {
    // Generate a buffer
    mDivisor = 0;
@@ -112,14 +113,16 @@ void GFXGLVertexBuffer::prepare()
    // Loop thru the vertex format elements adding the array state...   
    for ( U32 i=0; i < glVerticesFormat.size(); i++ )
    {
+      // glEnableVertexAttribArray are called and cache in GFXGLDevice::preDrawPrimitive
+
       glVertexDecl &e = glVerticesFormat[i];
-      glEnableVertexAttribArray(e.attrIndex);
+      
       glVertexAttribPointer(
          e.attrIndex,      // attribute
          e.elementCount,   // number of elements per vertex, here (r,g,b)
          e.type,           // the type of each element
          e.normalized,     // take our values as-is
-         e.stride,         // no extra data between each position
+         e.stride,         // stride between each position
          e.pointerFirst    // offset of first element
       );
       glVertexAttribDivisor( e.attrIndex, mDivisor );
@@ -128,12 +131,7 @@ void GFXGLVertexBuffer::prepare()
 
 void GFXGLVertexBuffer::finish()
 {
-   PROFILE_SCOPE(GFXGLVertexBuffer_finish);
-   glBindBuffer(GL_ARRAY_BUFFER, 0);
-   GFXGL->getOpenglCache()->setCacheBinded(GL_ARRAY_BUFFER, 0);
-
-   for ( U32 i=0; i < glVerticesFormat.size(); i++ )
-      glDisableVertexAttribArray(glVerticesFormat[i].attrIndex);
+   // glDisableVertexAttribArray are called and cache in GFXGLDevice::preDrawPrimitive
 }
 
 GLvoid* GFXGLVertexBuffer::getBuffer()
@@ -184,12 +182,6 @@ void GFXGLVertexBuffer::_initVerticesFormat()
       if ( element.isSemantic( GFXSemantic::POSITION ) )
       {           
          glElement.attrIndex = Torque::GL_VertexAttrib_Position;
-         if(glElement.attrIndex == -1)
-         {
-            glVerticesFormat.pop_back();
-            buffer += element.getSizeInBytes();
-            continue;
-         }
          glElement.elementCount = element.getSizeInBytes() / 4;
          glElement.normalized = false;
          glElement.type = GL_FLOAT;
@@ -201,12 +193,6 @@ void GFXGLVertexBuffer::_initVerticesFormat()
       else if ( element.isSemantic( GFXSemantic::NORMAL ) )
       {
          glElement.attrIndex = Torque::GL_VertexAttrib_Normal;
-         if(glElement.attrIndex == -1)     
-         {
-            glVerticesFormat.pop_back();
-            buffer += element.getSizeInBytes();
-            continue;
-         }
          glElement.elementCount = 3;
          glElement.normalized = false;
          glElement.type = GL_FLOAT;
@@ -218,12 +204,6 @@ void GFXGLVertexBuffer::_initVerticesFormat()
       else if ( element.isSemantic( GFXSemantic::TANGENT ) )
       {
          glElement.attrIndex = Torque::GL_VertexAttrib_Tangent;
-         if(glElement.attrIndex == -1)     
-         {
-            glVerticesFormat.pop_back();
-            buffer += element.getSizeInBytes();
-            continue;
-         }
          glElement.elementCount = 3;
          glElement.normalized = false;
          glElement.type = GL_FLOAT;
@@ -235,12 +215,6 @@ void GFXGLVertexBuffer::_initVerticesFormat()
       else if ( element.isSemantic( GFXSemantic::TANGENTW ) )
       {
          glElement.attrIndex = Torque::GL_VertexAttrib_TangentW;
-         if(glElement.attrIndex == -1)     
-         {
-            glVerticesFormat.pop_back();
-            buffer += element.getSizeInBytes();
-            continue;
-         }
          glElement.elementCount = 3;
          glElement.normalized = false;
          glElement.type = GL_FLOAT;
@@ -252,12 +226,6 @@ void GFXGLVertexBuffer::_initVerticesFormat()
       else if ( element.isSemantic( GFXSemantic::BINORMAL ) )
       {
          glElement.attrIndex = Torque::GL_VertexAttrib_Binormal;
-         if(glElement.attrIndex == -1)     
-         {
-            glVerticesFormat.pop_back();
-            buffer += element.getSizeInBytes();
-            continue;
-         }
          glElement.elementCount = 3;
          glElement.normalized = false;
          glElement.type = GL_FLOAT;
@@ -269,12 +237,6 @@ void GFXGLVertexBuffer::_initVerticesFormat()
       else if ( element.isSemantic( GFXSemantic::COLOR ) )
       {
          glElement.attrIndex = Torque::GL_VertexAttrib_Color;
-         if(glElement.attrIndex == -1)     
-         {
-            glVerticesFormat.pop_back();
-            buffer += element.getSizeInBytes();
-            continue;
-         }
          glElement.elementCount = element.getSizeInBytes();
          glElement.normalized = true;
          glElement.type = GL_UNSIGNED_BYTE;
@@ -289,12 +251,6 @@ void GFXGLVertexBuffer::_initVerticesFormat()
          glElement.elementCount = element.getSizeInBytes() / 4;
          texCoordIndex = getMax(texCoordIndex, element.getSemanticIndex());
          glElement.attrIndex = Torque::GL_VertexAttrib_TexCoord0 + texCoordIndex;
-         if(glElement.attrIndex == -1)     
-         {
-            glVerticesFormat.pop_back();
-            buffer += element.getSizeInBytes();
-            continue;
-         }
             
          glElement.normalized = false;
          glElement.type = GL_FLOAT;
@@ -304,6 +260,9 @@ void GFXGLVertexBuffer::_initVerticesFormat()
          buffer += element.getSizeInBytes();
          ++texCoordIndex;
       }
+
+      AssertFatal(!( mVertexAttribActiveMask & BIT(glElement.attrIndex) ), "GFXGLVertexBuffer::_initVerticesFormat - Duplicate vertex attrib index");
+      mVertexAttribActiveMask |= BIT(glElement.attrIndex);
    }
 
    AssertFatal(mVertexSize == (U8)buffer, "");

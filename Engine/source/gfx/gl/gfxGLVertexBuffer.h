@@ -52,6 +52,7 @@ public:
    virtual void zombify();
    virtual void resurrect();
    GLuint mDivisor;
+   U32 getVertexAttribActiveMask() const { return mVertexAttribActiveMask; }
 
 private:
    friend class GFXGLDevice;
@@ -69,6 +70,7 @@ private:
       GLvoid *pointerFirst;
    };
 
+   U32 mVertexAttribActiveMask;
    Vector<glVertexDecl> glVerticesFormat;  
    void _initVerticesFormat();
 

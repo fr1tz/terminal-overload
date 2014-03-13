@@ -14,6 +14,7 @@ public:
       mBindedIBO = 0;
       mBindedFBO_W = 0;
       mBindedFBO_R = 0;
+      mVertexAttribActive = 0;
    }
 
    class TextureUnit
@@ -118,9 +119,14 @@ public:
    void setCacheActiveTexture(U32 unit) { mActiveTexture = unit; }
    U32 getCacheActiveTexture() const { return mActiveTexture;  }
 
+   /// for cache glEnableVertexAttribArray / glDisableVertexAttribArray
+   void setCacheVertexAttribActive(U32 activeMask) { mVertexAttribActive = activeMask; }
+   U32 getCacheVertexAttribActive() const { return mVertexAttribActive;  }
+
 protected:   
    GLuint mActiveTexture, mBindedVBO, mBindedIBO, mBindedFBO_W, mBindedFBO_R;
    TextureUnit mTextureUnits[TEXTURE_STAGE_COUNT];
+   U32 mVertexAttribActive;
 };
 
 
