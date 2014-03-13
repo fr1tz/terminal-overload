@@ -164,7 +164,7 @@ void GBufferConditionerGLSL::processPix(  Vector<ShaderComponent*> &componentLis
    if ( fd.features[ MFT_IsTranslucentZWrite ] )
    {
       alphaVal = new Var( "outAlpha", "float" );
-      meta->addStatement( new GenOp( "   @ = OUT.col.a; // MFT_IsTranslucentZWrite\r\n", new DecOp( alphaVal ) ) );
+      meta->addStatement( new GenOp( "   @ = col.a; // MFT_IsTranslucentZWrite\r\n", new DecOp( alphaVal ) ) );
    }
 
    // If using interlaced normals, invert the normal
