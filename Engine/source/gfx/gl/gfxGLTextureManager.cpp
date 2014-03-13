@@ -192,6 +192,9 @@ void GFXGLTextureManager::innerCreateTexture( GFXGLTextureObject *retTex,
    glTexParameteri(binding, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
    if(binding == GL_TEXTURE_3D)
       glTexParameteri(binding, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+   if(GFXGLTextureSwizzle[format])         
+      glTexParameteriv(binding, GL_TEXTURE_SWIZZLE_RGBA, GFXGLTextureSwizzle[format]);   
    
    // Get the size from GL (you never know...)
    GLint texHeight, texWidth, texDepth = 0;
