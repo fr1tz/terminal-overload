@@ -223,15 +223,17 @@ void TSMesh::innerRender( TSMaterialList *materials, const TSRenderState &rdata,
 #endif
 
       const U32 matIndex = draw.matIndex & TSDrawPrimitive::MaterialMask;
-      BaseMatInstance *matInst = materials->getMaterialInst( matIndex );
 
+      BaseMatInstance *matInst = rdata.getForcedMaterial();
+      if(!matInst)
+      {
+         matInst = materials->getMaterialInst( matIndex );
 #ifndef TORQUE_OS_MAC
-
       // Get the instancing material if this mesh qualifies.
-      if ( meshType != SkinMeshType && pb->mPrimitiveArray[i].numVertices < smMaxInstancingVerts )
-         matInst = InstancingMaterialHook::getInstancingMat( matInst );
-
+         if ( meshType != SkinMeshType && pb->mPrimitiveArray[i].numVertices < smMaxInstancingVerts )
+            matInst = InstancingMaterialHook::getInstancingMat( matInst );
 #endif
+      }
 
       // If we don't have a material instance after the overload then
       // there is nothing to render... skip this primitive.

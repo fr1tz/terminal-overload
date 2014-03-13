@@ -116,6 +116,11 @@ F32  ShapeBase::sFullCorrectionDistance = 0.5f;
 F32  ShapeBase::sCloakSpeed = 0.5;
 U32  ShapeBase::sLastRenderFrame = 0;
 
+static F32 sShapeTrailsAmount = 1.0;
+static F32 sShapeTrailsDetail = 5.0;
+static F32 sShapeTrailsScale = 0.1f;
+static F32 sShapeTrailsVisibility = 0.5f;
+
 static const char *sDamageStateName[] =
 {
    // Index by enum ShapeBase::DamageState
@@ -166,6 +171,9 @@ ShapeBaseData::ShapeBaseData()
    explosionID( 0 ),
    underwaterExplosion( NULL ),
    underwaterExplosionID( 0 ),
+   numShapeTrails( 0 ),
+   shapeTrailsMaterialName( StringTable->insert("") ),
+   shapeTrailsMatInst( NULL ),
    firstPersonOnly( false ),
    useEyePoint( false ),
    cubeDescId( 0 ),
@@ -212,7 +220,7 @@ static ShapeBaseDataProto gShapeBaseDataProto;
 
 ShapeBaseData::~ShapeBaseData()
 {
-
+   SAFE_DELETE(shapeTrailsMatInst);
 }
 
 bool ShapeBaseData::preload(bool server, String &errorStr)
@@ -302,6 +310,22 @@ bool ShapeBaseData::preload(bool server, String &errorStr)
             return false;
          }
       }
+
+      // Create material instance for shape trails material.
+      if(!server && !shapeTrailsMaterialName.isEmpty())
+      {
+         SAFE_DELETE(shapeTrailsMatInst);
+         shapeTrailsMatInst = MATMGR->createMatInstance(shapeTrailsMaterialName);
+         shapeTrailsMatInst->init(MATMGR->getDefaultFeatures(), mShape->getVertexFormat());
+         if(!shapeTrailsMatInst->isValid() )
+         {
+            Con::errorf( "ShapeBaseData::preload - failed to create shapeTrailsMatInst for '%s'", shapeTrailsMaterialName.c_str() );
+            SAFE_DELETE(shapeTrailsMatInst);
+            shapeTrailsMatInst = MATMGR->createMatInstance("WarningMaterial");
+            shapeTrailsMatInst->init(MATMGR->getDefaultFeatures(), mShape->getVertexFormat());
+         }
+      }
+
       // Resolve details and camera node indexes.
       static const String sCollisionStr( "collision-" );
 
@@ -479,6 +503,11 @@ void ShapeBaseData::initPersistFields()
          "Whether to render the shape when it is in the \"Destroyed\" damage state." );
       addField( "debrisShapeName", TypeShapeFilename, Offset(debrisShapeName, ShapeBaseData),
          "The DTS or DAE model to use for auto-generated breakups. @note may not be functional." );
+
+      addField( "numShapeTrails", TypeS32, Offset(numShapeTrails, ShapeBaseData),
+         "Max. number of shape trails to render when moving.");
+      addField( "shapeTrailsMaterial", TypeMaterialName, Offset( shapeTrailsMaterialName, ShapeBaseData ),
+         "Material to use for the shape trails." );
 
    endGroup( "Destruction" );
 
@@ -711,6 +740,9 @@ void ShapeBaseData::packData(BitStream* stream)
       stream->writeRangedU32( underwaterExplosion->getId(), DataBlockObjectIdFirst,  DataBlockObjectIdLast );
    }
 
+   stream->write(numShapeTrails);
+   stream->writeString(shapeTrailsMaterialName);
+
    stream->writeFlag(inheritEnergyFromMount);
    stream->writeFlag(firstPersonOnly);
    stream->writeFlag(useEyePoint);
@@ -816,6 +848,9 @@ void ShapeBaseData::unpackData(BitStream* stream)
    {
       underwaterExplosionID = stream->readRangedU32( DataBlockObjectIdFirst, DataBlockObjectIdLast );
    }
+
+   stream->read(&numShapeTrails);
+   shapeTrailsMaterialName = stream->readSTString();
 
    inheritEnergyFromMount = stream->readFlag();
    firstPersonOnly = stream->readFlag();
@@ -2795,8 +2830,48 @@ void ShapeBase::_prepRenderImage(   SceneRenderState *state,
       state->getRenderPass()->addInst( ri );
    }
 
-   if ( mShapeInstance && renderSelf )
+   if(mShapeInstance && renderSelf)
+   {
       prepBatchRender( state, -1 );
+
+      // Shape trails
+      int numTrails = sShapeTrailsAmount * F32(mDataBlock->numShapeTrails);
+      if(numTrails > 0 && this->getVelocity().len() > 0)
+      {
+         GFXTransformSaver saver;
+
+         S32 dt = mShapeInstance->getCurrentDetail() + sShapeTrailsDetail;
+         dt = mClampF(dt, 0, mShapeInstance->getNumDetails()-1);
+         mShapeInstance->setCurrentDetail(dt);
+
+         TSRenderState rdata;
+         rdata.setSceneState( state );
+         if ( mCubeReflector.isEnabled() )
+            rdata.setCubemap( mCubeReflector.getCubemap() );
+
+         if(mDataBlock->shapeTrailsMatInst)
+            rdata.setForcedMaterial(mDataBlock->shapeTrailsMatInst);
+
+         LightQuery query;
+         query.init( getWorldSphere() );
+         rdata.setLightQuery( &query );       
+
+         MatrixF mat = getRenderTransform();
+         mat.scale(mObjScale);
+         Point3F p = mat.getPosition();
+         F32 f = sShapeTrailsVisibility / numTrails;
+         Point3F v = this->getVelocity() / numTrails; v *= sShapeTrailsScale;
+
+         while(numTrails-- > 0)
+         {
+            p -= v;
+            mat.setPosition(p);
+            GFX->setWorldMatrix( mat );
+            rdata.setFadeOverride(f * (numTrails+1));
+            mShapeInstance->render(rdata);
+         }
+      }
+   }
 
    calcClassRenderData();
 }
@@ -5451,6 +5526,16 @@ void ShapeBase::consoleInit()
    Con::addVariable("SB::CloakSpeed", TypeF32, &sCloakSpeed, 
       "@brief Time to cloak, in seconds.\n\n"
 	   "@ingroup gameObjects\n");
+
+   // Shape trail preferences
+   Con::addVariable("Pref::SB::Trails::Amount", TypeF32, &sShapeTrailsAmount, 
+      "Percentage of shape trails to render.");
+   Con::addVariable("Pref::SB::Trails::Detail", TypeF32, &sShapeTrailsDetail, 
+      "Detail level of shape trails.");
+   Con::addVariable("Pref::SB::Trails::Scale", TypeF32, &sShapeTrailsScale, 
+      "Spacing of shape trails.");
+   Con::addVariable("Pref::SB::Trails::Visibility", TypeF32, &sShapeTrailsVisibility, 
+      "Visibility of shape trails.");
 }
 
 void ShapeBase::_updateHiddenMeshes()

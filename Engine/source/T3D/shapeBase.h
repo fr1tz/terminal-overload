@@ -558,6 +558,13 @@ public:
    S32               underwaterExplosionID;
    /// @}
 
+   /// @name Shape trails
+   /// @{
+   S32  numShapeTrails;                 ///< Max. number of shape trails to render when moving
+   String shapeTrailsMaterialName;      ///< Name of material to use for shape trails
+   BaseMatInstance* shapeTrailsMatInst; ///< Material instance for shape trails
+   /// @}
+
    /// @name Physical Properties
    /// @{
    F32 mass;

@@ -14,6 +14,7 @@ class SceneRenderState;
 class GFXCubemap;
 class Frustum;
 class LightQuery;
+class BaseMatInstance;
 
 
 /// A simple class for passing render state through the pre-render pipeline.
@@ -57,6 +58,10 @@ protected:
    /// fade value of the instance
    /// to gain the resulting visibility fade (see TSMesh::render()).
    F32 mFadeOverride;
+
+   /// Used to force the same material
+   /// to be used on all the meshes.
+   BaseMatInstance* mForcedMaterial;
 
    /// These are used in some places
    /// TSShapeInstance::render, however,
@@ -103,6 +108,10 @@ public:
    ///@see mFadeOverride
    F32 getFadeOverride() const { return mFadeOverride; }
    void setFadeOverride( F32 fade ) { mFadeOverride = fade; }
+
+   ///@see mForcedMaterial
+   BaseMatInstance* getForcedMaterial() const { return mForcedMaterial; }
+   void setForcedMaterial(BaseMatInstance* mat) { mForcedMaterial = mat; }
 
    ///@see mNoRenderTranslucent
    bool isNoRenderTranslucent() const { return mNoRenderTranslucent; }
