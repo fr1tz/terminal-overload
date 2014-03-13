@@ -162,26 +162,31 @@ void _GFXGLTextureTargetFBOImpl::applyState()
    
    PRESERVE_FRAMEBUFFER();
    glBindFramebuffer(GL_FRAMEBUFFER, mFramebuffer);
-   
-   _GFXGLTargetDesc* color0 = mTarget->getTargetDesc(GFXTextureTarget::Color0);
-   if(color0)
-   {
-      if(color0->getDepth() == 0)
-         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, color0->getBinding(), color0->getHandle(), color0->getMipLevel());
+
+   bool hasColor = false;
+   for(int i = 0; i < GFXGL->getNumRenderTargets(); ++i)
+   {   
+      _GFXGLTargetDesc* color = mTarget->getTargetDesc( static_cast<GFXTextureTarget::RenderSlot>(GFXTextureTarget::Color0+i ));
+      if(color)
+      {
+         hasColor = true;
+         if(color->getDepth() == 0)
+            glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0+i, color->getBinding(), color->getHandle(), color->getMipLevel());
+         else
+            glFramebufferTexture3D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0+i, color->getBinding(), color->getHandle(), color->getMipLevel(), color->getZOffset());
+      }
       else
-         glFramebufferTexture3D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, color0->getBinding(), color0->getHandle(), color0->getMipLevel(), color0->getZOffset());
-   }
-   else
-   {
-      // Clears the texture (note that the binding is irrelevent)
-      glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, 0, 0);
+      {
+         // Clears the texture (note that the binding is irrelevent)
+         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0+i, GL_TEXTURE_2D, 0, 0);
+      }
    }
    
    _GFXGLTargetDesc* depthStecil = mTarget->getTargetDesc(GFXTextureTarget::DepthStencil);
    if(depthStecil)
    {
       // Certain drivers have issues with depth only FBOs.  That and the next two asserts assume we have a color target.
-      AssertFatal(color0, "GFXGLTextureTarget::applyState() - Cannot set DepthStencil target without Color0 target!");
+      AssertFatal(hasColor, "GFXGLTextureTarget::applyState() - Cannot set DepthStencil target without Color0 target!");
       glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, depthStecil->getBinding(), depthStecil->getHandle(), depthStecil->getMipLevel());
    }
    else
@@ -203,22 +208,19 @@ void _GFXGLTextureTargetFBOImpl::finish()
 {
    glBindFramebuffer(GL_FRAMEBUFFER, 0);
    GFXGL->getOpenglCache()->setCacheBinded(GL_FRAMEBUFFER, 0);
-   
-   _GFXGLTargetDesc* color0 = mTarget->getTargetDesc(GFXTextureTarget::Color0);
-   if(!color0 || !(color0->hasMips()))
-      return;
 
-   if( gglHasExtension(EXT_direct_state_access) )
-   {
-      glGenerateTextureMipmapEXT( color0->getHandle(), GL_TEXTURE_2D );
-      return;
-   }
+   for(int i = 0; i < GFXGL->getNumRenderTargets(); ++i)
+   {   
+      _GFXGLTargetDesc* color = mTarget->getTargetDesc( static_cast<GFXTextureTarget::RenderSlot>(GFXTextureTarget::Color0+i ) );
+      if(!color || !(color->hasMips()))
+         continue;
    
-   // Generate mips if necessary
-   // Assumes a 2D texture.
-   PRESERVE_TEXTURE(color0->getBinding());
-   glBindTexture(color0->getBinding(), color0->getHandle());
-   glGenerateMipmapEXT(GL_TEXTURE_2D);
+      // Generate mips if necessary
+      // Assumes a 2D texture.
+      PRESERVE_TEXTURE(color->getBinding());
+      glBindTexture(color->getBinding(), color->getHandle());
+      glGenerateMipmapEXT(GL_TEXTURE_2D);
+   }
 }
 
 // Actual GFXGLTextureTarget interface

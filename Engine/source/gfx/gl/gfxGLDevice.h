@@ -217,6 +217,8 @@ private:
    U32 mMaxShaderTextures;
    U32 mMaxFFTextures;
 
+   U32 mMaxTRColors;
+
    RectI mClip;
    
    GFXGLStateBlockRef mCurrentGLStateBlock;

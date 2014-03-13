@@ -102,6 +102,8 @@ void GFXGLDevice::initGLState()
    mCardProfiler->init(); 
    glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, (GLint*)&mMaxShaderTextures);
    glGetIntegerv(GL_MAX_TEXTURE_UNITS, (GLint*)&mMaxFFTextures);
+   glGetIntegerv(GL_MAX_COLOR_ATTACHMENTS, (GLint*)&mMaxTRColors);
+   mMaxTRColors = getMin( mMaxTRColors, (U32)(GFXTextureTarget::MaxRenderSlotId-1) );
    
    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
    
@@ -161,6 +163,7 @@ GFXGLDevice::GFXGLDevice(U32 adapterIndex) :
    mPixelShaderVersion(0.0f),
    mMaxShaderTextures(2),
    mMaxFFTextures(2),
+   mMaxTRColors(1),
    mClip(0, 0, 0, 0),
    mCurrentShader( NULL ),
    mNeedUpdateVertexAttrib(false)
@@ -787,7 +790,7 @@ U32 GFXGLDevice::getNumSamplers() const
 
 U32 GFXGLDevice::getNumRenderTargets() const 
 { 
-   return 1; 
+   return mMaxTRColors; 
 }
 
 void GFXGLDevice::_updateRenderTargets()
