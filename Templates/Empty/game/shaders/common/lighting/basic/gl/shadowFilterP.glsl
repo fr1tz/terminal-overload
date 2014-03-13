@@ -37,9 +37,9 @@ void main()
    
    for ( int i=1; i < 3; i++ )
    {
-      vec2 sample = (BLUR_DIR * offset[i]) * oneOverTargetSize;
-      OUT += texture2D( diffuseMap, uv + sample ) * weight[i];  
-      OUT += texture2D( diffuseMap, uv - sample ) * weight[i];  
+      vec2 _sample = (BLUR_DIR * offset[i]) * oneOverTargetSize;
+      OUT += texture2D( diffuseMap, uv + _sample ) * weight[i];  
+      OUT += texture2D( diffuseMap, uv - _sample ) * weight[i];  
    }
 
    gl_FragColor = OUT;
