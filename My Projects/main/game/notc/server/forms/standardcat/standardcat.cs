@@ -109,7 +109,7 @@ datablock PlayerData(FrmStandardcat)
    minLateralImpactSpeed = 30;
    speedDamageScale = 1;
 
-   boundingBox = "0.65 0.75 1.85";
+   boundingBox = "1.0 0.75 2.6";
    crouchBoundingBox = "0.65 0.75 1.3";
    swimBoundingBox = "1 2 2";
    pickupRadius = 1;
