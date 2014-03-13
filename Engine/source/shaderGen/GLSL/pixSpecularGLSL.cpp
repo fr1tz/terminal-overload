@@ -78,7 +78,7 @@ void PixelSpecularGLSL::processPix( Vector<ShaderComponent*> &componentList,
          LangElement * lightMap = LangElement::find( "lightMap" );
          LangElement * lmCoord = LangElement::find( "texCoord2" );
 
-         lmColor = new GenOp( "texture2D(@, @)", lightMap, lmCoord );
+         lmColor = new GenOp( "texture(@, @)", lightMap, lmCoord );
       }
    
       final = new GenOp( "@ * vec4(@.rgb,0)", specMul, lmColor );
@@ -124,7 +124,7 @@ void SpecularMapGLSL::processPix( Vector<ShaderComponent*> &componentList, const
    specularMap->uniform = true;
    specularMap->sampler = true;
    specularMap->constNum = Var::getTexUnitNum();
-   LangElement *texOp = new GenOp( "texture2D(@, @)", specularMap, texCoord );
+   LangElement *texOp = new GenOp( "texture(@, @)", specularMap, texCoord );
 
    Var *specularColor = new Var( "specularColor", "vec4" );
 

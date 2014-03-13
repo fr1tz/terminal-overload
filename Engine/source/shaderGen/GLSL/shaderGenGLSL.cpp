@@ -67,7 +67,7 @@ void ShaderGenPrinterGLSL::printPixelShaderOutputStruct( Stream& stream, const M
 
 void ShaderGenPrinterGLSL::printPixelShaderCloser( Stream& stream )
 {
-   const char *closer = "   gl_FragColor = col;\r\n}\r\n";
+   const char *closer = "   OUT_FragColor0 = col;\r\n}\r\n";
    stream.write( dStrlen(closer), closer );
 }
 

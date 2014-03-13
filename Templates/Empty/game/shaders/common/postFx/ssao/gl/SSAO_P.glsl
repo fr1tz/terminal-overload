@@ -96,7 +96,7 @@ float getOcclusion( float depthDiff, float depthMin, float depthMax, float depth
       
    normalDiff *= 1.0 - ( dt * 0.5 + 0.5 );
    
-   return ( 1.0 - texture1D( powTable, delta ).r ) * normalDiff;   
+   return ( 1.0 - texture( powTable, delta ).r ) * normalDiff;   
 }
 
 
@@ -152,7 +152,7 @@ void main()
    // Early out if too far away.
    if ( depth > 0.99999999 )
    {
-      gl_FragColor = vec4( 0,0,0,0 );
+      OUT_FragColor0 = vec4( 0,0,0,0 );
       return;
    }
 
@@ -270,7 +270,7 @@ void main()
    // seems backwards, but it makes it simple to deal with the SSAO
    // being disabled in the lighting shaders.   
    
-   gl_FragColor = vec4(occlusion, vec3(0.0));
+   OUT_FragColor0 = vec4(occlusion, vec3(0.0));
 }
 
 

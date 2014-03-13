@@ -36,11 +36,11 @@
 #define float3x3 mat3
 #define float2x2 mat2
 
-#define texCUBE textureCube
-#define tex2D texture2D
-#define tex1D texture1D
-#define tex2Dproj texture2DProj
-#define tex2Dlod( sampler, texCoord ) texture2DLod(sampler, texCoord.xy, texCoord.w)
+#define texCUBE texture
+#define tex2D texture
+#define tex1D texture
+#define tex2Dproj textureProj
+#define tex2Dlod( sampler, texCoord ) textureLod(sampler, texCoord.xy, texCoord.w)
 
 #define samplerCUBE samplerCube
 
@@ -100,4 +100,11 @@ mat4 mat4FromRow( float r0c0, float r0c1, float r0c2, float r0c3,
 
 #ifdef TORQUE_PIXEL_SHADER
 	void clip(float a) { if(a < 0) discard;}
+#endif
+
+#ifdef TORQUE_PIXEL_SHADER
+	#define VARYING in
+	out vec4 OUT_FragColor0;
+#else
+	#define VARYING out
 #endif

@@ -140,7 +140,7 @@ void AppVertConnectorGLSL::print( Stream &stream, bool isVertexShader )
       for(int j = 0; j < var->arraySize; ++j)
       {        
          const char *name = j == 0 ? var->connectName : avar("vTexCoord%d", var->constNum + j) ;
-         dSprintf( (char*)output, sizeof(output), "attribute %s %s;\r\n", var->type, name );
+         dSprintf( (char*)output, sizeof(output), "in %s %s;\r\n", var->type, name );
          stream.write( dStrlen((char*)output), output );
       }
    }
@@ -254,9 +254,9 @@ void VertPixelConnectorGLSL::print( Stream &stream, bool isVerterShader )
          continue;
 
       if(var->arraySize <= 1)
-         dSprintf((char*)output, sizeof(output), "varying %s _%s_;\r\n", var->type, var->connectName);
+         dSprintf((char*)output, sizeof(output), "%s %s _%s_;\r\n", (isVerterShader ? "out" : "in"), var->type, var->connectName);
       else
-         dSprintf((char*)output, sizeof(output), "varying %s _%s_[%d];\r\n", var->type, var->connectName, var->arraySize);      
+         dSprintf((char*)output, sizeof(output), "%s %s _%s_[%d];\r\n", (isVerterShader ? "out" : "in"),var->type, var->connectName, var->arraySize);      
 
       stream.write( dStrlen((char*)output), output );
    }

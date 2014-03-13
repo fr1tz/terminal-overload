@@ -28,9 +28,9 @@
 #include "softShadow.glsl"
 #include "../../../gl/lighting.glsl"
 
-varying vec4 wsEyeDir;
-varying vec4 ssPos;
-varying vec4 vsEyeDir;
+VARYING vec4 wsEyeDir;
+VARYING vec4 ssPos;
+VARYING vec4 vsEyeDir;
 
 #define IN_wsEyeDir wsEyeDir
 #define IN_ssPos ssPos
@@ -122,7 +122,7 @@ void main()
    #ifdef USE_COOKIE_TEX
 
       // Lookup the cookie sample.
-      vec4 cookie = texture2D( cookieMap, shadowCoord );
+      vec4 cookie = texture( cookieMap, shadowCoord );
 
       // Multiply the light with the cookie tex.
       lightColor.rgb *= cookie.rgb;
@@ -162,5 +162,5 @@ void main()
       addToResult = ( 1.0 - shadowed ) * abs(lightMapParams);
    }
 
-   gl_FragColor = lightinfoCondition( lightColorOut, Sat_NL_Att, specular, addToResult );
+   OUT_FragColor0 = lightinfoCondition( lightColorOut, Sat_NL_Att, specular, addToResult );
 }

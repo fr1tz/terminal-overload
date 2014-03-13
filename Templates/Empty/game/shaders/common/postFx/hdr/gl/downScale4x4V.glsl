@@ -24,8 +24,8 @@
 #include "../../../shdrConsts.h"
 #include "../../../gl/hlslCompat.glsl"
 
-attribute vec4 vPosition;
-attribute vec2 vTexCoord0;
+in vec4 vPosition;
+in vec2 vTexCoord0;
 
 #define In_pos vPosition
 #define In_uv vTexCoord0
@@ -33,7 +33,7 @@ attribute vec2 vTexCoord0;
 //-----------------------------------------------------------------------------
 // Constants
 //-----------------------------------------------------------------------------
-varying vec4 texCoords[8];
+VARYING vec4 texCoords[8];
 #define Out_texCoords texCoords
 
 #define Out_hpos gl_Position

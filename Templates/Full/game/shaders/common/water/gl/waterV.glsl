@@ -38,10 +38,10 @@ struct VertData
 // Defines                                                                  
 //-----------------------------------------------------------------------------
 //VertData IN
-attribute vec4 vPosition;
-attribute vec3 vNormal;
-attribute vec2 vTexCoord0;
-attribute vec4 vTexCoord1;
+in vec4 vPosition;
+in vec3 vNormal;
+in vec2 vTexCoord0;
+in vec4 vTexCoord1;
 
 #define IN_position_       vPosition
 #define IN_normal          vNormal
@@ -50,29 +50,29 @@ attribute vec4 vTexCoord1;
 
 //ConnectData OUT
 //
-   varying vec4   hpos             ;
+   VARYING vec4   hpos             ;
 
 // TexCoord 0 and 1 (xy,zw) for ripple texture lookup
-varying vec4 rippleTexCoord01;
+VARYING vec4 rippleTexCoord01;
 
    // xy is TexCoord 2 for ripple texture lookup 
    // z is the Worldspace unit distance/depth of this vertex/pixel
    // w is amount of the crestFoam ( more at crest of waves ).
-   varying vec4   rippleTexCoord2  ;
+   VARYING vec4   rippleTexCoord2  ;
 
 // Screenspace vert position BEFORE wave transformation
-varying vec4 posPreWave;
+VARYING vec4 posPreWave;
 
 // Screenspace vert position AFTER wave transformation
-varying vec4 posPostWave;
+VARYING vec4 posPostWave;
 
    // Objectspace vert position BEFORE wave transformation	
    // w coord is world space z position.
-   varying vec4   objPos           ;  
+   VARYING vec4   objPos           ;  
 
-   varying vec4   foamTexCoords    ;
+   VARYING vec4   foamTexCoords    ;
 
-   varying mat3   tangentMat     ;
+   VARYING mat3   tangentMat     ;
 //
 
 #define OUT_hpos hpos

@@ -24,8 +24,8 @@
 #include "../../../gl/torque.glsl"
 #include "../../../gl/hlslCompat.glsl"
 
-attribute vec4 vPosition;
-attribute vec2 vTexCoord0;
+in vec4 vPosition;
+in vec2 vTexCoord0;
 
 #define IN_pos  vPosition
 #define _IN_uv  vTexCoord0
@@ -36,22 +36,22 @@ uniform vec2 oneOverTargetSize;
 
 #define OUT_hpos gl_Position
 
-varying vec4 uv0;
+VARYING vec4 uv0;
 #define OUT_uv0 uv0
-varying vec2 uv1;
+VARYING vec2 uv1;
 #define OUT_uv1 uv1
-varying vec2 uv2;
+VARYING vec2 uv2;
 #define OUT_uv2 uv2
-varying vec2 uv3;
+VARYING vec2 uv3;
 #define OUT_uv3 uv3
 
-varying vec2 uv4;
+VARYING vec2 uv4;
 #define OUT_uv4 uv4
-varying vec2 uv5;
+VARYING vec2 uv5;
 #define OUT_uv5 uv5
-varying vec2 uv6;
+VARYING vec2 uv6;
 #define OUT_uv6 uv6
-varying vec2 uv7;
+VARYING vec2 uv7;
 #define OUT_uv7 uv7
 
 

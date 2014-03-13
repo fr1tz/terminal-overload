@@ -138,12 +138,12 @@ mat3x3 quatToMat( vec4 quat )
 ///
 vec2 parallaxOffset( sampler2D texMap, vec2 texCoord, vec3 negViewTS, float depthScale )
 {
-   float depth = texture2D( texMap, texCoord ).a;
+   float depth = texture( texMap, texCoord ).a;
    vec2 offset = negViewTS.xy * ( depth * depthScale );
 
    for ( int i=0; i < PARALLAX_REFINE_STEPS; i++ )
    {
-      depth = ( depth + texture2D( texMap, texCoord + offset ).a ) * 0.5;
+      depth = ( depth + texture( texMap, texCoord + offset ).a ) * 0.5;
       offset = negViewTS.xy * ( depth * depthScale );
    }
 
@@ -240,53 +240,6 @@ float hdrLuminance( vec3 _sample )
    return lum;
 }
 
-float determinant(mat2 m)
-{
-   return m[0][0] * m[1][1] - m[1][0] * m[0][1];
-}
-
-float determinant(mat3 m)
-{
-   return (+ m[0][0] * (m[1][1] * m[2][2] - m[1][2] * m[2][1])
-           - m[0][1] * (m[1][0] * m[2][2] - m[1][2] * m[2][0])
-           + m[0][2] * (m[1][0] * m[2][1] - m[1][1] * m[2][0]));
-}
-
-float determinant(mat4 m)
-{
-   float SubFactor00 = m[2][2] * m[3][3] - m[3][2] * m[2][3];
-   float SubFactor01 = m[2][1] * m[3][3] - m[3][1] * m[2][3];
-   float SubFactor02 = m[2][1] * m[3][2] - m[3][1] * m[2][2];
-   float SubFactor03 = m[2][0] * m[3][3] - m[3][0] * m[2][3];
-   float SubFactor04 = m[2][0] * m[3][2] - m[3][0] * m[2][2];
-   float SubFactor05 = m[2][0] * m[3][1] - m[3][0] * m[2][1];
-   float SubFactor06 = m[1][2] * m[3][3] - m[3][2] * m[1][3];
-   float SubFactor07 = m[1][1] * m[3][3] - m[3][1] * m[1][3];
-   float SubFactor08 = m[1][1] * m[3][2] - m[3][1] * m[1][2];
-   float SubFactor09 = m[1][0] * m[3][3] - m[3][0] * m[1][3];
-   float SubFactor10 = m[1][0] * m[3][2] - m[3][0] * m[1][2];
-   float SubFactor11 = m[1][1] * m[3][3] - m[3][1] * m[1][3];
-   float SubFactor12 = m[1][0] * m[3][1] - m[3][0] * m[1][1];
-   float SubFactor13 = m[1][2] * m[2][3] - m[2][2] * m[1][3];
-   float SubFactor14 = m[1][1] * m[2][3] - m[2][1] * m[1][3];
-   float SubFactor15 = m[1][1] * m[2][2] - m[2][1] * m[1][2];
-   float SubFactor16 = m[1][0] * m[2][3] - m[2][0] * m[1][3];
-   float SubFactor17 = m[1][0] * m[2][2] - m[2][0] * m[1][2];
-   float SubFactor18 = m[1][0] * m[2][1] - m[2][0] * m[1][1];
-
-   vec4 adj_0;
-
-   adj_0[0] = + (m[1][1] * SubFactor00 - m[1][2] * SubFactor01 + m[1][3] * SubFactor02);
-   adj_0[1] = - (m[1][0] * SubFactor00 - m[1][2] * SubFactor03 + m[1][3] * SubFactor04);
-   adj_0[2] = + (m[1][0] * SubFactor01 - m[1][1] * SubFactor03 + m[1][3] * SubFactor05);
-   adj_0[3] = - (m[1][0] * SubFactor02 - m[1][1] * SubFactor04 + m[1][2] * SubFactor05);
-
-   return (+ m[0][0] * adj_0[0]
-           + m[0][1] * adj_0[1]
-           + m[0][2] * adj_0[2]
-           + m[0][3] * adj_0[3]);
-}
-
 #ifdef TORQUE_PIXEL_SHADER
 /// Called from the visibility feature to do screen
 /// door transparency for fading of objects.
@@ -314,6 +267,6 @@ void fizzle(vec2 vpos, float visibility)
 /// @param condition This should be a bvec[2-4].  If any items is false, condition is considered to fail.
 /// @param color The color that should be outputted if the condition fails.
 /// @note This macro will only work in the void main() method of a pixel shader.
-#define assert(condition, color) { if(!any(condition)) { gl_FragColor = color; return; } }
+#define assert(condition, color) { if(!any(condition)) { OUT_FragColor0 = color; return; } }
 
 #endif // _TORQUE_GLSL_

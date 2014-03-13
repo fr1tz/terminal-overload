@@ -29,19 +29,19 @@ uniform sampler1D colorCorrectionTex;
 
 uniform float OneOverGamma;
 
-varying vec2 uv0;
+VARYING vec2 uv0;
 
 void main()
 {
-    vec4 color = texture2D(backBuffer, uv0.xy);
+    vec4 color = texture(backBuffer, uv0.xy);
 
    // Apply the color correction.
-   color.r = texture1D( colorCorrectionTex, color.r ).r;
-   color.g = texture1D( colorCorrectionTex, color.g ).g;
-   color.b = texture1D( colorCorrectionTex, color.b ).b;
+   color.r = texture( colorCorrectionTex, color.r ).r;
+   color.g = texture( colorCorrectionTex, color.g ).g;
+   color.b = texture( colorCorrectionTex, color.b ).b;
 
    // Apply gamma correction
    color.rgb = pow( abs(color.rgb), vec3(OneOverGamma) );
 
-   gl_FragColor = color;
+   OUT_FragColor0 = color;
 }

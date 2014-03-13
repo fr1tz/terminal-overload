@@ -30,8 +30,8 @@ uniform sampler2D backBuffer;
 
 void main()
 {
- vec4 color1 = texture2D(backBuffer, IN_uv0); 
+ vec4 color1 = texture(backBuffer, IN_uv0); 
  vec4 color2 = color1 * MUL_COLOR;
  vec4 damage = mix(color1,color2,damageFlash);
- gl_FragColor = mix(damage,WHITE_COLOR,whiteOut);
+ OUT_FragColor0 = mix(damage,WHITE_COLOR,whiteOut);
 }

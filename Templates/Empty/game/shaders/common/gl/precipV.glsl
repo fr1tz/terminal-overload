@@ -23,15 +23,15 @@
 //-----------------------------------------------------------------------------
 // Data
 //-----------------------------------------------------------------------------
-attribute vec4 vPosition;
-attribute vec2 vTexCoord0;
+in vec4 vPosition;
+in vec2 vTexCoord0;
 
 uniform mat4 modelview;
 uniform vec3 cameraPos, ambient;
 uniform vec2 fadeStartEnd;
 
-varying vec4 color;
-varying vec2 texCoord;
+VARYING vec4 color;
+VARYING vec2 texCoord;
 
 //-----------------------------------------------------------------------------
 // Main

@@ -63,14 +63,14 @@ void main()
    vec2 velocity = ((screenPos - previousPos) / velocityMultiplier).xy;
    
    // Generate the motion blur
-   vec4 color = texture2D(backBuffer, IN_uv0);
+   vec4 color = texture(backBuffer, IN_uv0);
 	IN_uv0 += velocity;
 	
    for(int i = 1; i<samples; ++i, IN_uv0 += velocity)
    {
-      vec4 currentColor = texture2D(backBuffer, IN_uv0);
+      vec4 currentColor = texture(backBuffer, IN_uv0);
       color += currentColor;
    }
    
-   gl_FragColor = color / samples;
+   OUT_FragColor0 = color / samples;
 }

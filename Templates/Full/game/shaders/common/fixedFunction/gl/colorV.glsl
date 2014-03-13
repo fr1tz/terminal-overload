@@ -21,11 +21,11 @@
 //-----------------------------------------------------------------------------
 #include "../../gl/hlslCompat.glsl"
 
-attribute vec4 vPosition;
-attribute vec4 vColor;
+in vec4 vPosition;
+in vec4 vColor;
 
 uniform mat4 modelview;
-varying vec4 color;
+out vec4 color;
 
 void main()
 {

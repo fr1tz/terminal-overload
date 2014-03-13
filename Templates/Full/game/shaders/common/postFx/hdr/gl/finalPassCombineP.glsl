@@ -46,9 +46,9 @@ uniform float g_fOneOverGamma;
 
 void main()
 {
-   vec4 sample = hdrDecode( texture2D( sceneTex, IN_uv0 ) );
-   float adaptedLum = texture2D( luminanceTex, vec2( 0.5f, 0.5f ) ).r;
-   vec4 bloom = texture2D( bloomTex, IN_uv0 );
+   vec4 sample = hdrDecode( texture( sceneTex, IN_uv0 ) );
+   float adaptedLum = texture( luminanceTex, vec2( 0.5f, 0.5f ) ).r;
+   vec4 bloom = texture( bloomTex, IN_uv0 );
 
    // For very low light conditions, the rods will dominate the perception
    // of light, and therefore color will be desaturated and shifted
@@ -85,12 +85,12 @@ void main()
    sample += g_fBloomScale * bloom;
 
    // Apply the color correction.
-   sample.r = texture1D( colorCorrectionTex, sample.r ).r;
-   sample.g = texture1D( colorCorrectionTex, sample.g ).g;
-   sample.b = texture1D( colorCorrectionTex, sample.b ).b;
+   sample.r = texture( colorCorrectionTex, sample.r ).r;
+   sample.g = texture( colorCorrectionTex, sample.g ).g;
+   sample.b = texture( colorCorrectionTex, sample.b ).b;
 
    // Apply gamma correction
    sample.rgb = pow( abs(sample.rgb), vec3(g_fOneOverGamma) );
 
-   gl_FragColor = sample;
+   OUT_FragColor0 = sample;
 }

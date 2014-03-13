@@ -41,9 +41,9 @@
 
 #define CLIP_Z // TODO: Make this a proper macro
 
-varying vec4 color;
-varying vec2 uv0;
-varying vec4 pos;
+VARYING vec4 color;
+VARYING vec2 uv0;
+VARYING vec4 pos;
 
 #define IN_color color
 #define IN_uv0 uv0
@@ -71,7 +71,7 @@ vec4 lmSample( vec3 nrm )
    // Atlasing front and back maps, so scale
    lmCoord.x *= 0.5;
 
-   return texture2D(paraboloidLightMap, lmCoord);
+   return texture(paraboloidLightMap, lmCoord);
 }
 
 
@@ -98,14 +98,14 @@ void main()
       softBlend = saturate( diff * oneOverSoftness );
    #endif
 	   
-   vec4 diffuse = texture2D( diffuseMap, IN_uv0 );
+   vec4 diffuse = texture( diffuseMap, IN_uv0 );
    
-   //gl_FragColor = vec4( lmSample(vec3(0, 0, -1)).rgb, IN_color.a * diffuse.a * softBlend * alphaScale);
+   //OUT_FragColor0 = vec4( lmSample(vec3(0, 0, -1)).rgb, IN_color.a * diffuse.a * softBlend * alphaScale);
    
    // Scale output color by the alpha factor (turn LerpAlpha into pre-multiplied alpha)
    vec3 colorScale = ( alphaFactor < 0.0 ? IN_color.rgb * diffuse.rgb : vec3( alphaFactor > 0.0 ? IN_color.a * diffuse.a * alphaFactor * softBlend : softBlend ) );
    
-   gl_FragColor = hdrEncode( vec4( IN_color.rgb * diffuse.rgb * colorScale,
+   OUT_FragColor0 = hdrEncode( vec4( IN_color.rgb * diffuse.rgb * colorScale,
                   IN_color.a * diffuse.a * softBlend * alphaScale ) );
 }
 

@@ -82,7 +82,7 @@ float GetEdgeWeight(vec2 uv0, in sampler2D prepassBuffer, in vec2 targetSize)
    return dot(normalResults, vec4(1.0, 1.0, 1.0, 1.0)) * 0.25;
 }
 
-varying vec2 uv0;
+VARYING vec2 uv0;
 #define IN_uv0 uv0
 
 uniform sampler2D prepassBuffer;
@@ -90,5 +90,5 @@ uniform vec2 targetSize;
 
 void main()
 {
-   gl_FragColor = vec4( GetEdgeWeight(IN_uv0, prepassBuffer, targetSize ) );//rtWidthHeightInvWidthNegHeight.zw);
+   OUT_FragColor0 = vec4( GetEdgeWeight(IN_uv0, prepassBuffer, targetSize ) );//rtWidthHeightInvWidthNegHeight.zw);
 }

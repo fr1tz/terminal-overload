@@ -22,13 +22,13 @@
 
 #include "../../../gl/hlslCompat.glsl"
 
-attribute vec4 vPosition;
+in vec4 vPosition;
 
 #define IN_pos vPosition
 
-varying vec4 wsEyeDir;
-varying vec4 ssPos;
-varying vec4 vsEyeDir;
+VARYING vec4 wsEyeDir;
+VARYING vec4 ssPos;
+VARYING vec4 vsEyeDir;
 
 #define OUT_hpos gl_Position
 #define OUT_wsEyeDir wsEyeDir

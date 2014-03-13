@@ -29,10 +29,10 @@
 #include "../../shadowMap/shadowMapIO_GLSL.h"
 #include "softShadow.glsl"
 
-varying vec4 hpos;
-varying vec2 uv0;
-varying vec3 wsEyeRay;
-varying vec3 vsEyeRay;
+VARYING vec4 hpos;
+VARYING vec2 uv0;
+VARYING vec3 wsEyeRay;
+VARYING vec3 vsEyeRay;
 
 uniform sampler2D ShadowMap ;
 
@@ -219,7 +219,7 @@ void main()
 
    // Sample the AO texture.      
    #ifdef USE_SSAO_MASK
-      float ao = 1.0 - texture2D( ssaoMask, viewportCoordToRenderTarget( uv0.xy, rtParams2 ) ).r;
+      float ao = 1.0 - texture( ssaoMask, viewportCoordToRenderTarget( uv0.xy, rtParams2 ) ).r;
       addToResult *= ao;
    #endif
 
@@ -227,6 +227,6 @@ void main()
       lightColorOut = debugColor;
    #endif
    
-   gl_FragColor = lightinfoCondition( lightColorOut, Sat_NL_Att, specular, addToResult );  
+   OUT_FragColor0 = lightinfoCondition( lightColorOut, Sat_NL_Att, specular, addToResult );  
    
 }

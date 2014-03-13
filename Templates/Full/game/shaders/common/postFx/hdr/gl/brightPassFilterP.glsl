@@ -46,11 +46,11 @@ void main()
 
    // Combine and average 4 samples from the source HDR texture.
    for( int i = 0; i < 4; i++ )
-      average += hdrDecode( texture2D( inputTex, IN_uv0 + ( gTapOffsets[i] * oneOverTargetSize ) ) );
+      average += hdrDecode( texture( inputTex, IN_uv0 + ( gTapOffsets[i] * oneOverTargetSize ) ) );
    average *= 0.25f;
 
    // Determine the brightness of this particular pixel.   
-   float adaptedLum = texture2D( luminanceTex, vec2( 0.5f, 0.5f ) ).r;
+   float adaptedLum = texture( luminanceTex, vec2( 0.5f, 0.5f ) ).r;
    float lum = (g_fMiddleGray / (adaptedLum + 0.0001)) * hdrLuminance( average.rgb );
    //float lum = hdrLuminance( average.rgb );
    
@@ -59,5 +59,5 @@ void main()
       average = vec4( 0.0f, 0.0f, 0.0f, 1.0f );
 
    // Write the colour to the bright-pass render target
-   gl_FragColor = hdrEncode( average );
+   OUT_FragColor0 = hdrEncode( average );
 }

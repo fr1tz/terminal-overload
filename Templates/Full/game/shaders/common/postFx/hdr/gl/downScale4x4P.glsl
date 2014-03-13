@@ -25,7 +25,7 @@
 #include "../../../gl/hlslCompat.glsl"
 #include "shadergen:/autogenConditioners.h"
 
-varying vec4 texCoords[8];
+VARYING vec4 texCoords[8];
 #define IN_texCoords texCoords
 
 uniform sampler2D inputTex;
@@ -40,9 +40,9 @@ void main()
    vec4 sample = vec4(0.0f);
    for ( int i = 0; i < 8; i++ )
    {
-      sample += texture2D( inputTex, IN_texCoords[i].xy );
-      sample += texture2D( inputTex, IN_texCoords[i].zw );
+      sample += texture( inputTex, IN_texCoords[i].xy );
+      sample += texture( inputTex, IN_texCoords[i].zw );
    }
    
-	gl_FragColor = sample / 16;
+	OUT_FragColor0 = sample / 16;
 }

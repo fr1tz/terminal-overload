@@ -62,8 +62,8 @@ void main()
       offset = (fI - 4.0) * oneOverTargetSize.y;
       x = (fI - 4.0) / 4.0;
       weight = gaussMultiplier * computeGaussianValue( x, gaussMean, gaussStdDev );
-      color += (texture2D( inputTex, IN_uv0 + vec2( 0.0f, offset ) ) * weight );
+      color += (texture( inputTex, IN_uv0 + vec2( 0.0f, offset ) ) * weight );
    }
 
-   gl_FragColor = vec4( color.rgb, 1.0f );
+   OUT_FragColor0 = vec4( color.rgb, 1.0f );
 }

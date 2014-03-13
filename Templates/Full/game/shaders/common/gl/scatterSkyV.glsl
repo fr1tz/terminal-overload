@@ -35,10 +35,10 @@ float vernierScale(float fCos)
 	return 0.25 * outx;
 }
 
-attribute vec4 vPosition;
-attribute vec3 vNormal;
-attribute vec4 vColor;
-attribute vec2 vTexCoord0;
+in vec4 vPosition;
+in vec3 vNormal;
+in vec4 vColor;
+in vec2 vTexCoord0;
 
 // This is the shader input vertex structure.
 #define IN_position vPosition
@@ -46,15 +46,15 @@ attribute vec2 vTexCoord0;
 #define IN_color vColor
 
 // This is the shader output data.
-varying vec4  rayleighColor;
+VARYING vec4  rayleighColor;
 #define OUT_rayleighColor rayleighColor
-varying vec4  mieColor;
+VARYING vec4  mieColor;
 #define OUT_mieColor mieColor
-varying vec3  v3Direction;
+VARYING vec3  v3Direction;
 #define OUT_v3Direction v3Direction
-varying float zPosition;
+VARYING float zPosition;
 #define OUT_zPosition zPosition
-varying vec3  pos;
+VARYING vec3  pos;
 #define OUT_pos pos
  
 uniform mat4 modelView;

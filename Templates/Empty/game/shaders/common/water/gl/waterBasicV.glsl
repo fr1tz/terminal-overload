@@ -27,29 +27,29 @@
 //-----------------------------------------------------------------------------
 
 // TexCoord 0 and 1 (xy,zw) for ripple texture lookup
-varying vec4 rippleTexCoord01;
+VARYING vec4 rippleTexCoord01;
 #define OUT_rippleTexCoord01 rippleTexCoord01
 
 // TexCoord 2 for ripple texture lookup
-varying vec2 rippleTexCoord2;
+VARYING vec2 rippleTexCoord2;
 #define OUT_rippleTexCoord2 rippleTexCoord2
 
 // Screenspace vert position BEFORE wave transformation
-varying vec4 posPreWave;
+VARYING vec4 posPreWave;
 #define OUT_posPreWave posPreWave
 
 // Screenspace vert position AFTER wave transformation
-varying vec4 posPostWave;
+VARYING vec4 posPostWave;
 #define OUT_posPostWave posPostWave 
 
 // Worldspace unit distance/depth of this vertex/pixel
-varying float  pixelDist;
+VARYING float  pixelDist;
 #define OUT_pixelDist pixelDist
 
-varying vec4 objPos;
+VARYING vec4 objPos;
 #define OUT_objPos objPos
 
-varying vec3 misc;
+VARYING vec3 misc;
 #define OUT_misc misc
 
 //-----------------------------------------------------------------------------
@@ -70,11 +70,11 @@ uniform float    gridElementSize;
 uniform float    elapsedTime;
 uniform float    undulateMaxDist;
 
-attribute vec4 vPosition;
-attribute vec3 vNormal;
-attribute vec4 vColor;
-attribute vec2 vTexCoord0;
-attribute vec4 vTexCoord1;
+in vec4 vPosition;
+in vec3 vNormal;
+in vec4 vColor;
+in vec2 vTexCoord0;
+in vec4 vTexCoord1;
 
 //-----------------------------------------------------------------------------
 // Main                                                                        

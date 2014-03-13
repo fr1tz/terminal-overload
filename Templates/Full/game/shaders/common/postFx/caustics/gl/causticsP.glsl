@@ -48,7 +48,7 @@ void main()
    float depth = prePass.w;   
    if(depth > 0.9999)
    {
-      gl_FragColor = vec4(0,0,0,0);
+      OUT_FragColor0 = vec4(0,0,0,0);
       return;
    }
    
@@ -59,7 +59,7 @@ void main()
    float waterDepth = -distanceToPlane(waterFogPlane, pos);
    if(waterDepth < 0)
    {
-      gl_FragColor = vec4(0,0,0,0);
+      OUT_FragColor0 = vec4(0,0,0,0);
       return;
    }
    waterDepth = saturate(waterDepth);
@@ -74,12 +74,12 @@ void main()
    causticsUV1.xy -= vec2(accumTime*0.15, timeSin*0.15);   
    
    //Sample caustics texture   
-   vec4 caustics = texture2D(causticsTex0, causticsUV0);   
-   caustics *= texture2D(causticsTex1, causticsUV1);
+   vec4 caustics = texture(causticsTex0, causticsUV0);   
+   caustics *= texture(causticsTex1, causticsUV1);
    
    //Use normal Z to modulate caustics  
    //float waterDepth = 1 - saturate(pos.z + waterFogPlane.w + 1);
    caustics *= saturate(prePass.z) * pow(1-depth, 64) * waterDepth; 
       
-   gl_FragColor = caustics;   
+   OUT_FragColor0 = caustics;   
 }

@@ -47,7 +47,7 @@ void main()
    for ( int i = 0; i < 9; i++ )
    {
       // Decode the hdr value.
-      sample = hdrDecode( texture2D( inputTex, IN_uv0 + ( gTapOffsets[i] * tsize ) ).rgb );
+      sample = hdrDecode( texture( inputTex, IN_uv0 + ( gTapOffsets[i] * tsize ) ).rgb );
 
       // Get the luminance and add it to the average.
       float lum = max( hdrLuminance( sample ), g_fMinLuminace );
@@ -56,5 +56,5 @@ void main()
 
    average = exp( average / 9.0 );
 
-   gl_FragColor = vec4( average, 0.0, 0.0, 1.0 );
+   OUT_FragColor0 = vec4( average, 0.0, 0.0, 1.0 );
 }

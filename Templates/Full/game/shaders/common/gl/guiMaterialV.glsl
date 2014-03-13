@@ -20,13 +20,13 @@
 // IN THE SOFTWARE.
 //-----------------------------------------------------------------------------
 
-attribute vec4 vPosition;
-attribute vec2 vTexCoord0;
+in vec4 vPosition;
+in vec2 vTexCoord0;
 
 uniform mat4x4 modelview;
 
-varying vec4 hpos;
-varying vec2 uv0;
+VARYING vec4 hpos;
+VARYING vec2 uv0;
 
 
 void main()

@@ -33,7 +33,7 @@ void main()
    vec2 pixelSize = 1.0 / targetSize;
 
    // Sample edge buffer, bail if not on an edge
-   float edgeSample = texture2D(edgeBuffer, IN_uv0).r;
+   float edgeSample = texture(edgeBuffer, IN_uv0).r;
    clip(edgeSample - 1e-6);
    
    // Ok we're on an edge, so multi-tap sample, average, and return
@@ -60,9 +60,9 @@ void main()
       
       vec2 offsetUV = IN_uv1 + edgeSample * ( offsets[i] * 0.5 ) * pixelSize;//rtWidthHeightInvWidthNegHeight.zw;
       //offsetUV *= 0.999;
-      accumColor+= texture2D(backBuffer, offsetUV);
+      accumColor+= texture(backBuffer, offsetUV);
    }
    accumColor /= 9.0;
    
-   gl_FragColor = accumColor;
+   OUT_FragColor0 = accumColor;
 }

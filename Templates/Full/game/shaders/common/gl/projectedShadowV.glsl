@@ -22,14 +22,14 @@
 
 #include "hlslCompat.glsl"
 
-attribute vec4 vPosition;
-attribute vec4 vColor;
-attribute vec2 vTexCoord0;
-attribute vec2 vTexCoord1;
+in vec4 vPosition;
+in vec4 vColor;
+in vec2 vTexCoord0;
+in vec2 vTexCoord1;
 
-varying vec2 texCoord;
-varying vec4 color;
-varying float fade;
+VARYING vec2 texCoord;
+VARYING vec4 color;
+VARYING float fade;
 
 uniform mat4 modelview;
 uniform float shadowLength;

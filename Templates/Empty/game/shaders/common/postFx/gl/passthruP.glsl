@@ -22,10 +22,10 @@
 
 #include "../../gl/hlslCompat.glsl"
 
-varying vec2 uv0;
+VARYING vec2 uv0;
 uniform sampler2D inputTex ;
 
 void main()
 {
-   gl_FragColor = texture2D( inputTex, uv0 );   
+   OUT_FragColor0 = texture( inputTex, uv0 );   
 }

@@ -57,29 +57,29 @@
 //-----------------------------------------------------------------------------
 
 // TexCoord 0 and 1 (xy,zw) for ripple texture lookup
-varying vec4 rippleTexCoord01;
+VARYING vec4 rippleTexCoord01;
 #define IN_rippleTexCoord01 rippleTexCoord01
 
 // TexCoord 2 for ripple texture lookup
-varying vec2 rippleTexCoord2;
+VARYING vec2 rippleTexCoord2;
 #define IN_rippleTexCoord2 rippleTexCoord2
 
 // Screenspace vert position BEFORE wave transformation
-varying vec4 posPreWave;
+VARYING vec4 posPreWave;
 #define IN_posPreWave posPreWave
 
 // Screenspace vert position AFTER wave transformation
-varying vec4 posPostWave;
+VARYING vec4 posPostWave;
 #define IN_posPostWave posPostWave 
 
 // Worldspace unit distance/depth of this vertex/pixel
-varying float  pixelDist;
+VARYING float  pixelDist;
 #define IN_pixelDist pixelDist
 
-varying vec4 objPos;
+VARYING vec4 objPos;
 #define IN_objPos objPos
 
-varying vec3 misc;
+VARYING vec3 misc;
 #define IN_misc misc
 
 //-----------------------------------------------------------------------------
@@ -120,9 +120,9 @@ void main()
    vec4 waterBaseColor = baseColor * vec4( ambientColor.rgb, 1 );
    
    // Get the bumpNorm...
-   vec3 bumpNorm = ( texture2D( bumpMap, IN_rippleTexCoord01.xy ).rgb * 2.0 - 1.0 ) * rippleMagnitude.x;
-   bumpNorm       += ( texture2D( bumpMap, IN_rippleTexCoord01.zw ).rgb * 2.0 - 1.0 ) * rippleMagnitude.y;      
-   bumpNorm       += ( texture2D( bumpMap, IN_rippleTexCoord2 ).rgb * 2.0 - 1.0 ) * rippleMagnitude.z;  
+   vec3 bumpNorm = ( texture( bumpMap, IN_rippleTexCoord01.xy ).rgb * 2.0 - 1.0 ) * rippleMagnitude.x;
+   bumpNorm       += ( texture( bumpMap, IN_rippleTexCoord01.zw ).rgb * 2.0 - 1.0 ) * rippleMagnitude.y;      
+   bumpNorm       += ( texture( bumpMap, IN_rippleTexCoord2 ).rgb * 2.0 - 1.0 ) * rippleMagnitude.z;  
    
    bumpNorm = normalize( bumpNorm );
    bumpNorm = mix( bumpNorm, vec3(0,0,1), 1.0 - rippleMagnitude.w );
@@ -136,7 +136,7 @@ void main()
    distortPos.xy += bumpNorm.xy * distortAmt;   
  
  #ifdef UNDERWATER
-   gl_FragColor = hdrEncode( texture2DProj( refractBuff, distortPos ) );   
+   OUT_FragColor0 = hdrEncode( textureProj( refractBuff, distortPos ) );   
  #else
 
    vec3 eyeVec = IN_objPos.xyz - eyePos;
@@ -154,16 +154,16 @@ void main()
    float fakeColorAmt = ang;   
       
     // Get reflection map color
-   vec4 refMapColor = hdrDecode( texture2DProj( reflectMap, distortPos ) ); 
+   vec4 refMapColor = hdrDecode( textureProj( reflectMap, distortPos ) ); 
    // If we do not have a reflection texture then we use the cubemap.
-   refMapColor = mix( refMapColor, textureCube( skyMap, reflectionVec ), NO_REFLECT );      
+   refMapColor = mix( refMapColor, texture( skyMap, reflectionVec ), NO_REFLECT );      
    
    // Combine reflection color and fakeColor.
    vec4 reflectColor = mix( refMapColor, fakeColor, fakeColorAmt );
    //return refMapColor;
    
    // Get refract color
-   vec4 refractColor = hdrDecode( texture2DProj( refractBuff, distortPos ) );   
+   vec4 refractColor = hdrDecode( textureProj( refractBuff, distortPos ) );   
    
    // calc "diffuse" color by lerping from the water color
    // to refraction image based on the water clarity.
@@ -208,7 +208,7 @@ void main()
 
    #endif
    
-   gl_FragColor = OUT;
+   OUT_FragColor0 = OUT;
    
 #endif   
 }

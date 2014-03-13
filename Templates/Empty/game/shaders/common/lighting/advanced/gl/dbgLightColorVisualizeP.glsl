@@ -23,13 +23,13 @@
 #include "../../../gl/hlslCompat.glsl"
 #include "shadergen:/autogenConditioners.h"
 
-varying vec2 uv0;
+VARYING vec2 uv0;
 uniform sampler2D lightInfoBuffer;
 
 void main()
 {   
    vec3 lightcolor;   
    float nl_Att, specular;   
-   lightinfoUncondition( texture2D( lightInfoBuffer, uv0 ), lightcolor, nl_Att, specular );   
-   gl_FragColor = vec4( lightcolor, 1.0 ); 
+   lightinfoUncondition( texture( lightInfoBuffer, uv0 ), lightcolor, nl_Att, specular );   
+   OUT_FragColor0 = vec4( lightcolor, 1.0 ); 
 }

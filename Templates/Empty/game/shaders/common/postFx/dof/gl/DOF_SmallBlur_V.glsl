@@ -28,14 +28,14 @@
 #include "../../../gl/hlslCompat.glsl"
 #include "../../../gl/torque.glsl"
 
-attribute vec4 vPosition;
-attribute vec2 vTexCoord0;
+in vec4 vPosition;
+in vec2 vTexCoord0;
 
 #define IN_position  vPosition
 #define IN_texCoords vTexCoord0
 
 #define OUT_position gl_Position
-varying vec4 texCoords;
+VARYING vec4 texCoords;
 #define OUT_texCoords texCoords
 
 uniform vec2 oneOverTargetSize;  

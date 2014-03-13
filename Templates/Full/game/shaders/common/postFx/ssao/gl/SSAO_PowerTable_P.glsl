@@ -22,11 +22,11 @@
 
 #include "../../../gl/hlslCompat.glsl"
 
-varying vec2 uv0;
+VARYING vec2 uv0;
 #define IN_uv0 uv0
 
 void main()
 {  
    float power = pow( max( IN_uv0.x, 0 ), 0.1 );   
-   gl_FragColor = vec4( power, 0, 0, 1 );
+   OUT_FragColor0 = vec4( power, 0, 0, 1 );
 }

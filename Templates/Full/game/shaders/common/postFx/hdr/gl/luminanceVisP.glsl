@@ -30,11 +30,11 @@ uniform float brightPassThreshold;
 
 void main()
 {
-   vec4 sample = hdrDecode( texture2D( inputTex, IN_uv0 ) );
+   vec4 sample = hdrDecode( texture( inputTex, IN_uv0 ) );
    
    // Determine the brightness of this particular pixel.
    float lum = hdrLuminance( sample.rgb );
 
    // Write the colour to the bright-pass render target
-   gl_FragColor = ( vec4( lum.rrr, 1 ) );
+   OUT_FragColor0 = ( vec4( lum.rrr, 1 ) );
 }

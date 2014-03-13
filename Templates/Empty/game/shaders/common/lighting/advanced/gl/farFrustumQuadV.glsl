@@ -23,16 +23,16 @@
 #include "../../../gl/hlslCompat.glsl"
 #include "farFrustumQuad.glsl"
 
-attribute vec4 vPosition;
-attribute vec3 vNormal;
-attribute vec3 vTangent;
-attribute vec2 vTexCoord0;
+in vec4 vPosition;
+in vec3 vNormal;
+in vec3 vTangent;
+in vec2 vTexCoord0;
 
 uniform vec4 rtParams0;
-varying vec4 hpos;
-varying vec2 uv0;
-varying vec3 wsEyeRay;
-varying vec3 vsEyeRay;
+VARYING vec4 hpos;
+VARYING vec2 uv0;
+VARYING vec3 wsEyeRay;
+VARYING vec3 vsEyeRay;
 
 void main()
 {   

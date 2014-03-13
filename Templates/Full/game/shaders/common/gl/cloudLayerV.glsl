@@ -22,21 +22,21 @@
 
 #include "hlslCompat.glsl"
 
-attribute vec4 vPosition;
-attribute vec3 vNormal;
-attribute vec3 vBinormal;
-attribute vec3 vTangent;
-attribute vec2 vTexCoord0;
+in vec4 vPosition;
+in vec3 vNormal;
+in vec3 vBinormal;
+in vec3 vTangent;
+in vec2 vTexCoord0;
 
-varying vec4 texCoord12;
+VARYING vec4 texCoord12;
 #define OUT_texCoord12 texCoord12
-varying vec4 texCoord34;
+VARYING vec4 texCoord34;
 #define OUT_texCoord34 texCoord34
-varying vec3 vLightTS; // light vector in tangent space, denormalized
+VARYING vec3 vLightTS; // light vector in tangent space, denormalized
 #define OUT_vLightTS vLightTS
-varying vec3 vViewTS;  // view vector in tangent space, denormalized
+VARYING vec3 vViewTS;  // view vector in tangent space, denormalized
 #define OUT_vViewTS vViewTS
-varying float worldDist;
+VARYING float worldDist;
 #define OUT_worldDist worldDist
 
 //-----------------------------------------------------------------------------
