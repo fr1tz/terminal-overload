@@ -415,6 +415,21 @@ bool MatInstance::setupPass(SceneRenderState * state, const SceneData &sgData )
 
    ++mCurPass;
 
+   // Handle "glowOnly" material stages:
+   // If we're not rendering the glow bin, skip passes that
+   // render stages that glow but have the glowOnly flag set.
+   if(sgData.binType != SceneData::GlowBin && mProcessedMaterial->hasGlow())
+   {
+      while(mCurPass < mProcessedMaterial->getNumPasses())
+      {
+         U32 stageNum = mProcessedMaterial->getStageFromPass(mCurPass); 
+         if(mMaterial->mGlow[stageNum] && mMaterial->mGlowOnly[stageNum])
+            ++mCurPass;
+         else
+            break;
+      }
+   }
+
    if ( !mProcessedMaterial->setupPass( state, sgData, mCurPass ) )
    {
       mCurPass = -1;

@@ -243,6 +243,7 @@ public:
    F32 mSeqSegSize[MAX_STAGES];
    
    bool mGlow[MAX_STAGES];          // entire stage glows
+   bool mGlowOnly[MAX_STAGES];
    bool mEmissive[MAX_STAGES];
    bool mWireframe[MAX_STAGES];
 

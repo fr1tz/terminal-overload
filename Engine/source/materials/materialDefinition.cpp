@@ -107,6 +107,7 @@ Material::Material()
       mVertColor[ i ] = false;
 
       mGlow[i] = false;
+      mGlowOnly[i] = false;
       mEmissive[i] = false;
       mWireframe[i] = false;
 
@@ -271,6 +272,9 @@ void Material::initPersistFields()
 
       addField("glow", TypeBool, Offset(mGlow, Material), MAX_STAGES,
          "Enables rendering this material to the glow buffer." );
+
+      addField("glowOnly", TypeBool, Offset(mGlowOnly, Material), MAX_STAGES,
+         "Only render glow." );
 
       addField("emissive", TypeBool, Offset(mEmissive, Material), MAX_STAGES,
          "Enables emissive lighting for the material." );
