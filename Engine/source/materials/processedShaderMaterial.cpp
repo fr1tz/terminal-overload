@@ -711,7 +711,10 @@ bool ProcessedShaderMaterial::setupPass( SceneRenderState *state, const SceneDat
       // If we were rendering instanced data tell
       // the device to reset that vb stream.
       if ( mInstancingState )
+      {
+         GFX->setVertexBuffer( NULL, 0 ); // TODO OPENGL needed for instancing
          GFX->setVertexBuffer( NULL, 1 );
+      }
 
       return false;
    }
