@@ -52,7 +52,8 @@ function ItemBallastShape::updateThread(%this, %obj)
    if(!isObject(%obj))
       return;
    
-   %obj.zUpdateThread = %this.schedule(32, "updateThread", %obj);
+   %dtTime = 256;
+   %obj.zUpdateThread = %this.schedule(%dtTime, "updateThread", %obj);
    
    %mount = %obj.getObjectMount();
    if(!isObject(%mount))
@@ -68,15 +69,16 @@ function ItemBallastShape::updateThread(%this, %obj)
    
    if(%level <= 0.02)
    {
-      %level += 0.0004;
-      %level -= %speed/40000;
+      %level += 0.0000125*%dtTime;
+      if(%speed > 16)
+         %level -= %speed/(25*%dtTime);
       if(%level > %mount.zBalastLimit)
          %level = %mount.zBalastLimit;
    }
    else
    {
-      %level += 0.01;
-      %level -= %speed/200;
+      %level += 0.0003125*%dtTime;
+      %level -= %speed/(6.25*%dtTime);
       %level = mClamp(%level, 0.02, 1.0);
    }
    
