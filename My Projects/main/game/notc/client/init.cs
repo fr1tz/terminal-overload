@@ -87,11 +87,7 @@ function initClient()
    exec("./missionDownload.cs");
    exec("./serverConnection.cs");
    
-   // Load useful Materials
-   exec("./shaders.cs");
-
    loadMaterials();
-   
    loadAutoexec("ClientInit");
 
    // Really shouldn't be starting the networking unless we are
