@@ -1,0 +1,91 @@
+//--- OBJECT WRITE BEGIN ---
+%guiContent = new GuiControl(EDIT__OptGameGui) {
+   position = "0 0";
+   extent = "640 480";
+   minExtent = "8 8";
+   horizSizing = "width";
+   vertSizing = "height";
+   profile = "GuiOverlayProfile";
+   visible = "1";
+   active = "1";
+   tooltipProfile = "GuiToolTipProfile";
+   hovertime = "1000";
+   isContainer = "1";
+   canSave = "1";
+   canSaveDynamicFields = "1";
+      fixedAspectRatio = "0";
+
+   new GuiBitmapBorderCtrl(OptGameGui) {
+      position = "9 55";
+      extent = "358 210";
+      minExtent = "8 8";
+      horizSizing = "width";
+      vertSizing = "height";
+      profile = "GuiTabBorderProfile";
+      visible = "1";
+      active = "1";
+      tooltipProfile = "GuiToolTipProfile";
+      hovertime = "1000";
+      isContainer = "1";
+      canSave = "1";
+      canSaveDynamicFields = "0";
+
+      new GuiPopUpMenuCtrl(OptGameEditorList) {
+         maxPopupHeight = "200";
+         sbUsesNAColor = "0";
+         reverseTextList = "0";
+         bitmapBounds = "16 16";
+         maxLength = "1024";
+         margin = "0 0 0 0";
+         padding = "0 0 0 0";
+         anchorTop = "1";
+         anchorBottom = "0";
+         anchorLeft = "1";
+         anchorRight = "0";
+         position = "8 8";
+         extent = "339 19";
+         minExtent = "8 2";
+         horizSizing = "width";
+         vertSizing = "bottom";
+         profile = "GuiPopUpMenuProfile";
+         visible = "1";
+         active = "1";
+         tooltipProfile = "GuiToolTipProfile";
+         hovertime = "1000";
+         isContainer = "1";
+         canSave = "1";
+         canSaveDynamicFields = "0";
+      };
+      new GuiScrollCtrl() {
+         willFirstRespond = "1";
+         hScrollBar = "alwaysOn";
+         vScrollBar = "alwaysOn";
+         lockHorizScroll = "0";
+         lockVertScroll = "0";
+         constantThumbHeight = "0";
+         childMargin = "0 0";
+         mouseWheelScrollSpeed = "-1";
+         margin = "0 0 0 0";
+         padding = "0 0 0 0";
+         anchorTop = "1";
+         anchorBottom = "0";
+         anchorLeft = "1";
+         anchorRight = "0";
+         position = "8 32";
+         extent = "339 169";
+         minExtent = "8 2";
+         horizSizing = "width";
+         vertSizing = "height";
+         profile = "GuiScrollProfile";
+         visible = "1";
+         active = "1";
+         tooltipProfile = "GuiToolTipProfile";
+         hovertime = "1000";
+         isContainer = "1";
+         internalName = "ContentContainer";
+         canSave = "1";
+         canSaveDynamicFields = "0";
+      };
+   };
+};
+//--- OBJECT WRITE END ---

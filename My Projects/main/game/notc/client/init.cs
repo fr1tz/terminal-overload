@@ -69,29 +69,30 @@ function initClient()
    exec("notc/client/shell/chooseLevelDlg.gui");
    exec("notc/client/shell/loadingGui.gui");
    exec("notc/client/shell/optionsDlg.gui");
-   exec("notc/client/shell/remapDlg.gui");
-   
+   exec("notc/client/shell/optGraphics.gui");
+   exec("notc/client/shell/optAudio.gui");
+   exec("notc/client/shell/optGame.gui");
+
    // Gui scripts
    exec("notc/client/shell/startupGui.cs");
    exec("notc/client/shell/chooseLevelDlg.cs");
    exec("notc/client/shell/loadingGui.cs");
    exec("notc/client/shell/optionsDlg.cs");
+   exec("notc/client/shell/optGraphics.cs");
+   exec("notc/client/shell/optAudio.cs");
+   exec("notc/client/shell/optGame.cs");
 
    // Client scripts
    exec("./client.cs");
    exec("./missionDownload.cs");
    exec("./serverConnection.cs");
-
+   
    // Load useful Materials
    exec("./shaders.cs");
 
-   // Default player key bindings
-   exec("./default.bind.cs");
-
-   if (isFile("./config.cs"))
-      exec("./config.cs");
-
    loadMaterials();
+   
+   loadAutoexec("ClientInit");
 
    // Really shouldn't be starting the networking unless we are
    // going to connect to a remote server, or host a multi-player

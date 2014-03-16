@@ -1,9 +1,9 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
-function OptionsDlg::setContent(%this, %ctrl)
+function XaNotcSettings1_MuxerGui::setContent(%this, %ctrl)
 {
-   //echo("OptionsDlg::setContent():" SPC %ctrl);
+   //echo("XaNotcSettings1_MuxerGui::setContent():" SPC %ctrl);
 
    if(%this.zContent $= %ctrl)
       return;
@@ -26,11 +26,11 @@ function OptionsDlg::setContent(%this, %ctrl)
    }
 }
 
-function OptionsDlg::onWake(%this)
+function XaNotcSettings1_MuxerGui::onWake(%this)
 {
-   //echo("OptionsDlg::onWake()");
+   //echo("XaNotcSettings1_MuxerGui::onWake()");
 
    if(%this-->ContentContainer.getCount() == 0)
-      %this-->GraphicsButton.performClick();
+      %this-->ControlsButton.performClick();
 }
 

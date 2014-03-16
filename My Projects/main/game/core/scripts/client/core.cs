@@ -256,3 +256,16 @@ function reloadMaterials()
    loadMaterials();
    reInitMaterials();
 }
+
+//-----------------------------------------------------------------------------
+// loadAutoexec - load all autoexec.cs files
+//-----------------------------------------------------------------------------
+function loadAutoexec(%context)
+{
+   $AUTOEXEC_CONTEXT = %context;
+   %n = "*/autoexec.cs";
+   for(%f = findFirstFile(%n); %f !$= ""; %f = findNextFile(%n))
+      exec(%f);
+   $AUTOEXEC_CONTEXT = "";
+}
+
