@@ -14,6 +14,9 @@ $AudioTestDescription = new SFXDescription()
 function OptAudioGui::onWake(%this)
 {
    //echo("OptAudioGui::onWake()");
+   
+   if($InGuiEditor)
+      return;
 
    // Audio
    //OptAudioHardwareToggle.setStateOn($pref::SFX::useHardware);

@@ -84,6 +84,9 @@ $XaNotcSettings1_RemapCount++;
 function XaNotcSettings1_ControlsGui::onWake(%this)
 {
    //echo("XaNotcSettings1_ControlsGui::onWake");
+   
+   if($InGuiEditor)
+      return;
 
    %this-->MouseSensitivity.value = $pref::Input::LinkMouseSensitivity;
    %this.fillRemapList();

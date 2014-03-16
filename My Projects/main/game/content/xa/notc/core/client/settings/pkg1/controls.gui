@@ -15,19 +15,18 @@
    canSaveDynamicFields = "1";
       fixedAspectRatio = "0";
 
-   new GuiBitmapBorderCtrl(XaNotcSettings1_ControlsGui) {
+   new GuiControl(XaNotcSettings1_ControlsGui) {
       position = "9 55";
       extent = "358 210";
       minExtent = "8 8";
       horizSizing = "right";
       vertSizing = "bottom";
-      profile = "GuiTabBorderProfile";
+      profile = "GuiDefaultProfile";
       visible = "1";
       active = "1";
       tooltipProfile = "GuiToolTipProfile";
       hovertime = "1000";
       isContainer = "1";
-      internalName = "OptGamePane";
       canSave = "1";
       canSaveDynamicFields = "0";
 

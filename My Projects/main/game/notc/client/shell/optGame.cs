@@ -18,6 +18,9 @@ function OptGameGui::onWake(%this)
 {
    //echo("OptGameGui::onWake()");
    
+   if($InGuiEditor)
+      return;
+   
    %this.updateEditorList();
    
    if(%this-->ContentContainer.getCount() == 0)

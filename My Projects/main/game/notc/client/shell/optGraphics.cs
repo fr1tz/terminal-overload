@@ -4,6 +4,9 @@
 function OptGraphicsGui::onWake(%this)
 {
    //echo("OptGraphicsGui::onWake()");
+   
+   if($InGuiEditor)
+      return;
 
    if ( isFunction("getWebDeployment") && getWebDeployment() )
    {
