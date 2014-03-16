@@ -15,13 +15,13 @@
    canSaveDynamicFields = "1";
       fixedAspectRatio = "0";
 
-   new GuiBitmapBorderCtrl(XaNotcSettings1_MuxerGui) {
+   new GuiControl(XaNotcSettings1_MuxerGui) {
       position = "9 55";
       extent = "500 400";
       minExtent = "8 8";
       horizSizing = "width";
       vertSizing = "height";
-      profile = "GuiTabBorderProfile";
+      profile = "GuiDefaultProfile";
       visible = "1";
       active = "1";
       tooltipProfile = "GuiToolTipProfile";
@@ -48,11 +48,32 @@
          canSaveDynamicFields = "0";
       };
       new GuiButtonCtrl() {
-         text = "Controls";
+         text = "Misc";
          groupNum = "-1";
          buttonType = "RadioButton";
          useMouseEvents = "0";
          position = "8 8";
+         extent = "117 23";
+         minExtent = "8 8";
+         horizSizing = "right";
+         vertSizing = "bottom";
+         profile = "GuiRadioProfile";
+         visible = "1";
+         active = "1";
+         command = "XaNotcSettings1_MuxerGui.setContent(XaNotcSettings1_MiscGui);";
+         tooltipProfile = "GuiToolTipProfile";
+         hovertime = "1000";
+         isContainer = "0";
+         internalName = "MiscButton";
+         canSave = "1";
+         canSaveDynamicFields = "0";
+      };
+      new GuiButtonCtrl() {
+         text = "Controls";
+         groupNum = "-1";
+         buttonType = "RadioButton";
+         useMouseEvents = "0";
+         position = "8 40";
          extent = "117 23";
          minExtent = "8 8";
          horizSizing = "right";

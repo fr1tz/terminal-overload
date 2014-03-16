@@ -5,6 +5,8 @@ exec("./default.bind.cs");
 exec("./controls.gui");
 exec("./controls.cs");
 exec("./controlsRemapDlg.gui");
+exec("./misc.gui");
+exec("./misc.cs");
 exec("./muxer.gui");
 exec("./muxer.cs");
 

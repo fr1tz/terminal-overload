@@ -29,6 +29,9 @@ function XaNotcSettings1_MuxerGui::setContent(%this, %ctrl)
 function XaNotcSettings1_MuxerGui::onWake(%this)
 {
    //echo("XaNotcSettings1_MuxerGui::onWake()");
+   
+   if($InGuiEditor)
+      return;
 
    if(%this-->ContentContainer.getCount() == 0)
       %this-->ControlsButton.performClick();
