@@ -27,7 +27,7 @@ datablock PlayerData(FrmStandardcat)
    cmdCategory = "Clients";
 
    cameraDefaultFov = "80";
-   cameraMinFov = "80";
+   cameraMinFov = "10";
    cameraMaxFov = "180";
 
    debrisShapeName = "content/xa/torque3d/3.0/shapes/actors/common/debris_player.dts";
