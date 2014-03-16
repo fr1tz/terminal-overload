@@ -20,9 +20,11 @@
 // IN THE SOFTWARE.
 //-----------------------------------------------------------------------------
 
-VARYING vec2 texCoord;
-VARYING vec4 color;
-VARYING float fade;
+in vec2 texCoord;
+in vec4 color;
+in float fade;
+
+out vec4 OUT_FragColor0;
 
 uniform sampler2D inputTex;
 uniform vec4 ambient;

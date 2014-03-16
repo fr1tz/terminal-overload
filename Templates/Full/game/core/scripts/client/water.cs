@@ -138,10 +138,10 @@ singleton ShaderData( WaterBasicShader )
    OGLPixelShaderFile 	= "shaders/common/water/gl/waterBasicP.glsl"; 
    
    samplerNames[0] = "$bumpMap";
-   samplerNames[1] = "$reflectMap";
-   samplerNames[2] = "$refractBuff";
-   samplerNames[3] = "$samplerCUBE";
-   samplerNames[4] = "$depthGradMap";
+   samplerNames[2] = "$reflectMap";
+   samplerNames[3] = "$refractBuff";
+   samplerNames[4] = "$skyMap";
+   samplerNames[5] = "$depthGradMap";
    
    pixVersion = 2.0;
 };

@@ -26,8 +26,8 @@
 in vec4 vPosition;
 in vec2 vTexCoord0;
 
-VARYING vec2 layerCoord;
-VARYING vec2 texCoord;
+out vec2 layerCoord;
+out vec2 texCoord;
 
 uniform vec2 texScale;
 

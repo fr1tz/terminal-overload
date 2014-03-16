@@ -27,7 +27,7 @@ in vec2 vTexCoord0;
 
 uniform vec4 rtParams0;
 
-VARYING vec2 uv;
+out vec2 uv;
 
 void main()
 {
