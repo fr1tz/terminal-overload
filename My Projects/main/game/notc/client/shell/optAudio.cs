@@ -126,11 +126,6 @@ function OptAudioDeviceList::onSelect( %this, %id, %text )
                                              SPC $pref::SFX::useHardware );
 }
 
-function OptMouseSetSensitivity(%value)
-{
-   $pref::Input::LinkMouseSensitivity = %value;
-}
-
 /*
 function OptAudioHardwareToggle::onClick(%this)
 {
