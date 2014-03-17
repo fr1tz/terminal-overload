@@ -40,6 +40,7 @@ class GFXGLPrimitiveBuffer;
 class GFXGLTextureTarget;
 class GFXGLCubemap;
 class GFXGLStateCache;
+class GFXGLVertexDecl;
 
 class GFXGLDevice : public GFXDevice
 {
@@ -170,13 +171,9 @@ protected:
    // NOTE: The GL device doesn't need a vertex declaration at
    // this time, but we need to return something to keep the system
    // from retrying to allocate one on every call.
-   virtual GFXVertexDecl* allocVertexDecl( const GFXVertexFormat *vertexFormat ) 
-   {
-      static GFXVertexDecl decl;
-      return &decl; 
-   }
+   virtual GFXVertexDecl* allocVertexDecl( const GFXVertexFormat *vertexFormat );
 
-   virtual void setVertexDecl( const GFXVertexDecl *decl ) { }
+   virtual void setVertexDecl( const GFXVertexDecl *decl );
 
    virtual void setVertexStream( U32 stream, GFXVertexBuffer *buffer, U32 frequency );
 
@@ -194,6 +191,7 @@ private:
    U32 mAdapterIndex;
    static const U32 MAX_STREAMS = 4; // TODO OPENGL revise
    StrongRefPtr<GFXGLVertexBuffer> mCurrentVB[MAX_STREAMS];
+   U32 mCurrentVB_Divisor[MAX_STREAMS];
    bool mNeedUpdateVertexAttrib;
    StrongRefPtr<GFXGLPrimitiveBuffer> mCurrentPB;
    U32 mDrawInstancesCount;

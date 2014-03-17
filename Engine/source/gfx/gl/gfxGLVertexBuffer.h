@@ -51,28 +51,12 @@ public:
    // GFXResource interface
    virtual void zombify();
    virtual void resurrect();
-   GLuint mDivisor;
-   U32 getVertexAttribActiveMask() const { return mVertexAttribActiveMask; }
 
 private:
    friend class GFXGLDevice;
 	/// GL buffer handle
 	GLuint mBuffer;
    U8* mZombieCache;
-
-   struct glVertexDecl
-   {
-      GLint attrIndex;
-      GLint elementCount; // 1 - 4
-      GLenum type; // GL_FLOAT...
-      GLboolean normalized;
-      GLsizei stride;
-      GLvoid *pointerFirst;
-   };
-
-   U32 mVertexAttribActiveMask;
-   Vector<glVertexDecl> glVerticesFormat;  
-   void _initVerticesFormat();
 
    //FrameAllocator
    U32 mFrameAllocatorMark;
