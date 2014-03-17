@@ -486,7 +486,6 @@ inline void GFXGLDevice::postDrawPrimitive(U32 primitiveCount)
 {
    mDeviceStatistics.mDrawCalls++;
    mDeviceStatistics.mPolyCount += primitiveCount;
-   mDrawInstancesCount = 0;
 }
 
 void GFXGLDevice::drawPrimitive( GFXPrimitiveType primType, U32 vertexStart, U32 primitiveCount ) 
