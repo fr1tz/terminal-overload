@@ -100,7 +100,17 @@ void GFXGLVertexBuffer::unlock()
 
 void GFXGLVertexBuffer::prepare()
 {
-   
+   AssertFatal(0, "GFXGLVertexBuffer::prepare - use GFXGLVertexBuffer::prepare(U32 stream, U32 divisor)");
+}
+
+void GFXGLVertexBuffer::prepare(U32 stream, U32 divisor)
+{
+   if( gglHasExtension(ARB_vertex_attrib_binding) )
+   {      
+      glBindVertexBuffer( stream, mBuffer, 0, mVertexSize );
+      glVertexBindingDivisor( stream, divisor );
+      return;
+   }
 }
 
 void GFXGLVertexBuffer::finish()

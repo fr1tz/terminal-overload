@@ -10,7 +10,8 @@ public:
    GFXGLVertexDecl() : mFormat(NULL), mVertexAttribActiveMask(0) {}
    void init(const GFXVertexFormat *format);
 
-   void prepare(U32 stream, GLint mBuffer, GLint mDivisor) const;
+   void prepareVertexFormat() const;
+   void prepareBuffer_old(U32 stream, GLint mBuffer, GLint mDivisor) const;
    void updateActiveVertexAttrib(U32 lastActiveMask) const;
 
    struct glVertexAttribData
@@ -27,7 +28,6 @@ public:
 protected:
    friend class GFXGLDevice;
    const GFXVertexFormat *mFormat;
-   GLuint mVAO;
    GLuint mVertexSize[4];
    U32 mVertexAttribActiveMask;
    Vector<glVertexAttribData> glVerticesFormat;

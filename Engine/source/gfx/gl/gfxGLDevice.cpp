@@ -352,7 +352,7 @@ void GFXGLDevice::setVertexStream( U32 stream, GFXVertexBuffer *buffer, U32 freq
             mCurrentVB_Divisor[stream] = 1; // is istances data
          }
 
-         mCurrentVB[stream]->prepare();
+         mCurrentVB[stream]->prepare(stream, mCurrentVB_Divisor[stream]);
       }
 
       mNeedUpdateVertexAttrib = true;
@@ -453,8 +453,8 @@ inline GLsizei GFXGLDevice::primCountToIndexCount(GFXPrimitiveType primType, U32
 GFXVertexDecl* GFXGLDevice::allocVertexDecl( const GFXVertexFormat *vertexFormat ) 
 {
    typedef Map<void*, GFXGLVertexDecl> GFXGLVertexDeclMap;
-   static GFXGLVertexDeclMap declMap;
-   GFXGLVertexDeclMap::Iterator itr = declMap.find( (void*)vertexFormat->getDescription().c_str() );
+   static GFXGLVertexDeclMap declMap;   
+   GFXGLVertexDeclMap::Iterator itr = declMap.find( (void*)vertexFormat->getDescription().c_str() ); // description string are interned, safe to use c_str()
    if(itr != declMap.end())
       return &itr->value;
 
@@ -465,7 +465,7 @@ GFXVertexDecl* GFXGLDevice::allocVertexDecl( const GFXVertexFormat *vertexFormat
 
 void GFXGLDevice::setVertexDecl( const GFXVertexDecl *decl )
 {
-   
+   static_cast<const GFXGLVertexDecl*>(decl)->prepareVertexFormat();
 }
 
 inline void GFXGLDevice::preDrawPrimitive()
@@ -478,21 +478,24 @@ inline void GFXGLDevice::preDrawPrimitive()
    if(mCurrentShaderConstBuffer)
       setShaderConstBufferInternal(mCurrentShaderConstBuffer);
 
-   if(mNeedUpdateVertexAttrib)
+   if( !gglHasExtension(ARB_vertex_attrib_binding) )
    {
-      AssertFatal(mCurrVertexDecl, "");
-      const GFXGLVertexDecl* decl = static_cast<const GFXGLVertexDecl*>(mCurrVertexDecl);
-      
-      for(int i = 0; i < getVertexStreamSupported(); ++i)
+      if( mNeedUpdateVertexAttrib )
       {
-         if(mCurrentVB[i])
-            decl->prepare( i, mCurrentVB[i]->mBuffer, mCurrentVB_Divisor[i] );
+         AssertFatal(mCurrVertexDecl, "");
+         const GFXGLVertexDecl* decl = static_cast<const GFXGLVertexDecl*>(mCurrVertexDecl);
+      
+         for(int i = 0; i < getVertexStreamSupported(); ++i)
+         {
+            if(mCurrentVB[i])
+               decl->prepareBuffer_old( i, mCurrentVB[i]->mBuffer, mCurrentVB_Divisor[i] );
+         }
+
+         decl->updateActiveVertexAttrib( GFXGL->getOpenglCache()->getCacheVertexAttribActive() );         
       }
-
-      decl->updateActiveVertexAttrib( GFXGL->getOpenglCache()->getCacheVertexAttribActive() );
-
-      mNeedUpdateVertexAttrib = false;
    }
+
+   mNeedUpdateVertexAttrib = false;
 }
 
 inline void GFXGLDevice::postDrawPrimitive(U32 primitiveCount)

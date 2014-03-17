@@ -12,27 +12,32 @@ void GFXGLVertexDecl::init(const GFXVertexFormat *format)
       _initVerticesFormat(i);   
 }
 
-void GFXGLVertexDecl::prepare(U32 stream, GLint mBuffer, GLint mDivisor) const
+void GFXGLVertexDecl::prepareVertexFormat() const
 {
-   PROFILE_SCOPE(GFXGLVertexDecl_prepare);
-
+   AssertFatal(mFormat, "GFXGLVertexDecl - Not inited");
    if( gglHasExtension(ARB_vertex_attrib_binding) )
    {
       for ( U32 i=0; i < glVerticesFormat.size(); i++ )
       {
-         // glEnableVertexAttribArray are called and cache in GFXGLDevice::preDrawPrimitive
          const glVertexAttribData &glElement = glVerticesFormat[i];
-         if(glElement.stream != stream)
-            continue;
       
          glVertexAttribFormat( glElement.attrIndex, glElement.elementCount, glElement.type, glElement.normalized, (U32)glElement.pointerFirst );
          glVertexAttribBinding( glElement.attrIndex, glElement.stream );
       }
-      
-      glBindVertexBuffer( stream, mBuffer, 0, mVertexSize[stream] );
-      glVertexBindingDivisor( stream, mDivisor );
+
+      updateActiveVertexAttrib( GFXGL->getOpenglCache()->getCacheVertexAttribActive() );
+
       return;
    }
+}
+
+void GFXGLVertexDecl::prepareBuffer_old(U32 stream, GLint mBuffer, GLint mDivisor) const
+{
+   PROFILE_SCOPE(GFXGLVertexDecl_prepare);
+   AssertFatal(mFormat, "GFXGLVertexDecl - Not inited");
+
+   if( gglHasExtension(ARB_vertex_attrib_binding) )
+      return;   
 
 	// Bind the buffer...
    glBindBuffer(GL_ARRAY_BUFFER, mBuffer);
@@ -61,9 +66,12 @@ void GFXGLVertexDecl::prepare(U32 stream, GLint mBuffer, GLint mDivisor) const
 
 void GFXGLVertexDecl::updateActiveVertexAttrib(U32 lastActiveMask) const
 {
-   AssertFatal(mVertexAttribActiveMask, "GFXGLDevice::preDrawPrimitive - No vertex attribute are active");
+   AssertFatal(mVertexAttribActiveMask, "GFXGLVertexDecl::updateActiveVertexAttrib - No vertex attribute are active");
 
    U32 lastActiveVerxtexAttrib = GFXGL->getOpenglCache()->getCacheVertexAttribActive();
+   if(mVertexAttribActiveMask == lastActiveVerxtexAttrib)
+      return;
+
    U32 forActiveMask = mVertexAttribActiveMask & ~lastActiveVerxtexAttrib;
    U32 forDeactiveMask = ~mVertexAttribActiveMask & lastActiveVerxtexAttrib;
    for(int i = 0; i < Torque::GL_VertexAttrib_COUNT; ++i)
