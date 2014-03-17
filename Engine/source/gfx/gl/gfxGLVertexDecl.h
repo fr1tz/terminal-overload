@@ -8,19 +8,10 @@ class GFXGLVertexDecl : public GFXVertexDecl
 {
 public:
    GFXGLVertexDecl() : mFormat(NULL), mVertexAttribActiveMask(0) {}
-   void set(const GFXVertexFormat *format)
-   {
-      mFormat = format;
+   void init(const GFXVertexFormat *format);
 
-      if(!glVerticesFormat.size())
-      {
-         for(int i = 0; i < 4; ++i)
-         _initVerticesFormat(i);
-      }
-   }
-
-   void prepare_old(U32 stream, GLint mBuffer, GLint mDivisor) const;
-   void updateActiveVertexAttrib_old(U32 lastActiveMask) const;
+   void prepare(U32 stream, GLint mBuffer, GLint mDivisor) const;
+   void updateActiveVertexAttrib(U32 lastActiveMask) const;
 
    struct glVertexAttribData
    {
@@ -36,10 +27,13 @@ public:
 protected:
    friend class GFXGLDevice;
    const GFXVertexFormat *mFormat;
+   GLuint mVAO;
+   GLuint mVertexSize[4];
    U32 mVertexAttribActiveMask;
    Vector<glVertexAttribData> glVerticesFormat;
 
    void _initVerticesFormat(U32 stream);
+   void _initVerticesFormat2();
 };
 
 #endif //GFX_GL_VERTEX_DECL

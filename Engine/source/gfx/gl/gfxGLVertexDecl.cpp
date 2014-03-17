@@ -3,9 +3,36 @@
 #include "gfx/gl/gfxGLVertexAttribLocation.h"
 #include "gfx/gl/gfxGLVertexDecl.h"
 
-void GFXGLVertexDecl::prepare_old(U32 stream, GLint mBuffer, GLint mDivisor) const
+void GFXGLVertexDecl::init(const GFXVertexFormat *format)
+{
+   AssertFatal(!mFormat, "");
+   mFormat = format;
+  
+   for(int i = 0; i < GFXGLDevice::MAX_VERTEX_STREAMS; ++i)
+      _initVerticesFormat(i);   
+}
+
+void GFXGLVertexDecl::prepare(U32 stream, GLint mBuffer, GLint mDivisor) const
 {
    PROFILE_SCOPE(GFXGLVertexDecl_prepare);
+
+   if( gglHasExtension(ARB_vertex_attrib_binding) )
+   {
+      for ( U32 i=0; i < glVerticesFormat.size(); i++ )
+      {
+         // glEnableVertexAttribArray are called and cache in GFXGLDevice::preDrawPrimitive
+         const glVertexAttribData &glElement = glVerticesFormat[i];
+         if(glElement.stream != stream)
+            continue;
+      
+         glVertexAttribFormat( glElement.attrIndex, glElement.elementCount, glElement.type, glElement.normalized, (U32)glElement.pointerFirst );
+         glVertexAttribBinding( glElement.attrIndex, glElement.stream );
+      }
+      
+      glBindVertexBuffer( stream, mBuffer, 0, mVertexSize[stream] );
+      glVertexBindingDivisor( stream, mDivisor );
+      return;
+   }
 
 	// Bind the buffer...
    glBindBuffer(GL_ARRAY_BUFFER, mBuffer);
@@ -32,7 +59,7 @@ void GFXGLVertexDecl::prepare_old(U32 stream, GLint mBuffer, GLint mDivisor) con
    }
 }
 
-void GFXGLVertexDecl::updateActiveVertexAttrib_old(U32 lastActiveMask) const
+void GFXGLVertexDecl::updateActiveVertexAttrib(U32 lastActiveMask) const
 {
    AssertFatal(mVertexAttribActiveMask, "GFXGLDevice::preDrawPrimitive - No vertex attribute are active");
 
@@ -50,10 +77,18 @@ void GFXGLVertexDecl::updateActiveVertexAttrib_old(U32 lastActiveMask) const
    GFXGL->getOpenglCache()->setCacheVertexAttribActive(mVertexAttribActiveMask);
 }
 
+void GFXGLVertexDecl::_initVerticesFormat2()
+{
+   for( U32 i=0; i < GFXGLDevice::MAX_VERTEX_STREAMS; ++i )
+   {
+      _initVerticesFormat(i);
+   }
+}
+
 void GFXGLVertexDecl::_initVerticesFormat(U32 stream)
 {   
    U8* buffer = (U8*)0;
-   U32 mVertexSize = 0;
+   U32 vertexSize = 0;
 
    for ( U32 i=0; i < mFormat->getElementCount(); i++ )
    {
@@ -62,7 +97,7 @@ void GFXGLVertexDecl::_initVerticesFormat(U32 stream)
       if(element.getStreamIndex() != stream)
          continue;
 
-      mVertexSize += element.getSizeInBytes();
+      vertexSize += element.getSizeInBytes();
    }
 
    // Loop thru the vertex format elements adding the array state...
@@ -84,7 +119,7 @@ void GFXGLVertexDecl::_initVerticesFormat(U32 stream)
          glElement.elementCount = element.getSizeInBytes() / 4;
          glElement.normalized = false;
          glElement.type = GL_FLOAT;
-         glElement.stride = mVertexSize;
+         glElement.stride = vertexSize;
          glElement.pointerFirst = buffer;
 
          buffer += element.getSizeInBytes();
@@ -95,7 +130,7 @@ void GFXGLVertexDecl::_initVerticesFormat(U32 stream)
          glElement.elementCount = 3;
          glElement.normalized = false;
          glElement.type = GL_FLOAT;
-         glElement.stride = mVertexSize;
+         glElement.stride = vertexSize;
          glElement.pointerFirst = buffer;
 
          buffer += element.getSizeInBytes();
@@ -106,7 +141,7 @@ void GFXGLVertexDecl::_initVerticesFormat(U32 stream)
          glElement.elementCount = 3;
          glElement.normalized = false;
          glElement.type = GL_FLOAT;
-         glElement.stride = mVertexSize;
+         glElement.stride = vertexSize;
          glElement.pointerFirst = buffer;
 
          buffer += element.getSizeInBytes();
@@ -114,10 +149,10 @@ void GFXGLVertexDecl::_initVerticesFormat(U32 stream)
       else if ( element.isSemantic( GFXSemantic::TANGENTW ) )
       {
          glElement.attrIndex = Torque::GL_VertexAttrib_TangentW;
-         glElement.elementCount = 3;
+         glElement.elementCount = element.getSizeInBytes()/4;
          glElement.normalized = false;
          glElement.type = GL_FLOAT;
-         glElement.stride = mVertexSize;
+         glElement.stride = vertexSize;
          glElement.pointerFirst = buffer;
 
          buffer += element.getSizeInBytes();
@@ -128,7 +163,7 @@ void GFXGLVertexDecl::_initVerticesFormat(U32 stream)
          glElement.elementCount = 3;
          glElement.normalized = false;
          glElement.type = GL_FLOAT;
-         glElement.stride = mVertexSize;
+         glElement.stride = vertexSize;
          glElement.pointerFirst = buffer;
 
          buffer += element.getSizeInBytes();
@@ -139,7 +174,7 @@ void GFXGLVertexDecl::_initVerticesFormat(U32 stream)
          glElement.elementCount = element.getSizeInBytes();
          glElement.normalized = true;
          glElement.type = GL_UNSIGNED_BYTE;
-         glElement.stride = mVertexSize;
+         glElement.stride = vertexSize;
          glElement.pointerFirst = buffer;
 
          buffer += element.getSizeInBytes();
@@ -153,7 +188,7 @@ void GFXGLVertexDecl::_initVerticesFormat(U32 stream)
             
          glElement.normalized = false;
          glElement.type = GL_FLOAT;
-         glElement.stride = mVertexSize;
+         glElement.stride = vertexSize;
          glElement.pointerFirst = buffer;
 
          buffer += element.getSizeInBytes();
@@ -164,5 +199,6 @@ void GFXGLVertexDecl::_initVerticesFormat(U32 stream)
       mVertexAttribActiveMask |= BIT(glElement.attrIndex);
    }
 
-   AssertFatal(mVertexSize == (U8)buffer, "");
+   mVertexSize[stream] = vertexSize;
+   AssertFatal(vertexSize == (U8)buffer, "");
 }

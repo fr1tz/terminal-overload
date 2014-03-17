@@ -159,7 +159,7 @@ GFXGLDevice::GFXGLDevice(U32 adapterIndex) :
    mCurrentShader( NULL ),
    mNeedUpdateVertexAttrib(false)
 {
-   for(int i = 0; i < MAX_STREAMS; ++i)
+   for(int i = 0; i < MAX_VERTEX_STREAMS; ++i)
    {
       mCurrentVB[i] = NULL;
       mCurrentVB_Divisor[i] = 0;
@@ -183,7 +183,7 @@ GFXGLDevice::GFXGLDevice(U32 adapterIndex) :
 
    mTextureCoordStartTop = false;
    mTexelPixelOffset = false;
-   mVertexStreamSupported = MAX_STREAMS;
+   mVertexStreamSupported = MAX_VERTEX_STREAMS;
 
    for(int i = 0; i < GS_COUNT; ++i)
       mModelViewProjSC[i] = NULL;
@@ -195,7 +195,7 @@ GFXGLDevice::~GFXGLDevice()
 {
    mCurrentStateBlock = NULL;
 
-   for(int i = 0; i < MAX_STREAMS; ++i)      
+   for(int i = 0; i < MAX_VERTEX_STREAMS; ++i)      
       mCurrentVB[i] = NULL;
    mCurrentPB = NULL;
    
@@ -241,7 +241,7 @@ void GFXGLDevice::zombify()
 {
    mTextureManager->zombify();
 
-   for(int i = 0; i < MAX_STREAMS; ++i)   
+   for(int i = 0; i < MAX_VERTEX_STREAMS; ++i)   
       if(mCurrentVB[i])
          mCurrentVB[i]->finish();
    if(mCurrentPB)
@@ -265,7 +265,7 @@ void GFXGLDevice::resurrect()
       walk->resurrect();
       walk = walk->getNextResource();
    }
-   for(int i = 0; i < MAX_STREAMS; ++i)   
+   for(int i = 0; i < MAX_VERTEX_STREAMS; ++i)   
       if(mCurrentVB[i])
          mCurrentVB[i]->prepare();
    if(mCurrentPB)
@@ -459,7 +459,7 @@ GFXVertexDecl* GFXGLDevice::allocVertexDecl( const GFXVertexFormat *vertexFormat
       return &itr->value;
 
    GFXGLVertexDecl &decl = declMap[(void*)vertexFormat->getDescription().c_str()];   
-   decl.set(vertexFormat);
+   decl.init(vertexFormat);
    return &decl;
 }
 
@@ -486,12 +486,10 @@ inline void GFXGLDevice::preDrawPrimitive()
       for(int i = 0; i < getVertexStreamSupported(); ++i)
       {
          if(mCurrentVB[i])
-         {
-            decl->prepare_old( i, mCurrentVB[i]->mBuffer, mCurrentVB_Divisor[i] );
-         }
+            decl->prepare( i, mCurrentVB[i]->mBuffer, mCurrentVB_Divisor[i] );
       }
 
-      decl->updateActiveVertexAttrib_old( GFXGL->getOpenglCache()->getCacheVertexAttribActive() );
+      decl->updateActiveVertexAttrib( GFXGL->getOpenglCache()->getCacheVertexAttribActive() );
 
       mNeedUpdateVertexAttrib = false;
    }

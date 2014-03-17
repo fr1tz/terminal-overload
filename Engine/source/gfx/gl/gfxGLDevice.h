@@ -136,6 +136,8 @@ public:
    bool supportsAnisotropic() const { return mSupportsAnisotropic; }
 
    GFXGLStateCache* getOpenglCache() { return mOpenglStateCache; }
+
+   static const U32 MAX_VERTEX_STREAMS = 4; // TODO OPENGL revise
       
 protected:   
    /// Called by GFXDevice to create a device specific stateblock
@@ -189,9 +191,9 @@ private:
    static GFXAdapter::CreateDeviceInstanceDelegate mCreateDeviceInstance; 
 
    U32 mAdapterIndex;
-   static const U32 MAX_STREAMS = 4; // TODO OPENGL revise
-   StrongRefPtr<GFXGLVertexBuffer> mCurrentVB[MAX_STREAMS];
-   U32 mCurrentVB_Divisor[MAX_STREAMS];
+   
+   StrongRefPtr<GFXGLVertexBuffer> mCurrentVB[MAX_VERTEX_STREAMS];
+   U32 mCurrentVB_Divisor[MAX_VERTEX_STREAMS];
    bool mNeedUpdateVertexAttrib;
    StrongRefPtr<GFXGLPrimitiveBuffer> mCurrentPB;
    U32 mDrawInstancesCount;
