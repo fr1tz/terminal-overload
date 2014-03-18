@@ -131,18 +131,50 @@ void AppVertConnectorGLSL::reset()
 
 void AppVertConnectorGLSL::print( Stream &stream, bool isVertexShader )
 {
-   // print out elements
+   if(!isVertexShader)
+      return;
+
+   U8 output[256];
+
+   // print struct
+   dSprintf( (char*)output, sizeof(output), "struct VertexData\r\n" );
+   stream.write( dStrlen((char*)output), output );
+   dSprintf( (char*)output, sizeof(output), "{\r\n" );
+   stream.write( dStrlen((char*)output), output );
+
    for( U32 i=0; i<mElementList.size(); i++ )
    {
       Var *var = mElementList[i];
-      U8 output[256];
+      
+      if( var->arraySize == 1)
+      {         
+         dSprintf( (char*)output, sizeof(output), "   %s %s;\r\n", var->type, (char*)var->name );
+         stream.write( dStrlen((char*)output), output );
+      }
+      else
+      {
+         dSprintf( (char*)output, sizeof(output), "   %s %s[%d];\r\n", var->type, (char*)var->name, var->arraySize );
+         stream.write( dStrlen((char*)output), output );
+      }
+   }
+
+   dSprintf( (char*)output, sizeof(output), "} IN;\r\n\r\n" );
+   stream.write( dStrlen((char*)output), output );   
+
+   // print in elements
+   for( U32 i=0; i<mElementList.size(); i++ )
+   {
+      Var *var = mElementList[i];
       
       for(int j = 0; j < var->arraySize; ++j)
       {        
          const char *name = j == 0 ? var->connectName : avar("vTexCoord%d", var->constNum + j) ;
          dSprintf( (char*)output, sizeof(output), "in %s %s;\r\n", var->type, name );
-         stream.write( dStrlen((char*)output), output );
+         stream.write( dStrlen((char*)output), output );         
       }
+
+      dSprintf( (char*)output, sizeof(output), "#define IN_%s IN.%s\r\n", var->name, var->name ); // TODO REMOVE
+      stream.write( dStrlen((char*)output), output );
    }
    const char* newLine ="\r\n";
    stream.write( dStrlen((char*)newLine), newLine );
@@ -311,18 +343,15 @@ void AppVertConnectorGLSL::printOnMain( Stream &stream, bool isVerterShader )
 
       if(var->arraySize <= 1)
       {
-         dSprintf((char*)output, sizeof(output), "   %s IN_%s = %s;\r\n", var->type, var->name, var->connectName);
+         dSprintf((char*)output, sizeof(output), "   IN.%s = %s;\r\n", var->name, var->connectName);
          stream.write( dStrlen((char*)output), output );
       }
       else
       {
-         dSprintf((char*)output, sizeof(output), "   %s IN_%s[%d];\r\n", var->type, var->name, var->arraySize);
-         stream.write( dStrlen((char*)output), output );
-
          for(int j = 0; j < var->arraySize; ++j)
          {
             const char *name = j == 0 ? var->connectName : avar("vTexCoord%d", var->constNum + j) ;
-            dSprintf((char*)output, sizeof(output), "   IN_%s[%d] = %s;\r\n", var->name, j, name );
+            dSprintf((char*)output, sizeof(output), "   IN.%s[%d] = %s;\r\n", var->name, j, name );
             stream.write( dStrlen((char*)output), output );
          }
       }
