@@ -162,7 +162,7 @@ void RenderMeshMgr::render(SceneRenderState * state)
             {
                lastLM = NULL;
                break;
-            }            
+            }
 
             matrixSet.setWorld(*passRI->objectToWorld);
             matrixSet.setView(*passRI->worldToCamera);

@@ -117,7 +117,7 @@ bool CustomMaterial::onAdd()
    {
       logError("Failed to find ShaderData %s", mShaderDataName.c_str());
       return false;
-   }   
+   }
    
    const char* samplerDecl = "sampler";
    S32 i = 0;

@@ -160,7 +160,7 @@ void GFXGLStateBlock::activate(const GFXGLStateBlock* oldState)
    if( gglHasExtension(ARB_sampler_objects) )
    {
       for (U32 i = 0; i < getMin(getOwningDevice()->getNumSamplers(), (U32) TEXTURE_STAGE_COUNT); i++)
-      {         
+      {
          if(!oldState || oldState->mSamplerObjects[i] != mSamplerObjects[i])
 		      glBindSampler(i, mSamplerObjects[i] );
       }

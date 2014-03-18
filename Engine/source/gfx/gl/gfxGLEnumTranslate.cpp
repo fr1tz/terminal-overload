@@ -271,5 +271,4 @@ void GFXGLEnumTranslate::init()
    GFXGLFillMode[GFXFillPoint] = GL_POINT;
    GFXGLFillMode[GFXFillWireframe] = GL_LINE;
    GFXGLFillMode[GFXFillSolid] = GL_FILL;
-
 }

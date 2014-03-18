@@ -317,7 +317,7 @@ bool TerrainCellMaterial::_createPass( Vector<MaterialInfo*> *materials,
    // faster load time and less hiccups during gameplay.
    U32 matCount = getMin( 3, materials->size() );
 
-   Vector<GFXTexHandle> normalMaps;   
+   Vector<GFXTexHandle> normalMaps;
 
    // See if we're currently running under the
    // basic lighting manager.

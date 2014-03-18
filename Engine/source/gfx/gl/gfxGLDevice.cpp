@@ -97,7 +97,7 @@ void GFXGLDevice::initGLState()
    // We don't currently need to sync device state with a known good place because we are
    // going to set everything in GFXGLStateBlock, but if we change our GFXGLStateBlock strategy, this may
    // need to happen.
-
+   
    // Deal with the card profiler here when we know we have a valid context.
    mCardProfiler = new GFXGLCardProfiler();
    mCardProfiler->init(); 

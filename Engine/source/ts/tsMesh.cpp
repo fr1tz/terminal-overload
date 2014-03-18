@@ -1490,7 +1490,7 @@ void TSSkinMesh::render(   TSMaterialList *materials,
 
    if( mNumVerts == 0 )
       return;
-   
+
    // Initialize the vertex data if it needs it
    if(!mVertexData.isReady() )
       _convertToAlignedMeshData(mVertexData, batchData.initialVerts, batchData.initialNorms);

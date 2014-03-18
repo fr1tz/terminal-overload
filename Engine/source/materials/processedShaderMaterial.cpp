@@ -99,7 +99,7 @@ void ShaderConstHandles::init( GFXShader *shader, CustomMaterial* mat /*=NULL*/ 
    if(mat)
    {
       for (S32 i = 0; i < Material::MAX_TEX_PER_PASS; ++i)
-         mTexHandlesSC[i] = shader->getShaderConstHandle( mat->mSamplerNames[i] );
+         mTexHandlesSC[i] = shader->getShaderConstHandle(mat->mSamplerNames[i]);
    }
 }
 
@@ -765,7 +765,7 @@ void ProcessedShaderMaterial::setTextureStages( SceneRenderState *state, const S
    {
       U32 currTexFlag = rpd->mTexType[i];
       if (!LIGHTMGR || !LIGHTMGR->setTextureStage(sgData, currTexFlag, i, shaderConsts, handles))
-      {     
+      {
          switch( currTexFlag )
          {
          // If the flag is unset then assume its just

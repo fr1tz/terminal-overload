@@ -195,7 +195,7 @@ public:
    /// Returns the vertex element by index.
    const GFXVertexElement& getElement( U32 index ) const { return mElements[index]; }
 
-   /// Returns the size in bytes of the format as described.   
+   /// Returns the size in bytes of the format as described.
    U32 getSizeInBytes() const;
    
    /// Returns the size in bytes of the format as described per stream.   

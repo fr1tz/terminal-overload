@@ -31,6 +31,7 @@
 #include "gfx/gfxStructs.h"
 #include "console/console.h"
 
+
 class GFXGLShaderConstHandle : public GFXShaderConstHandle
 {
    friend class GFXGLShader;
@@ -799,7 +800,7 @@ void GFXGLShader::setConstantsFromBuffer(GFXGLShaderConstBuffer* buffer)
             AssertFatal(0,"");
             break;
       }
-   }   
+   }
 }
 
 GFXShaderConstBufferRef GFXGLShader::allocConstBuffer()
