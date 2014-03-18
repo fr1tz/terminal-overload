@@ -43,7 +43,8 @@ singleton Material(xa_notc_core_shapes_packet_p1_mat3)
 singleton Material(xa_notc_core_shapes_packet_p1_mat0)
 {
    mapTo = "xa_notc_core_shapes_packet_p1_mat0";
-   diffuseColor[0] = "0.996078 0.94902 0.00784314 1";
+   diffuseColor[0] = "1 1 1 1";
+   diffuseColorPaletteSlot[0] = "0";
    doubleSided = "0";
    translucentBlendOp = "None";
    diffuseMap[0] = "content/xa/notc/core/textures/grid.128.8.png";
