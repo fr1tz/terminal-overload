@@ -39,18 +39,6 @@ datablock ShotgunProjectileData(WpnSMG1Projectile)
 
 function WpnSMG1Projectile::onCollision(%this,%obj,%col,%fade,%pos,%normal)
 {
-   if(!(%col.getType() & $TypeMasks::GameBaseObjectType))
-      return;
-
-   %effectiveRange = 25;
-   %dist = VectorLen(VectorSub(%pos, %obj.initialPosition));
-   %distFactor = 1;
-   if(%dist > %effectiveRange)
-      %distFactor = 1 - (%dist-%effectiveRange) / (%this.range-%effectiveRange);
-      
-   error(%dist SPC %distFactor);
-   %damage = %this.directDamage * %distFactor;
-
-   %col.damage(%obj,%pos,%this.directDamage,"BulletProjectile");
+   Parent::onCollision(%this,%obj,%col,%fade,%pos,%normal);
 }
 
