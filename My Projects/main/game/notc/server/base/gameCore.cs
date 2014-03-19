@@ -477,6 +477,8 @@ function GameCore::initGameVars(%game)
 function GameCore::prepareClient(%game, %client)
 {
    //echo (%game @"\c4 -> "@ %game.class @" -> GameCore::prepareClient");
+   
+   %game.queryClientSettings(%client, "prepareClient");
 }
 
 function GameCore::onClientEnterGame(%game, %client)
@@ -575,6 +577,17 @@ function GameCore::onClientLeaveGame(%game, %client)
    // Cleanup the player
    if (isObject(%client.player))
       %client.player.delete();
+}
+
+function GameCore::queryClientSettings(%game, %client, %settings)
+{
+   //echo (%game @"\c4 -> "@ %game.class @" -> GameCore::queryClientSettings");
+   
+}
+
+function GameCore::processClientSettingsReply(%game, %client, %setting, %value)
+{
+   //echo (%game @"\c4 -> "@ %game.class @" -> GameCore::processClientSettingsReply");
 }
 
 // Added this stage to creating a player so game types can override it easily.

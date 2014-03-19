@@ -13,6 +13,22 @@ function serverCmdJoinTeam(%client, %nr)
    Game.joinTeam(%client, %nr);
 }
 
+// ----------------------------------------------------------------------------
+// Settings
+// ----------------------------------------------------------------------------
+
+function serverCmdGameSettingsChanged(%client, %settings)
+{
+   //echo("serverCmdGameSettingsChanged(): client:" SPC %client SPC "settings:" SPC %settings);
+   Game.queryClientSettings(%client, %settings);
+}
+
+function serverCmdXaNotcSettings1_Reply(%client, %setting, %value)
+{
+   //echo("serverCmdXaNotcSettings1_Reply(): client:" SPC %client SPC "setting:" SPC %setting SPC "value:" SPC %value);
+   Game.processClientSettingsReply(%client, %setting, %value);
+}
+
 //-----------------------------------------------------------------------------
 // Misc server commands avialable to clients
 //-----------------------------------------------------------------------------

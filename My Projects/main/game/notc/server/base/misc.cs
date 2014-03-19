@@ -13,6 +13,29 @@ datablock PrecipitationData(Precipitation_Snow)
    splashMS = 500;
 };
 
+function isValidPlayerColor(%colori)
+{
+   %numWords = getWordCount(%colori);
+   
+   if(%numWords != 3)
+      return false;
+      
+   %total = 0;
+   for(%i = 0; %i < %numWords; %i++)
+   {
+      %c = getWord(%colori, %i);
+      if(%c < 0 || %c > 255)
+         return false;
+         
+      %total += %c;
+   }
+   
+   if(%total < 255)
+      return false;
+   
+   return true;
+}
+
 function createExplosion(%data, %pos, %norm)
 {
 	%visibleDistance = 1000; // getVisibleDistance(); FIXME

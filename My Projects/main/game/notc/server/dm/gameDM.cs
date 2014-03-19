@@ -123,6 +123,47 @@ function DeathMatchGame::onClientLeaveGame(%game, %client)
 
 }
 
+function DeathMatchGame::queryClientSettings(%game, %client, %settings)
+{
+   //echo (%game @"\c4 -> "@ %game.class @" -> DeathMatchGame::queryClientSettings");
+
+   Parent::queryClientSettings(%game, %client, %settings);
+   
+   commandToClient(%client, 'XaNotcSettings1_Query', "PlayerColor0");
+   commandToClient(%client, 'XaNotcSettings1_Query', "PlayerColor1");
+}
+
+function DeathMatchGame::processClientSettingsReply(%game, %client, %setting, %value)
+{
+   //echo (%game @"\c4 -> "@ %game.class @" -> DeathMatchGame::processClientSettingsReply");
+   
+   %status = "Ignored";
+   
+   if(%setting $= "PlayerColor0")
+   {
+      if(isValidPlayerColor(%value))
+      {
+         %client.paletteColors[0] = %value SPC "255";
+         %status = "Ok";
+      }
+      else
+         %status = "Invalid";
+      
+   }
+   else if(%setting $= "PlayerColor1")
+   {
+      if(isValidPlayerColor(%value))
+      {
+         %client.paletteColors[1] = %value SPC "255";
+         %status = "Ok";
+      }
+      else
+         %status = "Invalid";
+   }
+
+   commandToClient(%client, 'XaNotcSettings1_Confirmation', %setting, %status);
+}
+
 function DeathMatchGame::loadOut(%game, %player)
 {
    //echo (%game @"\c4 -> "@ %game.class @" -> DeathMatchGame::loadOut");
