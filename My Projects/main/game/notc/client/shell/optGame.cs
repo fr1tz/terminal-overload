@@ -1,9 +1,15 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
-function addGameSettingsEditor(%ctrl)
+function gameSettingsChanged(%settings)
 {
-   //echo("addGameSettingsEditor():" SPC %ctrl);
+   //echo("gameSettingsChanged():" SPC %settings);
+   commandToServer('GameSettingsChanged', %settings);
+}
+
+function gameSettingsAddEditor(%ctrl)
+{
+   //echo("gameSettingsAddEditor():" SPC %ctrl);
    
    if(!isObject(%ctrl))
       return;
