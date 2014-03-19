@@ -16,7 +16,7 @@ datablock ShotgunProjectileData(WpnSMG1Projectile)
 
    //lightDesc = BulletProjectileLightDesc;
 
-   directDamage        = 15;
+   directDamage        = 20;
    radiusDamage        = 0;
    damageRadius        = 0.5;
    areaImpulse         = 0.5;
