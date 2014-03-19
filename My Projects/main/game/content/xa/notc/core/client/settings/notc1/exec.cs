@@ -11,5 +11,8 @@ exec("./misc.cs");
 exec("./muxer.gui");
 exec("./muxer.cs");
 
+if(isFile("notc/client/settings/notc1controls.cs"))
+   exec("notc/client/settings/notc1controls.cs");
+
 gameSettingsAddEditor(XaNotcSettings1_MuxerGui);
 
