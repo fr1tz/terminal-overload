@@ -11,6 +11,8 @@ datablock ShotgunProjectileData(WpnSMG1Projectile)
 	muzzleSpreadRadius = 0.0;
 	referenceSpreadRadius = 0.0;
 	referenceSpreadDistance = 50;
+ 
+   energyDrain = 5; // how much energy does firing this projectile drain?
 
    //lightDesc = BulletProjectileLightDesc;
 

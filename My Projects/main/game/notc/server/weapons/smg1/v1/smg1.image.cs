@@ -29,7 +29,7 @@ datablock ShapeBaseImageData(WpnSMG1Image)
    class = "WeaponImage";
 
    ammoSource = "Energy";
-   //minEnergy = 0;
+   minEnergy = 5;
 
    projectile = WpnSMG1Projectile;
 
