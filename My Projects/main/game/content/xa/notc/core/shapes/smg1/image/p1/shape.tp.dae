@@ -5,45 +5,13 @@
       <author>Blender User</author>
       <authoring_tool>Blender 2.67.0 r57141</authoring_tool>
     </contributor>
-    <created>2014-02-08T13:15:12</created>
-    <modified>2014-02-08T13:15:12</modified>
+    <created>2014-03-20T17:33:28</created>
+    <modified>2014-03-20T17:33:28</modified>
     <unit name="meter" meter="1"/>
     <up_axis>Z_UP</up_axis>
   </asset>
   <library_images/>
   <library_effects>
-    <effect id="xa_notc_core_shapes_smg1_image_p1_mat2-effect">
-      <profile_COMMON>
-        <technique sid="common">
-          <phong>
-            <emission>
-              <color sid="emission">0 0 0 1</color>
-            </emission>
-            <ambient>
-              <color sid="ambient">0 0 0 1</color>
-            </ambient>
-            <diffuse>
-              <color sid="diffuse">0.04169224 0.6073873 0.64 1</color>
-            </diffuse>
-            <specular>
-              <color sid="specular">0.5 0.5 0.5 1</color>
-            </specular>
-            <shininess>
-              <float sid="shininess">50</float>
-            </shininess>
-            <index_of_refraction>
-              <float sid="index_of_refraction">1</float>
-            </index_of_refraction>
-          </phong>
-        </technique>
-        <extra>
-          <technique profile="GOOGLEEARTH">
-            <double_sided>1</double_sided>
-          </technique>
-        </extra>
-      </profile_COMMON>
-      <extra><technique profile="MAX3D"><double_sided>1</double_sided></technique></extra>
-    </effect>
     <effect id="xa_notc_core_shapes_smg1_image_p1_mat1-effect">
       <profile_COMMON>
         <technique sid="common">
@@ -76,60 +44,48 @@
       </profile_COMMON>
       <extra><technique profile="MAX3D"><double_sided>1</double_sided></technique></extra>
     </effect>
+    <effect id="xa_notc_core_shapes_smg1_image_p1_mat2-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.04169224 0.6073873 0.64 1</color>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.5 0.5 0.5 1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">50</float>
+            </shininess>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+        <extra>
+          <technique profile="GOOGLEEARTH">
+            <double_sided>1</double_sided>
+          </technique>
+        </extra>
+      </profile_COMMON>
+      <extra><technique profile="MAX3D"><double_sided>1</double_sided></technique></extra>
+    </effect>
   </library_effects>
   <library_materials>
-    <material id="xa_notc_core_shapes_smg1_image_p1_mat2-material" name="xa_notc_core_shapes_smg1_image_p1_mat2">
-      <instance_effect url="#xa_notc_core_shapes_smg1_image_p1_mat2-effect"/>
-    </material>
     <material id="xa_notc_core_shapes_smg1_image_p1_mat1-material" name="xa_notc_core_shapes_smg1_image_p1_mat1">
       <instance_effect url="#xa_notc_core_shapes_smg1_image_p1_mat1-effect"/>
     </material>
+    <material id="xa_notc_core_shapes_smg1_image_p1_mat2-material" name="xa_notc_core_shapes_smg1_image_p1_mat2">
+      <instance_effect url="#xa_notc_core_shapes_smg1_image_p1_mat2-effect"/>
+    </material>
   </library_materials>
   <library_geometries>
-    <geometry id="Plane-mesh" name="Plane">
-      <mesh>
-        <source id="Plane-mesh-positions">
-          <float_array id="Plane-mesh-positions-array" count="12">0.009921431 -0.009921431 0 -0.009921431 -0.009921431 0 0.009921431 0.009921431 0 -0.009921431 0.009921431 0</float_array>
-          <technique_common>
-            <accessor source="#Plane-mesh-positions-array" count="4" stride="3">
-              <param name="X" type="float"/>
-              <param name="Y" type="float"/>
-              <param name="Z" type="float"/>
-            </accessor>
-          </technique_common>
-        </source>
-        <source id="Plane-mesh-normals">
-          <float_array id="Plane-mesh-normals-array" count="6">0 0 1 0 0 1</float_array>
-          <technique_common>
-            <accessor source="#Plane-mesh-normals-array" count="2" stride="3">
-              <param name="X" type="float"/>
-              <param name="Y" type="float"/>
-              <param name="Z" type="float"/>
-            </accessor>
-          </technique_common>
-        </source>
-        <source id="Plane-mesh-map-0">
-          <float_array id="Plane-mesh-map-0-array" count="12">1.0001e-4 9.998e-5 0.9999001 9.998e-5 0.9999001 0.9999001 9.998e-5 0.9999001 1.0001e-4 9.998e-5 0.9999001 0.9999001</float_array>
-          <technique_common>
-            <accessor source="#Plane-mesh-map-0-array" count="6" stride="2">
-              <param name="S" type="float"/>
-              <param name="T" type="float"/>
-            </accessor>
-          </technique_common>
-        </source>
-        <vertices id="Plane-mesh-vertices">
-          <input semantic="POSITION" source="#Plane-mesh-positions"/>
-        </vertices>
-        <polylist material="xa_notc_core_shapes_smg1_image_p1_mat2-material" count="2">
-          <input semantic="VERTEX" source="#Plane-mesh-vertices" offset="0"/>
-          <input semantic="NORMAL" source="#Plane-mesh-normals" offset="1"/>
-          <input semantic="TEXCOORD" source="#Plane-mesh-map-0" offset="2" set="0"/>
-          <vcount>3 3 </vcount>
-          <p>1 0 0 0 0 1 2 0 2 3 1 3 1 1 4 2 1 5</p>
-        </polylist>
-      </mesh>
-      <extra><technique profile="MAYA"><double_sided>1</double_sided></technique></extra>
-    </geometry>
     <geometry id="Cube_000-mesh" name="Cube.000">
       <mesh>
         <source id="Cube_000-mesh-positions">
@@ -262,175 +218,1324 @@
       </mesh>
       <extra><technique profile="MAYA"><double_sided>1</double_sided></technique></extra>
     </geometry>
+    <geometry id="Cube-mesh" name="Cube">
+      <mesh>
+        <source id="Cube-mesh-positions">
+          <float_array id="Cube-mesh-positions-array" count="24">-0.02692985 -0.08433818 -0.08433818 -0.02692985 0.2118812 0.02726197 0.02692985 0.2118812 0.02726197 0.02692985 -0.08433818 -0.08433818 -0.02692985 -0.08433818 0.08433818 -0.02692985 0.2128076 0.08433818 0.02692985 0.2128076 0.08433818 0.02692985 -0.08433818 0.08433818</float_array>
+          <technique_common>
+            <accessor source="#Cube-mesh-positions-array" count="8" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Cube-mesh-normals">
+          <float_array id="Cube-mesh-normals-array" count="36">-1 0 0 0 0.9998683 -0.01622885 1 0 0 0 -1 0 0 0.3525574 -0.9357902 0 0 1 -1 0 0 0 0.9998683 -0.01622885 1 0 0 0 -1 0 0 0.3525574 -0.9357902 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#Cube-mesh-normals-array" count="12" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Cube-mesh-map-0">
+          <float_array id="Cube-mesh-map-0-array" count="72">0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 1 1 0 0 1 0 1 1 0 0 1 0 1 1 1 0 1 1 0 1 1 0 1 1 0 1 1 0 1 1 0 1 0 1 0 0 1 1 0 1 0 0 1 1 0 1 0 0 1 1</float_array>
+          <technique_common>
+            <accessor source="#Cube-mesh-map-0-array" count="36" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Cube-mesh-vertices">
+          <input semantic="POSITION" source="#Cube-mesh-positions"/>
+        </vertices>
+        <polylist material="xa_notc_core_shapes_smg1_image_p1_mat1-material" count="12">
+          <input semantic="VERTEX" source="#Cube-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Cube-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Cube-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 3 3 3 3 3 3 3 3 3 3 </vcount>
+          <p>4 0 0 5 0 1 0 0 2 5 1 3 6 1 4 1 1 5 6 2 6 7 2 7 2 2 8 7 3 9 4 3 10 0 3 11 0 4 12 1 4 13 2 4 14 7 5 15 6 5 16 5 5 17 5 6 18 1 6 19 0 6 20 6 7 21 2 7 22 1 7 23 7 8 24 3 8 25 2 8 26 3 9 27 7 9 28 0 9 29 3 10 30 0 10 31 2 10 32 4 11 33 7 11 34 5 11 35</p>
+        </polylist>
+      </mesh>
+      <extra><technique profile="MAYA"><double_sided>1</double_sided></technique></extra>
+    </geometry>
+    <geometry id="Cube_001-mesh" name="Cube.001">
+      <mesh>
+        <source id="Cube_001-mesh-positions">
+          <float_array id="Cube_001-mesh-positions-array" count="36">-0.02692985 -0.08433818 -0.02170544 -0.02692985 0.111674 -0.02148783 0.02692985 0.111674 -0.02148783 0.02692985 -0.08433818 -0.02170544 -0.02692985 -0.08433818 0.08433818 -0.02692985 0.1114564 0.08433818 0.02692985 0.1114564 0.08433818 0.02692985 -0.08433818 0.08433818 -0.02692985 0.136114 0.01180422 0.02692985 0.136114 0.01180422 -0.02692985 0.1358965 0.08347213 0.02692985 0.1358965 0.08347213</float_array>
+          <technique_common>
+            <accessor source="#Cube_001-mesh-positions-array" count="12" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Cube_001-mesh-normals">
+          <float_array id="Cube_001-mesh-normals-array" count="60">-1 0 0 0 0.8061068 -0.5917701 1 0 0 0 -1 0 0 0.001110076 -0.9999994 0 0 1 0 0.9999954 0.003036022 0 0.03541189 0.9993728 1 0 0 -1 0 0 -1 0 0 0 0.8061068 -0.5917701 1 0 0 0 -1 0 0 0.001110076 -0.9999994 0 0 1 0 0.9999954 0.003036022 0 0.03541189 0.9993728 1 0 0 -1 0 0</float_array>
+          <technique_common>
+            <accessor source="#Cube_001-mesh-normals-array" count="20" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Cube_001-mesh-map-0">
+          <float_array id="Cube_001-mesh-map-0-array" count="120">0 0 8 0 8 1 0 0 1 0 0 1 0 0 8 0 8 1 0 0 1 0 1 1 0 0 8 0 0 1 0 0 8 0 8 1 0 0 1 0 0 1 0 0 1 0 1 1 0 0 1 0 1 1 0 0 1 0 1 1 0 1 0 0 8 1 1 0 1 1 0 1 0 1 0 0 8 1 0 1 0 0 1 1 8 0 8 1 0 1 0 1 0 0 8 1 1 0 1 1 0 1 0 1 0 0 1 1 0 1 0 0 1 1 0 1 0 0 1 1</float_array>
+          <technique_common>
+            <accessor source="#Cube_001-mesh-map-0-array" count="60" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Cube_001-mesh-vertices">
+          <input semantic="POSITION" source="#Cube_001-mesh-positions"/>
+        </vertices>
+        <polylist material="xa_notc_core_shapes_smg1_image_p1_mat1-material" count="20">
+          <input semantic="VERTEX" source="#Cube_001-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Cube_001-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Cube_001-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 </vcount>
+          <p>4 0 0 5 0 1 1 0 2 2 1 3 1 1 4 9 1 5 6 2 6 7 2 7 3 2 8 7 3 9 4 3 10 0 3 11 0 4 12 1 4 13 3 4 14 7 5 15 6 5 16 5 5 17 10 6 18 11 6 19 8 6 20 5 7 21 6 7 22 11 7 23 6 8 24 2 8 25 9 8 26 1 9 27 5 9 28 10 9 29 0 10 30 4 10 31 1 10 32 1 11 33 8 11 34 9 11 35 2 12 36 6 12 37 3 12 38 3 13 39 7 13 40 0 13 41 1 14 42 2 14 43 3 14 44 4 15 45 7 15 46 5 15 47 11 16 48 9 16 49 8 16 50 10 17 51 5 17 52 11 17 53 11 18 54 6 18 55 9 18 56 8 19 57 1 19 58 10 19 59</p>
+        </polylist>
+      </mesh>
+      <extra><technique profile="MAYA"><double_sided>1</double_sided></technique></extra>
+    </geometry>
+    <geometry id="Cube_003-mesh" name="Cube.003">
+      <mesh>
+        <source id="Cube_003-mesh-positions">
+          <float_array id="Cube_003-mesh-positions-array" count="24">-0.05217957 -0.225954 0 -0.05217957 -0.02571064 0 0 -0.02571064 -0.0488581 0 -0.225954 -0.0488581 0 -0.225954 0.0488581 0 -0.02571064 0.0488581 0.05217957 -0.02571064 0 0.05217957 -0.2259539 0</float_array>
+          <technique_common>
+            <accessor source="#Cube_003-mesh-positions-array" count="8" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Cube_003-mesh-normals">
+          <float_array id="Cube_003-mesh-normals-array" count="36">-0.6834922 0 0.7299578 -1.42787e-7 1 0 0.6834922 0 -0.7299578 5.71149e-7 -1 0 -0.6834923 0 -0.7299579 0.6834922 0 0.7299579 -0.6834922 0 0.7299578 -1.42787e-7 1 0 0.6834921 0 -0.7299578 0 -1 0 -0.6834922 0 -0.7299578 0.6834922 0 0.7299578</float_array>
+          <technique_common>
+            <accessor source="#Cube_003-mesh-normals-array" count="12" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Cube_003-mesh-map-0">
+          <float_array id="Cube_003-mesh-map-0-array" count="72">0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 1 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 1 1 1 0 1 1 0 1 1 0 1 1 0 1 0 1 0 0 1 1 1 0 1 1 0 1 1 0 1 1 0 1 0 1 0 0 1 1</float_array>
+          <technique_common>
+            <accessor source="#Cube_003-mesh-map-0-array" count="36" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Cube_003-mesh-vertices">
+          <input semantic="POSITION" source="#Cube_003-mesh-positions"/>
+        </vertices>
+        <polylist material="xa_notc_core_shapes_smg1_image_p1_mat1-material" count="12">
+          <input semantic="VERTEX" source="#Cube_003-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Cube_003-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Cube_003-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 3 3 3 3 3 3 3 3 3 3 </vcount>
+          <p>4 0 0 5 0 1 0 0 2 5 1 3 6 1 4 1 1 5 6 2 6 7 2 7 3 2 8 7 3 9 4 3 10 3 3 11 0 4 12 1 4 13 3 4 14 7 5 15 6 5 16 5 5 17 5 6 18 1 6 19 0 6 20 6 7 21 2 7 22 1 7 23 2 8 24 6 8 25 3 8 26 4 9 27 0 9 28 3 9 29 1 10 30 2 10 31 3 10 32 4 11 33 7 11 34 5 11 35</p>
+        </polylist>
+      </mesh>
+      <extra><technique profile="MAYA"><double_sided>1</double_sided></technique></extra>
+    </geometry>
+    <geometry id="Cube_004-mesh" name="Cube.004">
+      <mesh>
+        <source id="Cube_004-mesh-positions">
+          <float_array id="Cube_004-mesh-positions-array" count="24">-1 -0.03022515 -1 -1 0.03022515 -1 1 0.03022515 -1 1 -0.03022515 -1 -1 -0.03022515 1 -1 0.03022515 1 1 0.03022515 1 1 -0.03022515 1</float_array>
+          <technique_common>
+            <accessor source="#Cube_004-mesh-positions-array" count="8" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Cube_004-mesh-normals">
+          <float_array id="Cube_004-mesh-normals-array" count="12">0 1 0 0 -1 0 0 1 0 0 -1 0</float_array>
+          <technique_common>
+            <accessor source="#Cube_004-mesh-normals-array" count="4" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Cube_004-mesh-map-0">
+          <float_array id="Cube_004-mesh-map-0-array" count="24">0 0 1 0 1 1 0 0 1 0 1 1 0 1 0 0 1 1 0 1 0 0 1 1</float_array>
+          <technique_common>
+            <accessor source="#Cube_004-mesh-map-0-array" count="12" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Cube_004-mesh-vertices">
+          <input semantic="POSITION" source="#Cube_004-mesh-positions"/>
+        </vertices>
+        <polylist material="xa_notc_core_shapes_smg1_image_p1_mat2-material" count="4">
+          <input semantic="VERTEX" source="#Cube_004-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Cube_004-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Cube_004-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 3 3 </vcount>
+          <p>5 0 0 6 0 1 2 0 2 7 1 3 4 1 4 0 1 5 1 2 6 5 2 7 2 2 8 3 3 9 7 3 10 0 3 11</p>
+        </polylist>
+      </mesh>
+      <extra><technique profile="MAYA"><double_sided>1</double_sided></technique></extra>
+    </geometry>
+    <geometry id="Cube_005-mesh" name="Cube.005">
+      <mesh>
+        <source id="Cube_005-mesh-positions">
+          <float_array id="Cube_005-mesh-positions-array" count="24">-1 -0.03022515 -1 -1 0.03022515 -1 1 0.03022515 -1 1 -0.03022515 -1 -1 -0.03022515 1 -1 0.03022515 1 1 0.03022515 1 1 -0.03022515 1</float_array>
+          <technique_common>
+            <accessor source="#Cube_005-mesh-positions-array" count="8" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Cube_005-mesh-normals">
+          <float_array id="Cube_005-mesh-normals-array" count="12">0 1 0 0 -1 0 0 1 0 0 -1 0</float_array>
+          <technique_common>
+            <accessor source="#Cube_005-mesh-normals-array" count="4" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Cube_005-mesh-map-0">
+          <float_array id="Cube_005-mesh-map-0-array" count="24">0 0 1 0 1 1 0 0 1 0 1 1 0 1 0 0 1 1 0 1 0 0 1 1</float_array>
+          <technique_common>
+            <accessor source="#Cube_005-mesh-map-0-array" count="12" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Cube_005-mesh-vertices">
+          <input semantic="POSITION" source="#Cube_005-mesh-positions"/>
+        </vertices>
+        <polylist material="xa_notc_core_shapes_smg1_image_p1_mat2-material" count="4">
+          <input semantic="VERTEX" source="#Cube_005-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Cube_005-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Cube_005-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 3 3 </vcount>
+          <p>5 0 0 6 0 1 2 0 2 7 1 3 4 1 4 0 1 5 1 2 6 5 2 7 2 2 8 3 3 9 7 3 10 0 3 11</p>
+        </polylist>
+      </mesh>
+      <extra><technique profile="MAYA"><double_sided>1</double_sided></technique></extra>
+    </geometry>
+    <geometry id="Cube_006-mesh" name="Cube.006">
+      <mesh>
+        <source id="Cube_006-mesh-positions">
+          <float_array id="Cube_006-mesh-positions-array" count="24">-1 -0.03022515 -1 -1 0.03022515 -1 1 0.03022515 -1 1 -0.03022515 -1 -1 -0.03022515 1 -1 0.03022515 1 1 0.03022515 1 1 -0.03022515 1</float_array>
+          <technique_common>
+            <accessor source="#Cube_006-mesh-positions-array" count="8" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Cube_006-mesh-normals">
+          <float_array id="Cube_006-mesh-normals-array" count="12">0 1 0 0 -1 0 0 1 0 0 -1 0</float_array>
+          <technique_common>
+            <accessor source="#Cube_006-mesh-normals-array" count="4" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Cube_006-mesh-map-0">
+          <float_array id="Cube_006-mesh-map-0-array" count="24">0 0 1 0 1 1 0 0 1 0 1 1 0 1 0 0 1 1 0 1 0 0 1 1</float_array>
+          <technique_common>
+            <accessor source="#Cube_006-mesh-map-0-array" count="12" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Cube_006-mesh-vertices">
+          <input semantic="POSITION" source="#Cube_006-mesh-positions"/>
+        </vertices>
+        <polylist material="xa_notc_core_shapes_smg1_image_p1_mat2-material" count="4">
+          <input semantic="VERTEX" source="#Cube_006-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Cube_006-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Cube_006-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 3 3 </vcount>
+          <p>5 0 0 6 0 1 2 0 2 7 1 3 4 1 4 0 1 5 1 2 6 5 2 7 2 2 8 3 3 9 7 3 10 0 3 11</p>
+        </polylist>
+      </mesh>
+      <extra><technique profile="MAYA"><double_sided>1</double_sided></technique></extra>
+    </geometry>
   </library_geometries>
   <library_animations>
-    <animation id="Muzzleflash100_scale_X">
-      <source id="Muzzleflash100_scale_X-input">
-        <float_array id="Muzzleflash100_scale_X-input-array" count="4">0 4.125 4.166666 4.583333</float_array>
+    <animation id="LOD100_MUZZLEFLASH_LOD100_location_X">
+      <source id="LOD100_MUZZLEFLASH_LOD100_location_X-input">
+        <float_array id="LOD100_MUZZLEFLASH_LOD100_location_X-input-array" count="4">2.083333 2.125 2.5 2.541667</float_array>
         <technique_common>
-          <accessor source="#Muzzleflash100_scale_X-input-array" count="4" stride="1">
+          <accessor source="#LOD100_MUZZLEFLASH_LOD100_location_X-input-array" count="4" stride="1">
             <param name="TIME" type="float"/>
           </accessor>
         </technique_common>
       </source>
-      <source id="Muzzleflash100_scale_X-output">
-        <float_array id="Muzzleflash100_scale_X-output-array" count="4">0.00999999 1 50 1</float_array>
+      <source id="LOD100_MUZZLEFLASH_LOD100_location_X-output">
+        <float_array id="LOD100_MUZZLEFLASH_LOD100_location_X-output-array" count="4">-0.009391188 -0.009391188 -0.009391188 -0.009391188</float_array>
         <technique_common>
-          <accessor source="#Muzzleflash100_scale_X-output-array" count="4" stride="1">
+          <accessor source="#LOD100_MUZZLEFLASH_LOD100_location_X-output-array" count="4" stride="1">
             <param name="X" type="float"/>
           </accessor>
         </technique_common>
       </source>
-      <source id="Muzzleflash100_scale_X-interpolation">
-        <Name_array id="Muzzleflash100_scale_X-interpolation-array" count="4">BEZIER BEZIER BEZIER BEZIER</Name_array>
+      <source id="LOD100_MUZZLEFLASH_LOD100_location_X-interpolation">
+        <Name_array id="LOD100_MUZZLEFLASH_LOD100_location_X-interpolation-array" count="4">BEZIER BEZIER BEZIER BEZIER</Name_array>
         <technique_common>
-          <accessor source="#Muzzleflash100_scale_X-interpolation-array" count="4" stride="1">
+          <accessor source="#LOD100_MUZZLEFLASH_LOD100_location_X-interpolation-array" count="4" stride="1">
             <param name="INTERPOLATION" type="name"/>
           </accessor>
         </technique_common>
       </source>
-      <source id="Muzzleflash100_scale_X-intangent">
-        <float_array id="Muzzleflash100_scale_X-intangent-array" count="8">-1.610367 0.00999999 4.121684 0.00999999 4.16593 50 4.550806 1</float_array>
+      <source id="LOD100_MUZZLEFLASH_LOD100_location_X-intangent">
+        <float_array id="LOD100_MUZZLEFLASH_LOD100_location_X-intangent-array" count="8">2.067066 -0.009391188 2.108733 -0.009391188 2.418664 -0.009391188 2.525399 -0.009391188</float_array>
         <technique_common>
-          <accessor source="#Muzzleflash100_scale_X-intangent-array" count="4" stride="2">
+          <accessor source="#LOD100_MUZZLEFLASH_LOD100_location_X-intangent-array" count="4" stride="2">
             <param name="X" type="float"/>
             <param name="Y" type="float"/>
           </accessor>
         </technique_common>
       </source>
-      <source id="Muzzleflash100_scale_X-outtangent">
-        <float_array id="Muzzleflash100_scale_X-outtangent-array" count="8">1.610367 0.00999999 4.126302 1.388853 4.170351 50 4.615861 1</float_array>
+      <source id="LOD100_MUZZLEFLASH_LOD100_location_X-outtangent">
+        <float_array id="LOD100_MUZZLEFLASH_LOD100_location_X-outtangent-array" count="8">2.099601 -0.009391188 2.206336 -0.009391188 2.516267 -0.009391188 2.557934 -0.009391188</float_array>
         <technique_common>
-          <accessor source="#Muzzleflash100_scale_X-outtangent-array" count="4" stride="2">
+          <accessor source="#LOD100_MUZZLEFLASH_LOD100_location_X-outtangent-array" count="4" stride="2">
             <param name="X" type="float"/>
             <param name="Y" type="float"/>
           </accessor>
         </technique_common>
       </source>
-      <sampler id="Muzzleflash100_scale_X-sampler">
-        <input semantic="INPUT" source="#Muzzleflash100_scale_X-input"/>
-        <input semantic="OUTPUT" source="#Muzzleflash100_scale_X-output"/>
-        <input semantic="INTERPOLATION" source="#Muzzleflash100_scale_X-interpolation"/>
-        <input semantic="IN_TANGENT" source="#Muzzleflash100_scale_X-intangent"/>
-        <input semantic="OUT_TANGENT" source="#Muzzleflash100_scale_X-outtangent"/>
+      <sampler id="LOD100_MUZZLEFLASH_LOD100_location_X-sampler">
+        <input semantic="INPUT" source="#LOD100_MUZZLEFLASH_LOD100_location_X-input"/>
+        <input semantic="OUTPUT" source="#LOD100_MUZZLEFLASH_LOD100_location_X-output"/>
+        <input semantic="INTERPOLATION" source="#LOD100_MUZZLEFLASH_LOD100_location_X-interpolation"/>
+        <input semantic="IN_TANGENT" source="#LOD100_MUZZLEFLASH_LOD100_location_X-intangent"/>
+        <input semantic="OUT_TANGENT" source="#LOD100_MUZZLEFLASH_LOD100_location_X-outtangent"/>
       </sampler>
-      <channel source="#Muzzleflash100_scale_X-sampler" target="Muzzleflash100/scale.X"/>
+      <channel source="#LOD100_MUZZLEFLASH_LOD100_location_X-sampler" target="LOD100_MUZZLEFLASH_LOD100/location.X"/>
     </animation>
-    <animation id="Muzzleflash100_scale_Y">
-      <source id="Muzzleflash100_scale_Y-input">
-        <float_array id="Muzzleflash100_scale_Y-input-array" count="4">0 4.125 4.166666 4.583333</float_array>
+    <animation id="LOD100_MUZZLEFLASH_LOD100_location_Y">
+      <source id="LOD100_MUZZLEFLASH_LOD100_location_Y-input">
+        <float_array id="LOD100_MUZZLEFLASH_LOD100_location_Y-input-array" count="4">2.083333 2.125 2.5 2.541667</float_array>
         <technique_common>
-          <accessor source="#Muzzleflash100_scale_Y-input-array" count="4" stride="1">
+          <accessor source="#LOD100_MUZZLEFLASH_LOD100_location_Y-input-array" count="4" stride="1">
             <param name="TIME" type="float"/>
           </accessor>
         </technique_common>
       </source>
-      <source id="Muzzleflash100_scale_Y-output">
-        <float_array id="Muzzleflash100_scale_Y-output-array" count="4">0.00999999 1 50 1</float_array>
+      <source id="LOD100_MUZZLEFLASH_LOD100_location_Y-output">
+        <float_array id="LOD100_MUZZLEFLASH_LOD100_location_Y-output-array" count="4">0.8211202 0.9267028 0.9267028 0.8123217</float_array>
         <technique_common>
-          <accessor source="#Muzzleflash100_scale_Y-output-array" count="4" stride="1">
+          <accessor source="#LOD100_MUZZLEFLASH_LOD100_location_Y-output-array" count="4" stride="1">
             <param name="Y" type="float"/>
           </accessor>
         </technique_common>
       </source>
-      <source id="Muzzleflash100_scale_Y-interpolation">
-        <Name_array id="Muzzleflash100_scale_Y-interpolation-array" count="4">BEZIER BEZIER BEZIER BEZIER</Name_array>
+      <source id="LOD100_MUZZLEFLASH_LOD100_location_Y-interpolation">
+        <Name_array id="LOD100_MUZZLEFLASH_LOD100_location_Y-interpolation-array" count="4">BEZIER BEZIER BEZIER BEZIER</Name_array>
         <technique_common>
-          <accessor source="#Muzzleflash100_scale_Y-interpolation-array" count="4" stride="1">
+          <accessor source="#LOD100_MUZZLEFLASH_LOD100_location_Y-interpolation-array" count="4" stride="1">
             <param name="INTERPOLATION" type="name"/>
           </accessor>
         </technique_common>
       </source>
-      <source id="Muzzleflash100_scale_Y-intangent">
-        <float_array id="Muzzleflash100_scale_Y-intangent-array" count="8">-1.610367 0.00999999 4.121684 0.00999999 4.16593 50 4.550806 1</float_array>
+      <source id="LOD100_MUZZLEFLASH_LOD100_location_Y-intangent">
+        <float_array id="LOD100_MUZZLEFLASH_LOD100_location_Y-intangent-array" count="8">2.067156 0.8211202 2.108755 0.9267028 2.418797 0.9267028 2.525505 0.8123217</float_array>
         <technique_common>
-          <accessor source="#Muzzleflash100_scale_Y-intangent-array" count="4" stride="2">
+          <accessor source="#LOD100_MUZZLEFLASH_LOD100_location_Y-intangent-array" count="4" stride="2">
             <param name="X" type="float"/>
             <param name="Y" type="float"/>
           </accessor>
         </technique_common>
       </source>
-      <source id="Muzzleflash100_scale_Y-outtangent">
-        <float_array id="Muzzleflash100_scale_Y-outtangent-array" count="8">1.610367 0.00999999 4.126302 1.388853 4.170351 50 4.615861 1</float_array>
+      <source id="LOD100_MUZZLEFLASH_LOD100_location_Y-outtangent">
+        <float_array id="LOD100_MUZZLEFLASH_LOD100_location_Y-outtangent-array" count="8">2.09951 0.8211202 2.206223 0.9267028 2.516241 0.9267028 2.557828 0.8123217</float_array>
         <technique_common>
-          <accessor source="#Muzzleflash100_scale_Y-outtangent-array" count="4" stride="2">
+          <accessor source="#LOD100_MUZZLEFLASH_LOD100_location_Y-outtangent-array" count="4" stride="2">
             <param name="X" type="float"/>
             <param name="Y" type="float"/>
           </accessor>
         </technique_common>
       </source>
-      <sampler id="Muzzleflash100_scale_Y-sampler">
-        <input semantic="INPUT" source="#Muzzleflash100_scale_Y-input"/>
-        <input semantic="OUTPUT" source="#Muzzleflash100_scale_Y-output"/>
-        <input semantic="INTERPOLATION" source="#Muzzleflash100_scale_Y-interpolation"/>
-        <input semantic="IN_TANGENT" source="#Muzzleflash100_scale_Y-intangent"/>
-        <input semantic="OUT_TANGENT" source="#Muzzleflash100_scale_Y-outtangent"/>
+      <sampler id="LOD100_MUZZLEFLASH_LOD100_location_Y-sampler">
+        <input semantic="INPUT" source="#LOD100_MUZZLEFLASH_LOD100_location_Y-input"/>
+        <input semantic="OUTPUT" source="#LOD100_MUZZLEFLASH_LOD100_location_Y-output"/>
+        <input semantic="INTERPOLATION" source="#LOD100_MUZZLEFLASH_LOD100_location_Y-interpolation"/>
+        <input semantic="IN_TANGENT" source="#LOD100_MUZZLEFLASH_LOD100_location_Y-intangent"/>
+        <input semantic="OUT_TANGENT" source="#LOD100_MUZZLEFLASH_LOD100_location_Y-outtangent"/>
       </sampler>
-      <channel source="#Muzzleflash100_scale_Y-sampler" target="Muzzleflash100/scale.Y"/>
+      <channel source="#LOD100_MUZZLEFLASH_LOD100_location_Y-sampler" target="LOD100_MUZZLEFLASH_LOD100/location.Y"/>
     </animation>
-    <animation id="Muzzleflash100_scale_Z">
-      <source id="Muzzleflash100_scale_Z-input">
-        <float_array id="Muzzleflash100_scale_Z-input-array" count="4">0 4.125 4.166666 4.583333</float_array>
+    <animation id="LOD100_MUZZLEFLASH_LOD100_location_Z">
+      <source id="LOD100_MUZZLEFLASH_LOD100_location_Z-input">
+        <float_array id="LOD100_MUZZLEFLASH_LOD100_location_Z-input-array" count="4">2.083333 2.125 2.5 2.541667</float_array>
         <technique_common>
-          <accessor source="#Muzzleflash100_scale_Z-input-array" count="4" stride="1">
+          <accessor source="#LOD100_MUZZLEFLASH_LOD100_location_Z-input-array" count="4" stride="1">
             <param name="TIME" type="float"/>
           </accessor>
         </technique_common>
       </source>
-      <source id="Muzzleflash100_scale_Z-output">
-        <float_array id="Muzzleflash100_scale_Z-output-array" count="4">0.00999999 1 1 1</float_array>
+      <source id="LOD100_MUZZLEFLASH_LOD100_location_Z-output">
+        <float_array id="LOD100_MUZZLEFLASH_LOD100_location_Z-output-array" count="4">0.3045851 0.2987194 0.2987194 0.2987194</float_array>
         <technique_common>
-          <accessor source="#Muzzleflash100_scale_Z-output-array" count="4" stride="1">
+          <accessor source="#LOD100_MUZZLEFLASH_LOD100_location_Z-output-array" count="4" stride="1">
             <param name="Z" type="float"/>
           </accessor>
         </technique_common>
       </source>
-      <source id="Muzzleflash100_scale_Z-interpolation">
-        <Name_array id="Muzzleflash100_scale_Z-interpolation-array" count="4">BEZIER BEZIER BEZIER BEZIER</Name_array>
+      <source id="LOD100_MUZZLEFLASH_LOD100_location_Z-interpolation">
+        <Name_array id="LOD100_MUZZLEFLASH_LOD100_location_Z-interpolation-array" count="4">BEZIER BEZIER BEZIER BEZIER</Name_array>
         <technique_common>
-          <accessor source="#Muzzleflash100_scale_Z-interpolation-array" count="4" stride="1">
+          <accessor source="#LOD100_MUZZLEFLASH_LOD100_location_Z-interpolation-array" count="4" stride="1">
             <param name="INTERPOLATION" type="name"/>
           </accessor>
         </technique_common>
       </source>
-      <source id="Muzzleflash100_scale_Z-intangent">
-        <float_array id="Muzzleflash100_scale_Z-intangent-array" count="8">-1.610367 0.00999999 4.043665 1 4.1504 1 4.420662 1</float_array>
+      <source id="LOD100_MUZZLEFLASH_LOD100_location_Z-intangent">
+        <float_array id="LOD100_MUZZLEFLASH_LOD100_location_Z-intangent-array" count="8">2.067066 0.3045851 2.108733 0.2987194 2.418664 0.2987194 2.525399 0.2987194</float_array>
         <technique_common>
-          <accessor source="#Muzzleflash100_scale_Z-intangent-array" count="4" stride="2">
+          <accessor source="#LOD100_MUZZLEFLASH_LOD100_location_Z-intangent-array" count="4" stride="2">
             <param name="X" type="float"/>
             <param name="Y" type="float"/>
           </accessor>
         </technique_common>
       </source>
-      <source id="Muzzleflash100_scale_Z-outtangent">
-        <float_array id="Muzzleflash100_scale_Z-outtangent-array" count="8">1.610367 0.00999999 4.141267 1 4.248003 1 4.746005 1</float_array>
+      <source id="LOD100_MUZZLEFLASH_LOD100_location_Z-outtangent">
+        <float_array id="LOD100_MUZZLEFLASH_LOD100_location_Z-outtangent-array" count="8">2.0996 0.3045851 2.206335 0.2987194 2.516267 0.2987194 2.557934 0.2987194</float_array>
         <technique_common>
-          <accessor source="#Muzzleflash100_scale_Z-outtangent-array" count="4" stride="2">
+          <accessor source="#LOD100_MUZZLEFLASH_LOD100_location_Z-outtangent-array" count="4" stride="2">
             <param name="X" type="float"/>
             <param name="Y" type="float"/>
           </accessor>
         </technique_common>
       </source>
-      <sampler id="Muzzleflash100_scale_Z-sampler">
-        <input semantic="INPUT" source="#Muzzleflash100_scale_Z-input"/>
-        <input semantic="OUTPUT" source="#Muzzleflash100_scale_Z-output"/>
-        <input semantic="INTERPOLATION" source="#Muzzleflash100_scale_Z-interpolation"/>
-        <input semantic="IN_TANGENT" source="#Muzzleflash100_scale_Z-intangent"/>
-        <input semantic="OUT_TANGENT" source="#Muzzleflash100_scale_Z-outtangent"/>
+      <sampler id="LOD100_MUZZLEFLASH_LOD100_location_Z-sampler">
+        <input semantic="INPUT" source="#LOD100_MUZZLEFLASH_LOD100_location_Z-input"/>
+        <input semantic="OUTPUT" source="#LOD100_MUZZLEFLASH_LOD100_location_Z-output"/>
+        <input semantic="INTERPOLATION" source="#LOD100_MUZZLEFLASH_LOD100_location_Z-interpolation"/>
+        <input semantic="IN_TANGENT" source="#LOD100_MUZZLEFLASH_LOD100_location_Z-intangent"/>
+        <input semantic="OUT_TANGENT" source="#LOD100_MUZZLEFLASH_LOD100_location_Z-outtangent"/>
       </sampler>
-      <channel source="#Muzzleflash100_scale_Z-sampler" target="Muzzleflash100/scale.Z"/>
+      <channel source="#LOD100_MUZZLEFLASH_LOD100_location_Z-sampler" target="LOD100_MUZZLEFLASH_LOD100/location.Z"/>
+    </animation>
+    <animation id="LOD100_MUZZLEFLASH_LOD100_scale_X">
+      <source id="LOD100_MUZZLEFLASH_LOD100_scale_X-input">
+        <float_array id="LOD100_MUZZLEFLASH_LOD100_scale_X-input-array" count="4">2.083333 2.125 2.5 2.541667</float_array>
+        <technique_common>
+          <accessor source="#LOD100_MUZZLEFLASH_LOD100_scale_X-input-array" count="4" stride="1">
+            <param name="TIME" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD100_MUZZLEFLASH_LOD100_scale_X-output">
+        <float_array id="LOD100_MUZZLEFLASH_LOD100_scale_X-output-array" count="4">0.03999996 1 0.04434186 0.04434186</float_array>
+        <technique_common>
+          <accessor source="#LOD100_MUZZLEFLASH_LOD100_scale_X-output-array" count="4" stride="1">
+            <param name="X" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD100_MUZZLEFLASH_LOD100_scale_X-interpolation">
+        <Name_array id="LOD100_MUZZLEFLASH_LOD100_scale_X-interpolation-array" count="4">BEZIER BEZIER BEZIER BEZIER</Name_array>
+        <technique_common>
+          <accessor source="#LOD100_MUZZLEFLASH_LOD100_scale_X-interpolation-array" count="4" stride="1">
+            <param name="INTERPOLATION" type="name"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD100_MUZZLEFLASH_LOD100_scale_X-intangent">
+        <float_array id="LOD100_MUZZLEFLASH_LOD100_scale_X-intangent-array" count="8">2.071598 0.03999996 2.110039 1 2.418779 0.04434186 2.525399 0.04434186</float_array>
+        <technique_common>
+          <accessor source="#LOD100_MUZZLEFLASH_LOD100_scale_X-intangent-array" count="4" stride="2">
+            <param name="X" type="float"/>
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD100_MUZZLEFLASH_LOD100_scale_X-outtangent">
+        <float_array id="LOD100_MUZZLEFLASH_LOD100_scale_X-outtangent-array" count="8">2.095068 0.03999996 2.199804 1 2.516244 0.04434186 2.557934 0.04434186</float_array>
+        <technique_common>
+          <accessor source="#LOD100_MUZZLEFLASH_LOD100_scale_X-outtangent-array" count="4" stride="2">
+            <param name="X" type="float"/>
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <sampler id="LOD100_MUZZLEFLASH_LOD100_scale_X-sampler">
+        <input semantic="INPUT" source="#LOD100_MUZZLEFLASH_LOD100_scale_X-input"/>
+        <input semantic="OUTPUT" source="#LOD100_MUZZLEFLASH_LOD100_scale_X-output"/>
+        <input semantic="INTERPOLATION" source="#LOD100_MUZZLEFLASH_LOD100_scale_X-interpolation"/>
+        <input semantic="IN_TANGENT" source="#LOD100_MUZZLEFLASH_LOD100_scale_X-intangent"/>
+        <input semantic="OUT_TANGENT" source="#LOD100_MUZZLEFLASH_LOD100_scale_X-outtangent"/>
+      </sampler>
+      <channel source="#LOD100_MUZZLEFLASH_LOD100_scale_X-sampler" target="LOD100_MUZZLEFLASH_LOD100/scale.X"/>
+    </animation>
+    <animation id="LOD100_MUZZLEFLASH_LOD100_scale_Y">
+      <source id="LOD100_MUZZLEFLASH_LOD100_scale_Y-input">
+        <float_array id="LOD100_MUZZLEFLASH_LOD100_scale_Y-input-array" count="4">2.083333 2.125 2.5 2.541667</float_array>
+        <technique_common>
+          <accessor source="#LOD100_MUZZLEFLASH_LOD100_scale_Y-input-array" count="4" stride="1">
+            <param name="TIME" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD100_MUZZLEFLASH_LOD100_scale_Y-output">
+        <float_array id="LOD100_MUZZLEFLASH_LOD100_scale_Y-output-array" count="4">0.03999996 1 0.04434186 0.04434186</float_array>
+        <technique_common>
+          <accessor source="#LOD100_MUZZLEFLASH_LOD100_scale_Y-output-array" count="4" stride="1">
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD100_MUZZLEFLASH_LOD100_scale_Y-interpolation">
+        <Name_array id="LOD100_MUZZLEFLASH_LOD100_scale_Y-interpolation-array" count="4">BEZIER BEZIER BEZIER BEZIER</Name_array>
+        <technique_common>
+          <accessor source="#LOD100_MUZZLEFLASH_LOD100_scale_Y-interpolation-array" count="4" stride="1">
+            <param name="INTERPOLATION" type="name"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD100_MUZZLEFLASH_LOD100_scale_Y-intangent">
+        <float_array id="LOD100_MUZZLEFLASH_LOD100_scale_Y-intangent-array" count="8">2.071598 0.03999996 2.110039 1 2.418779 0.04434186 2.525399 0.04434186</float_array>
+        <technique_common>
+          <accessor source="#LOD100_MUZZLEFLASH_LOD100_scale_Y-intangent-array" count="4" stride="2">
+            <param name="X" type="float"/>
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD100_MUZZLEFLASH_LOD100_scale_Y-outtangent">
+        <float_array id="LOD100_MUZZLEFLASH_LOD100_scale_Y-outtangent-array" count="8">2.095068 0.03999996 2.199804 1 2.516244 0.04434186 2.557934 0.04434186</float_array>
+        <technique_common>
+          <accessor source="#LOD100_MUZZLEFLASH_LOD100_scale_Y-outtangent-array" count="4" stride="2">
+            <param name="X" type="float"/>
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <sampler id="LOD100_MUZZLEFLASH_LOD100_scale_Y-sampler">
+        <input semantic="INPUT" source="#LOD100_MUZZLEFLASH_LOD100_scale_Y-input"/>
+        <input semantic="OUTPUT" source="#LOD100_MUZZLEFLASH_LOD100_scale_Y-output"/>
+        <input semantic="INTERPOLATION" source="#LOD100_MUZZLEFLASH_LOD100_scale_Y-interpolation"/>
+        <input semantic="IN_TANGENT" source="#LOD100_MUZZLEFLASH_LOD100_scale_Y-intangent"/>
+        <input semantic="OUT_TANGENT" source="#LOD100_MUZZLEFLASH_LOD100_scale_Y-outtangent"/>
+      </sampler>
+      <channel source="#LOD100_MUZZLEFLASH_LOD100_scale_Y-sampler" target="LOD100_MUZZLEFLASH_LOD100/scale.Y"/>
+    </animation>
+    <animation id="LOD100_MUZZLEFLASH_LOD100_scale_Z">
+      <source id="LOD100_MUZZLEFLASH_LOD100_scale_Z-input">
+        <float_array id="LOD100_MUZZLEFLASH_LOD100_scale_Z-input-array" count="4">2.083333 2.125 2.5 2.541667</float_array>
+        <technique_common>
+          <accessor source="#LOD100_MUZZLEFLASH_LOD100_scale_Z-input-array" count="4" stride="1">
+            <param name="TIME" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD100_MUZZLEFLASH_LOD100_scale_Z-output">
+        <float_array id="LOD100_MUZZLEFLASH_LOD100_scale_Z-output-array" count="4">0.03999996 1 0.04434186 0.04434186</float_array>
+        <technique_common>
+          <accessor source="#LOD100_MUZZLEFLASH_LOD100_scale_Z-output-array" count="4" stride="1">
+            <param name="Z" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD100_MUZZLEFLASH_LOD100_scale_Z-interpolation">
+        <Name_array id="LOD100_MUZZLEFLASH_LOD100_scale_Z-interpolation-array" count="4">BEZIER BEZIER BEZIER BEZIER</Name_array>
+        <technique_common>
+          <accessor source="#LOD100_MUZZLEFLASH_LOD100_scale_Z-interpolation-array" count="4" stride="1">
+            <param name="INTERPOLATION" type="name"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD100_MUZZLEFLASH_LOD100_scale_Z-intangent">
+        <float_array id="LOD100_MUZZLEFLASH_LOD100_scale_Z-intangent-array" count="8">2.071598 0.03999996 2.110039 1 2.418779 0.04434186 2.525399 0.04434186</float_array>
+        <technique_common>
+          <accessor source="#LOD100_MUZZLEFLASH_LOD100_scale_Z-intangent-array" count="4" stride="2">
+            <param name="X" type="float"/>
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD100_MUZZLEFLASH_LOD100_scale_Z-outtangent">
+        <float_array id="LOD100_MUZZLEFLASH_LOD100_scale_Z-outtangent-array" count="8">2.095068 0.03999996 2.199804 1 2.516244 0.04434186 2.557934 0.04434186</float_array>
+        <technique_common>
+          <accessor source="#LOD100_MUZZLEFLASH_LOD100_scale_Z-outtangent-array" count="4" stride="2">
+            <param name="X" type="float"/>
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <sampler id="LOD100_MUZZLEFLASH_LOD100_scale_Z-sampler">
+        <input semantic="INPUT" source="#LOD100_MUZZLEFLASH_LOD100_scale_Z-input"/>
+        <input semantic="OUTPUT" source="#LOD100_MUZZLEFLASH_LOD100_scale_Z-output"/>
+        <input semantic="INTERPOLATION" source="#LOD100_MUZZLEFLASH_LOD100_scale_Z-interpolation"/>
+        <input semantic="IN_TANGENT" source="#LOD100_MUZZLEFLASH_LOD100_scale_Z-intangent"/>
+        <input semantic="OUT_TANGENT" source="#LOD100_MUZZLEFLASH_LOD100_scale_Z-outtangent"/>
+      </sampler>
+      <channel source="#LOD100_MUZZLEFLASH_LOD100_scale_Z-sampler" target="LOD100_MUZZLEFLASH_LOD100/scale.Z"/>
+    </animation>
+    <animation id="LOD10_MUZZLEFLASH_LOD10_location_X">
+      <source id="LOD10_MUZZLEFLASH_LOD10_location_X-input">
+        <float_array id="LOD10_MUZZLEFLASH_LOD10_location_X-input-array" count="4">2.083333 2.125 2.5 2.541667</float_array>
+        <technique_common>
+          <accessor source="#LOD10_MUZZLEFLASH_LOD10_location_X-input-array" count="4" stride="1">
+            <param name="TIME" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD10_MUZZLEFLASH_LOD10_location_X-output">
+        <float_array id="LOD10_MUZZLEFLASH_LOD10_location_X-output-array" count="4">-0.009391188 -0.009391188 -0.009391188 -0.009391188</float_array>
+        <technique_common>
+          <accessor source="#LOD10_MUZZLEFLASH_LOD10_location_X-output-array" count="4" stride="1">
+            <param name="X" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD10_MUZZLEFLASH_LOD10_location_X-interpolation">
+        <Name_array id="LOD10_MUZZLEFLASH_LOD10_location_X-interpolation-array" count="4">BEZIER BEZIER BEZIER BEZIER</Name_array>
+        <technique_common>
+          <accessor source="#LOD10_MUZZLEFLASH_LOD10_location_X-interpolation-array" count="4" stride="1">
+            <param name="INTERPOLATION" type="name"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD10_MUZZLEFLASH_LOD10_location_X-intangent">
+        <float_array id="LOD10_MUZZLEFLASH_LOD10_location_X-intangent-array" count="8">2.067066 -0.009391188 2.108733 -0.009391188 2.418664 -0.009391188 2.525399 -0.009391188</float_array>
+        <technique_common>
+          <accessor source="#LOD10_MUZZLEFLASH_LOD10_location_X-intangent-array" count="4" stride="2">
+            <param name="X" type="float"/>
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD10_MUZZLEFLASH_LOD10_location_X-outtangent">
+        <float_array id="LOD10_MUZZLEFLASH_LOD10_location_X-outtangent-array" count="8">2.099601 -0.009391188 2.206336 -0.009391188 2.516267 -0.009391188 2.557934 -0.009391188</float_array>
+        <technique_common>
+          <accessor source="#LOD10_MUZZLEFLASH_LOD10_location_X-outtangent-array" count="4" stride="2">
+            <param name="X" type="float"/>
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <sampler id="LOD10_MUZZLEFLASH_LOD10_location_X-sampler">
+        <input semantic="INPUT" source="#LOD10_MUZZLEFLASH_LOD10_location_X-input"/>
+        <input semantic="OUTPUT" source="#LOD10_MUZZLEFLASH_LOD10_location_X-output"/>
+        <input semantic="INTERPOLATION" source="#LOD10_MUZZLEFLASH_LOD10_location_X-interpolation"/>
+        <input semantic="IN_TANGENT" source="#LOD10_MUZZLEFLASH_LOD10_location_X-intangent"/>
+        <input semantic="OUT_TANGENT" source="#LOD10_MUZZLEFLASH_LOD10_location_X-outtangent"/>
+      </sampler>
+      <channel source="#LOD10_MUZZLEFLASH_LOD10_location_X-sampler" target="LOD10_MUZZLEFLASH_LOD10/location.X"/>
+    </animation>
+    <animation id="LOD10_MUZZLEFLASH_LOD10_location_Y">
+      <source id="LOD10_MUZZLEFLASH_LOD10_location_Y-input">
+        <float_array id="LOD10_MUZZLEFLASH_LOD10_location_Y-input-array" count="4">2.083333 2.125 2.5 2.541667</float_array>
+        <technique_common>
+          <accessor source="#LOD10_MUZZLEFLASH_LOD10_location_Y-input-array" count="4" stride="1">
+            <param name="TIME" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD10_MUZZLEFLASH_LOD10_location_Y-output">
+        <float_array id="LOD10_MUZZLEFLASH_LOD10_location_Y-output-array" count="4">0.8211202 0.9267028 0.9267028 0.8123217</float_array>
+        <technique_common>
+          <accessor source="#LOD10_MUZZLEFLASH_LOD10_location_Y-output-array" count="4" stride="1">
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD10_MUZZLEFLASH_LOD10_location_Y-interpolation">
+        <Name_array id="LOD10_MUZZLEFLASH_LOD10_location_Y-interpolation-array" count="4">BEZIER BEZIER BEZIER BEZIER</Name_array>
+        <technique_common>
+          <accessor source="#LOD10_MUZZLEFLASH_LOD10_location_Y-interpolation-array" count="4" stride="1">
+            <param name="INTERPOLATION" type="name"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD10_MUZZLEFLASH_LOD10_location_Y-intangent">
+        <float_array id="LOD10_MUZZLEFLASH_LOD10_location_Y-intangent-array" count="8">2.067156 0.8211202 2.108755 0.9267028 2.418797 0.9267028 2.525505 0.8123217</float_array>
+        <technique_common>
+          <accessor source="#LOD10_MUZZLEFLASH_LOD10_location_Y-intangent-array" count="4" stride="2">
+            <param name="X" type="float"/>
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD10_MUZZLEFLASH_LOD10_location_Y-outtangent">
+        <float_array id="LOD10_MUZZLEFLASH_LOD10_location_Y-outtangent-array" count="8">2.09951 0.8211202 2.206223 0.9267028 2.516241 0.9267028 2.557828 0.8123217</float_array>
+        <technique_common>
+          <accessor source="#LOD10_MUZZLEFLASH_LOD10_location_Y-outtangent-array" count="4" stride="2">
+            <param name="X" type="float"/>
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <sampler id="LOD10_MUZZLEFLASH_LOD10_location_Y-sampler">
+        <input semantic="INPUT" source="#LOD10_MUZZLEFLASH_LOD10_location_Y-input"/>
+        <input semantic="OUTPUT" source="#LOD10_MUZZLEFLASH_LOD10_location_Y-output"/>
+        <input semantic="INTERPOLATION" source="#LOD10_MUZZLEFLASH_LOD10_location_Y-interpolation"/>
+        <input semantic="IN_TANGENT" source="#LOD10_MUZZLEFLASH_LOD10_location_Y-intangent"/>
+        <input semantic="OUT_TANGENT" source="#LOD10_MUZZLEFLASH_LOD10_location_Y-outtangent"/>
+      </sampler>
+      <channel source="#LOD10_MUZZLEFLASH_LOD10_location_Y-sampler" target="LOD10_MUZZLEFLASH_LOD10/location.Y"/>
+    </animation>
+    <animation id="LOD10_MUZZLEFLASH_LOD10_location_Z">
+      <source id="LOD10_MUZZLEFLASH_LOD10_location_Z-input">
+        <float_array id="LOD10_MUZZLEFLASH_LOD10_location_Z-input-array" count="4">2.083333 2.125 2.5 2.541667</float_array>
+        <technique_common>
+          <accessor source="#LOD10_MUZZLEFLASH_LOD10_location_Z-input-array" count="4" stride="1">
+            <param name="TIME" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD10_MUZZLEFLASH_LOD10_location_Z-output">
+        <float_array id="LOD10_MUZZLEFLASH_LOD10_location_Z-output-array" count="4">0.3045851 0.2987194 0.2987194 0.2987194</float_array>
+        <technique_common>
+          <accessor source="#LOD10_MUZZLEFLASH_LOD10_location_Z-output-array" count="4" stride="1">
+            <param name="Z" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD10_MUZZLEFLASH_LOD10_location_Z-interpolation">
+        <Name_array id="LOD10_MUZZLEFLASH_LOD10_location_Z-interpolation-array" count="4">BEZIER BEZIER BEZIER BEZIER</Name_array>
+        <technique_common>
+          <accessor source="#LOD10_MUZZLEFLASH_LOD10_location_Z-interpolation-array" count="4" stride="1">
+            <param name="INTERPOLATION" type="name"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD10_MUZZLEFLASH_LOD10_location_Z-intangent">
+        <float_array id="LOD10_MUZZLEFLASH_LOD10_location_Z-intangent-array" count="8">2.067066 0.3045851 2.108733 0.2987194 2.418664 0.2987194 2.525399 0.2987194</float_array>
+        <technique_common>
+          <accessor source="#LOD10_MUZZLEFLASH_LOD10_location_Z-intangent-array" count="4" stride="2">
+            <param name="X" type="float"/>
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD10_MUZZLEFLASH_LOD10_location_Z-outtangent">
+        <float_array id="LOD10_MUZZLEFLASH_LOD10_location_Z-outtangent-array" count="8">2.0996 0.3045851 2.206335 0.2987194 2.516267 0.2987194 2.557934 0.2987194</float_array>
+        <technique_common>
+          <accessor source="#LOD10_MUZZLEFLASH_LOD10_location_Z-outtangent-array" count="4" stride="2">
+            <param name="X" type="float"/>
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <sampler id="LOD10_MUZZLEFLASH_LOD10_location_Z-sampler">
+        <input semantic="INPUT" source="#LOD10_MUZZLEFLASH_LOD10_location_Z-input"/>
+        <input semantic="OUTPUT" source="#LOD10_MUZZLEFLASH_LOD10_location_Z-output"/>
+        <input semantic="INTERPOLATION" source="#LOD10_MUZZLEFLASH_LOD10_location_Z-interpolation"/>
+        <input semantic="IN_TANGENT" source="#LOD10_MUZZLEFLASH_LOD10_location_Z-intangent"/>
+        <input semantic="OUT_TANGENT" source="#LOD10_MUZZLEFLASH_LOD10_location_Z-outtangent"/>
+      </sampler>
+      <channel source="#LOD10_MUZZLEFLASH_LOD10_location_Z-sampler" target="LOD10_MUZZLEFLASH_LOD10/location.Z"/>
+    </animation>
+    <animation id="LOD10_MUZZLEFLASH_LOD10_scale_X">
+      <source id="LOD10_MUZZLEFLASH_LOD10_scale_X-input">
+        <float_array id="LOD10_MUZZLEFLASH_LOD10_scale_X-input-array" count="4">2.083333 2.125 2.5 2.541667</float_array>
+        <technique_common>
+          <accessor source="#LOD10_MUZZLEFLASH_LOD10_scale_X-input-array" count="4" stride="1">
+            <param name="TIME" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD10_MUZZLEFLASH_LOD10_scale_X-output">
+        <float_array id="LOD10_MUZZLEFLASH_LOD10_scale_X-output-array" count="4">0.03999996 1 0.04434186 0.04434186</float_array>
+        <technique_common>
+          <accessor source="#LOD10_MUZZLEFLASH_LOD10_scale_X-output-array" count="4" stride="1">
+            <param name="X" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD10_MUZZLEFLASH_LOD10_scale_X-interpolation">
+        <Name_array id="LOD10_MUZZLEFLASH_LOD10_scale_X-interpolation-array" count="4">BEZIER BEZIER BEZIER BEZIER</Name_array>
+        <technique_common>
+          <accessor source="#LOD10_MUZZLEFLASH_LOD10_scale_X-interpolation-array" count="4" stride="1">
+            <param name="INTERPOLATION" type="name"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD10_MUZZLEFLASH_LOD10_scale_X-intangent">
+        <float_array id="LOD10_MUZZLEFLASH_LOD10_scale_X-intangent-array" count="8">2.071598 0.03999996 2.110039 1 2.418779 0.04434186 2.525399 0.04434186</float_array>
+        <technique_common>
+          <accessor source="#LOD10_MUZZLEFLASH_LOD10_scale_X-intangent-array" count="4" stride="2">
+            <param name="X" type="float"/>
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD10_MUZZLEFLASH_LOD10_scale_X-outtangent">
+        <float_array id="LOD10_MUZZLEFLASH_LOD10_scale_X-outtangent-array" count="8">2.095068 0.03999996 2.199804 1 2.516244 0.04434186 2.557934 0.04434186</float_array>
+        <technique_common>
+          <accessor source="#LOD10_MUZZLEFLASH_LOD10_scale_X-outtangent-array" count="4" stride="2">
+            <param name="X" type="float"/>
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <sampler id="LOD10_MUZZLEFLASH_LOD10_scale_X-sampler">
+        <input semantic="INPUT" source="#LOD10_MUZZLEFLASH_LOD10_scale_X-input"/>
+        <input semantic="OUTPUT" source="#LOD10_MUZZLEFLASH_LOD10_scale_X-output"/>
+        <input semantic="INTERPOLATION" source="#LOD10_MUZZLEFLASH_LOD10_scale_X-interpolation"/>
+        <input semantic="IN_TANGENT" source="#LOD10_MUZZLEFLASH_LOD10_scale_X-intangent"/>
+        <input semantic="OUT_TANGENT" source="#LOD10_MUZZLEFLASH_LOD10_scale_X-outtangent"/>
+      </sampler>
+      <channel source="#LOD10_MUZZLEFLASH_LOD10_scale_X-sampler" target="LOD10_MUZZLEFLASH_LOD10/scale.X"/>
+    </animation>
+    <animation id="LOD10_MUZZLEFLASH_LOD10_scale_Y">
+      <source id="LOD10_MUZZLEFLASH_LOD10_scale_Y-input">
+        <float_array id="LOD10_MUZZLEFLASH_LOD10_scale_Y-input-array" count="4">2.083333 2.125 2.5 2.541667</float_array>
+        <technique_common>
+          <accessor source="#LOD10_MUZZLEFLASH_LOD10_scale_Y-input-array" count="4" stride="1">
+            <param name="TIME" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD10_MUZZLEFLASH_LOD10_scale_Y-output">
+        <float_array id="LOD10_MUZZLEFLASH_LOD10_scale_Y-output-array" count="4">0.03999996 1 0.04434186 0.04434186</float_array>
+        <technique_common>
+          <accessor source="#LOD10_MUZZLEFLASH_LOD10_scale_Y-output-array" count="4" stride="1">
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD10_MUZZLEFLASH_LOD10_scale_Y-interpolation">
+        <Name_array id="LOD10_MUZZLEFLASH_LOD10_scale_Y-interpolation-array" count="4">BEZIER BEZIER BEZIER BEZIER</Name_array>
+        <technique_common>
+          <accessor source="#LOD10_MUZZLEFLASH_LOD10_scale_Y-interpolation-array" count="4" stride="1">
+            <param name="INTERPOLATION" type="name"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD10_MUZZLEFLASH_LOD10_scale_Y-intangent">
+        <float_array id="LOD10_MUZZLEFLASH_LOD10_scale_Y-intangent-array" count="8">2.071598 0.03999996 2.110039 1 2.418779 0.04434186 2.525399 0.04434186</float_array>
+        <technique_common>
+          <accessor source="#LOD10_MUZZLEFLASH_LOD10_scale_Y-intangent-array" count="4" stride="2">
+            <param name="X" type="float"/>
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD10_MUZZLEFLASH_LOD10_scale_Y-outtangent">
+        <float_array id="LOD10_MUZZLEFLASH_LOD10_scale_Y-outtangent-array" count="8">2.095068 0.03999996 2.199804 1 2.516244 0.04434186 2.557934 0.04434186</float_array>
+        <technique_common>
+          <accessor source="#LOD10_MUZZLEFLASH_LOD10_scale_Y-outtangent-array" count="4" stride="2">
+            <param name="X" type="float"/>
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <sampler id="LOD10_MUZZLEFLASH_LOD10_scale_Y-sampler">
+        <input semantic="INPUT" source="#LOD10_MUZZLEFLASH_LOD10_scale_Y-input"/>
+        <input semantic="OUTPUT" source="#LOD10_MUZZLEFLASH_LOD10_scale_Y-output"/>
+        <input semantic="INTERPOLATION" source="#LOD10_MUZZLEFLASH_LOD10_scale_Y-interpolation"/>
+        <input semantic="IN_TANGENT" source="#LOD10_MUZZLEFLASH_LOD10_scale_Y-intangent"/>
+        <input semantic="OUT_TANGENT" source="#LOD10_MUZZLEFLASH_LOD10_scale_Y-outtangent"/>
+      </sampler>
+      <channel source="#LOD10_MUZZLEFLASH_LOD10_scale_Y-sampler" target="LOD10_MUZZLEFLASH_LOD10/scale.Y"/>
+    </animation>
+    <animation id="LOD10_MUZZLEFLASH_LOD10_scale_Z">
+      <source id="LOD10_MUZZLEFLASH_LOD10_scale_Z-input">
+        <float_array id="LOD10_MUZZLEFLASH_LOD10_scale_Z-input-array" count="4">2.083333 2.125 2.5 2.541667</float_array>
+        <technique_common>
+          <accessor source="#LOD10_MUZZLEFLASH_LOD10_scale_Z-input-array" count="4" stride="1">
+            <param name="TIME" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD10_MUZZLEFLASH_LOD10_scale_Z-output">
+        <float_array id="LOD10_MUZZLEFLASH_LOD10_scale_Z-output-array" count="4">0.03999996 1 0.04434186 0.04434186</float_array>
+        <technique_common>
+          <accessor source="#LOD10_MUZZLEFLASH_LOD10_scale_Z-output-array" count="4" stride="1">
+            <param name="Z" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD10_MUZZLEFLASH_LOD10_scale_Z-interpolation">
+        <Name_array id="LOD10_MUZZLEFLASH_LOD10_scale_Z-interpolation-array" count="4">BEZIER BEZIER BEZIER BEZIER</Name_array>
+        <technique_common>
+          <accessor source="#LOD10_MUZZLEFLASH_LOD10_scale_Z-interpolation-array" count="4" stride="1">
+            <param name="INTERPOLATION" type="name"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD10_MUZZLEFLASH_LOD10_scale_Z-intangent">
+        <float_array id="LOD10_MUZZLEFLASH_LOD10_scale_Z-intangent-array" count="8">2.071598 0.03999996 2.110039 1 2.418779 0.04434186 2.525399 0.04434186</float_array>
+        <technique_common>
+          <accessor source="#LOD10_MUZZLEFLASH_LOD10_scale_Z-intangent-array" count="4" stride="2">
+            <param name="X" type="float"/>
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD10_MUZZLEFLASH_LOD10_scale_Z-outtangent">
+        <float_array id="LOD10_MUZZLEFLASH_LOD10_scale_Z-outtangent-array" count="8">2.095068 0.03999996 2.199804 1 2.516244 0.04434186 2.557934 0.04434186</float_array>
+        <technique_common>
+          <accessor source="#LOD10_MUZZLEFLASH_LOD10_scale_Z-outtangent-array" count="4" stride="2">
+            <param name="X" type="float"/>
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <sampler id="LOD10_MUZZLEFLASH_LOD10_scale_Z-sampler">
+        <input semantic="INPUT" source="#LOD10_MUZZLEFLASH_LOD10_scale_Z-input"/>
+        <input semantic="OUTPUT" source="#LOD10_MUZZLEFLASH_LOD10_scale_Z-output"/>
+        <input semantic="INTERPOLATION" source="#LOD10_MUZZLEFLASH_LOD10_scale_Z-interpolation"/>
+        <input semantic="IN_TANGENT" source="#LOD10_MUZZLEFLASH_LOD10_scale_Z-intangent"/>
+        <input semantic="OUT_TANGENT" source="#LOD10_MUZZLEFLASH_LOD10_scale_Z-outtangent"/>
+      </sampler>
+      <channel source="#LOD10_MUZZLEFLASH_LOD10_scale_Z-sampler" target="LOD10_MUZZLEFLASH_LOD10/scale.Z"/>
+    </animation>
+    <animation id="LOD1_MUZZLEFLASH_LOD1_location_X">
+      <source id="LOD1_MUZZLEFLASH_LOD1_location_X-input">
+        <float_array id="LOD1_MUZZLEFLASH_LOD1_location_X-input-array" count="4">2.083333 2.125 2.5 2.541667</float_array>
+        <technique_common>
+          <accessor source="#LOD1_MUZZLEFLASH_LOD1_location_X-input-array" count="4" stride="1">
+            <param name="TIME" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD1_MUZZLEFLASH_LOD1_location_X-output">
+        <float_array id="LOD1_MUZZLEFLASH_LOD1_location_X-output-array" count="4">-0.009391188 -0.009391188 -0.009391188 -0.009391188</float_array>
+        <technique_common>
+          <accessor source="#LOD1_MUZZLEFLASH_LOD1_location_X-output-array" count="4" stride="1">
+            <param name="X" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD1_MUZZLEFLASH_LOD1_location_X-interpolation">
+        <Name_array id="LOD1_MUZZLEFLASH_LOD1_location_X-interpolation-array" count="4">BEZIER BEZIER BEZIER BEZIER</Name_array>
+        <technique_common>
+          <accessor source="#LOD1_MUZZLEFLASH_LOD1_location_X-interpolation-array" count="4" stride="1">
+            <param name="INTERPOLATION" type="name"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD1_MUZZLEFLASH_LOD1_location_X-intangent">
+        <float_array id="LOD1_MUZZLEFLASH_LOD1_location_X-intangent-array" count="8">2.067066 -0.009391188 2.108733 -0.009391188 2.418664 -0.009391188 2.525399 -0.009391188</float_array>
+        <technique_common>
+          <accessor source="#LOD1_MUZZLEFLASH_LOD1_location_X-intangent-array" count="4" stride="2">
+            <param name="X" type="float"/>
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD1_MUZZLEFLASH_LOD1_location_X-outtangent">
+        <float_array id="LOD1_MUZZLEFLASH_LOD1_location_X-outtangent-array" count="8">2.099601 -0.009391188 2.206336 -0.009391188 2.516267 -0.009391188 2.557934 -0.009391188</float_array>
+        <technique_common>
+          <accessor source="#LOD1_MUZZLEFLASH_LOD1_location_X-outtangent-array" count="4" stride="2">
+            <param name="X" type="float"/>
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <sampler id="LOD1_MUZZLEFLASH_LOD1_location_X-sampler">
+        <input semantic="INPUT" source="#LOD1_MUZZLEFLASH_LOD1_location_X-input"/>
+        <input semantic="OUTPUT" source="#LOD1_MUZZLEFLASH_LOD1_location_X-output"/>
+        <input semantic="INTERPOLATION" source="#LOD1_MUZZLEFLASH_LOD1_location_X-interpolation"/>
+        <input semantic="IN_TANGENT" source="#LOD1_MUZZLEFLASH_LOD1_location_X-intangent"/>
+        <input semantic="OUT_TANGENT" source="#LOD1_MUZZLEFLASH_LOD1_location_X-outtangent"/>
+      </sampler>
+      <channel source="#LOD1_MUZZLEFLASH_LOD1_location_X-sampler" target="LOD1_MUZZLEFLASH_LOD1/location.X"/>
+    </animation>
+    <animation id="LOD1_MUZZLEFLASH_LOD1_location_Y">
+      <source id="LOD1_MUZZLEFLASH_LOD1_location_Y-input">
+        <float_array id="LOD1_MUZZLEFLASH_LOD1_location_Y-input-array" count="4">2.083333 2.125 2.5 2.541667</float_array>
+        <technique_common>
+          <accessor source="#LOD1_MUZZLEFLASH_LOD1_location_Y-input-array" count="4" stride="1">
+            <param name="TIME" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD1_MUZZLEFLASH_LOD1_location_Y-output">
+        <float_array id="LOD1_MUZZLEFLASH_LOD1_location_Y-output-array" count="4">0.8211202 0.9267028 0.9267028 0.8123217</float_array>
+        <technique_common>
+          <accessor source="#LOD1_MUZZLEFLASH_LOD1_location_Y-output-array" count="4" stride="1">
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD1_MUZZLEFLASH_LOD1_location_Y-interpolation">
+        <Name_array id="LOD1_MUZZLEFLASH_LOD1_location_Y-interpolation-array" count="4">BEZIER BEZIER BEZIER BEZIER</Name_array>
+        <technique_common>
+          <accessor source="#LOD1_MUZZLEFLASH_LOD1_location_Y-interpolation-array" count="4" stride="1">
+            <param name="INTERPOLATION" type="name"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD1_MUZZLEFLASH_LOD1_location_Y-intangent">
+        <float_array id="LOD1_MUZZLEFLASH_LOD1_location_Y-intangent-array" count="8">2.067156 0.8211202 2.108755 0.9267028 2.418797 0.9267028 2.525505 0.8123217</float_array>
+        <technique_common>
+          <accessor source="#LOD1_MUZZLEFLASH_LOD1_location_Y-intangent-array" count="4" stride="2">
+            <param name="X" type="float"/>
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD1_MUZZLEFLASH_LOD1_location_Y-outtangent">
+        <float_array id="LOD1_MUZZLEFLASH_LOD1_location_Y-outtangent-array" count="8">2.09951 0.8211202 2.206223 0.9267028 2.516241 0.9267028 2.557828 0.8123217</float_array>
+        <technique_common>
+          <accessor source="#LOD1_MUZZLEFLASH_LOD1_location_Y-outtangent-array" count="4" stride="2">
+            <param name="X" type="float"/>
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <sampler id="LOD1_MUZZLEFLASH_LOD1_location_Y-sampler">
+        <input semantic="INPUT" source="#LOD1_MUZZLEFLASH_LOD1_location_Y-input"/>
+        <input semantic="OUTPUT" source="#LOD1_MUZZLEFLASH_LOD1_location_Y-output"/>
+        <input semantic="INTERPOLATION" source="#LOD1_MUZZLEFLASH_LOD1_location_Y-interpolation"/>
+        <input semantic="IN_TANGENT" source="#LOD1_MUZZLEFLASH_LOD1_location_Y-intangent"/>
+        <input semantic="OUT_TANGENT" source="#LOD1_MUZZLEFLASH_LOD1_location_Y-outtangent"/>
+      </sampler>
+      <channel source="#LOD1_MUZZLEFLASH_LOD1_location_Y-sampler" target="LOD1_MUZZLEFLASH_LOD1/location.Y"/>
+    </animation>
+    <animation id="LOD1_MUZZLEFLASH_LOD1_location_Z">
+      <source id="LOD1_MUZZLEFLASH_LOD1_location_Z-input">
+        <float_array id="LOD1_MUZZLEFLASH_LOD1_location_Z-input-array" count="4">2.083333 2.125 2.5 2.541667</float_array>
+        <technique_common>
+          <accessor source="#LOD1_MUZZLEFLASH_LOD1_location_Z-input-array" count="4" stride="1">
+            <param name="TIME" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD1_MUZZLEFLASH_LOD1_location_Z-output">
+        <float_array id="LOD1_MUZZLEFLASH_LOD1_location_Z-output-array" count="4">0.3045851 0.2987194 0.2987194 0.2987194</float_array>
+        <technique_common>
+          <accessor source="#LOD1_MUZZLEFLASH_LOD1_location_Z-output-array" count="4" stride="1">
+            <param name="Z" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD1_MUZZLEFLASH_LOD1_location_Z-interpolation">
+        <Name_array id="LOD1_MUZZLEFLASH_LOD1_location_Z-interpolation-array" count="4">BEZIER BEZIER BEZIER BEZIER</Name_array>
+        <technique_common>
+          <accessor source="#LOD1_MUZZLEFLASH_LOD1_location_Z-interpolation-array" count="4" stride="1">
+            <param name="INTERPOLATION" type="name"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD1_MUZZLEFLASH_LOD1_location_Z-intangent">
+        <float_array id="LOD1_MUZZLEFLASH_LOD1_location_Z-intangent-array" count="8">2.067066 0.3045851 2.108733 0.2987194 2.418664 0.2987194 2.525399 0.2987194</float_array>
+        <technique_common>
+          <accessor source="#LOD1_MUZZLEFLASH_LOD1_location_Z-intangent-array" count="4" stride="2">
+            <param name="X" type="float"/>
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD1_MUZZLEFLASH_LOD1_location_Z-outtangent">
+        <float_array id="LOD1_MUZZLEFLASH_LOD1_location_Z-outtangent-array" count="8">2.0996 0.3045851 2.206335 0.2987194 2.516267 0.2987194 2.557934 0.2987194</float_array>
+        <technique_common>
+          <accessor source="#LOD1_MUZZLEFLASH_LOD1_location_Z-outtangent-array" count="4" stride="2">
+            <param name="X" type="float"/>
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <sampler id="LOD1_MUZZLEFLASH_LOD1_location_Z-sampler">
+        <input semantic="INPUT" source="#LOD1_MUZZLEFLASH_LOD1_location_Z-input"/>
+        <input semantic="OUTPUT" source="#LOD1_MUZZLEFLASH_LOD1_location_Z-output"/>
+        <input semantic="INTERPOLATION" source="#LOD1_MUZZLEFLASH_LOD1_location_Z-interpolation"/>
+        <input semantic="IN_TANGENT" source="#LOD1_MUZZLEFLASH_LOD1_location_Z-intangent"/>
+        <input semantic="OUT_TANGENT" source="#LOD1_MUZZLEFLASH_LOD1_location_Z-outtangent"/>
+      </sampler>
+      <channel source="#LOD1_MUZZLEFLASH_LOD1_location_Z-sampler" target="LOD1_MUZZLEFLASH_LOD1/location.Z"/>
+    </animation>
+    <animation id="LOD1_MUZZLEFLASH_LOD1_scale_X">
+      <source id="LOD1_MUZZLEFLASH_LOD1_scale_X-input">
+        <float_array id="LOD1_MUZZLEFLASH_LOD1_scale_X-input-array" count="4">2.083333 2.125 2.5 2.541667</float_array>
+        <technique_common>
+          <accessor source="#LOD1_MUZZLEFLASH_LOD1_scale_X-input-array" count="4" stride="1">
+            <param name="TIME" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD1_MUZZLEFLASH_LOD1_scale_X-output">
+        <float_array id="LOD1_MUZZLEFLASH_LOD1_scale_X-output-array" count="4">0.03999996 1 0.04434186 0.04434186</float_array>
+        <technique_common>
+          <accessor source="#LOD1_MUZZLEFLASH_LOD1_scale_X-output-array" count="4" stride="1">
+            <param name="X" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD1_MUZZLEFLASH_LOD1_scale_X-interpolation">
+        <Name_array id="LOD1_MUZZLEFLASH_LOD1_scale_X-interpolation-array" count="4">BEZIER BEZIER BEZIER BEZIER</Name_array>
+        <technique_common>
+          <accessor source="#LOD1_MUZZLEFLASH_LOD1_scale_X-interpolation-array" count="4" stride="1">
+            <param name="INTERPOLATION" type="name"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD1_MUZZLEFLASH_LOD1_scale_X-intangent">
+        <float_array id="LOD1_MUZZLEFLASH_LOD1_scale_X-intangent-array" count="8">2.071598 0.03999996 2.110039 1 2.418779 0.04434186 2.525399 0.04434186</float_array>
+        <technique_common>
+          <accessor source="#LOD1_MUZZLEFLASH_LOD1_scale_X-intangent-array" count="4" stride="2">
+            <param name="X" type="float"/>
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD1_MUZZLEFLASH_LOD1_scale_X-outtangent">
+        <float_array id="LOD1_MUZZLEFLASH_LOD1_scale_X-outtangent-array" count="8">2.095068 0.03999996 2.199804 1 2.516244 0.04434186 2.557934 0.04434186</float_array>
+        <technique_common>
+          <accessor source="#LOD1_MUZZLEFLASH_LOD1_scale_X-outtangent-array" count="4" stride="2">
+            <param name="X" type="float"/>
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <sampler id="LOD1_MUZZLEFLASH_LOD1_scale_X-sampler">
+        <input semantic="INPUT" source="#LOD1_MUZZLEFLASH_LOD1_scale_X-input"/>
+        <input semantic="OUTPUT" source="#LOD1_MUZZLEFLASH_LOD1_scale_X-output"/>
+        <input semantic="INTERPOLATION" source="#LOD1_MUZZLEFLASH_LOD1_scale_X-interpolation"/>
+        <input semantic="IN_TANGENT" source="#LOD1_MUZZLEFLASH_LOD1_scale_X-intangent"/>
+        <input semantic="OUT_TANGENT" source="#LOD1_MUZZLEFLASH_LOD1_scale_X-outtangent"/>
+      </sampler>
+      <channel source="#LOD1_MUZZLEFLASH_LOD1_scale_X-sampler" target="LOD1_MUZZLEFLASH_LOD1/scale.X"/>
+    </animation>
+    <animation id="LOD1_MUZZLEFLASH_LOD1_scale_Y">
+      <source id="LOD1_MUZZLEFLASH_LOD1_scale_Y-input">
+        <float_array id="LOD1_MUZZLEFLASH_LOD1_scale_Y-input-array" count="4">2.083333 2.125 2.5 2.541667</float_array>
+        <technique_common>
+          <accessor source="#LOD1_MUZZLEFLASH_LOD1_scale_Y-input-array" count="4" stride="1">
+            <param name="TIME" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD1_MUZZLEFLASH_LOD1_scale_Y-output">
+        <float_array id="LOD1_MUZZLEFLASH_LOD1_scale_Y-output-array" count="4">0.03999996 1 0.04434186 0.04434186</float_array>
+        <technique_common>
+          <accessor source="#LOD1_MUZZLEFLASH_LOD1_scale_Y-output-array" count="4" stride="1">
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD1_MUZZLEFLASH_LOD1_scale_Y-interpolation">
+        <Name_array id="LOD1_MUZZLEFLASH_LOD1_scale_Y-interpolation-array" count="4">BEZIER BEZIER BEZIER BEZIER</Name_array>
+        <technique_common>
+          <accessor source="#LOD1_MUZZLEFLASH_LOD1_scale_Y-interpolation-array" count="4" stride="1">
+            <param name="INTERPOLATION" type="name"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD1_MUZZLEFLASH_LOD1_scale_Y-intangent">
+        <float_array id="LOD1_MUZZLEFLASH_LOD1_scale_Y-intangent-array" count="8">2.071598 0.03999996 2.110039 1 2.418779 0.04434186 2.525399 0.04434186</float_array>
+        <technique_common>
+          <accessor source="#LOD1_MUZZLEFLASH_LOD1_scale_Y-intangent-array" count="4" stride="2">
+            <param name="X" type="float"/>
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD1_MUZZLEFLASH_LOD1_scale_Y-outtangent">
+        <float_array id="LOD1_MUZZLEFLASH_LOD1_scale_Y-outtangent-array" count="8">2.095068 0.03999996 2.199804 1 2.516244 0.04434186 2.557934 0.04434186</float_array>
+        <technique_common>
+          <accessor source="#LOD1_MUZZLEFLASH_LOD1_scale_Y-outtangent-array" count="4" stride="2">
+            <param name="X" type="float"/>
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <sampler id="LOD1_MUZZLEFLASH_LOD1_scale_Y-sampler">
+        <input semantic="INPUT" source="#LOD1_MUZZLEFLASH_LOD1_scale_Y-input"/>
+        <input semantic="OUTPUT" source="#LOD1_MUZZLEFLASH_LOD1_scale_Y-output"/>
+        <input semantic="INTERPOLATION" source="#LOD1_MUZZLEFLASH_LOD1_scale_Y-interpolation"/>
+        <input semantic="IN_TANGENT" source="#LOD1_MUZZLEFLASH_LOD1_scale_Y-intangent"/>
+        <input semantic="OUT_TANGENT" source="#LOD1_MUZZLEFLASH_LOD1_scale_Y-outtangent"/>
+      </sampler>
+      <channel source="#LOD1_MUZZLEFLASH_LOD1_scale_Y-sampler" target="LOD1_MUZZLEFLASH_LOD1/scale.Y"/>
+    </animation>
+    <animation id="LOD1_MUZZLEFLASH_LOD1_scale_Z">
+      <source id="LOD1_MUZZLEFLASH_LOD1_scale_Z-input">
+        <float_array id="LOD1_MUZZLEFLASH_LOD1_scale_Z-input-array" count="4">2.083333 2.125 2.5 2.541667</float_array>
+        <technique_common>
+          <accessor source="#LOD1_MUZZLEFLASH_LOD1_scale_Z-input-array" count="4" stride="1">
+            <param name="TIME" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD1_MUZZLEFLASH_LOD1_scale_Z-output">
+        <float_array id="LOD1_MUZZLEFLASH_LOD1_scale_Z-output-array" count="4">0.03999996 1 0.04434186 0.04434186</float_array>
+        <technique_common>
+          <accessor source="#LOD1_MUZZLEFLASH_LOD1_scale_Z-output-array" count="4" stride="1">
+            <param name="Z" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD1_MUZZLEFLASH_LOD1_scale_Z-interpolation">
+        <Name_array id="LOD1_MUZZLEFLASH_LOD1_scale_Z-interpolation-array" count="4">BEZIER BEZIER BEZIER BEZIER</Name_array>
+        <technique_common>
+          <accessor source="#LOD1_MUZZLEFLASH_LOD1_scale_Z-interpolation-array" count="4" stride="1">
+            <param name="INTERPOLATION" type="name"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD1_MUZZLEFLASH_LOD1_scale_Z-intangent">
+        <float_array id="LOD1_MUZZLEFLASH_LOD1_scale_Z-intangent-array" count="8">2.071598 0.03999996 2.110039 1 2.418779 0.04434186 2.525399 0.04434186</float_array>
+        <technique_common>
+          <accessor source="#LOD1_MUZZLEFLASH_LOD1_scale_Z-intangent-array" count="4" stride="2">
+            <param name="X" type="float"/>
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="LOD1_MUZZLEFLASH_LOD1_scale_Z-outtangent">
+        <float_array id="LOD1_MUZZLEFLASH_LOD1_scale_Z-outtangent-array" count="8">2.095068 0.03999996 2.199804 1 2.516244 0.04434186 2.557934 0.04434186</float_array>
+        <technique_common>
+          <accessor source="#LOD1_MUZZLEFLASH_LOD1_scale_Z-outtangent-array" count="4" stride="2">
+            <param name="X" type="float"/>
+            <param name="Y" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <sampler id="LOD1_MUZZLEFLASH_LOD1_scale_Z-sampler">
+        <input semantic="INPUT" source="#LOD1_MUZZLEFLASH_LOD1_scale_Z-input"/>
+        <input semantic="OUTPUT" source="#LOD1_MUZZLEFLASH_LOD1_scale_Z-output"/>
+        <input semantic="INTERPOLATION" source="#LOD1_MUZZLEFLASH_LOD1_scale_Z-interpolation"/>
+        <input semantic="IN_TANGENT" source="#LOD1_MUZZLEFLASH_LOD1_scale_Z-intangent"/>
+        <input semantic="OUT_TANGENT" source="#LOD1_MUZZLEFLASH_LOD1_scale_Z-outtangent"/>
+      </sampler>
+      <channel source="#LOD1_MUZZLEFLASH_LOD1_scale_Z-sampler" target="LOD1_MUZZLEFLASH_LOD1/scale.Z"/>
     </animation>
   </library_animations>
   <library_controllers/>
   <library_visual_scenes>
     <visual_scene id="Scene" name="Scene">
-      <node id="Muzzleflash100" name="Muzzleflash100" type="NODE">
-        <translate sid="location">-0.009022227 0.9421924 0.3220519</translate>
-        <rotate sid="rotationZ">0 0 1 0</rotate>
-        <rotate sid="rotationY">0 1 0 -89.99999</rotate>
+      <node id="RETRACTIONPOINT" name="RETRACTIONPOINT" type="NODE">
+        <translate sid="location">-0.008109245 0.9351115 0.2924399</translate>
+        <rotate sid="rotationZ">0 0 1 1.87123e-5</rotate>
+        <rotate sid="rotationY">0 1 0 -2.8545e-6</rotate>
+        <rotate sid="rotationX">1 0 0 7.41386e-6</rotate>
+        <scale sid="scale">0.06567196 0.06567 0.06567</scale>
+      </node>
+      <node id="LOD100_GUN_LOD100" name="LOD100_GUN_LOD100" type="NODE">
+        <translate sid="location">-0.01054834 -0.06228986 0.1450201</translate>
+        <rotate sid="rotationZ">0 0 1 -0.09322364</rotate>
+        <rotate sid="rotationY">0 1 0 5.10177e-6</rotate>
+        <rotate sid="rotationX">1 0 0 -2.30824e-5</rotate>
+        <scale sid="scale">3.568893 2.563862 3.568763</scale>
+        <instance_geometry url="#Cube_000-mesh">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="xa_notc_core_shapes_smg1_image_p1_mat1-material" target="#xa_notc_core_shapes_smg1_image_p1_mat1-material"/>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+      <node id="LOD100_THINGY_LOD100" name="LOD100_THINGY_LOD100" type="NODE">
+        <translate sid="location">-0.01055069 0.68047 0.2761821</translate>
+        <rotate sid="rotationZ">0 0 1 -0.09322364</rotate>
+        <rotate sid="rotationY">0 1 0 5.10177e-6</rotate>
+        <rotate sid="rotationX">1 0 0 -2.30824e-5</rotate>
+        <scale sid="scale">3.568893 2.563862 3.568763</scale>
+        <instance_geometry url="#Cube_002-mesh">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="xa_notc_core_shapes_smg1_image_p1_mat1-material" target="#xa_notc_core_shapes_smg1_image_p1_mat1-material"/>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+      <node id="LOD100_BARREL_LOD100" name="LOD100_BARREL_LOD100" type="NODE">
+        <translate sid="location">-0.01054845 0.678475 0.2807574</translate>
+        <rotate sid="rotationZ">0 0 1 1.34239e-14</rotate>
+        <rotate sid="rotationY">0 1 0 -1.7007e-14</rotate>
         <rotate sid="rotationX">1 0 0 -90</rotate>
-        <scale sid="scale">50 50 1</scale>
-        <instance_geometry url="#Plane-mesh">
+        <scale sid="scale">3.568895 3.568765 2.563859</scale>
+        <instance_geometry url="#Cylinder_002-mesh">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="xa_notc_core_shapes_smg1_image_p1_mat1-material" target="#xa_notc_core_shapes_smg1_image_p1_mat1-material"/>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+      <node id="EJECTPOINT" name="EJECTPOINT" type="NODE">
+        <translate sid="location">-0.008109011 0.2066844 0.3474568</translate>
+        <rotate sid="rotationZ">0 0 1 1.87123e-5</rotate>
+        <rotate sid="rotationY">0 1 0 -2.8545e-6</rotate>
+        <rotate sid="rotationX">1 0 0 7.41386e-6</rotate>
+        <scale sid="scale">0.0593079 0.05930788 0.05930788</scale>
+      </node>
+      <node id="MUZZLEPOINT" name="MUZZLEPOINT" type="NODE">
+        <translate sid="location">-0.009234576 0.9125118 0.2875224</translate>
+        <rotate sid="rotationZ">0 0 1 0</rotate>
+        <rotate sid="rotationY">0 1 0 0</rotate>
+        <rotate sid="rotationX">1 0 0 0</rotate>
+        <scale sid="scale">0.06849118 0.06849118 0.06849118</scale>
+      </node>
+      <node id="LOD1_GUN_LOD1" name="LOD1_GUN_LOD1" type="NODE">
+        <translate sid="location">-0.005937876 0.1649936 0.128025</translate>
+        <rotate sid="rotationZ">0 0 1 0</rotate>
+        <rotate sid="rotationY">0 1 0 0</rotate>
+        <rotate sid="rotationX">1 0 0 0</rotate>
+        <scale sid="scale">3.324239 3.324239 3.324239</scale>
+        <instance_geometry url="#Cube-mesh">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="xa_notc_core_shapes_smg1_image_p1_mat1-material" target="#xa_notc_core_shapes_smg1_image_p1_mat1-material"/>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+      <node id="LOD10_GUN_LOD10" name="LOD10_GUN_LOD10" type="NODE">
+        <translate sid="location">-0.005937876 0.1649936 0.128025</translate>
+        <rotate sid="rotationZ">0 0 1 0</rotate>
+        <rotate sid="rotationY">0 1 0 0</rotate>
+        <rotate sid="rotationX">1 0 0 0</rotate>
+        <scale sid="scale">3.324239 3.324239 3.324239</scale>
+        <instance_geometry url="#Cube_001-mesh">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="xa_notc_core_shapes_smg1_image_p1_mat1-material" target="#xa_notc_core_shapes_smg1_image_p1_mat1-material"/>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+      <node id="LOD10_BARREL_LOD10" name="LOD10_BARREL_LOD10" type="NODE">
+        <translate sid="location">-0.01027026 0.9169095 0.2810542</translate>
+        <rotate sid="rotationZ">0 0 1 0</rotate>
+        <rotate sid="rotationY">0 1 0 0</rotate>
+        <rotate sid="rotationX">1 0 0 0</rotate>
+        <scale sid="scale">1.329696 1.329696 1.329696</scale>
+        <instance_geometry url="#Cube_003-mesh">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="xa_notc_core_shapes_smg1_image_p1_mat1-material" target="#xa_notc_core_shapes_smg1_image_p1_mat1-material"/>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+      <node id="LOD100_MUZZLEFLASH_LOD100" name="LOD100_MUZZLEFLASH_LOD100" type="NODE">
+        <translate sid="location">-0.009391204 0.9267028 0.2987194</translate>
+        <rotate sid="rotationZ">0 0 1 0</rotate>
+        <rotate sid="rotationY">0 1 0 0</rotate>
+        <rotate sid="rotationX">1 0 0 0</rotate>
+        <scale sid="scale">0.8378046 0.8378046 0.8378046</scale>
+        <instance_geometry url="#Cube_004-mesh">
           <bind_material>
             <technique_common>
               <instance_material symbol="xa_notc_core_shapes_smg1_image_p1_mat2-material" target="#xa_notc_core_shapes_smg1_image_p1_mat2-material"/>
@@ -438,86 +1543,33 @@
           </bind_material>
         </instance_geometry>
       </node>
-      <node id="RETRACTIONPOINT" name="RETRACTIONPOINT" type="NODE">
-        <translate sid="location">-0.008456808 0.9496396 0.3244757</translate>
-        <rotate sid="rotationZ">0 0 1 1.87123e-5</rotate>
-        <rotate sid="rotationY">0 1 0 -2.8545e-6</rotate>
-        <rotate sid="rotationX">1 0 0 7.41386e-6</rotate>
-        <scale sid="scale">0.06567196 0.06567 0.06567</scale>
-      </node>
-      <node id="EJECTPOINT" name="EJECTPOINT" type="NODE">
-        <matrix sid="parentinverse">0.005103984 0.9999865 -6.78862e-4 -0.1381394 -0.9999473 0.005097915 -0.008906749 0.180401 -0.008903428 7.24329e-4 0.9999601 -0.2249866 0 0 0 1</matrix>
-        <translate sid="location">0.1800134 0.1154925 0.3302568</translate>
-        <rotate sid="rotationZ">0 0 1 4.86886e-6</rotate>
-        <rotate sid="rotationY">0 1 0 -2.67001e-6</rotate>
-        <rotate sid="rotationX">1 0 0 -3.97504e-6</rotate>
-        <scale sid="scale">0.0593079 0.05930788 0.05930788</scale>
-      </node>
-      <node id="shape" name="shape" type="NODE">
-        <translate sid="location">0 0 0</translate>
+      <node id="LOD10_MUZZLEFLASH_LOD10" name="LOD10_MUZZLEFLASH_LOD10" type="NODE">
+        <translate sid="location">-0.009391204 0.9267028 0.2987194</translate>
         <rotate sid="rotationZ">0 0 1 0</rotate>
         <rotate sid="rotationY">0 1 0 0</rotate>
         <rotate sid="rotationX">1 0 0 0</rotate>
-        <scale sid="scale">0.1724559 0.1238906 0.1724496</scale>
-        <node id="a100" name="a100" type="NODE">
-          <matrix sid="parentinverse">15.96424 0 0 0 0 15.96424 0 0 0 0 15.96482 0 0 0 0 1</matrix>
-          <translate sid="location">-0.009406573 0.07500729 0.07347482</translate>
-          <rotate sid="rotationZ">0 0 1 -0.08834726</rotate>
-          <rotate sid="rotationY">0 1 0 5.10368e-6</rotate>
-          <rotate sid="rotationX">1 0 0 -2.18738e-5</rotate>
-          <scale sid="scale">1.073597 1.073597 1.073558</scale>
-          <instance_geometry url="#Cube_000-mesh">
-            <bind_material>
-              <technique_common>
-                <instance_material symbol="xa_notc_core_shapes_smg1_image_p1_mat1-material" target="#xa_notc_core_shapes_smg1_image_p1_mat1-material"/>
-              </technique_common>
-            </bind_material>
-          </instance_geometry>
-        </node>
-        <node id="b100" name="b100" type="NODE">
-          <matrix sid="parentinverse">15.96424 0 0 0 0 15.96424 0 0 0 0 15.96482 0 0 0 0 1</matrix>
-          <translate sid="location">-0.009407277 0.3860326 0.1129311</translate>
-          <rotate sid="rotationZ">0 0 1 -0.08834726</rotate>
-          <rotate sid="rotationY">0 1 0 5.10368e-6</rotate>
-          <rotate sid="rotationX">1 0 0 -2.18738e-5</rotate>
-          <scale sid="scale">1.073597 1.073597 1.073558</scale>
-          <instance_geometry url="#Cube_002-mesh">
-            <bind_material>
-              <technique_common>
-                <instance_material symbol="xa_notc_core_shapes_smg1_image_p1_mat1-material" target="#xa_notc_core_shapes_smg1_image_p1_mat1-material"/>
-              </technique_common>
-            </bind_material>
-          </instance_geometry>
-        </node>
-        <node id="c100" name="c100" type="NODE">
-          <matrix sid="parentinverse">15.96424 0 0 0 0 15.96424 0 0 0 0 15.96482 0 0 0 0 1</matrix>
-          <translate sid="location">-0.009406605 0.3851973 0.1143074</translate>
-          <rotate sid="rotationZ">0 0 1 1.27218e-14</rotate>
-          <rotate sid="rotationY">0 1 0 -1.27222e-14</rotate>
-          <rotate sid="rotationX">1 0 0 -90</rotate>
-          <scale sid="scale">1.073597 1.073558 1.073597</scale>
-          <instance_geometry url="#Cylinder_002-mesh">
-            <bind_material>
-              <technique_common>
-                <instance_material symbol="xa_notc_core_shapes_smg1_image_p1_mat1-material" target="#xa_notc_core_shapes_smg1_image_p1_mat1-material"/>
-              </technique_common>
-            </bind_material>
-          </instance_geometry>
-        </node>
+        <scale sid="scale">0.8378046 0.8378046 0.8378046</scale>
+        <instance_geometry url="#Cube_005-mesh">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="xa_notc_core_shapes_smg1_image_p1_mat2-material" target="#xa_notc_core_shapes_smg1_image_p1_mat2-material"/>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
       </node>
-      <node id="MUZZLEPOINT" name="MUZZLEPOINT" type="NODE">
-        <translate sid="location">-0.009049088 0.937745 0.3218876</translate>
+      <node id="LOD1_MUZZLEFLASH_LOD1" name="LOD1_MUZZLEFLASH_LOD1" type="NODE">
+        <translate sid="location">-0.009391204 0.9267028 0.2987194</translate>
         <rotate sid="rotationZ">0 0 1 0</rotate>
         <rotate sid="rotationY">0 1 0 0</rotate>
         <rotate sid="rotationX">1 0 0 0</rotate>
-        <scale sid="scale">0.06849118 0.06849118 0.06849118</scale>
-      </node>
-      <node id="MOUNTPOINT" name="MOUNTPOINT" type="NODE">
-        <translate sid="location">-0.008456808 0.1958424 0.03247511</translate>
-        <rotate sid="rotationZ">0 0 1 1.87123e-5</rotate>
-        <rotate sid="rotationY">0 1 0 -2.8545e-6</rotate>
-        <rotate sid="rotationX">1 0 0 7.41386e-6</rotate>
-        <scale sid="scale">0.06567196 0.06567 0.06567</scale>
+        <scale sid="scale">0.8378046 0.8378046 0.8378046</scale>
+        <instance_geometry url="#Cube_006-mesh">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="xa_notc_core_shapes_smg1_image_p1_mat2-material" target="#xa_notc_core_shapes_smg1_image_p1_mat2-material"/>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
       </node>
     </visual_scene>
   </library_visual_scenes>
