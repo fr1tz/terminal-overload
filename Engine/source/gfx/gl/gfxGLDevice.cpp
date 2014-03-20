@@ -159,7 +159,7 @@ GFXGLDevice::GFXGLDevice(U32 adapterIndex) :
    mCurrentShader( NULL ),
    mNeedUpdateVertexAttrib(false)
 {
-   for(int i = 0; i < MAX_VERTEX_STREAMS; ++i)
+   for(int i = 0; i < MAX_VERTEX_STREAM_COUNT; ++i)
    {
       mCurrentVB[i] = NULL;
       mCurrentVB_Divisor[i] = 0;
@@ -180,10 +180,9 @@ GFXGLDevice::GFXGLDevice(U32 adapterIndex) :
 
    for(U32 i = 0; i < TEXTURE_STAGE_COUNT; i++)
       mActiveTextureType[i] = GL_ZERO;
-
-   mTextureCoordStartTop = false;
+   
    mTexelPixelOffset = false;
-   mVertexStreamSupported = MAX_VERTEX_STREAMS;
+   mNumVertexStream = 2;
 
    for(int i = 0; i < GS_COUNT; ++i)
       mModelViewProjSC[i] = NULL;
@@ -195,7 +194,7 @@ GFXGLDevice::~GFXGLDevice()
 {
    mCurrentStateBlock = NULL;
 
-   for(int i = 0; i < MAX_VERTEX_STREAMS; ++i)      
+   for(int i = 0; i < MAX_VERTEX_STREAM_COUNT; ++i)      
       mCurrentVB[i] = NULL;
    mCurrentPB = NULL;
    
@@ -241,7 +240,7 @@ void GFXGLDevice::zombify()
 {
    mTextureManager->zombify();
 
-   for(int i = 0; i < MAX_VERTEX_STREAMS; ++i)   
+   for(int i = 0; i < MAX_VERTEX_STREAM_COUNT; ++i)   
       if(mCurrentVB[i])
          mCurrentVB[i]->finish();
    if(mCurrentPB)
@@ -265,7 +264,7 @@ void GFXGLDevice::resurrect()
       walk->resurrect();
       walk = walk->getNextResource();
    }
-   for(int i = 0; i < MAX_VERTEX_STREAMS; ++i)   
+   for(int i = 0; i < MAX_VERTEX_STREAM_COUNT; ++i)   
       if(mCurrentVB[i])
          mCurrentVB[i]->prepare();
    if(mCurrentPB)
@@ -485,7 +484,7 @@ inline void GFXGLDevice::preDrawPrimitive()
          AssertFatal(mCurrVertexDecl, "");
          const GFXGLVertexDecl* decl = static_cast<const GFXGLVertexDecl*>(mCurrVertexDecl);
       
-         for(int i = 0; i < getVertexStreamSupported(); ++i)
+         for(int i = 0; i < getNumVertexStreams(); ++i)
          {
             if(mCurrentVB[i])
                decl->prepareBuffer_old( i, mCurrentVB[i]->mBuffer, mCurrentVB_Divisor[i] );

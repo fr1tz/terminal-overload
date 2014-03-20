@@ -237,7 +237,7 @@ protected:
    /// The macros to be passed to the shader.      
    Vector<GFXShaderMacro> mMacros;
 
-   /// Ordered SamplerNames
+   /// Ordered SamplerNames // TODO OPENGL REVIEW add doc
    Vector<String> mSamplerNamesOrdered;
 
    /// The pixel version this is compiled for.

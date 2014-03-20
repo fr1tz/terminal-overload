@@ -405,7 +405,7 @@ void GFXD3D9Device::releaseDefaultPoolResources()
    mCurrentConstBuffer = NULL;
 
    // Set current VB to NULL and set state dirty
-   for ( U32 i=0; i < VERTEX_STREAM_COUNT; i++ )
+   for ( U32 i=0; i < MAX_VERTEX_STREAM_COUNT; i++ )
    {
       mCurrentVertexBuffer[i] = NULL;
       mVertexBufferDirty[i] = true;

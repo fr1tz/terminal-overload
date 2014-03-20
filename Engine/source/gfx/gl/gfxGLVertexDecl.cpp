@@ -8,7 +8,7 @@ void GFXGLVertexDecl::init(const GFXVertexFormat *format)
    AssertFatal(!mFormat, "");
    mFormat = format;
   
-   for(int i = 0; i < GFXGLDevice::MAX_VERTEX_STREAMS; ++i)
+   for(int i = 0; i < GFXGL->getNumVertexStreams(); ++i)
       _initVerticesFormat(i);   
 }
 
@@ -87,7 +87,7 @@ void GFXGLVertexDecl::updateActiveVertexAttrib(U32 lastActiveMask) const
 
 void GFXGLVertexDecl::_initVerticesFormat2()
 {
-   for( U32 i=0; i < GFXGLDevice::MAX_VERTEX_STREAMS; ++i )
+   for( U32 i=0; i < GFXGL->getNumVertexStreams(); ++i )
    {
       _initVerticesFormat(i);
    }

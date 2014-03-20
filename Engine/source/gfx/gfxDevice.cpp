@@ -112,7 +112,7 @@ GFXDevice::GFXDevice()
    // Vertex buffer cache
    mCurrVertexDecl = NULL;
    mVertexDeclDirty = false;
-   for ( U32 i=0; i < VERTEX_STREAM_COUNT; i++ )
+   for ( U32 i=0; i < MAX_VERTEX_STREAM_COUNT; i++ )
    {
       mVertexBufferDirty[i] = false;
       mVertexBufferFrequency[i] = 0;
@@ -138,7 +138,7 @@ GFXDevice::GFXDevice()
    }
 
    mTexelPixelOffset = true;
-   mVertexStreamSupported = VERTEX_STREAM_COUNT;
+   mNumVertexStream = MAX_VERTEX_STREAM_COUNT;
 
    mLightsDirty = false;
    for(U32 i = 0; i < LIGHT_STAGE_COUNT; i++)
@@ -258,7 +258,7 @@ GFXDevice::~GFXDevice()
 
    // Clean up our current buffers.
    mCurrentPrimitiveBuffer = NULL;
-   for ( U32 i=0; i < VERTEX_STREAM_COUNT; i++ )
+   for ( U32 i=0; i < MAX_VERTEX_STREAM_COUNT; i++ )
       mCurrentVertexBuffer[i] = NULL;
 
    // Clear out our current texture references
@@ -371,7 +371,7 @@ void GFXDevice::updateStates(bool forceSetAll /*=false*/)
 
       setVertexDecl( mCurrVertexDecl );
 
-      for ( U32 i=0; i < getVertexStreamSupported(); i++ )
+      for ( U32 i=0; i < getNumVertexStreams(); i++ )
          setVertexStream( i, mCurrentVertexBuffer[i], mVertexBufferFrequency[i] );
       
 
@@ -475,7 +475,7 @@ void GFXDevice::updateStates(bool forceSetAll /*=false*/)
    }
 
    // Update the vertex buffers.
-   for ( U32 i=0; i < VERTEX_STREAM_COUNT; i++ )
+   for ( U32 i=0; i < MAX_VERTEX_STREAM_COUNT; i++ )
    {
       if ( mVertexBufferDirty[i] || mVertexBufferFrequencyDirty[i])
       {
