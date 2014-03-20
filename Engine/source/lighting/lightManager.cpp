@@ -304,7 +304,7 @@ void LightManager::_update4LightConsts(   const SceneData &sgData,
 
    // Skip over gathering lights if we don't have to!
    if (  lightPositionSC->isValid() || 
-         lightDiffuseSC->isValid() /*||   // TODO OPENGL
+         lightDiffuseSC->isValid() /*||   // TODO OPENGL REVIEW
          lightInvRadiusSqSC->isValid() ||
          lightSpotDirSC->isValid() ||
          lightSpotAngleSC->isValid() ||

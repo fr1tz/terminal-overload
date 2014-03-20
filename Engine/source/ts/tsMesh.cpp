@@ -49,7 +49,6 @@
 #include "renderInstance/renderPassManager.h"
 #include "materials/customMaterialDefinition.h"
 #include "gfx/util/triListOpt.h"
-#include "gfx/gfxDebugEvent.h"
 #include "util/triRayCheck.h"
 
 #include "opcode/Opcode.h"
@@ -137,8 +136,7 @@ void TSMesh::render( TSMaterialList *materials,
                      bool isSkinDirty,
                      const Vector<MatrixF> &transforms, 
                      TSVertexBufferHandle &vertexBuffer,
-                     GFXPrimitiveBufferHandle &primitiveBuffer,
-                     const char* meshName )
+                     GFXPrimitiveBufferHandle &primitiveBuffer )
 {
    // These are only used by TSSkinMesh.
    TORQUE_UNUSED( isSkinDirty );   
@@ -147,10 +145,10 @@ void TSMesh::render( TSMaterialList *materials,
    TORQUE_UNUSED( primitiveBuffer );
 
    // Pass our shared VB.
-   innerRender( materials, rdata, mVB, mPB, meshName );
+   innerRender( materials, rdata, mVB, mPB );
 }
 
-void TSMesh::innerRender( TSMaterialList *materials, const TSRenderState &rdata, TSVertexBufferHandle &vb, GFXPrimitiveBufferHandle &pb, const char* meshName )
+void TSMesh::innerRender( TSMaterialList *materials, const TSRenderState &rdata, TSVertexBufferHandle &vb, GFXPrimitiveBufferHandle &pb )
 {
    PROFILE_SCOPE( TSMesh_InnerRender );
 
@@ -166,7 +164,6 @@ void TSMesh::innerRender( TSMaterialList *materials, const TSRenderState &rdata,
 
    MeshRenderInst *coreRI = renderPass->allocInst<MeshRenderInst>();
    coreRI->type = RenderPassManager::RIT_Mesh;
-   coreRI->meshName = meshName;
 
    const MatrixF &objToWorld = GFX->getWorldMatrix();
 
@@ -1483,8 +1480,7 @@ void TSSkinMesh::render(   TSMaterialList *materials,
                            bool isSkinDirty,
                            const Vector<MatrixF> &transforms, 
                            TSVertexBufferHandle &vertexBuffer,
-                           GFXPrimitiveBufferHandle &primitiveBuffer,
-                           const char* meshName)
+                           GFXPrimitiveBufferHandle &primitiveBuffer )
 {
    PROFILE_SCOPE(TSSkinMesh_render);
 
@@ -1509,12 +1505,11 @@ void TSSkinMesh::render(   TSMaterialList *materials,
       updateSkin( transforms, vertexBuffer, primitiveBuffer );
       
       // Update GFX vertex buffer
-      GFXDEBUGEVENT_SCOPE_EX( TSSkinMesh_createVBIB, ColorI::GREEN, avar("TSSkinMesh_createVBIB: %s", meshName) );
       _createVBIB( vertexBuffer, primitiveBuffer );
    }
 
    // render...
-   innerRender( materials, rdata, vertexBuffer, primitiveBuffer, meshName );   
+   innerRender( materials, rdata, vertexBuffer, primitiveBuffer );   
 }
 
 bool TSSkinMesh::buildPolyList( S32 frame, AbstractPolyList *polyList, U32 &surfaceKey, TSMaterialList *materials )

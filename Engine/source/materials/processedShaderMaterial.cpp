@@ -517,7 +517,7 @@ bool ProcessedShaderMaterial::_createPasses( MaterialFeatureData &stageFeatures,
       passData.mNumTexReg += numTexReg;
       passData.mFeatureData.features.addFeature( *info.type );
 
-      U32 oldTexNumber = texIndex;
+      U32 oldTexNumber = texIndex; // TODO OPENL REVIEW
       info.feature->setTexData( mStages[stageNum], stageFeatures, passData, texIndex );
 
 #if defined(TORQUE_DEBUG) && defined( TORQUE_OPENGL)

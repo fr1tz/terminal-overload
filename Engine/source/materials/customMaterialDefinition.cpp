@@ -137,7 +137,8 @@ bool CustomMaterial::onAdd()
          	logError("sampler declarations must have a sampler name, e.g. sampler[\"diffuseMap\"]");
             return false;
          }
-
+         
+         // TODO OPENGL REVIEW
          int pos;
          String samplerName = entry->slotName + dStrlen(samplerDecl);
          samplerName.insert(0, '$');

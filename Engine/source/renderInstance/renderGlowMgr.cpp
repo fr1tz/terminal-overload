@@ -195,8 +195,6 @@ void RenderGlowMgr::render( SceneRenderState *state )
             if ( newPassNeeded( ri, passRI ) )
                break;
 
-            GFXDEBUGEVENT_SCOPE_EX( RenderGlowMgr_RenderLoop, ColorI::GREEN, avar("%s", passRI->meshName) );
-
             matrixSet.setWorld(*passRI->objectToWorld);
             matrixSet.setView(*passRI->worldToCamera);
             matrixSet.setProjection(*passRI->projection);
