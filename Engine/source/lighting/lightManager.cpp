@@ -304,11 +304,11 @@ void LightManager::_update4LightConsts(   const SceneData &sgData,
 
    // Skip over gathering lights if we don't have to!
    if (  lightPositionSC->isValid() || 
-         lightDiffuseSC->isValid() /*||   // TODO OPENGL REVIEW
+         lightDiffuseSC->isValid() ||
          lightInvRadiusSqSC->isValid() ||
          lightSpotDirSC->isValid() ||
          lightSpotAngleSC->isValid() ||
-		 lightSpotFalloffSC->isValid()*/)
+		 lightSpotFalloffSC->isValid() )
    {
       PROFILE_SCOPE( LightManager_Update4LightConsts_setLights );
 

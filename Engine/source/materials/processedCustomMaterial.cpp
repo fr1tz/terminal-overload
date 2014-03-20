@@ -241,8 +241,7 @@ bool ProcessedCustomMaterial::init( const FeatureSet &features,
    mDefaultParameters = allocMaterialParameters();
    setMaterialParameters( mDefaultParameters, 0 );
    mStateHint.init( this );
-
-   // TODO OPENGL REVIEW
+   
    for(int i = 0; i < mMaxTex; i++)
    {
       ShaderConstHandles *handles = _getShaderConstHandles( mPasses.size()-1 );
