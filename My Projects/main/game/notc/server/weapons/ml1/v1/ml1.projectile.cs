@@ -25,11 +25,13 @@ datablock ProjectileData(WpnML1Projectile)
 
    //lightDesc = BulletProjectileLightDesc;
 
-   directDamage        = 0;
-   radiusDamage        = 0;
-   damageRadius        = 0;
-   areaImpulse         = 0;
-   impactForce         = 0;
+	// script damage properties...
+	impactDamage        = 0;
+	impactImpulse       = 1000;
+	splashDamage        = 40;
+	splashDamageRadius  = 18;
+	splashDamageFalloff = $SplashDamageFalloff::Linear;
+	splashImpulse       = 0;
    
 	energyDrain = 2; // how much energy does firing this projectile drain?
 

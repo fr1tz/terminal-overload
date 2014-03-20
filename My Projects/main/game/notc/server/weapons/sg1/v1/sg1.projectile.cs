@@ -14,11 +14,12 @@ datablock ShotgunProjectileData(WpnSG1Projectile)
 
    //lightDesc = BulletProjectileLightDesc;
 
-   directDamage        = 10;
-   radiusDamage        = 0;
-   damageRadius        = 0;
-   areaImpulse         = 0;
-   impactForce         = 500;
+	// script damage properties...
+	impactDamage       = 10;
+	impactImpulse      = 500;
+	splashDamage       = 0;
+	splashDamageRadius = 0;
+	splashImpulse      = 0;
    
 	energyDrain = 3; // how much energy does firing this projectile drain?
 

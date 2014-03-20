@@ -8,20 +8,119 @@
 function ProjectileData::onCollision(%data, %proj, %col, %fade, %pos, %normal)
 {
    //echo("ProjectileData::onCollision("@%data.getName()@", "@%proj@", "@%col.getClassName()@", "@%fade@", "@%pos@", "@%normal@")");
+   
+	if( !(%col.getType() & $TypeMasks::ShapeBaseObjectType) )
+		return;
 
-   // Apply damage to the object all shape base objects
-   if (%data.directDamage > 0)
-   {
-      if (%col.getType() & ($TypeMasks::ShapeBaseObjectType))
-         %col.damage(%proj, %pos, %data.directDamage, %data.damageType);
-   }
+	// apply impulse...
+	if(%data.impactImpulse > 0)
+	{
+		%impulseVec = VectorScale(%normal, -%data.impactImpulse);
+		%col.applyImpulse(%pos, %impulseVec);
+	}
+
+	// bail out here if projectile doesn't do impact damage...
+	if( %data.impactDamage == 0 )
+		return;
+
+	// call damage func...
+	%col.damage(%proj, %pos, %data.impactDamage, "Impact");
+
+	// if projectile was fired by a player, regain some of his energy...
+   %sourceObject = %proj.sourceObject;
+   %regainEnergy = false;
+   if(isObject(%sourceObject))
+      %regainEnergy = %sourceObject.getClassName() $= "Player";
+	if(%regainEnergy)
+	{
+		%newSrcEnergy = %sourceObject.getEnergyLevel() + %data.energyDrain;
+		%sourceObject.setEnergyLevel(%newSrcEnergy);
+	}
 }
 
-function ProjectileData::onExplode(%data, %proj, %position, %mod)
+function ProjectileData::onExplode(%data, %proj, %pos, %mod)
 {
    //echo("ProjectileData::onExplode("@%data.getName()@", "@%proj@", "@%position@", "@%mod@")");
 
-   // Damage objects within the projectiles damage radius
-   if (%data.damageRadius > 0)
-      radiusDamage(%proj, %position, %data.damageRadius, %data.radiusDamage, %data.damageType, %data.areaImpulse);
+   // can we bail out early?
+   if(%data.splashDamageRadius == 0)
+      return;
+
+	%radius = %data.splashDamageRadius;
+	%damage = %data.splashDamage;
+	%damageType = "Splash";
+ 
+   %sourceObject = %proj.sourceObject;
+   %regainEnergy = false;
+   if(isObject(%sourceObject))
+      %regainEnergy = %sourceObject.getClassName() $= "Player";
+
+	%targets = new SimSet();
+
+	InitContainerRadiusSearch(%pos, %radius, $TypeMasks::ShapeBaseObjectType);
+	while( (%targetObject = containerSearchNext()) != 0 )
+		%targets.add(%targetObject);
+
+	for(%idx = %targets.getCount()-1; %idx >= 0; %idx-- )
+	{
+		%targetObject = %targets.getObject(%idx);
+
+      if(%targetObject == %proj)
+         continue;
+
+        // the observer cameras are ShapeBases; ignore them...
+      if(%targetObject.getType() & $TypeMasks::CameraObjectType)
+         continue;
+
+		%coverage = calcExplosionCoverage(%pos, %targetObject,
+			$TypeMasks::InteriorObjectType |  $TypeMasks::TerrainObjectType |
+			$TypeMasks::ForceFieldObjectType | $TypeMasks::VehicleObjectType |
+			$TypeMasks::TurretObjectType);
+
+		if (%coverage == 0)
+			continue;
+
+		%dist1 = containerSearchCurrRadiusDist();
+         // FIXME: can't call containerSearchCurrRadiusDist(); from here
+
+      %center = %targetObject.getWorldBoxCenter();
+		%col = containerRayCast(%pos, %center, $TypeMasks::ShapeBaseObjectType, %obj);
+		%col = getWord(%col, 1) SPC getWord(%col, 2) SPC getWord(%col, 3);
+		%dist2 = VectorLen(VectorSub(%col, %pos));
+
+		%dist = %dist2;
+		%prox = %radius - %dist;
+		if(%this.splashDamageFalloff == $SplashDamageFalloff::Exponential)
+			%distScale = (%prox*%prox) / (%radius*%radius);
+		else if(%this.splashDamageFalloff == $SplashDamageFalloff::None)
+			%distScale = 1;
+		else
+			%distScale = %prox / %radius;
+
+		// apply impulse...
+		if(%data.splashImpulse > 0)
+		{
+			%impulseVec = VectorNormalize(VectorSub(%center, %pos));
+			%impulseVec = VectorScale(%impulseVec, %data.splashImpulse);
+			%targetObject.applyImpulse(%pos, %impulseVec);
+		}
+
+		// bail out here if projectile doesn't do splash damage...
+		if( %data.splashDamage == 0 )
+			continue;
+
+		// call damage func...
+		%targetObject.damage(%obj, %pos,
+			%damage * %coverage * %distScale, %damageType);
+
+		// if projectile was fired by a player, regain some of his energy...
+		if(%regainEnergy)
+		{
+			%newSrcEnergy = %sourceObject.getEnergyLevel()
+				+ %data.energyDrain*%distScale;
+			%sourceObject.setEnergyLevel(%newSrcEnergy);
+		}
+	}
+
+	%targets.delete();
 }

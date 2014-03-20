@@ -36,6 +36,8 @@ datablock ShotgunProjectileData(WpnMGL1PseudoProjectile)
 	muzzleSpreadRadius = 0.0;
 	referenceSpreadRadius = 0.0;
 	referenceSpreadDistance = 50;
+ 
+   energyDrain = 16;
 
    muzzleVelocity      = 9999;
    velInheritFactor    = 0;
@@ -89,11 +91,15 @@ datablock ProjectileData(WpnMGL1Projectile)
 
    //lightDesc = BulletProjectileLightDesc;
 
-   directDamage        = 0;
-   radiusDamage        = 30;
-   damageRadius        = 2;
-   areaImpulse         = 0;
-   impactForce         = 2500;
+	// script damage properties...
+	impactDamage       = 0;
+	impactImpulse      = 2500;
+	splashDamage       = 30;
+	splashDamageRadius = 2;
+	splashImpulse      = 0;
+	bypassDamageBuffer = false;
+ 
+   energyDrain = 8;
 
    explosion           = "WpnMGL1ProjectileExplosion";
    decal               = "WpnMGL1ProjectileDecal";
@@ -113,18 +119,6 @@ datablock ProjectileData(WpnMGL1Projectile)
 
 function WpnMGL1Projectile::onCollision(%this,%obj,%col,%fade,%pos,%normal)
 {
-   if(!(%col.getType() & $TypeMasks::GameBaseObjectType))
-      return;
-
-   %effectiveRange = 25;
-   %dist = VectorLen(VectorSub(%pos, %obj.initialPosition));
-   %distFactor = 1;
-   if(%dist > %effectiveRange)
-      %distFactor = 1 - (%dist-%effectiveRange) / (%this.range-%effectiveRange);
-      
-   error(%dist SPC %distFactor);
-   %damage = %this.directDamage * %distFactor;
-
-   %col.damage(%obj,%pos,%this.directDamage,"BulletProjectile");
+   Parent::onCollision(%this,%obj,%col,%fade,%pos,%normal);
 }
 

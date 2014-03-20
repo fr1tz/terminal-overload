@@ -32,11 +32,13 @@ datablock ShotgunProjectileData(WpnSR1Projectile)
 
    //lightDesc = BulletProjectileLightDesc;
 
-   directDamage        = 40;
-   radiusDamage        = 0;
-   damageRadius        = 0;
-   areaImpulse         = 0;
-   impactForce         = 6000;
+	// script damage properties...
+	impactDamage       = 40;
+	impactImpulse      = 6000;
+	splashDamage       = 0;
+	splashDamageRadius = 0;
+	splashImpulse      = 0;
+	bypassDamageBuffer = true;
 
    explosion           = "WpnSR1ProjectileExplosion";
    decal               = "WpnSR1ProjectileDecal";
