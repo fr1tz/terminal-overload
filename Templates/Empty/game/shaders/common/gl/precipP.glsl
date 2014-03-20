@@ -25,8 +25,8 @@
 //-----------------------------------------------------------------------------
 uniform sampler2D diffuseMap;
 
-VARYING vec4 color;
-VARYING vec2 texCoord;
+in vec4 color;
+in vec2 texCoord;
 
 //-----------------------------------------------------------------------------
 // Main                                                                        

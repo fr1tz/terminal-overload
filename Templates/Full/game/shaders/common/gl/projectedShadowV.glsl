@@ -27,9 +27,9 @@ in vec4 vColor;
 in vec2 vTexCoord0;
 in vec2 vTexCoord1;
 
-VARYING vec2 texCoord;
-VARYING vec4 color;
-VARYING float fade;
+out vec2 texCoord;
+out vec4 color;
+out float fade;
 
 uniform mat4 modelview;
 uniform float shadowLength;

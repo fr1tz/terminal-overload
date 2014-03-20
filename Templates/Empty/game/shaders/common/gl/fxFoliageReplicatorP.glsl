@@ -26,8 +26,8 @@
 uniform sampler2D diffuseMap, alphaMap;
 uniform vec4 groundAlpha;
 
-VARYING vec4 color, groundAlphaCoeff;
-VARYING vec2 outTexCoord, alphaLookup;
+in vec4 color, groundAlphaCoeff;
+in vec2 outTexCoord, alphaLookup;
 
 //-----------------------------------------------------------------------------
 // Main                                                                        

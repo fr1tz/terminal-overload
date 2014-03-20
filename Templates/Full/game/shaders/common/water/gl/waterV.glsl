@@ -50,29 +50,29 @@ in vec4 vTexCoord1;
 
 //ConnectData OUT
 //
-   VARYING vec4   hpos             ;
+   out vec4   hpos             ;
 
 // TexCoord 0 and 1 (xy,zw) for ripple texture lookup
-VARYING vec4 rippleTexCoord01;
+out vec4 rippleTexCoord01;
 
    // xy is TexCoord 2 for ripple texture lookup 
    // z is the Worldspace unit distance/depth of this vertex/pixel
    // w is amount of the crestFoam ( more at crest of waves ).
-   VARYING vec4   rippleTexCoord2  ;
+   out vec4   rippleTexCoord2  ;
 
 // Screenspace vert position BEFORE wave transformation
-VARYING vec4 posPreWave;
+out vec4 posPreWave;
 
 // Screenspace vert position AFTER wave transformation
-VARYING vec4 posPostWave;
+out vec4 posPostWave;
 
    // Objectspace vert position BEFORE wave transformation	
    // w coord is world space z position.
-   VARYING vec4   objPos           ;  
+   out vec4   objPos           ;  
 
-   VARYING vec4   foamTexCoords    ;
+   out vec4   foamTexCoords    ;
 
-   VARYING mat3   tangentMat     ;
+   out mat3   tangentMat     ;
 //
 
 #define OUT_hpos hpos

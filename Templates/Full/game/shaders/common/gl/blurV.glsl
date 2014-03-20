@@ -31,7 +31,7 @@ in vec2 vTexCoord0;
 uniform mat4 modelview;
 uniform vec2 offset0, offset1, offset2, offset3;
 
-VARYING vec2 texc0, texc1, texc2, texc3;
+out vec2 texc0, texc1, texc2, texc3;
 
 void main()
 {

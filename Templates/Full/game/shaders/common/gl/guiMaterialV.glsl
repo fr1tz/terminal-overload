@@ -25,8 +25,8 @@ in vec2 vTexCoord0;
 
 uniform mat4x4 modelview;
 
-VARYING vec4 hpos;
-VARYING vec2 uv0;
+out vec4 hpos;
+out vec2 uv0;
 
 
 void main()

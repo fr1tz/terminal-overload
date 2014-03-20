@@ -35,9 +35,9 @@ in vec2 vTexCoord0;
 #define IN_texcoord  vTexCoord0
 
 #define OUT_position gl_Position
-VARYING vec2 texcoord;
+out vec2 texcoord;
 #define OUT_texcoord texcoord
-VARYING vec4 offset[2];
+out vec4 offset[2];
 #define OUT_offset offset
 
 uniform vec2 texSize0;

@@ -25,7 +25,7 @@
 #include "../../../gl/hlslCompat.glsl"
 #include "shadergen:/autogenConditioners.h"
 
-VARYING vec4 texCoords[8];
+in vec4 texCoords[8];
 #define IN_texCoords texCoords
 
 uniform sampler2D inputTex;

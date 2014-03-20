@@ -29,10 +29,10 @@ in vec3 vTangent;
 in vec2 vTexCoord0;
 
 uniform vec4 rtParams0;
-VARYING vec4 hpos;
-VARYING vec2 uv0;
-VARYING vec3 wsEyeRay;
-VARYING vec3 vsEyeRay;
+out vec4 hpos;
+out vec2 uv0;
+out vec3 wsEyeRay;
+out vec3 vsEyeRay;
 
 void main()
 {   

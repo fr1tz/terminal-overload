@@ -28,15 +28,15 @@ in vec3 vBinormal;
 in vec3 vTangent;
 in vec2 vTexCoord0;
 
-VARYING vec4 texCoord12;
+out vec4 texCoord12;
 #define OUT_texCoord12 texCoord12
-VARYING vec4 texCoord34;
+out vec4 texCoord34;
 #define OUT_texCoord34 texCoord34
-VARYING vec3 vLightTS; // light vector in tangent space, denormalized
+out vec3 vLightTS; // light vector in tangent space, denormalized
 #define OUT_vLightTS vLightTS
-VARYING vec3 vViewTS;  // view vector in tangent space, denormalized
+out vec3 vViewTS;  // view vector in tangent space, denormalized
 #define OUT_vViewTS vViewTS
-VARYING float worldDist;
+out float worldDist;
 #define OUT_worldDist worldDist
 
 //-----------------------------------------------------------------------------

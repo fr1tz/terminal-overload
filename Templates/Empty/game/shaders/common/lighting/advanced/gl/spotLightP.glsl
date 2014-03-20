@@ -28,9 +28,9 @@
 #include "softShadow.glsl"
 #include "../../../gl/lighting.glsl"
 
-VARYING vec4 wsEyeDir;
-VARYING vec4 ssPos;
-VARYING vec4 vsEyeDir;
+in vec4 wsEyeDir;
+in vec4 ssPos;
+in vec4 vsEyeDir;
 
 #define IN_wsEyeDir wsEyeDir
 #define IN_ssPos ssPos

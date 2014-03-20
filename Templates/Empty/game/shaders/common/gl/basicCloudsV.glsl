@@ -35,7 +35,7 @@ uniform float     texScale;
 uniform vec2    texDirection;
 uniform vec2    texOffset;
 
-VARYING vec2 texCoord;
+out vec2 texCoord;
 #define OUT_texCoord texCoord
 
 void main()

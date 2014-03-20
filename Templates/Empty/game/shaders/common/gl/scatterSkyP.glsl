@@ -25,15 +25,15 @@
 
 
 // Conn
-VARYING vec4  rayleighColor;
+in vec4  rayleighColor;
 #define IN_rayleighColor rayleighColor
-VARYING vec4  mieColor;
+in vec4  mieColor;
 #define IN_mieColor mieColor
-VARYING vec3  v3Direction;
+in vec3  v3Direction;
 #define IN_v3Direction v3Direction
-VARYING float zPosition;
+in float zPosition;
 #define IN_zPosition zPosition
-VARYING vec3  pos;
+in vec3  pos;
 #define IN_pos pos
 
 uniform samplerCube nightSky ;

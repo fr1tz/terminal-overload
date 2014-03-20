@@ -22,7 +22,7 @@
 
 #include "../../../gl/hlslCompat.glsl"
 
-VARYING vec2 uv0;
+in vec2 uv0;
 #define IN_uv0 uv0
 
 void main()

@@ -24,7 +24,7 @@
 
 uniform sampler2D diffuseMap;
 
-VARYING vec2 uv;
+in vec2 uv;
 
 uniform vec2 oneOverTargetSize;
 

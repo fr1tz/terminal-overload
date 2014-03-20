@@ -29,9 +29,9 @@
 #include "../../shadowMap/shadowMapIO_GLSL.h"
 #include "softShadow.glsl"
 
-VARYING vec4 wsEyeDir;
-VARYING vec4 ssPos;
-VARYING vec4 vsEyeDir;
+in vec4 wsEyeDir;
+in vec4 ssPos;
+in vec4 vsEyeDir;
 
 #ifdef USE_COOKIE_TEX
 

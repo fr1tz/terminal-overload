@@ -30,9 +30,9 @@ in vec2 vTexCoord0;
 #define In_color  vColor
 #define In_uv0    vTexCoord0
 
-VARYING vec4 color;
-VARYING vec2 uv0;
-VARYING vec4 pos;
+out vec4 color;
+out vec2 uv0;
+out vec4 pos;
 
 #define OUT_hpos gl_Position
 #define OUT_color color

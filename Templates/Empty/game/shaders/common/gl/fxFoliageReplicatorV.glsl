@@ -35,8 +35,8 @@ uniform vec3 CameraPos;
 uniform float GlobalSwayPhase, SwayMagnitudeSide, SwayMagnitudeFront,
               GlobalLightPhase, LuminanceMagnitude, LuminanceMidpoint, DistanceRange;
               
-VARYING vec4 color, groundAlphaCoeff;
-VARYING vec2 outTexCoord, alphaLookup;
+out vec4 color, groundAlphaCoeff;
+out vec2 outTexCoord, alphaLookup;
 
 //-----------------------------------------------------------------------------
 // Main                                                                        

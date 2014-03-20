@@ -46,15 +46,15 @@ in vec2 vTexCoord0;
 #define IN_color vColor
 
 // This is the shader output data.
-VARYING vec4  rayleighColor;
+out vec4  rayleighColor;
 #define OUT_rayleighColor rayleighColor
-VARYING vec4  mieColor;
+out vec4  mieColor;
 #define OUT_mieColor mieColor
-VARYING vec3  v3Direction;
+out vec3  v3Direction;
 #define OUT_v3Direction v3Direction
-VARYING float zPosition;
+out float zPosition;
 #define OUT_zPosition zPosition
-VARYING vec3  pos;
+out vec3  pos;
 #define OUT_pos pos
  
 uniform mat4 modelView;

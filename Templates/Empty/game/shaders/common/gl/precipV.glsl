@@ -30,8 +30,8 @@ uniform mat4 modelview;
 uniform vec3 cameraPos, ambient;
 uniform vec2 fadeStartEnd;
 
-VARYING vec4 color;
-VARYING vec2 texCoord;
+out vec4 color;
+out vec2 texCoord;
 
 //-----------------------------------------------------------------------------
 // Main

@@ -23,8 +23,8 @@
 #include "torque.glsl"
 #include "hlslCompat.glsl"
 
-VARYING vec4 offscreenPos;
-VARYING vec4 backbufferPos;
+in vec4 offscreenPos;
+in vec4 backbufferPos;
 
 #define IN_offscreenPos offscreenPos
 #define IN_backbufferPos backbufferPos

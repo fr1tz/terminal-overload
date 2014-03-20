@@ -29,10 +29,10 @@
 #include "../../shadowMap/shadowMapIO_GLSL.h"
 #include "softShadow.glsl"
 
-VARYING vec4 hpos;
-VARYING vec2 uv0;
-VARYING vec3 wsEyeRay;
-VARYING vec3 vsEyeRay;
+in vec4 hpos;
+in vec2 uv0;
+in vec3 wsEyeRay;
+in vec3 vsEyeRay;
 
 uniform sampler2D ShadowMap ;
 

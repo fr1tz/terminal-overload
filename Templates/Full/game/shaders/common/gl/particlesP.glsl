@@ -41,9 +41,9 @@
 
 #define CLIP_Z // TODO: Make this a proper macro
 
-VARYING vec4 color;
-VARYING vec2 uv0;
-VARYING vec4 pos;
+in vec4 color;
+in vec2 uv0;
+in vec4 pos;
 
 #define IN_color color
 #define IN_uv0 uv0

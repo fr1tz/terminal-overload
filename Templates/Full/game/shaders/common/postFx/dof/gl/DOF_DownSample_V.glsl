@@ -33,17 +33,17 @@ in vec3 vTexCoord1;
 
 #define OUT_position gl_Position
 
-VARYING vec2 tcColor0;
+out vec2 tcColor0;
 #define OUT_tcColor0 tcColor0
-VARYING vec2 tcColor1;
+out vec2 tcColor1;
 #define OUT_tcColor1 tcColor1
-VARYING vec2 tcDepth0;
+out vec2 tcDepth0;
 #define OUT_tcDepth0 tcDepth0
-VARYING vec2 tcDepth1;
+out vec2 tcDepth1;
 #define OUT_tcDepth1 tcDepth1
-VARYING vec2 tcDepth2;
+out vec2 tcDepth2;
 #define OUT_tcDepth2 tcDepth2
-VARYING vec2 tcDepth3;
+out vec2 tcDepth3;
 #define OUT_tcDepth3 tcDepth3
 
 

@@ -26,15 +26,15 @@
 // Structures                                                                  
 //-----------------------------------------------------------------------------
 //ConnectData
-VARYING vec4 texCoord12;
+in vec4 texCoord12;
 #define IN_texCoord12 texCoord12
-VARYING vec4 texCoord34;
+in vec4 texCoord34;
 #define IN_texCoord34 texCoord34
-VARYING vec3 vLightTS; // light vector in tangent space, denormalized
+in vec3 vLightTS; // light vector in tangent space, denormalized
 #define IN_vLightTS vLightTS
-VARYING vec3 vViewTS;  // view vector in tangent space, denormalized
+in vec3 vViewTS;  // view vector in tangent space, denormalized
 #define IN_vViewTS vViewTS
-VARYING float worldDist;
+in float worldDist;
 #define IN_worldDist worldDist
 
 //-----------------------------------------------------------------------------

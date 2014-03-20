@@ -25,8 +25,8 @@
 in vec2  vTexCoord0;
 #define uvCoord vTexCoord0
 
-VARYING vec4 offscreenPos;
-VARYING vec4 backbufferPos;
+out vec4 offscreenPos;
+out vec4 backbufferPos;
 
 #define OUT_hpos gl_Position
 #define OUT_offscreenPos offscreenPos

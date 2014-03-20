@@ -34,17 +34,17 @@ uniform float maxWorldCoC;
 //uniform vec2 dofEqWeapon;  
 //uniform vec2 dofRowDelta;  // vec2( 0, 0.25 / renderTargetHeight )  
 
-VARYING vec2 tcColor0;
+in vec2 tcColor0;
 #define IN_tcColor0 tcColor0
-VARYING vec2 tcColor1;
+in vec2 tcColor1;
 #define IN_tcColor1 tcColor1
-VARYING vec2 tcDepth0;
+in vec2 tcDepth0;
 #define IN_tcDepth0 tcDepth0
-VARYING vec2 tcDepth1;
+in vec2 tcDepth1;
 #define IN_tcDepth1 tcDepth1
-VARYING vec2 tcDepth2;
+in vec2 tcDepth2;
 #define IN_tcDepth2 tcDepth2
-VARYING vec2 tcDepth3;
+in vec2 tcDepth3;
 #define IN_tcDepth3 tcDepth3
 
 void main()

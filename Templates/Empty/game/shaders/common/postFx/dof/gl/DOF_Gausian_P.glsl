@@ -23,23 +23,23 @@
 #include "../../../gl/hlslCompat.glsl"
 #include "shadergen:/autogenConditioners.h"
 
-VARYING vec3 wsEyeRay;
+in vec3 wsEyeRay;
 #define IN_wsEyeRay wsEyeRay
-VARYING vec2 uv0;
+in vec2 uv0;
 #define IN_uv0 uv0
-VARYING vec2 uv1;
+in vec2 uv1;
 #define IN_uv1 uv1
-VARYING vec2 uv2;
+in vec2 uv2;
 #define IN_uv2 uv2
-VARYING vec2 uv3;
+in vec2 uv3;
 #define IN_uv3 uv3
-VARYING vec2 uv4;
+in vec2 uv4;
 #define IN_uv4 uv4
-VARYING vec2 uv5;
+in vec2 uv5;
 #define IN_uv5 uv5
-VARYING vec2 uv6;
+in vec2 uv6;
 #define IN_uv6 uv6
-VARYING vec2 uv7;
+in vec2 uv7;
 #define IN_uv7 uv7
 
 #define OUT OUT_FragColor0

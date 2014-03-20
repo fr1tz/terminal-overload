@@ -28,8 +28,8 @@
 
 #include "../../../gl/hlslCompat.glsl"
 
-VARYING vec2 texcoord;
-VARYING vec4 offset[2];
+in vec2 texcoord;
+in vec4 offset[2];
 
 uniform sampler2D blendMap;
 uniform sampler2D colorMapL;

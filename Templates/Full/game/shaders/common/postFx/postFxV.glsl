@@ -31,11 +31,11 @@ uniform vec4 rtParams1;
 uniform vec4 rtParams2;
 uniform vec4 rtParams3;
 
-VARYING vec2 uv0;
-VARYING vec2 uv1;
-VARYING vec2 uv2;
-VARYING vec2 uv3;
-VARYING vec3 wsEyeRay;                 
+out vec2 uv0;
+out vec2 uv1;
+out vec2 uv2;
+out vec2 uv3;
+out vec3 wsEyeRay;                 
 
 
 void main()

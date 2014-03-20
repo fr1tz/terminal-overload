@@ -26,7 +26,7 @@
 uniform vec4 kernel;
 uniform sampler2D diffuseMap;
 
-VARYING vec2 texc0, texc1, texc2, texc3;
+in vec2 texc0, texc1, texc2, texc3;
 
 void main()
 {

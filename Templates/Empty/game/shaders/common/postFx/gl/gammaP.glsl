@@ -29,7 +29,7 @@ uniform sampler1D colorCorrectionTex;
 
 uniform float OneOverGamma;
 
-VARYING vec2 uv0;
+in vec2 uv0;
 
 void main()
 {

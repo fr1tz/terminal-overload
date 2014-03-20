@@ -28,15 +28,15 @@ in vec2 vTexCoord0;
 
 uniform vec2 texSize0;
 
-VARYING vec4 hpos; //POSITION;
-VARYING vec2 uv0; //TEXCOORD0;
-VARYING vec2 uv1; //TEXCOORD1;
-VARYING vec2 uv2; //TEXCOORD2;
-VARYING vec2 uv3; //TEXCOORD3;
-VARYING vec2 uv4; //TEXCOORD4;
-VARYING vec2 uv5; //TEXCOORD5;
-VARYING vec2 uv6; //TEXCOORD6;
-VARYING vec2 uv7; //TEXCOORD7;
+out vec4 hpos; //POSITION;
+out vec2 uv0; //TEXCOORD0;
+out vec2 uv1; //TEXCOORD1;
+out vec2 uv2; //TEXCOORD2;
+out vec2 uv3; //TEXCOORD3;
+out vec2 uv4; //TEXCOORD4;
+out vec2 uv5; //TEXCOORD5;
+out vec2 uv6; //TEXCOORD6;
+out vec2 uv7; //TEXCOORD7;
 
 void main()
 {  

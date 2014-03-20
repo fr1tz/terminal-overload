@@ -33,7 +33,7 @@ in vec2 vTexCoord0;
 //-----------------------------------------------------------------------------
 // Constants
 //-----------------------------------------------------------------------------
-VARYING vec4 texCoords[8];
+out vec4 texCoords[8];
 #define Out_texCoords texCoords
 
 #define Out_hpos gl_Position

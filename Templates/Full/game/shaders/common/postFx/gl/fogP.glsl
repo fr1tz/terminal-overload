@@ -31,8 +31,8 @@ uniform vec4    fogColor;
 uniform vec3    fogData;
 uniform vec4    rtParams0;
 
-VARYING vec2 uv0;
-VARYING vec3 wsEyeRay;
+in vec2 uv0;
+in vec3 wsEyeRay;
 
 void main()
 {   

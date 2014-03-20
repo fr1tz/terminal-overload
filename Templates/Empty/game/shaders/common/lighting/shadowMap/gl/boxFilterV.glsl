@@ -25,7 +25,7 @@ in vec2 vTexCoord0;
 
 uniform mat4 modelview;
 
-VARYING vec2 tex0;
+out vec2 tex0;
 
 void main()
 {

@@ -24,7 +24,7 @@
 #include "hlslCompat.glsl"
 
 //ConnectData
-VARYING vec2 texCoord;
+in vec2 texCoord;
 #define IN_texCoord texCoord
 
 

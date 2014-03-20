@@ -29,7 +29,7 @@
 
 uniform sampler2D colorSampler;  // Output of DofNearCoc()  
 
-VARYING vec4 texCoords;
+in vec4 texCoords;
 #define IN_texCoords texCoords
 
 void main()

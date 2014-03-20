@@ -28,8 +28,8 @@ in vec2 vTexCoord0;
 
 uniform mat4 modelview;
 
-VARYING vec2 TEX0;
-VARYING vec4 TEX1;
+out vec2 TEX0;
+out vec4 TEX1;
 
 //-----------------------------------------------------------------------------
 // Main                                                                        

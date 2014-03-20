@@ -36,8 +36,8 @@ uniform vec3 lumaCoefficients;
 uniform float threshold;
 uniform float depthThreshold;
 
-VARYING vec2 texcoord;
-VARYING vec4 offset[2];
+in vec2 texcoord;
+in vec4 offset[2];
 
 void main()
 {

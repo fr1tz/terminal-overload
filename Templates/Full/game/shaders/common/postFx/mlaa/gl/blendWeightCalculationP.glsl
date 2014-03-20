@@ -28,7 +28,7 @@
 
 #include "../../../gl/hlslCompat.glsl"
 
-VARYING vec2 texcoord;
+in vec2 texcoord;
 
 uniform sampler2D edgesMap;
 uniform sampler2D edgesMapL;

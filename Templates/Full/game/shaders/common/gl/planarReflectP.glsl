@@ -26,8 +26,8 @@
 uniform sampler2D diffuseMap, refractMap;
 uniform vec4 shadeColor;
 
-VARYING vec2 TEX0;
-VARYING vec4 TEX1;
+in vec2 TEX0;
+in vec4 TEX1;
 
 //-----------------------------------------------------------------------------
 // Main                                                                        

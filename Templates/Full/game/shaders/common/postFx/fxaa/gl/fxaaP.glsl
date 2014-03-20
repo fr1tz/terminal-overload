@@ -31,8 +31,8 @@
 uniform sampler2D colorTex ;
 uniform vec2 oneOverTargetSize;
 
-VARYING vec4 hpos;
-VARYING vec2 uv0;
+in vec4 hpos;
+in vec2 uv0;
 
 void main()
 {

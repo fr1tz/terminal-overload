@@ -28,10 +28,10 @@ uniform float specularPower;
 uniform vec4 ambient;
 uniform float accumTime;
 
-VARYING vec2 TEX0;
-VARYING vec4 outLightVec;
-VARYING vec3 outPos;
-VARYING vec3 outEyePos;
+in vec2 TEX0;
+in vec4 outLightVec;
+in vec3 outPos;
+in vec3 outEyePos;
 
 void main()
 {

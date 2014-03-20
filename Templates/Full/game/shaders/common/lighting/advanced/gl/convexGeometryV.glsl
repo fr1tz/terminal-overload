@@ -26,9 +26,9 @@ in vec4 vPosition;
 
 #define IN_pos vPosition
 
-VARYING vec4 wsEyeDir;
-VARYING vec4 ssPos;
-VARYING vec4 vsEyeDir;
+out vec4 wsEyeDir;
+out vec4 ssPos;
+out vec4 vsEyeDir;
 
 #define OUT_hpos gl_Position
 #define OUT_wsEyeDir wsEyeDir

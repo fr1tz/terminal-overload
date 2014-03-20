@@ -35,7 +35,7 @@ in vec2 vTexCoord0;
 #define IN_texCoords vTexCoord0
 
 #define OUT_position gl_Position
-VARYING vec4 texCoords;
+out vec4 texCoords;
 #define OUT_texCoords texCoords
 
 uniform vec2 oneOverTargetSize;  

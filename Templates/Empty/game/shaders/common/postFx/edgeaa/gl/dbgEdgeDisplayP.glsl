@@ -23,7 +23,7 @@
 #include "../../../gl/hlslCompat.glsl"
 #include "shadergen:/autogenConditioners.h"
 
-VARYING vec2 uv0;
+in vec2 uv0;
 #define IN_uv0 uv0
 
 uniform sampler2D edgeBuffer;

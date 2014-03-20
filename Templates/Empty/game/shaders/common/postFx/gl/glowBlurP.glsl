@@ -24,15 +24,15 @@
 
 uniform sampler2D diffuseMap ;
 
-VARYING vec4 hpos; //POSITION;
-VARYING vec2 uv0; //TEXCOORD0;
-VARYING vec2 uv1; //TEXCOORD1;
-VARYING vec2 uv2; //TEXCOORD2;
-VARYING vec2 uv3; //TEXCOORD3;
-VARYING vec2 uv4; //TEXCOORD4;
-VARYING vec2 uv5; //TEXCOORD5;
-VARYING vec2 uv6; //TEXCOORD6;
-VARYING vec2 uv7; //TEXCOORD7;
+in vec4 hpos; //POSITION;
+in vec2 uv0; //TEXCOORD0;
+in vec2 uv1; //TEXCOORD1;
+in vec2 uv2; //TEXCOORD2;
+in vec2 uv3; //TEXCOORD3;
+in vec2 uv4; //TEXCOORD4;
+in vec2 uv5; //TEXCOORD5;
+in vec2 uv6; //TEXCOORD6;
+in vec2 uv7; //TEXCOORD7;
 
 void main()
 {

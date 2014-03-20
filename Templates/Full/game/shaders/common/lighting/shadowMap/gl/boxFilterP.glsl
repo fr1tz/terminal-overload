@@ -26,7 +26,7 @@ uniform sampler2D diffuseMap0;
 uniform float texSize;
 uniform vec2 blurDimension;
 
-VARYING vec2 tex0;
+in vec2 tex0;
 
 void main()
 {
