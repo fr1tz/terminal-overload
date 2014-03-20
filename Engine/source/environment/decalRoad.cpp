@@ -315,7 +315,7 @@ void DecalRoad::initPersistFields()
 
    addGroup( "Internal" );
 
-      addProtectedField( "node", TypeString, 0, &addNodeFromField, &emptyStringProtectedGetFn, 
+      addProtectedField( "node", TypeString, NULL, &addNodeFromField, &emptyStringProtectedGetFn, 
          "Do not modify, for internal use." );
 
    endGroup( "Internal" );

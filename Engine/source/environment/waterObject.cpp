@@ -762,8 +762,7 @@ void WaterObject::setCustomTextures( S32 matIdx, U32 pass, const WaterMatParams 
    if ( ( matIdx == WaterMat || matIdx == BasicWaterMat ) && mCubemap )   
       GFX->setCubeTexture( paramHandles.mCubemapSamplerSC->getSamplerRegister(pass), mCubemap->mCubemap );
    else if(paramHandles.mCubemapSamplerSC->getSamplerRegister(pass) != -1 )         
-      GFX->setCubeTexture( paramHandles.mCubemapSamplerSC->getSamplerRegister(pass), NULL );
-   
+      GFX->setCubeTexture( paramHandles.mCubemapSamplerSC->getSamplerRegister(pass), NULL );   
 }
 
 void WaterObject::drawUnderwaterFilter( SceneRenderState *state )
