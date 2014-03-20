@@ -56,7 +56,9 @@ void ShaderGenPrinterGLSL::printMainComment( Stream& stream )
 
 void ShaderGenPrinterGLSL::printVertexShaderCloser( Stream& stream )
 {
-   const char *closer = "}\r\n";
+   // We are render OpenGL upside down for use DX9 texture coords.
+   // Must be the last vertex feature.
+   const char *closer = "   gl_Position.y *= -1;\r\n}\r\n";
    stream.write( dStrlen(closer), closer );
 }
 

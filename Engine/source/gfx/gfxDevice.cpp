@@ -137,7 +137,6 @@ GFXDevice::GFXDevice()
       mTextureMatrixDirty[i] = false;
    }
 
-   mTextureCoordStartTop = true;
    mTexelPixelOffset = true;
    mVertexStreamSupported = VERTEX_STREAM_COUNT;
 

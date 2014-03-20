@@ -282,9 +282,6 @@ void ShaderGen::_processVertFeatures( Vector<GFXShaderMacro> &macros, bool macro
       }
    }
 
-   if(!GFX->isTextureCoordStartTop()) // TODO OPENGL, NEED API INDEPENDENT... Move to shadergen feature
-      mOutput->addStatement( new GenOp( "   gl_Position.y *= -1; //API DEPENDENT CORRECTION correctSSP\r\n" ) ); // TODO OPENGL
-
    ShaderConnector *connect = dynamic_cast<ShaderConnector *>( mComponents[C_CONNECTOR] );
    connect->sortVars();
 }

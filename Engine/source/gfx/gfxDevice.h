@@ -584,6 +584,7 @@ protected:
    virtual void setVertexDecl( const GFXVertexDecl *decl ) = 0;
 
    /// Sets the vertex buffer on the device.
+   // TODO OPENGL REVIEW
    virtual void setVertexStream( U32 stream, GFXVertexBuffer *buffer, U32 frequency ) = 0;
 
    /// The maximum number of supported vertex streams which
@@ -654,7 +655,7 @@ protected:
    /// it must be updated on the next draw/clear.
    bool mViewportDirty;
 
-   U32 mVertexStreamSupported;
+   U32 mVertexStreamSupported; // TODO OPENGL REVIEW
 
 public:
 
@@ -663,8 +664,7 @@ public:
 protected:
    GFXTextureManager * mTextureManager;
 
-   bool mTextureCoordStartTop;
-   bool mTexelPixelOffset;
+   bool mTexelPixelOffset; // TODO OPENGL REVIEW
 
 public:   
    virtual GFXCubemap * createCubemap() = 0;
@@ -732,8 +732,6 @@ public:
    /// and deleted by the caller.
    /// @see GFXShader::init
    virtual GFXShader* createShader() = 0;
-
-   bool isTextureCoordStartTop() const { return mTextureCoordStartTop; }
 
    /// For handle with DX9 API texel-to-pixel mapping offset
    bool hasTexelPixelOffset() const { return mTexelPixelOffset; }
