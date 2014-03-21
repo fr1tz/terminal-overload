@@ -166,7 +166,6 @@ void WindDeformationGLSL::processVert( Vector<ShaderComponent*> &componentList,
                      "@.r, "  // fBranchAtten
 
                      "dot( @[3], vec4(1) ), "    // fDetailPhase
-                     //"dot( tGetMatrixRow(@, 3), vec4(1) ), "    // fDetailPhase  // TODO OPENGL
                      "@.z, "  // fDetailAmp
                      "@.w, "  // fDetailFreq
                      

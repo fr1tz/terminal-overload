@@ -506,20 +506,11 @@ inline void GFXGLDevice::postDrawPrimitive(U32 primitiveCount)
 void GFXGLDevice::drawPrimitive( GFXPrimitiveType primType, U32 vertexStart, U32 primitiveCount ) 
 {
    preDrawPrimitive();
-   
-   // TODO OPENGL
-   // There are some odd performance issues if a buffer is bound to GL_ELEMENT_ARRAY_BUFFER when glDrawArrays is called.  Unbinding the buffer
-   // improves performance by 10%.
-   if(mCurrentPB)
-      mCurrentPB->finish();
 
    if(mDrawInstancesCount)
       glDrawArraysInstanced(GFXGLPrimType[primType], vertexStart, primCountToIndexCount(primType, primitiveCount), mDrawInstancesCount);
    else
-      glDrawArrays(GFXGLPrimType[primType], vertexStart, primCountToIndexCount(primType, primitiveCount));
-   
-   if(mCurrentPB)
-      mCurrentPB->prepare();
+      glDrawArrays(GFXGLPrimType[primType], vertexStart, primCountToIndexCount(primType, primitiveCount));   
 
    postDrawPrimitive(primitiveCount);
 }
@@ -654,7 +645,7 @@ void GFXGLDevice::setClipRect( const RectI &inRect )
    setWorldMatrix( mTempMatrix );
 
    // Set the viewport to the clip rect
-   RectI viewport(mClip.point.x, mClip.point.y, mClip.extent.x, mClip.extent.y); // TODO OPENGL
+   RectI viewport(mClip.point.x, mClip.point.y, mClip.extent.x, mClip.extent.y);
    setViewport(viewport);
 }
 

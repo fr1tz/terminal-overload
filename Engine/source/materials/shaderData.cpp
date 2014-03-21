@@ -118,7 +118,11 @@ void ShaderData::initPersistFields()
       "@endtsexample\n\n"
       );
 
-   addField("samplerNames",              TypeRealString,      Offset(mSamplerNames,   ShaderData), NumTextures, ""); // TODO OPENGL ADD DOCUMENTATION
+   addField("samplerNames",              TypeRealString,      Offset(mSamplerNames,   ShaderData), NumTextures, 
+      "@brief Indicates names of samplers present in shader. Order is important.\n\n"
+	   "Order of sampler names are used to assert correct sampler register/location"
+      "Other objects (GFXStateBlockData, PostEffect...) use index number to link samplers."
+      );
 
    addField("rtParams",              TypeBool,      Offset(mRTParams,   ShaderData), NumTextures, "");
 
