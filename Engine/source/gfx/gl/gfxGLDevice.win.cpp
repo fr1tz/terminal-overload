@@ -262,9 +262,7 @@ void GFXGLDevice::init( const GFXVideoMode &mode, PlatformWindow *window )
    }
 
    int OGL_MAJOR = 3;
-   int OGL_MINOR = 3;
-
-   __GLEW_ARB_vertex_attrib_binding = false;
+   int OGL_MINOR = 2;
    
 #if TORQUE_DEBUG
    int debugFlag = WGL_CONTEXT_DEBUG_BIT_ARB;
