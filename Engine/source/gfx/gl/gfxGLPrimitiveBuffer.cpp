@@ -74,8 +74,12 @@ void GFXGLPrimitiveBuffer::unlock()
    // Preserve previous binding
    PRESERVE_INDEX_BUFFER();
    
-   // Bind ourselves and unmap
+   // Bind ourselves
    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mBuffer);
+
+   if( !lockedIndexStart && lockedIndexEnd == mIndexCount)
+      glBufferData(GL_ELEMENT_ARRAY_BUFFER, mIndexCount * sizeof(U16), NULL, GFXGLBufferType[mBufferType]); // orphan the buffer
+
    glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, offset, length, mFrameAllocatorPtr + offset );
    
 #if TORQUE_DEBUG

@@ -84,7 +84,11 @@ void GFXGLVertexBuffer::unlock()
    
    PRESERVE_VERTEX_BUFFER();
    glBindBuffer(GL_ARRAY_BUFFER, mBuffer);
-   glBufferSubData(GL_ARRAY_BUFFER, offset, length, mFrameAllocatorPtr + offset );   
+   
+   if( !lockedVertexStart && lockedVertexEnd == mNumVerts)
+      glBufferData(GL_ARRAY_BUFFER, mNumVerts * mVertexSize, NULL, GFXGLBufferType[mBufferType]); // orphan the buffer
+
+   glBufferSubData(GL_ARRAY_BUFFER, offset, length, mFrameAllocatorPtr + offset );
 
    lockedVertexStart = 0;
 	lockedVertexEnd   = 0;
