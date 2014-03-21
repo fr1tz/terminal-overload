@@ -8,6 +8,7 @@ function executeBaseServerScripts()
    exec("./commands.cs");
    exec("./game.cs");
    exec("./gameCore.cs");
+   exec("./gameCoreBase.cs");
    exec("./inventory.cs");
    exec("./item.cs");
    exec("./misc.cs");
