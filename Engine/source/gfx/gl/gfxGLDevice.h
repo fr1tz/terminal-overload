@@ -175,7 +175,8 @@ protected:
 
    virtual void setVertexDecl( const GFXVertexDecl *decl );
 
-   virtual void setVertexStream( U32 stream, GFXVertexBuffer *buffer, U32 frequency );
+   virtual void setVertexStream( U32 stream, GFXVertexBuffer *buffer );
+   virtual void setVertexStreamFrequency( U32 stream, U32 frequency );
 
 private:
    typedef GFXDevice Parent;

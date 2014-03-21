@@ -584,8 +584,10 @@ protected:
    virtual void setVertexDecl( const GFXVertexDecl *decl ) = 0;
 
    /// Sets the vertex buffer on the device.
-   // TODO OPENGL REVIEW
-   virtual void setVertexStream( U32 stream, GFXVertexBuffer *buffer, U32 frequency ) = 0;
+   virtual void setVertexStream( U32 stream, GFXVertexBuffer *buffer ) = 0;
+
+   /// Set the vertex stream frequency on the device.
+   virtual void setVertexStreamFrequency( U32 stream, U32 frequency ) = 0;
 
    /// The maximum number of supported vertex streams which
    /// may be more than the device supports.

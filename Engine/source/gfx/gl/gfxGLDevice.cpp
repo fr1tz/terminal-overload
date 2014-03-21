@@ -325,11 +325,11 @@ GFXPrimitiveBuffer *GFXGLDevice::allocPrimitiveBuffer( U32 numIndices, U32 numPr
    return buf;
 }
 
-void GFXGLDevice::setVertexStream( U32 stream, GFXVertexBuffer *buffer, U32 frequency )
+void GFXGLDevice::setVertexStream( U32 stream, GFXVertexBuffer *buffer )
 {
    AssertFatal(stream <= 1, "GFXGLDevice::setVertexStream only support 2 stream (0: data, 1: instancing)");
 
-   if(mCurrentVB[stream] != buffer)
+   //if(mCurrentVB[stream] != buffer)
    {
       // Reset the state the old VB required, then set the state the new VB requires.
       if( mCurrentVB[stream] )
@@ -337,28 +337,29 @@ void GFXGLDevice::setVertexStream( U32 stream, GFXVertexBuffer *buffer, U32 freq
          mCurrentVB[stream]->finish();
       }
 
-      mCurrentVB[stream] = static_cast<GFXGLVertexBuffer*>( buffer );   
-
-      if( mCurrentVB[stream])
-      {
-         if( stream == 0 )
-         {
-            mCurrentVB_Divisor[stream] = 0; // non instanced, is vertex buffer
-         }
-         else
-         {
-            AssertFatal( stream == 1 && frequency == 1, "GFXGLDevice::setVertexStream - instancing stream(1) need a frequency of 1");
-            mCurrentVB_Divisor[stream] = 1; // is istances data
-         }
-
-         mCurrentVB[stream]->prepare(stream, mCurrentVB_Divisor[stream]);
-      }
+      mCurrentVB[stream] = static_cast<GFXGLVertexBuffer*>( buffer );
 
       mNeedUpdateVertexAttrib = true;
    }
+}
 
-   if( stream == 0 && mCurrentVB[stream] )
-      mDrawInstancesCount = frequency; // instances count   
+void GFXGLDevice::setVertexStreamFrequency( U32 stream, U32 frequency )
+{
+   if( stream == 0 )
+   {
+      mCurrentVB_Divisor[stream] = 0; // non instanced, is vertex buffer
+      mDrawInstancesCount = frequency; // instances count
+   }
+   else
+   {
+      AssertFatal(frequency <= 1, "GFXGLDevice::setVertexStreamFrequency only support 0/1 for this stream" );
+      if( stream == 1 && frequency == 1 )
+         mCurrentVB_Divisor[stream] = 1; // instances data need a frequency of 1
+      else
+         mCurrentVB_Divisor[stream] = 0;
+   }
+
+   mNeedUpdateVertexAttrib = true;
 }
 
 GFXCubemap* GFXGLDevice::createCubemap()
@@ -477,22 +478,22 @@ inline void GFXGLDevice::preDrawPrimitive()
    if(mCurrentShaderConstBuffer)
       setShaderConstBufferInternal(mCurrentShaderConstBuffer);
 
-   if( !gglHasExtension(ARB_vertex_attrib_binding) )
+   if( mNeedUpdateVertexAttrib )
    {
-      if( mNeedUpdateVertexAttrib )
-      {
-         AssertFatal(mCurrVertexDecl, "");
-         const GFXGLVertexDecl* decl = static_cast<const GFXGLVertexDecl*>(mCurrVertexDecl);
+      AssertFatal(mCurrVertexDecl, "");
+      const GFXGLVertexDecl* decl = static_cast<const GFXGLVertexDecl*>(mCurrVertexDecl);
       
-         for(int i = 0; i < getNumVertexStreams(); ++i)
+      for(int i = 0; i < getNumVertexStreams(); ++i)
+      {
+         if(mCurrentVB[i])
          {
-            if(mCurrentVB[i])
-               decl->prepareBuffer_old( i, mCurrentVB[i]->mBuffer, mCurrentVB_Divisor[i] );
+            mCurrentVB[i]->prepare(i, mCurrentVB_Divisor[i]);    // GL_ARB_vertex_attrib_binding  
+            decl->prepareBuffer_old( i, mCurrentVB[i]->mBuffer, mCurrentVB_Divisor[i] ); // old vertex buffer/format
          }
-
-         decl->updateActiveVertexAttrib( GFXGL->getOpenglCache()->getCacheVertexAttribActive() );         
       }
-   }
+
+      decl->updateActiveVertexAttrib( GFXGL->getOpenglCache()->getCacheVertexAttribActive() );         
+   }   
 
    mNeedUpdateVertexAttrib = false;
 }

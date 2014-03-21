@@ -122,7 +122,8 @@ protected:
 
    virtual GFXVertexDecl* allocVertexDecl( const GFXVertexFormat *vertexFormat ) { return NULL; }
    virtual void setVertexDecl( const GFXVertexDecl *decl ) {  }
-   virtual void setVertexStream( U32 stream, GFXVertexBuffer *buffer, U32 frequency ) { }
+   virtual void setVertexStream( U32 stream, GFXVertexBuffer *buffer ) { }
+   virtual void setVertexStreamFrequency( U32 stream, U32 frequency ) { }
 
 public:
    virtual GFXCubemap * createCubemap();
