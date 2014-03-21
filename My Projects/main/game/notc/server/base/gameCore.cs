@@ -23,13 +23,13 @@
 function GameCore::createGame()
 {
    if($Server::MissionType $= "")
-      $Server::MissionType = "Deathmatch"; //Default gametype, just in case
+      $Server::MissionType = "DM"; //Default gametype, just in case
 
    // Note: The Game object will be cleaned up by MissionCleanup.  Therefore its lifetime is
    // limited to that of the mission.
    new ScriptObject(Game)
    {
-      class = $Server::MissionType @"Game";
+      class = "GameCore" @ $Server::MissionType;
       superClass = GameCore;
    };
 

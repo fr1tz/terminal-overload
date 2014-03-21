@@ -12,17 +12,17 @@
 // If this information is missing then the GameCore will default to Deathmatch.
 // ----------------------------------------------------------------------------
 
-function DeathMatchGame::onMissionLoaded(%game)
+function GameCoreDM::onMissionLoaded(%game)
 {
-   //echo (%game @"\c4 -> "@ %game.class @" -> DeathMatchGame::onMissionLoaded");
+   //echo (%game @"\c4 -> "@ %game.class @" -> GameCoreDM::onMissionLoaded");
 
-   $Server::MissionType = "Deathmatch";
+   $Server::MissionType = "DM";
    parent::onMissionLoaded(%game);
 }
 
-function DeathMatchGame::initGameVars(%game)
+function GameCoreDM::initGameVars(%game)
 {
-   //echo (%game @"\c4 -> "@ %game.class @" -> DeathMatchGame::initGameVars");
+   //echo (%game @"\c4 -> "@ %game.class @" -> GameCoreDM::initGameVars");
 
    //-----------------------------------------------------------------------------
    // What kind of "player" is spawned is either controlled directly by the
@@ -56,30 +56,30 @@ function DeathMatchGame::initGameVars(%game)
    %game.allowCycling = true;   // Is mission cycling allowed?
 }
 
-function DeathMatchGame::startGame(%game)
+function GameCoreDM::startGame(%game)
 {
-   //echo (%game @"\c4 -> "@ %game.class @" -> DeathMatchGame::startGame");
+   //echo (%game @"\c4 -> "@ %game.class @" -> GameCoreDM::startGame");
 
    parent::startGame(%game);
 }
 
-function DeathMatchGame::endGame(%game)
+function GameCoreDM::endGame(%game)
 {
-   //echo (%game @"\c4 -> "@ %game.class @" -> DeathMatchGame::endGame");
+   //echo (%game @"\c4 -> "@ %game.class @" -> GameCoreDM::endGame");
 
    parent::endGame(%game);
 }
 
-function DeathMatchGame::onGameDurationEnd(%game)
+function GameCoreDM::onGameDurationEnd(%game)
 {
-   //echo (%game @"\c4 -> "@ %game.class @" -> DeathMatchGame::onGameDurationEnd");
+   //echo (%game @"\c4 -> "@ %game.class @" -> GameCoreDM::onGameDurationEnd");
 
    parent::onGameDurationEnd(%game);
 }
 
-function DeathMatchGame::prepareClient(%game, %client)
+function GameCoreDM::prepareClient(%game, %client)
 {
-   //echo (%game @"\c4 -> "@ %game.class @" -> DeathMatchGame::prepareClient");
+   //echo (%game @"\c4 -> "@ %game.class @" -> GameCoreDM::prepareClient");
 
    Parent::prepareClient(%game, %client);
    
@@ -102,9 +102,9 @@ function DeathMatchGame::prepareClient(%game, %client)
    }
 }
 
-function DeathMatchGame::onClientEnterGame(%game, %client)
+function GameCoreDM::onClientEnterGame(%game, %client)
 {
-   //echo (%game @"\c4 -> "@ %game.class @" -> DeathMatchGame::onClientEnterGame");
+   //echo (%game @"\c4 -> "@ %game.class @" -> GameCoreDM::onClientEnterGame");
 
    Parent::onClientEnterGame(%game, %client);
    
@@ -115,17 +115,17 @@ function DeathMatchGame::onClientEnterGame(%game, %client)
    }
 }
 
-function DeathMatchGame::onClientLeaveGame(%game, %client)
+function GameCoreDM::onClientLeaveGame(%game, %client)
 {
-   //echo (%game @"\c4 -> "@ %game.class @" -> DeathMatchGame::onClientLeaveGame");
+   //echo (%game @"\c4 -> "@ %game.class @" -> GameCoreDM::onClientLeaveGame");
 
    parent::onClientLeaveGame(%game, %client);
 
 }
 
-function DeathMatchGame::queryClientSettings(%game, %client, %settings)
+function GameCoreDM::queryClientSettings(%game, %client, %settings)
 {
-   //echo (%game @"\c4 -> "@ %game.class @" -> DeathMatchGame::queryClientSettings");
+   //echo (%game @"\c4 -> "@ %game.class @" -> GameCoreDM::queryClientSettings");
 
    Parent::queryClientSettings(%game, %client, %settings);
    
@@ -133,9 +133,9 @@ function DeathMatchGame::queryClientSettings(%game, %client, %settings)
    commandToClient(%client, 'XaNotcSettings1_Query', "PlayerColor1");
 }
 
-function DeathMatchGame::processClientSettingsReply(%game, %client, %setting, %value)
+function GameCoreDM::processClientSettingsReply(%game, %client, %setting, %value)
 {
-   //echo (%game @"\c4 -> "@ %game.class @" -> DeathMatchGame::processClientSettingsReply");
+   //echo (%game @"\c4 -> "@ %game.class @" -> GameCoreDM::processClientSettingsReply");
    
    %status = "Ignored";
    
@@ -164,9 +164,9 @@ function DeathMatchGame::processClientSettingsReply(%game, %client, %setting, %v
    commandToClient(%client, 'XaNotcSettings1_Confirmation', %setting, %status);
 }
 
-function DeathMatchGame::loadOut(%game, %player)
+function GameCoreDM::loadOut(%game, %player)
 {
-   //echo (%game @"\c4 -> "@ %game.class @" -> DeathMatchGame::loadOut");
+   //echo (%game @"\c4 -> "@ %game.class @" -> GameCoreDM::loadOut");
    
    Parent::loadOut(%game, %player);
 
@@ -188,9 +188,9 @@ function DeathMatchGame::loadOut(%game, %player)
       %player.mountImage(WpnBadgerImage, 0);
 }
 
-function DeathMatchGame::clientAction(%game, %client, %nr)
+function GameCoreDM::clientAction(%game, %client, %nr)
 {
-   echo(%game @"\c4 -> "@ %game.class @" -> DeathMatchGame::clientAction");
+   echo(%game @"\c4 -> "@ %game.class @" -> GameCoreDM::clientAction");
 
    %obj = %client.getControlObject();
    if(!isObject(%obj))

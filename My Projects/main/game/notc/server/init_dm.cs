@@ -9,7 +9,7 @@ function onServerCreated()
 
    // Server::MissionType sent to the master server.  Clients can
    // filter servers based on mission type.
-   $Server::MissionType = "Deathmatch";
+   $Server::MissionType = "DM";
 
    // GameStartTime is the sim time the game started. Used to calculated
    // game elapsed time.
