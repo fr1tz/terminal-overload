@@ -188,6 +188,17 @@ function GameCoreDM::loadOut(%game, %player)
       %player.mountImage(WpnBadgerImage, 0);
 }
 
+function GameCoreDM::onUnitDestroyed(%game, %obj)
+{
+   //echo(%game @"\c4 -> "@ %game.class @" -> GameCoreDM::onUnitDestroyed");
+   
+   Parent::onUnitDestroyed(%game, %obj);
+   
+   %client = %obj.client;
+   if(isObject(%client) && %client.player == %obj)
+      DM::onDeath(%client);
+}
+
 function GameCoreDM::clientAction(%game, %client, %nr)
 {
    echo(%game @"\c4 -> "@ %game.class @" -> GameCoreDM::clientAction");

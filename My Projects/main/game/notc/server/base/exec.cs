@@ -6,6 +6,7 @@ function executeBaseServerScripts()
    exec("./aiPlayer.cs");
    exec("./bleedfx.cs");
    exec("./commands.cs");
+   exec("./deathCamera.cs");
    exec("./game.cs");
    exec("./gameCore.cs");
    exec("./gameCoreBase.cs");
