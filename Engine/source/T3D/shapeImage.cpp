@@ -38,6 +38,7 @@ ImplementEnumType( ShapeBaseImageAmmoSource,
 	{ ShapeBaseImageData::Manual,   "Manual",   "Image must be told manually whether it has ammo.\n" },
    { ShapeBaseImageData::Energy,   "Energy",   "Image has ammo if energy >= image's minEnergy.\n" },
    { ShapeBaseImageData::Magazine, "Magazine", "Image has ammo as long as its magazine isn't empty.\n" },
+   { ShapeBaseImageData::Hybrid,   "Hybrid",   "Energy + Magazine.\n" },
 EndImplementEnumType;
 
 ImplementEnumType( ShapeBaseImageLoadedState,
@@ -3677,6 +3678,27 @@ TICKAGAIN:
 				}
 			}
 		}
+   }
+	else if(imageData.ammoSource == ShapeBaseImageData::Hybrid) 
+   {
+		if(image.mode == MountedImage::ClientFireMode)
+		{
+			image.ammo = (image.magazineRounds > 0 
+			        && newEnergy > imageData.minEnergy);
+		}
+		else if(image.mode == MountedImage::StandardMode)
+		{
+			if(isServerObject())
+			{
+				bool ammo = (image.magazineRounds > 0 
+				      && newEnergy > imageData.minEnergy);
+				if (ammo != image.ammo)
+				{
+					setMaskBits(ImageMaskN << imageSlot);
+					image.ammo = ammo;
+				}
+			}
+      }
    }
 
    // Update the spinning thread timeScale

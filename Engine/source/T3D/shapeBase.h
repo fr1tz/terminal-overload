@@ -135,6 +135,7 @@ struct ShapeBaseImageData: public GameBaseData {
 		Manual = 0,
 		Energy,
 		Magazine,
+		Hybrid,
 		NumAmmoSources
 	};
    enum LightType {
@@ -380,7 +381,7 @@ struct ShapeBaseImageData: public GameBaseData {
 
 	S32 ammoSource;                  ///< How does the image know whether is has ammo?
                                     ///
-                                    ///  One of: Manual, Energy, Magazine.
+                                    ///  One of: Manual, Energy, Magazine, Hybrid.
 
    F32   mass;                      ///< Mass!
    F32   minEnergy;                 ///< Minimum energy for the weapon to be operable.
