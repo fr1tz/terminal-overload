@@ -34,7 +34,6 @@ GFXVertexBufferHandle<GFXVertexPCT> mVertBuff;
 GFXPrimitiveType  mType;
 U32               mCurVertIndex;
 ColorI            mCurColor( 255, 255, 255 );
-bool              mNeedTexture;
 Point2F           mCurTexCoord;
 const ColorI      _colWhite( 255, 255, 255, 255 );
 
@@ -67,7 +66,6 @@ void begin( GFXPrimitiveType type, U32 maxVerts )
    mCurVertIndex = 0;
    INIT_VERTEX_SIZE( maxVerts );
    mTempVertBuff.setSize( maxVerts );
-   mNeedTexture = false;
 }
 
 void beginToBuffer( GFXPrimitiveType type, U32 maxVerts )
@@ -78,7 +76,6 @@ void beginToBuffer( GFXPrimitiveType type, U32 maxVerts )
    mCurVertIndex = 0;
    INIT_VERTEX_SIZE( maxVerts );
    mTempVertBuff.setSize( maxVerts );
-   mNeedTexture = false;
 }
 
 //-----------------------------------------------------------------------------
@@ -183,7 +180,18 @@ void end( bool useGenericShaders )
    }
 
    if ( useGenericShaders )
-      GFX->setupGenericShaders( mNeedTexture ? GFXDevice::GSModColorTexture : GFXDevice::GSColor);
+   {
+	   GFXStateBlock *currentBlock = GFX->getStateBlock();
+	   if (currentBlock && currentBlock->getDesc().samplersDefined)
+	   {
+		   if (currentBlock->getDesc().vertexColorEnable)
+			   GFX->setupGenericShaders( GFXDevice::GSModColorTexture );
+		   else
+			   GFX->setupGenericShaders( GFXDevice::GSTexture );
+	   }
+	   else
+		   GFX->setupGenericShaders( GFXDevice::GSColor );
+   }
 
    const GFXVertexPCT *srcVerts = mTempVertBuff.address();
    U32 numVerts = mCurVertIndex;
@@ -327,7 +335,6 @@ void color4f( F32 red, F32 green, F32 blue, F32 alpha )
 void texCoord2f( F32 x, F32 y )
 {
    mCurTexCoord.set( x, y );
-   mNeedTexture = true;
 }
 
 void shutdown()
