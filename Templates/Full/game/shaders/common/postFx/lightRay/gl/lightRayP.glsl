@@ -72,13 +72,13 @@ void main()
         texCoord.xy -= deltaTexCoord;  
 
         // Retrieve sample at new location.
-        half3 sample = half3(tex2Dlod( frameSampler, texCoord ));  
+        half3 sample_ = half3(tex2Dlod( frameSampler, texCoord ));  
 
         // Apply sample attenuation scale/decay factors.
-        sample *= illuminationDecay * weight;
+        sample_ *= illuminationDecay * weight;
 
         // Accumulate combined color.
-        color += sample;
+        color += sample_;
 
         // Update exponential decay factor.
         illuminationDecay *= decay;
