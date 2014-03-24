@@ -157,7 +157,8 @@ GFXGLDevice::GFXGLDevice(U32 adapterIndex) :
    mMaxTRColors(1),
    mClip(0, 0, 0, 0),
    mCurrentShader( NULL ),
-   mNeedUpdateVertexAttrib(false)
+   mNeedUpdateVertexAttrib(false),
+   mWindowRT(NULL)
 {
    for(int i = 0; i < MAX_VERTEX_STREAM_COUNT; ++i)
    {
@@ -782,6 +783,14 @@ void GFXGLDevice::setShaderConstBufferInternal(GFXShaderConstBuffer* buffer)
 U32 GFXGLDevice::getNumSamplers() const
 {
    return getMin((U32)TEXTURE_STAGE_COUNT,mPixelShaderVersion > 0.001f ? mMaxShaderTextures : mMaxFFTextures);
+}
+
+GFXTextureObject* GFXGLDevice::getDefaultDepthTex() const 
+{
+   if(mWindowRT && mWindowRT->getPointer())
+      return static_cast<GFXGLWindowTarget*>( mWindowRT->getPointer() )->mBackBufferDepthTex.getPointer();
+
+   return NULL;
 }
 
 U32 GFXGLDevice::getNumRenderTargets() const 

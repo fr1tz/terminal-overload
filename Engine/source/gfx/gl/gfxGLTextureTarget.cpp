@@ -260,11 +260,11 @@ GFXFormat GFXGLTextureTarget::getFormat()
 
 void GFXGLTextureTarget::attachTexture( RenderSlot slot, GFXTextureObject *tex, U32 mipLevel/*=0*/, U32 zOffset /*= 0*/ )
 {
-   // GFXTextureTarget::sDefaultDepthStencil
-   AssertFatal(tex != GFXTextureTarget::sDefaultDepthStencil, "GFXGLTextureTarget::attachTexture - GFXTextureTarget::sDefaultDepthStencil not supported")
+   if( tex == GFXTextureTarget::sDefaultDepthStencil )
+      tex = GFXGL->getDefaultDepthTex();
 
    _GFXGLTextureTargetDesc* mTex = static_cast<_GFXGLTextureTargetDesc*>(mTargets[slot].ptr());
-   if( (!tex && !mTex) || (mTex && mTex->getTextureObject() == tex) )         
+   if( (!tex && !mTex) || (mTex && mTex->getTextureObject() == tex) )
       return;
    
    // Triggers an update when we next render

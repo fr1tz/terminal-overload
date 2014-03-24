@@ -136,6 +136,8 @@ public:
    bool supportsAnisotropic() const { return mSupportsAnisotropic; }
 
    GFXGLStateCache* getOpenglCache() { return mOpenglStateCache; }
+
+   GFXTextureObject* getDefaultDepthTex() const;
       
 protected:   
    /// Called by GFXDevice to create a device specific stateblock
@@ -241,6 +243,8 @@ private:
    void setPB(GFXGLPrimitiveBuffer* pb); ///< Sets mCurrentPB
 
    GFXGLStateCache *mOpenglStateCache;
+
+   GFXWindowTargetRef *mWindowRT;
 };
 
 #define GFXGL static_cast<GFXGLDevice*>(GFXDevice::get())

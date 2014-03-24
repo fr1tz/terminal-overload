@@ -242,6 +242,8 @@ void GFXGLDevice::init( const GFXVideoMode &mode, PlatformWindow *window )
    AssertFatal(dynamic_cast<Win32Window*>(window), "Invalid window class type!");
    HWND hwnd = GETHWND(window);
 
+   mWindowRT = &static_cast<Win32Window*>(window)->mTarget;
+
    RECT rect;
    GetClientRect(hwnd, &rect);
 
