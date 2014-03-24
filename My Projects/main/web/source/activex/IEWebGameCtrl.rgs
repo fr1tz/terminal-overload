@@ -1,20 +1,20 @@
 HKCR
 {
-	IEAlux3DPlugin.IEWebGameCtrl.1 = s 'IEWebGameCtrl Class'
+	IEnotcPlugin.IEWebGameCtrl.1 = s 'IEWebGameCtrl Class'
 	{
 		CLSID = s '{D62D1B36-253D-4218-B033-5ACE0B42B8BF}'
 	}
-	IEAlux3DPlugin.IEWebGameCtrl = s 'IEWebGameCtrl Class'
+	IEnotcPlugin.IEWebGameCtrl = s 'IEWebGameCtrl Class'
 	{
 		CLSID = s '{D62D1B36-253D-4218-B033-5ACE0B42B8BF}'
-		CurVer = s 'IEAlux3DPlugin.IEWebGameCtrl.1'
+		CurVer = s 'IEnotcPlugin.IEWebGameCtrl.1'
 	}
 	NoRemove CLSID
 	{
 		ForceRemove {D62D1B36-253D-4218-B033-5ACE0B42B8BF} = s 'IEWebGameCtrl Class'
 		{
-			ProgID = s 'IEAlux3DPlugin.IEWebGameCtrl.1'
-			VersionIndependentProgID = s 'IEAlux3DPlugin.IEWebGameCtrl'
+			ProgID = s 'IEnotcPlugin.IEWebGameCtrl.1'
+			VersionIndependentProgID = s 'IEnotcPlugin.IEWebGameCtrl'
 			ForceRemove 'Programmable'
 			InprocServer32 = s '%MODULE%'
 			{

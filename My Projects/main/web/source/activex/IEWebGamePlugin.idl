@@ -29,9 +29,9 @@ interface IIEWebGameCtrl : IDispatch{
 [
 	uuid(FC143328-E29C-4BC4-8C83-618FEB562532),
 	version(1.0),
-	helpstring("IEAlux3DPlugin 1.0 Type Library")
+	helpstring("IEnotcPlugin 1.0 Type Library")
 ]
-library IEAlux3DPluginLib
+library IEnotcPluginLib
 {
 	importlib("stdole2.tlb");
 	[
