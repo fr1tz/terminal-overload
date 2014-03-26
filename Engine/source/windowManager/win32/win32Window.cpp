@@ -108,6 +108,14 @@ Win32Window::~Win32Window()
 	_unregisterWindowClass();
 }
 
+void* Win32Window::getSystemWindow(const WindowSystem system)
+{
+   if( system == WindowSystem_Windows)
+      return getHWND();
+
+     return NULL;
+}
+
 GFXDevice * Win32Window::getGFXDevice()
 {
 	return mDevice;

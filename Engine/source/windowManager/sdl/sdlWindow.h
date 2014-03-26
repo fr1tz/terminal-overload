@@ -20,26 +20,22 @@
 // IN THE SOFTWARE.
 //-----------------------------------------------------------------------------
 
-#ifndef  _WINDOWMANAGER_WIN32_WIN32WINDOW_
-#define  _WINDOWMANAGER_WIN32_WIN32WINDOW_
+#ifndef  _WINDOWMANAGER_SDL_WINDOW_
+#define  _WINDOWMANAGER_SDL_WINDOW_
 
-#include <windows.h>
 #include "windowManager/platformWindowMgr.h"
 #include "gfx/gfxTarget.h"
 #include "gfx/gfxStructs.h"
 #include "sim/actionMap.h"
 
-class Win32WindowManager;
-class GFXGLDevice;
+class SDLWindowManager;
+struct SDL_Window;
+union SDL_Event;
 
-/// Implementation of a window on Win32.
-class Win32Window : public PlatformWindow
+/// Implementation of a window on SDL.
+class SDLWindow : public PlatformWindow
 {
-   friend class Win32WindowManager;
-   friend class GFXPCD3D9Device;
-   friend class GFXGLDevice;
-   friend class GFXPCD3D9WindowTarget;
-   friend class GFXD3D8WindowTarget;
+   friend class SDLWindowManager;
 
 public:
    struct Accelerator
@@ -50,7 +46,6 @@ public:
    typedef Vector<Accelerator> AcceleratorList;
 
 private:
-   typedef Vector<ACCEL> WinAccelList;
 
    /// @name Active window list
    ///
@@ -59,10 +54,10 @@ private:
    /// @{
 
    /// Which manager created us?
-   Win32WindowManager *mOwningManager;
+   SDLWindowManager *mOwningManager;
 
    /// Which window comes next in list?
-   Win32Window *mNextWindow;
+   SDLWindow *mNextWindow;
    
    /// @}
 
@@ -70,14 +65,11 @@ private:
    ///
    /// @{
 
-   /// Our HWND - Win32 window handle.
-   HWND mWindowHandle;
+   /// Our SDL window.
+   SDL_Window *mWindowHandle;
 
-   /// Our former Parent HWND
-   HWND mOldParent;
-
-   /// The Win32 window style we want to use when windowed.
-   DWORD mWindowedWindowStyle;
+   /// Our former Parent
+   SDL_Window *mOldParent;   
 
    /// The GFX device that we're tied to.
    GFXDevice *mDevice;
@@ -90,12 +82,6 @@ private:
 
    /// Our position on the desktop.
    Point2I mPosition;
-
-   /// Windows HACCEL for accelerators
-   HACCEL mAccelHandle;
-
-   /// Keyboard accelerators for menus
-   WinAccelList mWinAccelList;
 
    /// Is the mouse locked to this window?
    bool mMouseLocked;
@@ -110,48 +96,44 @@ private:
    bool mSuppressReset;
 
    /// Menu associated with this window.  This is a passive property of the window and is not required to be used at all.
-   HMENU mMenuHandle;
+   void* mMenuHandle;
 
    /// Do we have a fullscreen window style set?
    bool                 mFullscreen;
 
    /// @}
 
-   /// Helper to allocate our Win32 window class.
-   void _registerWindowClass();
-   void _unregisterWindowClass();
-
-   /// Windows message handler callback.
-   static LRESULT PASCAL WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
-
    /// Add an accelerator to the list of accelerators for this window. Intended for use by addAccelerators()
    void addAccelerator(Accelerator &accel);
    /// Remove an accelerator from the list of accelerators for this window. Intended for use by removeAccelerators()
    void removeAccelerator(Accelerator &accel);
 
-public:
-   Win32Window();
-   ~Win32Window();
+   void _processSDLEvent(SDL_Event &evt);
+   void _triggerMouseLocationNotify();
+   void _triggerMouseButtonNotify(const SDL_Event& event);
+   void _triggerKeyNotify(const SDL_Event& event);
+   void _triggerTextNotify(const SDL_Event& event);
 
-   /// Return the HWND (win32 window handle) for this window.
-   HWND &getHWND()
-   {
-      return mWindowHandle;
-   }
+public:
+   SDLWindow();
+   ~SDLWindow();
 
    virtual void* getSystemWindow(const WindowSystem system);
 
-   HMENU &getMenuHandle()
+   void* &getMenuHandle()
    {
       return mMenuHandle;
    }
 
-   void setMenuHandle( HMENU menuHandle ) 
+   void setMenuHandle( void* menuHandle ) 
    {
       mMenuHandle = menuHandle;
       if(!mFullscreen)
-         SetMenu(mWindowHandle, mMenuHandle);
-   }
+      {
+         // TODO SDL
+         //SetMenu(mWindowHandle, mMenuHandle);
+      }
+   }   
 
    /// Add a list of accelerators to this window
    void addAccelerators(AcceleratorList &list);
@@ -160,9 +142,6 @@ public:
 
    /// Returns true if @p info matches an accelerator
    bool isAccelerator(const InputEventInfo &info);
-
-   /// Allow windows to translate messages. Used for accelerators.
-   bool translateMessage(MSG &msg);
 
    virtual GFXDevice *getGFXDevice();
    virtual GFXWindowTarget *getGFXTarget();

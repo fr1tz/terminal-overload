@@ -1,6 +1,5 @@
-<?php
 //-----------------------------------------------------------------------------
-// Copyright (c) 2013 GarageGames, LLC
+// Copyright (c) 2012 GarageGames, LLC
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to
@@ -21,22 +20,15 @@
 // IN THE SOFTWARE.
 //-----------------------------------------------------------------------------
 
-beginModule( 'libsdl2' );
+#include "platform/platform.h"
+#include "console/console.h"
 
-   addProjectDefine( 'TORQUE_SDL' );
+bool Platform::displaySplashWindow( String path )
+{
+   if(path.isEmpty())
+      return false;
 
-   includeLib( 'libsdl2' );
-   addLibIncludePath( 'sdl/include' );
-   
-   addEngineSrcDir('windowManager/sdl');
-   addEngineSrcDir('platformSDL');
+	return true;
+}
 
-   if (inProjectConfig())
-   {
-      addProjectDependency( 'libsdl2' );
-      addSolutionProjectRef( 'libsdl2' );
-   }
 
-endModule();
-
-?>
