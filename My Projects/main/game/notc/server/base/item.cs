@@ -50,6 +50,15 @@ function Item::schedulePop(%this)
 }
 
 //-----------------------------------------------------------------------------
+
+function ItemData::onAdd(%this, %obj)
+{
+   Parent::onAdd(%this);
+   if(%this.playAmbient)
+      %obj.playThread(0, "ambient");
+}
+
+//-----------------------------------------------------------------------------
 // Callbacks to hook items into the inventory system
 
 function ItemData::onThrow(%this, %user, %amount)
