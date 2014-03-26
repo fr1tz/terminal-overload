@@ -63,44 +63,12 @@ function Weapon::onInventory(%this, %obj, %amount)
 
 function WeaponImage::onMount(%this, %obj, %slot)
 {
-   // Check if there's already some ammo in the weapon.
-   %magazine = %obj.magazine[%this];
-   if(%magazine !$= "")
-      %obj.setImageMagazineRounds(%slot, %magazine);
-   else
-      %obj.setImageMagazineRounds(%slot, 0);
-      
-   if(%this.isField("clip"))
-   {
-      // Use the clip system for this weapon.
-      if (%obj.client !$= "" && !%obj.isAiControlled)
-      {
-         %numClips = %obj.getInventory(%this.clip);
-         if(%numClips $= "")
-            %numClips = 0;
-         %obj.client.setAmmoAmountHud("", %numClips);
-      }
-   }
-   else if(%this.ammo !$= "")
-   {
-      // Use the ammo pool system for this weapon.
-      if (%obj.getInventory(%this.ammo))
-         %spareAmmo = %obj.getInventory(%this.ammo);
-      else
-         %spareAmmo = 0;
-
-      if (%obj.client !$= "" && !%obj.isAiControlled)
-         %obj.client.setAmmoAmountHud("", %spareAmmo);
-   }
+   %this.updateMagazine(%obj, %slot);
 }
 
 function WeaponImage::onUnmount(%this, %obj, %slot)
 {
-   if(%this.reloadImage !$= "")
-      %obj.magazine[%this.getId()] = %obj.getImageMagazineRounds(%slot);
 
-   if (%obj.client !$= "" && !%obj.isAiControlled)
-      %obj.client.RefreshWeaponHud(0, "", "");
 }
 
 // ----------------------------------------------------------------------------
@@ -316,151 +284,14 @@ function WeaponImage::onWetFire(%this, %obj, %slot)
 // Magazine Management
 //-----------------------------------------------------------------------------
 
-function WeaponImage::onMagazineEmpty(%this, %obj, %slot)
+function WeaponImage::updateMagazine(%this, %obj, %slot)
 {
-   //echo("WeaponImage::onMagazineEmpty: " SPC %this SPC %obj SPC %slot);
+   //echo("WeaponImage::updateMagazine: " SPC %this SPC %obj SPC %slot);
    
-   %obj.reloadWeapon();
-}
-
-function WeaponImage::onReloadDone(%this, %obj, %slot)
-{
-   //echo("WeaponImage::onReloadDone: " SPC %this SPC %obj SPC %slot);
-
-   %fireImage = %this.fireImage;
-   %magazineRounds = %obj.magazine[%fireImage.getId()];
-   %missingRounds = %fireImage.magazineCapacity - %magazineRounds;
-   %availRounds = %obj.decInventory(%fireImage.ammo, %missingRounds);
-   %magazineRounds += %availRounds;
-   %obj.magazine[%fireImage.getId()] = %magazineRounds;
-   %obj.mountImage(%fireImage, $WeaponSlot, true);
-   %obj.setImageGenericTrigger($WeaponSlot, 3, true);
-}
-
-//-----------------------------------------------------------------------------
-// Clip Management
-//-----------------------------------------------------------------------------
-
-function WeaponImage::onClipEmpty(%this, %obj, %slot)
-{
-   //echo("WeaponImage::onClipEmpty: " SPC %this SPC %obj SPC %slot);
-   
-   // Attempt to automatically reload.  Schedule this so it occurs
-   // outside of the current state that called this method
-   %this.schedule(0, "reloadAmmoClip", %obj, %slot);
-}
-
-function WeaponImage::reloadAmmoClip(%this, %obj, %slot)
-{
-   //echo("WeaponImage::reloadAmmoClip: " SPC %this SPC %obj SPC %slot);
-
-   // Make sure we're indeed the currect image on the given slot
-   if (%this != %obj.getMountedImage(%slot))
-      return;
-
-   if ( %this.isField("clip") )
+   if(%this.ammo !$= "")
    {
-      if (%obj.getInventory(%this.clip) > 0)
-      {
-         %obj.decInventory(%this.clip, 1);
-         %obj.setInventory(%this.ammo, %this.ammo.maxInventory);
-         %obj.setImageAmmo(%slot, true);
-      }
-      else
-      {
-         %amountInPocket = %obj.getFieldValue( "remaining" @ %this.ammo.getName());
-         if ( %amountInPocket )
-         {
-            %obj.setFieldValue( "remaining" @ %this.ammo.getName(), 0);
-            %obj.setInventory( %this.ammo, %amountInPocket );
-            %obj.setImageAmmo( %slot, true );
-         }
-      }
-      
-   }
-}
-
-function WeaponImage::clearAmmoClip( %this, %obj, %slot )
-{
-   //echo("WeaponImage::clearAmmoClip: " SPC %this SPC %obj SPC %slot);
-   
-   // if we're not empty put the remaining bullets from the current clip
-   // in to the player's "pocket".
-
-   if ( %this.isField( "clip" ) )
-   {
-      // Commenting out this line will use a "hard clip" system, where
-      // A player will lose any ammo currently in the gun when reloading.
-      %pocketAmount = %this.stashSpareAmmo( %obj );
-      
-      if ( %obj.getInventory( %this.clip ) > 0 || %pocketAmount != 0 )
-         %obj.setImageAmmo(%slot, false);
-   }
-}
-function WeaponImage::stashSpareAmmo( %this, %player )
-{
-   // If the amount in our pocket plus what we are about to add from the clip
-   // Is over a clip, add a clip to inventory and keep the remainder
-   // on the player
-   if (%player.getInventory( %this.ammo ) < %this.ammo.maxInventory )
-   {
-      %nameOfAmmoField = "remaining" @ %this.ammo.getName();
-      
-      %amountInPocket = %player.getFieldValue( %nameOfAmmoField );
-      
-      %amountInGun = %player.getInventory( %this.ammo );
-      
-      %combinedAmmo = %amountInGun + %amountInPocket;
-      
-      // Give the player another clip if the amount in our pocket + the 
-      // Amount in our gun is over the size of a clip.
-      if ( %combinedAmmo >= %this.ammo.maxInventory )
-      {
-         %player.setFieldValue( %nameOfAmmoField, %combinedAmmo - %this.ammo.maxInventory );
-         %player.incInventory( %this.clip, 1 );
-      }
-      else if ( %player.getInventory(%this.clip) > 0 )// Only put it back in our pocket if we have clips.
-         %player.setFieldValue( %nameOfAmmoField, %combinedAmmo );
-         
-      return %player.getFieldValue( %nameOfAmmoField );
-      
-   }
-   
-   return 0;
-
-}
-
-//-----------------------------------------------------------------------------
-// Clip Class
-//-----------------------------------------------------------------------------
-
-function AmmoClip::onPickup(%this, %obj, %shape, %amount)
-{
-   // The parent Item method performs the actual pickup.
-   if (Parent::onPickup(%this, %obj, %shape, %amount))
-      serverPlay3D(AmmoPickupSound, %shape.getTransform());
-
-   // The clip inventory state has changed, we need to update the
-   // current mounted image using this clip to reflect the new state.
-   if ((%image = %shape.getMountedImage($WeaponSlot)) > 0)
-   {
-      // Check if this weapon uses the clip we just picked up and if
-      // there is no ammo.
-      if (%image.isField("clip") && %image.clip.getId() == %this.getId())
-      {
-         %outOfAmmo = !%shape.getImageAmmo($WeaponSlot);
-
-         if ( isObject( %image.clip ) )
-            %amountInClips = %shape.getInventory(%image.clip);
-            
-         //%amountInClips *= %image.ammo.maxInventory;
-         //%amountInClips += %shape.getInventory(%image.ammo);
-         
-         %shape.client.setAmmoAmountHud("", %amountInClips);
-         
-         if(%outOfAmmo)
-            %image.onMagazineEmpty(%shape, $WeaponSlot);
-      }
+      %rounds = %obj.getInventory(%this.ammo);
+      %obj.setImageMagazineRounds(%slot, %rounds);
    }
 }
 
@@ -484,32 +315,10 @@ function Ammo::onInventory(%this, %obj, %amount)
 
    // The ammo inventory state has changed, we need to update any
    // mounted images using this ammo to reflect the new state.
-   for (%i = 0; %i < 8; %i++)
+   for(%i = 0; %i < 8; %i++)
    {
       if ((%image = %obj.getMountedImage(%i)) > 0)
-         if (isObject(%image.ammo) && %image.ammo.getId() == %this.getId())
-         {
-            %obj.setImageAmmo(%i, %amount != 0);
-            %currentAmmo = %obj.getInventory(%this);
-            
-            if (%obj.getClassname() $= "Player")
-            {
-               if ( isObject( %this.clip ) )
-               {
-                  %amountInClips = %obj.getInventory(%this.clip);
-                  %amountInClips *= %this.maxInventory;
-                  %amountInClips += %obj.getFieldValue( "remaining" @ %this.getName() );
-               }
-               else //Is a single fire weapon, like the grenade launcher.
-               {
-                  %amountInClips = %currentAmmo;
-                  %currentAmmo = "";
-               }
-
-               if (%obj.client !$= "" && !%obj.isAiControlled)
-                  %obj.client.setAmmoAmountHud(%currentAmmo, %amountInClips);
-            }
-         }
+         %image.updateMagazine(%obj, %i);
    }
 }
 
