@@ -478,6 +478,9 @@ function Ammo::onPickup(%this, %obj, %shape, %amount)
 function Ammo::onInventory(%this, %obj, %amount)
 {
    //echo("Ammo::onInventory: " SPC %this SPC %obj SPC %amount);
+   
+   if(%this.giveWeapon !$= "")
+      %obj.incInventory(%this.giveWeapon, 1);
 
    // The ammo inventory state has changed, we need to update any
    // mounted images using this ammo to reflect the new state.
