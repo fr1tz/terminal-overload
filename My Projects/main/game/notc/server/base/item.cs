@@ -148,7 +148,7 @@ function ItemData::createItem(%data)
    {
       dataBlock = %data;
       static = true;
-      rotate = true;
+      rotate = false;
    };
    return %obj;
 }
