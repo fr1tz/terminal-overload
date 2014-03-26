@@ -3140,7 +3140,8 @@ void ShapeBase::setImageState(U32 imageSlot, U32 newState,bool force)
 
 		if(createProjectile)
 		{
-			if(imageData.ammoSource == ShapeBaseImageData::Magazine)
+			if(imageData.ammoSource == ShapeBaseImageData::Magazine
+         || imageData.ammoSource == ShapeBaseImageData::Hybrid)
 				image.magazineRounds--;
 
 			Point3F muzzlePoint, muzzleVector;
@@ -4053,7 +4054,8 @@ void ShapeBase::clientFiredShotgun(
 		return;
 
 	// Update magazine rounds count.
-	if(image->dataBlock->ammoSource == ShapeBaseImageData::Magazine)
+	if(image->dataBlock->ammoSource == ShapeBaseImageData::Magazine
+   || image->dataBlock->ammoSource == ShapeBaseImageData::Hybrid)
 	{
 		this->setImageMagazineRounds(slot, image->magazineRounds-1);
 		image->controllingClientUpdate.enabled = false;
