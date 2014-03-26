@@ -52,6 +52,9 @@ function WpnMGL1PseudoProjectile::onAdd(%this, %obj)
  
    %muzzleVector = %player.getMuzzleVector(0);
 	%muzzlePoint = %player.getMuzzlePoint(0);
+ 
+   // Velocity inherited from player
+   %iVel = VectorScale(%player.getVelocity(), %data.velInheritFactor);
 
    %muzzleTransform = createOrientFromDir(%muzzleVector);
 
@@ -67,6 +70,7 @@ function WpnMGL1PseudoProjectile::onAdd(%this, %obj)
 			MatrixMulVector(%muzzleTransform, %pos[%i])
 		);
 		%velocity = VectorScale(MatrixMulVector(%muzzleTransform, %vec[%i]), %data.muzzleVelocity);
+      %velocity = VectorAdd(%velocity, %iVel);
 
 		// create the projectile object...
 		%p = new Projectile() {
@@ -78,6 +82,7 @@ function WpnMGL1PseudoProjectile::onAdd(%this, %obj)
 			sourceSlot      = %slot;
 			client          = %player.client;
 		};
+      copyPalette(%player, %p);
 		MissionCleanup.add(%p);
 	}
 

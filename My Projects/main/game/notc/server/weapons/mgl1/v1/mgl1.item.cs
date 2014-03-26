@@ -17,6 +17,7 @@ datablock ItemData(WpnMGL1Ammo)
    friction = 0.6;
 
    // Dynamic properties defined by the scripts
+   giveWeapon = WpnMGL1;
    playAmbient = true;
    pickUpName = "MGL1 Ammo";
    count = 15;

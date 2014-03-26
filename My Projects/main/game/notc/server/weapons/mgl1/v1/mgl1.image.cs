@@ -28,7 +28,7 @@ datablock ShapeBaseImageData(WpnMGL1Image)
    // provides some hooks into the inventory system.
    class = "WeaponImage";
 
-   ammoSource = "Energy";
+   ammoSource = "Hybrid";
    minEnergy = 16;
 
    projectile = WpnMGL1PseudoProjectile;
@@ -55,11 +55,8 @@ datablock ShapeBaseImageData(WpnMGL1Image)
    maxConcurrentSounds = 1;
    
    // Script fields
-   reloadImage = WpnMGL1ReloadImage;
    item = WpnMGL1;
    ammo = WpnMGL1Ammo;
-   //clip = WpnMGL1Clip;
-   magazineCapacity = 30;
 
 	//-------------------------------------------------
 	// image states...
