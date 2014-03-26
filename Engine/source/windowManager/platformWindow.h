@@ -123,6 +123,15 @@ public:
    /// window manager.
    virtual WindowId getWindowId() { return 0; };
 
+   enum WindowSystem
+   {
+      WindowSystem_Unknown = 0,
+      WindowSystem_Windows,
+      WindowSystem_X11,
+   };
+
+   virtual void* getSystemWindow(const WindowSystem system) { return NULL; }
+
    /// Set the flag that determines whether to suppress a GFXDevice reset
    inline void setSuppressReset(bool suppress) { mSuppressReset = suppress; };
 

@@ -31,10 +31,14 @@
 
 void CloseSplashWindow(HINSTANCE hinst);
 
+#ifndef TORQUE_SDL
+
 PlatformWindowManager * CreatePlatformWindowManager()
 {
    return new Win32WindowManager();
 }
+
+#endif
 
 // ------------------------------------------------------------------------
 

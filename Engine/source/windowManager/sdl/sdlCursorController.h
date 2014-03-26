@@ -1,6 +1,5 @@
-<?php
 //-----------------------------------------------------------------------------
-// Copyright (c) 2013 GarageGames, LLC
+// Copyright (c) 2012 GarageGames, LLC
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to
@@ -21,22 +20,32 @@
 // IN THE SOFTWARE.
 //-----------------------------------------------------------------------------
 
-beginModule( 'libsdl2' );
+#ifndef  _SDL_CURSORCONTROLLER_H_
+#define  _SDL_CURSORCONTROLLER_H_
 
-   addProjectDefine( 'TORQUE_SDL' );
+#include "windowManager/platformCursorController.h"
 
-   includeLib( 'libsdl2' );
-   addLibIncludePath( 'sdl/include' );
-   
-   addEngineSrcDir('windowManager/sdl');
-   addEngineSrcDir('platformSDL');
-
-   if (inProjectConfig())
+class SDLCursorController : public PlatformCursorController
+{
+public:
+   SDLCursorController( PlatformWindow *owner ) :
+      PlatformCursorController( owner )
    {
-      addProjectDependency( 'libsdl2' );
-      addSolutionProjectRef( 'libsdl2' );
-   }
+      pushCursor( PlatformCursorController::curArrow );
+   };
 
-endModule();
+   virtual void setCursorPosition( S32 x, S32 y );
+   virtual void getCursorPosition( Point2I &point );
+   virtual void setCursorVisible( bool visible );
+   virtual bool isCursorVisible();
 
-?>
+   void setCursorShape( U32 cursorID );
+   void setCursorShape( const UTF8 *fileName, bool reload );
+
+   U32 getDoubleClickTime();
+   S32 getDoubleClickWidth();
+   S32 getDoubleClickHeight();
+};
+
+
+#endif

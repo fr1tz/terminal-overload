@@ -1,6 +1,5 @@
-<?php
 //-----------------------------------------------------------------------------
-// Copyright (c) 2013 GarageGames, LLC
+// Copyright (c) 2012 GarageGames, LLC
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to
@@ -21,22 +20,63 @@
 // IN THE SOFTWARE.
 //-----------------------------------------------------------------------------
 
-beginModule( 'libsdl2' );
+#include <tchar.h>
+#include "core/strings/unicode.h"
+#include "math/mMath.h"
+#include "windowManager/sdl/sdlWindow.h"
+#include "windowManager/sdl/sdlWindowMgr.h"
+#include "windowManager/sdl/sdlCursorController.h"
+#include "platform/platformInput.h"
 
-   addProjectDefine( 'TORQUE_SDL' );
 
-   includeLib( 'libsdl2' );
-   addLibIncludePath( 'sdl/include' );
-   
-   addEngineSrcDir('windowManager/sdl');
-   addEngineSrcDir('platformSDL');
+U32 SDLCursorController::getDoubleClickTime()
+{
+   // TODO SDL
+   return 500;
+}
+S32 SDLCursorController::getDoubleClickWidth()
+{
+   // TODO SDL
+   return 32;
+}
+S32 SDLCursorController::getDoubleClickHeight()
+{
+   // TODO SDL
+   return 32;
+}
 
-   if (inProjectConfig())
-   {
-      addProjectDependency( 'libsdl2' );
-      addSolutionProjectRef( 'libsdl2' );
-   }
+void SDLCursorController::setCursorPosition( S32 x, S32 y )
+{
+   // TODO SDL
+}
 
-endModule();
+void SDLCursorController::getCursorPosition( Point2I &point )
+{
+   // TODO SDL
 
-?>
+   // Return 
+   point.x = 0;
+   point.y = 0;
+}
+
+void SDLCursorController::setCursorVisible( bool visible )
+{
+   // TODO SDL
+}
+
+bool SDLCursorController::isCursorVisible()
+{
+   // TODO SDL
+   return true;
+}
+
+void SDLCursorController::setCursorShape(U32 cursorID)
+{
+   // TODO SDL
+}
+
+
+void SDLCursorController::setCursorShape( const UTF8 *fileName, bool reload )
+{
+   // TODO SDL
+}
