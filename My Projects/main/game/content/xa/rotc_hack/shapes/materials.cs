@@ -3,7 +3,7 @@ singleton Material(xa_rotc_hack_shapes_mat1)
 {
    mapTo = "projectile.red";
    diffuseColorPaletteSlot[0] = "0";
-   diffuseMap[0] = "content/xa/rotc/p.5.4/shapes/rotc/weapons/assaultrifle/projectile.orange.png";
+   diffuseMap[0] = "content/xa/notc/core/shapes/smg1/image/p1/muzzleflash.png";
    glow[0] = "1";
    emissive[0] = "1";
    materialTag0 = "Miscellaneous";
@@ -46,24 +46,32 @@ singleton Material(xa_rotc_hack_shapes_mat3)
 singleton Material(xa_rotc_hack_shapes_mat4)
 {
    mapTo = "image";
-   diffuseColorPaletteSlot[0] = "0";
-   diffuseMap[0] = "content/xa/rotc/p.5.3/shapes/rotc/weapons/minigun/image";
-   glow[1] = "0";
+   diffuseMap[0] = "content/xa/notc/core/textures/grid.128.4.h1.png";
+   diffuseColor[0] = "0.992157 0.996078 0.996078 1";
+   diffuseColorPaletteSlot[0] = "1";
+   specular[0] = "0.5 0.5 0.5 1";
+   specularPower[0] = "50";
+   glow[0] = "1";
+   emissive[0] = "1";
+   diffuseMap[1] = "content/xa/notc/core/textures/grid128.12.png";
+   diffuseColor[1] = "0.996078 0.996078 0.996078 1";
+   diffuseColorPaletteSlot[1] = "1";
+   wireframe[1] = "1";
    emissive[1] = "1";
-   diffuseMap[1] = "content/xa/notc/core/textures/grid.128.8.png";
-   scrollDir[1] = "0 0.138";
-   rotSpeed[1] = "1.529";
+   glow[1] = "1";
+   doubleSided = "0";
+   translucentBlendOp = "LerpAlpha";
    castShadows = "0";
-   materialTag0 = "Miscellaneous";
+   translucent = "0";
    showFootprints = "0";
-   diffuseColor[1] = "0.996078 0.745098 0.00784314 1";
+   materialTag0 = "Miscellaneous";
 };
 
 singleton Material(xa_rotc_hack_shapes_mat5)
 {
    mapTo = "muzzleflash_red";
    diffuseColorPaletteSlot[0] = "0";
-   diffuseMap[0] = "content/xa/rotc/p.5.3/shapes/rotc/weapons/blaster/muzzleflash_red.png";
+   diffuseMap[0] = "content/xa/notc/core/shapes/smg1/image/p1/muzzleflash.png";
    specularPower[0] = "1";
    doubleSided = "1";
    castShadows = "0";
