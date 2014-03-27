@@ -41,6 +41,24 @@ datablock ShotgunProjectileData(WpnSG1Projectile)
    //lightDesc = "WpnSG1ProjectileLightDesc";
 };
 
+function WpnSG1Projectile::onAdd(%this, %obj)
+{
+   //Parent::onAdd(%this, %obj);
+
+   %data = WpnSG1Projectile;
+   %ammo = WpnSG1Ammo;
+	%player = %obj.sourceObject;
+	%slot = %obj.sourceSlot;
+ 
+   if(%player.getInventory(%ammo) == 0)
+   {
+      %obj.delete();
+      return;
+   }
+
+   %player.decInventory(%ammo, 1);
+}
+
 function WpnSG1Projectile::onCollision(%this,%obj,%col,%fade,%pos,%normal)
 {
    Parent::onCollision(%this,%obj,%col,%fade,%pos,%normal);

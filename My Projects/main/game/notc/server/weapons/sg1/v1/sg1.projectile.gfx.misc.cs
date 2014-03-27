@@ -25,6 +25,7 @@ datablock DecalData(WpnSG1ProjectileDecal)
    textureCoords[9] = "0 0 1 1";
    textureCoords[10] = "0 0 1 1";
    fadeTime = "3000";
+   paletteSlot = "0";
 };
 
 datablock ParticleData(WpnSG1ProjectileEmitterParticle : DefaultParticle)
@@ -39,8 +40,8 @@ datablock ParticleData(WpnSG1ProjectileEmitterParticle : DefaultParticle)
    inheritedVelFactor = "0";
    textureName = "content/xa/notc/core/textures/grid.128.4.glow.png";
    animTexName = "content/xa/notc/core/textures/grid.128.4.glow.png";
-   colors[0] = "0.996078 0.92549 0.00784314 1";
-   colors[1] = "0.996078 0.835294 0.0156863 0";
+   colors[0] = "1 1 1 1";
+   colors[1] = "1 1 1 0";
    lifetimeMS = "500";
    lifetimeVarianceMS = "250";
    useInvAlpha = "0";
@@ -52,6 +53,7 @@ datablock ParticleEmitterData(WpnSG1ProjectileEmitter : DefaultEmitter)
    ejectionPeriodMS = "2";
    ejectionOffset = "0";
    periodVarianceMS = "1";
+   paletteSlot = 0;
 };
 
 

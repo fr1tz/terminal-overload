@@ -28,7 +28,7 @@ datablock ShapeBaseImageData(WpnSG1Image)
    // provides some hooks into the inventory system.
    class = "WeaponImage";
 
-   ammoSource = "Energy";
+   ammoSource = "Hybrid";
    minEnergy = 16;
 
    projectile = WpnSG1Projectile;
@@ -55,11 +55,8 @@ datablock ShapeBaseImageData(WpnSG1Image)
    maxConcurrentSounds = 1;
    
    // Script fields
-   reloadImage = WpnSG1ReloadImage;
    item = WpnSG1;
    ammo = WpnSG1Ammo;
-   //clip = WpnSG1Clip;
-   magazineCapacity = 30;
 
 	//-------------------------------------------------
 	// image states...
@@ -101,7 +98,6 @@ datablock ShapeBaseImageData(WpnSG1Image)
 		stateEmitterNode[3]              = "fireparticles";
 		stateEmitterTime[3]              = 0.1;
 		stateSpinThread[3]               = "Stop";
-		stateScript[3]                   = "onFire";
 
 		// after fire...
 		stateName[4]                     = "AfterFire";
