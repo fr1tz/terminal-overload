@@ -516,7 +516,7 @@ U32 GameBase::packUpdate( NetConnection *connection, U32 mask, BitStream *stream
 
    if(stream->writeFlag(mask & RareUpdatesMask))
    {
-      stream->writeInt(mTeamId, 2);
+      stream->writeInt(mTeamId, 32);
       if(stream->writeFlag(mObjScale != Point3F::One))
          mathWrite(*stream, mObjScale);  
    }
@@ -545,7 +545,7 @@ void GameBase::unpackUpdate(NetConnection *con, BitStream *stream)
    // Rare updates
    if(stream->readFlag())
    {
-      mTeamId = stream->readInt(2);
+      mTeamId = stream->readInt(32);
       if(stream->readFlag())
       {
          VectorF scale;
