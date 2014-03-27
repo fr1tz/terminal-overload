@@ -12,7 +12,7 @@ datablock ParticleData(WpnMG1ProjectileExplosion_Smoke)
 
 	useInvAlpha =  false;
 
-	textureName = "content/xa/rotc/p.5.4/textures/rotc/corona1.png";
+	textureName = "content/xa/rotc/p.5.4/textures/rotc/corona.png";
 
 	colors[0]	  = "1.0 1.0 1.0 1.0";
 	colors[1]	  = "1.0 1.0 1.0 0.0";
@@ -23,7 +23,7 @@ datablock ParticleData(WpnMG1ProjectileExplosion_Smoke)
 
 	allowLighting = 0;
    renderDot = 0;
-   animTexName = "content/xa/rotc/p.5.4/textures/rotc/corona1.png";
+   animTexName = "content/xa/rotc/p.5.4/textures/rotc/corona.png";
    times[2] = "1";
 };
 
@@ -42,6 +42,7 @@ datablock ParticleEmitterData(WpnMG1ProjectileExplosion_SmokeEmitter)
 	orientParticles  = false;
 	lifetimeMS		 = 50;
 	particles = "WpnMG1ProjectileExplosion_Smoke";
+   paletteSlot = 0;
 };
 
 datablock ParticleData(WpnMG1ProjectileExplosion_DebrisParticles)
@@ -117,9 +118,8 @@ datablock ExplosionData(WpnMG1ProjectileExplosion)
 	// Dynamic light
 	lightStartRadius = 4;
 	lightEndRadius = 0;
-	lightStartColor = "1.0 0.5 0.0 1.0";
-	lightEndColor = "1.0 0.5 0.0 1.0";
-   lightCastShadows = false;
+	lightStartColor = "1 1 1 1.0";
+	lightEndColor = "1 1 1 1.0";
 
 	shakeCamera = false;
 };

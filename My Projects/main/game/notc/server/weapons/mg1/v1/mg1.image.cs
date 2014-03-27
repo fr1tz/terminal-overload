@@ -28,7 +28,7 @@ datablock ShapeBaseImageData(WpnMG1Image)
    // provides some hooks into the inventory system.
    class = "WeaponImage";
 
-   ammoSource = "Energy";
+   ammoSource = "Hybrid";
    minEnergy = 10;
 
    projectile = WpnMG1Projectile;
@@ -41,7 +41,7 @@ datablock ShapeBaseImageData(WpnMG1Image)
 
    // Weapon lights up while firing
    lightType = "WeaponFireLight";
-   lightColor = "0.992126 0.874016 0 1";
+   lightColor = "1 1 1 1";
    lightRadius = "10";
    lightDuration = "100";
    lightBrightness = 2;
@@ -55,11 +55,8 @@ datablock ShapeBaseImageData(WpnMG1Image)
    maxConcurrentSounds = 1;
    
    // Script fields
-   reloadImage = WpnMG1ReloadImage;
    item = WpnMG1;
    ammo = WpnMG1Ammo;
-   //clip = WpnMG1Clip;
-   magazineCapacity = 30;
 
 	//-------------------------------------------------
 	// image states...
@@ -166,7 +163,8 @@ function WpnMG1Image::getBulletSpread(%this, %obj)
 function WpnMG1Image::onFire(%this, %obj, %slot)
 {
 	%projectile = %this.projectile;
-
+   %ammo = %this.ammo;
+   
 	// determine muzzle-point...
 	%muzzlePoint = %obj.getMuzzlePoint(%slot);
 
@@ -203,8 +201,10 @@ function WpnMG1Image::onFire(%this, %obj, %slot)
 		client	    = %obj.client;
 	};
 	MissionCleanup.add(%p);
+   copyPalette(%obj, %p);
 
 	%obj.setEnergyLevel(%obj.getEnergyLevel() - %projectile.energyDrain);
+   %obj.decInventory(%ammo, 1);
 
 	return %p;
 }
