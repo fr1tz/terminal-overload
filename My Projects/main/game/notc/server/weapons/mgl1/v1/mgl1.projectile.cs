@@ -10,8 +10,8 @@ datablock LightDescription(WpnMGL1ProjectileLightDesc : BulletProjectileLightDes
 
 datablock DecalData(WpnMGL1ProjectileDecal)
 {
-   Material = "xa_notc_core_shapes_smg1_projectile_p1_decalmat";
-   size = "0.25";
+   Material = "DECAL_RocketEXP";
+   size = "2";
    lifeSpan = "5000";
    randomize = "1";
    texRows = "2";
@@ -47,9 +47,15 @@ function WpnMGL1PseudoProjectile::onAdd(%this, %obj)
 {
    // Create actual projectile.
    %data = WpnMGL1Projectile;
+   %ammo = WpnMGL1Ammo;
 	%player = %obj.sourceObject;
 	%slot = %obj.sourceSlot;
  
+   if(%player.getInventory(%ammo) == 0)
+      return;
+      
+   %player.decInventory(%ammo, 1);
+
    %muzzleVector = %player.getMuzzleVector(0);
 	%muzzlePoint = %player.getMuzzlePoint(0);
  

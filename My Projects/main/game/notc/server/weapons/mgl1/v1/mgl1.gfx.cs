@@ -201,7 +201,7 @@ datablock ParticleData(WpnMGL1ProjectileExplosion_Cloud)
 	spinRandomMin = -200.0;
 	spinRandomMax =  200.0;
 
-	textureName = "content/xa/rotc/p.5.4/textures/rotc/corona3.png";
+	textureName = "content/xa/rotc/p.5.4/textures/rotc/corona.png";
 
 	colors[0]	  = "1.0 1.0 1.0 1.0";
 	colors[1]	  = "1.0 1.0 1.0 0.5";
@@ -214,6 +214,8 @@ datablock ParticleData(WpnMGL1ProjectileExplosion_Cloud)
 	times[2]		= 1.0;
 
 	allowLighting = false;
+ 
+   paletteSlot = 0;
 };
 
 datablock ParticleEmitterData(WpnMGL1ProjectileExplosion_CloudEmitter)
@@ -326,7 +328,7 @@ datablock ParticleData(WpnMGL1ProjectileExplosion_Shrapnel)
 	constantAcceleration = 0.0;
 	lifetimeMS			  = 1000;
 	lifetimeVarianceMS	= 0;
-	textureName			 = "content/xa/rotc/p.5.4/textures/rotc/corona3.png";
+	textureName			 = "content/xa/rotc/p.5.4/textures/rotc/corona.png";
 	colors[0]	  = "1 1 1 1.0";
 	colors[1]	  = "1 1 1 0.5";
 	colors[2]	  = "1 1 1 0.0";
@@ -355,6 +357,7 @@ datablock ParticleEmitterData(WpnMGL1ProjectileExplosion_ShrapnelEmitter)
 	orientParticles  = false;
 	lifetimeMS		 = 50;
 	particles = "WpnMGL1ProjectileExplosion_Shrapnel";
+   paletteSlot = 0;
 };
 
 datablock ParticleData(WpnMGL1ProjectileExplosion_Sparks)
