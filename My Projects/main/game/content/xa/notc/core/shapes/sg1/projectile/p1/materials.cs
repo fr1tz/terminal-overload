@@ -9,8 +9,9 @@ singleton Material(xa_notc_core_shapes_sg1_projectile_p1_decalmat)
    showFootprints = "0";
    glow[0] = "1";
    emissive[0] = "1";
-   diffuseColor[0] = "1 0.929412 0 1";
+   diffuseColor[0] = "0.996078 0.996078 0.992157 1";
    translucentZWrite = "1";
    vertColor[0] = "1";
+   materialTag0 = "Miscellaneous";
 };
 
