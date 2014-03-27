@@ -1021,12 +1021,14 @@ void Projectile::explode( const Point3F &p, const Point3F &n, const U32 collideT
       if (mDataBlock->waterExplosion && pointInWater(p))
       {
          pExplosion = new Explosion;
+         pExplosion->setPalette(this->getPalette());
          pExplosion->onNewDataBlock(mDataBlock->waterExplosion, false);
       }
       else
       if (mDataBlock->explosion)
       {
          pExplosion = new Explosion;
+         pExplosion->setPalette(this->getPalette());
          pExplosion->onNewDataBlock(mDataBlock->explosion, false);
       }
 
