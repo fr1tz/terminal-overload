@@ -15,7 +15,8 @@ singleton Material(xa_notc_core_shapes_mg1_projectile_p1_decalmat)
 singleton Material(xa_notc_core_shapes_mg1_projectile_p1_mat1)
 {
    mapTo = "xa_notc_core_shapes_mg1_projectile_p1_mat1";
-   diffuseColor[0] = "0.996078 0.996078 0.992157 1";
+   diffuseColor[0] = "1 1 1 1";
+   diffuseColorPaletteSlot[0] = "0";
    doubleSided = "1";
    translucentBlendOp = "AddAlpha";
    glow[0] = "1";
@@ -29,7 +30,8 @@ singleton Material(xa_notc_core_shapes_mg1_projectile_p1_mat1)
 singleton Material(xa_notc_core_shapes_mg1_projectile_p1_mat2)
 {
    mapTo = "xa_notc_core_shapes_mg1_projectile_p1_mat2";
-   diffuseColor[0] = "1 0.533333 0 1";
+   diffuseColor[0] = "1 1 1 1";
+   diffuseColorPaletteSlot[0] = "0";
    doubleSided = "1";
    translucentBlendOp = "AddAlpha";
    glow[0] = "1";
