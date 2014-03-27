@@ -513,6 +513,9 @@ function GameCoreBase::spawnPlayer(%game, %client, %spawnPoint, %noControl)
    // won't get saved into the level files and will get
    // cleaned up properly
    MissionCleanup.add(%player);
+   
+   // Default team ID is ID of the client connection.
+   %player.teamId = %client.getID();
 
    // Store the client object on the player object for
    // future reference
