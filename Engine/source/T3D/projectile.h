@@ -82,6 +82,16 @@ public:
    S32 armingDelay;  // the values are converted on initialization with
    S32 fadeDelay;    // the IRangeValidatorScaled field validator
 
+   // Explosion near enemies
+   bool explodesNearEnemies;
+   S32  explodesNearEnemiesRadius;
+   U32  explodesNearEnemiesMask;
+
+	/// Explosion when missing enemy (purely cosmetic)
+   ExplosionData* missEnemyEffect;
+   S32 missEnemyEffectId;
+   S32 missEnemyEffectRadius;
+
    ExplosionData* explosion;
    S32 explosionId;
 
@@ -216,10 +226,13 @@ public:
 	virtual void setTargetPosition(const Point3F& pos);
 	GameBase* getTarget() { return mTarget; };
 	Point3F getTargetPosition() { return mTargetPosition; };
+   void missedEnemiesCheck(const Point3F& start, const Point3F& end);
+   bool missedObject(const SceneObject* obj, const Point3F& oldPos, const Point3F& newPos);
 
 public:
    Point3F  mCurrPosition;
    Point3F  mCurrVelocity;
+   bool     mExplode;
 
    U32      mCurrTrackingAbility;
 
@@ -228,6 +241,22 @@ public:
 
    S32      mSourceObjectId;
    S32      mSourceObjectSlot;
+
+private:
+   struct ProximityInfo 
+   {
+      Projectile* prj;
+      Point3F oldPos;
+      Point3F newPos;
+      ProximityInfo(Projectile* _prj, const Point3F& _oldPos, const Point3F& _newPos)
+      {
+         prj = _prj;
+         oldPos = _oldPos;
+         newPos = _newPos;
+      }
+   };
+
+   static void proximityCallback(SceneObject* obj, void* key);
 
 protected:
 

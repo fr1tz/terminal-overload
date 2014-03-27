@@ -297,8 +297,8 @@ void ShotgunProjectileTracer::processTick(const Move* move)
 	// HACK HACK HACK
 	if(mDataBlock->muzzleVelocity > 9000)
 	{
+      this->missedEnemiesCheck(mInitialPosition, mImpactPos);
 #if 0
-		this->missedEnemiesCheck(mInitialPosition, mImpactPos);
 		if(mDataBlock->laserTail != NULL)
 		{
 			LaserBeam* beam = new LaserBeam();
@@ -366,10 +366,10 @@ void ShotgunProjectileTracer::processTick(const Move* move)
 	mCurrDeltaBase = newPosition;
 	mCurrBackDelta = mCurrPosition - newPosition;
 
-	this->emitParticles(oldPosition, newPosition, mCurrVelocity, TickMs);
+   this->emitParticles(oldPosition, newPosition, mCurrVelocity, TickMs);
+   this->missedEnemiesCheck(oldPosition, newPosition);
 
 #if 0
-	this->missedEnemiesCheck(oldPosition, newPosition);
 
 	//emitParticles(mCurrPosition, newPosition, mCurrVelocity, TickMs);
 
@@ -447,6 +447,7 @@ void ShotgunProjectileTracer::simulate(F32 dt)
 	mCurrBackDelta = mCurrPosition - newPosition;
 
 	this->emitParticles(oldPosition, newPosition, mCurrVelocity, dt*1000);
+   this->missedEnemiesCheck(oldPosition, newPosition);
 
 	mCurrPosition = newPosition;
 
@@ -1030,7 +1031,8 @@ void ShotgunProjectile::clientProcessHits()
 			prj->mSourceObject     = mSourceObject;
 			prj->mSourceObjectSlot = mSourceObjectSlot;
 
-			prj->setPalette(this->getPalette());
+			prj->setTeamId(this->getTeamId());
+         prj->setPalette(this->getPalette());
 			prj->onNewDataBlock(mDataBlock, false);
 			if(!prj->registerObject())
 			{

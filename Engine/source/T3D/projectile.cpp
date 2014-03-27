@@ -132,6 +132,14 @@ ProjectileData::ProjectileData()
 
    sound = NULL;
 
+   explodesNearEnemies = false;
+   explodesNearEnemiesRadius = 10;
+   explodesNearEnemiesMask = ShapeBaseObjectType;
+
+   missEnemyEffect = NULL;	
+   missEnemyEffectId = 0;
+   missEnemyEffectRadius = 0;
+
    explosion = NULL;
    explosionId = 0;
 
@@ -208,6 +216,18 @@ void ProjectileData::initPersistFields()
 
    addField("sound", TypeSFXTrackName, Offset(sound, ProjectileData),
       "@brief SFXTrack datablock used to play sounds while in flight.\n\n");
+
+   addField("explodesNearEnemies", TypeBool, Offset(explodesNearEnemies, ProjectileData),
+      "@brief Whether the projectile explodes near enemies.\n\n");
+   addField("explodesNearEnemiesRadius", TypeS32, Offset(explodesNearEnemiesRadius, ProjectileData),
+      "@brief How close the projectile has to be to an enemy to explode.\n\n");
+   addField("explodesNearEnemiesMask", TypeS32, Offset(explodesNearEnemiesMask, ProjectileData),
+      "@brief Projectile will only explode near enemies with this typemask.\n\n");
+
+   addField("missEnemyEffect", TYPEID< ExplosionData >(), Offset(missEnemyEffect, ProjectileData),
+      "@brief Explosion datablock used when the projectile misses an enemy.\n\n");
+   addField("missEnemyEffectRadius", TypeS32, Offset(missEnemyEffectRadius, ProjectileData),
+      "@brief How close the projectile has to be to an enemy to trigger the missedEnemyEffect.\n\n");
 
    addField("explosion", TYPEID< ExplosionData >(), Offset(explosion, ProjectileData),
       "@brief Explosion datablock used when the projectile explodes outside of water.\n\n");
@@ -299,6 +319,10 @@ bool ProjectileData::preload(bool server, String &errorStr)
          if (Sim::findObject(particleWaterEmitterId, particleWaterEmitter) == false)
             Con::errorf(ConsoleLogEntry::General, "ProjectileData::preload: Invalid packet, bad datablockId(particleWaterEmitter): %d", particleWaterEmitterId);
 
+      if (!missEnemyEffect && missEnemyEffectId != 0)
+         if (Sim::findObject(missEnemyEffectId, explosion) == false)
+            Con::errorf(ConsoleLogEntry::General, "ProjectileData::preload: Invalid packet, bad datablockId(missEnemyEffect): %d", missEnemyEffectId);
+
       if (!explosion && explosionId != 0)
          if (Sim::findObject(explosionId, explosion) == false)
             Con::errorf(ConsoleLogEntry::General, "ProjectileData::preload: Invalid packet, bad datablockId(explosion): %d", explosionId);
@@ -362,6 +386,12 @@ void ProjectileData::packData(BitStream* stream)
       stream->write(scale.z);
    }
 
+   if(stream->writeFlag(explodesNearEnemies))
+   {
+      stream->writeInt(explodesNearEnemiesRadius, 32);
+      stream->writeInt(explodesNearEnemiesMask, 32);
+   }
+
    if (stream->writeFlag(particleEmitter != NULL))
       stream->writeRangedU32(particleEmitter->getId(), DataBlockObjectIdFirst,
                                                    DataBlockObjectIdLast);
@@ -369,6 +399,13 @@ void ProjectileData::packData(BitStream* stream)
    if (stream->writeFlag(particleWaterEmitter != NULL))
       stream->writeRangedU32(particleWaterEmitter->getId(), DataBlockObjectIdFirst,
                                                    DataBlockObjectIdLast);
+
+   if (stream->writeFlag(missEnemyEffect != NULL))
+   {
+      stream->writeInt(missEnemyEffectRadius, 10);
+      stream->writeRangedU32(missEnemyEffect->getId(), DataBlockObjectIdFirst,
+                                                 DataBlockObjectIdLast);
+   }
 
    if (stream->writeFlag(explosion != NULL))
       stream->writeRangedU32(explosion->getId(), DataBlockObjectIdFirst,
@@ -434,11 +471,24 @@ void ProjectileData::unpackData(BitStream* stream)
    else
       scale.set(1,1,1);
 
+   explodesNearEnemies = stream->readFlag();
+   if(explodesNearEnemies)
+   {
+      explodesNearEnemiesRadius = stream->readInt(32);
+      explodesNearEnemiesMask = stream->readInt(32);
+   }
+
    if (stream->readFlag())
       particleEmitterId = stream->readRangedU32(DataBlockObjectIdFirst, DataBlockObjectIdLast);
 
    if (stream->readFlag())
       particleWaterEmitterId = stream->readRangedU32(DataBlockObjectIdFirst, DataBlockObjectIdLast);
+
+   if(stream->readFlag())
+   {
+      missEnemyEffectRadius = stream->readInt(10); 
+      missEnemyEffectId = stream->readRangedU32(DataBlockObjectIdFirst, DataBlockObjectIdLast);
+   }
 
    if (stream->readFlag())
       explosionId = stream->readRangedU32(DataBlockObjectIdFirst, DataBlockObjectIdLast);
@@ -557,6 +607,7 @@ Projectile::Projectile()
  : mPhysicsWorld( NULL ),
    mCurrPosition( 0, 0, 0 ),
    mCurrVelocity( 0, 0, 1 ),
+   mExplode(false),
    mSourceObjectId( -1 ),
    mSourceObjectSlot( -1 ),
    mCurrTick( 0 ),
@@ -1251,6 +1302,11 @@ void Projectile::simulate( F32 dt )
          mCurrVelocity    = Point3F::Zero;
       }
    }
+   else
+   {
+      // No collision
+      this->missedEnemiesCheck(oldPosition, newPosition);
+   }
 
    // re-enable the collision response on the source object now
    // that we are done processing the ballistic movement
@@ -1643,6 +1699,186 @@ void Projectile::prepBatchRender( SceneRenderState *state )
    mProjectileShape->animate();
 
    mProjectileShape->render( rdata );
+}
+
+void Projectile::proximityCallback(SceneObject* obj, void* key)
+{
+   ShapeBase* shape = (ShapeBase*)obj;
+   ProximityInfo* prox = (ProximityInfo*)key;
+
+   Projectile* prj = prox->prj;
+
+   if(shape 
+   && shape->getDamageState() == ShapeBase::Enabled
+   && shape->getTeamId() != prj->getTeamId() 
+   && shape->getTeamId() != 0)
+   {
+      const Point3F& oldPosition = prox->oldPos;
+      const Point3F& newPosition = prox->newPos;
+
+      Point3F vec = newPosition-oldPosition;
+
+      const F32& x1 = oldPosition.x;
+      const F32& y1 = oldPosition.y;
+      const F32& z1 = oldPosition.z;
+
+      const F32& x2 = newPosition.x;
+      const F32& y2 = newPosition.y;
+      const F32& z2 = newPosition.z;
+
+      Point3F shapepos; shape->getWorldBox().getCenter(&shapepos);
+      const F32& x3 = shapepos.x;
+      const F32& y3 = shapepos.y;
+      const F32& z3 = shapepos.z;
+
+      F32 explodeDist = prj->mDataBlock->explodesNearEnemiesRadius;
+      F32 missedDist = prj->mDataBlock->missEnemyEffectRadius;
+      if(missedDist == 0)
+         missedDist = explodeDist;
+
+      // find point on vec that is closest to sphere...
+      F32 u = ((x3-x1)*(x2-x1)+(y3-y1)*(y2-y1)+(z3-z1)*(z2-z1))
+            / ((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1)+(z2-z1)*(z2-z1));
+
+      if(u >= 0 && u <= 1)
+      {
+         // closest point is indeed between old and new position...
+         Point3F p = oldPosition+vec*u;
+         F32 dist = (p-shapepos).len();
+         if(prj->mDataBlock->explodesNearEnemies && 
+            dist <= explodeDist && 
+            prj->isServerObject() &&
+            prj->mCurrTick > prj->mDataBlock->armingDelay)
+         {
+            // explode near enemy!
+            MatrixF xform(true);
+            xform.setColumn(3, p);
+            prj->setTransform(xform);
+            prj->mExplode = true;
+         }
+         else if(prj->mDataBlock->missEnemyEffect &&
+                    dist <= missedDist &&
+                    prj->isClientObject())
+         {
+            // missed enemy effect!
+            // find actual intersection points...
+            F32 r = missedDist;
+
+#define SQR(x) ((x)*(x))
+            F32 A = SQR(x2-x1)+SQR(y2-y1)+SQR(z2-z1);
+
+            F32 B = 2*((x2-x1)*(x1-x3)+(y2-y1)*(y1-y3)+(z2-z1)*(z1-z3));
+
+            F32 C = SQR(x3) + SQR(y3) + SQR(z3) + SQR(x1) + SQR(y1) + SQR(z1)
+                  -2*(x3*x1 + y3*y1 + z3*z1) - SQR(r);
+
+            // D < 0: no intersection
+            // D = 1: one intersection
+            // D > 1: two intersections
+            F32 D = B*B - 4*A*C;
+
+            if( D >= 0 )
+            {
+               u = (-B - mSqrt(D))/(2*A);
+               // other u (if D > 1): (-B + mSqrt(D))/(2*A);
+
+               Point3F exppos = oldPosition+vec*u;
+               Point3F normal = prj->mCurrPosition;
+               normal.normalize();
+
+               Explosion* pExplosion = new Explosion;
+               pExplosion->setPalette(prj->getPalette());
+               pExplosion->onNewDataBlock(prj->mDataBlock->missEnemyEffect, false);
+
+               MatrixF xform(true);
+               xform.setPosition(exppos);
+               pExplosion->setTransform(xform);
+               pExplosion->setInitialState(exppos, normal);
+               pExplosion->setCollideType(0);
+               if (pExplosion->registerObject() == false)
+               {
+                  Con::errorf(ConsoleLogEntry::General, "Projectile(%s): missed enemy: couldn't register explosion",
+                           prj->mDataBlock->getName() );
+                  delete pExplosion;
+               }
+            }
+         }
+      }
+   }
+}      
+
+void Projectile::missedEnemiesCheck(const Point3F& start, const Point3F& end)
+{
+   if( mDataBlock->explodesNearEnemies || mDataBlock->missEnemyEffect )
+   {
+      Point3F deltaVec = end - start;
+      F32 distDelta = deltaVec.len();
+
+      Point3F center = start + deltaVec*0.5;
+      F32 radius = mDataBlock->explodesNearEnemiesRadius;
+      if(mDataBlock->missEnemyEffectRadius > radius)
+         radius = mDataBlock->missEnemyEffectRadius;
+      F32 dist = distDelta/2 + radius;
+
+      Box3F box;
+      box.minExtents.x = center.x - dist;
+      box.minExtents.y = center.y - dist;
+      box.minExtents.z = center.z - dist;
+      box.maxExtents.x = center.x + dist;
+      box.maxExtents.y = center.y + dist;
+      box.maxExtents.z = center.z + dist;
+
+      U32 searchMask = mDataBlock->explodesNearEnemiesMask;
+
+      ProximityInfo prox(this, start, end);
+
+      this->getContainer()->findObjects(box,
+         searchMask, &Projectile::proximityCallback, &prox);
+
+      if(mExplode)
+      {
+         Point3F p = this->getPosition();
+         Point3F n = mCurrVelocity; n.normalize();
+         this->explode(p, n, 0);
+      }
+   }
+}
+
+bool Projectile::missedObject(const SceneObject* obj, const Point3F& oldPos, const Point3F& newPos)
+{
+   const Point3F& oldPosition = oldPos;
+   const Point3F& newPosition = newPos;
+
+   Point3F vec = newPosition-oldPosition;
+
+   const F32& x1 = oldPosition.x;
+   const F32& y1 = oldPosition.y;
+   const F32& z1 = oldPosition.z;
+
+   const F32& x2 = newPosition.x;
+   const F32& y2 = newPosition.y;
+   const F32& z2 = newPosition.z;
+
+   Point3F shapepos; obj->getWorldBox().getCenter(&shapepos);
+   const F32& x3 = shapepos.x;
+   const F32& y3 = shapepos.y;
+   const F32& z3 = shapepos.z;
+
+   const F32& r = this->mDataBlock->explodesNearEnemiesRadius;
+
+   // find point on vec that is closest to sphere...
+   F32 u = ((x3-x1)*(x2-x1)+(y3-y1)*(y2-y1)+(z3-z1)*(z2-z1))
+         / ((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1)+(z2-z1)*(z2-z1));
+
+   if(u >= 0 && u <= 1)
+   {
+      // closest point is indeed between old and new position...
+      Point3F p = oldPosition+vec*u;
+      if((p-shapepos).len() <= r)
+         return true;
+   }   
+
+   return false;
 }
 
 DefineEngineMethod(Projectile, presimulate, void, (F32 seconds), (1.0f), 
