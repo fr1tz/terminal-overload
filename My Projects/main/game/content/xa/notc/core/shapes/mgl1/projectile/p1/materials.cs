@@ -2,7 +2,8 @@
 singleton Material(xa_notc_core_shapes_mgl1_projectile_p1_mat1)
 {
    mapTo = "xa_notc_core_shapes_mgl1_projectile_p1_mat1";
-   diffuseColor[0] = "0.996078 0.807843 0.00784314 1";
+   diffuseColor[0] = "0.996078 0.996078 0.992157 1";
+   diffuseColorPaletteSlot[0] = "0";
    doubleSided = "1";
    translucentBlendOp = "AddAlpha";
    glow[0] = "1";
@@ -26,7 +27,8 @@ singleton Material(xa_notc_core_shapes_mgl1_projectile_p1_mat2)
 singleton Material(xa_notc_core_shapes_mgl1_projectile_p1_mat3)
 {
    mapTo = "xa_notc_core_shapes_mgl1_projectile_p1_mat3";
-   diffuseColor[0] = "0.996078 0.764706 0.00784314 1";
+   diffuseColor[0] = "0.996078 0.996078 0.992157 1";
+   diffuseColorPaletteSlot[0] = "0";
    doubleSided = "1";
    translucentBlendOp = "AddAlpha";
    glow[0] = "1";
