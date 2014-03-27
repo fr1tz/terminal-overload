@@ -110,6 +110,10 @@ datablock ProjectileData(WpnMGL1Projectile)
 	splashImpulse      = 0;
 	bypassDamageBuffer = false;
  
+   explodesNearEnemies = true;
+   explodesNearEnemiesRadius = 2;
+   explodesNearEnemiesMask = $TypeMasks::PlayerObjectType;
+ 
    energyDrain = 8;
 
    explosion           = "WpnMGL1ProjectileExplosion";
