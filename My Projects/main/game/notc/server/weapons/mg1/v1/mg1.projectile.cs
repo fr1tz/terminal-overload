@@ -13,6 +13,10 @@ datablock ProjectileData(WpnMG1Projectile)
 	splashDamage       = 0;
 	splashDamageRadius = 0;
 	splashImpulse      = 0;
+ 
+   explodesNearEnemies = false;
+   explodesNearEnemiesRadius = 10;
+   missEnemyEffect = WpnMG1ProjectileMissEnemyEffect;
    
 	energyDrain = 2; // how much energy does firing this projectile drain?
 

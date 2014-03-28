@@ -48,8 +48,8 @@ datablock ParticleData(WpnMG1ProjectileParticleEmitter_Particles)
 	spinRandomMin        = 0;
 	spinRandomMax        = 0;
 	textureName			   = "content/xa/rotc/p.5.4/textures/rotc/corona";
-	colors[0]            = "0.94902 0.996078 0.00784314 0.021";
-	colors[1]            = "1 0.627451 0 0";
+	colors[0]            = "1 1 1 0.021";
+	colors[1]            = "1 1 1 0";
 	sizes[0]             = "4.99908";
 	sizes[1]             = "4.99908";
 	times[0]             = 0.0;
@@ -75,4 +75,5 @@ datablock ParticleEmitterData(WpnMG1ProjectileParticleEmitter)
 	orientParticles  = false;
 	//lifetimeMS		 = 1000;
 	particles = "WpnMG1ProjectileParticleEmitter_Particles";
+   paletteSlot = 0;
 };
