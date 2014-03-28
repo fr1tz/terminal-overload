@@ -11,6 +11,10 @@ datablock ShotgunProjectileData(WpnSMG1Projectile)
 	muzzleSpreadRadius = 0.0;
 	referenceSpreadRadius = 0.0;
 	referenceSpreadDistance = 50;
+
+   explodesNearEnemies = false;
+   explodesNearEnemiesRadius = 5;
+   missEnemyEffect = GenericMissEnemyEffect1;
  
    energyDrain = 5; // how much energy does firing this projectile drain?
 
