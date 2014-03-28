@@ -27,6 +27,8 @@ function executeBaseServerScripts()
    exec("./turret.cs");
    exec("./vehicle.cs");
    exec("./vehicleWheeled.cs");
+   exec("./weapon.sfx.cs");
+   exec("./weapon.gfx.cs");
    exec("./weapon.cs");
 }
 
