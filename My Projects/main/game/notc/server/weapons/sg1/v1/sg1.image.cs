@@ -41,7 +41,7 @@ datablock ShapeBaseImageData(WpnSG1Image)
 
    // Weapon lights up while firing
    lightType = "WeaponFireLight";
-   lightColor = "0.992126 0.874016 0 1";
+   lightColor = "1 1 1 1";
    lightRadius = "10";
    lightDuration = "100";
    lightBrightness = 2;
