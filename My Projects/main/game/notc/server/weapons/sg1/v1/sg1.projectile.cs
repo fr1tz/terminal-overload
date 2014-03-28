@@ -20,6 +20,10 @@ datablock ShotgunProjectileData(WpnSG1Projectile)
 	splashDamage       = 0;
 	splashDamageRadius = 0;
 	splashImpulse      = 0;
+ 
+   explodesNearEnemies = false;
+   explodesNearEnemiesRadius = 5;
+   missEnemyEffect = GenericMissEnemyEffect1;
    
 	energyDrain = 3; // how much energy does firing this projectile drain?
 
