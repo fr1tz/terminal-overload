@@ -127,8 +127,8 @@ datablock ProjectileData(WpnMGL1Projectile)
    fadeDelay           = 5000;
    bounceElasticity    = 0;
    bounceFriction      = 0;
-   isBallistic         = false;
-   gravityMod          = 5.0;
+   isBallistic         = true;
+   gravityMod          = 2.5;
    //lightDesc = "WpnMGL1ProjectileLightDesc";
 };
 
