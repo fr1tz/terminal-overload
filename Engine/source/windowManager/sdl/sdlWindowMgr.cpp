@@ -200,7 +200,8 @@ void SDLWindowManager::_process()
           case SDL_QUIT:
           {
              SDLWindow *window = static_cast<SDLWindow*>( getFirstWindow() );
-             window->appEvent.trigger( window->getWindowId(), WindowClose );
+             if(window)
+               window->appEvent.trigger( window->getWindowId(), WindowClose );
              break;
           }
 
@@ -208,14 +209,16 @@ void SDLWindowManager::_process()
          case SDL_KEYUP:
          {
             SDLWindow *window = mWindowMap[evt.key.windowID];
-            window->_processSDLEvent(evt);
+            if(window)
+               window->_processSDLEvent(evt);
             break;
          }
 
          case SDL_MOUSEMOTION:
          {
             SDLWindow *window = mWindowMap[evt.motion.windowID];
-            window->_processSDLEvent(evt);
+            if(window)
+               window->_processSDLEvent(evt);
             break;
          }
 
@@ -223,14 +226,16 @@ void SDLWindowManager::_process()
          case SDL_MOUSEBUTTONUP:
          {
             SDLWindow *window = mWindowMap[evt.button.windowID];
-            window->_processSDLEvent(evt);
+            if(window)
+               window->_processSDLEvent(evt);
             break;
          }
 
          case SDL_TEXTINPUT:
          {
             SDLWindow *window = mWindowMap[evt.text.windowID];
-            window->_processSDLEvent(evt);
+            if(window)
+               window->_processSDLEvent(evt);
             break;
          }
       }
