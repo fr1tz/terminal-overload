@@ -2,6 +2,7 @@
 // located in the root directory of this distribution.
 
 exec("./cmds.cs");
+exec("./default.prefs.cs");
 exec("./default.bind.cs");
 exec("./controls.gui");
 exec("./controls.cs");

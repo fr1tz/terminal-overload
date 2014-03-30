@@ -420,9 +420,34 @@ function mouseButtonZoom(%val)
    toggleZoom(%val);
 }
 
+function mouseZoom(%val)
+{
+	if(Canvas.isCursorOn())
+		return;
+
+	if($MouseZoomValue == 0)
+		$MouseZoomValue = $Pref::NOTC1::DefaultFov;
+
+	%minFov = ServerConnection.getControlObject().getDataBlock().cameraMinFov;
+	%step = ($Pref::NOTC1::DefaultFov - %minFov)/$Pref::NOTC1::MouseZoomSteps;
+
+	if(%val > 0)
+		$MouseZoomValue -= %step;
+	else
+		$MouseZoomValue += %step;
+
+	if($MouseZoomValue < %minFov)
+		$MouseZoomValue = %minFov;
+	else if($MouseZoomValue > $Pref::NOTC1::DefaultFov)
+		$MouseZoomValue = $Pref::NOTC1::DefaultFov;
+
+	setFov($MouseZoomValue);
+}
+
 moveMap.bind(keyboard, f, setZoomFOV); // f for field of view
 moveMap.bind(keyboard, z, toggleZoom); // z for zoom
 //moveMap.bind( mouse, button1, mouseButtonZoom );
+moveMap.bind(mouse, "zaxis", mouseZoom);
 
 //------------------------------------------------------------------------------
 // Camera & View functions
@@ -545,7 +570,7 @@ function mouseWheelWeaponCycle(%val)
 
 //moveMap.bind(keyboard, q, nextWeapon);
 //moveMap.bind(keyboard, "ctrl q", prevWeapon);
-moveMap.bind(mouse, "zaxis", mouseWheelWeaponCycle);
+//moveMap.bind(mouse, "zaxis", mouseWheelWeaponCycle);
 
 //------------------------------------------------------------------------------
 // Message HUD functions
