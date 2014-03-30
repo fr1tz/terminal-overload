@@ -808,6 +808,7 @@ bool Projectile::onAdd()
       if (mDataBlock->particleEmitter != NULL)
       {
          ParticleEmitter* pEmitter = new ParticleEmitter;
+         pEmitter->setPalette(this->getPalette());
          pEmitter->onNewDataBlock(mDataBlock->particleEmitter,false);
          if (pEmitter->registerObject() == false)
          {
@@ -821,6 +822,7 @@ bool Projectile::onAdd()
       if (mDataBlock->particleWaterEmitter != NULL)
       {
          ParticleEmitter* pEmitter = new ParticleEmitter;
+         pEmitter->setPalette(this->getPalette());
          pEmitter->onNewDataBlock(mDataBlock->particleWaterEmitter,false);
          if (pEmitter->registerObject() == false)
          {
