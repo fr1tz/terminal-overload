@@ -65,6 +65,16 @@ function CatGui::tickThread(%this)
       
    CatGuiDamageBufferText.setText(%control.getDamageBufferLevel());
    CatGuiMassText.setText(%control.getMass());
+   %image = %control.getMountedImage(0);
+   if(isObject(%image))
+   {
+      if(%image.ammoSource $= "Energy")
+         CatGuiAmmoText.setText("-");
+      else
+         CatGuiAmmoText.setText(%control.getImageMagazineRounds(0));
+   }
+   else
+      CatGuiAmmoText.setText("");
 }
 
 //-----------------------------------------------------------------------------
