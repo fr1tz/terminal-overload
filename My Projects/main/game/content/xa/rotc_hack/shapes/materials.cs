@@ -107,3 +107,14 @@ singleton Material(xa_rotc_hack_shapes_mat7)
    diffuseMap[1] = "content/xa/notc/core/textures/grid.128.8.png";
 };
 
+singleton Material(xa_rotc_hack_shapes_mat8)
+{
+   mapTo = "explosion2_white";
+   diffuseMap[0] = "content/xa/rotc/p.5.4/shapes/rotc/effects/explosion2_white.png";
+   glow[0] = "1";
+   emissive[0] = "1";
+   castShadows = "0";
+   translucent = "1";
+   translucentBlendOp = "AddAlpha";
+   showFootprints = "0";
+};
