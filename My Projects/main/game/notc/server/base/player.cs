@@ -253,8 +253,6 @@ function PlayerData::onDisabled(%this, %obj, %state)
          %obj.throw(%item.image.clip, 1);
    }
 
-   // Toss out a health patch
-   %obj.tossPatch();
 
    %obj.playDeathCry();
    %obj.playDeathAnimation();
