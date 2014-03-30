@@ -180,7 +180,7 @@ function GameCoreDM::loadOut(%game, %player)
 
    %player.setInventory(ItemBallast, 1);
    %player.setInventory(ItemEtherboard, 1);
-   %player.setInventory(WpnSMG, 1);
+   %player.setInventory(WpnSMG1, 1);
 
    if (%player.getDatablock().mainWeapon.image !$= "")
       %player.mountImage(%player.getDatablock().mainWeapon.image, 0);
