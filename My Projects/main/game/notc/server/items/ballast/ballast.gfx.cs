@@ -14,7 +14,7 @@ datablock ParticleData(ItemBallastDropExplosion_Cloud)
 	spinRandomMin = -200.0;
 	spinRandomMax =  200.0;
 
-	textureName = "content/xa/rotc/p.5.4/textures/rotc/corona3.png";
+	textureName = "content/xa/rotc/p.5.4/textures/rotc/corona.png";
 
 	colors[0]	  = "1.0 1.0 1.0 1.0";
 	colors[1]	  = "1.0 1.0 1.0 0.5";
@@ -140,9 +140,9 @@ datablock ParticleData(ItemBallastDropExplosion_Shrapnel)
 	lifetimeMS			  = 1000;
 	lifetimeVarianceMS	= 0;
 	textureName			 = "content/xa/rotc/p.5.4/textures/rotc/corona.png";
-	colors[0]	  = "0.996078 0.956863 0.662745 1";
-	colors[1]	  = "1 0.905882 0 0.5";
-	colors[2]	  = "1 0.905882 0 0";
+	colors[0]	  = "1 1 1 1";
+	colors[1]	  = "1 1 1 0.5";
+	colors[2]	  = "1 1 1 0";
 	sizes[0]		= 0.5;
 	sizes[1]		= 0.5;
 	sizes[2]		= 0.5;
