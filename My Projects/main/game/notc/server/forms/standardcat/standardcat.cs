@@ -87,10 +87,13 @@ datablock PlayerData(FrmStandardcat)
    maxUnderwaterBackwardSpeed = 7.8;
    maxUnderwaterSideSpeed = 4.0;
 
-   jumpForce = 24 * 90;
+   jumpForce = 0;
    jumpEnergyDrain = 0;
    minJumpEnergy = 0;
    jumpDelay = 0;
+   
+   reJumpForce = 32 * 90; // script field
+   reJumpEnergyDrain = 20; // script field
 
 	skidSpeed = 20;
 	skidFactor = 0.4;
@@ -373,6 +376,18 @@ function FrmStandardcat::onTrigger(%this, %obj, %triggerNum, %val)
 	// as the jump key.
  
    Parent::onTrigger(%this, %obj, %triggerNum, %val);
+   
+   if(%triggerNum == 2 && %val)
+   {
+      if(%obj.getEnergyLevel() > %this.reJumpEnergyDrain)
+      {
+         %pos = %obj.getPosition();
+         createExplosion(FrmStandardcatJumpExplosion, %pos, "0 0 1");
+         %impulseVec = VectorScale("0 0 1", %this.reJumpForce);
+         %obj.applyImpulse(%pos, %impulseVec);
+         %obj.setEnergyLevel(%obj.getEnergyLevel() - %this.reJumpEnergyDrain);
+      }
+   }
    
    // Distort player view
    %max = "0 -0.25 0.25";

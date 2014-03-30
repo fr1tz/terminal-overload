@@ -32,7 +32,7 @@ datablock SFXProfile(FrmStandardcatSkidSound)
 datablock SFXProfile(FrmStandardcatJumpExplosionSound)
 {
 	filename = "content/xa/rotc/p.5.4/sounds/rotc/explosion3.wav";
-	description = AudioFar3D;
+	description = AudioDefault3D;
 	preload = true;
 };
 
