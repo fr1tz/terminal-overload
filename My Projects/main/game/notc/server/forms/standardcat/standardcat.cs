@@ -482,17 +482,15 @@ function FrmStandardcat::clientAction(%this, %obj, %nr)
    }
 
    if(%nr == 1)
-      %obj.use(WpnBadger);
+      %obj.use(WpnSMG1);
    else if(%nr == 2)
-      %obj.use(WpnRaptor);
+      %obj.use(WpnMGL1);
    else if(%nr == 3)
-      %obj.use(WpnBulldog);
+      %obj.use(WpnSG1);
    else if(%nr == 4)
-      %obj.use(WpnSiberion);
-   else if(%nr == 5)
-      %obj.use(WpnCrackpack);
-   else if(%nr == 21)
-      %obj.reloadWeapon();
+      %obj.use(WpnMG1);
+   else if(%nr == 19)
+      %obj.cycleWeapon("next");
 }
 
 function FrmStandardcat::canMaterialize(%this, %client, %pos, %normal, %transform)

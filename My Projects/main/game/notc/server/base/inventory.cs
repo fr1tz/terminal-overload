@@ -42,18 +42,6 @@ function serverCmdUse(%client, %data)
 function ShapeBase::use(%this, %data)
 {
    // Use an object in the inventory.
-
-   // Need to prevent weapon changing when zooming, but only shapes
-   // that have a connection.
-   %conn = %this.getControllingClient();
-   if (%conn)
-   {
-      %defaultFov = %conn.getControlCameraDefaultFov();
-      %fov = %conn.getControlCameraFov();
-      if (%fov != %defaultFov)
-         return false;
-   }
-
    if (%this.getInventory(%data) > 0)
       return %data.onUse(%this);
 
