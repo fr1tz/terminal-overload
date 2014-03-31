@@ -37,14 +37,6 @@ class SDLWindow : public PlatformWindow
 {
    friend class SDLWindowManager;
 
-public:
-   struct Accelerator
-   {
-      U32 mID;
-      EventDescriptor mDescriptor;
-   };
-   typedef Vector<Accelerator> AcceleratorList;
-
 private:
 
    /// @name Active window list
@@ -98,15 +90,7 @@ private:
    /// Menu associated with this window.  This is a passive property of the window and is not required to be used at all.
    void* mMenuHandle;
 
-   /// Do we have a fullscreen window style set?
-   bool                 mFullscreen;
-
    /// @}
-
-   /// Add an accelerator to the list of accelerators for this window. Intended for use by addAccelerators()
-   void addAccelerator(Accelerator &accel);
-   /// Remove an accelerator from the list of accelerators for this window. Intended for use by removeAccelerators()
-   void removeAccelerator(Accelerator &accel);
 
    void _processSDLEvent(SDL_Event &evt);
    void _triggerMouseLocationNotify();
@@ -128,20 +112,7 @@ public:
    void setMenuHandle( void* menuHandle ) 
    {
       mMenuHandle = menuHandle;
-      if(!mFullscreen)
-      {
-         // TODO SDL
-         //SetMenu(mWindowHandle, mMenuHandle);
-      }
    }   
-
-   /// Add a list of accelerators to this window
-   void addAccelerators(AcceleratorList &list);
-   /// Remove a list of accelerators from this window
-   void removeAccelerators(AcceleratorList &list);
-
-   /// Returns true if @p info matches an accelerator
-   bool isAccelerator(const InputEventInfo &info);
 
    virtual GFXDevice *getGFXDevice();
    virtual GFXWindowTarget *getGFXTarget();
