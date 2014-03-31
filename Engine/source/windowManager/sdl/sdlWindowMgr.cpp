@@ -155,7 +155,7 @@ PlatformWindow *SDLWindowManager::createWindow(GFXDevice *device, const GFXVideo
    // Do the allocation.
    SDLWindow *window = new SDLWindow();   
 
-   window->mWindowHandle = SDL_CreateWindow("", 100, 100, mode.resolution.x, mode.resolution.y,  SDL_WINDOW_SHOWN);
+   window->mWindowHandle = SDL_CreateWindow("", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, mode.resolution.x, mode.resolution.y,  SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
    window->mWindowId = SDL_GetWindowID( window->mWindowHandle );
    window->mOwningManager = this;
    mWindowMap[ window->mWindowId ] = window;
@@ -179,19 +179,16 @@ PlatformWindow *SDLWindowManager::createWindow(GFXDevice *device, const GFXVideo
 
 void SDLWindowManager::setParentWindow(void* newParent)
 {
-   // TODO SDL
-   AssertFatal(0, "");
+   
 }
 
 void* SDLWindowManager::getParentWindow()
 {
-   // TODO SDL
-   AssertFatal(0, "");
    return NULL;
 }
 
 void SDLWindowManager::_process()
-{  
+{
    SDL_Event evt;
    while( SDL_PollEvent(&evt) )
    {      
@@ -237,6 +234,19 @@ void SDLWindowManager::_process()
             if(window)
                window->_processSDLEvent(evt);
             break;
+         }
+
+         case SDL_WINDOWEVENT:
+         {
+            SDLWindow *window = mWindowMap[evt.window.windowID];
+            if(window)
+               window->_processSDLEvent(evt);
+            break;
+         }
+
+         default:
+         {
+            Con::printf("Event: %d", evt.type);
          }
       }
    }
@@ -312,7 +322,6 @@ void SDLWindowManager::lowerCurtain()
       return;
 
    // TODO SDL
-   AssertFatal(0, "");
 }
 
 void SDLWindowManager::raiseCurtain()
@@ -321,7 +330,6 @@ void SDLWindowManager::raiseCurtain()
       return;
 
    // TODO SDL
-   AssertFatal(0, "");
 }
 
 
