@@ -246,7 +246,7 @@ void SDLWindowManager::_process()
 
          default:
          {
-            Con::printf("Event: %d", evt.type);
+            //Con::printf("Event: %d", evt.type);
          }
       }
    }

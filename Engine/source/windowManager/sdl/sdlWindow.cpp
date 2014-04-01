@@ -462,24 +462,44 @@ void SDLWindow::_triggerKeyNotify(const SDL_Event& evt)
       inputAction = IA_REPEAT;
    }
 
-   U32 modifiers = getTorqueModFromSDL(evt.key.keysym.mod);
-
+   U32 torqueModifiers = getTorqueModFromSDL(evt.key.keysym.mod);
+   U32 torqueKey = KeyMapSDL::getTorqueScanCodeFromSDL(tKey.scancode);
    if(tKey.scancode)
    {
-      keyEvent.trigger(getWindowId(), modifiers, inputAction, KeyMapSDL::getTorqueScanCodeFromSDL(tKey.scancode) );
+      keyEvent.trigger(getWindowId(), torqueModifiers, inputAction, torqueKey);
       //Con::printf("Key %d : %d", tKey.sym, inputAction);
    }
+
+   // stop SDL_TEXTINPUT event when unwanted
+   if( inputAction == IA_MAKE && getKeyboardTranslation() && shouldNotTranslate( torqueModifiers, torqueKey ) )	
+      SDL_StopTextInput();
+   else   
+      SDL_StartTextInput();
 }
 
 void SDLWindow::_triggerTextNotify(const SDL_Event& evt)
 {
-   for(int i = 0; i < 32; ++i)
+    U32 mod = getTorqueModFromSDL( SDL_GetModState() );
+   
+   if( !evt.text.text[1] ) // get a char
    {
-      if(!evt.text.text[i])
-         break;
+      U16 wchar = evt.text.text[0];
+      charEvent.trigger(getWindowId(), mod, wchar );
+      //Con::printf("Char: %c", wchar);
+      return;
+   }
+   else // get a wchar string
+   {
+      U16 wchar[16]; // evt.text.text is char[32] long
+      dMemcpy(wchar, evt.text.text, sizeof(char)*32);
 
-      charEvent.trigger(getWindowId(), 0, evt.text.text[i] );
-      //Con::printf("Char %d : %d", printable, inputAction);
+      for(int i = 0; i < 16; ++i)
+      {
+         if( !wchar[i] )
+            return;
+
+         charEvent.trigger(getWindowId(), mod, wchar[i] );
+      }
    }
 }
 
