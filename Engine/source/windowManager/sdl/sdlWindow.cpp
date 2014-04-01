@@ -70,7 +70,7 @@ namespace
    }
 }
 
-SDLWindow::SDLWindow():
+PlatformWindowSDL::PlatformWindowSDL():
 mShouldLockMouse(false),
 mMouseLocked(false),
 mOwningManager(NULL),
@@ -83,7 +83,7 @@ mSuppressReset(false),
 mMenuHandle(NULL),
 mPosition(0,0)
 {
-	mCursorController = new SDLCursorController( this );
+	mCursorController = new PlatformCursorControllerSDL( this );
 
 	mVideoMode.bitDepth = 32;
 	mVideoMode.fullScreen = false;
@@ -91,32 +91,32 @@ mPosition(0,0)
 	mVideoMode.resolution.set(800,600);
 }
 
-SDLWindow::~SDLWindow()
+PlatformWindowSDL::~PlatformWindowSDL()
 {
 	// delete our sdl handle..
 	SDL_DestroyWindow(mWindowHandle);
 
 	// unlink ourselves from the window list...
-	AssertFatal(mOwningManager, "SDLWindow::~SDLWindow - orphan window, cannot unlink!");
+	AssertFatal(mOwningManager, "PlatformWindowSDL::~PlatformWindowSDL - orphan window, cannot unlink!");
 	mOwningManager->unlinkWindow(this);
 }
 
-GFXDevice * SDLWindow::getGFXDevice()
+GFXDevice * PlatformWindowSDL::getGFXDevice()
 {
 	return mDevice;
 }
 
-GFXWindowTarget * SDLWindow::getGFXTarget()
+GFXWindowTarget * PlatformWindowSDL::getGFXTarget()
 {
 	return mTarget;
 }
 
-const GFXVideoMode & SDLWindow::getVideoMode()
+const GFXVideoMode & PlatformWindowSDL::getVideoMode()
 {
 	return mVideoMode;
 }
 
-void* SDLWindow::getSystemWindow(const WindowSystem system)
+void* PlatformWindowSDL::getSystemWindow(const WindowSystem system)
 {
      SDL_SysWMinfo info;
      SDL_VERSION(&info.version);
@@ -128,7 +128,7 @@ void* SDLWindow::getSystemWindow(const WindowSystem system)
      return NULL;
 }
 
-void SDLWindow::setVideoMode( const GFXVideoMode &mode )
+void PlatformWindowSDL::setVideoMode( const GFXVideoMode &mode )
 {
    mVideoMode = mode;
    mSuppressReset = true;
@@ -165,12 +165,12 @@ void SDLWindow::setVideoMode( const GFXVideoMode &mode )
 	mSuppressReset = false;
 }
 
-bool SDLWindow::clearFullscreen()
+bool PlatformWindowSDL::clearFullscreen()
 {
 	return true;
 }
 
-bool SDLWindow::isFullscreen()
+bool PlatformWindowSDL::isFullscreen()
 {   
    U32 flags = SDL_GetWindowFlags( mWindowHandle );   
    if( flags & SDL_WINDOW_FULLSCREEN || flags & SDL_WINDOW_FULLSCREEN_DESKTOP )
@@ -179,19 +179,19 @@ bool SDLWindow::isFullscreen()
    return false;
 }
 
-void SDLWindow::_setFullscreen(const bool fullscreen)
+void PlatformWindowSDL::_setFullscreen(const bool fullscreen)
 {
 	if( isFullscreen() )
 		return;
 
 	if(fullscreen && !mOffscreenRender)
 	{
-		Con::printf("SDLWindow::setFullscreen (full) enter");
+		Con::printf("PlatformWindowSDL::setFullscreen (full) enter");
 		SDL_SetWindowFullscreen( mWindowHandle, SDL_WINDOW_FULLSCREEN);
 	}
 	else
 	{
-		Con::printf("SDLWindow::setFullscreen (windowed) enter");
+		Con::printf("PlatformWindowSDL::setFullscreen (windowed) enter");
       if (!mOffscreenRender)
       {
 	      SDL_SetWindowFullscreen( mWindowHandle, SDL_WINDOW_FULLSCREEN_DESKTOP);
@@ -200,26 +200,26 @@ void SDLWindow::_setFullscreen(const bool fullscreen)
       setSize(mVideoMode.resolution);
 
 	}
-	Con::printf("SDLWindow::setFullscreen exit");   
+	Con::printf("PlatformWindowSDL::setFullscreen exit");   
 }
 
-bool SDLWindow::setCaption( const char *cap )
+bool PlatformWindowSDL::setCaption( const char *cap )
 {
    SDL_SetWindowTitle(mWindowHandle, cap);
 	return true;
 }
 
-const char * SDLWindow::getCaption()
+const char * PlatformWindowSDL::getCaption()
 {
    return StringTable->insert( SDL_GetWindowTitle(mWindowHandle) );
 }
 
-void SDLWindow::setFocus()
+void PlatformWindowSDL::setFocus()
 {
    SDL_SetWindowGrab( mWindowHandle, SDL_TRUE );
 }
 
-void SDLWindow::setClientExtent( const Point2I newExtent )
+void PlatformWindowSDL::setClientExtent( const Point2I newExtent )
 {
 	Point2I oldExtent = getClientExtent();
 	if (oldExtent == newExtent)
@@ -228,7 +228,7 @@ void SDLWindow::setClientExtent( const Point2I newExtent )
    SDL_SetWindowSize(mWindowHandle, newExtent.x, newExtent.y);
 }
 
-const Point2I SDLWindow::getClientExtent()
+const Point2I PlatformWindowSDL::getClientExtent()
 {
 	// Fetch Client Rect from Windows
    Point2I size;
@@ -237,23 +237,23 @@ const Point2I SDLWindow::getClientExtent()
 	return size;
 }
 
-void SDLWindow::setBounds( const RectI &newBounds )
+void PlatformWindowSDL::setBounds( const RectI &newBounds )
 {
 	// TODO SDL
 }
 
-const RectI SDLWindow::getBounds() const
+const RectI PlatformWindowSDL::getBounds() const
 {
 	// TODO SDL
 	return RectI(0, 0, 0, 0);   
 }
 
-void SDLWindow::setPosition( const Point2I newPosition )
+void PlatformWindowSDL::setPosition( const Point2I newPosition )
 {
 	SDL_SetWindowPosition( mWindowHandle, newPosition.x, newPosition.y );
 }
 
-const Point2I SDLWindow::getPosition()
+const Point2I PlatformWindowSDL::getPosition()
 {
 	Point2I position;
 	SDL_GetWindowPosition( mWindowHandle, &position.x, &position.y );
@@ -262,21 +262,21 @@ const Point2I SDLWindow::getPosition()
 	return position;
 }
 
-Point2I SDLWindow::clientToScreen( const Point2I& pos )
+Point2I PlatformWindowSDL::clientToScreen( const Point2I& pos )
 {
    Point2I position;
    SDL_GetWindowPosition( mWindowHandle, &position.x, &position.y );
    return pos + position;
 }
 
-Point2I SDLWindow::screenToClient( const Point2I& pos )
+Point2I PlatformWindowSDL::screenToClient( const Point2I& pos )
 {
    Point2I position;
    SDL_GetWindowPosition( mWindowHandle, &position.x, &position.y );
    return pos - position;
 }
 
-void SDLWindow::centerWindow()
+void PlatformWindowSDL::centerWindow()
 {
    int sizeX, sizeY;
    SDL_GetWindowSize(mWindowHandle, &sizeX, &sizeY);
@@ -290,7 +290,7 @@ void SDLWindow::centerWindow()
    SDL_SetWindowPosition( mWindowHandle, posX, posY);
 }
 
-bool SDLWindow::setSize( const Point2I &newSize )
+bool PlatformWindowSDL::setSize( const Point2I &newSize )
 {
    SDL_SetWindowSize(mWindowHandle, newSize.x, newSize.y);
 
@@ -303,12 +303,12 @@ bool SDLWindow::setSize( const Point2I &newSize )
 	return true;
 }
 
-bool SDLWindow::isOpen()
+bool PlatformWindowSDL::isOpen()
 {
 	return mWindowHandle;
 }
 
-bool SDLWindow::isVisible()
+bool PlatformWindowSDL::isVisible()
 {
 	// Is the window open and visible, ie. not minimized?
 	if(!mWindowHandle)
@@ -324,7 +324,7 @@ bool SDLWindow::isVisible()
 	return false;
 }
 
-bool SDLWindow::isFocused()
+bool PlatformWindowSDL::isFocused()
 {
    if (mOffscreenRender)
       return true;
@@ -336,7 +336,7 @@ bool SDLWindow::isFocused()
 	return true;
 }
 
-bool SDLWindow::isMinimized()
+bool PlatformWindowSDL::isMinimized()
 {
    if (mOffscreenRender)
       return false;
@@ -348,7 +348,7 @@ bool SDLWindow::isMinimized()
     return false;
 }
 
-bool SDLWindow::isMaximized()
+bool PlatformWindowSDL::isMaximized()
 {
    if (mOffscreenRender)
       return true;
@@ -360,12 +360,12 @@ bool SDLWindow::isMaximized()
     return false;
 }
 
-WindowId SDLWindow::getWindowId()
+WindowId PlatformWindowSDL::getWindowId()
 {
 	return mWindowId;
 }
 
-void SDLWindow::minimize()
+void PlatformWindowSDL::minimize()
 {
    if (mOffscreenRender)
       return;
@@ -373,7 +373,7 @@ void SDLWindow::minimize()
 	SDL_MinimizeWindow( mWindowHandle );
 }
 
-void SDLWindow::maximize()
+void PlatformWindowSDL::maximize()
 {
    if (mOffscreenRender)
       return;
@@ -381,7 +381,7 @@ void SDLWindow::maximize()
 	SDL_MaximizeWindow( mWindowHandle );
 }
 
-void SDLWindow::restore()
+void PlatformWindowSDL::restore()
 {
    if (mOffscreenRender)
       return;
@@ -389,7 +389,7 @@ void SDLWindow::restore()
 	SDL_RestoreWindow( mWindowHandle );
 }
 
-void SDLWindow::hide()
+void PlatformWindowSDL::hide()
 {
    if (mOffscreenRender)
       return;
@@ -397,7 +397,7 @@ void SDLWindow::hide()
 	SDL_HideWindow( mWindowHandle );
 }
 
-void SDLWindow::show()
+void PlatformWindowSDL::show()
 {
    if (mOffscreenRender)
       return;
@@ -405,17 +405,17 @@ void SDLWindow::show()
 	SDL_RaiseWindow( mWindowHandle );
 }
 
-void SDLWindow::close()
+void PlatformWindowSDL::close()
 {
 	delete this;
 }
 
-void SDLWindow::defaultRender()
+void PlatformWindowSDL::defaultRender()
 {
 	// TODO SDL
 }
 
-void SDLWindow::_triggerMouseLocationNotify(const SDL_Event& evt)
+void PlatformWindowSDL::_triggerMouseLocationNotify(const SDL_Event& evt)
 {
    if(!mMouseLocked)
       mouseEvent.trigger(getWindowId(), 0, evt.motion.x, evt.motion.y, false);
@@ -423,7 +423,7 @@ void SDLWindow::_triggerMouseLocationNotify(const SDL_Event& evt)
       mouseEvent.trigger(getWindowId(), 0, evt.motion.xrel, evt.motion.yrel, true);
 }
 
-void SDLWindow::_triggerMouseButtonNotify(const SDL_Event& event)
+void PlatformWindowSDL::_triggerMouseButtonNotify(const SDL_Event& event)
 {
    S32 action = (event.type == SDL_MOUSEBUTTONDOWN) ? SI_MAKE : SI_BREAK;
    S32 button = -1;
@@ -447,7 +447,7 @@ void SDLWindow::_triggerMouseButtonNotify(const SDL_Event& event)
    buttonEvent.trigger(getWindowId(), mod, action, button );
 }
 
-void SDLWindow::_triggerKeyNotify(const SDL_Event& evt)
+void PlatformWindowSDL::_triggerKeyNotify(const SDL_Event& evt)
 {
    U32 inputAction = IA_MAKE;
    SDL_Keysym tKey = evt.key.keysym;
@@ -477,7 +477,7 @@ void SDLWindow::_triggerKeyNotify(const SDL_Event& evt)
       SDL_StartTextInput();
 }
 
-void SDLWindow::_triggerTextNotify(const SDL_Event& evt)
+void PlatformWindowSDL::_triggerTextNotify(const SDL_Event& evt)
 {
     U32 mod = getTorqueModFromSDL( SDL_GetModState() );
    
@@ -503,7 +503,7 @@ void SDLWindow::_triggerTextNotify(const SDL_Event& evt)
    }
 }
 
-void SDLWindow::_processSDLEvent(SDL_Event &evt)
+void PlatformWindowSDL::_processSDLEvent(SDL_Event &evt)
 {
    switch(evt.type)
    {        
@@ -561,7 +561,7 @@ void SDLWindow::_processSDLEvent(SDL_Event &evt)
 // Mouse Locking
 //-----------------------------------------------------------------------------
 
-void SDLWindow::setMouseLocked( bool enable )
+void PlatformWindowSDL::setMouseLocked( bool enable )
 {
    if (mOffscreenRender)
       return;
@@ -572,13 +572,13 @@ void SDLWindow::setMouseLocked( bool enable )
    SDL_SetRelativeMouseMode( SDL_bool(enable) );
 }
 
-const UTF16 *SDLWindow::getWindowClassName()
+const UTF16 *PlatformWindowSDL::getWindowClassName()
 {
    // TODO SDL
 	return L"WindowClassName";
 }
 
-const UTF16 *SDLWindow::getCurtainWindowClassName()
+const UTF16 *PlatformWindowSDL::getCurtainWindowClassName()
 {
    // TODO SDL
 	return L"CurtainWindowClassName";

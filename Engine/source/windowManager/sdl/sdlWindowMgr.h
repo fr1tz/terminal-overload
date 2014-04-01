@@ -31,23 +31,23 @@
 struct SDL_Window;
 
 /// SDL2 implementation of the window manager interface.
-class SDLWindowManager : public PlatformWindowManager
+class PlatformWindowManagerSDL : public PlatformWindowManager
 {
-   friend class SDLWindow;
+   friend class PlatformWindowSDL;
 
    virtual void _processCmdLineArgs(const S32 argc, const char **argv);
 
    /// Link the specified window into the window list.
-   void linkWindow(SDLWindow *w);
+   void linkWindow(PlatformWindowSDL *w);
 
    /// Remove specified window from the window list.
-   void unlinkWindow(SDLWindow *w);
+   void unlinkWindow(PlatformWindowSDL *w);
 
    /// Callback for the process list.
    void _process();
 
    /// List of allocated windows.
-   SDLWindow *mWindowListHead;
+   PlatformWindowSDL *mWindowListHead;
 
    /// Parent window, used in window setup in web plugin scenarios.
    SDL_Window *mParentWindow;
@@ -59,11 +59,11 @@ class SDLWindowManager : public PlatformWindowManager
    /// If a curtain window is present, then will be stored here.
    SDL_Window *mCurtainWindow;
 
-   Map<U32, SDLWindow*> mWindowMap;
+   Map<U32, PlatformWindowSDL*> mWindowMap;
 
 public:
-   SDLWindowManager();
-   ~SDLWindowManager();
+   PlatformWindowManagerSDL();
+   ~PlatformWindowManagerSDL();
 
    virtual RectI getPrimaryDesktopArea();
    virtual S32       getDesktopBitDepth();
