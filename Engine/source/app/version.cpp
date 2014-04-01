@@ -35,8 +35,7 @@ const char* getAppVersionString()
 /// TGE  WII        0005
 /// Torque 3D       0006
 /// Torque 3D MIT   0007
-/// Alux3D          0010
-/// NOTC            0011
+/// NOTC            0010
 
 const char* getEngineProductString()
 {
@@ -60,7 +59,7 @@ const char* getEngineProductString()
       case 0007:
          return "Torque 3D MIT";
       case 0010:
-         return "NOTC";
+         return "Terminal Overload";
 		 
       default:
          return "Torque Engine";
