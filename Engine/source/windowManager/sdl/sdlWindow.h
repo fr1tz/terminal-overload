@@ -28,14 +28,14 @@
 #include "gfx/gfxStructs.h"
 #include "sim/actionMap.h"
 
-class SDLWindowManager;
+class PlatformWindowManagerSDL;
 struct SDL_Window;
 union SDL_Event;
 
 /// Implementation of a window on SDL.
-class SDLWindow : public PlatformWindow
+class PlatformWindowSDL : public PlatformWindow
 {
-   friend class SDLWindowManager;
+   friend class PlatformWindowManagerSDL;
 
 private:
 
@@ -46,10 +46,10 @@ private:
    /// @{
 
    /// Which manager created us?
-   SDLWindowManager *mOwningManager;
+   PlatformWindowManagerSDL *mOwningManager;
 
    /// Which window comes next in list?
-   SDLWindow *mNextWindow;
+   PlatformWindowSDL *mNextWindow;
    
    /// @}
 
@@ -96,8 +96,8 @@ private:
    void _triggerTextNotify(const SDL_Event& event);
 
 public:
-   SDLWindow();
-   ~SDLWindow();
+   PlatformWindowSDL();
+   ~PlatformWindowSDL();
 
    virtual void* getSystemWindow(const WindowSystem system);
 

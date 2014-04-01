@@ -35,17 +35,17 @@ void sdl_CloseSplashWindow(void* hinst);
 
 PlatformWindowManager * CreatePlatformWindowManager()
 {
-   return new SDLWindowManager();
+   return new PlatformWindowManagerSDL();
 }
 
 #endif
 
 // ------------------------------------------------------------------------
 
-SDLWindowManager::SDLWindowManager()
+PlatformWindowManagerSDL::PlatformWindowManagerSDL()
 {
    // Register in the process list.
-   Process::notify(this, &SDLWindowManager::_process, PROCESS_INPUT_ORDER);
+   Process::notify(this, &PlatformWindowManagerSDL::_process, PROCESS_INPUT_ORDER);
 
    // Init our list of allocated windows.
    mWindowListHead = NULL;
@@ -60,10 +60,10 @@ SDLWindowManager::SDLWindowManager()
    buildMonitorsList();
 }
 
-SDLWindowManager::~SDLWindowManager()
+PlatformWindowManagerSDL::~PlatformWindowManagerSDL()
 {
    // Get ourselves off the process list.
-   Process::remove(this, &SDLWindowManager::_process);
+   Process::remove(this, &PlatformWindowManagerSDL::_process);
 
    // Kill all our windows first.
    while(mWindowListHead)
@@ -71,14 +71,14 @@ SDLWindowManager::~SDLWindowManager()
       delete mWindowListHead;
 }
 
-RectI SDLWindowManager::getPrimaryDesktopArea()
+RectI PlatformWindowManagerSDL::getPrimaryDesktopArea()
 {
    // TODO SDL
    AssertFatal(0, "");
    return RectI(0,0,0,0);
 }
 
-Point2I SDLWindowManager::getDesktopResolution()
+Point2I PlatformWindowManagerSDL::getDesktopResolution()
 {
    SDL_DisplayMode mode;
    SDL_GetDesktopDisplayMode(0, &mode);
@@ -87,7 +87,7 @@ Point2I SDLWindowManager::getDesktopResolution()
    return Point2I(mode.w, mode.h);
 }
 
-S32 SDLWindowManager::getDesktopBitDepth()
+S32 PlatformWindowManagerSDL::getDesktopBitDepth()
 {
    // Return Bits per Pixel
    SDL_DisplayMode mode;
@@ -98,12 +98,12 @@ S32 SDLWindowManager::getDesktopBitDepth()
    return bbp;
 }
 
-void SDLWindowManager::buildMonitorsList()
+void PlatformWindowManagerSDL::buildMonitorsList()
 {
    // TODO SDL
 }
 
-S32 SDLWindowManager::findFirstMatchingMonitor(const char* name)
+S32 PlatformWindowManagerSDL::findFirstMatchingMonitor(const char* name)
 {
    /// TODO SDL
    AssertFatal(0, "");
@@ -111,14 +111,14 @@ S32 SDLWindowManager::findFirstMatchingMonitor(const char* name)
    return 0;
 }
 
-U32 SDLWindowManager::getMonitorCount()
+U32 PlatformWindowManagerSDL::getMonitorCount()
 {
    // TODO SDL
    AssertFatal(0, "");
    return 1;
 }
 
-const char* SDLWindowManager::getMonitorName(U32 index)
+const char* PlatformWindowManagerSDL::getMonitorName(U32 index)
 {
    // TODO SDL
    AssertFatal(0, "");
@@ -126,7 +126,7 @@ const char* SDLWindowManager::getMonitorName(U32 index)
    return "Monitor";
 }
 
-RectI SDLWindowManager::getMonitorRect(U32 index)
+RectI PlatformWindowManagerSDL::getMonitorRect(U32 index)
 {
    // TODO SDL
    AssertFatal(0, "");
@@ -134,15 +134,15 @@ RectI SDLWindowManager::getMonitorRect(U32 index)
    return RectI(0, 0, 0,0 );
 }
 
-void SDLWindowManager::getMonitorRegions(Vector<RectI> &regions)
+void PlatformWindowManagerSDL::getMonitorRegions(Vector<RectI> &regions)
 {
    // TODO SDL
    AssertFatal(0, "");
 }
 
-void SDLWindowManager::getWindows(VectorPtr<PlatformWindow*> &windows)
+void PlatformWindowManagerSDL::getWindows(VectorPtr<PlatformWindow*> &windows)
 {
-   SDLWindow *win = mWindowListHead;
+   PlatformWindowSDL *win = mWindowListHead;
    while(win)
    {
       windows.push_back(win);
@@ -150,10 +150,10 @@ void SDLWindowManager::getWindows(VectorPtr<PlatformWindow*> &windows)
    }
 }
 
-PlatformWindow *SDLWindowManager::createWindow(GFXDevice *device, const GFXVideoMode &mode)
+PlatformWindow *PlatformWindowManagerSDL::createWindow(GFXDevice *device, const GFXVideoMode &mode)
 {
    // Do the allocation.
-   SDLWindow *window = new SDLWindow();   
+   PlatformWindowSDL *window = new PlatformWindowSDL();   
 
    window->mWindowHandle = SDL_CreateWindow("", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, mode.resolution.x, mode.resolution.y,  SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
    window->mWindowId = SDL_GetWindowID( window->mWindowHandle );
@@ -164,11 +164,11 @@ PlatformWindow *SDLWindowManager::createWindow(GFXDevice *device, const GFXVideo
    {
       window->mDevice = device;
       window->mTarget = device->allocWindowTarget(window);
-      AssertISV(window->mTarget, "SDLWindowManager::createWindow - failed to get a window target back from the device.");
+      AssertISV(window->mTarget, "PlatformWindowManagerSDL::createWindow - failed to get a window target back from the device.");
    }
    else
    {
-      Con::warnf("SDLWindowManager::createWindow - created a window with no device!");
+      Con::warnf("PlatformWindowManagerSDL::createWindow - created a window with no device!");
    }
 
    linkWindow(window);
@@ -177,17 +177,17 @@ PlatformWindow *SDLWindowManager::createWindow(GFXDevice *device, const GFXVideo
 }
 
 
-void SDLWindowManager::setParentWindow(void* newParent)
+void PlatformWindowManagerSDL::setParentWindow(void* newParent)
 {
    
 }
 
-void* SDLWindowManager::getParentWindow()
+void* PlatformWindowManagerSDL::getParentWindow()
 {
    return NULL;
 }
 
-void SDLWindowManager::_process()
+void PlatformWindowManagerSDL::_process()
 {
    SDL_Event evt;
    while( SDL_PollEvent(&evt) )
@@ -196,7 +196,7 @@ void SDLWindowManager::_process()
       {
           case SDL_QUIT:
           {
-             SDLWindow *window = static_cast<SDLWindow*>( getFirstWindow() );
+             PlatformWindowSDL *window = static_cast<PlatformWindowSDL*>( getFirstWindow() );
              if(window)
                window->appEvent.trigger( window->getWindowId(), WindowClose );
              break;
@@ -205,7 +205,7 @@ void SDLWindowManager::_process()
          case SDL_KEYDOWN:
          case SDL_KEYUP:
          {
-            SDLWindow *window = mWindowMap[evt.key.windowID];
+            PlatformWindowSDL *window = mWindowMap[evt.key.windowID];
             if(window)
                window->_processSDLEvent(evt);
             break;
@@ -213,7 +213,7 @@ void SDLWindowManager::_process()
 
          case SDL_MOUSEMOTION:
          {
-            SDLWindow *window = mWindowMap[evt.motion.windowID];
+            PlatformWindowSDL *window = mWindowMap[evt.motion.windowID];
             if(window)
                window->_processSDLEvent(evt);
             break;
@@ -222,7 +222,7 @@ void SDLWindowManager::_process()
          case SDL_MOUSEBUTTONDOWN:
          case SDL_MOUSEBUTTONUP:
          {
-            SDLWindow *window = mWindowMap[evt.button.windowID];
+            PlatformWindowSDL *window = mWindowMap[evt.button.windowID];
             if(window)
                window->_processSDLEvent(evt);
             break;
@@ -230,7 +230,7 @@ void SDLWindowManager::_process()
 
          case SDL_TEXTINPUT:
          {
-            SDLWindow *window = mWindowMap[evt.text.windowID];
+            PlatformWindowSDL *window = mWindowMap[evt.text.windowID];
             if(window)
                window->_processSDLEvent(evt);
             break;
@@ -238,7 +238,7 @@ void SDLWindowManager::_process()
 
          case SDL_WINDOWEVENT:
          {
-            SDLWindow *window = mWindowMap[evt.window.windowID];
+            PlatformWindowSDL *window = mWindowMap[evt.window.windowID];
             if(window)
                window->_processSDLEvent(evt);
             break;
@@ -253,10 +253,10 @@ void SDLWindowManager::_process()
 
 }
 
-PlatformWindow * SDLWindowManager::getWindowById( WindowId id )
+PlatformWindow * PlatformWindowManagerSDL::getWindowById( WindowId id )
 {
    // Walk the list and find the matching id, if any.
-   SDLWindow *win = mWindowListHead;
+   PlatformWindowSDL *win = mWindowListHead;
    while(win)
    {
       if(win->getWindowId() == id)
@@ -268,14 +268,14 @@ PlatformWindow * SDLWindowManager::getWindowById( WindowId id )
    return NULL; 
 }
 
-PlatformWindow * SDLWindowManager::getFirstWindow()
+PlatformWindow * PlatformWindowManagerSDL::getFirstWindow()
 {
    return mWindowListHead != NULL ? mWindowListHead : NULL;
 }
 
-PlatformWindow* SDLWindowManager::getFocusedWindow()
+PlatformWindow* PlatformWindowManagerSDL::getFocusedWindow()
 {
-   SDLWindow* window = mWindowListHead;
+   PlatformWindowSDL* window = mWindowListHead;
    while( window )
    {
       if( window->isFocused() )
@@ -287,15 +287,15 @@ PlatformWindow* SDLWindowManager::getFocusedWindow()
    return NULL;
 }
 
-void SDLWindowManager::linkWindow( SDLWindow *w )
+void PlatformWindowManagerSDL::linkWindow( PlatformWindowSDL *w )
 {
    w->mNextWindow = mWindowListHead;
    mWindowListHead = w;
 }
 
-void SDLWindowManager::unlinkWindow( SDLWindow *w )
+void PlatformWindowManagerSDL::unlinkWindow( PlatformWindowSDL *w )
 {
-   SDLWindow **walk = &mWindowListHead;
+   PlatformWindowSDL **walk = &mWindowListHead;
    while(*walk)
    {
       if(*walk != w)
@@ -311,12 +311,12 @@ void SDLWindowManager::unlinkWindow( SDLWindow *w )
    }
 }
 
-void SDLWindowManager::_processCmdLineArgs( const S32 argc, const char **argv )
+void PlatformWindowManagerSDL::_processCmdLineArgs( const S32 argc, const char **argv )
 {
    // TODO SDL
 }
 
-void SDLWindowManager::lowerCurtain()
+void PlatformWindowManagerSDL::lowerCurtain()
 {
    if(mCurtainWindow)
       return;
@@ -324,7 +324,7 @@ void SDLWindowManager::lowerCurtain()
    // TODO SDL
 }
 
-void SDLWindowManager::raiseCurtain()
+void PlatformWindowManagerSDL::raiseCurtain()
 {
    if(!mCurtainWindow)
       return;

@@ -46,48 +46,48 @@ static struct { U32 id; SDL_SystemCursor resourceID; SDL_Cursor *cursor;} sgCurs
 };
 
 
-U32 SDLCursorController::getDoubleClickTime()
+U32 PlatformCursorControllerSDL::getDoubleClickTime()
 {
    // TODO SDL
    return 500;
 }
-S32 SDLCursorController::getDoubleClickWidth()
+S32 PlatformCursorControllerSDL::getDoubleClickWidth()
 {
    // TODO SDL
    return 32;
 }
-S32 SDLCursorController::getDoubleClickHeight()
+S32 PlatformCursorControllerSDL::getDoubleClickHeight()
 {
    // TODO SDL
    return 32;
 }
 
-void SDLCursorController::setCursorPosition( S32 x, S32 y )
+void PlatformCursorControllerSDL::setCursorPosition( S32 x, S32 y )
 {
    if( PlatformWindowManager::get() && PlatformWindowManager::get()->getFirstWindow() )
    {
-      AssertFatal( dynamic_cast<SDLWindow*>( PlatformWindowManager::get()->getFirstWindow() ), "");
-      SDLWindow *window = static_cast<SDLWindow*>( PlatformWindowManager::get()->getFirstWindow() );
+      AssertFatal( dynamic_cast<PlatformWindowSDL*>( PlatformWindowManager::get()->getFirstWindow() ), "");
+      PlatformWindowSDL *window = static_cast<PlatformWindowSDL*>( PlatformWindowManager::get()->getFirstWindow() );
       SDL_WarpMouseInWindow(window->getSDLWindow(), x, y);
    }
 }
 
-void SDLCursorController::getCursorPosition( Point2I &point )
+void PlatformCursorControllerSDL::getCursorPosition( Point2I &point )
 {
    SDL_GetMouseState( &point.x, &point.y );
 }
 
-void SDLCursorController::setCursorVisible( bool visible )
+void PlatformCursorControllerSDL::setCursorVisible( bool visible )
 {
    SDL_ShowCursor( visible );
 }
 
-bool SDLCursorController::isCursorVisible()
+bool PlatformCursorControllerSDL::isCursorVisible()
 {
    return SDL_ShowCursor( -1 );;
 }
 
-void SDLCursorController::setCursorShape(U32 cursorID)
+void PlatformCursorControllerSDL::setCursorShape(U32 cursorID)
 {
    SDL_Cursor* cursor = NULL;
 
@@ -110,8 +110,8 @@ void SDLCursorController::setCursorShape(U32 cursorID)
 }
 
 
-void SDLCursorController::setCursorShape( const UTF8 *fileName, bool reload )
+void PlatformCursorControllerSDL::setCursorShape( const UTF8 *fileName, bool reload )
 {
    // TODO SDL
-   AssertWarn(0, "SDLCursorController::setCursorShape - Not implemented");
+   AssertWarn(0, "PlatformCursorControllerSDL::setCursorShape - Not implemented");
 }

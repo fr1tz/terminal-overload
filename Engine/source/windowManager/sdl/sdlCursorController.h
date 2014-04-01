@@ -25,10 +25,10 @@
 
 #include "windowManager/platformCursorController.h"
 
-class SDLCursorController : public PlatformCursorController
+class PlatformCursorControllerSDL : public PlatformCursorController
 {
 public:
-   SDLCursorController( PlatformWindow *owner ) :
+   PlatformCursorControllerSDL( PlatformWindow *owner ) :
       PlatformCursorController( owner )
    {
       pushCursor( PlatformCursorController::curArrow );
