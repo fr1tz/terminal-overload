@@ -4,7 +4,7 @@
 
 
  /* File created by MIDL compiler version 7.00.0555 */
-/* at Thu Mar 13 22:22:10 2014
+/* at Tue Apr 01 08:27:06 2014
  */
 /* Compiler settings for ..\..\..\web\source\activex\IEWebGamePlugin.idl:
     Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 7.00.0555 
@@ -250,14 +250,14 @@ EXTERN_C const IID IID_IIEWebGameCtrl;
 
 
 
-#ifndef __IEnotcPluginLib_LIBRARY_DEFINED__
-#define __IEnotcPluginLib_LIBRARY_DEFINED__
+#ifndef __IEterminalPluginLib_LIBRARY_DEFINED__
+#define __IEterminalPluginLib_LIBRARY_DEFINED__
 
-/* library IEnotcPluginLib */
+/* library IEterminalPluginLib */
 /* [helpstring][version][uuid] */ 
 
 
-EXTERN_C const IID LIBID_IEnotcPluginLib;
+EXTERN_C const IID LIBID_IEterminalPluginLib;
 
 EXTERN_C const CLSID CLSID_IEWebGameCtrl;
 
@@ -266,7 +266,7 @@ EXTERN_C const CLSID CLSID_IEWebGameCtrl;
 class DECLSPEC_UUID("D62D1B36-253D-4218-B033-5ACE0B42B8BF")
 IEWebGameCtrl;
 #endif
-#endif /* __IEnotcPluginLib_LIBRARY_DEFINED__ */
+#endif /* __IEterminalPluginLib_LIBRARY_DEFINED__ */
 
 /* Additional Prototypes for ALL interfaces */
 

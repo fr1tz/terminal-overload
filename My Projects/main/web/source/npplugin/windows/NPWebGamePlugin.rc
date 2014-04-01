@@ -49,7 +49,7 @@ BEGIN
             VALUE "FileVersion", "1,0"
             VALUE "InternalName", "My Web Game"
             VALUE "MIMEType", "application/x-fulltemplateplugin"
-            VALUE "OriginalFilename", "NP notc Plugin.dll"
+            VALUE "OriginalFilename", "NP terminal Plugin.dll"
             VALUE "ProductName", "My Web Game"
             VALUE "ProductVersion", "1,0"
             VALUE "CompanyName", "My Game Company"

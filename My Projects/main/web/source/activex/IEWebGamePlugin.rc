@@ -80,8 +80,8 @@ BEGIN
             VALUE "FileDescription", "ActiveX Web Game Plugin"
             VALUE "FileVersion", "1.0.0.1"
             VALUE "LegalCopyright", "(c) My Game Company.  All rights reserved."
-            VALUE "InternalName", "IE notc Plugin.dll"
-            VALUE "OriginalFilename", "IE notc Plugin.dll"
+            VALUE "InternalName", "IE terminal Plugin.dll"
+            VALUE "OriginalFilename", "IE terminal Plugin.dll"
             VALUE "ProductName", "My Web Game"
             VALUE "ProductVersion", "1.0"
         END
@@ -115,7 +115,7 @@ IDB_IEWEBGAMECTRL       BITMAP                  "IEWebGameCtrl.bmp"
 
 STRINGTABLE 
 BEGIN
-    IDS_PROJNAME            "IEnotcPlugin"
+    IDS_PROJNAME            "IEterminalPlugin"
 END
 
 #endif    // English (U.S.) resources
