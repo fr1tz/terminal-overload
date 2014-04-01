@@ -176,7 +176,7 @@ void RenderGlowMgr::render( SceneRenderState *state )
             if ( newPassNeeded( ri, passRI ) )
                break;
 
-            GFXDEBUGEVENT_SCOPE_EX( RenderGlowMgr_RenderLoop, ColorI::GREEN, avar("%s", passRI->meshName) );
+            //GFXDEBUGEVENT_SCOPE_EX( RenderGlowMgr_RenderLoop, ColorI::GREEN, avar("%s", passRI->meshName) );
 
             sgData.palette = passRI->palette;
 
