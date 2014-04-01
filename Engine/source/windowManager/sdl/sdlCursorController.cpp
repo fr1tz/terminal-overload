@@ -28,6 +28,23 @@
 #include "windowManager/sdl/sdlCursorController.h"
 #include "platform/platformInput.h"
 
+#include "SDL.h"
+
+static struct { U32 id; SDL_SystemCursor resourceID; SDL_Cursor *cursor;} sgCursorShapeMap[]=
+{
+   { PlatformCursorController::curArrow,       SDL_SYSTEM_CURSOR_ARROW  ,     NULL },
+   { PlatformCursorController::curWait,        SDL_SYSTEM_CURSOR_WAIT,        NULL },
+   { PlatformCursorController::curPlus,        SDL_SYSTEM_CURSOR_CROSSHAIR,   NULL },
+   { PlatformCursorController::curResizeVert,  SDL_SYSTEM_CURSOR_SIZEWE,      NULL },
+   { PlatformCursorController::curResizeHorz,  SDL_SYSTEM_CURSOR_SIZENS,      NULL },
+   { PlatformCursorController::curResizeAll,   SDL_SYSTEM_CURSOR_SIZEALL,     NULL },
+   { PlatformCursorController::curIBeam,       SDL_SYSTEM_CURSOR_IBEAM,       NULL },
+   { PlatformCursorController::curResizeNESW,  SDL_SYSTEM_CURSOR_SIZENESW,    NULL },
+   { PlatformCursorController::curResizeNWSE,  SDL_SYSTEM_CURSOR_SIZENWSE,    NULL },
+   { PlatformCursorController::curHand,        SDL_SYSTEM_CURSOR_HAND,        NULL },
+   { 0,                                        SDL_SYSTEM_CURSOR_NO,          NULL },
+};
+
 
 U32 SDLCursorController::getDoubleClickTime()
 {
@@ -47,36 +64,54 @@ S32 SDLCursorController::getDoubleClickHeight()
 
 void SDLCursorController::setCursorPosition( S32 x, S32 y )
 {
-   // TODO SDL
+   if( PlatformWindowManager::get() && PlatformWindowManager::get()->getFirstWindow() )
+   {
+      AssertFatal( dynamic_cast<SDLWindow*>( PlatformWindowManager::get()->getFirstWindow() ), "");
+      SDLWindow *window = static_cast<SDLWindow*>( PlatformWindowManager::get()->getFirstWindow() );
+      SDL_WarpMouseInWindow(window->getSDLWindow(), x, y);
+   }
 }
 
 void SDLCursorController::getCursorPosition( Point2I &point )
 {
-   // TODO SDL
-
-   // Return 
-   point.x = 0;
-   point.y = 0;
+   SDL_GetMouseState( &point.x, &point.y );
 }
 
 void SDLCursorController::setCursorVisible( bool visible )
 {
-   // TODO SDL
+   SDL_ShowCursor( visible );
 }
 
 bool SDLCursorController::isCursorVisible()
 {
-   // TODO SDL
-   return true;
+   return SDL_ShowCursor( -1 );;
 }
 
 void SDLCursorController::setCursorShape(U32 cursorID)
 {
-   // TODO SDL
+   SDL_Cursor* cursor = NULL;
+
+   for(S32 i = 0; sgCursorShapeMap[i].resourceID != SDL_SYSTEM_CURSOR_NO; ++i)
+   {
+      if(cursorID == sgCursorShapeMap[i].id)
+      {  
+         if( !sgCursorShapeMap[i].cursor )
+            sgCursorShapeMap[i].cursor = SDL_CreateSystemCursor( sgCursorShapeMap[i].resourceID );
+
+         cursor = sgCursorShapeMap[i].cursor;
+         break;
+      }
+   }
+
+   if( !cursor )
+      return;   
+  
+   SDL_SetCursor(cursor);
 }
 
 
 void SDLCursorController::setCursorShape( const UTF8 *fileName, bool reload )
 {
    // TODO SDL
+   AssertWarn(0, "SDLCursorController::setCursorShape - Not implemented");
 }
