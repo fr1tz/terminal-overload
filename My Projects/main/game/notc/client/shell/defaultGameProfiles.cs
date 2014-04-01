@@ -132,6 +132,11 @@ singleton GuiControlProfile (HudTextNormalProfile)
    fontColor = "255 255 255";
 };
 
+singleton GuiControlProfile(HudBigTextNormalProfile : HudTextNormalProfile)
+{
+   fontSize = 36;
+};
+
 singleton GuiControlProfile (HudTextItalicProfile : HudTextNormalProfile)
 {
    fontType = "ArialItalic";
