@@ -4,7 +4,7 @@
 #include "platform/platform.h"
 #include "T3D/shapeBase.h"
 
-#include "Alux3D/ballastShape.h"
+#include "NOTC/ballastShape.h"
 #include "core/dnet.h"
 #include "sfx/sfxSystem.h"
 #include "sfx/sfxSource.h"
@@ -4609,7 +4609,7 @@ DefineEngineMethod( ShapeBase, setImageCharge, bool, ( S32 slot, F32 charge ),,
    return false;
 }
 
-// Added for Alux3D
+// Added for NOTC
 ConsoleMethod( ShapeBase, setImageInaccuracy, bool, 5, 5, "(int slot, string constant, string value)")
 {
 	int slot = dAtoi(argv[2]);
@@ -4621,7 +4621,7 @@ ConsoleMethod( ShapeBase, setImageInaccuracy, bool, 5, 5, "(int slot, string con
 	return false;
 }
 
-// Added for Alux3D
+// Added for NOTC
 ConsoleMethod( ShapeBase, getImageInaccuracy, const char*, 4, 4, "(int slot, string constant)")
 {
 	int slot = dAtoi(argv[2]);
@@ -4634,7 +4634,7 @@ ConsoleMethod( ShapeBase, getImageInaccuracy, const char*, 4, 4, "(int slot, str
 	return "";
 }
 
-// Added for Alux3D
+// Added for NOTC
 ConsoleMethod( ShapeBase, setImageRecoilEnabled, bool, 4, 4, "(int slot, bool enabled)")
 {
 	int slot = dAtoi(argv[2]);
@@ -4647,7 +4647,7 @@ ConsoleMethod( ShapeBase, setImageRecoilEnabled, bool, 4, 4, "(int slot, bool en
 	return false;
 }
 
-// Added for Alux3D 
+// Added for NOTC 
 ConsoleMethod( ShapeBase, getImageRecoilEnabled, bool, 3, 3, "(int slot)")
 {
    int slot = dAtoi(argv[2]);
@@ -4656,7 +4656,7 @@ ConsoleMethod( ShapeBase, getImageRecoilEnabled, bool, 3, 3, "(int slot)")
    return false;
 }
 
-// Added for Alux3D
+// Added for NOTC
 ConsoleMethod( ShapeBase, setImageCurrentRecoil, bool, 4, 4, "(int slot, int r)")
 {
 	int slot = dAtoi(argv[2]);
@@ -4669,7 +4669,7 @@ ConsoleMethod( ShapeBase, setImageCurrentRecoil, bool, 4, 4, "(int slot, int r)"
 	return false;
 }
 
-// Added for Alux3D 
+// Added for NOTC 
 ConsoleMethod( ShapeBase, getImageCurrentRecoil, S32, 3, 3, "(int slot)")
 {
    int slot = dAtoi(argv[2]);
@@ -4678,7 +4678,7 @@ ConsoleMethod( ShapeBase, getImageCurrentRecoil, S32, 3, 3, "(int slot)")
    return 0;
 }
 
-// Added for Alux3D
+// Added for NOTC
 ConsoleMethod( ShapeBase, setImageMaxRecoil, bool, 4, 4, "(int slot, int r)")
 {
 	int slot = dAtoi(argv[2]);
@@ -4691,7 +4691,7 @@ ConsoleMethod( ShapeBase, setImageMaxRecoil, bool, 4, 4, "(int slot, int r)")
 	return false;
 }
 
-// Added for Alux3D 
+// Added for NOTC 
 ConsoleMethod( ShapeBase, getImageMaxRecoil, S32, 3, 3, "(int slot)")
 {
    int slot = dAtoi(argv[2]);
@@ -4700,7 +4700,7 @@ ConsoleMethod( ShapeBase, getImageMaxRecoil, S32, 3, 3, "(int slot)")
    return 0;
 }
 
-// Added for Alux3D
+// Added for NOTC
 ConsoleMethod( ShapeBase, setImageRecoilAdd, bool, 4, 4, "(int slot, int r)")
 {
 	int slot = dAtoi(argv[2]);
@@ -4713,7 +4713,7 @@ ConsoleMethod( ShapeBase, setImageRecoilAdd, bool, 4, 4, "(int slot, int r)")
 	return false;
 }
 
-// Added for Alux3D 
+// Added for NOTC 
 ConsoleMethod( ShapeBase, getImageRecoilAdd, S32, 3, 3, "(int slot)")
 {
    int slot = dAtoi(argv[2]);
@@ -4722,7 +4722,7 @@ ConsoleMethod( ShapeBase, getImageRecoilAdd, S32, 3, 3, "(int slot)")
    return 0;
 }
 
-// Added for Alux3D
+// Added for NOTC
 ConsoleMethod( ShapeBase, setImageRecoilDelta, bool, 4, 4, "(int slot, int r)")
 {
 	int slot = dAtoi(argv[2]);
@@ -4735,7 +4735,7 @@ ConsoleMethod( ShapeBase, setImageRecoilDelta, bool, 4, 4, "(int slot, int r)")
 	return false;
 }
 
-// Added for Alux3D
+// Added for NOTC
 ConsoleMethod( ShapeBase, getImageRecoilDelta, S32, 3, 3, "(int slot)")
 {
    int slot = dAtoi(argv[2]);

@@ -38,9 +38,9 @@ addEngineSrcDir('T3D/decal');
 addEngineSrcDir('T3D/sfx');
 addEngineSrcDir('T3D/gameBase');
 addEngineSrcDir('T3D/turret');
-addEngineSrcDir('Alux3D');
-addEngineSrcDir('Alux3D/fx');
-addEngineSrcDir('Alux3D/gui');
+addEngineSrcDir('NOTC');
+addEngineSrcDir('NOTC/fx');
+addEngineSrcDir('NOTC/gui');
 
 global $TORQUE_HIFI_NET;
 global $TORQUE_EXTENDED_MOVE;

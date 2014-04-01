@@ -178,9 +178,9 @@ class GameBase : public SceneObject
 
    U32 mGhostCleanupCountdown; ///< Only used on server (obviously)
 
-   S32 mClient; ///< exposed to script under the name 'client' (added for Alux3D)
+   S32 mClient; ///< exposed to script under the name 'client' (added for NOTC)
 
-   S32 mTeamId; ///< exposed to script under the name 'teamId' (added for Alux3D)
+   S32 mTeamId; ///< exposed to script under the name 'teamId' (added for NOTC)
 
 public:
 
@@ -390,7 +390,7 @@ public:
    virtual void setControlObject( GameBase * ) { }
    /// @}
 
-   /// @name Team ID (added for Alux3D)
+   /// @name Team ID (added for NOTC)
    /// @{
 	void setTeamId(S32 id) { mTeamId = id; this->onNewTeamId(); }
 	S32 getTeamId() { return mTeamId; };

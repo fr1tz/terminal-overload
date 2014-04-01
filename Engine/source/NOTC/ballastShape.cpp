@@ -16,7 +16,7 @@
 #include "sim/netConnection.h"
 #include "scene/sceneObjectLightingPlugin.h"
 
-#include "Alux3D/ballastShape.h"
+#include "NOTC/ballastShape.h"
 
 extern void wireCube(F32 size,Point3F pos);
 

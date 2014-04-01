@@ -174,7 +174,7 @@ struct ShapeBaseImageData: public GameBaseData {
       /// @name State attributes
       /// @{
 
-      ProjectileData* fireProjectile; ///< Fire projectile in this state? (added for Alux3D)
+      ProjectileData* fireProjectile; ///< Fire projectile in this state? (added for NOTC)
       bool fire;                    ///< Can only have one fire state
       bool altFire;                 ///< Can only have one alternate fire state
       bool reload;                  ///< Can only have one reload state
@@ -288,7 +288,7 @@ struct ShapeBaseImageData: public GameBaseData {
    F32                     stateTimeoutValue          [MaxStates];
    bool                    stateWaitForTimeout        [MaxStates];
 
-	ProjectileData*         stateFireProjectile        [MaxStates]; // Added for Alux3D
+	ProjectileData*         stateFireProjectile        [MaxStates]; // Added for NOTC
    bool                    stateFire                  [MaxStates];
    bool                    stateAlternateFire         [MaxStates];
    bool                    stateReload                [MaxStates];
@@ -818,7 +818,7 @@ public:
       /// representing this specific mounted image.
       /// @{
 
-		enum Mode {           ///< Mode the image operates in (added for Alux3D -mag)
+		enum Mode {           ///< Mode the image operates in (added for NOTC -mag)
 			StandardMode,      ///  'StandardMode' is the mode known from stock torque
 			ClientFireMode,    ///  while the 'ClientFireMode' makes the image behave more
 		} mode;               ///  like the weapons in other games (ie. client controls fire) 
@@ -830,9 +830,9 @@ public:
 			bool sendMagazineRounds;
 		} controllingClientUpdate;
 
-		Inaccuracy inaccuracy; ///< Firing inaccuracy (added for Alux3D)
+		Inaccuracy inaccuracy; ///< Firing inaccuracy (added for NOTC)
 
-		/// @name Recoil (added for Alux3D)
+		/// @name Recoil (added for NOTC)
 		///
 		/// Variables to control the recoil mechanic.
 		/// @{
@@ -1493,7 +1493,7 @@ public:
    void advanceThreads(F32 dt);
    /// @}
 
-	/// Client fired shotgun (added for Alux3D)
+	/// Client fired shotgun (added for NOTC)
 	void clientFiredShotgun(NetConnection* client,  int slot, const ShotgunHits& hits,
 		ShotgunProjectileData* datablock, const Point3F& pos, const Point3F& vel);
 
@@ -1528,7 +1528,7 @@ public:
    /// @note Legacy code from Tribes 2, but still works
    Point3F getAIRepairPoint();
 
-   /// Updates image trigger state (added for Alux3D).
+   /// Updates image trigger state (added for NOTC).
 	virtual void updateImageTrigger(const Move* move, U32 slot, bool trigger, bool alt);
 
    /// @name Mounted Images
@@ -1709,13 +1709,13 @@ public:
    /// @param   imageShapeIndex  Shape index (1st person, etc.) used to look up the prefix text
    NetStringHandle getImageScriptAnimPrefix(U32 imageSlot);
 
-   /// @name Mounted image inaccuracy mechanic (added for Alux3D)
+   /// @name Mounted image inaccuracy mechanic (added for NOTC)
    /// @{
    void setImageInaccuracy(U32 imageSlot, const char* constant, const char* value);
    const char* getImageInaccuracy(U32 imageSlot, const char* constant);
    /// @}
 
-   /// @name Mounted image recoil mechanic (added for Alux3D)
+   /// @name Mounted image recoil mechanic (added for NOTC)
    /// @{
    void setImageRecoilEnabled(U32 imageSlot, bool enabled);
    void setImageCurrentRecoil(U32 imageSlot, U32 r);

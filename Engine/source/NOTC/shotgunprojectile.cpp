@@ -2,7 +2,7 @@
 // located in the root directory of this distribution.
 
 #include "platform/platform.h"
-#include "Alux3D/shotgunprojectile.h"
+#include "NOTC/shotgunprojectile.h"
 
 #include "scene/sceneRenderState.h"
 #include "scene/sceneManager.h"

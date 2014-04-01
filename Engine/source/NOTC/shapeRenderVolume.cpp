@@ -2,7 +2,7 @@
 // located in the root directory of this distribution.
 
 #include "platform/platform.h"
-#include "Alux3D/shapeRenderVolume.h"
+#include "NOTC/shapeRenderVolume.h"
 
 #include "collision/boxConvex.h"
 #include "console/consoleTypes.h"

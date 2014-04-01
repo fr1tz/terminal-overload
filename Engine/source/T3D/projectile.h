@@ -237,7 +237,7 @@ public:
    U32      mCurrTrackingAbility;
 
 	SimObjectPtr<ShapeBase> mSourceObject; ///< Actual pointer to the source object
-	                                       ///  (never times out for Alux3D)
+	                                       ///  (never times out for NOTC)
 
    S32      mSourceObjectId;
    S32      mSourceObjectSlot;

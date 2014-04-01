@@ -1,7 +1,7 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
-#include "Alux3D/staticMetaShape.h"
+#include "NOTC/staticMetaShape.h"
 
 #include "platform/platform.h"
 #include "core/dnet.h"

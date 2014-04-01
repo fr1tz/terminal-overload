@@ -2,7 +2,7 @@
 // located in the root directory of this distribution.
 
 #include "platform/platform.h"
-#include "Alux3D/etherform.h"
+#include "NOTC/etherform.h"
 
 #include "math/mMath.h"
 #include "core/stream/bitStream.h"

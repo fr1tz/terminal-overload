@@ -20,7 +20,7 @@
 #include "ts/tsShape.h"
 #endif
 #ifndef _TSSHAPECACHE_H_
-#include "Alux3D/tsShapeCache.h"
+#include "NOTC/tsShapeCache.h"
 #endif
 #ifndef _HEXAGONVOLUMECOLLISIONSHAPE_H_
 #include "hexagonVolumeCollisionShape.h"

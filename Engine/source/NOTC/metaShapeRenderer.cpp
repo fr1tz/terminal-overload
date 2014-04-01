@@ -1,7 +1,7 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
-#include "Alux3D/metaShapeRenderer.h"
+#include "NOTC/metaShapeRenderer.h"
 
 #include "math/mathIO.h"
 #include "scene/sceneRenderState.h"

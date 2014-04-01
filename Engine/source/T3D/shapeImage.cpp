@@ -26,7 +26,7 @@
 #include "sfx/sfxTypes.h"
 #include "scene/sceneManager.h"
 #include "core/stream/fileStream.h"
-#include "Alux3D/shotgunprojectile.h"
+#include "NOTC/shotgunprojectile.h"
 
 //----------------------------------------------------------------------------
 
@@ -1895,7 +1895,7 @@ F32 ShapeBase::getImageCharge(U32 imageSlot)
    return image.charge;
 }
 
-// Added for Alux3D
+// Added for NOTC
 void ShapeBase::setImageInaccuracy(U32 imageSlot, const char* constant, const char* value)
 {
 	MountedImage& image = mMountedImageList[imageSlot];
@@ -1927,13 +1927,13 @@ void ShapeBase::setImageInaccuracy(U32 imageSlot, const char* constant, const ch
 	}
 }
 
-// Added for Alux3D
+// Added for NOTC
 const char* ShapeBase::getImageInaccuracy(U32 imageSlot, const char* constant)
 {
 	return "TODO";
 }
 
-// Added for Alux3D
+// Added for NOTC
 void ShapeBase::setImageRecoilEnabled(U32 imageSlot, bool enabled)
 {
 	MountedImage& image = mMountedImageList[imageSlot];
@@ -1944,7 +1944,7 @@ void ShapeBase::setImageRecoilEnabled(U32 imageSlot, bool enabled)
 	}
 }
 
-// Added for Alux3D
+// Added for NOTC
 void ShapeBase::setImageCurrentRecoil(U32 imageSlot, U32 r)
 {
 	MountedImage& image = mMountedImageList[imageSlot];
@@ -1955,7 +1955,7 @@ void ShapeBase::setImageCurrentRecoil(U32 imageSlot, U32 r)
 	}
 }
 
-// Added for Alux3D
+// Added for NOTC
 void ShapeBase::setImageMaxRecoil(U32 imageSlot, U32 r)
 {
 	MountedImage& image = mMountedImageList[imageSlot];
@@ -1966,7 +1966,7 @@ void ShapeBase::setImageMaxRecoil(U32 imageSlot, U32 r)
 	}
 }
 
-// Added for Alux3D
+// Added for NOTC
 void ShapeBase::setImageRecoilAdd(U32 imageSlot, S32 r)
 {
 	MountedImage& image = mMountedImageList[imageSlot];
@@ -1977,7 +1977,7 @@ void ShapeBase::setImageRecoilAdd(U32 imageSlot, S32 r)
 	}
 }
 
-// Added for Alux3D
+// Added for NOTC
 void ShapeBase::setImageRecoilDelta(U32 imageSlot, S32 r)
 {
 	MountedImage& image = mMountedImageList[imageSlot];
@@ -1988,7 +1988,7 @@ void ShapeBase::setImageRecoilDelta(U32 imageSlot, S32 r)
 	}
 }
  
-// Added for Alux3D
+// Added for NOTC
 bool ShapeBase::getImageRecoilEnabled(U32 imageSlot)
 {
    MountedImage& image = mMountedImageList[imageSlot];
@@ -1997,7 +1997,7 @@ bool ShapeBase::getImageRecoilEnabled(U32 imageSlot)
    return image.recoilEnabled;
 }
 
-// Added for Alux3D
+// Added for NOTC
 U32 ShapeBase::getImageCurrentRecoil(U32 imageSlot)
 {
    MountedImage& image = mMountedImageList[imageSlot];
@@ -2006,7 +2006,7 @@ U32 ShapeBase::getImageCurrentRecoil(U32 imageSlot)
    return image.currentRecoil;
 }
 
-// Added for Alux3D
+// Added for NOTC
 U32 ShapeBase::getImageMaxRecoil(U32 imageSlot)
 {
    MountedImage& image = mMountedImageList[imageSlot];
@@ -2015,7 +2015,7 @@ U32 ShapeBase::getImageMaxRecoil(U32 imageSlot)
    return image.maxRecoil;
 }
 
-// Added for Alux3D
+// Added for NOTC
 S32 ShapeBase::getImageRecoilAdd(U32 imageSlot)
 {
    MountedImage& image = mMountedImageList[imageSlot];
@@ -2024,7 +2024,7 @@ S32 ShapeBase::getImageRecoilAdd(U32 imageSlot)
    return image.recoilAdd;
 }
 
-// Added for Alux3D
+// Added for NOTC
 S32 ShapeBase::getImageRecoilDelta(U32 imageSlot)
 {
    MountedImage& image = mMountedImageList[imageSlot];

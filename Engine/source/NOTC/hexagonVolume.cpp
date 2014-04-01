@@ -3,7 +3,7 @@
 
 #include "hexagonVolume.h"
 
-#include "Alux3D/grid.h"
+#include "NOTC/grid.h"
 #include "platform/platform.h"
 #include "collision/boxConvex.h"
 #include "console/consoleTypes.h"
