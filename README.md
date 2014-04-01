@@ -1,7 +1,7 @@
-OpenROTC (temporary name until a name has been voted on)
-========================================================
+Terminal Overload
+=================
 
-Free and open-source remake of Revenge Of The Cats: Ethernet
+Free and open-source remake/continuation of [Revenge Of The Cats: Ethernet](http://ethernet.wasted.ch).
 
 Uses the Torque3D-MIT engine, see Torque 3D [main repository](https://github.com/GarageGames/Torque3D)
 for more information.
