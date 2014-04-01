@@ -335,6 +335,6 @@ void PlatformWindowManagerSDL::raiseCurtain()
 
 AFTER_MODULE_INIT(gfx)
 {
-   int res = SDL_Init(SDL_INIT_EVERYTHING);
+   int res = SDL_Init( SDL_INIT_VIDEO | SDL_INIT_JOYSTICK | SDL_INIT_HAPTIC | SDL_INIT_GAMECONTROLLER | SDL_INIT_EVENTS );
    AssertFatal(res != -1, "SDL init error");
 }
