@@ -29,6 +29,7 @@ void buildScanCodeArray()
    }
 
    // SDL, Torque
+   mapScanCode(SDL_SCANCODE_A, KEY_A);
    mapScanCode(SDL_SCANCODE_B, KEY_B);
    mapScanCode(SDL_SCANCODE_C, KEY_C);
    mapScanCode(SDL_SCANCODE_D, KEY_D);
