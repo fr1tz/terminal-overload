@@ -4,7 +4,12 @@
 
 #include "gfx/D3D9/pc/gfxPCD3D9Device.h"
 #include "gfx/D3D9/pc/gfxPCD3D9Target.h"
-#include <d3d.h>
+
+#if defined TORQUE_OS_WIN32
+# include <d3dx9.h>
+#else
+# include <d3d.h>
+#endif
 
 #include "gfx/gfxProfiler.h"
 
