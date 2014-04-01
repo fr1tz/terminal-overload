@@ -161,6 +161,8 @@ public:
 
    virtual WindowId getWindowId();
 
+   SDL_Window* getSDLWindow() const { return mWindowHandle; }
+
    virtual PlatformWindow * getNextWindow() const
    {
       return mNextWindow;
