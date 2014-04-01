@@ -29,7 +29,7 @@
       isContainer = "1";
       canSave = "1";
       canSaveDynamicFields = "1";
-         gameString = "NOTC (0.x.x)";
+         gameString = "Terminal Overload (0.x.x)";
 
       new GuiBitmapBorderCtrl() {
          position = "135 9";

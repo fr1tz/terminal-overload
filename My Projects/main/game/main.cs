@@ -2,7 +2,7 @@
 // located in the root directory of this distribution.
 
 // Set the name of our application
-$appName = "OpenROTC (pending a niftier name)";
+$appName = "Terminal Overload";
 
 // The directory it is run from
 $defaultGame = "notc";
