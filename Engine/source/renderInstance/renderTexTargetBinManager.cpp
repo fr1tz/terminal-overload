@@ -147,6 +147,7 @@ bool RenderTexTargetBinManager::_updateTargets()
 
       for( U32 j = 0; j < mNumRenderTargets; j++ )
       {
+         // try reuse of old color texture
          if( mTargetChainTextures[i][j].getWidthHeight() != mTargetSize 
             || mTargetChainTextures[i][j].getFormat() != mTargetFormat)
          {

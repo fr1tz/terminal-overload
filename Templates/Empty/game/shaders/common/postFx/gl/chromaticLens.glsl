@@ -56,5 +56,5 @@ void main()
         outColor[i] = tex2Dlod( backBuffer, vec4(x,y,0,0) )[i];
     }
 
-    gl_FragColor = vec4( outColor.rgb, 1 );
+    OUT_FragColor0 = vec4( outColor.rgb, 1 );
 }

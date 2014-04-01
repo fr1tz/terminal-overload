@@ -12,3 +12,4 @@
 *.hpp text
 *.command
 *.txt
+*.ini

@@ -52,25 +52,25 @@ void main()
    vec4 screenPos = vec4(IN_uv0.x*2-1, IN_uv0.y*2-1, depth*2-1, 1);
 
    // Calculate the world position
-   vec4 D = mul(screenPos, matWorldToScreen);
+   vec4 D = tMul(screenPos, matWorldToScreen);
    vec4 worldPos = D / D.w;
    
    // Now calculate the previous screen position
-   vec4 previousPos = mul( worldPos, matPrevScreenToWorld );
+   vec4 previousPos = tMul( worldPos, matPrevScreenToWorld );
    previousPos /= previousPos.w;
 	
    // Calculate the XY velocity
    vec2 velocity = ((screenPos - previousPos) / velocityMultiplier).xy;
    
    // Generate the motion blur
-   vec4 color = texture2D(backBuffer, IN_uv0);
+   vec4 color = texture(backBuffer, IN_uv0);
 	IN_uv0 += velocity;
 	
    for(int i = 1; i<samples; ++i, IN_uv0 += velocity)
    {
-      vec4 currentColor = texture2D(backBuffer, IN_uv0);
+      vec4 currentColor = texture(backBuffer, IN_uv0);
       color += currentColor;
    }
    
-   gl_FragColor = color / samples;
+   OUT_FragColor0 = color / samples;
 }

@@ -23,9 +23,9 @@
 #include "../../../gl/hlslCompat.glsl"
 #include "../../../gl/torque.glsl"
 
-attribute vec4 vPosition;
-attribute vec2 vTexCoord0;
-attribute vec3 vTexCoord1;
+in vec4 vPosition;
+in vec2 vTexCoord0;
+in vec3 vTexCoord1;
 
 #define IN_pos  vPosition
 #define IN_tc vTexCoord0
@@ -33,17 +33,17 @@ attribute vec3 vTexCoord1;
 
 #define OUT_position gl_Position
 
-varying vec2 tcColor0;
+out vec2 tcColor0;
 #define OUT_tcColor0 tcColor0
-varying vec2 tcColor1;
+out vec2 tcColor1;
 #define OUT_tcColor1 tcColor1
-varying vec2 tcDepth0;
+out vec2 tcDepth0;
 #define OUT_tcDepth0 tcDepth0
-varying vec2 tcDepth1;
+out vec2 tcDepth1;
 #define OUT_tcDepth1 tcDepth1
-varying vec2 tcDepth2;
+out vec2 tcDepth2;
 #define OUT_tcDepth2 tcDepth2
-varying vec2 tcDepth3;
+out vec2 tcDepth3;
 #define OUT_tcDepth3 tcDepth3
 
 
@@ -55,7 +55,7 @@ void main()
    OUT_position = IN_pos;
    
    vec2 uv = viewportCoordToRenderTarget( IN_tc, rtParams0 ); 
-   //OUT_position = mul( IN_pos, modelView );  
+   //OUT_position = tMul( IN_pos, modelView );  
    OUT_tcColor1 = uv + vec2( +1.0, -0.0 ) * oneOverTargetSize;  
    OUT_tcColor0 = uv + vec2( -1.0, -0.0 ) * oneOverTargetSize;  
    OUT_tcDepth0 = uv + vec2( -0.5, -0.0 ) * oneOverTargetSize;    

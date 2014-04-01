@@ -8,29 +8,29 @@
 //-----------------------------------------------------------------------------
 
 // TexCoord 0 and 1 (xy,zw) for ripple texture lookup
-varying vec4 rippleTexCoord01;
+out vec4 rippleTexCoord01;
 #define OUT_rippleTexCoord01 rippleTexCoord01
 
 // TexCoord 2 for ripple texture lookup
-varying vec2 rippleTexCoord2;
+out vec2 rippleTexCoord2;
 #define OUT_rippleTexCoord2 rippleTexCoord2
 
 // Screenspace vert position BEFORE wave transformation
-varying vec4 posPreWave;
+out vec4 posPreWave;
 #define OUT_posPreWave posPreWave
 
 // Screenspace vert position AFTER wave transformation
-varying vec4 posPostWave;
+out vec4 posPostWave;
 #define OUT_posPostWave posPostWave 
 
 // Worldspace unit distance/depth of this vertex/pixel
-varying float  pixelDist;
+out float  pixelDist;
 #define OUT_pixelDist pixelDist
 
-varying vec4 objPos;
+out vec4 objPos;
 #define OUT_objPos objPos
 
-varying vec3 misc;
+out vec3 misc;
 #define OUT_misc misc
 
 //-----------------------------------------------------------------------------
@@ -51,11 +51,11 @@ uniform float    gridElementSize;
 uniform float    elapsedTime;
 uniform float    undulateMaxDist;
 
-attribute vec4 vPosition;
-attribute vec3 vNormal;
-attribute vec4 vColor;
-attribute vec2 vTexCoord0;
-attribute vec4 vTexCoord1;
+in vec4 vPosition;
+in vec3 vNormal;
+in vec4 vColor;
+in vec2 vTexCoord0;
+in vec4 vTexCoord1;
 
 //-----------------------------------------------------------------------------
 // Main                                                                        
@@ -82,7 +82,7 @@ void main()
       // IN_undulateData += offsetXY; 
    // }         
    
-   vec4 worldPos = mul( modelMat, IN_position );
+   vec4 worldPos = tMul( modelMat, IN_position );
       
    IN_position.z = mix( IN_position.z, eyePos.z, IN_horizonFactor.x );
    
@@ -91,11 +91,11 @@ void main()
    OUT_objPos.w = worldPos.z;
    
    // Send pre-undulation screenspace position
-   OUT_posPreWave = mul( modelview, IN_position );
-   OUT_posPreWave = mul( texGen, OUT_posPreWave );
+   OUT_posPreWave = tMul( modelview, IN_position );
+   OUT_posPreWave = tMul( texGen, OUT_posPreWave );
       
    // Calculate the undulation amount for this vertex.   
-   vec2 undulatePos = mul( modelMat, vec4( IN_undulateData.xy, 0, 1 ) ).xy;
+   vec2 undulatePos = tMul( modelMat, vec4( IN_undulateData.xy, 0, 1 ) ).xy;
    //if ( undulatePos.x < 0 )
    //   undulatePos = IN_position.xy;
    
@@ -132,10 +132,10 @@ void main()
    
    // Save worldSpace position of this pixel/vert
    //OUT_worldPos = OUT_posPostWave.xyz;   
-   //OUT_worldPos = mul( modelMat, OUT_posPostWave.xyz );   
+   //OUT_worldPos = tMul( modelMat, OUT_posPostWave.xyz );   
    //OUT_worldPos.z += objTrans[2][2]; //91.16;
    
-   // OUT_misc.w = mul( modelMat, OUT_fogPos ).z;
+   // OUT_misc.w = tMul( modelMat, OUT_fogPos ).z;
    // if ( IN_horizonFactor.x > 0 )
    // {
       // vec3 awayVec = normalize( OUT_fogPos.xyz - eyePos );
@@ -143,17 +143,17 @@ void main()
    // }
    
    // Convert to screen 
-   OUT_posPostWave = mul( modelview, OUT_posPostWave ); // mul( modelview, vec4( OUT_posPostWave.xyz, 1 ) );     
+   OUT_posPostWave = tMul( modelview, OUT_posPostWave ); // tMul( modelview, vec4( OUT_posPostWave.xyz, 1 ) );     
    
    // Setup the OUT position symantic variable
-   OUT_hpos = OUT_posPostWave; // mul( modelview, vec4( IN_position.xyz, 1 ) ); //vec4( OUT_posPostWave.xyz, 1 );   
+   OUT_hpos = OUT_posPostWave; // tMul( modelview, vec4( IN_position.xyz, 1 ) ); //vec4( OUT_posPostWave.xyz, 1 );   
    //OUT_hpos.z = mix( OUT_hpos.z, OUT_hpos.w, IN_horizonFactor.x );
    
    // Save world space camera dist/depth of the outgoing pixel
    OUT_pixelDist = OUT_hpos.z;              
 
    // Convert to reflection texture space   
-   OUT_posPostWave = mul( texGen, OUT_posPostWave );
+   OUT_posPostWave = tMul( texGen, OUT_posPostWave );
         
    vec2 txPos = undulatePos;
    if ( bool(IN_horizonFactor.x) )
@@ -168,7 +168,7 @@ void main()
    texMat[1][0] = rippleMat[0].y;
    texMat[0][1] = rippleMat[0].z;
    texMat[1][1] = rippleMat[0].w;
-   OUT_rippleTexCoord01.xy = mul( texMat, OUT_rippleTexCoord01.xy );      
+   OUT_rippleTexCoord01.xy = tMul( texMat, OUT_rippleTexCoord01.xy );      
 
    OUT_rippleTexCoord01.zw = txPos * rippleTexScale[1];
    OUT_rippleTexCoord01.zw += rippleDir[1] * elapsedTime * rippleSpeed.y;
@@ -177,7 +177,7 @@ void main()
    texMat[1][0] = rippleMat[1].y;
    texMat[0][1] = rippleMat[1].z;
    texMat[1][1] = rippleMat[1].w;
-   OUT_rippleTexCoord01.zw = mul( texMat, OUT_rippleTexCoord01.zw );         
+   OUT_rippleTexCoord01.zw = tMul( texMat, OUT_rippleTexCoord01.zw );         
 
    OUT_rippleTexCoord2.xy = txPos * rippleTexScale[2];
    OUT_rippleTexCoord2.xy += rippleDir[2] * elapsedTime * rippleSpeed.z; 
@@ -186,7 +186,7 @@ void main()
    texMat[1][0] = rippleMat[2].y;
    texMat[0][1] = rippleMat[2].z;
    texMat[1][1] = rippleMat[2].w;
-   OUT_rippleTexCoord2.xy = mul( texMat, OUT_rippleTexCoord2.xy );   
+   OUT_rippleTexCoord2.xy = tMul( texMat, OUT_rippleTexCoord2.xy );   
 
 #ifdef WATER_SPEC
    
@@ -210,8 +210,8 @@ void main()
    
    worldToTangent = transpose(worldToTangent);
       
-   OUT_misc.xyz = mul( inLightVec, modelMat );
-   OUT_misc.xyz = mul( worldToTangent, OUT_misc.xyz );   
+   OUT_misc.xyz = tMul( inLightVec, modelMat );
+   OUT_misc.xyz = tMul( worldToTangent, OUT_misc.xyz );   
    
 #else
 

@@ -30,7 +30,7 @@ uniform vec4 targetViewport;
 
 uniform sampler2D inputTex;
 
-varying vec2 uv0;
+in vec2 uv0;
 
 #define IN_uv0 uv0
 
@@ -46,5 +46,5 @@ void main()
 	y = clamp(y, targetViewport.y, targetViewport.w);
 	x = clamp(x, targetViewport.x, targetViewport.z);
 
-   gl_FragColor = texture2D (inputTex, vec2(x, y));
+   OUT_FragColor0 = texture (inputTex, vec2(x, y));
 }

@@ -9,16 +9,16 @@
 
 #include "../../../gl/hlslCompat.glsl"
 
-attribute vec4 vPosition;
-attribute vec2 vTexCoord0;
+in vec4 vPosition;
+in vec2 vTexCoord0;
 
 #define IN_position  vPosition
 #define IN_texcoord  vTexCoord0
 
 #define OUT_position gl_Position
-varying vec2 texcoord;
+out vec2 texcoord;
 #define OUT_texcoord texcoord
-varying vec4 offset[2];
+out vec4 offset[2];
 #define OUT_offset offset
 
 uniform vec2 texSize0;

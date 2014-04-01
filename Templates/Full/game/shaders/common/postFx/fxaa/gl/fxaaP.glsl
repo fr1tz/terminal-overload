@@ -21,7 +21,7 @@
 //-----------------------------------------------------------------------------
 
 #define FXAA_PC 1
-#define FXAA_GLSL_120 1
+#define FXAA_GLSL_130 1
 #define FXAA_QUALITY__PRESET 12
 #define FXAA_GREEN_AS_LUMA 1
 
@@ -31,12 +31,12 @@
 uniform sampler2D colorTex ;
 uniform vec2 oneOverTargetSize;
 
-varying vec4 hpos;
-varying vec2 uv0;
+in vec4 hpos;
+in vec2 uv0;
 
 void main()
 {
-   gl_FragColor = FxaaPixelShader(
+   OUT_FragColor0 = FxaaPixelShader(
 
     uv0, // vertex position
 

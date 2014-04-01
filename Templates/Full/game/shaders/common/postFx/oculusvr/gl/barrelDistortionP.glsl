@@ -74,7 +74,7 @@ vec4 main( PFXVertToPix IN ) : COLOR0
    else
    {
       tc.x += xOffset;
-      color = texture2D(backBuffer, tc);
+      color = texture(backBuffer, tc);
    }
 
    return color;    

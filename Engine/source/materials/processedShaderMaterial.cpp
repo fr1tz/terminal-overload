@@ -81,7 +81,7 @@ void ShaderConstHandles::init( GFXShader *shader, CustomMaterial* mat /*=NULL*/ 
    if(mat)
    {
       for (S32 i = 0; i < Material::MAX_TEX_PER_PASS; ++i)
-         mTexHandlesSC[i] = shader->getShaderConstHandle( mat->mSamplerNames[i] );
+         mTexHandlesSC[i] = shader->getShaderConstHandle(mat->mSamplerNames[i]);
    }
 }
 
@@ -500,7 +500,7 @@ bool ProcessedShaderMaterial::_createPasses( MaterialFeatureData &stageFeatures,
       passData.mNumTexReg += numTexReg;
       passData.mFeatureData.features.addFeature( *info.type );
 
-      U32 oldTexNumber = texIndex;
+      U32 oldTexNumber = texIndex; // TODO OPENL REVIEW
       info.feature->setTexData( mStages[stageNum], stageFeatures, passData, texIndex );
 
 #if defined(TORQUE_DEBUG) && defined( TORQUE_OPENGL)
@@ -716,7 +716,7 @@ bool ProcessedShaderMaterial::setupPass( SceneRenderState *state, const SceneDat
    }
    else
    {
-      GFX->disableShaders();
+      GFX->setupGenericShaders();
       GFX->setShaderConstBuffer(NULL);
    } 
 
@@ -748,7 +748,7 @@ void ProcessedShaderMaterial::setTextureStages( SceneRenderState *state, const S
    {
       U32 currTexFlag = rpd->mTexType[i];
       if (!LIGHTMGR || !LIGHTMGR->setTextureStage(sgData, currTexFlag, i, shaderConsts, handles))
-      {     
+      {
          switch( currTexFlag )
          {
          // If the flag is unset then assume its just

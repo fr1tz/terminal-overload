@@ -51,29 +51,29 @@
 
 //ConnectData IN
 
-varying vec4 hpos;   
+in vec4 hpos;   
 
 // TexCoord 0 and 1 (xy,zw) for ripple texture lookup
-varying vec4 rippleTexCoord01;
+in vec4 rippleTexCoord01;
 
 // xy is TexCoord 2 for ripple texture lookup 
 // z is the Worldspace unit distance/depth of this vertex/pixel
 // w is amount of the crestFoam ( more at crest of waves ).
-varying vec4 rippleTexCoord2;
+in vec4 rippleTexCoord2;
 
 // Screenspace vert position BEFORE wave transformation
-varying vec4 posPreWave;
+in vec4 posPreWave;
 
 // Screenspace vert position AFTER wave transformation
-varying vec4 posPostWave;
+in vec4 posPostWave;
 
 // Objectspace vert position BEFORE wave transformation	
 // w coord is world space z position.
-varying vec4 objPos;   
+in vec4 objPos;   
 
-varying vec4 foamTexCoords;
+in vec4 foamTexCoords;
 
-varying mat3 tangentMat;
+in mat3 tangentMat;
 
 
 #define IN_hpos hpos
@@ -102,8 +102,7 @@ uniform sampler2D    reflectMap;
 uniform sampler2D      refractBuff;
 uniform samplerCube  skyMap;
 uniform sampler2D      foamMap;
-//uniform sampler1D    depthGradMap;
-uniform sampler2D    depthGradMap;
+uniform sampler1D    depthGradMap;
 uniform vec4         specularParams;
 uniform vec4       baseColor;
 uniform vec4       miscParams;
@@ -133,13 +132,13 @@ uniform float        reflectivity;
 void main()
 { 
    // Get the bumpNorm...
-   vec3 bumpNorm = ( texture2D( bumpMap, IN_rippleTexCoord01.xy ).rgb * 2.0 - 1.0 ) * rippleMagnitude.x;
-   bumpNorm       += ( texture2D( bumpMap, IN_rippleTexCoord01.zw ).rgb * 2.0 - 1.0 ) * rippleMagnitude.y;      
-   bumpNorm       += ( texture2D( bumpMap, IN_rippleTexCoord2.xy ).rgb * 2.0 - 1.0 ) * rippleMagnitude.z;         
+   vec3 bumpNorm = ( texture( bumpMap, IN_rippleTexCoord01.xy ).rgb * 2.0 - 1.0 ) * rippleMagnitude.x;
+   bumpNorm       += ( texture( bumpMap, IN_rippleTexCoord01.zw ).rgb * 2.0 - 1.0 ) * rippleMagnitude.y;      
+   bumpNorm       += ( texture( bumpMap, IN_rippleTexCoord2.xy ).rgb * 2.0 - 1.0 ) * rippleMagnitude.z;         
                              
    bumpNorm = normalize( bumpNorm );
    bumpNorm = mix( bumpNorm, vec3(0,0,1), 1.0 - rippleMagnitude.w );
-   bumpNorm = mul( bumpNorm, IN_tangentMat ); 
+   bumpNorm = tMul( bumpNorm, IN_tangentMat ); 
    
    // Get depth of the water surface (this pixel).
    // Convert from WorldSpace to EyeSpace.
@@ -229,8 +228,8 @@ void main()
    
    vec4 fakeColor = vec4(ambientColor,1);   
    vec3 eyeVec = IN_objPos.xyz - eyePos;
-   eyeVec = mul( mat3(modelMat), eyeVec );
-   eyeVec = mul( IN_tangentMat, eyeVec );
+   eyeVec = tMul( mat3(modelMat), eyeVec );
+   eyeVec = tMul( IN_tangentMat, eyeVec );
    vec3 reflectionVec = reflect( eyeVec, bumpNorm );   
    
    // Use fakeColor for ripple-normals that are angled towards the camera   
@@ -253,8 +252,8 @@ void main()
    IN_foamTexCoords.xy += foamRippleOffset; 
    IN_foamTexCoords.zw += foamRippleOffset;
    
-   vec4 foamColor = texture2D( foamMap, IN_foamTexCoords.xy );   
-   foamColor += texture2D( foamMap, IN_foamTexCoords.zw ); 
+   vec4 foamColor = texture( foamMap, IN_foamTexCoords.xy );   
+   foamColor += texture( foamMap, IN_foamTexCoords.zw ); 
    foamColor = saturate( foamColor );
    
    // Modulate foam color by ambient color
@@ -275,18 +274,18 @@ void main()
    foamColor.rgb *= FOAM_OPACITY * foamAmt * foamColor.a;
    
    // Get reflection map color.
-   vec4 refMapColor = hdrDecode( texture2D( reflectMap, reflectCoord ) );  
+   vec4 refMapColor = hdrDecode( texture( reflectMap, reflectCoord ) );  
    
    // If we do not have a reflection texture then we use the cubemap.
-   refMapColor = mix( refMapColor, textureCube( skyMap, reflectionVec ), NO_REFLECT );
+   refMapColor = mix( refMapColor, texture( skyMap, reflectionVec ), NO_REFLECT );
    
-   fakeColor = ( textureCube( skyMap, reflectionVec ) );
+   fakeColor = ( texture( skyMap, reflectionVec ) );
    fakeColor.a = 1;
    // Combine reflection color and fakeColor.
    vec4 reflectColor = mix( refMapColor, fakeColor, fakeColorAmt );
    
    // Get refract color
-   vec4 refractColor = hdrDecode( texture2D( refractBuff, refractCoord ) );    
+   vec4 refractColor = hdrDecode( texture( refractBuff, refractCoord ) );    
    
    // We darken the refraction color a bit to make underwater 
    // elements look wet.  We fade out this darkening near the
@@ -303,8 +302,7 @@ void main()
    float fogAmt = 1.0 - saturate( exp( -FOG_DENSITY * fogDelta )  );
    
    // Calculate the water "base" color based on depth.
-   //vec4 waterBaseColor = baseColor * texture1D( depthGradMap, saturate( delta / depthGradMax ) );
-   vec4 waterBaseColor = baseColor * texture2D( depthGradMap, vec2(saturate( delta / depthGradMax ), 1.0) );
+   vec4 waterBaseColor = baseColor * texture( depthGradMap, saturate( delta / depthGradMax ) );
       
    // Modulate baseColor by the ambientColor.
    waterBaseColor *= vec4( ambientColor.rgb, 1 );     
@@ -347,7 +345,7 @@ void main()
    
 #else
 
-   vec4 refractColor = hdrDecode( texture2D( refractBuff, refractCoord ) );   
+   vec4 refractColor = hdrDecode( texture( refractBuff, refractCoord ) );   
    vec4 OUT = refractColor;  
    
 #endif
@@ -373,5 +371,5 @@ void main()
 
    //return OUT;
    
-   gl_FragColor = hdrEncode( OUT );
+   OUT_FragColor0 = hdrEncode( OUT );
 }

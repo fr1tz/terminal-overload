@@ -43,12 +43,12 @@ void main()
     // and perform the exposure calculation on the result.
     if ( depth >= 0.999 )
     {
-        col = texture2D( backBuffer, IN_uv0 );
+        col = texture( backBuffer, IN_uv0 );
 
         //col = 1 - exp(-120000 * col);
         col += dot( vec3(col), LUMINANCE_VECTOR ) + 0.0001f;
         col *= brightScalar;
     }
     
-    gl_FragColor = col;
+    OUT_FragColor0 = col;
 }

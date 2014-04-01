@@ -222,7 +222,7 @@ bool ProcessedCustomMaterial::init( const FeatureSet &features,
    mDefaultParameters = allocMaterialParameters();
    setMaterialParameters( mDefaultParameters, 0 );
    mStateHint.init( this );
-
+   
    for(int i = 0; i < mMaxTex; i++)
    {
       ShaderConstHandles *handles = _getShaderConstHandles( mPasses.size()-1 );
@@ -278,7 +278,7 @@ bool ProcessedCustomMaterial::setupPass( SceneRenderState *state, const SceneDat
    if ( rpd->shader )
       GFX->setShader( rpd->shader );
    else
-      GFX->disableShaders();
+      GFX->setupGenericShaders();
 
    // Set our textures   
    setTextureStages( state, sgData, pass );   
@@ -396,7 +396,7 @@ void ProcessedCustomMaterial::setTextureStages( SceneRenderState *state, const S
                   Point4F rtParams;
 
                   ScreenSpace::RenderTargetParameters(targetSz, targetVp, rtParams);
-                  shaderConsts->set(handles->mRTParamsSC[i], rtParams);               
+                  shaderConsts->set(handles->mRTParamsSC[i], rtParams);
                }
               
                GFX->setTexture( samplerRegister, texObject );

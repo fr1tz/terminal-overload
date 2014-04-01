@@ -20,9 +20,11 @@
 // IN THE SOFTWARE.
 //-----------------------------------------------------------------------------
 
-varying vec4 color;
+in vec4 color;
+
+out vec4 OUT_FragColor0;
 
 void main()
 {
-   gl_FragColor = color;
+   OUT_FragColor0 = color;
 }

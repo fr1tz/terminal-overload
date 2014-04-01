@@ -28,7 +28,7 @@
 
 #include "../../../gl/hlslCompat.glsl"
 
-varying vec2 texcoord;
+in vec2 texcoord;
 
 uniform sampler2D edgesMap;
 uniform sampler2D edgesMapL;
@@ -41,7 +41,7 @@ void main()
 {
    vec4 areas = vec4(0.0);
 
-   vec2 e = texture2D(edgesMap, texcoord).rg;	
+   vec2 e = texture(edgesMap, texcoord).rg;	
 
    //[branch]
    if (bool(e.g)) // Edge at north
@@ -77,5 +77,5 @@ void main()
       areas.ba = Area(abs(d), e1, e2);
    }
 
-   gl_FragColor = areas;
+   OUT_FragColor0 = areas;
 }

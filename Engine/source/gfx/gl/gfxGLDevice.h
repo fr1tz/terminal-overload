@@ -20,6 +20,8 @@ class GFXGLVertexBuffer;
 class GFXGLPrimitiveBuffer;
 class GFXGLTextureTarget;
 class GFXGLCubemap;
+class GFXGLStateCache;
+class GFXGLVertexDecl;
 
 class GFXGLDevice : public GFXDevice
 {
@@ -69,7 +71,6 @@ public:
    virtual void  setPixelShaderVersion( F32 version ) { mPixelShaderVersion = version; }
    
    virtual void setShader(GFXShader* shd);
-   virtual void disableShaders(); ///< Equivalent to setShader(NULL)
    
    /// @attention GL cannot check if the given format supports blending or filtering!
    virtual GFXFormat selectSupportedFormat(GFXTextureProfile *profile,
@@ -114,7 +115,11 @@ public:
    
    ///
    bool supportsAnisotropic() const { return mSupportsAnisotropic; }
-   
+
+   GFXGLStateCache* getOpenglCache() { return mOpenglStateCache; }
+
+   GFXTextureObject* getDefaultDepthTex() const;
+      
 protected:   
    /// Called by GFXDevice to create a device specific stateblock
    virtual GFXStateBlockRef createStateBlockInternal(const GFXStateBlockDesc& desc);
@@ -149,13 +154,9 @@ protected:
    // NOTE: The GL device doesn't need a vertex declaration at
    // this time, but we need to return something to keep the system
    // from retrying to allocate one on every call.
-   virtual GFXVertexDecl* allocVertexDecl( const GFXVertexFormat *vertexFormat ) 
-   {
-      static GFXVertexDecl decl;
-      return &decl; 
-   }
+   virtual GFXVertexDecl* allocVertexDecl( const GFXVertexFormat *vertexFormat );
 
-   virtual void setVertexDecl( const GFXVertexDecl *decl ) { }
+   virtual void setVertexDecl( const GFXVertexDecl *decl );
 
    virtual void setVertexStream( U32 stream, GFXVertexBuffer *buffer );
    virtual void setVertexStreamFrequency( U32 stream, U32 frequency );
@@ -173,8 +174,11 @@ private:
 
    U32 mAdapterIndex;
    
-   StrongRefPtr<GFXGLVertexBuffer> mCurrentVB;
+   StrongRefPtr<GFXGLVertexBuffer> mCurrentVB[MAX_VERTEX_STREAM_COUNT];
+   U32 mCurrentVB_Divisor[MAX_VERTEX_STREAM_COUNT];
+   bool mNeedUpdateVertexAttrib;
    StrongRefPtr<GFXGLPrimitiveBuffer> mCurrentPB;
+   U32 mDrawInstancesCount;
    
    GFXShader* mCurrentShader;
    GFXShaderRef mGenericShader[GS_COUNT];
@@ -194,6 +198,8 @@ private:
    
    U32 mMaxShaderTextures;
    U32 mMaxFFTextures;
+
+   U32 mMaxTRColors;
 
    RectI mClip;
    
@@ -216,6 +222,11 @@ private:
    GFXFence* _createPlatformSpecificFence(); ///< If our platform (e.g. OS X) supports a fence extenstion (e.g. GL_APPLE_fence) this will create one, otherwise returns NULL
    
    void setPB(GFXGLPrimitiveBuffer* pb); ///< Sets mCurrentPB
+
+   GFXGLStateCache *mOpenglStateCache;
+
+   GFXWindowTargetRef *mWindowRT;
 };
 
+#define GFXGL static_cast<GFXGLDevice*>(GFXDevice::get())
 #endif

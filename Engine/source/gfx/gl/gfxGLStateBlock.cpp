@@ -6,12 +6,47 @@
 #include "gfx/gl/gfxGLEnumTranslate.h"
 #include "gfx/gl/gfxGLUtils.h"
 #include "gfx/gl/gfxGLTextureObject.h"
+#include "core/crc.h"
 
+namespace DictHash
+{
+   inline U32 hash(const GFXSamplerStateDesc &data)
+   {
+      return CRC::calculateCRC(&data, sizeof(GFXSamplerStateDesc));;
+   }
+}
 
 GFXGLStateBlock::GFXGLStateBlock(const GFXStateBlockDesc& desc) :
    mDesc(desc),
    mCachedHashValue(desc.getHashValue())
 {
+    if( !gglHasExtension(ARB_sampler_objects) )
+	   return;
+
+   static Map<GFXSamplerStateDesc, U32> mSamplersMap;
+
+	for(int i = 0; i < TEXTURE_STAGE_COUNT; ++i)
+	{
+		GLuint &id = mSamplerObjects[i];
+		GFXSamplerStateDesc &ssd = mDesc.samplers[i];
+      Map<GFXSamplerStateDesc, U32>::Iterator itr =  mSamplersMap.find(ssd);
+      if(itr == mSamplersMap.end())
+      {
+		   glGenSamplers(1, &id);
+
+		   glSamplerParameteri(id, GL_TEXTURE_MIN_FILTER, minificationFilter(ssd.minFilter, ssd.mipFilter, 1) );
+		   glSamplerParameteri(id, GL_TEXTURE_MAG_FILTER, GFXGLTextureFilter[ssd.magFilter]);
+		   glSamplerParameteri(id, GL_TEXTURE_WRAP_S, GFXGLTextureAddress[ssd.addressModeU]);
+		   glSamplerParameteri(id, GL_TEXTURE_WRAP_T, GFXGLTextureAddress[ssd.addressModeV]);
+		   glSamplerParameteri(id, GL_TEXTURE_WRAP_R, GFXGLTextureAddress[ssd.addressModeW]);
+		   if(static_cast< GFXGLDevice* >( GFX )->supportsAnisotropic() )
+			   glSamplerParameterf(id, GL_TEXTURE_MAX_ANISOTROPY_EXT, ssd.maxAnisotropy);
+
+         mSamplersMap[ssd] = id;
+      }
+      else
+         id = itr->value;
+	}
 }
 
 GFXGLStateBlock::~GFXGLStateBlock()
@@ -93,11 +128,7 @@ void GFXGLStateBlock::activate(const GFXGLStateBlock* oldState)
       glStencilOp(GFXGLStencilOp[mDesc.stencilFailOp], GFXGLStencilOp[mDesc.stencilZFailOp], GFXGLStencilOp[mDesc.stencilPassOp]);
    if(STATE_CHANGE(stencilWriteMask))
       glStencilMask(mDesc.stencilWriteMask);
-
-   // "Misc"
-   CHECK_TOGGLE_STATE(ffLighting, GL_LIGHTING);
-
-   CHECK_TOGGLE_STATE(vertexColorEnable, GL_COLOR_MATERIAL);
+   
 
    if(STATE_CHANGE(fillMode))
       glPolygonMode(GL_FRONT_AND_BACK, GFXGLFillMode[mDesc.fillMode]);
@@ -105,6 +136,16 @@ void GFXGLStateBlock::activate(const GFXGLStateBlock* oldState)
 #undef CHECK_STATE
 #undef TOGGLE_STATE
 #undef CHECK_TOGGLE_STATE
+
+   //sampler objects
+   if( gglHasExtension(ARB_sampler_objects) )
+   {
+      for (U32 i = 0; i < getMin(getOwningDevice()->getNumSamplers(), (U32) TEXTURE_STAGE_COUNT); i++)
+      {
+         if(!oldState || oldState->mSamplerObjects[i] != mSamplerObjects[i])
+		      glBindSampler(i, mSamplerObjects[i] );
+      }
+   }	  
 
    // TODO: states added for detail blend   
 }

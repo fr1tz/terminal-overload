@@ -534,14 +534,6 @@ void Frustum::getProjectionMatrix( MatrixF *proj, bool gfxRotate ) const
    }
 }
 
-void Frustum::getProjectionMatrixInvertedTopBottom( MatrixF *proj, bool gfxRotate ) const
-{
-   if (mIsOrtho)
-      MathUtils::makeOrthoProjection(proj, mNearLeft, mNearRight, mNearBottom, mNearTop, mNearDist, mFarDist, gfxRotate);
-   else
-      MathUtils::makeProjection(proj, mNearLeft, mNearRight, mNearBottom, mNearTop, mNearDist, mFarDist, gfxRotate);
-}
-
 //-----------------------------------------------------------------------------
 
 void Frustum::tileFrustum(U32 numTiles, const Point2I& curTile, Point2F overlap)

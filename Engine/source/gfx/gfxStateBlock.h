@@ -70,6 +70,11 @@ struct GFXSamplerStateDesc
 
    /// Returns an modulate, clamp, and point sampled state.
    static GFXSamplerStateDesc getClampPoint();
+
+   bool operator==(const GFXSamplerStateDesc &b) const
+   {
+      return !dMemcmp(this, &b, sizeof(GFXSamplerStateDesc));
+   }
 };
 
 /// GFXStateBlockDesc defines a render state, which is then used to create a GFXStateBlock instance.  
@@ -137,7 +142,6 @@ struct GFXStateBlockDesc
    // Sampler states
    bool samplersDefined;
    GFXSamplerStateDesc samplers[TEXTURE_STAGE_COUNT];
-   StringTableEntry _samplerNames[TEXTURE_STAGE_COUNT];
    ColorI textureFactor;
 
    GFXStateBlockDesc();

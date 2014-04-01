@@ -37,8 +37,8 @@ void main()
    half4 blurred;  
    half4 shrunk;  
    
-   shrunk = texture2D( shrunkSampler, IN_uv0 );  
-   blurred = texture2D( blurredSampler, IN_uv1 );  
+   shrunk = texture( shrunkSampler, IN_uv0 );  
+   blurred = texture( blurredSampler, IN_uv1 );  
    color = shrunk.rgb;  
    //coc = shrunk.a;
    //coc = blurred.a;
@@ -46,8 +46,8 @@ void main()
    coc = 2 * max( blurred.a, shrunk.a ) - shrunk.a;  
    
    
-   //gl_FragColor = vec4( coc.rrr, 1.0 );
-   //gl_FragColor = vec4( color, 1.0 );
-   gl_FragColor = vec4( color, coc );  
-   //gl_FragColor = vec4( 1.0, 0.0, 1.0, 1.0 );
+   //OUT_FragColor0 = vec4( coc.rrr, 1.0 );
+   //OUT_FragColor0 = vec4( color, 1.0 );
+   OUT_FragColor0 = vec4( color, coc );  
+   //OUT_FragColor0 = vec4( 1.0, 0.0, 1.0, 1.0 );
 }

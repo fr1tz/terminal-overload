@@ -98,7 +98,7 @@ bool CustomMaterial::onAdd()
    {
       logError("Failed to find ShaderData %s", mShaderDataName.c_str());
       return false;
-   }   
+   }
    
    const char* samplerDecl = "sampler";
    S32 i = 0;
@@ -118,8 +118,9 @@ bool CustomMaterial::onAdd()
          	logError("sampler declarations must have a sampler name, e.g. sampler[\"diffuseMap\"]");
             return false;
          }
-
-         int pos;
+         
+         // Assert sampler names are defined on ShaderData
+         S32 pos = -1;
          String samplerName = entry->slotName + dStrlen(samplerDecl);
          samplerName.insert(0, '$');
          mShaderData->hasSamplerDef(samplerName, pos);

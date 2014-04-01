@@ -54,7 +54,7 @@ vec4 main( PFXVertToPix IN ) : COLOR0
    texCoord.x *= 0.5;
    texCoord.x += 0.25;
    
-   vec4 color = texture2D(backBuffer, texCoord);
+   vec4 color = texture(backBuffer, texCoord);
 
    return color;    
 }

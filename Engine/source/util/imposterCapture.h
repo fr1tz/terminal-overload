@@ -51,6 +51,7 @@ protected:
    GFXTexHandle mBlackTex;
    GFXTexHandle mWhiteTex;
    GFXTexHandle mNormalTex;
+   GFXTexHandle mDepthBuffer;
 
    SceneRenderState *mState;
    TSShapeInstance *mShapeInstance;

@@ -219,6 +219,9 @@ protected:
    Vector<GFXShaderMacro> mMacros;
 
    /// Ordered SamplerNames
+   /// We need to store a list of sampler for allow OpenGL to
+   /// assign correct location for each sampler.
+   /// GLSL 150 not allow explicit uniform location.   
    Vector<String> mSamplerNamesOrdered;
 
    /// The pixel version this is compiled for.

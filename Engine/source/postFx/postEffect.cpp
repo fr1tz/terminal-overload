@@ -476,22 +476,22 @@ void PostEffect::_updateScreenGeometry(   const Frustum &frustum,
    PFXVertex *vert = outVB->lock();
 
    vert->point.set( -1.0, -1.0, 0.0 );
-      vert->texCoord.set( 0.0f, 1.0f );
+   vert->texCoord.set( 0.0f, 1.0f );
    vert->wsEyeRay = frustumPoints[Frustum::FarBottomLeft] - cameraOffsetPos;
    vert++;
 
    vert->point.set( -1.0, 1.0, 0.0 );
-      vert->texCoord.set( 0.0f, 0.0f );
+   vert->texCoord.set( 0.0f, 0.0f );
    vert->wsEyeRay = frustumPoints[Frustum::FarTopLeft] - cameraOffsetPos;
    vert++;
 
    vert->point.set( 1.0, 1.0, 0.0 );
-      vert->texCoord.set( 1.0f, 0.0f );
+   vert->texCoord.set( 1.0f, 0.0f );
    vert->wsEyeRay = frustumPoints[Frustum::FarTopRight] - cameraOffsetPos;
    vert++;
 
-    vert->point.set( 1.0, -1.0, 0.0 );
-      vert->texCoord.set( 1.0f, 1.0f );
+   vert->point.set( 1.0, -1.0, 0.0 );
+   vert->texCoord.set( 1.0f, 1.0f );
    vert->wsEyeRay = frustumPoints[Frustum::FarBottomRight] - cameraOffsetPos;
    vert++;
 
@@ -506,12 +506,9 @@ void PostEffect::_setupStateBlock( const SceneRenderState *state )
       if ( mStateBlockData )
          desc = mStateBlockData->getState();
 
-      if(!GFX->isTextureCoordStartTop())
-         desc.setCullMode(GFXCullNone); // TODO OPENGL
-
       mStateBlock = GFX->createStateBlock( desc );
    }
-   
+
    GFX->setStateBlock( mStateBlock );
 }
 
@@ -859,7 +856,7 @@ void PostEffect::_setupConstants( const SceneRenderState *state )
       if ( state )
       {
          Con::setFloatVariable( "$Param::NearDist", state->getNearPlane() );
-         Con::setFloatVariable( "$Param::FarDist", state->getFarPlane() );
+         Con::setFloatVariable( "$Param::FarDist", state->getFarPlane() );   
       }
 
       setShaderConsts_callback();
@@ -872,7 +869,7 @@ void PostEffect::_setupConstants( const SceneRenderState *state )
 
 void PostEffect::_setupTexture( U32 stage, GFXTexHandle &inputTex, const RectI *inTexViewport )
 {
-   const String &texFilename = mTexFilename[ stage ];      
+   const String &texFilename = mTexFilename[ stage ];
 
    GFXTexHandle theTex;
    NamedTexTarget *namedTarget = NULL;
@@ -1220,7 +1217,7 @@ void PostEffect::process(  const SceneRenderState *state,
       GFX->setShaderConstBuffer( mShaderConsts );
    }
    else
-      GFX->disableShaders();
+      GFX->setupGenericShaders();
 
    Frustum frustum;
    if ( state )

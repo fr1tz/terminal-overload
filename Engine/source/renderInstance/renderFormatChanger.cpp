@@ -199,6 +199,7 @@ void RenderFormatToken::_updateTargets()
       // Update color target
       if(mColorFormat != GFXFormat_COUNT)
       {
+         // try reuse of old color texture
          if( !mTargetColorTexture[i] || mTargetColorTexture[i].getFormat() != mColorFormat 
             || mTargetColorTexture[i].getWidthHeight() != rtSize)
          {
@@ -215,6 +216,7 @@ void RenderFormatToken::_updateTargets()
       // Update depth target
       if(mDepthFormat != GFXFormat_COUNT)
       {
+         // try reuse of old depth texture
          if( !mTargetDepthStencilTexture[i] || mTargetDepthStencilTexture[i].getFormat() != mColorFormat 
             || mTargetDepthStencilTexture[i].getWidthHeight() != rtSize)
          {

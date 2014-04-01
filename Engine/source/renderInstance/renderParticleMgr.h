@@ -101,7 +101,7 @@ protected:
    {
       GFXShaderConstBufferRef mShaderConsts;
       GFXShaderConstHandle *mSystemDepth;
-      GFXShaderConstHandle *mScreenRect;      
+      GFXShaderConstHandle *mScreenRect;
       GFXShaderConstHandle *mSamplerColorSource;
       GFXShaderConstHandle *mSamplerEdgeSource;
       GFXShaderConstHandle *mEdgeTargetParamsSC;

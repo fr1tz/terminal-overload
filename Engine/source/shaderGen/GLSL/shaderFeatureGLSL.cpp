@@ -242,7 +242,7 @@ Var* ShaderFeatureGLSL::getOutWorldToTangent(   Vector<ShaderComponent*> &compon
          }
 			
          // assign world->tangent transform
-         meta->addStatement( new GenOp( "   @ = mul( @, float3x3(@) );\r\n", worldToTangentDecl, texSpaceMat, worldToObj ) );
+         meta->addStatement( new GenOp( "   @ = tMul( @, float3x3(@) );\r\n", worldToTangentDecl, texSpaceMat, worldToObj ) );
       }
       else
       {
@@ -289,7 +289,7 @@ Var* ShaderFeatureGLSL::getOutViewToTangent( Vector<ShaderComponent*> &component
 			Var *viewToObj = getInvWorldView( componentList, fd.features[MFT_UseInstancing], meta );
 			
 			// assign world->tangent transform
-         meta->addStatement( new GenOp( "   @ = mul( (@), float3x3(@) );\r\n", viewToTangentDecl, texSpaceMat, viewToObj ) );
+         meta->addStatement( new GenOp( "   @ = tMul( (@), float3x3(@) );\r\n", viewToTangentDecl, texSpaceMat, viewToObj ) );
 		}
 		else
 		{
@@ -345,7 +345,7 @@ Var* ShaderFeatureGLSL::getOutTexCoord(   const char *name,
          
 			// Statement allows for casting of different types which
 		   // eliminates vector truncation problems.
-         String statement = String::ToString( "   @ = %s(mul(@, @));\r\n", type );
+         String statement = String::ToString( "   @ = %s(tMul(@, @));\r\n", type );
 			meta->addStatement( new GenOp( statement , texCoord, texMat, inTex ) );      
       }
       else
@@ -533,13 +533,13 @@ Var* ShaderFeatureGLSL::getObjTrans(   Vector<ShaderComponent*> &componentList,
       mInstancingFormat->addElement( "objTrans", GFXDeclType_Float4, instObjTrans->constNum+3 );
 
       objTrans = new Var;
-      objTrans->setType( "float4x4" );
+      objTrans->setType( "mat4x4" );
       objTrans->setName( "objTrans" );
-      meta->addStatement( new GenOp( "   @ = { // Instancing!\r\n", new DecOp( objTrans ), instObjTrans ) );
-      meta->addStatement( new GenOp( "      tGetMatrix4Row(@, 0),\r\n", instObjTrans ) );
-      meta->addStatement( new GenOp( "      tGetMatrix4Row(@, 1),\r\n", instObjTrans ) );
-      meta->addStatement( new GenOp( "      tGetMatrix4Row(@, 2),\r\n",instObjTrans ) );
-      meta->addStatement( new GenOp( "      tGetMatrix4Row(@, 3) };\r\n", instObjTrans ) );
+      meta->addStatement( new GenOp( "   @ = mat4x4( // Instancing!\r\n", new DecOp( objTrans ), instObjTrans ) );
+      meta->addStatement( new GenOp( "      @[0],\r\n", instObjTrans ) );
+      meta->addStatement( new GenOp( "      @[1],\r\n", instObjTrans ) );
+      meta->addStatement( new GenOp( "      @[2],\r\n",instObjTrans ) );
+      meta->addStatement( new GenOp( "      @[3] );\r\n", instObjTrans ) );
    }
    else
    {
@@ -578,7 +578,7 @@ Var* ShaderFeatureGLSL::getModelView(  Vector<ShaderComponent*> &componentList,
 	modelview = new Var;
       modelview->setType( "float4x4" );
       modelview->setName( "modelview" );
-      meta->addStatement( new GenOp( "   @ = mul( @, @ ); // Instancing!\r\n", new DecOp( modelview ), viewProj, objTrans ) );
+      meta->addStatement( new GenOp( "   @ = tMul( @, @ ); // Instancing!\r\n", new DecOp( modelview ), viewProj, objTrans ) );
    }
    else
    {
@@ -618,7 +618,7 @@ Var* ShaderFeatureGLSL::getWorldView(  Vector<ShaderComponent*> &componentList,
       worldView->setType( "float4x4" );
       worldView->setName( "worldViewOnly" );
 
-      meta->addStatement( new GenOp( "   @ = mul( @, @ ); // Instancing!\r\n", new DecOp( worldView ), worldToCamera, objTrans ) );
+      meta->addStatement( new GenOp( "   @ = tMul( @, @ ); // Instancing!\r\n", new DecOp( worldView ), worldToCamera, objTrans ) );
    }
    else
    {
@@ -688,7 +688,7 @@ void ShaderFeatureGLSL::getWsPosition( Vector<ShaderComponent*> &componentList,
 	
    Var *objTrans = getObjTrans( componentList, useInstancing, meta );
 	
-   meta->addStatement( new GenOp( "   @ = mul( @, float4( @.xyz, 1 ) ).xyz;\r\n", 
+   meta->addStatement( new GenOp( "   @ = tMul( @, float4( @.xyz, 1 ) ).xyz;\r\n", 
 											wsPosition, objTrans, inPosition ) );
 }
 
@@ -793,7 +793,7 @@ Var* ShaderFeatureGLSL::addOutDetailTexCoord(   Vector<ShaderComponent*> &compon
 			texMat->constSortPos = cspPass;   
 		}
 		
-      meta->addStatement( new GenOp( "   @ = mul(@, @) * @;\r\n", outTex, texMat, inTex, detScale ) );
+      meta->addStatement( new GenOp( "   @ = tMul(@, @) * @;\r\n", outTex, texMat, inTex, detScale ) );
 	}
 	else
 	{
@@ -1007,7 +1007,7 @@ void OverlayTexFeatGLSL::processVert(  Vector<ShaderComponent*> &componentList,
          texMat->constSortPos = cspPass;   
       }
      
-      output = new GenOp( "   @ = mul(@, @);\r\n", outTex, texMat, inTex );
+      output = new GenOp( "   @ = tMul(@, @);\r\n", outTex, texMat, inTex );
       return;
    }
    
@@ -1603,7 +1603,7 @@ void VertPositionGLSL::processVert( Vector<ShaderComponent*> &componentList,
 	
 	Var *modelview = getModelView( componentList, fd.features[MFT_UseInstancing], meta );
    
-   meta->addStatement( new GenOp( "   @ = mul(@, float4(@.xyz,1));\r\n", 
+   meta->addStatement( new GenOp( "   @ = tMul(@, float4(@.xyz,1));\r\n", 
        outPosition, modelview, inPosition ) );   
    
 	output = meta;
@@ -1659,7 +1659,7 @@ void ReflectCubeFeatGLSL::processVert( Vector<ShaderComponent*> &componentList,
     cubeVertPos->setType( "vec3" );
    LangElement *cubeVertPosDecl = new DecOp( cubeVertPos );
 
-    meta->addStatement( new GenOp( "   @ = mul(mat3(@), @).xyz;\r\n", 
+    meta->addStatement( new GenOp( "   @ = tMul(mat3( @ ), @).xyz;\r\n",
                        cubeVertPosDecl, cubeTrans, LangElement::find( "position" ) ) );
 
    // cube normal
@@ -1668,7 +1668,7 @@ void ReflectCubeFeatGLSL::processVert( Vector<ShaderComponent*> &componentList,
     cubeNormal->setType( "vec3" );
    LangElement *cubeNormDecl = new DecOp( cubeNormal );
 
-    meta->addStatement( new GenOp( "   @ = normalize( mul(mat3(@), normalize(@)).xyz );\r\n", 
+    meta->addStatement( new GenOp( "   @ = ( tMul( (@),  vec4(@, 0) ) ).xyz;\r\n",
                        cubeNormDecl, cubeTrans, inNormal ) );
 
     // grab the eye position
@@ -1686,7 +1686,7 @@ void ReflectCubeFeatGLSL::processVert( Vector<ShaderComponent*> &componentList,
     cubePos->setType( "vec3" );
     LangElement *cubePosDecl = new DecOp( cubePos );
 
-    meta->addStatement( new GenOp( "   @ = float3( @[3][0], @[3][1], @[3][2] );\r\n", 
+    meta->addStatement( new GenOp( "   @ = vec3( @[3][0], @[3][1], @[3][2] );\r\n",
                         cubePosDecl, cubeTrans, cubeTrans, cubeTrans ) );
 
    // eye to vert
@@ -1946,7 +1946,7 @@ void RTLightingFeatGLSL::processVert(  Vector<ShaderComponent*> &componentList,
       Var *objTrans = getObjTrans( componentList, fd.features[MFT_UseInstancing], meta );
    
       // Transform the normal to world space.
-      meta->addStatement( new GenOp( "   @ = mul( @, float4( normalize( @ ), 0.0 ) ).xyz;\r\n", outNormal, objTrans, inNormal ) );
+      meta->addStatement( new GenOp( "   @ = tMul( @, float4( normalize( @ ), 0.0 ) ).xyz;\r\n", outNormal, objTrans, inNormal ) );
    }
 
 	addOutWsPosition( componentList, fd.features[MFT_UseInstancing], meta );

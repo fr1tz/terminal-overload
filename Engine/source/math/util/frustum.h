@@ -415,8 +415,6 @@ class Frustum : public PolyhedronImpl< FrustumData >
       /// Generates a projection matrix from the frustum.
       void getProjectionMatrix( MatrixF *proj, bool gfxRotate=true ) const;
 
-      void getProjectionMatrixInvertedTopBottom( MatrixF *proj, bool gfxRotate=true ) const;
-
       /// Will update the frustum if it is dirty
       void update() { _update(); }
       /// @}

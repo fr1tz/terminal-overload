@@ -43,9 +43,9 @@ void main()
 
    for ( int i = 0; i < 16; i++ )
    {
-      float lum = texture2D( inputTex, IN_uv0 + ( gTapOffsets[i] * pixelSize ) ).r;
+      float lum = texture( inputTex, IN_uv0 + ( gTapOffsets[i] * pixelSize ) ).r;
       average += lum;
    }
 
-   gl_FragColor = vec4( average / 16.0, 0.0, 0.0, 1.0 );
+   OUT_FragColor0 = vec4( average / 16.0, 0.0, 0.0, 1.0 );
 }

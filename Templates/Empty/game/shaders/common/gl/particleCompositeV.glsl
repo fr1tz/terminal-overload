@@ -3,11 +3,11 @@
 
 #include "hlslCompat.glsl"
 
-attribute vec2  vTexCoord0;
+in vec2  vTexCoord0;
 #define uvCoord vTexCoord0
 
-varying vec4 offscreenPos;
-varying vec4 backbufferPos;
+out vec4 offscreenPos;
+out vec4 backbufferPos;
 
 #define OUT_hpos gl_Position
 #define OUT_offscreenPos offscreenPos

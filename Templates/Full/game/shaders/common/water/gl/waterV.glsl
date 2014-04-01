@@ -19,10 +19,10 @@ struct VertData
 // Defines                                                                  
 //-----------------------------------------------------------------------------
 //VertData IN
-attribute vec4 vPosition;
-attribute vec3 vNormal;
-attribute vec2 vTexCoord0;
-attribute vec4 vTexCoord1;
+in vec4 vPosition;
+in vec3 vNormal;
+in vec2 vTexCoord0;
+in vec4 vTexCoord1;
 
 #define IN_position_       vPosition
 #define IN_normal          vNormal
@@ -31,29 +31,29 @@ attribute vec4 vTexCoord1;
 
 //ConnectData OUT
 //
-   varying vec4   hpos             ;
+   out vec4   hpos             ;
 
 // TexCoord 0 and 1 (xy,zw) for ripple texture lookup
-varying vec4 rippleTexCoord01;
+out vec4 rippleTexCoord01;
 
    // xy is TexCoord 2 for ripple texture lookup 
    // z is the Worldspace unit distance/depth of this vertex/pixel
    // w is amount of the crestFoam ( more at crest of waves ).
-   varying vec4   rippleTexCoord2  ;
+   out vec4   rippleTexCoord2  ;
 
 // Screenspace vert position BEFORE wave transformation
-varying vec4 posPreWave;
+out vec4 posPreWave;
 
 // Screenspace vert position AFTER wave transformation
-varying vec4 posPostWave;
+out vec4 posPostWave;
 
    // Objectspace vert position BEFORE wave transformation	
    // w coord is world space z position.
-   varying vec4   objPos           ;  
+   out vec4   objPos           ;  
 
-   varying vec4   foamTexCoords    ;
+   out vec4   foamTexCoords    ;
 
-   varying mat3   tangentMat     ;
+   out mat3   tangentMat     ;
 //
 
 #define OUT_hpos hpos
@@ -101,14 +101,14 @@ void main()
    IN_position.z = mix( IN_position.z, eyePos.z, IN_horizonFactor.x );
       
    OUT_objPos = IN_position;
-   OUT_objPos.w = mul( modelMat, IN_position ).z;
+   OUT_objPos.w = tMul( modelMat, IN_position ).z;
    
    // Send pre-undulation screenspace position
-   OUT_posPreWave = mul( modelview, IN_position );
-   OUT_posPreWave = mul( texGen, OUT_posPreWave );
+   OUT_posPreWave = tMul( modelview, IN_position );
+   OUT_posPreWave = tMul( texGen, OUT_posPreWave );
       
    // Calculate the undulation amount for this vertex.   
-   vec2   undulatePos = mul( modelMat, vec4  ( IN_undulateData.xy, 0, 1 ) ).xy;
+   vec2   undulatePos = tMul( modelMat, vec4  ( IN_undulateData.xy, 0, 1 ) ).xy;
    float undulateAmt = 0.0;
    
    undulateAmt += waveData[0].y * sin( elapsedTime * waveData[0].x + 
@@ -141,7 +141,7 @@ void main()
    OUT_posPostWave.xyz += IN_normal.xyz * undulateAmt;         
    
    // Convert to screen 
-   OUT_posPostWave = mul( modelview, OUT_posPostWave );
+   OUT_posPostWave = tMul( modelview, OUT_posPostWave );
    
    // Setup the OUT position symantic variable
    OUT_hpos = OUT_posPostWave; 
@@ -157,7 +157,7 @@ void main()
    OUT_rippleTexCoord2.z = OUT_hpos.z;              
 
    // Convert to reflection texture space   
-   OUT_posPostWave = mul( texGen, OUT_posPostWave );
+   OUT_posPostWave = tMul( texGen, OUT_posPostWave );
               
    vec2   txPos = undulatePos;
    if ( bool(IN_horizonFactor.x) )
@@ -172,7 +172,7 @@ void main()
    texMat[1][0] = rippleMat[0].y;
    texMat[0][1] = rippleMat[0].z;
    texMat[1][1] = rippleMat[0].w;
-   OUT_rippleTexCoord01.xy = mul( texMat, OUT_rippleTexCoord01.xy );      
+   OUT_rippleTexCoord01.xy = tMul( texMat, OUT_rippleTexCoord01.xy );      
 
    OUT_rippleTexCoord01.zw = txPos * rippleTexScale[1];
    OUT_rippleTexCoord01.zw += rippleDir[1] * elapsedTime * rippleSpeed.y;
@@ -181,7 +181,7 @@ void main()
    texMat[1][0] = rippleMat[1].y;
    texMat[0][1] = rippleMat[1].z;
    texMat[1][1] = rippleMat[1].w;
-   OUT_rippleTexCoord01.zw = mul( texMat, OUT_rippleTexCoord01.zw );         
+   OUT_rippleTexCoord01.zw = tMul( texMat, OUT_rippleTexCoord01.zw );         
 
    OUT_rippleTexCoord2.xy = txPos * rippleTexScale[2];
    OUT_rippleTexCoord2.xy += rippleDir[2] * elapsedTime * rippleSpeed.z; 
@@ -190,7 +190,7 @@ void main()
    texMat[1][0] = rippleMat[2].y;
    texMat[0][1] = rippleMat[2].z;
    texMat[1][1] = rippleMat[2].w;
-   OUT_rippleTexCoord2.xy = mul( texMat, OUT_rippleTexCoord2.xy );    
+   OUT_rippleTexCoord2.xy = tMul( texMat, OUT_rippleTexCoord2.xy );    
    
    OUT_foamTexCoords.xy = txPos * foamTexScale.xy + foamDir.xy * foamSpeed.x * elapsedTime;
    OUT_foamTexCoords.zw = txPos * foamTexScale.zw + foamDir.zw * foamSpeed.y * elapsedTime;

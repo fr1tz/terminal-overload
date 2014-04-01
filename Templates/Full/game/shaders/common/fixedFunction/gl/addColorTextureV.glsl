@@ -21,17 +21,17 @@
 //-----------------------------------------------------------------------------
 #include "../../gl/hlslCompat.glsl"
 
-attribute vec4 vPosition;
-attribute vec4 vColor;
-attribute vec2 vTexCoord0;
+in vec4 vPosition;
+in vec4 vColor;
+in vec2 vTexCoord0;
 
 uniform mat4 modelview;
-varying vec4 color;
-varying vec2 texCoord;
+out vec4 color;
+out vec2 texCoord;
 
 void main()
 {
-   gl_Position = mul(modelview, vPosition);
+   gl_Position = tMul(modelview, vPosition);
    correctSSP(gl_Position);
    color = vColor;
    texCoord = vTexCoord0.st;

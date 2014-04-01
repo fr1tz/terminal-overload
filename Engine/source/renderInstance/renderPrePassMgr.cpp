@@ -267,7 +267,7 @@ void RenderPrePassMgr::render( SceneRenderState *state )
    GFX->clear( GFXClearTarget | GFXClearZBuffer | GFXClearStencil, ColorI::WHITE, 1.0f, 0);
 
    // Restore transforms
-   MatrixSet &matrixSet = getRenderPass()->getMatrixSet();   
+   MatrixSet &matrixSet = getRenderPass()->getMatrixSet();
    matrixSet.restoreSceneViewProjection();
    const MatrixF worldViewXfm = GFX->getWorldMatrix();
 
@@ -304,7 +304,7 @@ void RenderPrePassMgr::render( SceneRenderState *state )
 
       mat->setTransformAndEye(   *ri->objectToWorldXfm,
                                  worldViewXfm,
-                                 GFX->getProjectionMatrix(), 
+                                 GFX->getProjectionMatrix(),
                                  state->getFarPlane() );
 
       while ( mat->setupPass( state, sgData ) )
@@ -816,12 +816,12 @@ Var* LinearEyeDepthConditioner::printMethodHeader( MethodType methodType, const 
       // possible so that the shader compiler can optimize.
       meta->addStatement( new GenOp( "   #if TORQUE_SM >= 30\r\n" ) );
       if (GFX->getAdapterType() == OpenGL)
-         meta->addStatement( new GenOp( "    @ = texture2DLod(@, @, 0); \r\n", bufferSampleDecl, prepassSampler, screenUV) );
+         meta->addStatement( new GenOp( "    @ = textureLod(@, @, 0); \r\n", bufferSampleDecl, prepassSampler, screenUV) );
       else
          meta->addStatement( new GenOp( "      @ = tex2Dlod(@, float4(@,0,0));\r\n", bufferSampleDecl, prepassSampler, screenUV ) );
       meta->addStatement( new GenOp( "   #else\r\n" ) );
       if (GFX->getAdapterType() == OpenGL)
-         meta->addStatement( new GenOp( "    @ = texture2D(@, @);\r\n", bufferSampleDecl, prepassSampler, screenUV) );
+         meta->addStatement( new GenOp( "    @ = texture(@, @);\r\n", bufferSampleDecl, prepassSampler, screenUV) );
       else
          meta->addStatement( new GenOp( "      @ = tex2D(@, @);\r\n", bufferSampleDecl, prepassSampler, screenUV ) );
       meta->addStatement( new GenOp( "   #endif\r\n\r\n" ) );

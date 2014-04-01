@@ -223,6 +223,8 @@ void GFXGLDevice::init( const GFXVideoMode &mode, PlatformWindow *window )
    AssertFatal(dynamic_cast<Win32Window*>(window), "Invalid window class type!");
    HWND hwnd = GETHWND(window);
 
+   mWindowRT = &static_cast<Win32Window*>(window)->mTarget;
+
    RECT rect;
    GetClientRect(hwnd, &rect);
 
@@ -241,6 +243,9 @@ void GFXGLDevice::init( const GFXVideoMode &mode, PlatformWindow *window )
    {
       AssertFatal( false, "GFXGLDevice::init - cannot get the one and only pixel format we check for." );
    }
+
+   int OGL_MAJOR = 3;
+   int OGL_MINOR = 2;
    
 #if TORQUE_DEBUG
    int debugFlag = WGL_CONTEXT_DEBUG_BIT_ARB;
@@ -251,10 +256,11 @@ void GFXGLDevice::init( const GFXVideoMode &mode, PlatformWindow *window )
    if( gglHasWExtension(ARB_create_context) )
    {
       int const create_attribs[] = {
-               WGL_CONTEXT_MAJOR_VERSION_ARB, 2,
-               WGL_CONTEXT_MINOR_VERSION_ARB, 1,
+               WGL_CONTEXT_MAJOR_VERSION_ARB, OGL_MAJOR,
+               WGL_CONTEXT_MINOR_VERSION_ARB, OGL_MINOR,
                WGL_CONTEXT_FLAGS_ARB, /*WGL_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB |*/ debugFlag,
                WGL_CONTEXT_PROFILE_MASK_ARB, WGL_CONTEXT_CORE_PROFILE_BIT_ARB,
+               //WGL_CONTEXT_PROFILE_MASK_ARB, WGL_CONTEXT_COMPATIBILITY_PROFILE_BIT_ARB,
                0
            };
 

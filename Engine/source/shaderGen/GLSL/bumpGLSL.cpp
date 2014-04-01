@@ -157,7 +157,7 @@ void BumpFeatGLSL::processPix(   Vector<ShaderComponent*> &componentList,
    // multiplication by the worldToTanget transform.
    Var *wsNormal = new Var( "wsNormal", "vec3" );
    Var *worldToTanget = getInWorldToTangent( componentList );
-   meta->addStatement( new GenOp( "   @ = normalize( mul( @.xyz, @ ) );\r\n", new DecOp( wsNormal ), bumpNorm, worldToTanget ) );
+   meta->addStatement( new GenOp( "   @ = normalize( tMul( @.xyz, @ ) );\r\n", new DecOp( wsNormal ), bumpNorm, worldToTanget ) );
 }
 
 ShaderFeature::Resources BumpFeatGLSL::getResources( const MaterialFeatureData &fd )
@@ -269,7 +269,7 @@ void ParallaxFeatGLSL::processVert( Vector<ShaderComponent*> &componentList,
    outNegViewTS->setName( "outNegViewTS" );
    outNegViewTS->setStructName( "OUT" );
    outNegViewTS->setType( "vec3" );
-   meta->addStatement( new GenOp( "   @ = mul( @, float3( @.xyz - @ ) );\r\n", 
+   meta->addStatement( new GenOp( "   @ = tMul( @, float3( @.xyz - @ ) );\r\n", 
       outNegViewTS, objToTangentSpace, inPos, eyePos ) );
 
    // TODO: I'm at a loss at why i need to flip the binormal/y coord
@@ -285,7 +285,7 @@ void ParallaxFeatGLSL::processVert( Vector<ShaderComponent*> &componentList,
    Var *texMat = (Var*)LangElement::find( "texMat" );
    if ( texMat )
    {
-      meta->addStatement( new GenOp( "   @ = mul(@, float4(@,0)).xyz;\r\n",
+      meta->addStatement( new GenOp( "   @ = tMul(@, float4(@,0)).xyz;\r\n",
          outNegViewTS, texMat, outNegViewTS ) );
    }
 	
@@ -396,7 +396,7 @@ void NormalsOutFeatGLSL::processVert(  Vector<ShaderComponent*> &componentList,
    {
       // Transform the normal to world space.
       Var *objTrans = getObjTrans( componentList, fd.features[MFT_UseInstancing], meta );
-      meta->addStatement( new GenOp( "   @ = mul( @, normalize( @ ) );\r\n", outNormal, objTrans, inNormal ) );
+      meta->addStatement( new GenOp( "   @ = tMul( @, normalize( vec4(@, 0.0) ) ).xyz;\r\n", outNormal, objTrans, inNormal ) );
    }
    else
    {

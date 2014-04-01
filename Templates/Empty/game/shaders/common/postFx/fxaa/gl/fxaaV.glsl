@@ -22,13 +22,13 @@
 #include "../../../gl/hlslCompat.glsl"
 #include "../../../gl/torque.glsl"
 
-attribute vec4 vPosition;
-attribute vec2 vTexCoord0;
+in vec4 vPosition;
+in vec2 vTexCoord0;
 
 uniform vec4 rtParams0;
 
-varying vec4 hpos;
-varying vec2 uv0;
+out vec4 hpos;
+out vec2 uv0;
                     
 void main()
 {

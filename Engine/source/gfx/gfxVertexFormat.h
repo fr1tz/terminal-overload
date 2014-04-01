@@ -178,6 +178,9 @@ public:
 
    /// Returns the size in bytes of the format as described.
    U32 getSizeInBytes() const;
+   
+   /// Returns the size in bytes of the format as described per stream.   
+   // U32 getSizeInBytes(U32 stream) const; // TODO 
 
    /// Returns the hardware specific vertex declaration for this format.
    GFXVertexDecl* getDecl() const;

@@ -10,10 +10,10 @@
 #include "../../shadowMap/shadowMapIO_GLSL.h"
 #include "softShadow.glsl"
 
-varying vec4 hpos;
-varying vec2 uv0;
-varying vec3 wsEyeRay;
-varying vec3 vsEyeRay;
+in vec4 hpos;
+in vec2 uv0;
+in vec3 wsEyeRay;
+in vec3 vsEyeRay;
 
 uniform sampler2D ShadowMap ;
 
@@ -72,7 +72,7 @@ void main()
    #else
 
       // Compute shadow map coordinate
-      vec4 pxlPosLightProj = mul(worldToLightProj, worldPos);
+      vec4 pxlPosLightProj = tMul(worldToLightProj, worldPos);
       vec2 baseShadowCoord = pxlPosLightProj.xy / pxlPosLightProj.w;   
 
       // Distance to light, in shadowmap space
@@ -200,7 +200,7 @@ void main()
 
    // Sample the AO texture.      
    #ifdef USE_SSAO_MASK
-      float ao = 1.0 - texture2D( ssaoMask, viewportCoordToRenderTarget( uv0.xy, rtParams2 ) ).r;
+      float ao = 1.0 - texture( ssaoMask, viewportCoordToRenderTarget( uv0.xy, rtParams2 ) ).r;
       addToResult *= ao;
    #endif
 
@@ -208,6 +208,6 @@ void main()
       lightColorOut = debugColor;
    #endif
    
-   gl_FragColor = lightinfoCondition( lightColorOut, Sat_NL_Att, specular, addToResult );  
+   OUT_FragColor0 = lightinfoCondition( lightColorOut, Sat_NL_Att, specular, addToResult );  
    
 }

@@ -80,6 +80,13 @@ private:
    U8* mZombieCache;
    
    void copyIntoCache();
+
+   //FrameAllocator
+   U32 mFrameAllocatorMark;
+#if TORQUE_DEBUG
+   U32 mFrameAllocatorMarkGuard;
+#endif
+   U8 *mFrameAllocatorPtr;
 };
 
 #endif

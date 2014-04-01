@@ -75,18 +75,18 @@ vec4 main( PFXVertToPix IN ) : COLOR0
    {
       // Now do blue texture lookup.
       tcBlue.x += xOffset;
-      float blue = texture2D(backBuffer, tcBlue).b;
+      float blue = texture(backBuffer, tcBlue).b;
 
       // Do green lookup (no scaling).
       vec2 tcGreen = lensCenter + Scale * theta1;
       tcGreen.x += xOffset;
-      float green = texture2D(backBuffer, tcGreen).g;
+      float green = texture(backBuffer, tcGreen).g;
 
       // Do red scale and lookup.
       vec2 thetaRed = theta1 * (HmdChromaAbParam.x + HmdChromaAbParam.y * rSq);
       vec2 tcRed = lensCenter + Scale * thetaRed;
       tcRed.x += xOffset;
-      float red = texture2D(backBuffer, tcRed).r;
+      float red = texture(backBuffer, tcRed).r;
 
       color = vec4(red, green, blue, 1);
    }

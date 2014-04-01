@@ -5,14 +5,14 @@
 // Glow shader
 //*****************************************************************************
 
-attribute vec4 vPosition;
-attribute vec4 vColor;
-attribute vec2 vTexCoord0;
+in vec4 vPosition;
+in vec4 vColor;
+in vec2 vTexCoord0;
 
 uniform mat4 modelview;
 uniform vec2 offset0, offset1, offset2, offset3;
 
-varying vec2 texc0, texc1, texc2, texc3;
+out vec2 texc0, texc1, texc2, texc3;
 
 void main()
 {

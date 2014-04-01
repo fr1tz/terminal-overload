@@ -17,11 +17,11 @@
 #define float3x3 mat3
 #define float2x2 mat2
 
-#define texCUBE textureCube
-#define tex2D texture2D
-#define tex1D texture1D
-#define tex2Dproj texture2DProj
-#define tex2Dlod( sampler, texCoord ) texture2DLod(sampler, texCoord.xy, texCoord.w)
+#define texCUBE texture
+#define tex2D texture
+#define tex1D texture
+#define tex2Dproj textureProj
+#define tex2Dlod( sampler, texCoord ) textureLod(sampler, texCoord.xy, texCoord.w)
 
 #define samplerCUBE samplerCube
 
@@ -73,12 +73,7 @@ mat4 mat4FromRow( float r0c0, float r0c1, float r0c2, float r0c3,
 
 #define round( n ) (sign( n ) * floor( abs( n ) + 0.5 ))
 
-vec4 mul( mat4 m1, vec4 v1) { return m1*v1; }
-vec4 mul( vec4 v1, mat4 m1) { return v1*m1; }
-vec3 mul( vec3 v1, mat3 m1) { return v1*m1; }
-vec3 mul( mat3 m1, vec3 v1) { return m1*v1; }
-vec2 mul( mat2 m1, vec2 v1) { return m1*v1; }
-mat3 mul( mat3 m1, mat3 m2) { return m1*m2; }
+#define tMul(a, b) (a*b)
 
 #define inversesqrt( n ) inversesqrt( n )
 
@@ -86,4 +81,6 @@ mat3 mul( mat3 m1, mat3 m2) { return m1*m2; }
 
 #ifdef TORQUE_PIXEL_SHADER
 	void clip(float a) { if(a < 0) discard;}
+   
+   out vec4 OUT_FragColor0;
 #endif

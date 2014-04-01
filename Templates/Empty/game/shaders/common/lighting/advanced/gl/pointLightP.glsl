@@ -10,9 +10,9 @@
 #include "../../shadowMap/shadowMapIO_GLSL.h"
 #include "softShadow.glsl"
 
-varying vec4 wsEyeDir;
-varying vec4 ssPos;
-varying vec4 vsEyeDir;
+in vec4 wsEyeDir;
+in vec4 ssPos;
+in vec4 vsEyeDir;
 
 #ifdef USE_COOKIE_TEX
 
@@ -31,7 +31,7 @@ uniform samplerCube cookieMap ;
 
    vec4 shadowSample( samplerCube shadowMap, vec3 shadowCoord )
    {
-      return textureCube( shadowMap, shadowCoord );
+      return texture( shadowMap, shadowCoord );
    }
   
 #else
@@ -148,12 +148,12 @@ void main()
       #ifdef SHADOW_CUBE
               
          // TODO: We need to fix shadow cube to handle soft shadows!
-         float occ = textureCube( shadowMap, mul( viewToLightProj, -lightVec ) ).r;
+         float occ = texture( shadowMap, tMul( viewToLightProj, -lightVec ) ).r;
          float shadowed = saturate( exp( lightParams.y * ( occ - distToLight ) ) );
          
       #else
 
-         vec2 shadowCoord = decodeShadowCoord( mul( viewToLightProj, -lightVec ) ).xy;
+         vec2 shadowCoord = decodeShadowCoord( tMul( viewToLightProj, -lightVec ) ).xy;
          
          float shadowed = softShadow_filter( shadowMap,
                                              ssPos.xy,
@@ -170,7 +170,7 @@ void main()
    #ifdef USE_COOKIE_TEX
 
       // Lookup the cookie sample.
-      vec4 cookie = textureCube( cookieMap, mul( viewToLightProj, -lightVec ) );
+      vec4 cookie = texture( cookieMap, tMul( viewToLightProj, -lightVec ) );
 
       // Multiply the light with the cookie tex.
       lightColor.rgb *= cookie.rgb;
@@ -210,5 +210,5 @@ void main()
       addToResult = ( 1.0 - shadowed ) * abs(lightMapParams);
    }
 
-   gl_FragColor = lightinfoCondition( lightColorOut, Sat_NL_Att, specular, addToResult );
+   OUT_FragColor0 = lightinfoCondition( lightColorOut, Sat_NL_Att, specular, addToResult );
 }

@@ -92,7 +92,7 @@ void GBufferConditionerGLSL::processVert( Vector<ShaderComponent*> &componentLis
       dummy.mInstancingFormat = mInstancingFormat;
       Var *worldViewOnly = dummy.getWorldView( componentList, fd.features[MFT_UseInstancing], meta );
 
-      meta->addStatement(  new GenOp("   @ = mul(@, float4( normalize(@), 0.0 ) ).xyz;\r\n", 
+      meta->addStatement(  new GenOp("   @ = tMul(@, float4( normalize(@), 0.0 ) ).xyz;\r\n", 
                               outNormal, worldViewOnly, inNormal ) );
    }
    else
@@ -145,7 +145,7 @@ void GBufferConditionerGLSL::processPix(  Vector<ShaderComponent*> &componentLis
    if ( fd.features[ MFT_IsTranslucentZWrite ] )
    {
       alphaVal = new Var( "outAlpha", "float" );
-      meta->addStatement( new GenOp( "   @ = OUT.col.a; // MFT_IsTranslucentZWrite\r\n", new DecOp( alphaVal ) ) );
+      meta->addStatement( new GenOp( "   @ = col.a; // MFT_IsTranslucentZWrite\r\n", new DecOp( alphaVal ) ) );
    }
 
    // If using interlaced normals, invert the normal

@@ -41,10 +41,10 @@ void main()
     vec4 texCoord = vec4( IN_uv0.xy, 0, 0 );        
     
     // Store initial sample.
-    half3 color = half3(texture2D( frameSampler, texCoord.xy ).rgb);  
+    half3 color = half3(texture( frameSampler, texCoord.xy ).rgb);  
 	
 	// Store original bb color.
-	vec4 bbCol = texture2D( backBuffer, IN_uv1 );
+	vec4 bbCol = texture( backBuffer, IN_uv1 );
 
     // Set up illumination decay factor.
     half illuminationDecay = 1.0;  		
@@ -55,7 +55,7 @@ void main()
 	
 	if ( samples <= 0 )
    {
-	   gl_FragColor = bbCol;
+	   OUT_FragColor0 = bbCol;
       return;
    }
 
@@ -72,13 +72,13 @@ void main()
         texCoord.xy -= deltaTexCoord;  
 
         // Retrieve sample at new location.
-        half3 sample = half3(tex2Dlod( frameSampler, texCoord ));  
+        half3 sample_ = half3(tex2Dlod( frameSampler, texCoord ));  
 
         // Apply sample attenuation scale/decay factors.
-        sample *= illuminationDecay * weight;
+        sample_ *= illuminationDecay * weight;
 
         // Accumulate combined color.
-        color += sample;
+        color += sample_;
 
         // Update exponential decay factor.
         illuminationDecay *= decay;
@@ -88,5 +88,5 @@ void main()
 	//return bbCol * decay;
 	
     // Output final color with a further scale control factor.      
-    gl_FragColor = saturate( amount ) * vec4( color * exposure, 1 ) + bbCol;
+    OUT_FragColor0 = saturate( amount ) * vec4( color * exposure, 1 ) + bbCol;
 }  

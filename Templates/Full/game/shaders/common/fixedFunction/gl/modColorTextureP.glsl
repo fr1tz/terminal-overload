@@ -21,10 +21,12 @@
 //-----------------------------------------------------------------------------
 
 uniform sampler2D diffuseMap;
-varying vec4 color;
-varying vec2 texCoord;
+in vec4 color;
+in vec2 texCoord;
+
+out vec4 OUT_FragColor0;
 
 void main()
 {
-   gl_FragColor = texture2D(diffuseMap, texCoord) * color;
+   OUT_FragColor0 = texture(diffuseMap, texCoord) * color;
 }

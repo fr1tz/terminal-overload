@@ -3,21 +3,21 @@
 
 #include "hlslCompat.glsl"
 
-attribute vec4 vPosition;
-attribute vec3 vNormal;
-attribute vec3 vBinormal;
-attribute vec3 vTangent;
-attribute vec2 vTexCoord0;
+in vec4 vPosition;
+in vec3 vNormal;
+in vec3 vBinormal;
+in vec3 vTangent;
+in vec2 vTexCoord0;
 
-varying vec4 texCoord12;
+out vec4 texCoord12;
 #define OUT_texCoord12 texCoord12
-varying vec4 texCoord34;
+out vec4 texCoord34;
 #define OUT_texCoord34 texCoord34
-varying vec3 vLightTS; // light vector in tangent space, denormalized
+out vec3 vLightTS; // light vector in tangent space, denormalized
 #define OUT_vLightTS vLightTS
-varying vec3 vViewTS;  // view vector in tangent space, denormalized
+out vec3 vViewTS;  // view vector in tangent space, denormalized
 #define OUT_vViewTS vViewTS
-varying float worldDist;
+out float worldDist;
 #define OUT_worldDist worldDist
 
 //-----------------------------------------------------------------------------
@@ -66,7 +66,7 @@ void main()
    vec3 vBinormalWS = -IN_binormal;
    
    // Compute position in world space:
-   vec4 vPositionWS = IN_pos + vec4( eyePosWorld, 1 ); //mul( IN_pos, objTrans );
+   vec4 vPositionWS = IN_pos + vec4( eyePosWorld, 1 ); //tMul( IN_pos, objTrans );
 
    // Compute and output the world view vector (unnormalized):
    vec3 vViewWS = eyePosWorld - vPositionWS.xyz;
