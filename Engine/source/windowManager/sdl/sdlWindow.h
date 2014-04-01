@@ -78,9 +78,6 @@ private:
    /// Is the mouse locked to this window?
    bool mMouseLocked;
 
-   /// The position the cursor was at when a mouse lock occured
-   Point2I mMouseLockPosition;
-
    /// Determines whether this window should lock the mouse when it has an opportunity
    bool mShouldLockMouse;
 
@@ -93,7 +90,7 @@ private:
    /// @}
 
    void _processSDLEvent(SDL_Event &evt);
-   void _triggerMouseLocationNotify();
+   void _triggerMouseLocationNotify(const SDL_Event& evt);
    void _triggerMouseButtonNotify(const SDL_Event& event);
    void _triggerKeyNotify(const SDL_Event& event);
    void _triggerTextNotify(const SDL_Event& event);

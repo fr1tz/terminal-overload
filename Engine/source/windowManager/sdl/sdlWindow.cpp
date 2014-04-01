@@ -70,7 +70,7 @@ namespace
    }
 }
 
-SDLWindow::SDLWindow(): mMouseLockPosition(0,0),
+SDLWindow::SDLWindow():
 mShouldLockMouse(false),
 mMouseLocked(false),
 mOwningManager(NULL),
@@ -415,14 +415,12 @@ void SDLWindow::defaultRender()
 	// TODO SDL
 }
 
-void SDLWindow::_triggerMouseLocationNotify()
+void SDLWindow::_triggerMouseLocationNotify(const SDL_Event& evt)
 {
-   int winX, winY;
-   SDL_GetMouseState(&winX, &winY);
    if(!mMouseLocked)
-      mouseEvent.trigger(getWindowId(), 0, winX, winY, false);
+      mouseEvent.trigger(getWindowId(), 0, evt.motion.x, evt.motion.y, false);
    else
-      mouseEvent.trigger(getWindowId(), 0, winX-(mVideoMode.resolution.x/2), winY-(mVideoMode.resolution.y/2), true);
+      mouseEvent.trigger(getWindowId(), 0, evt.motion.xrel, evt.motion.yrel, true);
 }
 
 void SDLWindow::_triggerMouseButtonNotify(const SDL_Event& event)
@@ -445,7 +443,8 @@ void SDLWindow::_triggerMouseButtonNotify(const SDL_Event& event)
          return;
    }
    
-   buttonEvent.trigger(getWindowId(), 0, action, button );
+   U32 mod = getTorqueModFromSDL( SDL_GetModState() );
+   buttonEvent.trigger(getWindowId(), mod, action, button );
 }
 
 void SDLWindow::_triggerKeyNotify(const SDL_Event& evt)
@@ -503,7 +502,7 @@ void SDLWindow::_processSDLEvent(SDL_Event &evt)
 
       case SDL_MOUSEMOTION:
       {
-         _triggerMouseLocationNotify();
+         _triggerMouseLocationNotify(evt);
          break;
       }
 
@@ -511,7 +510,6 @@ void SDLWindow::_processSDLEvent(SDL_Event &evt)
       case SDL_MOUSEBUTTONUP:
       {
          appEvent.trigger(getWindowId(), GainFocus);
-         _triggerMouseLocationNotify();
          _triggerMouseButtonNotify(evt);
          
          break;
@@ -549,7 +547,9 @@ void SDLWindow::setMouseLocked( bool enable )
       return;
 
 	mMouseLocked = enable;
-   SDL_GetMouseState(&mMouseLockPosition.x, &mMouseLockPosition.y);
+   
+   SDL_SetWindowGrab( mWindowHandle, SDL_bool(enable) );
+   SDL_SetRelativeMouseMode( SDL_bool(enable) );
 }
 
 const UTF16 *SDLWindow::getWindowClassName()
