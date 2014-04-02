@@ -1,9 +1,9 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
-if ( isObject( moveMap ) )
-   moveMap.delete();
-new ActionMap(moveMap);
+if ( isObject( XaNotc1CatMoveMap ) )
+   XaNotc1CatMoveMap.delete();
+new ActionMap(XaNotc1CatMoveMap);
 
 
 //------------------------------------------------------------------------------
@@ -18,7 +18,7 @@ function escapeFromGame()
       MessageBoxYesNo( "Disconnect", "Disconnect from the server?", "disconnect();", "");
 }
 
-moveMap.bindCmd(keyboard, "escape", "", "handleEscape();");
+XaNotc1CatMoveMap.bindCmd(keyboard, "escape", "", "handleEscape();");
 
 function showPlayerList(%val)
 {
@@ -26,7 +26,7 @@ function showPlayerList(%val)
       PlayerListGui.toggle();
 }
 
-moveMap.bind( keyboard, Tab, showPlayerList );
+XaNotc1CatMoveMap.bind( keyboard, Tab, showPlayerList );
 
 function hideHUDs(%val)
 {
@@ -34,7 +34,7 @@ function hideHUDs(%val)
       HudlessPlayGui.toggle();
 }
 
-moveMap.bind(keyboard, "ctrl h", hideHUDs);
+XaNotc1CatMoveMap.bind(keyboard, "ctrl h", hideHUDs);
 
 function doScreenShotHudless(%val)
 {
@@ -48,7 +48,7 @@ function doScreenShotHudless(%val)
       canvas.setContent($PlayGui);
 }
 
-moveMap.bind(keyboard, "alt p", doScreenShotHudless);
+XaNotc1CatMoveMap.bind(keyboard, "alt p", doScreenShotHudless);
 
 //------------------------------------------------------------------------------
 // Movement Keys
@@ -233,35 +233,35 @@ function gamepadPitch(%val)
    }
 }
 
-moveMap.bind( keyboard, a, moveleft );
-moveMap.bind( keyboard, d, moveright );
-moveMap.bind( keyboard, left, moveleft );
-moveMap.bind( keyboard, right, moveright );
+XaNotc1CatMoveMap.bind( keyboard, a, moveleft );
+XaNotc1CatMoveMap.bind( keyboard, d, moveright );
+XaNotc1CatMoveMap.bind( keyboard, left, moveleft );
+XaNotc1CatMoveMap.bind( keyboard, right, moveright );
 
-moveMap.bind( keyboard, w, moveforward );
-moveMap.bind( keyboard, s, movebackward );
-moveMap.bind( keyboard, up, moveforward );
-moveMap.bind( keyboard, down, movebackward );
+XaNotc1CatMoveMap.bind( keyboard, w, moveforward );
+XaNotc1CatMoveMap.bind( keyboard, s, movebackward );
+XaNotc1CatMoveMap.bind( keyboard, up, moveforward );
+XaNotc1CatMoveMap.bind( keyboard, down, movebackward );
 
-moveMap.bind( keyboard, e, moveup );
-moveMap.bind( keyboard, c, movedown );
+XaNotc1CatMoveMap.bind( keyboard, e, moveup );
+XaNotc1CatMoveMap.bind( keyboard, c, movedown );
 
-moveMap.bind( keyboard, space, jump );
-moveMap.bind( mouse, xaxis, yaw );
-moveMap.bind( mouse, yaxis, pitch );
+XaNotc1CatMoveMap.bind( keyboard, space, jump );
+XaNotc1CatMoveMap.bind( mouse, xaxis, yaw );
+XaNotc1CatMoveMap.bind( mouse, yaxis, pitch );
 
-moveMap.bind( gamepad, thumbrx, "D", "-0.23 0.23", gamepadYaw );
-moveMap.bind( gamepad, thumbry, "D", "-0.23 0.23", gamepadPitch );
-moveMap.bind( gamepad, thumblx, "D", "-0.23 0.23", gamePadMoveX );
-moveMap.bind( gamepad, thumbly, "D", "-0.23 0.23", gamePadMoveY );
+XaNotc1CatMoveMap.bind( gamepad, thumbrx, "D", "-0.23 0.23", gamepadYaw );
+XaNotc1CatMoveMap.bind( gamepad, thumbry, "D", "-0.23 0.23", gamepadPitch );
+XaNotc1CatMoveMap.bind( gamepad, thumblx, "D", "-0.23 0.23", gamePadMoveX );
+XaNotc1CatMoveMap.bind( gamepad, thumbly, "D", "-0.23 0.23", gamePadMoveY );
 
-moveMap.bind( gamepad, btn_a, jump );
-moveMap.bindCmd( gamepad, btn_back, "disconnect();", "" );
+XaNotc1CatMoveMap.bind( gamepad, btn_a, jump );
+XaNotc1CatMoveMap.bindCmd( gamepad, btn_back, "disconnect();", "" );
 
-moveMap.bindCmd(gamepad, dpadl, "toggleLightColorViz();", "");
-moveMap.bindCmd(gamepad, dpadu, "toggleDepthViz();", "");
-moveMap.bindCmd(gamepad, dpadd, "toggleNormalsViz();", "");
-moveMap.bindCmd(gamepad, dpadr, "toggleLightSpecularViz();", "");
+XaNotc1CatMoveMap.bindCmd(gamepad, dpadl, "toggleLightColorViz();", "");
+XaNotc1CatMoveMap.bindCmd(gamepad, dpadu, "toggleDepthViz();", "");
+XaNotc1CatMoveMap.bindCmd(gamepad, dpadd, "toggleNormalsViz();", "");
+XaNotc1CatMoveMap.bindCmd(gamepad, dpadr, "toggleLightSpecularViz();", "");
 
 // ----------------------------------------------------------------------------
 // Stance/pose
@@ -289,9 +289,9 @@ function doSlide(%val)
    $mvTriggerCount6++;
 }
 
-moveMap.bind(keyboard, lshift, doWalk);
-moveMap.bind(keyboard, lcontrol, doSlide);
-moveMap.bind(gamepad, btn_b, doSlide);
+XaNotc1CatMoveMap.bind(keyboard, lshift, doWalk);
+XaNotc1CatMoveMap.bind(keyboard, lcontrol, doSlide);
+XaNotc1CatMoveMap.bind(gamepad, btn_b, doSlide);
 
 //------------------------------------------------------------------------------
 // Mouse Trigger
@@ -307,8 +307,8 @@ function altTrigger(%val)
    $mvTriggerCount1++;
 }
 
-moveMap.bind( mouse, button0, mouseFire );
-moveMap.bind( mouse, button1, altTrigger );
+XaNotc1CatMoveMap.bind( mouse, button0, mouseFire );
+XaNotc1CatMoveMap.bind( mouse, button1, altTrigger );
 
 //------------------------------------------------------------------------------
 // Gamepad Trigger
@@ -342,8 +342,8 @@ function gamepadAltTrigger(%val)
    }
 }
 
-moveMap.bind(gamepad, triggerr, gamepadFire);
-moveMap.bind(gamepad, triggerl, gamepadAltTrigger);
+XaNotc1CatMoveMap.bind(gamepad, triggerr, gamepadFire);
+XaNotc1CatMoveMap.bind(gamepad, triggerl, gamepadAltTrigger);
 
 //------------------------------------------------------------------------------
 // Zoom and FOV functions
@@ -444,10 +444,10 @@ function mouseZoom(%val)
 	setFov($MouseZoomValue);
 }
 
-moveMap.bind(keyboard, f, setZoomFOV); // f for field of view
-moveMap.bind(keyboard, z, toggleZoom); // z for zoom
-//moveMap.bind( mouse, button1, mouseButtonZoom );
-moveMap.bind(mouse, "zaxis", mouseZoom);
+XaNotc1CatMoveMap.bind(keyboard, f, setZoomFOV); // f for field of view
+XaNotc1CatMoveMap.bind(keyboard, z, toggleZoom); // z for zoom
+//XaNotc1CatMoveMap.bind( mouse, button1, mouseButtonZoom );
+XaNotc1CatMoveMap.bind(mouse, "zaxis", mouseZoom);
 
 //------------------------------------------------------------------------------
 // Camera & View functions
@@ -475,14 +475,14 @@ function toggleCamera(%val)
       commandToServer('ToggleCamera');
 }
 
-moveMap.bind( keyboard, v, toggleFreeLook ); // v for vanity
-moveMap.bind(keyboard, tab, toggleFirstPerson );
-moveMap.bind(keyboard, "alt c", toggleCamera);
+XaNotc1CatMoveMap.bind( keyboard, v, toggleFreeLook ); // v for vanity
+XaNotc1CatMoveMap.bind(keyboard, tab, toggleFirstPerson );
+XaNotc1CatMoveMap.bind(keyboard, "alt c", toggleCamera);
 
-moveMap.bind( gamepad, btn_start, toggleCamera );
-moveMap.bind( gamepad, btn_x, toggleFirstPerson );
+XaNotc1CatMoveMap.bind( gamepad, btn_start, toggleCamera );
+XaNotc1CatMoveMap.bind( gamepad, btn_x, toggleFirstPerson );
 
-moveMap.bind(keyboard, "p", toggleFirstPerson );
+XaNotc1CatMoveMap.bind(keyboard, "p", toggleFirstPerson );
 
 // ----------------------------------------------------------------------------
 // Misc. Player stuff
@@ -493,38 +493,38 @@ moveMap.bind(keyboard, "p", toggleFirstPerson );
 // who will want to use a player model that has these animations and wishes to
 // use them.
 
-//moveMap.bindCmd(keyboard, "ctrl w", "commandToServer('playCel',\"wave\");", "");
-//moveMap.bindCmd(keyboard, "ctrl s", "commandToServer('playCel',\"salute\");", "");
+//XaNotc1CatMoveMap.bindCmd(keyboard, "ctrl w", "commandToServer('playCel',\"wave\");", "");
+//XaNotc1CatMoveMap.bindCmd(keyboard, "ctrl s", "commandToServer('playCel',\"salute\");", "");
 
-moveMap.bindCmd(keyboard, "ctrl k", "commandToServer('suicide');", "");
+XaNotc1CatMoveMap.bindCmd(keyboard, "ctrl k", "commandToServer('suicide');", "");
 
 //------------------------------------------------------------------------------
 // Item manipulation
 //------------------------------------------------------------------------------
 
-moveMap.bindCmd(keyboard, "tab", "commandToServer('action', 0);", "");
-moveMap.bindCmd(keyboard, "1", "commandToServer('action', 1);", "");
-moveMap.bindCmd(keyboard, "2", "commandToServer('action', 2);", "");
-moveMap.bindCmd(keyboard, "3", "commandToServer('action', 3);", "");
-moveMap.bindCmd(keyboard, "4", "commandToServer('action', 4);", "");
-moveMap.bindCmd(keyboard, "5", "commandToServer('action', 5);", "");
-moveMap.bindCmd(keyboard, "6", "commandToServer('action', 6);", "");
-moveMap.bindCmd(keyboard, "7", "commandToServer('action', 7);", "");
-moveMap.bindCmd(keyboard, "8", "commandToServer('action', 8);", "");
-moveMap.bindCmd(keyboard, "9", "commandToServer('action', 9);", "");
-moveMap.bindCmd(keyboard, "0", "commandToServer('action', 10);", "");
-moveMap.bindCmd(keyboard, "F1", "commandToServer('action', 11);", "");
-moveMap.bindCmd(keyboard, "F2", "commandToServer('action', 12);", "");
-moveMap.bindCmd(keyboard, "F3", "commandToServer('action', 13);", "");
-moveMap.bindCmd(keyboard, "F4", "commandToServer('action', 14);", "");
-moveMap.bindCmd(keyboard, "F5", "commandToServer('action', 15);", "");
-moveMap.bindCmd(keyboard, "F6", "commandToServer('action', 16);", "");
-moveMap.bindCmd(keyboard, "F7", "commandToServer('action', 17);", "");
-moveMap.bindCmd(keyboard, "F8", "commandToServer('action', 18);", "");
-moveMap.bindCmd(keyboard, "q", "commandToServer('action', 19);", "");
-moveMap.bindCmd(keyboard, "e", "commandToServer('action', 20);", "");
-moveMap.bindCmd(keyboard, "r", "commandToServer('action', 21);", "");
-moveMap.bindCmd(keyboard, "c", "commandToServer('action', 22);", "");
+XaNotc1CatMoveMap.bindCmd(keyboard, "tab", "commandToServer('action', 0);", "");
+XaNotc1CatMoveMap.bindCmd(keyboard, "1", "commandToServer('action', 1);", "");
+XaNotc1CatMoveMap.bindCmd(keyboard, "2", "commandToServer('action', 2);", "");
+XaNotc1CatMoveMap.bindCmd(keyboard, "3", "commandToServer('action', 3);", "");
+XaNotc1CatMoveMap.bindCmd(keyboard, "4", "commandToServer('action', 4);", "");
+XaNotc1CatMoveMap.bindCmd(keyboard, "5", "commandToServer('action', 5);", "");
+XaNotc1CatMoveMap.bindCmd(keyboard, "6", "commandToServer('action', 6);", "");
+XaNotc1CatMoveMap.bindCmd(keyboard, "7", "commandToServer('action', 7);", "");
+XaNotc1CatMoveMap.bindCmd(keyboard, "8", "commandToServer('action', 8);", "");
+XaNotc1CatMoveMap.bindCmd(keyboard, "9", "commandToServer('action', 9);", "");
+XaNotc1CatMoveMap.bindCmd(keyboard, "0", "commandToServer('action', 10);", "");
+XaNotc1CatMoveMap.bindCmd(keyboard, "F1", "commandToServer('action', 11);", "");
+XaNotc1CatMoveMap.bindCmd(keyboard, "F2", "commandToServer('action', 12);", "");
+XaNotc1CatMoveMap.bindCmd(keyboard, "F3", "commandToServer('action', 13);", "");
+XaNotc1CatMoveMap.bindCmd(keyboard, "F4", "commandToServer('action', 14);", "");
+XaNotc1CatMoveMap.bindCmd(keyboard, "F5", "commandToServer('action', 15);", "");
+XaNotc1CatMoveMap.bindCmd(keyboard, "F6", "commandToServer('action', 16);", "");
+XaNotc1CatMoveMap.bindCmd(keyboard, "F7", "commandToServer('action', 17);", "");
+XaNotc1CatMoveMap.bindCmd(keyboard, "F8", "commandToServer('action', 18);", "");
+XaNotc1CatMoveMap.bindCmd(keyboard, "q", "commandToServer('action', 19);", "");
+XaNotc1CatMoveMap.bindCmd(keyboard, "e", "commandToServer('action', 20);", "");
+XaNotc1CatMoveMap.bindCmd(keyboard, "r", "commandToServer('action', 21);", "");
+XaNotc1CatMoveMap.bindCmd(keyboard, "c", "commandToServer('action', 22);", "");
 
 function unmountWeapon(%val)
 {
@@ -532,7 +532,7 @@ function unmountWeapon(%val)
       commandToServer('unmountWeapon');
 }
 
-moveMap.bind(keyboard, 0, unmountWeapon);
+XaNotc1CatMoveMap.bind(keyboard, 0, unmountWeapon);
 
 function throwWeapon(%val)
 {
@@ -545,8 +545,8 @@ function tossAmmo(%val)
       commandToServer('Throw', "Ammo");
 }
 
-moveMap.bind(keyboard, "alt w", throwWeapon);
-moveMap.bind(keyboard, "alt a", tossAmmo);
+XaNotc1CatMoveMap.bind(keyboard, "alt w", throwWeapon);
+XaNotc1CatMoveMap.bind(keyboard, "alt a", tossAmmo);
 
 function nextWeapon(%val)
 {
@@ -568,9 +568,9 @@ function mouseWheelWeaponCycle(%val)
       commandToServer('cycleWeapon', "prev");
 }
 
-//moveMap.bind(keyboard, q, nextWeapon);
-//moveMap.bind(keyboard, "ctrl q", prevWeapon);
-//moveMap.bind(mouse, "zaxis", mouseWheelWeaponCycle);
+//XaNotc1CatMoveMap.bind(keyboard, q, nextWeapon);
+//XaNotc1CatMoveMap.bind(keyboard, "ctrl q", prevWeapon);
+//XaNotc1CatMoveMap.bind(mouse, "zaxis", mouseWheelWeaponCycle);
 
 //------------------------------------------------------------------------------
 // Message HUD functions
@@ -594,11 +594,11 @@ function resizeMessageHud( %val )
       cycleMessageHudSize();
 }
 
-moveMap.bind(keyboard, u, toggleMessageHud );
-//moveMap.bind(keyboard, y, teamMessageHud );
-moveMap.bind(keyboard, "pageUp", pageMessageHudUp );
-moveMap.bind(keyboard, "pageDown", pageMessageHudDown );
-//moveMap.bind(keyboard, "p", resizeMessageHud );
+XaNotc1CatMoveMap.bind(keyboard, u, toggleMessageHud );
+//XaNotc1CatMoveMap.bind(keyboard, y, teamMessageHud );
+XaNotc1CatMoveMap.bind(keyboard, "pageUp", pageMessageHudUp );
+XaNotc1CatMoveMap.bind(keyboard, "pageDown", pageMessageHudDown );
+//XaNotc1CatMoveMap.bind(keyboard, "p", resizeMessageHud );
 
 //------------------------------------------------------------------------------
 // Demo recording functions
@@ -616,8 +616,8 @@ function stopRecordingDemo( %val )
       stopDemoRecord();
 }
 
-//moveMap.bind( keyboard, F3, startRecordingDemo );
-//moveMap.bind( keyboard, F4, stopRecordingDemo );
+//XaNotc1CatMoveMap.bind( keyboard, F3, startRecordingDemo );
+//XaNotc1CatMoveMap.bind( keyboard, F4, stopRecordingDemo );
 
 
 //------------------------------------------------------------------------------
@@ -671,7 +671,7 @@ GlobalActionMap.bind(keyboard, "ctrl F3", doProfile);
 GlobalActionMap.bind(keyboard, "tilde", toggleConsole);
 GlobalActionMap.bindCmd(keyboard, "alt k", "cls();","");
 GlobalActionMap.bindCmd(keyboard, "alt enter", "", "Canvas.attemptFullscreenToggle();");
-moveMap.bindCmd(keyboard, "n", "toggleNetGraph();", "");
+XaNotc1CatMoveMap.bindCmd(keyboard, "n", "toggleNetGraph();", "");
 
 // ----------------------------------------------------------------------------
 // Useful vehicle stuff
@@ -709,21 +709,21 @@ function carjack()
 }
 
 // Bind the keys to the carjack command
-moveMap.bindCmd(keyboard, "ctrl z", "carjack();", "");
+XaNotc1CatMoveMap.bindCmd(keyboard, "ctrl z", "carjack();", "");
 
 
 // Starting vehicle action map code
-if ( isObject( vehicleMap ) )
-   vehicleMap.delete();
-new ActionMap(vehicleMap);
+if ( isObject( XaNotc1VehicleMoveMap ) )
+   XaNotc1VehicleMoveMap.delete();
+new ActionMap(XaNotc1VehicleMoveMap);
 
 // The key command for flipping the car
-vehicleMap.bindCmd(keyboard, "ctrl x", "commandToServer(\'flipCar\');", "");
+XaNotc1VehicleMoveMap.bindCmd(keyboard, "ctrl x", "commandToServer(\'flipCar\');", "");
 
 function getOut()
 {
-   vehicleMap.pop();
-   moveMap.push();
+   XaNotc1VehicleMoveMap.pop();
+   XaNotc1CatMoveMap.push();
    commandToServer('dismountVehicle');
 }
 
@@ -739,18 +739,18 @@ function brake(%val)
    $mvTriggerCount2++;
 }
 
-vehicleMap.bind( keyboard, w, moveforward );
-vehicleMap.bind( keyboard, s, movebackward );
-vehicleMap.bind( keyboard, up, moveforward );
-vehicleMap.bind( keyboard, down, movebackward );
-vehicleMap.bind( mouse, xaxis, yaw );
-vehicleMap.bind( mouse, yaxis, pitch );
-vehicleMap.bind( mouse, button0, mouseFire );
-//vehicleMap.bind( mouse, button1, altTrigger );
-vehicleMap.bindCmd(keyboard, "ctrl f","getout();","");
-vehicleMap.bind(keyboard, space, brake);
-vehicleMap.bindCmd(keyboard, "l", "brakeLights();", "");
-vehicleMap.bindCmd(keyboard, "escape", "", "handleEscape();");
-vehicleMap.bind( keyboard, v, toggleFreeLook ); // v for vanity
-//vehicleMap.bind(keyboard, tab, toggleFirstPerson );
-vehicleMap.bind(keyboard, "alt c", toggleCamera);
+XaNotc1VehicleMoveMap.bind( keyboard, w, moveforward );
+XaNotc1VehicleMoveMap.bind( keyboard, s, movebackward );
+XaNotc1VehicleMoveMap.bind( keyboard, up, moveforward );
+XaNotc1VehicleMoveMap.bind( keyboard, down, movebackward );
+XaNotc1VehicleMoveMap.bind( mouse, xaxis, yaw );
+XaNotc1VehicleMoveMap.bind( mouse, yaxis, pitch );
+XaNotc1VehicleMoveMap.bind( mouse, button0, mouseFire );
+//XaNotc1VehicleMoveMap.bind( mouse, button1, altTrigger );
+XaNotc1VehicleMoveMap.bindCmd(keyboard, "ctrl f","getout();","");
+XaNotc1VehicleMoveMap.bind(keyboard, space, brake);
+XaNotc1VehicleMoveMap.bindCmd(keyboard, "l", "brakeLights();", "");
+XaNotc1VehicleMoveMap.bindCmd(keyboard, "escape", "", "handleEscape();");
+XaNotc1VehicleMoveMap.bind( keyboard, v, toggleFreeLook ); // v for vanity
+//XaNotc1VehicleMoveMap.bind(keyboard, tab, toggleFirstPerson );
+XaNotc1VehicleMoveMap.bind(keyboard, "alt c", toggleCamera);

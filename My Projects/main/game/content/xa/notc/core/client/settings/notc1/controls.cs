@@ -97,7 +97,7 @@ function XaNotcSettings1_ControlsGui::onSleep(%this)
    //echo("XaNotcSettings1_ControlsGui::onSleep");
 
    // write out the control config into the rw config file
-   moveMap.save("notc/client/settings/notc1controls.cs");
+   XaNotc1CatMoveMap.save("notc/client/settings/notc1controls.cs");
 }
 
 function XaNotcSettings1_ControlsGui::fillRemapList( %this )
@@ -145,14 +145,14 @@ function XaNotcSettings1_Controls_RemapInputCtrl::onInputEvent( %this, %device, 
    %mapName = XaNotcSettings1_Controls_getMapDisplayName( %device, %action );
 
    // Get the current command this action is mapped to.
-   %prevMap = moveMap.getCommand( %device, %action );
+   %prevMap = XaNotc1CatMoveMap.getCommand( %device, %action );
 
    // If nothing was mapped to the previous command
    // mapping then it's easy... just bind it.
    if ( %prevMap $= "" )
    {
       XaNotcSettings1_Controls_unbindExtraActions( %cmd, 1 );
-      moveMap.bind( %device, %action, %cmd );
+      XaNotc1CatMoveMap.bind( %device, %action, %cmd );
       optionsDlg-->RemapList.setRowById( %this.index, XaNotcSettings1_Controls_buildFullMapString( %this.index ) );
       return;
    }
@@ -163,7 +163,7 @@ function XaNotcSettings1_Controls_RemapInputCtrl::onInputEvent( %this, %device, 
    if ( %prevMap $= %cmd )
    {
       XaNotcSettings1_Controls_unbindExtraActions( %cmd, 0 );
-      moveMap.bind( %device, %action, %cmd );
+      XaNotc1CatMoveMap.bind( %device, %action, %cmd );
       optionsDlg-->RemapList.setRowById( %this.index, XaNotcSettings1_Controls_buildFullMapString( %this.index ) );
       return;
    }
@@ -257,7 +257,7 @@ function XaNotcSettings1_Controls_buildFullMapString( %index )
    %name       = $XaNotcSettings1_RemapName[%index];
    %cmd        = $XaNotcSettings1_RemapCmd[%index];
 
-   %temp = moveMap.getBinding( %cmd );
+   %temp = XaNotc1CatMoveMap.getBinding( %cmd );
    if ( %temp $= "" )
       return %name TAB "";
 
@@ -280,7 +280,7 @@ function XaNotcSettings1_Controls_buildFullMapString( %index )
 function XaNotcSettings1_Controls_redoMapping( %device, %action, %cmd, %oldIndex, %newIndex )
 {
 	//%actionMap.bind( %device, %action, $XaNotcSettings1_RemapCmd[%newIndex] );
-	moveMap.bind( %device, %action, %cmd );
+	XaNotc1CatMoveMap.bind( %device, %action, %cmd );
 
    %remapList = XaNotcSettings1_ControlsGui-->RemapList;
 	%remapList.setRowById( %oldIndex, XaNotcSettings1_Controls_buildFullMapString( %oldIndex ) );
@@ -298,10 +298,10 @@ function XaNotcSettings1_Controls_findRemapCmdIndex( %command )
 }
 
 /// This unbinds actions beyond %count associated to the
-/// particular moveMap %commmand.
+/// particular XaNotc1CatMoveMap %commmand.
 function XaNotcSettings1_Controls_unbindExtraActions( %command, %count )
 {
-   %temp = moveMap.getBinding( %command );
+   %temp = XaNotc1CatMoveMap.getBinding( %command );
    if ( %temp $= "" )
       return;
 
@@ -311,13 +311,13 @@ function XaNotcSettings1_Controls_unbindExtraActions( %command, %count )
       %device = getField( %temp, %i + 0 );
       %action = getField( %temp, %i + 1 );
 
-      moveMap.unbind( %device, %action );
+      XaNotc1CatMoveMap.unbind( %device, %action );
    }
 }
 
 function XaNotcSettings1_Controls_restoreDefaultMappings()
 {
-   moveMap.delete();
+   XaNotc1CatMoveMap.delete();
    exec("notc/client/settings/notc1controls.cs");
    optionsDlg.fillRemapList();
 }

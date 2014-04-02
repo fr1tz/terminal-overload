@@ -18,7 +18,7 @@ function CatGui::onWake(%this)
    }      
    
    // just update the action map here
-   moveMap.push();
+   XaNotc1CatMoveMap.push();
    
    // Start tick thread.
    %this.tickThread();
@@ -36,7 +36,7 @@ function CatGui::onSleep(%this)
       Canvas.popDialog( MainChatHud );
    
    // pop the keymaps
-   moveMap.pop();
+   XaNotc1CatMoveMap.pop();
 }
 
 function CatGui::clearHud( %this )
