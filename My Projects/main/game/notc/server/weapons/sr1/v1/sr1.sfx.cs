@@ -3,21 +3,21 @@
 
 datablock SFXProfile(WpnSR1FireSound)
 {
-   filename = "content/xa/rotc/p.5.3/sounds/rotc/explosion12";
+   filename = "content/xa/rotc/p.5.4/sounds/rotc/explosion12";
    description = AudioClose3D;
    preload = true;
 };
 
 datablock SFXProfile(WpnSR1DryFireSound)
 {
-   filename = "content/xa/rotc/p.5.3/sounds/rotc/weaponEmpty";
+   filename = "content/xa/rotc/p.5.4/sounds/rotc/weaponEmpty";
    description = AudioClose3D;
    preload = true;
 };
 
 datablock SFXProfile(WpnSR1ChargeSound)
 {
-   filename = "content/xa/rotc/p.5.3/sounds/rotc/charge2";
+   filename = "content/xa/rotc/p.5.4/sounds/rotc/charge2";
    description = AudioClose3D;
    preload = true;
 };

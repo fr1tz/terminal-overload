@@ -18,7 +18,7 @@ datablock ParticleData(FrmStandardcatSkidTrailEmitter0_Particle)
 	times[0]		= 0.0;
 	times[1]		= 0.5;
 	times[2]		= 1.0;
-	textureName	= "content/xa/rotc/p.5.3/textures/rotc/spark00";
+	textureName	= "content/xa/rotc/p.5.4/textures/rotc/spark00";
 	useInvAlpha = false;
 	allowLighting = false;
 };
@@ -57,7 +57,7 @@ datablock ParticleData(FrmStandardcatSkidTrailEmitter1_Particle)
 	times[0]		= 0.0;
 	times[1]		= 0.5;
 	times[2]		= 1.0;
-	textureName	= "content/xa/rotc/p.5.3/textures/rotc/smoke_particle";
+	textureName	= "content/xa/rotc/p.5.4/textures/rotc/smoke_particle";
 	useInvAlpha = true;
 	allowLighting = false;
 };

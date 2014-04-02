@@ -13,7 +13,7 @@ datablock ParticleData(FrmCrate_DamageEmitter_Particle)
 	constantAcceleration = 0.0;
 	lifetimeMS			  = 1000;
 	lifetimeVarianceMS	= 0;
-	textureName = "content/xa/rotc/p.5.3/textures/rotc/corona";
+	textureName = "content/xa/rotc/p.5.4/textures/rotc/corona";
 	colors[0]	  = "1.0 1.0 0.0 1.0";
 	colors[1]	  = "1.0 1.0 0.0 1.0";
 	colors[2]	  = "1.0 1.0 0.0 0.0";
@@ -62,7 +62,7 @@ datablock ParticleData(FrmCrateMaterializeExplosion_Cloud)
 	spinRandomMin = -200.0;
 	spinRandomMax =  200.0;
 
-	textureName = "content/xa/rotc/p.5.3/textures/rotc/corona.png";
+	textureName = "content/xa/rotc/p.5.4/textures/rotc/corona.png";
 
 	colors[0]	  = "1.0 1.0 1.0 1.0";
 	colors[1]	  = "1.0 1.0 1.0 0.0";
@@ -147,7 +147,7 @@ datablock ParticleData(FrmCrateMaterializeExplosion_Smoke)
 	spinRandomMin = -200.0;
 	spinRandomMax =  200.0;
 
-	textureName = "content/xa/rotc/p.5.3/textures/rotc/smoke_particle.png";
+	textureName = "content/xa/rotc/p.5.4/textures/rotc/smoke_particle.png";
 
 	colors[0]	  = "0.9 0.9 0.9 0.4";
 	colors[1]	  = "0.9 0.9 0.9 0.2";
@@ -269,7 +269,7 @@ datablock ParticleData(FrmCrateMaterializeExplosion_LargeDebris_Particles2)
 	constantAcceleration = 0.0;
 	lifetimeMS			  = 1000;
 	lifetimeVarianceMS	= 0;
-	textureName			 = "content/xa/rotc/p.5.3/textures/rotc/cross1";
+	textureName			 = "content/xa/rotc/p.5.4/textures/rotc/cross1";
 	colors[0]	  = "1.0 1.0 1.0 0.6";
 	colors[1]	  = "1.0 1.0 1.0 0.4";
 	colors[2]	  = "1.0 1.0 1.0 0.2";
@@ -310,7 +310,7 @@ datablock ParticleData(FrmCrateMaterializeExplosion_LargeDebris_Particles1)
 	constantAcceleration = 0.0;
 	lifetimeMS			  = 100;
 	lifetimeVarianceMS	= 0;
-	textureName			 = "content/xa/rotc/p.5.3/textures/rotc/cross1";
+	textureName			 = "content/xa/rotc/p.5.4/textures/rotc/cross1";
 	colors[0]	  = "1.0 1.0 1.0 1.0";
 	colors[1]	  = "1.0 1.0 1.0 1.0";
 	colors[2]	  = "1.0 1.0 1.0 0.5";
@@ -437,7 +437,7 @@ datablock ParticleData(FrmCrateDematerializeExplosion_Cloud)
 	spinRandomMin = -200.0;
 	spinRandomMax =  200.0;
 
-	textureName = "content/xa/rotc/p.5.3/textures/rotc/corona.png";
+	textureName = "content/xa/rotc/p.5.4/textures/rotc/corona.png";
 
 	colors[0]	  = "1.0 1.0 1.0 1.0";
 	colors[1]	  = "1.0 1.0 1.0 0.0";
@@ -522,7 +522,7 @@ datablock ParticleData(FrmCrateDematerializeExplosion_Smoke)
 	spinRandomMin = -200.0;
 	spinRandomMax =  200.0;
 
-	textureName = "content/xa/rotc/p.5.3/textures/rotc/smoke_particle.png";
+	textureName = "content/xa/rotc/p.5.4/textures/rotc/smoke_particle.png";
 
 	colors[0]	  = "0.9 0.9 0.9 0.4";
 	colors[1]	  = "0.9 0.9 0.9 0.2";
@@ -644,7 +644,7 @@ datablock ParticleData(FrmCrateDematerializeExplosion_LargeDebris_Particles2)
 	constantAcceleration = 0.0;
 	lifetimeMS			  = 1000;
 	lifetimeVarianceMS	= 0;
-	textureName			 = "content/xa/rotc/p.5.3/textures/rotc/cross1";
+	textureName			 = "content/xa/rotc/p.5.4/textures/rotc/cross1";
 	colors[0]	  = "1.0 1.0 1.0 0.6";
 	colors[1]	  = "1.0 1.0 1.0 0.4";
 	colors[2]	  = "1.0 1.0 1.0 0.2";
@@ -685,7 +685,7 @@ datablock ParticleData(FrmCrateDematerializeExplosion_LargeDebris_Particles1)
 	constantAcceleration = 0.0;
 	lifetimeMS			  = 100;
 	lifetimeVarianceMS	= 0;
-	textureName			 = "content/xa/rotc/p.5.3/textures/rotc/cross1";
+	textureName			 = "content/xa/rotc/p.5.4/textures/rotc/cross1";
 	colors[0]	  = "1.0 1.0 1.0 1.0";
 	colors[1]	  = "1.0 1.0 1.0 1.0";
 	colors[2]	  = "1.0 1.0 1.0 0.5";

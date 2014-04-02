@@ -3,14 +3,14 @@
 
 datablock SFXProfile(FrmCrateMaterializeSound)
 {
-	filename = "content/xa/rotc/p.5.3/sounds/rotc/explosion6.wav";
+	filename = "content/xa/rotc/p.5.4/sounds/rotc/explosion6.wav";
 	description = AudioDefault3D;
 	preload = true;
 };
 
 datablock SFXProfile(FrmCrateDematerializingSound)
 {
-	filename = "content/xa/rotc/p.5.3/sounds/rotc/charge5.wav";
+	filename = "content/xa/rotc/p.5.4/sounds/rotc/charge5.wav";
 	description = AudioDefaultLooping3D;
 	preload = true;
 };
@@ -24,7 +24,7 @@ datablock SFXProfile(FrmCrateDematerializeSound)
 
 datablock SFXProfile(FrmCrateExplosionSound)
 {
-	filename = "content/xa/rotc/p.5.3/sounds/rotc/explosion10.wav";
+	filename = "content/xa/rotc/p.5.4/sounds/rotc/explosion10.wav";
 	description = AudioDefault3D;
 	preload = true;
 };

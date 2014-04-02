@@ -5,7 +5,7 @@ datablock PrecipitationData(Precipitation_Snow)
 {
    //soundProfile = "HeavyRainSound";
 
-   dropTexture = "content/xa/rotc/p.5.3/textures/nat/snowflakes";
+   dropTexture = "content/xa/rotc/p.5.4/textures/nat/snowflakes";
    splashTexture = "content/xa/torque3d/3.0/environment/precipitation/water_splash";
    dropSize = 0.35;
    splashSize = 0.1;

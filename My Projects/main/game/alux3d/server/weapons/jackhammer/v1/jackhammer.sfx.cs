@@ -16,7 +16,7 @@ datablock SFXProfile(WpnJackhammerFireSound)
 
 datablock SFXProfile(WpnJackhammerDryFireSound)
 {
-   filename = "content/xa/rotc/p.5.3/sounds/rotc/weaponEmpty";
+   filename = "content/xa/rotc/p.5.4/sounds/rotc/weaponEmpty";
    description = AudioClose3D;
    preload = true;
 };

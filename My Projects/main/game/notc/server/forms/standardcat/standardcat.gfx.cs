@@ -122,7 +122,7 @@ datablock ParticleData(FrmStandardcatSpawnExplosion_Cloud)
 	spinRandomMin = -200.0;
 	spinRandomMax =  200.0;
 
-	textureName = "content/xa/rotc/p.5.3/textures/rotc/corona.png";
+	textureName = "content/xa/rotc/p.5.4/textures/rotc/corona.png";
 
 	colors[0]	  = "1.0 1.0 1.0 1.0";
 	colors[1]	  = "1.0 1.0 1.0 0.0";
@@ -164,7 +164,7 @@ datablock ParticleData(FrmStandardcatSpawnExplosion_Dust)
 	useInvAlpha			 = true;
 	spinRandomMin		  = -90.0;
 	spinRandomMax		  = 500.0;
-	textureName			 = "content/xa/rotc/p.5.3/textures/rotc/smoke_particle.png";
+	textureName			 = "content/xa/rotc/p.5.4/textures/rotc/smoke_particle.png";
 	colors[0]	  = "0.9 0.9 0.9 0.5";
 	colors[1]	  = "0.9 0.9 0.9 0.5";
 	colors[2]	  = "0.9 0.9 0.9 0.0";
@@ -207,7 +207,7 @@ datablock ParticleData(FrmStandardcatSpawnExplosion_Smoke)
 	spinRandomMin = -200.0;
 	spinRandomMax =  200.0;
 
-	textureName = "content/xa/rotc/p.5.3/textures/rotc/smoke_particle.png";
+	textureName = "content/xa/rotc/p.5.4/textures/rotc/smoke_particle.png";
 
 	colors[0]	  = "0.9 0.9 0.9 0.4";
 	colors[1]	  = "0.9 0.9 0.9 0.2";
@@ -246,7 +246,7 @@ datablock ParticleData(FrmStandardcatSpawnExplosion_Sparks)
 	constantAcceleration = 0.0;
 	lifetimeMS			  = 500;
 	lifetimeVarianceMS	= 350;
-	textureName			 = "content/xa/rotc/p.5.3/textures/rotc/particle1.png";
+	textureName			 = "content/xa/rotc/p.5.4/textures/rotc/particle1.png";
 	colors[0]	  = "0.56 0.36 0.26 1.0";
 	colors[1]	  = "0.56 0.36 0.26 1.0";
 	colors[2]	  = "1.0 0.36 0.26 0.0";
@@ -279,7 +279,7 @@ datablock ParticleEmitterData(FrmStandardcatSpawnExplosion_SparksEmitter)
 datablock DebrisData(FrmStandardcatSpawnExplosion_SmallDebris)
 {
 	// shape...
-	shapeFile = "content/xa/rotc/p.5.3/shapes/rotc/misc/debris1.white.dts";
+	shapeFile = "content/xa/rotc/p.5.4/shapes/rotc/misc/debris1.white.dts";
 
 	// bounce...
 	staticOnMaxBounce = true;
@@ -312,7 +312,7 @@ datablock MultiNodeLaserBeamData(FrmStandardcatSpawnExplosion_LargeDebris_LaserT
 	outerColor = "1.00 1.00 1.00 0.2";
 	outerWidth = "0.40";
 
-//	bitmap = "content/xa/rotc/p.5.3/shapes/rotc/weapons/missilelauncher/explosion.trail";
+//	bitmap = "content/xa/rotc/p.5.4/shapes/rotc/weapons/missilelauncher/explosion.trail";
 //	bitmapWidth = 0.25;
 
 	blendMode = 1;
@@ -329,7 +329,7 @@ datablock ParticleData(FrmStandardcatSpawnExplosion_LargeDebris_Particles2)
 	constantAcceleration = 0.0;
 	lifetimeMS			  = 1000;
 	lifetimeVarianceMS	= 0;
-	textureName			 = "content/xa/rotc/p.5.3/textures/rotc/cross1";
+	textureName			 = "content/xa/rotc/p.5.4/textures/rotc/cross1";
 	colors[0]	  = "1.0 1.0 1.0 0.6";
 	colors[1]	  = "1.0 1.0 1.0 0.4";
 	colors[2]	  = "1.0 1.0 1.0 0.2";
@@ -370,7 +370,7 @@ datablock ParticleData(FrmStandardcatSpawnExplosion_LargeDebris_Particles1)
 	constantAcceleration = 0.0;
 	lifetimeMS			  = 100;
 	lifetimeVarianceMS	= 0;
-	textureName			 = "content/xa/rotc/p.5.3/textures/rotc/cross1";
+	textureName			 = "content/xa/rotc/p.5.4/textures/rotc/cross1";
 	colors[0]	  = "1.0 1.0 1.0 1.0";
 	colors[1]	  = "1.0 1.0 1.0 1.0";
 	colors[2]	  = "1.0 1.0 1.0 0.5";
@@ -417,7 +417,7 @@ datablock ExplosionData(FrmStandardcatSpawnExplosion_LargeDebris_Explosion)
 datablock DebrisData(FrmStandardcatSpawnExplosion_LargeDebris)
 {
 	// shape...
-	shapeFile = "content/xa/rotc/p.5.3/shapes/rotc/misc/debris2.white.dts";
+	shapeFile = "content/xa/rotc/p.5.4/shapes/rotc/misc/debris2.white.dts";
 
 	explosion = FrmStandardcatSpawnExplosion_LargeDebris_Explosion;
 
@@ -487,7 +487,7 @@ datablock ExplosionData(FrmStandardcatSpawnExplosion)
 datablock ShapeBaseImageData(FrmStandardcatLightImage)
 {
 	// basic item properties
-	shapeFile = "content/xa/rotc/p.5.3/shapes/rotc/misc/nothing.dts";
+	shapeFile = "content/xa/rotc/p.5.4/shapes/rotc/misc/nothing.dts";
 	emap = true;
 
 	// mount point & mount offset...
@@ -527,7 +527,7 @@ datablock ParticleData(FrmStandardcatDamageBufferEmitter_Particle)
 	times[2]		= 1.0;
 	spinRandomMin = 0.0;
 	spinRandomMax = 0.0;
-	textureName	= "content/xa/rotc/p.5.3/textures/rotc/corona";
+	textureName	= "content/xa/rotc/p.5.4/textures/rotc/corona";
 	allowLighting = false;
 };
 
@@ -570,7 +570,7 @@ datablock ParticleData(FrmStandardcatRepairEmitter_Particle)
 	times[2]		= 1.0;
 	spinRandomMin = 0.0;
 	spinRandomMax = 0.0;
-	textureName	= "content/xa/rotc/p.5.3/textures/rotc/cross1";
+	textureName	= "content/xa/rotc/p.5.4/textures/rotc/cross1";
 	allowLighting = false;
 };
 
@@ -613,7 +613,7 @@ datablock ParticleData(FrmStandardcatBufferRepairEmitter_Particle)
 	times[2]		= 1.0;
 	spinRandomMin = 0.0;
 	spinRandomMax = 0.0;
-	textureName	= "content/xa/rotc/p.5.3/textures/rotc/cross1";
+	textureName	= "content/xa/rotc/p.5.4/textures/rotc/cross1";
 	allowLighting = false;
 };
 
@@ -649,7 +649,7 @@ datablock ParticleData(FrmStandardcatDamageEmitter_Particle)
 	constantAcceleration = 0.0;
 	lifetimeMS			  = 1000;
 	lifetimeVarianceMS	= 0;
-	textureName = "content/xa/rotc/p.5.3/shapes/rotc/misc/debris1.red";
+	textureName = "content/xa/rotc/p.5.4/shapes/rotc/misc/debris1.red";
 	colors[0]	  = "1.0 1.0 1.0 1.0";
 	colors[1]	  = "1.0 1.0 1.0 1.0";
 	colors[2]	  = "1.0 1.0 1.0 0.0";
@@ -696,7 +696,7 @@ datablock ParticleData(FrmStandardcatBufferDamageEmitter_Particle)
 	constantAcceleration = 0.0;
 	lifetimeMS			  = 1000;
 	lifetimeVarianceMS	= 0;
-	textureName = "content/xa/rotc/p.5.3/shapes/rotc/misc/debris1.white";
+	textureName = "content/xa/rotc/p.5.4/shapes/rotc/misc/debris1.white";
 	colors[0]	  = "1.0 1.0 1.0 1.0";
 	colors[1]	  = "1.0 1.0 1.0 1.0";
 	colors[2]	  = "1.0 1.0 1.0 0.0";
@@ -735,11 +735,11 @@ datablock DebrisData(FrmStandardcatDamageDebris)
 {
     // 2d billboard...
     render2D = true;
-    texture = "content/xa/rotc/p.5.3/textures/rotc/halo1.red.png";
+    texture = "content/xa/rotc/p.5.4/textures/rotc/halo1.red.png";
     textureWidth = 0.5;
 
 	// shape...
-	shapeFile = "content/xa/rotc/p.5.3/shapes/rotc/misc/debris1.red.dts";
+	shapeFile = "content/xa/rotc/p.5.4/shapes/rotc/misc/debris1.red.dts";
 
 	// bounce...
 	staticOnMaxBounce = true;
@@ -766,11 +766,11 @@ datablock DebrisData(FrmStandardcatBufferDamageDebris)
 {
     // 2d billboard...
     render2D = true;
-    texture = "content/xa/rotc/p.5.3/textures/rotc/halo1.white.png";
+    texture = "content/xa/rotc/p.5.4/textures/rotc/halo1.white.png";
     textureWidth = 0.5;
 
 	// shape...
-	shapeFile = "content/xa/rotc/p.5.3/shapes/rotc/misc/debris1.white.dts";
+	shapeFile = "content/xa/rotc/p.5.4/shapes/rotc/misc/debris1.white.dts";
 
 	// bounce...
 	staticOnMaxBounce = true;
@@ -806,7 +806,7 @@ datablock ParticleData(FrmStandardcatJumpExplosion_Cloud)
 	spinRandomMin = -200.0;
 	spinRandomMax =  200.0;
 
-	textureName = "content/xa/rotc/p.5.3/textures/rotc/corona.png";
+	textureName = "content/xa/rotc/p.5.4/textures/rotc/corona.png";
 
 	colors[0]	  = "1.0 1.0 1.0 1.0";
 	colors[1]	  = "1.0 1.0 1.0 0.0";
@@ -848,7 +848,7 @@ datablock ParticleData(FrmStandardcatJumpExplosion_Dust)
 	useInvAlpha			 = true;
 	spinRandomMin		  = -90.0;
 	spinRandomMax		  = 500.0;
-	textureName			 = "content/xa/rotc/p.5.3/textures/rotc/smoke_particle.png";
+	textureName			 = "content/xa/rotc/p.5.4/textures/rotc/smoke_particle.png";
 	colors[0]	  = "0.9 0.9 0.9 0.5";
 	colors[1]	  = "0.9 0.9 0.9 0.5";
 	colors[2]	  = "0.9 0.9 0.9 0.0";
@@ -891,7 +891,7 @@ datablock ParticleData(FrmStandardcatJumpExplosion_Smoke)
 	spinRandomMin = -200.0;
 	spinRandomMax =  200.0;
 
-	textureName = "content/xa/rotc/p.5.3/textures/rotc/smoke_particle.png";
+	textureName = "content/xa/rotc/p.5.4/textures/rotc/smoke_particle.png";
 
 	colors[0]	  = "0.9 0.9 0.9 0.4";
 	colors[1]	  = "0.9 0.9 0.9 0.2";
@@ -930,7 +930,7 @@ datablock ParticleData(FrmStandardcatJumpExplosion_Sparks)
 	constantAcceleration = 0.0;
 	lifetimeMS			  = 500;
 	lifetimeVarianceMS	= 350;
-	textureName			 = "content/xa/rotc/p.5.3/textures/rotc/particle1.png";
+	textureName			 = "content/xa/rotc/p.5.4/textures/rotc/particle1.png";
 	colors[0]	  = "0.56 0.36 0.26 1.0";
 	colors[1]	  = "0.56 0.36 0.26 1.0";
 	colors[2]	  = "1.0 0.36 0.26 0.0";
@@ -973,7 +973,7 @@ datablock MultiNodeLaserBeamData(FrmStandardcatJumpExplosion_Debris_LaserTrail)
 	outerColor = "1.00 1.00 0.00 0.3";
 	outerWidth = "0.40";
 
-//	bitmap = "content/xa/rotc/p.5.3/shapes/rotc/weapons/hegrenade/lasertrail";
+//	bitmap = "content/xa/rotc/p.5.4/shapes/rotc/weapons/hegrenade/lasertrail";
 //	bitmapWidth = 0.1;
 
 	blendMode = 1;
@@ -983,7 +983,7 @@ datablock MultiNodeLaserBeamData(FrmStandardcatJumpExplosion_Debris_LaserTrail)
 
 datablock DebrisData(FrmStandardcatJumpExplosion_Debris)
 {
-//	shapeFile = "content/xa/rotc/p.5.3/shapes/rotc/weapons/hegrenade/grenade.dts";
+//	shapeFile = "content/xa/rotc/p.5.4/shapes/rotc/weapons/hegrenade/grenade.dts";
 //	emitters[0] = GrenadeLauncherParticleEmitter;
 
 	laserTrail = FrmStandardcatJumpExplosion_Debris_LaserTrail;

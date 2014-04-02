@@ -9,14 +9,14 @@ datablock SFXPlayList(WpnRaptorFireSoundList)
 
 datablock SFXProfile(WpnRaptorFireSound)
 {
-   filename = "content/xa/rotc/p.5.3/sounds/rotc/fire3";
+   filename = "content/xa/rotc/p.5.4/sounds/rotc/fire3";
    description = AudioClose3D;
    preload = true;
 };
 
 datablock SFXProfile(WpnRaptorDryFireSound)
 {
-   filename = "content/xa/rotc/p.5.3/sounds/rotc/weaponEmpty";
+   filename = "content/xa/rotc/p.5.4/sounds/rotc/weaponEmpty";
    description = AudioClose3D;
    preload = true;
 };

@@ -47,7 +47,7 @@ datablock ParticleData(FrmSoldierpodDefunctEffect_Dust)
    useInvAlpha          = true;
    spinRandomMin        = -90.0;
    spinRandomMax        = 500.0;
-   textureName          = "content/xa/rotc/p.5.3/textures/rotc/smoke_particle.png";
+   textureName          = "content/xa/rotc/p.5.4/textures/rotc/smoke_particle.png";
    colors[0]     = "0.3 0.3 0.3 0.5";
    colors[1]     = "0.3 0.3 0.3 0.5";
    colors[2]     = "0.3 0.3 0.3 0.0";
@@ -89,7 +89,7 @@ datablock ParticleData(FrmSoldierpodDefunctEffect_ExplosionSmoke)
    spinRandomMin = -200.0;
    spinRandomMax =  200.0;
 
-   textureName = "content/xa/rotc/p.5.3/textures/rotc/smoke_particle.png";
+   textureName = "content/xa/rotc/p.5.4/textures/rotc/smoke_particle.png";
 
    colors[0]     = "0.7 0.7 0.7 1.0";
    colors[1]     = "0.2 0.2 0.2 1.0";
@@ -131,7 +131,7 @@ datablock ParticleData(FrmSoldierpodDefunctEffect_Sparks)
    constantAcceleration = 0.0;
    lifetimeMS           = 500;
    lifetimeVarianceMS   = 350;
-   textureName          = "content/xa/rotc/p.5.3/textures/rotc/particle1.png";
+   textureName          = "content/xa/rotc/p.5.4/textures/rotc/particle1.png";
    colors[0]     = "0.56 0.36 0.26 1.0";
    colors[1]     = "0.56 0.36 0.26 1.0";
    colors[2]     = "1.0 0.36 0.26 0.0";
@@ -169,7 +169,7 @@ datablock ParticleData(TFrmSoldierpodDefunctEffect_MemoryLeak0Particles)
    constantAcceleration = 0.0;
    lifetimeMS           = 1000;
    lifetimeVarianceMS   = 350;
-   textureName          = "content/xa/rotc/p.5.3/textures/rotc/particle1";
+   textureName          = "content/xa/rotc/p.5.4/textures/rotc/particle1";
    colors[0]     = "1.0 0.9 0.0 0.5";
    colors[1]     = "1.0 0.0 0.0 0.5";
    colors[2]     = "1.0 0.0 0.0 0.0";
@@ -209,7 +209,7 @@ datablock ParticleData(FrmSoldierpodDefunctEffect_MemoryLeak1Particles)
    constantAcceleration = 0.0;
    lifetimeMS           = 1000;
    lifetimeVarianceMS   = 350;
-   textureName          = "content/xa/rotc/p.5.3/textures/rotc/particle1";
+   textureName          = "content/xa/rotc/p.5.4/textures/rotc/particle1";
    colors[0]     = "1.0 0.9 0.0 0.5";
    colors[1]     = "1.0 0.0 0.0 0.5";
    colors[2]     = "1.0 0.0 0.0 0.0";
@@ -314,7 +314,7 @@ datablock ParticleData(FrmSoldierpod_ContrailParticle)
 	times[2]		= 1.0;
 	spinRandomMin = 0.0;
 	spinRandomMax = 0.0;
-	textureName	= "content/xa/rotc/p.5.3/textures/rotc/corona";
+	textureName	= "content/xa/rotc/p.5.4/textures/rotc/corona";
 	allowLighting = false;
 };
 
@@ -346,7 +346,7 @@ datablock ParticleData(FrmSoldierpodWreckFX_Sparks)
    constantAcceleration = 0.0;
    lifetimeMS           = 500;
    lifetimeVarianceMS   = 350;
-   textureName          = "content/xa/rotc/p.5.3/textures/rotc/particle1.png";
+   textureName          = "content/xa/rotc/p.5.4/textures/rotc/particle1.png";
    colors[0]     = "0.56 0.36 0.26 1.0";
    colors[1]     = "0.56 0.36 0.26 1.0";
    colors[2]     = "1.0 0.36 0.26 0.0";
@@ -384,7 +384,7 @@ datablock ParticleData(FrmSoldierpodWreckFX_MemoryLeak0Particles)
    constantAcceleration = 0.0;
    lifetimeMS           = 5000;
    lifetimeVarianceMS   = 350;
-   textureName          = "content/xa/rotc/p.5.3/textures/rotc/particle1";
+   textureName          = "content/xa/rotc/p.5.4/textures/rotc/particle1";
    colors[0]     = "1.0 0.9 0.0 0.5";
    colors[1]     = "1.0 0.0 0.0 0.5";
    colors[2]     = "1.0 0.0 0.0 0.0";
@@ -422,7 +422,7 @@ datablock ParticleData(FrmSoldierpodWreckFX_MemoryLeak1Particles)
    constantAcceleration = 0.0;
    lifetimeMS           = 5000;
    lifetimeVarianceMS   = 350;
-   textureName          = "content/xa/rotc/p.5.3/textures/rotc/particle1";
+   textureName          = "content/xa/rotc/p.5.4/textures/rotc/particle1";
    colors[0]     = "1.0 0.9 0.0 0.5";
    colors[1]     = "1.0 0.0 0.0 0.5";
    colors[2]     = "1.0 0.0 0.0 0.0";

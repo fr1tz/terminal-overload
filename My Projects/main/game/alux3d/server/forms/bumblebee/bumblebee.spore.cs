@@ -25,7 +25,7 @@ datablock LaserBeamData(FrmBumblebeeSpore_LaserTail)
 	outerBetweenWidth = "0.25";
 	outerEndWidth = "0.1";
 
-//	bitmap = "content/xa/rotc/p.5.3/textures/rotc/violetspark";
+//	bitmap = "content/xa/rotc/p.5.4/textures/rotc/violetspark";
 //	bitmapWidth = 0.10;
 //	crossBitmap = "share/shapes/rotc/weapons/blaster/lasertail.red.cross";
 //	crossBitmapWidth = 0.10;

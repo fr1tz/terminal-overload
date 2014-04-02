@@ -3,14 +3,14 @@
 
 datablock SFXProfile(FrmParrotEngineSound)
 {
-   filename = "content/xa/rotc/p.5.3/sounds/rotc/slide3.wav";
+   filename = "content/xa/rotc/p.5.4/sounds/rotc/slide3.wav";
    description = AudioDefaultLooping3D;
 	preload = true;
 };
 
 datablock SFXProfile(FrmParrotExplosionSound)
 {
-	filename = "content/xa/rotc/p.5.3/sounds/rotc/explosion10.wav";
+	filename = "content/xa/rotc/p.5.4/sounds/rotc/explosion10.wav";
 	description = AudioFar3D;
 	preload = true;
 };

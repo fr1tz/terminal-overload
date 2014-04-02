@@ -17,7 +17,7 @@ datablock SFXProfile(WpnCrackpackActivateSound)
 
 datablock SFXProfile(WpnCrackpackCrackSound)
 {
-	filename = "content/xa/rotc/p.5.3/sounds/rotc/explosion7";
+	filename = "content/xa/rotc/p.5.4/sounds/rotc/explosion7";
 	description = AudioDefault3D;
 	preload = true;
 };

@@ -53,7 +53,7 @@ datablock MultiNodeLaserBeamData(WpnParrotMinigunProjectileLaserTrail)
 	outerColor = "1.00 1.00 1.00 0.02";
 	outerWidth = "0.05";
 
-	bitmap = "content/xa/rotc/p.5.3/textures/rotc/miniguntrail";
+	bitmap = "content/xa/rotc/p.5.4/textures/rotc/miniguntrail";
 	bitmapWidth = 0.2;
 
 	blendMode = 1;
@@ -92,7 +92,7 @@ datablock ParticleData(WpnParrotMinigunProjectileImpact_Smoke)
 
 	useInvAlpha =  true;
 
-	textureName = "content/xa/rotc/p.5.3/textures/rotc/smoke_particle";
+	textureName = "content/xa/rotc/p.5.4/textures/rotc/smoke_particle";
 
 	colors[0]	  = "0.5 0.0 1.0 1.0";
 	colors[1]	  = "0.5 0.0 1.0 0.0";
@@ -196,7 +196,7 @@ datablock ParticleData(WpnParrotMinigunProjectileHit_Particle)
 
 	useInvAlpha =  false;
 
-	textureName	= "content/xa/rotc/p.5.3/textures/rotc/star1";
+	textureName	= "content/xa/rotc/p.5.4/textures/rotc/star1";
 
 	colors[0]	  = "1.0 1.0 1.0 1.0";
 	colors[1]	  = "0.0 0.0 1.0 1.0";

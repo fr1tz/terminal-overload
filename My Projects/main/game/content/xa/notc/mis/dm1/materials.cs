@@ -65,6 +65,6 @@ new TerrainMaterial()
    diffuseSize = "16";
    detailSize = "4";
    detailDistance = "500";
-   detailMap = "content/xa/rotc/p.5.3/textures/rotc/zone.grid";
+   detailMap = "content/xa/rotc/p.5.4/textures/rotc/zone.grid";
 };
 

@@ -13,7 +13,7 @@ datablock ParticleData(WpnParrotMinigunFireEmitter_Particles)
 	constantAcceleration  = 0.0;
 	lifetimeMS            = 50;
 	lifetimeVarianceMS    = 0;
-	textureName           = "content/xa/rotc/p.5.3/textures/rotc/smoke_particle";
+	textureName           = "content/xa/rotc/p.5.4/textures/rotc/smoke_particle";
 	colors[0]             = "1.0 1.0 1.0 1.0";
 	colors[1]             = "1.0 1.0 1.0 1.0";
 	colors[2]             = "1.0 1.0 1.0 0.0";
