@@ -36,6 +36,7 @@ singleton Material(xa_notc_core_shapes_mg1_projectile_p1_mat2)
    translucentBlendOp = "AddAlpha";
    glow[0] = "1";
    emissive[0] = "1";
+   wireframe[0] = "1";
    castShadows = "0";
    translucent = "1";
    showFootprints = "0";
