@@ -79,6 +79,7 @@ function onStart()
    exec("./scripts/server/server.cs");
    
    exec("./scripts/gui/guiTreeViewCtrl.cs");
+   exec("./scripts/gui/FileDialog.cs");
    exec("./scripts/gui/messageBoxes/messageBox.ed.cs");
    
    echo(" % - Initialized Core");

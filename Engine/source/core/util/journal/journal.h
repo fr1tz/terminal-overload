@@ -54,6 +54,8 @@ class Journal
    typedef void* VoidPtr;
    typedef void (Journal::*VoidMethod)();
 
+   friend class FileDialog; // TODO SDL REMOVE
+
    /// Functor base classes
    struct Functor 
    {
