@@ -29,11 +29,13 @@
 #include "core/util/tVector.h"
 
 struct SDL_Window;
+class FileDialog; // TODO SDL REMOVE
 
 /// SDL2 implementation of the window manager interface.
 class PlatformWindowManagerSDL : public PlatformWindowManager
 {
    friend class PlatformWindowSDL;
+   friend class FileDialog; // TODO SDL REMOVE
 
    virtual void _processCmdLineArgs(const S32 argc, const char **argv);
 
