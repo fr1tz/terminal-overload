@@ -13,6 +13,8 @@
 #include "scene/sceneManager.h"
 #include "ts/tsShapeInstance.h"
 #include "ts/tsPartInstance.h"
+#include "T3D/decal/decalManager.h"
+#include "T3D/decal/decalData.h"
 #include "T3D/fx/particleEmitter.h"
 #include "T3D/fx/explosion.h"
 #include "T3D/gameBase/gameProcess.h"
@@ -71,6 +73,9 @@ DebrisData::DebrisData()
    dMemset( emitterList, 0, sizeof( emitterList ) );
    dMemset( emitterIDList, 0, sizeof( emitterIDList ) );
 
+   decal = NULL;
+   decalId = 0;
+
    explosion = NULL;
    explosionId = 0;
 
@@ -112,6 +117,12 @@ bool DebrisData::onAdd()
             Con::errorf( ConsoleLogEntry::General, "DebrisData::onAdd: Invalid packet, bad datablockId(emitter): 0x%x", emitterIDList[i]);
          }
       }
+   }
+
+   if(!decal && decalId != 0)
+   {
+      if (!Sim::findObject( SimObjectId( decalId ), decal ))
+            Con::errorf( ConsoleLogEntry::General, "DebrisData::onAdd: Invalid packet, bad datablockId(decal): 0x%x", decalId);
    }
 
    if (!explosion && explosionId != 0)
@@ -207,6 +218,8 @@ void DebrisData::initPersistFields()
    endGroup("Display");
 
    addGroup("Datablocks");
+   addField("decal",                TYPEID< DecalData >(),       Offset(decal, DebrisData),
+      "@brief Decal datablock used for decals placed at bounce/explosion points.\n\n");
    addField("emitters",             TYPEID< ParticleEmitterData >(),  Offset(emitterList,    DebrisData), DDC_NUM_EMITTERS, 
       "@brief List of particle emitters to spawn along with this debris object.\n\nThese are optional.  You could have Debris made up of only a shape.\n");
    addField("explosion",            TYPEID< ExplosionData >(),   Offset(explosion,           DebrisData), 
@@ -292,6 +305,12 @@ void DebrisData::packData(BitStream* stream)
       }
    }
 
+   if( stream->writeFlag( decal ) )
+   {
+      stream->writeRangedU32(packed? SimObjectId(decal):
+         decal->getId(),DataBlockObjectIdFirst,DataBlockObjectIdLast);
+   }
+
    if( stream->writeFlag( explosion ) )
    {
       stream->writeRangedU32(packed? SimObjectId(explosion):
@@ -333,6 +352,15 @@ void DebrisData::unpackData(BitStream* stream)
       {
          emitterIDList[i] = stream->readRangedU32( DataBlockObjectIdFirst, DataBlockObjectIdLast );
       }
+   }
+
+   if(stream->readFlag())
+   {
+      decalId = (S32)stream->readRangedU32(DataBlockObjectIdFirst, DataBlockObjectIdLast);
+   }
+   else
+   {
+      decalId = 0;
    }
 
    if(stream->readFlag())
@@ -666,9 +694,18 @@ void Debris::advanceTime( F32 dt )
       Point3F nextPos = getPosition();
       computeNewState( nextPos, mVelocity, dt );
 
-      if( bounce( nextPos, dt ) )
+      Point3F p, n;
+      if( bounce( nextPos, dt, &p, &n ) )
       {
          --mNumBounces;
+
+         if(mDataBlock->decal)     
+         {
+            DecalInstance* dinst = gDecalManager->addDecal( p, n, 0.0f, mDataBlock->decal );
+            if(dinst)
+               dinst->mPalette = this->getPalette();
+         }
+
          if( mNumBounces <= 0 )
          {
             if( mDataBlock->explodeOnMaxBounce )
@@ -722,7 +759,7 @@ void Debris::rotate( F32 dt )
    setTransform( curTrans );
 }
 
-bool Debris::bounce( const Point3F &nextPos, F32 dt )
+bool Debris::bounce( const Point3F &nextPos, F32 dt, Point3F* p, Point3F* n )
 {
    Point3F curPos = getPosition();
 
@@ -743,6 +780,8 @@ bool Debris::bounce( const Point3F &nextPos, F32 dt )
 
    if( getContainer()->castRay( curPos, extent, collisionMask, &rayInfo ) )
    {
+      *p = rayInfo.point;
+      *n = rayInfo.normal;
 
       Point3F reflection = mVelocity - rayInfo.normal * (mDot( mVelocity, rayInfo.normal ) * 2.0f);
       mVelocity = reflection;

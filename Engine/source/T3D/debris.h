@@ -11,6 +11,7 @@
 #include "T3D/gameBase/gameBase.h"
 #endif
 
+class DecalData;
 class ParticleEmitterData;
 class ParticleEmitter;
 class ExplosionData;
@@ -62,7 +63,8 @@ struct DebrisData : public GameBaseData
 
    StringTableEntry  textureName;
 
-
+   S32                     decalId;
+   DecalData*              decal;
    S32                     explosionId;
    ExplosionData *         explosion;
    ParticleEmitterData*    emitterList[DDC_NUM_EMITTERS];
@@ -109,7 +111,7 @@ private:
    SimObjectPtr<ParticleEmitter> mEmitterList[ DebrisData::DDC_NUM_EMITTERS ];
 
    /// Bounce the debris - returns true if debris bounces.
-   bool bounce( const Point3F &nextPos, F32 dt );
+   bool bounce( const Point3F &nextPos, F32 dt, Point3F* p, Point3F* n );
    
    /// Compute state of debris as if it hasn't collided with anything.
    void computeNewState( Point3F &newPos, Point3F &newVel, F32 dt );
