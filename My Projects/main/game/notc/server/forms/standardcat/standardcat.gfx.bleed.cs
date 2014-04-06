@@ -7,21 +7,23 @@ datablock DecalData(FrmStandardCatBleedEffect_Decal)
    material = xa_notc_core_shapes_standardcat_blood_p1_decalmat;
    textureCoordCount = "0";
    lifeSpan = "250";
-   fadeTime = "1500";
-   paletteSlot = 0;
+   fadeTime = "2500";
 };
 
 datablock DebrisData(FrmStandardCatBleedEffect_Debris)
 {
 	// shape...
 	shapeFile = "content/xa/notc/core/shapes/standardcat/blood/p1/shape.dae";
+ 
+   // decal...
+   decal = FrmStandardCatBleedEffect_Decal;
 
 	// bounce...
 	staticOnMaxBounce = "0";
 	numBounces = "0";
 
 	// physics...
-	gravModifier = 2.0;
+	gravModifier = 4.0;
 	elasticity = 0.6;
 	friction = 0.1;
 
@@ -99,9 +101,6 @@ datablock ParticleEmitterData(FrmStandardCatBleedEffect10Emitter : DefaultEmitte
    particleDensity = "2";
    particleRadius = "0.1";
    emitter[0] = "FrmStandardCatBleedEffect_Sting_Emitter";
-   Debris = "FrmStandardCatBleedEffect_Debris";
-   debrisThetaMax = "30";
-   debrisVelocity = "5";
    lifetimeMS = "96";
    lightStartRadius = "4.94118";
    lightStartColor = "1 0 0 1";
@@ -125,7 +124,7 @@ datablock ExplosionData(FrmStandardCatBleedEffect10)
    Debris = "FrmStandardCatBleedEffect_Debris";
    debrisThetaMax = "60";
    debrisNum = "2";
-   debrisVelocity = 5;
+   debrisVelocity = 10;
 };
 
 //------------------------------------------------------------------------------
