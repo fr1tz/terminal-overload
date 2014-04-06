@@ -118,3 +118,16 @@ singleton Material(xa_rotc_hack_shapes_mat8)
    translucentBlendOp = "AddAlpha";
    showFootprints = "0";
 };
+
+singleton Material(xa_rotc_hack_shapes_mat9)
+{
+   mapTo = "explosion_white";
+   diffuseMap[0] = "content/xa/rotc/p.5.4/shapes/rotc/effects/explosion_white.png";
+   glow[0] = "0";
+   castShadows = "0";
+   translucent = "1";
+   translucentBlendOp = "AddAlpha";
+   emissive[0] = "1";
+   showFootprints = "0";
+};
+
