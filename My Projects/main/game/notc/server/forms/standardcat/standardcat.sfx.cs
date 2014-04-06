@@ -1,6 +1,13 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
+datablock SFXProfile(FrmStandardcatBleedEffectSound)
+{
+   fileName = "content/xa/rotc/p.5.4/sounds/rotc/explosion1";
+   description = AudioDefault3D;
+   preload = true;
+};
+
 datablock SFXProfile(FrmStandardcatSpawnSound)
 {
 	filename	 = "content/xa/rotc/p.5.4/sounds/rotc/deploy1.wav";

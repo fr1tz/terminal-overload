@@ -493,6 +493,33 @@ function FrmStandardcat::clientAction(%this, %obj, %nr)
       %obj.cycleWeapon("next");
 }
 
+// Called by ShapeBase script code.
+function FrmStandardcat::getBleed(%this, %obj, %dmg, %src)
+{
+   if(%dmg > 90)
+      return FrmStandardCatBleedEffect100;
+   else if(%dmg > 80)
+      return FrmStandardCatBleedEffect90;
+   else if(%dmg > 70)
+      return FrmStandardCatBleedEffect80;
+   else if(%dmg > 60)
+      return FrmStandardCatBleedEffect70;
+   else if(%dmg > 50)
+      return FrmStandardCatBleedEffect60;
+   else if(%dmg > 40)
+      return FrmStandardCatBleedEffect50;
+   else if(%dmg > 30)
+      return FrmStandardCatBleedEffect40;
+   else if(%dmg > 20)
+      return FrmStandardCatBleedEffect30;
+   else if(%dmg > 10)
+      return FrmStandardCatBleedEffect20;
+   else if(%dmg > 0)
+      return FrmStandardCatBleedEffect10;
+   else
+      return FrmStandardCatBleedEffect0;
+}
+
 function FrmStandardcat::canMaterialize(%this, %client, %pos, %normal, %transform)
 {
 	%ownTeamId = %client.team.teamId;
