@@ -110,9 +110,8 @@ function ShapeBase::reloadWeapon(%this)
 
 function ShapeBaseData::damage(%this, %obj, %source, %position, %amount, %damageType)
 {
-   %obj.applyDamage(%amount);
-   
-   %bleed = %this.getBleed(%obj, %delta);
+   %healthDamageDealt = %obj.applyDamage(%amount);
+   %bleed = %this.getBleed(%obj, %healthDamageDealt);
    if(isObject(%bleed))
    {
       %dpos = %position;
