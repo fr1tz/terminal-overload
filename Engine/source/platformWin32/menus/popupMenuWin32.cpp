@@ -20,6 +20,8 @@
 // IN THE SOFTWARE.
 //-----------------------------------------------------------------------------
 
+#ifndef TORQUE_SDL
+
 #include "platform/menus/popupMenu.h"
 #include "platformWin32/platformWin32.h"
 #include "console/consoleTypes.h"
@@ -740,3 +742,4 @@ S32 PopupMenu::getPosOnMenuBar()
    return pos;
 }
 
+#endif
