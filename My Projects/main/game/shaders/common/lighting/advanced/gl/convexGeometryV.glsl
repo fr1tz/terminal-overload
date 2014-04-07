@@ -3,13 +3,13 @@
 
 #include "../../../gl/hlslCompat.glsl"
 
-attribute vec4 vPosition;
+in vec4 vPosition;
 
 #define IN_pos vPosition
 
-varying vec4 wsEyeDir;
-varying vec4 ssPos;
-varying vec4 vsEyeDir;
+out vec4 wsEyeDir;
+out vec4 ssPos;
+out vec4 vsEyeDir;
 
 #define OUT_hpos gl_Position
 #define OUT_wsEyeDir wsEyeDir
@@ -23,9 +23,9 @@ uniform vec3 eyePosWorld;
 
 void main()
 {
-   OUT_hpos = mul( modelview, IN_pos );
-   OUT_wsEyeDir = mul( objTrans, IN_pos ) - vec4( eyePosWorld, 0.0 );
-   OUT_vsEyeDir = mul( worldViewOnly, IN_pos );
+   OUT_hpos = tMul( modelview, IN_pos );
+   OUT_wsEyeDir = tMul( objTrans, IN_pos ) - vec4( eyePosWorld, 0.0 );
+   OUT_vsEyeDir = tMul( worldViewOnly, IN_pos );
    OUT_ssPos = OUT_hpos;
 
    correctSSP(gl_Position);

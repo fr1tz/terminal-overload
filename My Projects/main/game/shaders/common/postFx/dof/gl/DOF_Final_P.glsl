@@ -43,7 +43,7 @@ uniform float maxFarCoC;
 
 vec4 tex2Doffset( sampler2D s, vec2 tc, vec2 offset )  
 {  
-   return texture2D( s, tc + offset * oneOverTargetSize );  
+   return texture( s, tc + offset * oneOverTargetSize );  
 }  
 
 half3 GetSmallBlurSample( vec2 tc )  
@@ -88,8 +88,8 @@ half4 InterpolateDof( half3 small, half3 med, half3 large, half t )
 void main()
 {  
    //return half4( 1,0,1,1 );
-   //return half4( texture2D( colorSampler, IN_uv0 ).rgb, 1.0 );
-   //return half4( texture2D( colorSampler, texCoords ).rgb, 0 );
+   //return half4( texture( colorSampler, IN_uv0 ).rgb, 1.0 );
+   //return half4( texture( colorSampler, texCoords ).rgb, 0 );
    half3 small;  
    half4 med;  
    half3 large;  
@@ -101,10 +101,10 @@ void main()
    small = GetSmallBlurSample( IN_uv0 );  
    //small = half3( 1,0,0 );
    //return half4( small, 1.0 );
-   med = texture2D( smallBlurSampler, IN_uv1 );  
+   med = texture( smallBlurSampler, IN_uv1 );  
    //med.rgb = half3( 0,1,0 );
    //return half4(med.rgb, 0.0);
-   large = texture2D( largeBlurSampler, IN_uv2 ).rgb;  
+   large = texture( largeBlurSampler, IN_uv2 ).rgb;  
    //large = half3( 0,0,1 );
    //return large;
    //return half4(large.rgb,1.0);
@@ -141,5 +141,5 @@ void main()
    //return half4(nearCoc.rrr,1);
    
    //return half4( 1,0,1,0 );
-   gl_FragColor = InterpolateDof( small, med.rgb, large, coc );  
+   OUT_FragColor0 = InterpolateDof( small, med.rgb, large, coc );  
 }  

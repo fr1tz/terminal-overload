@@ -36,8 +36,8 @@ uniform vec3 lumaCoefficients;
 uniform float threshold;
 uniform float depthThreshold;
 
-varying vec2 texcoord;
-varying vec4 offset[2];
+in vec2 texcoord;
+in vec4 offset[2];
 
 void main()
 {
@@ -47,12 +47,12 @@ void main()
    // can be improved if this luma calculation is performed in the main pass,
    // which may give you an edge if used in conjunction with a z prepass.
 
-   float L = dot(texture2D(colorMapG, texcoord).rgb, lumaCoefficients);
+   float L = dot(texture(colorMapG, texcoord).rgb, lumaCoefficients);
 
-   float Lleft = dot(texture2D(colorMapG, offset[0].xy).rgb, lumaCoefficients);
-   float Ltop = dot(texture2D(colorMapG, offset[0].zw).rgb, lumaCoefficients);  
-   float Lright = dot(texture2D(colorMapG, offset[1].xy).rgb, lumaCoefficients);
-   float Lbottom = dot(texture2D(colorMapG, offset[1].zw).rgb, lumaCoefficients);
+   float Lleft = dot(texture(colorMapG, offset[0].xy).rgb, lumaCoefficients);
+   float Ltop = dot(texture(colorMapG, offset[0].zw).rgb, lumaCoefficients);  
+   float Lright = dot(texture(colorMapG, offset[1].xy).rgb, lumaCoefficients);
+   float Lbottom = dot(texture(colorMapG, offset[1].zw).rgb, lumaCoefficients);
 
    vec4 delta = abs(vec4(L) - vec4(Lleft, Ltop, Lright, Lbottom));
    vec4 edges = step(threshold, delta);
@@ -70,5 +70,5 @@ void main()
    if (dot(edges, vec4(1.0)) == 0.0)
       discard;
 
-   gl_FragColor = edges;
+   OUT_FragColor0 = edges;
 }

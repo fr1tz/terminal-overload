@@ -21,12 +21,12 @@
 //-----------------------------------------------------------------------------
 #include "../../../gl/hlslCompat.glsl"
 
-varying vec2 uv0;
+in vec2 uv0;
 uniform sampler2D shadowMap;
-uniform sampler2D depthViz;
+uniform sampler1D depthViz;
 
 void main()
 {
-   float depth = saturate( texture2D( shadowMap, uv0 ).r );
-   gl_FragColor = vec4( texture2D( depthViz, vec2(depth, 1.0) ).rgb, 1 );
+   float depth = saturate( texture( shadowMap, uv0 ).r );
+   OUT_FragColor0 = vec4( texture( depthViz, depth ).rgb, 1 );
 }

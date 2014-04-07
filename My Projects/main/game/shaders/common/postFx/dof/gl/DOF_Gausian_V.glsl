@@ -23,32 +23,32 @@
 #include "../../../gl/hlslCompat.glsl"
 #include "../../../gl/torque.glsl"
 
-attribute vec4 vPosition;
-attribute vec2 vTexCoord0;
-attribute vec3 vTexCoord1;
+in vec4 vPosition;
+in vec2 vTexCoord0;
+in vec3 vTexCoord1;
 
 #define IN_pos  vPosition
 #define _IN_uv vTexCoord0
 #define IN_wsEyeRay vTexCoord1
 
 #define OUT_hpos gl_Position
-varying vec3 wsEyeRay;
+out vec3 wsEyeRay;
 #define OUT_wsEyeRay wsEyeRay
-varying vec2 uv0;
+out vec2 uv0;
 #define OUT_uv0 uv0
-varying vec2 uv1;
+out vec2 uv1;
 #define OUT_uv1 uv1
-varying vec2 uv2;
+out vec2 uv2;
 #define OUT_uv2 uv2
-varying vec2 uv3;
+out vec2 uv3;
 #define OUT_uv3 uv3
-varying vec2 uv4;
+out vec2 uv4;
 #define OUT_uv4 uv4
-varying vec2 uv5;
+out vec2 uv5;
 #define OUT_uv5 uv5
-varying vec2 uv6;
+out vec2 uv6;
 #define OUT_uv6 uv6
-varying vec2 uv7;
+out vec2 uv7;
 #define OUT_uv7 uv7
 
 uniform vec2 texSize0;

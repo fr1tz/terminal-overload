@@ -31,8 +31,8 @@ uniform vec4    fogColor;
 uniform vec3    fogData;
 uniform vec4    rtParams0;
 
-varying vec2 uv0;
-varying vec3 wsEyeRay;
+in vec2 uv0;
+in vec3 wsEyeRay;
 
 void main()
 {   
@@ -46,5 +46,5 @@ void main()
                                    fogData.y, 
                                    fogData.z );
 
-   gl_FragColor = hdrEncode( vec4( fogColor.rgb, 1.0 - saturate( factor ) ) );     
+   OUT_FragColor0 = hdrEncode( vec4( fogColor.rgb, 1.0 - saturate( factor ) ) );     
 }

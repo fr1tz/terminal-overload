@@ -34,17 +34,17 @@ uniform float maxWorldCoC;
 //uniform vec2 dofEqWeapon;  
 //uniform vec2 dofRowDelta;  // vec2( 0, 0.25 / renderTargetHeight )  
 
-varying vec2 tcColor0;
+in vec2 tcColor0;
 #define IN_tcColor0 tcColor0
-varying vec2 tcColor1;
+in vec2 tcColor1;
 #define IN_tcColor1 tcColor1
-varying vec2 tcDepth0;
+in vec2 tcDepth0;
 #define IN_tcDepth0 tcDepth0
-varying vec2 tcDepth1;
+in vec2 tcDepth1;
 #define IN_tcDepth1 tcDepth1
-varying vec2 tcDepth2;
+in vec2 tcDepth2;
 #define IN_tcDepth2 tcDepth2
-varying vec2 tcDepth3;
+in vec2 tcDepth3;
 #define IN_tcDepth3 tcDepth3
 
 void main()
@@ -72,10 +72,10 @@ void main()
    
    // Use bilinear filtering to average 4 color samples for free.  
    color = half3(0);  
-   color += texture2D( colorSampler, IN_tcColor0.xy + rowOfs[0] ).rgb;  
-   color += texture2D( colorSampler, IN_tcColor1.xy + rowOfs[0] ).rgb;  
-   color += texture2D( colorSampler, IN_tcColor0.xy + rowOfs[2] ).rgb;  
-   color += texture2D( colorSampler, IN_tcColor1.xy + rowOfs[2] ).rgb;  
+   color += texture( colorSampler, IN_tcColor0.xy + rowOfs[0] ).rgb;  
+   color += texture( colorSampler, IN_tcColor1.xy + rowOfs[0] ).rgb;  
+   color += texture( colorSampler, IN_tcColor0.xy + rowOfs[2] ).rgb;  
+   color += texture( colorSampler, IN_tcColor1.xy + rowOfs[2] ).rgb;  
    color /= 4;  
    
    // Process 4 samples at a time to use vector hardware efficiently.  
@@ -92,37 +92,37 @@ void main()
    }   
    
    /*
-   depth[0] = texture2D( depthSampler, pixel.tcDepth0.xy + rowOfs[0] ).r;  
-   depth[1] = texture2D( depthSampler, pixel.tcDepth1.xy + rowOfs[0] ).r;  
-   depth[2] = texture2D( depthSampler, pixel.tcDepth2.xy + rowOfs[0] ).r;  
-   depth[3] = texture2D( depthSampler, pixel.tcDepth3.xy + rowOfs[0] ).r;  
+   depth[0] = texture( depthSampler, pixel.tcDepth0.xy + rowOfs[0] ).r;  
+   depth[1] = texture( depthSampler, pixel.tcDepth1.xy + rowOfs[0] ).r;  
+   depth[2] = texture( depthSampler, pixel.tcDepth2.xy + rowOfs[0] ).r;  
+   depth[3] = texture( depthSampler, pixel.tcDepth3.xy + rowOfs[0] ).r;  
    viewCoc = saturate( dofEqWeapon.x * -depth + dofEqWeapon.y );  
    sceneCoc = saturate( dofEqWorld.x * depth + dofEqWorld.y ); 
    curCoc = min( viewCoc, sceneCoc );  
    coc = curCoc;  
    
-   depth[0] = texture2D( depthSampler, pixel.tcDepth0.xy + rowOfs[1] ).r;  
-   depth[1] = texture2D( depthSampler, pixel.tcDepth1.xy + rowOfs[1] ).r;  
-   depth[2] = texture2D( depthSampler, pixel.tcDepth2.xy + rowOfs[1] ).r;  
-   depth[3] = texture2D( depthSampler, pixel.tcDepth3.xy + rowOfs[1] ).r;  
+   depth[0] = texture( depthSampler, pixel.tcDepth0.xy + rowOfs[1] ).r;  
+   depth[1] = texture( depthSampler, pixel.tcDepth1.xy + rowOfs[1] ).r;  
+   depth[2] = texture( depthSampler, pixel.tcDepth2.xy + rowOfs[1] ).r;  
+   depth[3] = texture( depthSampler, pixel.tcDepth3.xy + rowOfs[1] ).r;  
    viewCoc = saturate( dofEqWeapon.x * -depth + dofEqWeapon.y );  
    sceneCoc = saturate( dofEqWorld.x * depth + dofEqWorld.y );  
    curCoc = min( viewCoc, sceneCoc );  
    coc = max( coc, curCoc );  
    
-   depth[0] = texture2D( depthSampler, pixel.tcDepth0.xy + rowOfs[2] ).r;  
-   depth[1] = texture2D( depthSampler, pixel.tcDepth1.xy + rowOfs[2] ).r;  
-   depth[2] = texture2D( depthSampler, pixel.tcDepth2.xy + rowOfs[2] ).r;  
-   depth[3] = texture2D( depthSampler, pixel.tcDepth3.xy + rowOfs[2] ).r;  
+   depth[0] = texture( depthSampler, pixel.tcDepth0.xy + rowOfs[2] ).r;  
+   depth[1] = texture( depthSampler, pixel.tcDepth1.xy + rowOfs[2] ).r;  
+   depth[2] = texture( depthSampler, pixel.tcDepth2.xy + rowOfs[2] ).r;  
+   depth[3] = texture( depthSampler, pixel.tcDepth3.xy + rowOfs[2] ).r;  
    viewCoc = saturate( dofEqWeapon.x * -depth + dofEqWeapon.y );  
    sceneCoc = saturate( dofEqWorld.x * depth + dofEqWorld.y );  
    curCoc = min( viewCoc, sceneCoc );  
    coc = max( coc, curCoc );  
    
-   depth[0] = texture2D( depthSampler, pixel.tcDepth0.xy + rowOfs[3] ).r;  
-   depth[1] = texture2D( depthSampler, pixel.tcDepth1.xy + rowOfs[3] ).r;  
-   depth[2] = texture2D( depthSampler, pixel.tcDepth2.xy + rowOfs[3] ).r;  
-   depth[3] = texture2D( depthSampler, pixel.tcDepth3.xy + rowOfs[3] ).r;  
+   depth[0] = texture( depthSampler, pixel.tcDepth0.xy + rowOfs[3] ).r;  
+   depth[1] = texture( depthSampler, pixel.tcDepth1.xy + rowOfs[3] ).r;  
+   depth[2] = texture( depthSampler, pixel.tcDepth2.xy + rowOfs[3] ).r;  
+   depth[3] = texture( depthSampler, pixel.tcDepth3.xy + rowOfs[3] ).r;  
    viewCoc = saturate( dofEqWeapon.x * -depth + dofEqWeapon.y );  
    sceneCoc = saturate( dofEqWorld.x * depth + dofEqWorld.y );  
    curCoc = min( viewCoc, sceneCoc );  
@@ -131,8 +131,8 @@ void main()
    
    maxCoc = max( max( coc[0], coc[1] ), max( coc[2], coc[3] ) );  
    
-   //gl_FragColor = half4( 1.0, 0.0, 1.0, 1.0 );
-   gl_FragColor = half4( color, maxCoc );  
-   //gl_FragColor = half4( color, 1.0f );
-   //gl_FragColor = half4( maxCoc.rrr, 1.0 );
+   //OUT_FragColor0 = half4( 1.0, 0.0, 1.0, 1.0 );
+   OUT_FragColor0 = half4( color, maxCoc );  
+   //OUT_FragColor0 = half4( color, 1.0f );
+   //OUT_FragColor0 = half4( maxCoc.rrr, 1.0 );
 }  

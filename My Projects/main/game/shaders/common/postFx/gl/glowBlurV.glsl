@@ -23,20 +23,20 @@
 #include "../../gl/hlslCompat.glsl"
 #include "../../gl/torque.glsl"
 
-attribute vec4 vPosition;
-attribute vec2 vTexCoord0;
+in vec4 vPosition;
+in vec2 vTexCoord0;
 
 uniform vec2 texSize0;
 
-varying vec4 hpos; //POSITION;
-varying vec2 uv0; //TEXCOORD0;
-varying vec2 uv1; //TEXCOORD1;
-varying vec2 uv2; //TEXCOORD2;
-varying vec2 uv3; //TEXCOORD3;
-varying vec2 uv4; //TEXCOORD4;
-varying vec2 uv5; //TEXCOORD5;
-varying vec2 uv6; //TEXCOORD6;
-varying vec2 uv7; //TEXCOORD7;
+out vec4 hpos; //POSITION;
+out vec2 uv0; //TEXCOORD0;
+out vec2 uv1; //TEXCOORD1;
+out vec2 uv2; //TEXCOORD2;
+out vec2 uv3; //TEXCOORD3;
+out vec2 uv4; //TEXCOORD4;
+out vec2 uv5; //TEXCOORD5;
+out vec2 uv6; //TEXCOORD6;
+out vec2 uv7; //TEXCOORD7;
 
 void main()
 {  
