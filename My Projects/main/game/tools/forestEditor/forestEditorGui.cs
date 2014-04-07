@@ -151,7 +151,7 @@ function ForestEditorGui::newMesh( %this )
       ForestEditMeshTree.scrollVisible( %item );
       ForestEditMeshTree.addSelection( %item );
       
-      ForestDataManager.setDirty( %name, "content/xa/torque3d/3.0/forest/managedItemData.cs" );  
+      ForestDataManager.setDirty( %name, "content/cleanup/managedItemData.cs" );
       
       %element = new ForestBrushElement()
       {
@@ -200,7 +200,7 @@ function ForestEditorGui::deleteMesh( %this )
 function ForestEditorGui::okDeleteMesh( %this, %mesh )
 {
    // Remove mesh from file
-   ForestDataManager.removeObjectFromFile( %mesh, "content/xa/torque3d/3.0/forest/managedItemData.cs" );  
+   ForestDataManager.removeObjectFromFile( %mesh, "content/cleanup/managedItemData.cs" );
 
    // Submitting undo actions is handled in code.
    %this.deleteMeshSafe( %mesh );   
