@@ -20,13 +20,18 @@
 // IN THE SOFTWARE.
 //-----------------------------------------------------------------------------
 
-#include "platformWin32/platformWin32.h"
 #include "platform/menus/menuBar.h"
 #include "platform/menus/popupMenu.h"
 #include "gui/core/guiCanvas.h"
 #include "windowManager/platformWindowMgr.h"
-#include "windowManager/win32/win32Window.h"
 #include "core/util/safeDelete.h"
+
+#include "windowManager/sdl/sdlWindow.h"
+#include "gui/editor/guiMenuBar.h"
+
+#include "platformSDL/menus/PlatformSDLPopupMenuData.h"
+
+#ifdef TORQUE_SDL
 
 //-----------------------------------------------------------------------------
 // Platform Data
@@ -37,17 +42,40 @@
 // 
 // };
 
+Map<GuiMenuBar::Menu*, PopupMenu*> PlatformPopupMenuData::mMenuMap;
+
+class GuiPlatformGenericMenuBar : public GuiMenuBar
+{
+   typedef GuiMenuBar Parent;
+public:
+   DECLARE_CONOBJECT(GuiPlatformGenericMenuBar);
+
+   virtual void menuItemSelected(Menu *menu, MenuItem *item)
+   {
+      AssertFatal(menu && item, "");
+
+      PopupMenu *popupMenu = PlatformPopupMenuData::mMenuMap[ menu ];
+      AssertFatal(popupMenu, "");
+
+      popupMenu->handleSelect( item->id );
+
+      Parent::menuItemSelected(menu, item);
+   }
+
+protected:
+   /// menu id / item id
+   Map<CompoundKey<U32, U32>, String> mCmds;
+
+};
+
+IMPLEMENT_CONOBJECT(GuiPlatformGenericMenuBar);
+
 //-----------------------------------------------------------------------------
 // MenuBar Methods
 //-----------------------------------------------------------------------------
 
-#ifndef TORQUE_SDL
-
 void MenuBar::createPlatformPopupMenuData()
 {
-//    mData = new PlatformMenuBarData;
-
-   // [tom, 6/4/2007] Nothing currently needed for win32
    mData = NULL;
 }
 
@@ -58,39 +86,38 @@ void MenuBar::deletePlatformPopupMenuData()
 
 //-----------------------------------------------------------------------------
 
-void MenuBar::updateMenuBar(PopupMenu *menu /* = NULL */)
+GuiPlatformGenericMenuBar* _FindMenuBarCtrl()
 {
-   if(! isAttachedToCanvas())
-      return;
+   GuiControl* control;
+   Sim::findObject("PlatformGenericMenubar", control);
+   AssertFatal(control, "");
+   if( !control )      
+      return NULL;   
 
-   if(menu == NULL)
+   GuiPlatformGenericMenuBar* menuBar;
+   menuBar = dynamic_cast<GuiPlatformGenericMenuBar*>( control->findObjectByInternalName(  StringTable->insert("menubar"), true) );
+   AssertFatal(menuBar, "");
+   return menuBar;
+}
+
+
+void MenuBar::updateMenuBar(PopupMenu *popupMenu /* = NULL */)
+{
+   //if(! isAttachedToCanvas())
+   //   return;   
+
+   GuiPlatformGenericMenuBar* menuBarGui = _FindMenuBarCtrl();
+   popupMenu->mData->mMenuBar = this;
+
+   AssertFatal( dStrcmp( popupMenu->mData->mMenuGui->text, popupMenu->getBarTitle() ) == 0, "");
+   GuiMenuBar::Menu* menuGui = menuBarGui->findMenu( popupMenu->getBarTitle() );
+   if(!menuGui)
    {
-      // [tom, 6/4/2007] Kludgetastic
-      GuiCanvas *oldCanvas = mCanvas;
-      S32 pos = -1;
-      PopupMenu *mnu = dynamic_cast<PopupMenu *>(at(0));
-      if(mnu)
-         pos = mnu->getPosOnMenuBar();
-
-      removeFromCanvas();
-      attachToCanvas(oldCanvas, pos);
-
-      return;
+      menuBarGui->addMenu( popupMenu->mData->mMenuGui );
+      menuGui = menuBarGui->findMenu( popupMenu->getBarTitle() );
    }
 
-   menu->removeFromMenuBar();
-   SimSet::iterator itr = find(begin(), end(), menu);
-   if(itr == end())
-      return;
-
-   menu->attachToMenuBar(mCanvas, itr - begin());
-
-   Win32Window *pWindow = dynamic_cast<Win32Window*>(mCanvas->getPlatformWindow());
-   if(pWindow == NULL) 
-      return;
-
-   HWND hWindow = pWindow->getHWND();
-   DrawMenuBar(hWindow);
+   PlatformPopupMenuData::mMenuMap[ menuGui ] = popupMenu;
 }
 
 //-----------------------------------------------------------------------------
@@ -103,73 +130,38 @@ void MenuBar::attachToCanvas(GuiCanvas *owner, S32 pos)
    // This is set for popup menus in the onAttachToMenuBar() callback
    mCanvas = owner;
 
-   Win32Window *pWindow = dynamic_cast<Win32Window*>(owner->getPlatformWindow());
+   PlatformWindowSDL *pWindow = dynamic_cast<PlatformWindowSDL*>(owner->getPlatformWindow());
    if(pWindow == NULL) 
       return;
 
    // Setup the native menu bar
-   HMENU hWindowMenu = pWindow->getMenuHandle();
-	if(hWindowMenu == NULL && !Journal::IsPlaying())
+   GuiMenuBar *hWindowMenu = static_cast<GuiMenuBar*>( pWindow->getMenuHandle() );
+	if( hWindowMenu == NULL && !Journal::IsPlaying() )
+      hWindowMenu = _FindMenuBarCtrl();
+
+   if(hWindowMenu)
    {
-      hWindowMenu = CreateMenu();
-      if(hWindowMenu)
+      pWindow->setMenuHandle( hWindowMenu );
+      GuiControl *base = hWindowMenu->getParent();
+         
+      while( base->getParent() )
       {
-         pWindow->setMenuHandle( hWindowMenu);
-      }
+         base = base->getParent();
+      }         
+
+      mCanvas->setMenuBar( base );
    }
-
-   // Add the items
-   for(S32 i = 0;i < size();++i)
-   {
-      PopupMenu *mnu = dynamic_cast<PopupMenu *>(at(i));
-      if(mnu == NULL)
-      {
-         Con::warnf("MenuBar::attachToMenuBar - Non-PopupMenu object in set");
-         continue;
-      }
-
-      if(mnu->isAttachedToMenuBar())
-         mnu->removeFromMenuBar();
-
-      mnu->attachToMenuBar(owner, pos + i);
-   }
-
-   HWND hWindow = pWindow->getHWND();
-   DrawMenuBar(hWindow);
-
+   
 }
 
 void MenuBar::removeFromCanvas()
 {
-   if(mCanvas == NULL || ! isAttachedToCanvas())
+   _FindMenuBarCtrl()->clearMenus();
+
+   mCanvas->setMenuBar(NULL);
+
+   if(mCanvas == NULL || !isAttachedToCanvas())
       return;
-
-   Win32Window *pWindow = dynamic_cast<Win32Window*>(mCanvas->getPlatformWindow());
-   if(pWindow == NULL) 
-      return;
-
-   // Setup the native menu bar
-   HMENU hWindowMenu = pWindow->getMenuHandle();
-   if(hWindowMenu == NULL)
-      return;
-
-   // Add the items
-   for(S32 i = 0;i < size();++i)
-   {
-      PopupMenu *mnu = dynamic_cast<PopupMenu *>(at(i));
-      if(mnu == NULL)
-      {
-         Con::warnf("MenuBar::removeFromMenuBar - Non-PopupMenu object in set");
-         continue;
-      }
-
-      mnu->removeFromMenuBar();
-   }
-
-   HWND hWindow = pWindow->getHWND();
-   DrawMenuBar(hWindow);
-
-   mCanvas = NULL;
 }
 
 #endif
