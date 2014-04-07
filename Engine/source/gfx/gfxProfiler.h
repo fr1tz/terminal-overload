@@ -78,7 +78,7 @@ inline TYPE GFXProfiler<TYPE>::getQueryTimer(GFXDevice* d, const StringTableEntr
       }
    }
 
-   TimerMap::Iterator itr;
+   typename TimerMap::Iterator itr;
    itr = mQueryMap.find(name);
    if(itr == mQueryMap.end())
       mQueryMap[name] = Vector<TYPE>();
@@ -94,7 +94,7 @@ template<class TYPE>
 inline F64 GFXProfiler<TYPE>::getQueryTime(StringTableEntry name)
 {
    F64 timeTotal = 0.0;
-   TimerMap::Iterator itr = mQueryMap.find(name);
+   typename TimerMap::Iterator itr = mQueryMap.find(name);
    if(itr != mQueryMap.end())
    {
       Vector<TYPE> &vec = itr->value;
@@ -178,7 +178,7 @@ inline void GFXProfiler<TYPE>::onEndFrame(bool start)
    }
    mActiveTimers.clear();
    mFreetimeQueries = mTimeQueries;
-   for(TimerMap::Iterator itr = mQueryMap.begin(); itr != mQueryMap.end(); ++itr)
+   for(typename TimerMap::Iterator itr = mQueryMap.begin(); itr != mQueryMap.end(); ++itr)
    {
       Vector<TYPE> &vec = itr->value;
       vec.clear();
