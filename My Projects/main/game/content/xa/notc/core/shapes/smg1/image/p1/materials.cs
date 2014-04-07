@@ -7,14 +7,14 @@ singleton Material(xa_notc_core_shapes_smg1_image_p1_mat1)
    diffuseColorPaletteSlot[0] = "1";
    specular[0] = "0.5 0.5 0.5 1";
    specularPower[0] = "50";
-   glow[0] = "1";
+   glow[0] = "0";
    emissive[0] = "1";
    diffuseMap[1] = "content/xa/notc/core/textures/grid128.12.png";
    diffuseColor[1] = "0.996078 0.996078 0.996078 1";
    diffuseColorPaletteSlot[1] = "1";
    wireframe[1] = "1";
    emissive[1] = "1";
-   glow[1] = "1";
+   glow[1] = "0";
    doubleSided = "0";
    translucentBlendOp = "LerpAlpha";
    castShadows = "0";
