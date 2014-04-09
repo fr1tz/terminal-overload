@@ -85,6 +85,7 @@ function GameCoreDM::prepareClient(%game, %client)
    
    %files = "xa/notc/core/client/audio/Descriptions/v1/exec.cs" TAB
             "xa/notc/core/client/audio/Hearing/v1/exec.cs" TAB
+            "xa/notc/core/client/audio/HitSound/v1/exec.cs" TAB
             "xa/notc/core/client/gui/CatGui/v1/exec.cs" TAB
             "xa/notc/core/client/gui/ChatHud/v1/exec.cs" TAB
             "xa/notc/core/client/gui/GuiChanger/v1/exec.cs" TAB

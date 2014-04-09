@@ -104,13 +104,74 @@ function ShapeBase::reloadWeapon(%this)
    }
 }
 
+//------------------------------------------------------------------------------
+
+function ShapeBase::setHitSoundPitch(%this, %pitch)
+{
+   if(%pitch > %this.inflictedDamageSoundPitch)
+      %this.inflictedDamageSoundPitch = %pitch;
+
+   cancel(%this.inflictedDamageThread);
+   %this.inflictedDamageThread = %this.schedule(0, "playHitSound");
+}
+
+function ShapeBase::playHitSound(%this)
+{
+   if(%this.client)
+   {
+      %pitch = 0.9 + %this.inflictedDamageSoundPitch / 2;
+      commandToClient(%this.client, 'PlayHitSound', %pitch);
+   }
+
+   %this.inflictedDamageSoundPitch = 0;
+   %this.inflictedDamageSoundLocked = false;
+}
+
 //-----------------------------------------------------------------------------
 // ShapeBase datablock
 //-----------------------------------------------------------------------------
 
 function ShapeBaseData::damage(%this, %obj, %source, %position, %amount, %damageType)
 {
+   if(%this.ignoreDamage)
+      return;
+
+	// Find original source object.
+   %originalSource = 0;
+   if(isObject(%source))
+   {
+      if(%source.getType() & $TypeMasks::ProjectileObjectType)
+         %originalSource = %source.sourceObject;
+      else if(%source.getType() & $TypeMasks::ShapeBaseObjectType)
+         %originalSource = %source.client.player;
+   }
+   
+   %damageBufStore = %obj.getDamageBufferLevel();
    %healthDamageDealt = %obj.applyDamage(%amount);
+   %bufDamageDealt = %damageBufStore - %obj.getDamageBufferLevel();
+   
+   //error("ShapeBaseData::damage()");
+   //echo("source:" SPC %source);
+   //echo("amount:" SPC %amount);
+   //echo("damageType:" SPC %damageType);
+   //echo("originalSource:" SPC %originalSource);
+   //echo("healthDamageDealt:" SPC %healthDamageDealt);
+   //echo("bufDamageDealt:" SPC %bufDamageDealt);
+
+   if(%originalSource != 0
+   && %originalSource.teamId != %obj.teamId
+   && %originalSource.getDamageState() $= "Enabled")
+	{
+		%stor = %originalSource.getDamageLevel();
+
+      %this.onHitEnemy(
+         %originalSource,
+         %obj,
+         %healthDamageDealt,
+         %bufDamageDealt
+      );
+   }
+
    %bleed = %this.getBleed(%obj, %healthDamageDealt);
    if(isObject(%bleed))
    {
@@ -127,5 +188,15 @@ function ShapeBaseData::damage(%this, %obj, %source, %position, %amount, %damage
 function ShapeBaseData::onDamage(%this, %obj, %delta)
 {
    // Avoid console error spam.
+}
+
+// Called by script
+function ShapeBaseData::onHitEnemy(%this, %obj, %enemy, %healthDmg, %bufDmg)
+{
+   %client = %obj.client;
+   if(!isObject(%client))
+      return;
+  
+   %obj.setHitSoundPitch(%enemy.getDamagePercent());
 }
 

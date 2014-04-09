@@ -3,6 +3,7 @@
 
 datablock BallastShapeData(ItemBallastShape)
 {
+   ignoreDamage = true;
    shapeFile = "content/xa/notc/core/shapes/standardcat/ballast/p1/shape.dae";
    mass = 9000;
 };
