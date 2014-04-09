@@ -873,7 +873,7 @@ public:
    /// Sets the current stateblock (actually activated in ::updateStates)
    virtual void setStateBlock( GFXStateBlock *block );
 
-   GFXStateBlock* getStateBlock() { return mCurrentStateBlock; }
+   GFXStateBlock* getStateBlock() { return mNewStateBlock; }
 
    /// This sets a stateblock directly from the description
    /// structure.  Its acceptable to use this for debug rendering
