@@ -65,7 +65,7 @@
 			{/foreach}
 		</Compiler>
 		<Linker>
-			
+			<Add option="-m32" />
 		</Linker>
 		<!-- <Unit filename="../../../../../Engine/lib/tinyxml/tinystr.cpp" /> -->
 		{assign var="dirWalk" value=$fileArray}

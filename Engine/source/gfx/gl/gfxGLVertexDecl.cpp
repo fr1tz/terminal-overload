@@ -95,7 +95,7 @@ void GFXGLVertexDecl::_initVerticesFormat2()
 
 void GFXGLVertexDecl::_initVerticesFormat(U32 stream)
 {   
-   U8* buffer = (U8*)0;
+   void* buffer = 0;
    U32 vertexSize = 0;
 
    for ( U32 i=0; i < mFormat->getElementCount(); i++ )
@@ -208,5 +208,5 @@ void GFXGLVertexDecl::_initVerticesFormat(U32 stream)
    }
 
    mVertexSize[stream] = vertexSize;
-   AssertFatal(vertexSize == (U8)buffer, "");
+   AssertFatal(vertexSize == (U32)buffer, "");
 }

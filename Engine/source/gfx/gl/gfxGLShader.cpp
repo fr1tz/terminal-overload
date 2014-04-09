@@ -677,12 +677,12 @@ void GFXGLShader::initHandles()
          desc.arraySize = 1;
          switch(element.getType())
          {
-         case GFXDeclType::GFXDeclType_Float4:
-            desc.constType = GFXShaderConstType::GFXSCT_Float4;
+         case GFXDeclType_Float4:
+            desc.constType = GFXSCT_Float4;
             break;
 
          default:
-            desc.constType = GFXShaderConstType::GFXSCT_Float;
+            desc.constType = GFXSCT_Float;
             break;
          }
          
@@ -705,10 +705,10 @@ void GFXGLShader::initHandles()
                break;
             }
             ++desc.arraySize;
-            if(desc.arraySize == 4 && desc.constType == GFXShaderConstType::GFXSCT_Float4)
+            if(desc.arraySize == 4 && desc.constType == GFXSCT_Float4)
             {
                desc.arraySize = 1;
-               desc.constType = GFXShaderConstType::GFXSCT_Float4x4;
+               desc.constType = GFXSCT_Float4x4;
             }
             offset += nextElement.getSizeInBytes();
          }

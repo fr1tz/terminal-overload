@@ -54,7 +54,8 @@
 			{/foreach}
 		</Compiler>
 		<Linker>
-                        <Add library="dl" />
+			<Add option="-m32" />
+			<Add library="dl" />
 			<Add directory="..\..\..\..\..\Engine\lib\compiled\debug.cb\" />;			
 		</Linker>
 		<!-- <Unit filename="../../../../../Engine/lib/tinyxml/tinystr.cpp" /> -->
