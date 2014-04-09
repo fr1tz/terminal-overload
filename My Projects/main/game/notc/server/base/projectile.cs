@@ -110,7 +110,7 @@ function ProjectileData::onExplode(%data, %proj, %pos, %mod)
 			continue;
 
 		// call damage func...
-		%targetObject.damage(%obj, %pos,
+		%targetObject.damage(%proj, %pos,
 			%damage * %coverage * %distScale, %damageType);
 
 		// if projectile was fired by a player, regain some of his energy...
