@@ -194,8 +194,9 @@ function GameCoreBase::onClientEnterGame(%game, %client)
 {
    //echo (%game @"\c4 -> "@ %game.class @" -> GameCoreBase::onClientEntergame");
 
+   commandToClient(%client, 'GameStart');
   	%client.ingame = true;
-   
+
    // Sync the client's clocks to the server's
    commandToClient(%client, 'SyncClock', $Sim::Time - $Game::StartTime);
    
