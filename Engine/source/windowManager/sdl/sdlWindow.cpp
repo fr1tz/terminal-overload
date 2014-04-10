@@ -20,7 +20,6 @@
 // IN THE SOFTWARE.
 //-----------------------------------------------------------------------------
 
-#include <tchar.h>
 #include "math/mMath.h"
 #include "gfx/gfxStructs.h"
 
@@ -298,8 +297,6 @@ bool PlatformWindowSDL::setSize( const Point2I &newSize )
    if (mTarget.isValid())
 		mTarget->resetMode();
 
-	InvalidateRect( NULL, NULL, true );
-
 	return true;
 }
 
@@ -575,11 +572,13 @@ void PlatformWindowSDL::setMouseLocked( bool enable )
 const UTF16 *PlatformWindowSDL::getWindowClassName()
 {
    // TODO SDL
-	return L"WindowClassName";
+   static String str("WindowClassName");
+   return str.utf16();
 }
 
 const UTF16 *PlatformWindowSDL::getCurtainWindowClassName()
 {
    // TODO SDL
-	return L"CurtainWindowClassName";
+   static String str("CurtainWindowClassName");
+   return str.utf16();
 }
