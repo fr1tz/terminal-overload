@@ -21,6 +21,8 @@ option(TORQUE_HIFI "HIFI? support" OFF)
 mark_as_advanced(TORQUE_HIFI)
 option(TORQUE_EXTENDED_MOVE "Extended move support" OFF)
 mark_as_advanced(TORQUE_EXTENDED_MOVE)
+option(TORQUE_SDL "Use SDL for window and input" OFF)
+mark_as_advanced(TORQUE_SDL)
 
 ###############################################################################
 # options
@@ -224,6 +226,13 @@ else()
     addPath("${srcDir}/T3D/gameBase/std")
 endif()
 
+if(TORQUE_SDL)
+    addPath("${srcDir}/WindowManager/sdl")
+    addPathRec("${srcDir}/platformSDL")
+    set(SDL_STATIC FALSE)
+    add_subdirectory( ${libDir}/sdl ${CMAKE_CURRENT_BINARY_DIR}/sdl2)
+endif()
+
 ###############################################################################
 # platform specific things
 ###############################################################################
@@ -419,6 +428,12 @@ if(TORQUE_HIFI)
 endif()
 if(TORQUE_EXTENDED_MOVE)
     addDef(TORQUE_EXTENDED_MOVE)
+endif()
+
+if(TORQUE_SDL)
+    addDef(TORQUE_SDL)
+    addInclude(${libDir}/sdl/include)
+    addLib(SDL2)
 endif()
 
 ###############################################################################

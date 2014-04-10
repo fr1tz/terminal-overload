@@ -9,6 +9,7 @@ set(libDir        "${CMAKE_SOURCE_DIR}/Engine/lib")
 set(srcDir        "${CMAKE_SOURCE_DIR}/Engine/source")
 set(cmakeDir      "${CMAKE_SOURCE_DIR}/Tools/CMake")
 
+include(ExternalProject)
 
 # hide some things
 mark_as_advanced(CMAKE_INSTALL_PREFIX)
