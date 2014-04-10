@@ -20,6 +20,8 @@
 // IN THE SOFTWARE.
 //-----------------------------------------------------------------------------
 
+#if !defined(TORQUE_SDL)
+
 #include <windows.h>
 #include <tchar.h>
 #include <winuser.h>
@@ -1171,3 +1173,5 @@ const UTF16 *Win32Window::getCurtainWindowClassName()
 {
 	return _CurtainWindowClassName;
 }
+
+#endif
