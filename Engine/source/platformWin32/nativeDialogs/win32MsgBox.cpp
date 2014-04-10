@@ -61,7 +61,7 @@ static U32 getMaskFromID(_FlagMap *map, S32 id)
 }
 
 //-----------------------------------------------------------------------------
-
+#ifndef TORQUE_SDL
 S32 Platform::messageBox(const UTF8 *title, const UTF8 *message, MBButtons buttons, MBIcons icon)
 {
    PlatformWindow *pWindow = WindowManager->getFirstWindow();
@@ -108,3 +108,4 @@ S32 Platform::messageBox(const UTF8 *title, const UTF8 *message, MBButtons butto
 
    return getMaskFromID(sgMsgBoxRetMap, ret);
 }
+#endif

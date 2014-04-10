@@ -102,6 +102,8 @@ void CloseSplashWindow(HINSTANCE hinst)
 	
 }
 
+#ifndef TORQUE_SDL
+
 bool Platform::displaySplashWindow( String path )
 {
    if(path.isEmpty())
@@ -129,9 +131,4 @@ bool Platform::displaySplashWindow( String path )
 	return true;
 }
 
-void Platform::closeSplashWindow()
-{
-
-}
-
-
+#endif

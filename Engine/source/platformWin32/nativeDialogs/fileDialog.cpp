@@ -14,7 +14,7 @@
 #include <WindowsX.h>
 #include "console/engineAPI.h"
 
-#ifdef TORQUE_TOOLS
+#if defined(TORQUE_TOOLS) && !defined(TORQUE_SDL)
 //-----------------------------------------------------------------------------
 // PlatformFileDlgData Implementation
 //-----------------------------------------------------------------------------

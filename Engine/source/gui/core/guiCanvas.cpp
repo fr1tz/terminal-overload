@@ -248,6 +248,8 @@ bool GuiCanvas::onAdd()
    mLastPurchaseHideTime = 0;
 #endif
 
+   mMenuBarCtrl = (GuiControl*)Sim::findObject("PlatformGenericMenubar");
+
    return parentRet;
 }
 
@@ -265,6 +267,18 @@ void GuiCanvas::onRemove()
    Con::executef(this, "onDestroyMenu");
 
    Parent::onRemove();
+}
+
+void GuiCanvas::setMenuBar(SimObject *obj)
+{
+   if( mMenuBarCtrl )
+      Parent::removeObject( mMenuBarCtrl );
+
+   mMenuBarCtrl = (GuiControl*)obj;
+   if( mMenuBarCtrl )
+   {
+      Parent::addObject(mMenuBarCtrl);
+   }
 }
 
 void GuiCanvas::setWindowTitle(const char *newTitle)
@@ -643,7 +657,7 @@ bool GuiCanvas::processMouseEvent(InputEventInfo &inputEvent)
    // Need to query platform for specific things
    AssertISV(mPlatformWindow, "GuiCanvas::processMouseEvent - no window present!");
    PlatformCursorController *pController = mPlatformWindow->getCursorController();
-   AssertFatal(pController != NULL, "GuiCanvas::processInputEvent - No Platform Controller Found")
+   AssertFatal(pController != NULL, "GuiCanvas::processInputEvent - No Platform Controller Found");
 
       //copy the modifier into the new event
       mLastEvent.modifier = inputEvent.modifier;
@@ -981,24 +995,8 @@ void GuiCanvas::rootMouseDown(const GuiEvent &event)
       mMouseCapturedControl->onMouseDown(event);
    else
    {
-      //else pass it to whoever is underneath the cursor
-      iterator i;
-      i = end();
-      while (i != begin())
-      {
-         i--;
-         GuiControl *ctrl = static_cast<GuiControl *>(*i);
-         GuiControl *controlHit = ctrl->findHitControl(event.mousePoint);
-
-         //see if the controlHit is a modeless dialog...
-         if( !controlHit->getControlProfile()->mModal )
-            continue;
-         else
-         {
-            controlHit->onMouseDown(event);
-            break;
-         }
-      }
+      GuiControl *controlHit = findHitControl(event.mousePoint);
+      controlHit->onMouseDown(event);
    }
 
    if (bool(mMouseControl))
@@ -1257,6 +1255,8 @@ void GuiCanvas::setContentControl(GuiControl *gui)
 
       Sim::getGuiGroup()->addObject( ctrl );
    }
+
+   setMenuBar( mMenuBarCtrl );
 
    // lose the first responder from the old GUI
    GuiControl* responder = gui->findFirstTabable();
@@ -1521,10 +1521,18 @@ void GuiCanvas::maintainSizing()
       GuiControl *ctrl = static_cast<GuiControl*>(*i);
       Point2I ext = ctrl->getExtent();
       Point2I pos = ctrl->getPosition();
+      Point2I newExt = screenRect.extent;
+      Point2I newPos = screenRect.point;
 
-      if(pos != screenRect.point || ext != screenRect.extent)
+      if( mMenuBarCtrl && (ctrl == getContentControl()) )
       {
-         ctrl->resize(screenRect.point, screenRect.extent);
+         newPos.y += 32;
+         newExt.y -= 32;
+      }
+
+      if(pos != newPos || ext != newExt)
+      {
+         ctrl->resize(newPos, newExt);
          resetUpdateRegions();
       }
    }
@@ -2566,6 +2574,15 @@ ConsoleMethod( GuiCanvas, setFocus, void, 2,2, "() - Claim OS input focus for th
    PlatformWindow* window = object->getPlatformWindow();
    if( window )
       window->setFocus();
+}
+
+DefineEngineMethod( GuiCanvas, setMenuBar, void, ( GuiControl* menu ),,
+   "Translate a coordinate from canvas window-space to screen-space.\n"
+   "@param coordinate The coordinate in window-space.\n"
+   "@return The given coordinate translated to screen-space." )
+{ 
+      
+   return object->setMenuBar( menu );
 }
 
 ConsoleMethod( GuiCanvas, setVideoMode, void, 5, 8,
