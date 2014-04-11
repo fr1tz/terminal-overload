@@ -131,4 +131,13 @@ bool Platform::displaySplashWindow( String path )
 	return true;
 }
 
+void Platform::closeSplashWindow()
+{
+	if(!gSplashWnd)
+		return;
+
+   DestroyWindow(gSplashWnd);
+	gSplashWnd = NULL;
+}
+
 #endif
