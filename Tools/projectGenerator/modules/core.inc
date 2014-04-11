@@ -103,8 +103,11 @@ switch( TorqueGenerator::$platform )
    case "linux":
      addEngineSrcDir('platformX86UNIX');
      addEngineSrcDir('platformX86UNIX/threads');
-     addEngineSrcDir('platformX86UNIX/nativeDialogs');
-     addEngineSrcDir('platformX86UNIX/menus');
+     //addEngineSrcDir('platformX86UNIX/nativeDialogs');
+     //addEngineSrcDir('platformX86UNIX/menus');
+     addEngineSrcFile('platformX86UNIX/nativeDialogs/x11MsgBox.cpp');
+     addEngineSrcDir('platformPortable/menus');
+     addEngineSrcFile('platformPortable/nativeDialogs/portableFileDialog.cpp');
      addEngineSrcDir('platformPOSIX');
      addEngineSrcDir('windowManager/x11');
      break;
