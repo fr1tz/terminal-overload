@@ -36,6 +36,7 @@ class X11WindowManager : public PlatformWindowManager
     // List of allocated windows.
     X11Window* mWindowListHead;
 
+public:
     // Callback for the process list.
     void _process();
 

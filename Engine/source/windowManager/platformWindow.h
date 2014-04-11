@@ -70,6 +70,9 @@ protected:
    /// Offscreen Render
    bool mOffscreenRender;
 
+   /// Generic handle for the portable menu bar
+   void* mPortableMenuHandle;
+
    /// Protected constructor so that the win
    PlatformWindow()
    {
@@ -85,6 +88,7 @@ protected:
       mSuppressReset = false;
 
       mOffscreenRender = false;
+      mPortableMenuHandle = NULL;
    }
 
 public:
@@ -468,6 +472,12 @@ public:
    ResizeEvent       resizeEvent;
    IdleEvent         idleEvent;
 
+   /// @}
+
+   /// @name Portable menu handle
+   /// @{
+   void* &getPortableMenuHandle() { return mPortableMenuHandle; }
+   void  setPortableMenuHandle(void* menuHandle) { mPortableMenuHandle = menuHandle; }  
    /// @}
    
    /// Get the platform specific object needed to create or attach an accelerated
