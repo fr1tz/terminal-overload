@@ -8,6 +8,8 @@
 #include "core/util/journal/process.h"
 #include "core/strings/unicode.h"
 
+#if !defined( TORQUE_SDL )
+
 // ------------------------------------------------------------------------
 
 void CloseSplashWindow(HINSTANCE hinst);
@@ -506,3 +508,5 @@ void Win32WindowManager::raiseCurtain()
    DestroyWindow(mCurtainWindow);
    mCurtainWindow = NULL;
 }
+
+#endif

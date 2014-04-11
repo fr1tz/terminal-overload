@@ -1,6 +1,287 @@
+//-----------------------------------------------------------------------------
+// Copyright (c) 2012 GarageGames, LLC
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to
+// deal in the Software without restriction, including without limitation the
+// rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+// sell copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+// IN THE SOFTWARE.
+//-----------------------------------------------------------------------------
+
+#include "platform/platformInput.h"
+#include "console/console.h"
+#include "core/util/journal/process.h"
+#include "windowManager/platformWindowMgr.h"
+
 #include "sdlInput.h"
 #include "platform/platformInput.h"
 #include "SDL.h"
+
+#ifdef LOG_INPUT
+#include <time.h>
+#include <stdarg.h>
+#endif
+
+// Static class variables:
+InputManager*  Input::smManager;
+bool           Input::smActive;
+U8             Input::smModifierKeys;
+bool           Input::smLastKeyboardActivated;
+bool           Input::smLastMouseActivated;
+bool           Input::smLastJoystickActivated;
+InputEvent     Input::smInputEvent;
+
+#ifdef LOG_INPUT
+static HANDLE gInputLog;
+#endif
+
+static void fillAsciiTable() {}
+
+//------------------------------------------------------------------------------
+//
+// This function gets the standard ASCII code corresponding to our key code
+// and the existing modifier key state.
+//
+//------------------------------------------------------------------------------
+struct AsciiData
+{
+   struct KeyData
+   {
+      U16   ascii;
+      bool  isDeadChar;
+   };
+
+   KeyData upper;
+   KeyData lower;
+   KeyData goofy;
+};
+
+
+#define NUM_KEYS ( KEY_OEM_102 + 1 )
+#define KEY_FIRST KEY_ESCAPE
+static AsciiData AsciiTable[NUM_KEYS];
+
+//------------------------------------------------------------------------------
+void Input::init()
+{
+   Con::printf( "Input Init:" );
+
+   destroy();
+
+   smActive = false;
+   smLastKeyboardActivated = true;
+   smLastMouseActivated = true;
+   smLastJoystickActivated = true;
+
+   SDL_InitSubSystem( SDL_INIT_JOYSTICK | SDL_INIT_HAPTIC | SDL_INIT_GAMECONTROLLER | SDL_INIT_EVENTS );
+
+   // Init the current modifier keys
+   setModifierKeys(0);
+   fillAsciiTable();
+   Con::printf( "" );
+
+   // Set ourselves to participate in per-frame processing.
+   Process::notify(Input::process, PROCESS_INPUT_ORDER);
+
+}
+
+//------------------------------------------------------------------------------
+ConsoleFunction( isJoystickDetected, bool, 1, 1, "isJoystickDetected()" )
+{
+   argc; argv;
+   return( SDL_NumJoysticks() > 0 );
+}
+
+//------------------------------------------------------------------------------
+ConsoleFunction( getJoystickAxes, const char*, 2, 2, "getJoystickAxes( instance )" )
+{
+   argc;
+   // TODO SDL
+   return( "" );
+}
+
+//------------------------------------------------------------------------------
+U16 Input::getKeyCode( U16 asciiCode )
+{
+   U16 keyCode = 0;
+   U16 i;
+
+   // This is done three times so the lowerkey will always
+   // be found first. Some foreign keyboards have duplicate
+   // chars on some keys.
+   for ( i = KEY_FIRST; i < NUM_KEYS && !keyCode; i++ )
+   {
+      if ( AsciiTable[i].lower.ascii == asciiCode )
+      {
+         keyCode = i;
+         break;
+      };
+   }
+
+   for ( i = KEY_FIRST; i < NUM_KEYS && !keyCode; i++ )
+   {
+      if ( AsciiTable[i].upper.ascii == asciiCode )
+      {
+         keyCode = i;
+         break;
+      };
+   }
+
+   for ( i = KEY_FIRST; i < NUM_KEYS && !keyCode; i++ )
+   {
+      if ( AsciiTable[i].goofy.ascii == asciiCode )
+      {
+         keyCode = i;
+         break;
+      };
+   }
+
+   return( keyCode );
+}
+
+//------------------------------------------------------------------------------
+U16 Input::getAscii( U16 keyCode, KEY_STATE keyState )
+{
+   if ( keyCode >= NUM_KEYS )
+      return 0;
+
+   U32 SDLKey = KeyMapSDL::getSDLScanCodeFromTorque( keyCode );
+   SDLKey = SDL_GetKeyFromScancode( (SDL_Scancode)SDLKey );
+
+   const char *text = SDL_GetKeyName( SDLKey );
+   if(text[1] != 0)
+      return 0;
+   U8 ret = text[0];
+
+   if( !dIsalpha(ret) )
+      return ret;
+
+   switch ( keyState )
+   {
+      case STATE_LOWER:
+         return dTolower( ret );
+      case STATE_UPPER:
+         return dToupper( ret );
+      case STATE_GOOFY:
+         return 0; // TODO SDL
+      default:
+         return(0);
+
+   }
+}
+
+//------------------------------------------------------------------------------
+void Input::destroy()
+{
+   Process::remove(Input::process);
+
+   SDL_QuitSubSystem( SDL_INIT_JOYSTICK | SDL_INIT_HAPTIC | SDL_INIT_GAMECONTROLLER );
+
+}
+
+//------------------------------------------------------------------------------
+bool Input::enable()
+{
+   if ( smManager && !smManager->isEnabled() )
+      return( smManager->enable() );
+
+   return( false );
+}
+
+//------------------------------------------------------------------------------
+void Input::disable()
+{
+   if ( smManager && smManager->isEnabled() )
+      smManager->disable();
+}
+
+//------------------------------------------------------------------------------
+
+void Input::activate()
+{
+#ifdef UNICODE
+   //winState.imeHandle = ImmGetContext( getWin32WindowHandle() );
+   //ImmReleaseContext( getWin32WindowHandle(), winState.imeHandle );
+#endif
+
+   if ( !Con::getBoolVariable( "$enableDirectInput" ) )
+      return;
+
+   if ( smManager && smManager->isEnabled() && !smActive )
+   {
+      Con::printf( "Activating Input..." );
+      smActive = true;
+   }
+}
+
+//------------------------------------------------------------------------------
+void Input::deactivate()
+{
+   if ( smManager && smManager->isEnabled() && smActive )
+   {
+      smActive = false;
+      Con::printf( "Input deactivated." );
+   }
+}
+
+//------------------------------------------------------------------------------
+bool Input::isEnabled()
+{
+   if ( smManager )
+      return smManager->isEnabled();
+   return false;
+}
+
+//------------------------------------------------------------------------------
+bool Input::isActive()
+{
+   return smActive;
+}
+
+//------------------------------------------------------------------------------
+void Input::process()
+{
+   if ( smManager && smManager->isEnabled() && smActive )
+      smManager->process();
+}
+
+//------------------------------------------------------------------------------
+InputManager* Input::getManager()
+{
+   return( smManager );
+}
+
+//-----------------------------------------------------------------------------
+// Clipboard functions
+const char* Platform::getClipboard()
+{
+   //note - this function never returns NULL
+	return SDL_HasClipboardText() ? SDL_GetClipboardText() : "";
+}
+
+//-----------------------------------------------------------------------------
+bool Platform::setClipboard(const char *text)
+{
+	if (!text)
+		return false;
+
+	SDL_SetClipboardText(text);
+
+	return true;
+}
+
 
 namespace
 {

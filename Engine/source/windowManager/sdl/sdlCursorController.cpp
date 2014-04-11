@@ -20,7 +20,6 @@
 // IN THE SOFTWARE.
 //-----------------------------------------------------------------------------
 
-#include <tchar.h>
 #include "core/strings/unicode.h"
 #include "math/mMath.h"
 #include "windowManager/sdl/sdlWindow.h"
