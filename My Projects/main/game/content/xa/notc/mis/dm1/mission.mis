@@ -425,11 +425,11 @@ new SimGroup(MissionGroup) {
          canSave = "1";
          canSaveDynamicFields = "1";
             lines = "SpawnLine";
-            zActivationTrigger = "4425";
+            zActivationTrigger = "4430";
             zLastUpdatePosition = "0 0.2174 9173.61";
-            zParticleEmitter = "4424";
-            zProximityTrigger = "4426";
-            zUpdateAssetsThread = "40395";
+            zParticleEmitter = "4429";
+            zProximityTrigger = "4431";
+            zUpdateAssetsThread = "70634";
       };
       new TSStatic() {
          shapeName = "content/xa/notc/mis/dm1/shapes/heap/shape.dae";
@@ -1437,7 +1437,7 @@ new SimGroup(MissionGroup) {
          msToNext = "1000";
          smoothingType = "Spline";
          position = "37 116 201";
-         rotation = "0.0209759 0.0211819 -0.999556 90.5854";
+         rotation = "0.0209759 0.0211819 -0.999556 90.5857";
          scale = "1 1 1";
          paletteColors[0] = "227 209 124 255";
          paletteColors[1] = "227 209 124 255";
