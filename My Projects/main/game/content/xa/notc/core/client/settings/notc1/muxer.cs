@@ -34,6 +34,6 @@ function XaNotcSettings1_MuxerGui::onWake(%this)
       return;
 
    if(%this-->ContentContainer.getCount() == 0)
-      %this-->ControlsButton.performClick();
+      %this-->MiscButton.performClick();
 }
 

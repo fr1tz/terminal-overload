@@ -4,9 +4,10 @@
 exec("./cmds.cs");
 exec("./default.prefs.cs");
 exec("./default.bind.cs");
-exec("./controls.gui");
-exec("./controls.cs");
+exec("./catControls.gui");
+exec("./catControls.cs");
 exec("./controlsRemapDlg.gui");
+exec("./controlsRemapDlg.cs");
 exec("./misc.gui");
 exec("./misc.cs");
 exec("./muxer.gui");

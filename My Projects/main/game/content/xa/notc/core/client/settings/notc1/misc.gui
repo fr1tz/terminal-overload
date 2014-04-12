@@ -17,7 +17,7 @@
 
    new GuiControl(XaNotcSettings1_MiscGui) {
       position = "66 38";
-      extent = "488 390";
+      extent = "480 390";
       minExtent = "8 8";
       horizSizing = "width";
       vertSizing = "height";
