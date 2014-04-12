@@ -52,7 +52,11 @@ function OptGameGui::setContent(%this, %ctrl)
    {
       %this-->ContentContainer.add(%content);
       %content.setPosition(0, 0);
-      %content.setExtent(%this-->ContentContainer.getExtent());
+      %extent = %this-->ContentContainer.getExtent();
+      %w = getWord(%extent, 0);
+      %h = getWord(%extent, 1);
+      %extent = %w-20 SPC %h;
+      %content.setExtent(%extent);
       %this.zContent = %content;
       %this.zContentOriginalParent = %contentOriginalParent;
    }
