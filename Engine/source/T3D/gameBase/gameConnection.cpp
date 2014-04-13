@@ -697,7 +697,7 @@ bool GameConnection::isValidControlCameraFov(F32 fov)
       obj = obj->getControlObject();
    }
 
-   return cObj ? cObj->isValidCameraFov(fov) : false;
+   return cObj ? cObj->isValidCameraFov(fov) : NULL;
 }
 
 bool GameConnection::setControlCameraFov(F32 fov)

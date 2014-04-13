@@ -882,12 +882,12 @@ ConsoleStaticMethod( GuiInspector, findByObject, S32, 2, 2,
 {
    SimObject *obj;
    if ( !Sim::findObject( argv[1], obj ) )   
-      return 0;
+      return NULL;
    
    obj = GuiInspector::findByObject( obj );
 
    if ( !obj )
-      return 0;
+      return NULL;
 
    return obj->getId();      
 }

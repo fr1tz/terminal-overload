@@ -132,7 +132,7 @@ S32 QSORT_CALLBACK ArrayObject::_valueFunctionCompare( const void* a, const void
 //-----------------------------------------------------------------------------
 
 ArrayObject::ArrayObject()
-   : mCurrentIndex( 0 ),
+   : mCurrentIndex( NULL ),
      mCaseSensitive( false )
 {
 }
@@ -145,7 +145,7 @@ void ArrayObject::initPersistFields()
       "Makes the keys and values case-sensitive.\n"
       "By default, comparison of key and value strings will be case-insensitive." );
 
-   addProtectedField( "key", TypeCaseString, 0, &_addKeyFromField, &emptyStringProtectedGetFn, 
+   addProtectedField( "key", TypeCaseString, NULL, &_addKeyFromField, &emptyStringProtectedGetFn, 
       "Helper field which allows you to add new key['keyname'] = value pairs." );
 
    Parent::initPersistFields();

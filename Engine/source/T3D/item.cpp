@@ -1204,7 +1204,7 @@ DefineEngineMethod( Item, isRotating, bool, (),,
    return object->isRotating();
 }
 
-DefineEngineMethod( Item, setCollisionTimeout, bool, (int ignoreColObj),(0), 
+DefineEngineMethod( Item, setCollisionTimeout, bool, (int ignoreColObj),(NULL), 
    "@brief Temporarily disable collisions against a specific ShapeBase object.\n\n"
 
    "This is useful to prevent a player from immediately picking up an Item they have "

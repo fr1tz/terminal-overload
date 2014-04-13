@@ -126,7 +126,7 @@ ConsoleDocClass( Explosion,
 MRandomLCG sgRandom(0xdeadbeef);
 
 
-DefineEngineFunction(calcExplosionCoverage, F32, (Point3F pos, S32 id, U32 covMask),(Point3F(0.0f,0.0f,0.0f), 0, 0),
+DefineEngineFunction(calcExplosionCoverage, F32, (Point3F pos, S32 id, U32 covMask),(Point3F(0.0f,0.0f,0.0f), NULL, NULL),
    "@brief Calculates how much an explosion effects a specific object.\n\n"
    "Use this to determine how much damage to apply to objects based on their "
    "distance from the explosion's center point, and whether the explosion is "

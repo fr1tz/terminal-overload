@@ -89,7 +89,7 @@ class OptimizedPolyList : public AbstractPolyList
          : plane( -1 ),
            object( NULL ),
            vertexCount( 0 ),
-           material( 0 ),
+           material( NULL ),
            type( TriangleFan )
       {
       }
