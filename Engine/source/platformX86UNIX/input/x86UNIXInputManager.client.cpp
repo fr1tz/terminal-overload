@@ -1845,4 +1845,4 @@ ConsoleFunction( echoInputState, void, 1, 1, "echoInputState()" )
    }
    else
       Con::printf( "Input is not enabled." );
-}
+}
