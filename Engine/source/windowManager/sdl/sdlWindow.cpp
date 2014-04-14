@@ -32,6 +32,7 @@
 
 #include "gfx/gfxDevice.h"
 
+#define SDL_VIDEO_DRIVER_X11  // TODO SDL
 #include "SDL.h"
 #include "SDL_syswm.h"
 
@@ -121,10 +122,18 @@ void* PlatformWindowSDL::getSystemWindow(const WindowSystem system)
      SDL_VERSION(&info.version);
      SDL_GetWindowWMInfo(mWindowHandle,&info);     
 
+#ifdef TORQUE_OS_WIN32
      if( system == WindowSystem_Windows && info.subsystem == SDL_SYSWM_WINDOWS)
         return info.info.win.window;
+#endif
 
-     return NULL;
+#if defined(TORQUE_OS_LINUX)
+     if( system == WindowSystem_X11 && info.subsystem == SDL_SYSWM_X11)
+        return (void*)info.info.x11.window;
+#endif
+
+    AssertFatal(0, "");
+    return NULL;
 }
 
 void PlatformWindowSDL::setVideoMode( const GFXVideoMode &mode )
