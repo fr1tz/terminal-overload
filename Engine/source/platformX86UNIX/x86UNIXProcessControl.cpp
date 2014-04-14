@@ -31,7 +31,7 @@
 #include <signal.h>
 
 #ifndef TORQUE_DEDICATED
-#include <SDL/SDL.h>
+#include <SDL.h>
 #endif
 
 //-----------------------------------------------------------------------------
