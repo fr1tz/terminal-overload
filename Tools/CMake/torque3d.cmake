@@ -1,5 +1,16 @@
 project(${TORQUE_APP_NAME})
 
+if(UNIX)
+    # default compiler flags
+    # force compile 32 bit
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m32 -Wall -Wundef -msse -pipe -Wfatal-errors")
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -m32 -Wall -Wundef -msse -pipe -Wfatal-errors")
+
+	# for asm files
+	SET (CMAKE_ASM_NASM_OBJECT_FORMAT "elf")
+	ENABLE_LANGUAGE (ASM_NASM)
+endif()
+
 # TODO: fmod support
 
 ###############################################################################
@@ -13,24 +24,47 @@ option(TORQUE_BASIC_LIGHTING "Basic Lighting" ON)
 mark_as_advanced(TORQUE_BASIC_LIGHTING)
 option(TORQUE_THEORA "Theora Video Support" ON)
 mark_as_advanced(TORQUE_THEORA)
-option(TORQUE_SFX_DirectX "DirectX Sound" ON)
-mark_as_advanced(TORQUE_SFX_DirectX)
+if(WIN32)
+	option(TORQUE_SFX_DirectX "DirectX Sound" ON)
+	mark_as_advanced(TORQUE_SFX_DirectX)
+else()
+	set(TORQUE_SFX_DirectX OFF)
+endif()
 option(TORQUE_SFX_OPENAL "OpenAL Sound" ON)
 mark_as_advanced(TORQUE_SFX_OPENAL)
 option(TORQUE_HIFI "HIFI? support" OFF)
 mark_as_advanced(TORQUE_HIFI)
 option(TORQUE_EXTENDED_MOVE "Extended move support" OFF)
 mark_as_advanced(TORQUE_EXTENDED_MOVE)
-option(TORQUE_SDL "Use SDL for window and input" OFF)
-mark_as_advanced(TORQUE_SDL)
+if(WIN32)
+	option(TORQUE_SDL "Use SDL for window and input" OFF)
+	mark_as_advanced(TORQUE_SDL)
+else()
+	set(TORQUE_SDL ON) # we need sdl to work on Linux/Mac
+endif()
+if(WIN32)
+	option(TORQUE_OPENGL "Allow OpenGL render" OFF)
+	mark_as_advanced(TORQUE_OPENGL)
+else()
+	set(TORQUE_OPENGL ON) # we need OpenGL to render on Linux/Mac
+endif()
+
 
 ###############################################################################
 # options
 ###############################################################################
+if(NOT MSVC) # handle single-configuration generator
+    set(TORQUE_BUILD_TYPE "Debug" CACHE STRING "Select one of Debug, Release and RelWithDebInfo")
+    set_property(CACHE TORQUE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "RelWithDebInfo")
+    
+    set(TORQUE_ADDITIONAL_LINKER_FLAGS "" CACHE STRING "Additional linker flags")
+    mark_as_advanced(TORQUE_ADDITIONAL_LINKER_FLAGS)
+endif()
+
 option(TORQUE_MULTITHREAD "Multi Threading" ON)
 mark_as_advanced(TORQUE_MULTITHREAD)
 
-option(TORQUE_DISABLE_MEMORY_MANAGER "Disable memory manager" OFF)
+option(TORQUE_DISABLE_MEMORY_MANAGER "Disable memory manager" ON)
 mark_as_advanced(TORQUE_DISABLE_MEMORY_MANAGER)
 
 option(TORQUE_DISABLE_VIRTUAL_MOUNT_SYSTEM "Disable virtual mount system" OFF)
@@ -66,15 +100,31 @@ mark_as_advanced(TORQUE_DEBUG_GFX_MODE)
 #option(DEBUG_SPEW "more debug" OFF)
 set(TORQUE_NO_DSO_GENERATION ON)
 
-# warning C4800: 'XXX' : forcing value to bool 'true' or 'false' (performance warning)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -wd4800")
-# warning C4018: '<' : signed/unsigned mismatch
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -wd4018")
-# warning C4244: 'initializing' : conversion from 'XXX' to 'XXX', possible loss of data
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -wd4244")
+if(WIN32)
+	# warning C4800: 'XXX' : forcing value to bool 'true' or 'false' (performance warning)
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -wd4800")
+	# warning C4018: '<' : signed/unsigned mismatch
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -wd4018")
+	# warning C4244: 'initializing' : conversion from 'XXX' to 'XXX', possible loss of data
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -wd4244")
+endif()
 
 if(WIN32)
     link_directories($ENV{DXSDK_DIR}/Lib/x86)
+endif()
+
+# build types
+if(NOT MSVC) # handle single-configuration generator
+	set(CMAKE_BUILD_TYPE ${TORQUE_BUILD_TYPE})
+	if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+        set(TORQUE_DEBUG TRUE)
+    elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
+        set(TORQUE_RELEASE TRUE)
+    elseif(CMAKE_BUILD_TYPE STREQUAL "RelWithDebInfo")
+        set(TORQUE_RELEASE TRUE)
+    else()
+		message(FATAL_ERROR "Please select Debug, Release or RelWithDebInfo for TORQUE_BUILD_TYPE")
+	endif()
 endif()
 
 ###############################################################################
@@ -179,8 +229,12 @@ addPathRec("${projectSrcDir}")
 if(TORQUE_ADVANCED_LIGHTING)
     addPath("${srcDir}/lighting/advanced")
     addPathRec("${srcDir}/lighting/shadowMap")
-    addPathRec("${srcDir}/lighting/advanced/hlsl")
-    #addPathRec("${srcDir}/lighting/advanced/glsl")
+    if(WIN32)
+		addPathRec("${srcDir}/lighting/advanced/hlsl")
+	endif()
+	if(TORQUE_OPENGL)
+		addPathRec("${srcDir}/lighting/advanced/glsl")
+	endif()
 endif()
 if(TORQUE_BASIC_LIGHTING)
     addPathRec("${srcDir}/lighting/basic")
@@ -197,7 +251,12 @@ endif()
 if(TORQUE_SFX_OPENAL)
     addPath("${srcDir}/sfx/openal")
     #addPath("${srcDir}/sfx/openal/mac")
-    addPath("${srcDir}/sfx/openal/win32")
+    if(WIN32)
+		addPath("${srcDir}/sfx/openal/win32")
+    endif()
+	if(UNIX)
+		addPath("${srcDir}/sfx/openal/linux")
+	endif()
 endif()
 
 # Theora
@@ -227,9 +286,14 @@ else()
 endif()
 
 if(TORQUE_SDL)
-    addPath("${srcDir}/WindowManager/sdl")
+    addPathRec("${srcDir}/windowManager/sdl")
     addPathRec("${srcDir}/platformSDL")
+    addPathRec("${srcDir}/gfx/gl/sdl")
+    
     set(SDL_STATIC FALSE)
+    set(CMAKE_SIZEOF_VOID_P 4) #force 32 bit
+    set(ENV{CFLAGS} "-m32 -g -O3")
+    set(ENV{LDFLAGS} "-m32 ${TORQUE_ADDITIONAL_LINKER_FLAGS}")
     add_subdirectory( ${libDir}/sdl ${CMAKE_CURRENT_BINARY_DIR}/sdl2)
 endif()
 
@@ -298,18 +362,25 @@ endif()
 
 if(UNIX)
     # linux_dedicated
-    addPath("${srcDir}/windowManager/dedicated")
+    if(TORQUE_DEDICATED) # TODO check dedicated build
+		addPath("${srcDir}/windowManager/dedicated")
+    endif()
     # linux
     addPath("${srcDir}/platformX86UNIX")
     addPath("${srcDir}/platformX86UNIX/threads")
     addPath("${srcDir}/platformPOSIX")
+endif()
+
+if(TORQUE_OPENGL)
     addPath("${srcDir}/gfx/gl")
+    addPath("${srcDir}/gfx/gl/tGL")
     addPath("${srcDir}/gfx/gl/ggl")
-    addPath("${srcDir}/gfx/gl/ggl/x11") # This one is not yet implemented!
-    addPath("${srcDir}/gfx/gl/ggl/generated")
     addPath("${srcDir}/shaderGen/GLSL")
     addPath("${srcDir}/terrain/glsl")
-    addPath("${srcDir}/forest/glsl")    
+    addPath("${srcDir}/forest/glsl")
+
+    # glew
+    LIST(APPEND ${PROJECT_NAME}_files "${libDir}/glew/src/glew.c")
 endif()
 
 ###############################################################################
@@ -366,6 +437,18 @@ if(WIN32)
     addLib("${TORQUE_EXTERNAL_LIBS}")
 endif()
 
+if(UNIX)
+    # copy pasted from T3D build system, some might not be needed
+	set(TORQUE_EXTERNAL_LIBS "dl Xxf86vm Xext X11 Xft stdc++ pthread GL" CACHE STRING "external libs to link against")
+	mark_as_advanced(TORQUE_EXTERNAL_LIBS)
+    
+    string(REPLACE " " ";" TORQUE_EXTERNAL_LIBS_LIST ${TORQUE_EXTERNAL_LIBS})
+    
+    FOREACH(LIB ${TORQUE_EXTERNAL_LIBS_LIST})
+		addLib( "${LIB}" )
+	ENDFOREACH(LIB)
+endif()
+
 ###############################################################################
 # Always enabled Definitions
 ###############################################################################
@@ -389,6 +472,10 @@ addDef(DOM_INCLUDE_TINYXML)
 addDef(PCRE_STATIC)
 addDef(_CRT_SECURE_NO_WARNINGS)
 addDef(_CRT_SECURE_NO_DEPRECATE)
+
+if(UNIX)
+	addDef(LINUX)	
+endif()
 
 
 ###############################################################################
@@ -430,6 +517,10 @@ if(TORQUE_EXTENDED_MOVE)
     addDef(TORQUE_EXTENDED_MOVE)
 endif()
 
+if(TORQUE_OPENGL)
+	addDef(TORQUE_OPENGL)
+endif()
+
 if(TORQUE_SDL)
     addDef(TORQUE_SDL)
     addInclude(${libDir}/sdl/include)
@@ -455,9 +546,26 @@ addInclude("${libDir}/opcode")
 addInclude("${libDir}/collada/include")
 addInclude("${libDir}/collada/include/1.4")
 
+if(UNIX)
+	addInclude("/usr/include/freetype2/freetype")
+	addInclude("/usr/include/freetype2")
+endif()
+
+if(TORQUE_OPENGL)
+	addInclude("${libDir}/glew/include")
+endif()
+
 # external things
 if(WIN32)
     set_property(TARGET ${PROJECT_NAME} APPEND PROPERTY INCLUDE_DIRECTORIES $ENV{DXSDK_DIR}/Include)
+endif()
+
+if(TORQUE_DEBUG)
+	addDef(TORQUE_DEBUG)
+endif()
+
+if(TORQUE_RELEASE)
+	addDef(TORQUE_RELEASE)
 endif()
 
 ###############################################################################

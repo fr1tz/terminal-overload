@@ -27,7 +27,8 @@ macro(addPath dir)
              ${dir}/*.cpp
              ${dir}/*.c
              ${dir}/*.cc
-             ${dir}/*.h)
+             ${dir}/*.h
+             ${dir}/*.asm)
     LIST(APPEND ${PROJECT_NAME}_files "${tmpa}")
     LIST(APPEND ${PROJECT_NAME}_paths "${dir}")
 	#message(STATUS "addPath ${PROJECT_NAME} : ${tmpa}")
@@ -47,7 +48,8 @@ macro(addPathRec dir)
              ${dir}/*.cpp
              ${dir}/*.c
              ${dir}/*.cc
-             ${dir}/*.h)
+             ${dir}/*.h
+             ${dir}/*.asm)
     LIST(APPEND ${PROJECT_NAME}_files "${tmpa}")
     LIST(APPEND ${PROJECT_NAME}_paths "${dir}")
 	#message(STATUS "addPathRec ${PROJECT_NAME} : ${tmpa}")
@@ -224,6 +226,13 @@ if(WIN32)
 			SET("${flag}" "${${flag}} /EHsc")
 		ENDFOREACH()
 	endif()
+endif()
+
+if(UNIX)
+	SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${projectOutDir}")
+	set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${projectOutDir}")
+	SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG "${projectOutDir}")
+	set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_DEBUG "${projectOutDir}")
 endif()
 
 
