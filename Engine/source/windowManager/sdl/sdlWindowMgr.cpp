@@ -351,6 +351,13 @@ void Platform::openFile(const char* path )
     AssertFatal(0, "Not Implemented");
 }
 
+//------------------------------------------------------------------------------
+bool Platform::excludeOtherInstances(const char *mutexName)
+{
+    AssertFatal(0, "Not Implemented");
+    return false;
+}
+
 namespace GL
 {
    void gglPerformBinds();
