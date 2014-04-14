@@ -5,7 +5,7 @@
 
 namespace
 {   
-   SDL_MessageBoxButtonData MBOkCancelData[2], MBRetryCancelData[2], MBSaveDontSaveData[2], MBSaveDontSaveCancelData[3];
+   SDL_MessageBoxButtonData MBOkCancelData[2], MBRetryCancelData[2], MBSaveDontSaveData[2], MBSaveDontSaveCancelData[3], MBAlertAssetData[4];
 
    bool needInitMsgBox = true;
 
@@ -50,6 +50,22 @@ namespace
       MBSaveDontSaveCancelData[0] = MBSaveButton;
       MBSaveDontSaveCancelData[1] = MBDontSaveButton;
       MBSaveDontSaveCancelData[2] = MBRetryButton;
+      
+      MBAlertAssetData[0].text = "Debug";
+      MBAlertAssetData[0].buttonid = Platform::ALERT_ASSERT_DEBUG;
+      MBAlertAssetData[0].flags = 0;
+      
+      MBAlertAssetData[1].text = "Ignore";
+      MBAlertAssetData[1].buttonid = Platform::ALERT_ASSERT_IGNORE;
+      MBAlertAssetData[1].flags = 0;
+      
+      MBAlertAssetData[2].text = "Ignore all";
+      MBAlertAssetData[2].buttonid = Platform::ALERT_ASSERT_IGNORE_ALL;
+      MBAlertAssetData[2].flags = 0;
+      
+      MBAlertAssetData[3].text = "Exit";
+      MBAlertAssetData[3].buttonid = Platform::ALERT_ASSERT_EXIT;
+      MBAlertAssetData[3].flags = 0;
    }
 }
 
@@ -100,6 +116,12 @@ S32 Platform::messageBox(const UTF8 *title, const UTF8 *message, MBButtons butto
          boxData.numbuttons = 3;
          break;
       }
+      case MBAlertAssert:
+      {
+         boxData.buttons = &MBAlertAssetData[0];
+         boxData.numbuttons = 4;
+         break;
+      }
       default:
       {
          return MBOk;
@@ -129,5 +151,16 @@ bool Platform::AlertRetry(const char *windowTitle, const char *message)
 {
    SDL_ShowCursor(1);
    return MROk == Platform::messageBox(windowTitle, message, MBRetryCancel );
+}
+
+Platform::ALERT_ASSERT_RESULT Platform::AlertAssert(const char *windowTitle, const char *message)
+{
+   SDL_ShowCursor(1);
+   return (Platform::ALERT_ASSERT_RESULT)Platform::messageBox(windowTitle, message, MBAlertAssert );
+}
+
+bool Platform::openWebBrowser( const char* )
+{
+
 }
 #endif
