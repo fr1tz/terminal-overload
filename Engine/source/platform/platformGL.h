@@ -8,6 +8,8 @@ namespace PlatformGL
    void* CreateContextGL( PlatformWindow *window );
 
    void MakeCurrentGL( PlatformWindow *window, void *glContext );
+
+   void setVSync(const int i);
 }
 
 #endif //PLATFORM_GL_H

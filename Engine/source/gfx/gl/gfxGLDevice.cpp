@@ -22,6 +22,7 @@
 
 #include "platform/platform.h"
 #include "gfx/gl/gfxGLDevice.h"
+#include "platform/platformGL.h"
 
 #include "gfx/gfxCubemap.h"
 #include "gfx/screenshot.h"
@@ -136,6 +137,8 @@ void GFXGLDevice::initGLState()
       glDebugMessageEnableAMD(GL_DONT_CARE, GL_DONT_CARE, 0,&unusedIds, GL_TRUE);
    }
 #endif
+
+   PlatformGL::setVSync(0);
 
    //OpenGL 3 need a binded VAO for render
    GLuint vao;
