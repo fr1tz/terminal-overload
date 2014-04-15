@@ -44,7 +44,7 @@ else()
 endif()
 if(WIN32)
 	option(TORQUE_OPENGL "Allow OpenGL render" OFF)
-	mark_as_advanced(TORQUE_OPENGL)
+	#mark_as_advanced(TORQUE_OPENGL)
 else()
 	set(TORQUE_OPENGL ON) # we need OpenGL to render on Linux/Mac
 endif()
@@ -297,7 +297,7 @@ if(TORQUE_SDL)
     if(UNIX)
        set(CMAKE_SIZEOF_VOID_P 4) #force 32 bit
        set(ENV{CFLAGS} "-m32 -g -O3")
-       if(TORQUE_ADDITIONAL_LINKER_FLAGS MATCHES "")
+       if("${TORQUE_ADDITIONAL_LINKER_FLAGS}" STREQUAL "")
          set(ENV{LDFLAGS} "-m32")
        else()
          set(ENV{LDFLAGS} "-m32 ${TORQUE_ADDITIONAL_LINKER_FLAGS}")
@@ -459,10 +459,7 @@ if(UNIX)
 	mark_as_advanced(TORQUE_EXTERNAL_LIBS)
     
     string(REPLACE " " ";" TORQUE_EXTERNAL_LIBS_LIST ${TORQUE_EXTERNAL_LIBS})
-    
-    FOREACH(LIB ${TORQUE_EXTERNAL_LIBS_LIST})
-		addLib( "${LIB}" )
-	ENDFOREACH(LIB)
+    addLib( "${TORQUE_EXTERNAL_LIBS_LIST}" )
 endif()
 
 ###############################################################################

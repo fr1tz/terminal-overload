@@ -68,17 +68,16 @@ void EnumerateVideoModes(Vector<GFXVideoMode>& outModes)
 
 void GFXGLDevice::enumerateAdapters( Vector<GFXAdapter*> &adapterList )
 {
-   const char *errz = SDL_GetError();
-   SDL_ClearError();
-   bool init = SDL_WasInit(SDL_INIT_VIDEO);
+   AssertFatal( SDL_WasInit(SDL_INIT_VIDEO), "");
+
     // Create a dummy window & openGL context so that gl functions can be used here
    SDL_Window* tempWindow =  SDL_CreateWindow(
-        "An SDL2 window",                  // window title
+        "",                                // window title
         SDL_WINDOWPOS_UNDEFINED,           // initial x position
         SDL_WINDOWPOS_UNDEFINED,           // initial y position
         640,                               // width, in pixels
         480,                               // height, in pixels
-        SDL_WINDOW_OPENGL                  // flags - see below
+        SDL_WINDOW_OPENGL | SDL_WINDOW_HIDDEN // flags - see below
     );
 
    SDL_ClearError();
