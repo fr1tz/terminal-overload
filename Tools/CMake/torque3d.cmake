@@ -288,12 +288,21 @@ endif()
 if(TORQUE_SDL)
     addPathRec("${srcDir}/windowManager/sdl")
     addPathRec("${srcDir}/platformSDL")
-    addPathRec("${srcDir}/gfx/gl/sdl")
+    
+    if(TORQUE_OPENGL)
+      addPathRec("${srcDir}/gfx/gl/sdl")
+    endif()
     
     set(SDL_STATIC FALSE)
-    set(CMAKE_SIZEOF_VOID_P 4) #force 32 bit
-    set(ENV{CFLAGS} "-m32 -g -O3")
-    set(ENV{LDFLAGS} "-m32 ${TORQUE_ADDITIONAL_LINKER_FLAGS}")
+    if(UNIX)
+       set(CMAKE_SIZEOF_VOID_P 4) #force 32 bit
+       set(ENV{CFLAGS} "-m32 -g -O3")
+       if(TORQUE_ADDITIONAL_LINKER_FLAGS MATCHES "")
+         set(ENV{LDFLAGS} "-m32")
+       else()
+         set(ENV{LDFLAGS} "-m32 ${TORQUE_ADDITIONAL_LINKER_FLAGS}")
+       endif()
+    endif()
     add_subdirectory( ${libDir}/sdl ${CMAKE_CURRENT_BINARY_DIR}/sdl2)
 endif()
 
@@ -374,13 +383,16 @@ endif()
 if(TORQUE_OPENGL)
     addPath("${srcDir}/gfx/gl")
     addPath("${srcDir}/gfx/gl/tGL")
-    addPath("${srcDir}/gfx/gl/ggl")
     addPath("${srcDir}/shaderGen/GLSL")
     addPath("${srcDir}/terrain/glsl")
     addPath("${srcDir}/forest/glsl")
 
     # glew
     LIST(APPEND ${PROJECT_NAME}_files "${libDir}/glew/src/glew.c")
+    
+    if(WIN32 AND NOT TORQUE_SDL)
+      addPath("${srcDir}/gfx/gl/win32")
+    endif()
 endif()
 
 ###############################################################################
@@ -434,7 +446,11 @@ if(WIN32)
     # copy pasted from T3D build system, some might not be needed
 	set(TORQUE_EXTERNAL_LIBS "COMCTL32.LIB;COMDLG32.LIB;USER32.LIB;ADVAPI32.LIB;GDI32.LIB;WINMM.LIB;WSOCK32.LIB;vfw32.lib;Imm32.lib;d3d9.lib;d3dx9.lib;DxErr.lib;ole32.lib;shell32.lib;oleaut32.lib;version.lib" CACHE STRING "external libs to link against")
 	mark_as_advanced(TORQUE_EXTERNAL_LIBS)
-    addLib("${TORQUE_EXTERNAL_LIBS}")
+   addLib("${TORQUE_EXTERNAL_LIBS}")
+   
+   if(TORQUE_OPENGL)
+      addLib(OpenGL32.lib)
+   endif()
 endif()
 
 if(UNIX)
@@ -519,6 +535,9 @@ endif()
 
 if(TORQUE_OPENGL)
 	addDef(TORQUE_OPENGL)
+   if(WIN32)
+      addDef(GLEW_STATIC)
+    endif()
 endif()
 
 if(TORQUE_SDL)
