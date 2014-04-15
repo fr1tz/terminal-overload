@@ -231,7 +231,6 @@ bool Platform::AlertRetry(const char *windowTitle, const char *message)
    return (MessageBox(NULL, message, windowTitle, MB_ICONINFORMATION | MB_SETFOREGROUND | MB_TASKMODAL | MB_RETRYCANCEL) == IDRETRY);
 #endif
 }
-#endif
 
 Platform::ALERT_ASSERT_RESULT Platform::AlertAssert(const char *windowTitle, const char *message)
 {
@@ -267,6 +266,8 @@ Platform::ALERT_ASSERT_RESULT Platform::AlertAssert(const char *windowTitle, con
 
    return alertResult;
 }
+
+#endif
 
 //--------------------------------------
 HIMC gIMEContext;

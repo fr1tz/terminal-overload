@@ -32,7 +32,10 @@
 
 #include "gfx/gfxDevice.h"
 
+#if TORQUE_LINUX
 #define SDL_VIDEO_DRIVER_X11  // TODO SDL
+#endif
+
 #include "SDL.h"
 #include "SDL_syswm.h"
 

@@ -159,8 +159,4 @@ Platform::ALERT_ASSERT_RESULT Platform::AlertAssert(const char *windowTitle, con
    return (Platform::ALERT_ASSERT_RESULT)Platform::messageBox(windowTitle, message, MBAlertAssert );
 }
 
-bool Platform::openWebBrowser( const char* )
-{
-
-}
 #endif

@@ -352,11 +352,6 @@ void Platform::openFile(const char* path )
 }
 
 //------------------------------------------------------------------------------
-bool Platform::excludeOtherInstances(const char *mutexName)
-{
-    AssertFatal(0, "Not Implemented");
-    return false;
-}
 
 namespace GL
 {
