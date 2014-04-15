@@ -1588,15 +1588,6 @@ DefineEngineFunction( displaySplashWindow, bool, (const char* path), ("art/gui/s
    return Platform::displaySplashWindow(path);
 }
 
-DefineEngineFunction( closeSplashWindow, void, (),,
-   "Display a startup splash window suitable for showing while the engine still starts up.\n\n"
-   "@note This is currently only implemented on Windows.\n\n"
-   "@return True if the splash window could be successfully initialized.\n\n"
-   "@ingroup Platform" )
-{
-    Platform::closeSplashWindow();
-}
-
 //-----------------------------------------------------------------------------
 
 DefineEngineFunction( getWebDeployment, bool, (),,
