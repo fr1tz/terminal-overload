@@ -154,6 +154,7 @@ switch( TorqueGenerator::$platform )
      addLibSrcFile( 'glew/src/glew.c' );
      addIncludePath( getAppLibSrcDir() . 'glew/include' );
      addEngineSrcDir( 'gfx/gl' );
+     addEngineSrcDir( 'gfx/gl/win32' );
      addEngineSrcDir( 'gfx/gl/tGL' );
      addEngineSrcDir( 'shaderGen/GLSL' );
       break;
