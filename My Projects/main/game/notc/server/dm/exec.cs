@@ -6,7 +6,8 @@ function executeDeathmatchServerScripts()
    exec("notc/server/base/exec.cs");
    
    exec("notc/server/forms/standardcat/exec.cs");
-   
+
+   exec("notc/server/items/impshield/exec.cs");
    exec("notc/server/items/ballast/exec.cs");
    exec("notc/server/items/etherboard/exec.cs");
 

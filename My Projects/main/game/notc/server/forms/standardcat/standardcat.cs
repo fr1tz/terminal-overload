@@ -234,6 +234,7 @@ datablock PlayerData(FrmStandardcat)
    // Allowable Inventory Items
    mainWeapon = WpnSMG1;
 
+   maxInv[ItemImpShield] = 1;
    maxInv[ItemBallast] = 1;
    maxInv[ItemEtherboard] = 1;
 
@@ -400,9 +401,15 @@ function FrmStandardcat::onTrigger(%this, %obj, %triggerNum, %val)
    if(%triggerNum == 5)
    {
       if(%val)
+      {
          %obj.zBalastLimit = 0.02;
+         %obj.zImpShieldLimit = 0.75;
+      }
       else
+      {
          %obj.zBalastLimit = 1.0;
+         %obj.zImpShieldLimit = 1.0;
+      }
    }
  
    if(!%val || %triggerNum != 2)
