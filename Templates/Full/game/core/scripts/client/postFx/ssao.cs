@@ -153,8 +153,8 @@ singleton ShaderData( SSAOShader )
    DXVertexShaderFile 	= "shaders/common/postFx/postFxV.hlsl";
    DXPixelShaderFile 	= "shaders/common/postFx/ssao/SSAO_P.hlsl";            
    
-   OGLVertexShaderFile 	= "shaders/common/postFx/gl/postFxV.glsl";
-   OGLPixelShaderFile 	= "shaders/common/postFx/ssao/gl/SSAO_P.glsl";
+   OGLVertexShaderFile  = "shaders/common/postFx/gl/postFxV.glsl";
+   OGLPixelShaderFile   = "shaders/common/postFx/ssao/gl/SSAO_P.glsl";
 
    samplerNames[0] = "$prepassMap";
    samplerNames[1] = "$randNormalTex";
@@ -168,8 +168,8 @@ singleton ShaderData( SSAOBlurYShader )
    DXVertexShaderFile 	= "shaders/common/postFx/ssao/SSAO_Blur_V.hlsl";
    DXPixelShaderFile 	= "shaders/common/postFx/ssao/SSAO_Blur_P.hlsl";   
    
-   OGLVertexShaderFile 	= "shaders/common/postFx/ssao/gl/SSAO_Blur_V.glsl";
-   OGLPixelShaderFile 	= "shaders/common/postFx/ssao/gl/SSAO_Blur_P.glsl";
+   OGLVertexShaderFile  = "shaders/common/postFx/ssao/gl/SSAO_Blur_V.glsl";
+   OGLPixelShaderFile   = "shaders/common/postFx/ssao/gl/SSAO_Blur_P.glsl";
    
    samplerNames[0] = "$occludeMap";
    samplerNames[1] = "$prepassMap";
@@ -282,8 +282,8 @@ singleton ShaderData( SSAOPowTableShader )
    DXVertexShaderFile 	= "shaders/common/postFx/ssao/SSAO_PowerTable_V.hlsl";
    DXPixelShaderFile 	= "shaders/common/postFx/ssao/SSAO_PowerTable_P.hlsl";            
    
-   OGLVertexShaderFile 	= "shaders/common/postFx/ssao/gl/SSAO_PowerTable_V.glsl";
-   OGLPixelShaderFile 	= "shaders/common/postFx/ssao/gl/SSAO_PowerTable_P.glsl";   
+   OGLVertexShaderFile  = "shaders/common/postFx/ssao/gl/SSAO_PowerTable_V.glsl";
+   OGLPixelShaderFile   = "shaders/common/postFx/ssao/gl/SSAO_PowerTable_P.glsl";   
    
    pixVersion = 2.0;
 };

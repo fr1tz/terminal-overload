@@ -25,8 +25,8 @@ singleton ShaderData( PFX_FlashShader )
    DXVertexShaderFile 	= "shaders/common/postFx/postFxV.hlsl";
    DXPixelShaderFile 	= "shaders/common/postFx/flashP.hlsl";
    
-   OGLVertexShaderFile 	= "shaders/common/postFx/gl/postFxV.glsl";
-   OGLPixelShaderFile 	= "shaders/common/postFx/gl/flashP.glsl";
+   OGLVertexShaderFile  = "shaders/common/postFx/gl/postFxV.glsl";
+   OGLPixelShaderFile   = "shaders/common/postFx/gl/flashP.glsl";
    
    samplerNames[0] = "$backBuffer";
 

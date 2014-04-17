@@ -134,8 +134,8 @@ singleton ShaderData( WaterBasicShader )
    DXVertexShaderFile 	= "shaders/common/water/waterBasicV.hlsl";
    DXPixelShaderFile 	= "shaders/common/water/waterBasicP.hlsl";
    
-   OGLVertexShaderFile 	= "shaders/common/water/gl/waterBasicV.glsl";
-   OGLPixelShaderFile 	= "shaders/common/water/gl/waterBasicP.glsl"; 
+   OGLVertexShaderFile  = "shaders/common/water/gl/waterBasicV.glsl";
+   OGLPixelShaderFile   = "shaders/common/water/gl/waterBasicP.glsl"; 
    
    samplerNames[0] = "$bumpMap";
    samplerNames[2] = "$reflectMap";

@@ -21,7 +21,7 @@
 //-----------------------------------------------------------------------------
 
 #include "./../../torque.hlsl"
-#include "./../postFx.hlsl"
+#include "./../postFX.hlsl"
 
 struct VertToPix
 {

@@ -26,8 +26,8 @@ singleton ShaderData( BL_ShadowFilterShaderV )
    DXVertexShaderFile 	= "shaders/common/lighting/basic/shadowFilterV.hlsl";
    DXPixelShaderFile 	= "shaders/common/lighting/basic/shadowFilterP.hlsl";
    
-   OGLVertexShaderFile 	= "shaders/common/lighting/basic/gl/shadowFilterV.glsl";
-   OGLPixelShaderFile 	= "shaders/common/lighting/basic/gl/shadowFilterP.glsl";
+   OGLVertexShaderFile  = "shaders/common/lighting/basic/gl/shadowFilterV.glsl";
+   OGLPixelShaderFile   = "shaders/common/lighting/basic/gl/shadowFilterP.glsl";
 
    samplerNames[0] = "$diffuseMap";
 
@@ -63,7 +63,6 @@ singleton PostEffect( BL_ShadowFilterPostFx )
    targetClear = "PFXTargetClear_OnDraw";
    targetClearColor = "0 0 0 0";
    texture[0] = "$inTex";
-   
    target = "$outTex";   
 
    // Blur horizontal
