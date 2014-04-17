@@ -163,7 +163,7 @@ GFXGLDevice::GFXGLDevice(U32 adapterIndex) :
    mNeedUpdateVertexAttrib(false),
    mWindowRT(NULL)
 {
-   for(int i = 0; i < MAX_VERTEX_STREAM_COUNT; ++i)
+   for(int i = 0; i < VERTEX_STREAM_COUNT; ++i)
    {
       mCurrentVB[i] = NULL;
       mCurrentVB_Divisor[i] = 0;
@@ -198,7 +198,7 @@ GFXGLDevice::~GFXGLDevice()
 {
    mCurrentStateBlock = NULL;
 
-   for(int i = 0; i < MAX_VERTEX_STREAM_COUNT; ++i)      
+   for(int i = 0; i < VERTEX_STREAM_COUNT; ++i)      
       mCurrentVB[i] = NULL;
    mCurrentPB = NULL;
    
@@ -244,7 +244,7 @@ void GFXGLDevice::zombify()
 {
    mTextureManager->zombify();
 
-   for(int i = 0; i < MAX_VERTEX_STREAM_COUNT; ++i)   
+   for(int i = 0; i < VERTEX_STREAM_COUNT; ++i)   
       if(mCurrentVB[i])
          mCurrentVB[i]->finish();
    if(mCurrentPB)
@@ -268,7 +268,7 @@ void GFXGLDevice::resurrect()
       walk->resurrect();
       walk = walk->getNextResource();
    }
-   for(int i = 0; i < MAX_VERTEX_STREAM_COUNT; ++i)   
+   for(int i = 0; i < VERTEX_STREAM_COUNT; ++i)   
       if(mCurrentVB[i])
          mCurrentVB[i]->prepare();
    if(mCurrentPB)

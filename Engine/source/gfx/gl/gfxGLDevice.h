@@ -193,8 +193,8 @@ private:
 
    U32 mAdapterIndex;
    
-   StrongRefPtr<GFXGLVertexBuffer> mCurrentVB[MAX_VERTEX_STREAM_COUNT];
-   U32 mCurrentVB_Divisor[MAX_VERTEX_STREAM_COUNT];
+   StrongRefPtr<GFXGLVertexBuffer> mCurrentVB[VERTEX_STREAM_COUNT];
+   U32 mCurrentVB_Divisor[VERTEX_STREAM_COUNT];
    bool mNeedUpdateVertexAttrib;
    StrongRefPtr<GFXGLPrimitiveBuffer> mCurrentPB;
    U32 mDrawInstancesCount;
