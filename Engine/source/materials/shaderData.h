@@ -131,7 +131,7 @@ public:
 
    // ConsoleObject
    static void initPersistFields();
-   DECLARE_CONOBJECT(ShaderData);   
+   DECLARE_CONOBJECT(ShaderData);
 };
 
 #endif // _SHADERTDATA_H_

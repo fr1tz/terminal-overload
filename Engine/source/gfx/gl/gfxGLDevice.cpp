@@ -184,8 +184,7 @@ GFXGLDevice::GFXGLDevice(U32 adapterIndex) :
 
    for(U32 i = 0; i < TEXTURE_STAGE_COUNT; i++)
       mActiveTextureType[i] = GL_ZERO;
-   
-   mTexelPixelOffset = false;
+
    mNumVertexStream = 2;
 
    for(int i = 0; i < GS_COUNT; ++i)

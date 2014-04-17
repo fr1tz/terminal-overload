@@ -45,6 +45,17 @@ GFXShader::~GFXShader()
    Torque::FS::RemoveChangeNotification( mPixelFile, this, &GFXShader::_onFileChanged );
 }
 
+#ifndef TORQUE_OPENGL
+bool GFXShader::init(   const Torque::Path &vertFile, 
+                        const Torque::Path &pixFile, 
+                        F32 pixVersion, 
+                        const Vector<GFXShaderMacro> &macros )
+{
+   Vector<String> samplerNames;
+   return init( vertFile, pixFile, pixVersion, macros, samplerNames );
+}
+#endif
+
 bool GFXShader::init(   const Torque::Path &vertFile, 
                         const Torque::Path &pixFile, 
                         F32 pixVersion, 

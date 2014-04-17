@@ -180,6 +180,9 @@ protected:
    virtual void setVertexStream( U32 stream, GFXVertexBuffer *buffer );
    virtual void setVertexStreamFrequency( U32 stream, U32 frequency );
 
+   /// Returns the number of vertex streams supported by the device.	
+   const U32 getNumVertexStreams() const { return mNumVertexStream; }
+
 private:
    typedef GFXDevice Parent;
    
@@ -213,7 +216,9 @@ private:
 
    F32 mPixelShaderVersion;
    
-   bool mSupportsAnisotropic;
+   bool mSupportsAnisotropic;   
+
+   U32 mNumVertexStream;
    
    U32 mMaxShaderTextures;
    U32 mMaxFFTextures;

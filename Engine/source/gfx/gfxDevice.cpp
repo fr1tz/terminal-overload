@@ -137,9 +137,6 @@ GFXDevice::GFXDevice()
       mTextureMatrixDirty[i] = false;
    }
 
-   mTexelPixelOffset = true;
-   mNumVertexStream = VERTEX_STREAM_COUNT;
-
    mLightsDirty = false;
    for(U32 i = 0; i < LIGHT_STAGE_COUNT; i++)
    {

@@ -655,16 +655,12 @@ protected:
    /// it must be updated on the next draw/clear.
    bool mViewportDirty;
 
-   U32 mNumVertexStream;
-
 public:
 
    /// @name Texture functions
    /// @{
 protected:
    GFXTextureManager * mTextureManager;
-
-   bool mTexelPixelOffset;
 
 public:   
    virtual GFXCubemap * createCubemap() = 0;
@@ -723,9 +719,6 @@ public:
    /// Returns the number of simultaneous render targets supported by the device.
    virtual U32 getNumRenderTargets() const = 0;
 
-   /// Returns the number of vertex streams supported by the device.	
-   const U32 getNumVertexStreams() const { return mNumVertexStream; }
-
    virtual void setShader( GFXShader *shader ) {}
 
    /// Set the buffer! (Actual set happens on the next draw call, just like textures, state blocks, etc)
@@ -735,9 +728,6 @@ public:
    /// and deleted by the caller.
    /// @see GFXShader::init
    virtual GFXShader* createShader() = 0;
-
-   /// For handle with DX9 API texel-to-pixel mapping offset
-   bool hasTexelPixelOffset() const { return mTexelPixelOffset; }
    
    /// @}
  

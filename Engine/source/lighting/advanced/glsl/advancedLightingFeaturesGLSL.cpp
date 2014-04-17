@@ -482,7 +482,7 @@ void DeferredPixelSpecularGLSL::processPix(  Vector<ShaderComponent*> &component
       "DeferredPixelSpecularGLSL::processPix - Something hosed the deferred features!" );
 
    // (a^m)^n = a^(m*n)
-   meta->addStatement( new GenOp( "   @ = pow( @, ceil(@ / AL_ConstantSpecularPower)) * @;\r\n", 
+   meta->addStatement( new GenOp( "   @ = pow( abs(@), max((@ / AL_ConstantSpecularPower),1.0f)) * @;\r\n", 
       specDecl, d_specular, specPow, specStrength ) );
 
    LangElement *specMul = new GenOp( "float4( @.rgb, 0 ) * @", specCol, specular );
