@@ -28,7 +28,6 @@
 #include "console/engineAPI.h"
 #include "gfx/gfxDevice.h"
 #include "gfx/gfxDrawUtil.h"
-#include "gfx/gfxDebugEvent.h"
 
 
 IMPLEMENT_CONOBJECT(GuiBitmapCtrl);
@@ -167,7 +166,6 @@ void GuiBitmapCtrl::setBitmapHandle(GFXTexHandle handle, bool resize)
 
 void GuiBitmapCtrl::onRender(Point2I offset, const RectI &updateRect)
 {
-    GFXDEBUGEVENT_SCOPE_EX( GuiBitmapCtrl_onRender, ColorI::GREEN, avar("GuiBitmapCtrl: %s", mBitmapName.c_str()) );
    if (mTextureObject)
    {
       GFX->getDrawUtil()->clearBitmapModulation();

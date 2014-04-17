@@ -553,9 +553,6 @@ const char *CodeBlock::exec(U32 ip, const char *functionName, Namespace *thisNam
    {
       U32 instruction = code[ip++];
       nsEntry = NULL;
-#ifdef TORQUE_DEBUG
-	  const char* CurrentFileLine = getFileLine(ip-4);
-#endif // TORQUE_DEBUG
 breakContinue:
       switch(instruction)
       {

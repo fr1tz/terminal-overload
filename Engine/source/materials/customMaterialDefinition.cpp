@@ -156,7 +156,7 @@ bool CustomMaterial::onAdd()
          mTexFilename[pos] = entry->value;
          ++i;
       }
-   }   
+   }
 
    return true;
 }
