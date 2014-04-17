@@ -179,7 +179,7 @@ function GameCoreDM::loadOut(%game, %player)
    %player.addToWeaponCycle(WpnMG1);
    //%player.addToWeaponCycle(WpnML1);
 
-   %player.setInventory(ItemBallast, 1);
+   //%player.setInventory(ItemBallast, 1);
    %player.setInventory(ItemEtherboard, 1);
    %player.setInventory(WpnSMG1, 1);
 
