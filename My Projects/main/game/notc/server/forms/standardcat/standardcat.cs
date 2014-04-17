@@ -53,21 +53,21 @@ datablock PlayerData(FrmStandardcat)
 	damageBufferDischargeRate = 0.15;
 	rechargeRate = 0.4;
 
-   runForce = 9000*2;
+   runForce = 100 * 90;
    runEnergyDrain = 0;
    minRunEnergy = 0;
    maxForwardSpeed = 8;
    maxBackwardSpeed = 8;
    maxSideSpeed = 5;
    
-	slideForce = 20 * 90 *2;
+	slideForce = 20 * 90;
 	slideEnergyDrain = 0;
 	minSlideEnergy = 0;
 	maxSlideForwardSpeed = 30;
 	maxSlideBackwardSpeed = 25;
 	maxSlideSideSpeed = 12;
 
-   sprintForce = 9000*2;
+   sprintForce = 100 * 90;
    sprintEnergyDrain = 0;
    minSprintEnergy = 0;
    maxSprintForwardSpeed = 15;
@@ -92,13 +92,13 @@ datablock PlayerData(FrmStandardcat)
    minJumpEnergy = 0;
    jumpDelay = 0;
    
-   reJumpForce = 32 * 90; // script field
+   reJumpForce = 10 * 90; // script field
    reJumpEnergyDrain = 20; // script field
 
 	skidSpeed = 20;
 	skidFactor = 0.4;
    
-   glideForce = 10 * 90 * 2;
+   glideForce = 10 * 90;
    airControl = 0.0;
 
    fallingSpeedThreshold = -6.0;
