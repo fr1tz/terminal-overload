@@ -138,6 +138,9 @@ public:
    GFXGLStateCache* getOpenglCache() { return mOpenglStateCache; }
 
    GFXTextureObject* getDefaultDepthTex() const;
+
+   /// Returns the number of vertex streams supported by the device.	
+   const U32 getNumVertexStreams() const { return mNumVertexStream; }
       
 protected:   
    /// Called by GFXDevice to create a device specific stateblock
@@ -178,10 +181,7 @@ protected:
    virtual void setVertexDecl( const GFXVertexDecl *decl );
 
    virtual void setVertexStream( U32 stream, GFXVertexBuffer *buffer );
-   virtual void setVertexStreamFrequency( U32 stream, U32 frequency );
-
-   /// Returns the number of vertex streams supported by the device.	
-   const U32 getNumVertexStreams() const { return mNumVertexStream; }
+   virtual void setVertexStreamFrequency( U32 stream, U32 frequency );   
 
 private:
    typedef GFXDevice Parent;

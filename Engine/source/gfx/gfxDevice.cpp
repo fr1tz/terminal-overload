@@ -267,7 +267,6 @@ GFXDevice::~GFXDevice()
       mNewCubemap[i] = NULL;
    }
 
-   mRTStack.clear();
    mCurrentRT = NULL;
 
    // Release all the unreferenced textures in the cache.
