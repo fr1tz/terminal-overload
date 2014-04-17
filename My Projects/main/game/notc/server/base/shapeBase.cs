@@ -51,6 +51,12 @@ function ShapeBase::damage(%this, %sourceObject, %position, %damage, %damageType
       %this.getDataBlock().damage(%this, %sourceObject, %position, %damage, %damageType);
 }
 
+function ShapeBase::impulse(%this, %position, %impulseVec, %src)
+{
+   // All impulses applied by one object to another should go through this method.
+   return %this.getDataBlock().impulse(%this, %position, %impulseVec, %src);
+}
+
 //-----------------------------------------------------------------------------
 
 function ShapeBase::setDamageDt(%this, %damageAmount, %damageType)
@@ -182,6 +188,13 @@ function ShapeBaseData::damage(%this, %obj, %source, %position, %amount, %damage
          %norm = VectorNormalize(VectorSub(%spos, %dpos));
       createExplosion(%bleed, %dpos, %norm);
    }
+}
+
+// Called by ShapeBase::impulse()
+function ShapeBaseData::impulse(%this, %obj, %position, %impulseVec, %src)
+{
+   //%impulseVec = VectorScale(%impulseVec, 1-0.75*%obj.gridConnection);
+   %obj.applyImpulse(%position, %impulseVec);
 }
 
 // Called by engine whenever the object's damage level changes.

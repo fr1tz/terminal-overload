@@ -384,7 +384,7 @@ function FrmStandardcat::onTrigger(%this, %obj, %triggerNum, %val)
          %pos = %obj.getPosition();
          createExplosion(FrmStandardcatJumpExplosion, %pos, "0 0 1");
          %impulseVec = VectorScale("0 0 1", %this.reJumpForce);
-         %obj.applyImpulse(%pos, %impulseVec);
+         %obj.impulse(%pos, %impulseVec, %obj);
          %obj.setEnergyLevel(%obj.getEnergyLevel() - %this.reJumpEnergyDrain);
       }
    }

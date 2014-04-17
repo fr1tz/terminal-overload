@@ -46,7 +46,7 @@ function ShapeBase::tossPatch(%this)
    %pos = getBoxCenter(%this.getWorldBox());
 
    %item.setTransform(%pos);
-   %item.applyImpulse(%pos, %vec);
+   %item.impulse(%pos, %vec, %item);
    %item.setCollisionTimeout(%this);
    //serverPlay3D(%item.getDataBlock().throwSound, %item.getTransform());
    %item.schedulePop();

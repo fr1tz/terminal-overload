@@ -119,7 +119,7 @@ function PlayerData::doDismount(%this, %obj, %forced)
       %obj.unmount();
       %obj.setTransform(%pos SPC %rot);//%obj.setTransform(%pos);
       //%obj.playAudio(0, UnmountVehicleSound);
-      %obj.applyImpulse(%pos, VectorScale(%impulseVec, %obj.getDataBlock().mass));
+      %obj.impulse(%pos, VectorScale(%impulseVec, %obj.getDataBlock().mass));
 
       // Set player velocity when ejecting
       %vel = %obj.getVelocity();

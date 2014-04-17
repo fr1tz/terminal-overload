@@ -47,7 +47,7 @@ function radiusDamage(%sourceObject, %position, %radius, %damage, %damageType, %
          %impulseVec = VectorSub(%targetObject.getWorldBoxCenter(), %position);
          %impulseVec = VectorNormalize(%impulseVec);
          %impulseVec = VectorScale(%impulseVec, %impulse * %distScale);
-         %targetObject.applyImpulse(%position, %impulseVec);
+         %targetObject.impulse(%position, %impulseVec, %sourceObject);
       }
    }
 }
