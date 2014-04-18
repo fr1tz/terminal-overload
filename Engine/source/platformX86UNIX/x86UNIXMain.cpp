@@ -36,6 +36,9 @@ void Platform::init()
    StdConsole::create();
    stdConsole->enable(true);
 
+   // init process control stuff
+   ProcessControlInit();
+
    Con::printf("Initializing platform...");
 
    // Set the platform variable for the scripts
