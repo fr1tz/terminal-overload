@@ -19,7 +19,7 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 // IN THE SOFTWARE.
 //-----------------------------------------------------------------------------
-#if 1 //defined( TORQUE_SDL )
+#if defined( TORQUE_SDL )
 
 #include "gfx/gfxCubemap.h"
 #include "gfx/screenshot.h"
@@ -70,6 +70,8 @@ void GFXGLDevice::enumerateAdapters( Vector<GFXAdapter*> &adapterList )
 {
    AssertFatal( SDL_WasInit(SDL_INIT_VIDEO), "");
 
+   PlatformGL::init(); // for hints about context creation
+
     // Create a dummy window & openGL context so that gl functions can be used here
    SDL_Window* tempWindow =  SDL_CreateWindow(
         "",                                // window title
@@ -87,6 +89,7 @@ void GFXGLDevice::enumerateAdapters( Vector<GFXAdapter*> &adapterList )
        const char *err = SDL_GetError();
        Con::printf( err );
        AssertFatal(0, err );
+       return;
    }
 
    SDL_ClearError();
@@ -97,6 +100,15 @@ void GFXGLDevice::enumerateAdapters( Vector<GFXAdapter*> &adapterList )
    {
        Con::printf( err );
        AssertFatal(0, err );
+   }
+
+   //check minimun Opengl 3.2
+   int major, minor;
+   glGetIntegerv(GL_MAJOR_VERSION, &major);
+   glGetIntegerv(GL_MINOR_VERSION, &minor);
+   if( major < 3 || ( major == 3 && minor < 2 ) )
+   {
+      return;
    }
 
    loadGLCore();
