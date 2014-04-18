@@ -5,25 +5,40 @@
 namespace PlatformGL
 {
 
-   void* CreateContextGL( PlatformWindow *window )
+   void init()
    {
-       PlatformWindowSDL* windowSdl = dynamic_cast<PlatformWindowSDL*>(window);
-       AssertFatal(windowSdl, "");
+       static bool inited = false;
 
-       if( !windowSdl )
-           return NULL;
+       if(inited)
+           return;
 
-       const U32 majorOGL = 3;
+       inited = true;
+       const U32 majorOGL = 4;
        const U32 minorOGL = 2;
        U32 debugFlag = 0;
 #ifdef TORQUE_DEBUG
        debugFlag |= SDL_GL_CONTEXT_DEBUG_FLAG;
 #endif
 
+#if 0  // cause problem with glew, no extension load
        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, majorOGL);
        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, minorOGL);
        SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+#endif
        SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, debugFlag);
+
+       SDL_ClearError();
+   }
+
+   void* CreateContextGL( PlatformWindow *window )
+   {
+       init();
+
+       PlatformWindowSDL* windowSdl = dynamic_cast<PlatformWindowSDL*>(window);
+       AssertFatal(windowSdl, "");
+
+       if( !windowSdl )
+           return NULL;
 
        SDL_ClearError();
        SDL_GLContext ctx = SDL_GL_CreateContext( windowSdl->getSDLWindow() );
@@ -51,6 +66,19 @@ namespace PlatformGL
            Con::printf( err );
            AssertFatal(0, err );
        }
+   }
+
+   void setVSync(const int i)
+   {
+       if( i == 1 || i == -1 )
+       {
+           int ret = SDL_GL_SetSwapInterval(-1);
+
+           if( ret == -1)
+               SDL_GL_SetSwapInterval(1);
+       }
+       else
+           SDL_GL_SetSwapInterval(0);
    }
 
 }

@@ -5,6 +5,8 @@ class PlatformWindow;
 
 namespace PlatformGL
 {
+   void init();
+
    void* CreateContextGL( PlatformWindow *window );
 
    void MakeCurrentGL( PlatformWindow *window, void *glContext );
