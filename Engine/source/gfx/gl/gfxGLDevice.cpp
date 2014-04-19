@@ -132,7 +132,7 @@ void GFXGLDevice::initGLState()
    {
       glEnable(GL_DEBUG_OUTPUT);
       glDebugMessageCallbackAMD(glAmdDebugCallback, NULL);      
-      glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+      //glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS_ARB);
       GLuint unusedIds = 0;
       glDebugMessageEnableAMD(GL_DONT_CARE, GL_DONT_CARE, 0,&unusedIds, GL_TRUE);
    }
