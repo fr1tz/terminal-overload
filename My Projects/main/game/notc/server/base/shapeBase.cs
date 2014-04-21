@@ -193,7 +193,8 @@ function ShapeBaseData::damage(%this, %obj, %source, %position, %amount, %damage
 // Called by ShapeBase::impulse()
 function ShapeBaseData::impulse(%this, %obj, %position, %impulseVec, %src)
 {
-   //%impulseVec = VectorScale(%impulseVec, 1-0.75*%obj.gridConnection);
+   if(%obj != %src && %obj.zImpShield !$= "")
+      %impulseVec = VectorScale(%impulseVec, 1-%obj.zImpShield);
    %obj.applyImpulse(%position, %impulseVec);
 }
 
