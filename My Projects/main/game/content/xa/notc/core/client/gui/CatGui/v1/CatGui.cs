@@ -62,6 +62,23 @@ function CatGui::tickThread(%this)
    %control = ServerConnection.getControlObject();
    if(!isObject(%control))
       return;
+
+   %impshield = "";
+   %n = %control.getMountedObjectCount();
+   while(%n--)
+   {
+      %obj = %control.getMountedObject(%n);
+      if(isObject(%obj))
+      {
+         if(%obj.getDataBlock().getName() $= "ItemImpShieldShape")
+            %impshield = %obj;
+      }
+   }
+
+   if(isObject(%impshield))
+      CatGuiImpShield.setValue(%impshield.getLevel());
+   else
+      CatGuiImpShield.setValue(0);
       
    CatGuiDamageBufferText.setText(%control.getDamageBufferLevel());
    CatGuiMassText.setText(%control.getMass());
