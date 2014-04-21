@@ -318,8 +318,7 @@ bool GFXGLDevice::beginSceneInternal()
 
 U32 GFXGLDevice::getTotalVideoMemory()
 {
-   // CodeReview [ags 12/21/07] Figure out how to do this.
-   return 0;
+   return getTotalVideoMemory_GL_EXT();
 }
 
 //------------------------------------------------------------------------------

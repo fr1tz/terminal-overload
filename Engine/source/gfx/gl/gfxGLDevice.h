@@ -65,6 +65,7 @@ public:
 
    virtual void enumerateVideoModes();
 
+   virtual U32 getTotalVideoMemory_GL_EXT();
    virtual U32 getTotalVideoMemory();
 
    virtual GFXCubemap * createCubemap();

@@ -867,6 +867,38 @@ GFXFormat GFXGLDevice::selectSupportedFormat(   GFXTextureProfile* profile,
    return GFXFormatR8G8B8A8;
 }
 
+U32 GFXGLDevice::getTotalVideoMemory_GL_EXT()
+{
+   // Source: http://www.opengl.org/registry/specs/ATI/meminfo.txt
+   if( gglHasExtension(ATI_meminfo) )
+   {
+      GLint mem[4] = {0};
+      glGetIntegerv(GL_TEXTURE_FREE_MEMORY_ATI, mem);  // Retrieve the texture pool
+      
+      /* With mem[0] i get only the total memory free in the pool in KB
+      *
+      * mem[0] - total memory free in the pool
+      * mem[1] - largest available free block in the pool
+      * mem[2] - total auxiliary memory free
+      * mem[3] - largest auxiliary free block
+      */
+
+      return  mem[0] / 1024;
+   }
+   
+   //source http://www.opengl.org/registry/specs/NVX/gpu_memory_info.txt
+   else if( gglHasExtension(NVX_gpu_memory_info) )
+   {
+      GLint mem = 0;
+      glGetIntegerv(GL_GPU_MEMORY_INFO_TOTAL_AVAILABLE_MEMORY_NVX, &mem);
+      return mem / 1024;
+   }
+
+   // TODO OPENGL, add supprt for INTEL cards.
+   
+   return 0;
+}
+
 //
 // Register this device with GFXInit
 //
