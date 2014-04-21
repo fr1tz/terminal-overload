@@ -20,7 +20,7 @@ datablock ItemData(WpnMGL1Ammo)
    giveWeapon = WpnMGL1;
    playAmbient = true;
    pickUpName = "MGL1 Ammo";
-   count = 15;
+   count = 30;
 };
 
 datablock ItemData(WpnMGL1)
