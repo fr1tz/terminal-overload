@@ -119,7 +119,7 @@ datablock ProjectileData(WpnMGL1Projectile)
    explosion           = "WpnMGL1ProjectileExplosion";
    decal               = "WpnMGL1ProjectileDecal";
 
-   muzzleVelocity      = 150;
+   muzzleVelocity      = 300;
    velInheritFactor    = 0.75;
 
    armingDelay         = 0;
@@ -128,7 +128,7 @@ datablock ProjectileData(WpnMGL1Projectile)
    bounceElasticity    = 0;
    bounceFriction      = 0;
    isBallistic         = true;
-   gravityMod          = 2.5;
+   gravityMod          = 5;
    //lightDesc = "WpnMGL1ProjectileLightDesc";
 };
 
