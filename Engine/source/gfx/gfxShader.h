@@ -221,7 +221,8 @@ protected:
    /// Ordered SamplerNames
    /// We need to store a list of sampler for allow OpenGL to
    /// assign correct location for each sampler.
-   /// GLSL 150 not allow explicit uniform location.   
+   /// GLSL 150 not allow explicit uniform location.
+   /// Only used on OpenGL   
    Vector<String> mSamplerNamesOrdered;
 
    /// The pixel version this is compiled for.
@@ -277,6 +278,15 @@ public:
 
    /// The destructor.
    virtual ~GFXShader();
+
+   ///
+   /// Deprecated. Remove on T3D 4.0
+#ifndef TORQUE_OPENGL
+   bool init(  const Torque::Path &vertFile, 
+               const Torque::Path &pixFile, 
+               F32 pixVersion, 
+               const Vector<GFXShaderMacro> &macros );
+#endif
 
    ///
    bool init(  const Torque::Path &vertFile, 

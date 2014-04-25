@@ -84,6 +84,7 @@ protected:
    GFXShaderConstHandle *mTexScaleSC;
    GFXShaderConstHandle *mTexDirectionSC;
    GFXShaderConstHandle *mTexOffsetSC;
+   GFXShaderConstHandle *mDiffuseMapSC;
 
    GFXVertexBufferHandle<GFXVertexPT> mVB[TEX_COUNT];
    GFXPrimitiveBufferHandle mPB;    
@@ -97,7 +98,6 @@ protected:
    F32 mTexSpeed[TEX_COUNT];   
    Point2F mTexOffset[TEX_COUNT];
    F32 mHeight[TEX_COUNT];
-   S8 mDiffuseMapReg;
 };
 
 

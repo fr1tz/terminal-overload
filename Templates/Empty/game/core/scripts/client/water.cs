@@ -115,8 +115,8 @@ singleton ShaderData( WaterBasicShader )
    DXVertexShaderFile 	= "shaders/common/water/waterBasicV.hlsl";
    DXPixelShaderFile 	= "shaders/common/water/waterBasicP.hlsl";
    
-   OGLVertexShaderFile 	= "shaders/common/water/gl/waterBasicV.glsl";
-   OGLPixelShaderFile 	= "shaders/common/water/gl/waterBasicP.glsl";
+   OGLVertexShaderFile  = "shaders/common/water/gl/waterBasicV.glsl";
+   OGLPixelShaderFile   = "shaders/common/water/gl/waterBasicP.glsl";
    
    samplerNames[0] = "$bumpMap";
    samplerNames[2] = "$reflectMap";
@@ -150,7 +150,7 @@ singleton CustomMaterial( WaterBasicMat )
    // to use this same material but override these textures
    // per instance.     
    //sampler["bumpMap"] = "core/art/water/noise02";
-   //sampler["skyMap"] = "$cubemap";
+   //sampler["skyMap"] = "$cubemap";   
    
    //sampler["prepassTex"] = "#prepass";
    sampler["reflectMap"] = "$reflectbuff";

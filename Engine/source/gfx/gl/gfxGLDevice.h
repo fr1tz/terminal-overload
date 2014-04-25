@@ -46,6 +46,7 @@ public:
 
    virtual void enumerateVideoModes();
 
+   virtual U32 getTotalVideoMemory_GL_EXT();
    virtual U32 getTotalVideoMemory();
 
    virtual GFXCubemap * createCubemap();
@@ -119,6 +120,9 @@ public:
    GFXGLStateCache* getOpenglCache() { return mOpenglStateCache; }
 
    GFXTextureObject* getDefaultDepthTex() const;
+
+   /// Returns the number of vertex streams supported by the device.	
+   const U32 getNumVertexStreams() const { return mNumVertexStream; }
       
 protected:   
    /// Called by GFXDevice to create a device specific stateblock
@@ -159,7 +163,7 @@ protected:
    virtual void setVertexDecl( const GFXVertexDecl *decl );
 
    virtual void setVertexStream( U32 stream, GFXVertexBuffer *buffer );
-   virtual void setVertexStreamFrequency( U32 stream, U32 frequency );
+   virtual void setVertexStreamFrequency( U32 stream, U32 frequency );   
 
 private:
    typedef GFXDevice Parent;
@@ -174,8 +178,8 @@ private:
 
    U32 mAdapterIndex;
    
-   StrongRefPtr<GFXGLVertexBuffer> mCurrentVB[MAX_VERTEX_STREAM_COUNT];
-   U32 mCurrentVB_Divisor[MAX_VERTEX_STREAM_COUNT];
+   StrongRefPtr<GFXGLVertexBuffer> mCurrentVB[VERTEX_STREAM_COUNT];
+   U32 mCurrentVB_Divisor[VERTEX_STREAM_COUNT];
    bool mNeedUpdateVertexAttrib;
    StrongRefPtr<GFXGLPrimitiveBuffer> mCurrentPB;
    U32 mDrawInstancesCount;
@@ -194,7 +198,9 @@ private:
 
    F32 mPixelShaderVersion;
    
-   bool mSupportsAnisotropic;
+   bool mSupportsAnisotropic;   
+
+   U32 mNumVertexStream;
    
    U32 mMaxShaderTextures;
    U32 mMaxFFTextures;

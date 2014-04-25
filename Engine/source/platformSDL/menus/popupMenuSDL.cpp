@@ -137,7 +137,8 @@ void PopupMenu::removeItem(S32 itemPos)
 
 void PopupMenu::enableItem( S32 pos, bool enable )
 {
-   for( auto item = mData->mMenuGui->firstMenuItem; item; item = item->nextMenuItem )
+   GuiMenuBar::MenuItem *item = NULL;
+   for( item = mData->mMenuGui->firstMenuItem; item; item = item->nextMenuItem )
    {
       if( item->id == pos)
          item->enabled = enable;
@@ -190,7 +191,7 @@ bool PopupMenu::isItemChecked(S32 pos)
 U32 PopupMenu::getItemCount()
 {
    int count = 0;
-   for( auto item = mData->mMenuGui->firstMenuItem; item; item = item->nextMenuItem )
+   for( GuiMenuBar::MenuItem *item = mData->mMenuGui->firstMenuItem; item; item = item->nextMenuItem )
       ++count;
 
    return count;

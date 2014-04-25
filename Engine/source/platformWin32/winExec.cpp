@@ -133,6 +133,8 @@ ConsoleFunction(shellExecute, bool, 2, 4, "(string executable, string args, stri
    return true;
 }
 
+#ifndef TORQUE_SDL
+
 void Platform::openFolder(const char* path )
 {
    char filePath[1024];
@@ -166,4 +168,6 @@ void Platform::openFile(const char* path )
 
    ::ShellExecute( NULL,TEXT("open"),p, NULL, NULL, SW_SHOWNORMAL);
 }
+
+#endif // !TORQUE_SDL
 

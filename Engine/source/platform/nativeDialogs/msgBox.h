@@ -18,6 +18,7 @@ enum MBButtons
    MBRetryCancel,
    MBSaveDontSave,
    MBSaveDontSaveCancel,
+   MBAlertAssert
 };
 
 enum MBIcons

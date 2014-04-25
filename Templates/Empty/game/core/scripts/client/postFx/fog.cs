@@ -90,7 +90,6 @@ singleton PostEffect( UnderwaterFogPostFx )
   
    shader = UnderwaterFogPassShader;
    stateBlock = UnderwaterFogPassStateBlock;
-   
    texture[0] = "#prepass";
    texture[1] = "$backBuffer";
    texture[2] = "#waterDepthGradMap";

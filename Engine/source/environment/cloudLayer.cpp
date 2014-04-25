@@ -18,7 +18,6 @@
 #include "materials/shaderData.h"
 #include "lighting/lightInfo.h"
 #include "math/mathIO.h"
-#include "gfx/gfxDebugEvent.h"
 
 ConsoleDocClass( CloudLayer,
    "@brief A layer of clouds which change shape over time and are affected by scene lighting.\n\n"
@@ -59,8 +58,7 @@ CloudLayer::CloudLayer()
   mCoverage( 0.5f ),
   mExposure( 1.0f ),
   mWindSpeed( 1.0f ),
-  mLastTime( 0 ),
-  mNormalHeightMapReg(-1)
+  mLastTime( 0 )
 {
    mTypeMask |= EnvironmentObjectType | StaticObjectType;
    mNetFlags.set(Ghostable | ScopeAlways);
@@ -126,7 +124,7 @@ bool CloudLayer::onAdd()
       mCoverageSC = mShader->getShaderConstHandle( "$cloudCoverage" );
       mExposureSC = mShader->getShaderConstHandle( "$cloudExposure" );
       mBaseColorSC = mShader->getShaderConstHandle( "$cloudBaseColor" );
-      mNormalHeightMapReg = mShader->getShaderConstHandle( "$normalHeightMap" )->getSamplerRegister();
+      mNormalHeightMapSC = mShader->getShaderConstHandle( "$normalHeightMap" );
 
       // Create StateBlocks
       GFXStateBlockDesc desc;
@@ -299,7 +297,6 @@ void CloudLayer::prepRenderImage( SceneRenderState *state )
 
 void CloudLayer::renderObject( ObjectRenderInst *ri, SceneRenderState *state, BaseMatInstance *mi )
 {
-    GFXDEBUGEVENT_SCOPE( CloudLayer_renderObject, ColorF::WHITE );
    GFXTransformSaver saver;
 
    const Point3F &camPos = state->getCameraPosition();
@@ -350,7 +347,7 @@ void CloudLayer::renderObject( ObjectRenderInst *ri, SceneRenderState *state, Ba
 
    mShaderConsts->setSafe( mExposureSC, mExposure );
 
-   GFX->setTexture( mNormalHeightMapReg, mTexture );                            
+   GFX->setTexture( mNormalHeightMapSC->getSamplerRegister(), mTexture );                            
    GFX->setVertexBuffer( mVB );            
    GFX->setPrimitiveBuffer( mPB );
 

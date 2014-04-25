@@ -154,8 +154,12 @@ PlatformWindow *PlatformWindowManagerSDL::createWindow(GFXDevice *device, const 
 {
    // Do the allocation.
    PlatformWindowSDL *window = new PlatformWindowSDL();   
+   U32 windowFlags = SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE;
 
-   window->mWindowHandle = SDL_CreateWindow("", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, mode.resolution.x, mode.resolution.y,  SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
+   if(GFX->getAdapterType() == OpenGL)
+       windowFlags |= SDL_WINDOW_OPENGL;
+
+   window->mWindowHandle = SDL_CreateWindow("", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, mode.resolution.x, mode.resolution.y, windowFlags );
    window->mWindowId = SDL_GetWindowID( window->mWindowHandle );
    window->mOwningManager = this;
    mWindowMap[ window->mWindowId ] = window;
@@ -332,9 +336,35 @@ void PlatformWindowManagerSDL::raiseCurtain()
    // TODO SDL
 }
 
+void Platform::closeSplashWindow()
+{
+
+}
+
+void Platform::openFolder(const char* path )
+{
+    AssertFatal(0, "Not Implemented");
+}
+
+void Platform::openFile(const char* path )
+{
+    AssertFatal(0, "Not Implemented");
+}
+
+//------------------------------------------------------------------------------
+
+namespace GL
+{
+   void gglPerformBinds();
+}
+
+void InitWindowingSystem()
+{
+
+}
 
 AFTER_MODULE_INIT(gfx)
-{
-   int res = SDL_Init( SDL_INIT_VIDEO | SDL_INIT_JOYSTICK | SDL_INIT_HAPTIC | SDL_INIT_GAMECONTROLLER | SDL_INIT_EVENTS );
+{   
+   int res = SDL_Init( SDL_INIT_VIDEO | SDL_INIT_JOYSTICK | SDL_INIT_HAPTIC | SDL_INIT_GAMECONTROLLER | SDL_INIT_EVENTS | SDL_INIT_NOPARACHUTE );
    AssertFatal(res != -1, "SDL init error");
 }

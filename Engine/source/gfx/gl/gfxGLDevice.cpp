@@ -3,6 +3,7 @@
 
 #include "platform/platform.h"
 #include "gfx/gl/gfxGLDevice.h"
+#include "platform/platformGL.h"
 
 #include "gfx/gfxCubemap.h"
 #include "gfx/screenshot.h"
@@ -95,13 +96,13 @@ void GFXGLDevice::initGLState()
    mSupportsAnisotropic = mCardProfiler->queryProfile( "GL::suppAnisotropic" );
 
 #if TORQUE_DEBUG
-   if( gglHasExtension(KHR_debug)||gglHasExtension(ARB_debug_output))
+   if( gglHasExtension(ARB_debug_output) )
    {
       glEnable(GL_DEBUG_OUTPUT);
-      glDebugMessageCallback(glDebugCallback, NULL);      
-      glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+      glDebugMessageCallbackARB(glDebugCallback, NULL);
+      glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS_ARB);
       GLuint unusedIds = 0;
-      glDebugMessageControl(GL_DONT_CARE,
+      glDebugMessageControlARB(GL_DONT_CARE,
             GL_DONT_CARE,
             GL_DONT_CARE,
             0,
@@ -112,11 +113,13 @@ void GFXGLDevice::initGLState()
    {
       glEnable(GL_DEBUG_OUTPUT);
       glDebugMessageCallbackAMD(glAmdDebugCallback, NULL);      
-      glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+      //glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS_ARB);
       GLuint unusedIds = 0;
       glDebugMessageEnableAMD(GL_DONT_CARE, GL_DONT_CARE, 0,&unusedIds, GL_TRUE);
    }
 #endif
+
+   PlatformGL::setVSync(0);
 
    //OpenGL 3 need a binded VAO for render
    GLuint vao;
@@ -141,7 +144,7 @@ GFXGLDevice::GFXGLDevice(U32 adapterIndex) :
    mNeedUpdateVertexAttrib(false),
    mWindowRT(NULL)
 {
-   for(int i = 0; i < MAX_VERTEX_STREAM_COUNT; ++i)
+   for(int i = 0; i < VERTEX_STREAM_COUNT; ++i)
    {
       mCurrentVB[i] = NULL;
       mCurrentVB_Divisor[i] = 0;
@@ -162,8 +165,7 @@ GFXGLDevice::GFXGLDevice(U32 adapterIndex) :
 
    for(U32 i = 0; i < TEXTURE_STAGE_COUNT; i++)
       mActiveTextureType[i] = GL_ZERO;
-   
-   mTexelPixelOffset = false;
+
    mNumVertexStream = 2;
 
    for(int i = 0; i < GS_COUNT; ++i)
@@ -176,7 +178,7 @@ GFXGLDevice::~GFXGLDevice()
 {
    mCurrentStateBlock = NULL;
 
-   for(int i = 0; i < MAX_VERTEX_STREAM_COUNT; ++i)      
+   for(int i = 0; i < VERTEX_STREAM_COUNT; ++i)      
       mCurrentVB[i] = NULL;
    mCurrentPB = NULL;
    
@@ -222,7 +224,7 @@ void GFXGLDevice::zombify()
 {
    mTextureManager->zombify();
 
-   for(int i = 0; i < MAX_VERTEX_STREAM_COUNT; ++i)   
+   for(int i = 0; i < VERTEX_STREAM_COUNT; ++i)   
       if(mCurrentVB[i])
          mCurrentVB[i]->finish();
    if(mCurrentPB)
@@ -246,7 +248,7 @@ void GFXGLDevice::resurrect()
       walk->resurrect();
       walk = walk->getNextResource();
    }
-   for(int i = 0; i < MAX_VERTEX_STREAM_COUNT; ++i)   
+   for(int i = 0; i < VERTEX_STREAM_COUNT; ++i)   
       if(mCurrentVB[i])
          mCurrentVB[i]->prepare();
    if(mCurrentPB)
@@ -844,6 +846,38 @@ GFXFormat GFXGLDevice::selectSupportedFormat(   GFXTextureProfile* profile,
    }
    
    return GFXFormatR8G8B8A8;
+}
+
+U32 GFXGLDevice::getTotalVideoMemory_GL_EXT()
+{
+   // Source: http://www.opengl.org/registry/specs/ATI/meminfo.txt
+   if( gglHasExtension(ATI_meminfo) )
+   {
+      GLint mem[4] = {0};
+      glGetIntegerv(GL_TEXTURE_FREE_MEMORY_ATI, mem);  // Retrieve the texture pool
+      
+      /* With mem[0] i get only the total memory free in the pool in KB
+      *
+      * mem[0] - total memory free in the pool
+      * mem[1] - largest available free block in the pool
+      * mem[2] - total auxiliary memory free
+      * mem[3] - largest auxiliary free block
+      */
+
+      return  mem[0] / 1024;
+   }
+   
+   //source http://www.opengl.org/registry/specs/NVX/gpu_memory_info.txt
+   else if( gglHasExtension(NVX_gpu_memory_info) )
+   {
+      GLint mem = 0;
+      glGetIntegerv(GL_GPU_MEMORY_INFO_TOTAL_AVAILABLE_MEMORY_NVX, &mem);
+      return mem / 1024;
+   }
+
+   // TODO OPENGL, add supprt for INTEL cards.
+   
+   return 0;
 }
 
 //

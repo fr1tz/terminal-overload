@@ -14,8 +14,8 @@ singleton ShaderData( OVRMonoToStereoShader )
    DXVertexShaderFile 	= "shaders/common/postFx/postFxV.hlsl";
    DXPixelShaderFile 	= "shaders/common/postFx/oculusvr/monoToStereoP.hlsl";
    
-   //OGLVertexShaderFile 	= "shaders/common/postFx/gl/postFxV.hlsl";
-   //OGLPixelShaderFile 	= "shaders/common/postFx/oculusvr/gl/monoToStereoP.glsl";
+   //OGLVertexShaderFile  = "shaders/common/postFx/gl/postFxV.hlsl";
+   //OGLPixelShaderFile   = "shaders/common/postFx/oculusvr/gl/monoToStereoP.glsl";
    
    samplerNames[0] = "$backBuffer";
 
@@ -27,8 +27,8 @@ singleton ShaderData( OVRBarrelDistortionShader )
    DXVertexShaderFile 	= "shaders/common/postFx/postFxV.hlsl";
    DXPixelShaderFile 	= "shaders/common/postFx/oculusvr/barrelDistortionP.hlsl";
    
-   //OGLVertexShaderFile 	= "shaders/common/postFx/gl/postFxV.glsl";
-   //OGLPixelShaderFile 	= "shaders/common/postFx/oculusvr/gl/barrelDistortionP.glsl";
+   //OGLVertexShaderFile  = "shaders/common/postFx/gl/postFxV.glsl";
+   //OGLPixelShaderFile   = "shaders/common/postFx/oculusvr/gl/barrelDistortionP.glsl";
    
    samplerNames[0] = "$backBuffer";
 

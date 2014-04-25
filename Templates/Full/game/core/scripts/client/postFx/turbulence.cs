@@ -34,5 +34,5 @@ singleton PostEffect( TurbulenceFx )
      
    shader = PFX_TurbulenceShader;  
    stateBlock=PFX_TurbulenceStateBlock;
-   texture[0] = "$backBuffer";  
+   texture[0] = "$backBuffer";      
  };

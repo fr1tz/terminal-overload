@@ -572,12 +572,12 @@ protected:
 
    /// The maximum number of supported vertex streams which
    /// may be more than the device supports.
-   static const U32 MAX_VERTEX_STREAM_COUNT = 4;
+   static const U32 VERTEX_STREAM_COUNT = 4;
 
-   StrongRefPtr<GFXVertexBuffer> mCurrentVertexBuffer[MAX_VERTEX_STREAM_COUNT];
-   bool mVertexBufferDirty[MAX_VERTEX_STREAM_COUNT];
-   U32 mVertexBufferFrequency[MAX_VERTEX_STREAM_COUNT];
-   bool mVertexBufferFrequencyDirty[MAX_VERTEX_STREAM_COUNT];
+   StrongRefPtr<GFXVertexBuffer> mCurrentVertexBuffer[VERTEX_STREAM_COUNT];
+   bool mVertexBufferDirty[VERTEX_STREAM_COUNT];
+   U32 mVertexBufferFrequency[VERTEX_STREAM_COUNT];
+   bool mVertexBufferFrequencyDirty[VERTEX_STREAM_COUNT];
 
    const GFXVertexDecl *mCurrVertexDecl;
    bool mVertexDeclDirty;
@@ -636,16 +636,12 @@ protected:
    /// it must be updated on the next draw/clear.
    bool mViewportDirty;
 
-   U32 mNumVertexStream;
-
 public:
 
    /// @name Texture functions
    /// @{
 protected:
    GFXTextureManager * mTextureManager;
-
-   bool mTexelPixelOffset;
 
 public:   
    virtual GFXCubemap * createCubemap() = 0;
@@ -704,9 +700,6 @@ public:
    /// Returns the number of simultaneous render targets supported by the device.
    virtual U32 getNumRenderTargets() const = 0;
 
-   /// Returns the number of vertex streams supported by the device.	
-   const U32 getNumVertexStreams() const { return mNumVertexStream; }
-
    virtual void setShader( GFXShader *shader ) {}
 
    /// Set the buffer! (Actual set happens on the next draw call, just like textures, state blocks, etc)
@@ -716,9 +709,6 @@ public:
    /// and deleted by the caller.
    /// @see GFXShader::init
    virtual GFXShader* createShader() = 0;
-
-   /// For handle with DX9 API texel-to-pixel mapping offset
-   bool hasTexelPixelOffset() const { return mTexelPixelOffset; }
    
    /// @}
  
@@ -854,7 +844,7 @@ public:
    /// Sets the current stateblock (actually activated in ::updateStates)
    virtual void setStateBlock( GFXStateBlock *block );
 
-   GFXStateBlock* getStateBlock() { return mCurrentStateBlock; }
+   GFXStateBlock* getStateBlock() { return mNewStateBlock; }
 
    /// This sets a stateblock directly from the description
    /// structure.  Its acceptable to use this for debug rendering
@@ -1074,7 +1064,7 @@ inline void GFXDevice::setTextureMatrix( const U32 stage, const MatrixF &texMat 
 
 inline void GFXDevice::setVertexBuffer( GFXVertexBuffer *buffer, U32 stream, U32 frequency )
 {
-   AssertFatal( stream < MAX_VERTEX_STREAM_COUNT, "GFXDevice::setVertexBuffer - Bad stream index!" );
+   AssertFatal( stream < VERTEX_STREAM_COUNT, "GFXDevice::setVertexBuffer - Bad stream index!" );
 
    if ( buffer && stream == 0 )
       setVertexFormat( &buffer->mVertexFormat );

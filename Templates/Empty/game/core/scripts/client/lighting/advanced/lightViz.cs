@@ -84,7 +84,6 @@ singleton PostEffect( AL_NormalsVisualize )
    shader = AL_NormalsVisualizeShader;
    stateBlock = AL_DefaultVisualizeState;
    texture[0] = "#prepass";
-   
    target = "$backBuffer";
    renderPriority = 9999;
 };

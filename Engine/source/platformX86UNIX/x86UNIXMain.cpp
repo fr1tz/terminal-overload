@@ -17,6 +17,9 @@ void Platform::init()
    StdConsole::create();
    stdConsole->enable(true);
 
+   // init process control stuff
+   ProcessControlInit();
+
    Con::printf("Initializing platform...");
 
    // Set the platform variable for the scripts
@@ -35,10 +38,7 @@ void Platform::init()
 
 #ifndef TORQUE_DEDICATED
    // if we're not dedicated do more initialization
-   if (!x86UNIXState->isDedicated())
-   {
-       InitWindowingSystem();
-   }
+   InitWindowingSystem();
 #endif
 }
 

@@ -1,0 +1,15 @@
+cmake_minimum_required (VERSION 2.8.3)
+
+set(TORQUE_APP_NAME "" CACHE STRING "the app name")
+
+if("${TORQUE_APP_NAME}" STREQUAL "")
+	message(FATAL_ERROR "Please set TORQUE_APP_NAME first")
+endif()
+
+IF(NOT DEFINED CMAKE_INSTALL_PREFIX)
+  set(CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_BINARY_DIR}" CACHE PATH "" FORCE)
+ENDIF(NOT DEFINED CMAKE_INSTALL_PREFIX)
+
+project(${TORQUE_APP_NAME})
+
+add_subdirectory(Tools/CMake)

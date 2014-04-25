@@ -249,6 +249,8 @@ Platform::ALERT_ASSERT_RESULT Platform::AlertAssert(const char *windowTitle, con
    return alertResult;
 }
 
+#endif
+
 //--------------------------------------
 HIMC gIMEContext;
 

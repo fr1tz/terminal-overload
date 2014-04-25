@@ -65,7 +65,8 @@
 			{foreach item=def from=$projIncludes}<Add directory="{$def}" />;
 			{/foreach}
 		</Compiler>
-		<Linker>				
+		<Linker>
+			<Add option="-m32" />			
 		</Linker>
 		<!-- <Unit filename="../../../../../Engine/lib/tinyxml/tinystr.cpp" /> -->
 		{assign var="dirWalk" value=$fileArray}
