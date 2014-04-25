@@ -59,8 +59,8 @@ singleton ShaderData( HDR_BrightPassShader )
 {
    DXVertexShaderFile 	= "shaders/common/postFx/postFxV.hlsl";
    DXPixelShaderFile 	= "shaders/common/postFx/hdr/brightPassFilterP.hlsl";   
-   OGLVertexShaderFile 	= "shaders/common/postFx/gl/postFxV.glsl";
-   OGLPixelShaderFile 	= "shaders/common/postFx/hdr/gl/brightPassFilterP.glsl";
+   OGLVertexShaderFile  = "shaders/common/postFx/gl/postFxV.glsl";
+   OGLPixelShaderFile   = "shaders/common/postFx/hdr/gl/brightPassFilterP.glsl";
    
    samplerNames[0] = "$inputTex";
    samplerNames[1] = "$luminanceTex";
@@ -72,8 +72,8 @@ singleton ShaderData( HDR_DownScale4x4Shader )
 {
    DXVertexShaderFile 	= "shaders/common/postFx/hdr/downScale4x4V.hlsl";
    DXPixelShaderFile 	= "shaders/common/postFx/hdr/downScale4x4P.hlsl";
-   OGLVertexShaderFile 	= "shaders/common/postFx/hdr/gl/downScale4x4V.glsl";
-   OGLPixelShaderFile 	= "shaders/common/postFx/hdr/gl/downScale4x4P.glsl";
+   OGLVertexShaderFile  = "shaders/common/postFx/hdr/gl/downScale4x4V.glsl";
+   OGLPixelShaderFile   = "shaders/common/postFx/hdr/gl/downScale4x4P.glsl";
    
    samplerNames[0] = "$inputTex";
    
@@ -84,8 +84,8 @@ singleton ShaderData( HDR_BloomGaussBlurHShader )
 {
    DXVertexShaderFile 	= "shaders/common/postFx/postFxV.hlsl";
    DXPixelShaderFile 	= "shaders/common/postFx/hdr/bloomGaussBlurHP.hlsl";
-   OGLVertexShaderFile 	= "shaders/common/postFx/gl/postFxV.glsl";
-   OGLPixelShaderFile 	= "shaders/common/postFx/hdr/gl/bloomGaussBlurHP.glsl";
+   OGLVertexShaderFile  = "shaders/common/postFx/gl/postFxV.glsl";
+   OGLPixelShaderFile   = "shaders/common/postFx/hdr/gl/bloomGaussBlurHP.glsl";
    
    samplerNames[0] = "$inputTex";
    
@@ -96,8 +96,8 @@ singleton ShaderData( HDR_BloomGaussBlurVShader )
 {
    DXVertexShaderFile 	= "shaders/common/postFx/postFxV.hlsl";
    DXPixelShaderFile 	= "shaders/common/postFx/hdr/bloomGaussBlurVP.hlsl";
-   OGLVertexShaderFile 	= "shaders/common/postFx/gl/postFxV.glsl";
-   OGLPixelShaderFile 	= "shaders/common/postFx/hdr/gl/bloomGaussBlurVP.glsl";
+   OGLVertexShaderFile  = "shaders/common/postFx/gl/postFxV.glsl";
+   OGLPixelShaderFile   = "shaders/common/postFx/hdr/gl/bloomGaussBlurVP.glsl";
    
    samplerNames[0] = "$inputTex";
    
@@ -108,8 +108,8 @@ singleton ShaderData( HDR_SampleLumShader )
 {
    DXVertexShaderFile 	= "shaders/common/postFx/postFxV.hlsl";
    DXPixelShaderFile 	= "shaders/common/postFx/hdr/sampleLumInitialP.hlsl";
-   OGLVertexShaderFile 	= "shaders/common/postFx/gl/postFxV.glsl";
-   OGLPixelShaderFile 	= "shaders/common/postFx/hdr/gl/sampleLumInitialP.glsl";
+   OGLVertexShaderFile  = "shaders/common/postFx/gl/postFxV.glsl";
+   OGLPixelShaderFile   = "shaders/common/postFx/hdr/gl/sampleLumInitialP.glsl";
    
    samplerNames[0] = "$inputTex";
    
@@ -120,8 +120,8 @@ singleton ShaderData( HDR_DownSampleLumShader )
 {
    DXVertexShaderFile 	= "shaders/common/postFx/postFxV.hlsl";
    DXPixelShaderFile 	= "shaders/common/postFx/hdr/sampleLumIterativeP.hlsl";
-   OGLVertexShaderFile 	= "shaders/common/postFx/gl/postFxV.glsl";
-   OGLPixelShaderFile 	= "shaders/common/postFx/hdr/gl/sampleLumIterativeP.glsl";
+   OGLVertexShaderFile  = "shaders/common/postFx/gl/postFxV.glsl";
+   OGLPixelShaderFile   = "shaders/common/postFx/hdr/gl/sampleLumIterativeP.glsl";
    
    samplerNames[0] = "$inputTex";
    
@@ -132,8 +132,8 @@ singleton ShaderData( HDR_CalcAdaptedLumShader )
 {
    DXVertexShaderFile 	= "shaders/common/postFx/postFxV.hlsl";
    DXPixelShaderFile 	= "shaders/common/postFx/hdr/calculateAdaptedLumP.hlsl";
-   OGLVertexShaderFile 	= "shaders/common/postFx/gl/postFxV.glsl";
-   OGLPixelShaderFile 	= "shaders/common/postFx/hdr/gl/calculateAdaptedLumP.glsl";
+   OGLVertexShaderFile  = "shaders/common/postFx/gl/postFxV.glsl";
+   OGLPixelShaderFile   = "shaders/common/postFx/hdr/gl/calculateAdaptedLumP.glsl";
    
    samplerNames[0] = "$currLum";
    samplerNames[1] = "$lastAdaptedLum";
@@ -145,8 +145,8 @@ singleton ShaderData( HDR_CombineShader )
 {
    DXVertexShaderFile 	= "shaders/common/postFx/postFxV.hlsl";
    DXPixelShaderFile 	= "shaders/common/postFx/hdr/finalPassCombineP.hlsl";
-   OGLVertexShaderFile 	= "shaders/common/postFx/gl/postFxV.glsl";
-   OGLPixelShaderFile 	= "shaders/common/postFx/hdr/gl/finalPassCombineP.glsl";
+   OGLVertexShaderFile  = "shaders/common/postFx/gl/postFxV.glsl";
+   OGLPixelShaderFile   = "shaders/common/postFx/hdr/gl/finalPassCombineP.glsl";
    
    samplerNames[0] = "$sceneTex";
    samplerNames[1] = "$luminanceTex";
@@ -447,8 +447,8 @@ singleton ShaderData( LuminanceVisShader )
 {
    DXVertexShaderFile 	= "shaders/common/postFx/postFxV.hlsl";
    DXPixelShaderFile 	= "shaders/common/postFx/hdr/luminanceVisP.hlsl";
-   OGLVertexShaderFile 	= "shaders/common/postFx/gl/postFxV.glsl";
-   OGLPixelShaderFile 	= "shaders/common/postFx/hdr/gl/luminanceVisP.glsl";
+   OGLVertexShaderFile  = "shaders/common/postFx/gl/postFxV.glsl";
+   OGLPixelShaderFile   = "shaders/common/postFx/hdr/gl/luminanceVisP.glsl";
    
    samplerNames[0] = "$inputTex";
    

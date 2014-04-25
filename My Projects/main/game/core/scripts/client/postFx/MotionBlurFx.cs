@@ -1,8 +1,6 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
-$PostFX::MotionBlur::VelMul = 10;
-
 singleton ShaderData( PFX_MotionBlurShader )  
 {     
    DXVertexShaderFile   = "shaders/common/postFx/postFxV.hlsl";  //we use the bare-bones postFxV.hlsl
@@ -32,5 +30,5 @@ singleton PostEffect(MotionBlurFX)
 
 function MotionBlurFX::setShaderConsts(%this)
 {
-   %this.setShaderConst("$velocityMultiplier", $PostFX::MotionBlur::VelMul);
+   %this.setShaderConst( "$velocityMultiplier", 3000 );
 }

@@ -20,22 +20,21 @@
 // IN THE SOFTWARE.
 //-----------------------------------------------------------------------------
 
-varying vec2 uv0;
-varying vec2 uv1;
-varying vec2 uv2;
-varying vec2 uv3;
-varying vec3 wsEyeRay;
-
-
 #ifdef TORQUE_VERTEX_SHADER
 
-attribute vec4 vPosition;
-attribute vec2 vTexCoord0;
-attribute vec3 vTexCoord1;
+in vec4 vPosition;
+in vec2 vTexCoord0;
+in vec3 vTexCoord1;
 
 #define IN_pos       vPosition
 #define IN_uv        vTexCoord0.st
 #define IN_wsEyeRay  vTexCoord1.xyz
+
+out vec2 uv0;
+out vec2 uv1;
+out vec2 uv2;
+out vec2 uv3;
+out vec3 wsEyeRay;
 
 #define OUT_uv0 uv0
 #define OUT_uv1 uv1
@@ -48,6 +47,12 @@ attribute vec3 vTexCoord1;
 
 
 #ifdef TORQUE_PIXEL_SHADER
+
+in vec2 uv0;
+in vec2 uv1;
+in vec2 uv2;
+in vec2 uv3;
+in vec3 wsEyeRay;
 
 #define IN_uv0 uv0
 #define IN_uv1 uv1
