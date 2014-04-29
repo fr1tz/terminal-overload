@@ -49,4 +49,5 @@ function xa_notc_core_shaapes_standardcat_old_dts::onLoad(%this)
    %this.addSequence("./oldanims/nm/jump.dsq", "jump", "0", "4", "1", "0");
    %this.addSequence("./oldanims/b/slide.dsq", "slide", "0", "4", "1", "0");
    %this.renameNode("pelvis", "Mount3");
+   %this.renameNode("head", "Mount4");
 }
