@@ -1246,6 +1246,17 @@ void ShapeBase::onDeleteNotify( SimObject *obj )
    if ( obj == mCurrentWaterObject )
       mCurrentWaterObject = NULL;
 
+   // Check if the object was a target of an image.
+   for(int i = 0; i < MaxMountedImages; i++)
+   {
+      ShapeBase::MountedImage* image = this->getImageStruct(i); 
+      if(obj == image->currTarget)
+      {
+         image->currTarget = NULL;
+         image->targetState = MountedImage::NoTarget;	
+      }
+   }
+
    Parent::onDeleteNotify( obj );      
 }
 
@@ -1441,6 +1452,10 @@ void ShapeBase::advanceTime(F32 dt)
       {
          //updateImageState(i, NULL, dt);
          updateImageAnimation(i, dt);
+         if(mMountedImageList[i].state->target 
+         && mMountedImageList[i].targetState != MountedImage::NoTarget
+         && mMountedImageList[i].dataBlock->followTarget)
+            updateImageTargetFollow(mMountedImageList[i]);	
       }
 
    // Cloaking
@@ -3383,7 +3398,17 @@ U32 ShapeBase::packUpdate(NetConnection *con, U32 mask, BitStream *stream)
             stream->writeFlag(image.ammo);
             stream->writeFlag(image.loaded);
             stream->writeFlag(image.charged);
-            stream->writeFlag(image.target);
+
+            stream->writeInt(image.targetState, 2);
+            if(image.currTarget)
+            {
+               S32 ghostIndex = con->getGhostIndex(image.currTarget);
+               if( stream->writeFlag(ghostIndex != -1) )
+                  stream->writeRangedU32(U32(ghostIndex), 0, NetConnection::MaxGhostCount);
+            }
+            else
+               stream->writeFlag(false);
+
             stream->writeFlag(image.triggerDown);
             stream->writeFlag(image.altTriggerDown);
 
@@ -3584,7 +3609,17 @@ void ShapeBase::unpackUpdate(NetConnection *con, BitStream *stream)
 
 				image.charged = stream->readFlag();
 
-				image.target = stream->readFlag();
+				image.targetState = (MountedImage::TargetState)stream->readInt(2);
+			   if(stream->readFlag()) // have currTarget?
+			   {
+				   S32 id = stream->readRangedU32(0, NetConnection::MaxGhostCount);
+				   NetObject* obj = con->resolveGhost(id);
+				   image.currTarget = dynamic_cast<ShapeBase*>(obj);
+			   }
+			   else 
+			   {
+				   image.currTarget = NULL;
+			   }
 
 				image.triggerDown = stream->readFlag();
 				image.altTriggerDown = stream->readFlag();
@@ -3608,7 +3643,7 @@ void ShapeBase::unpackUpdate(NetConnection *con, BitStream *stream)
 									skinDesiredNameHandle, image.loaded, 
 									image.ammo, image.triggerDown, image.altTriggerDown,
 									image.motion, image.genericTrigger[0], image.genericTrigger[1], image.genericTrigger[2], image.genericTrigger[3],
-									image.target, image.magazineRounds);
+									image.magazineRounds);
 				}
             
 				if (!datablockChange && image.scriptAnimPrefix != scriptDesiredAnimPrefix)
@@ -4744,29 +4779,18 @@ ConsoleMethod( ShapeBase, getImageRecoilDelta, S32, 3, 3, "(int slot)")
    return 0;
 }
 
-DefineEngineMethod( ShapeBase, getImageTarget, bool, ( S32 slot ),,
-   "@brief Get the target state of the Image mounted in the specified slot.\n\n"
+DefineEngineMethod( ShapeBase, getImageTarget, S32, ( S32 slot ),,
+   "@brief Get the target of the Image mounted in the specified slot.\n\n"
 
    "@param slot Image slot to query\n"
-   "@return the Image's current target state\n\n" )
+   "@return the Image's current target\n\n" )
 {
    if (slot >= 0 && slot < ShapeBase::MaxMountedImages)
-      return object->getImageTargetState(slot);
-   return false;
-}
-
-DefineEngineMethod( ShapeBase, setImageTarget, bool, ( S32 slot, bool state ),,
-   "@brief Set the target state of the Image mounted in the specified slot.\n\n"
-
-   "@param slot Image slot to modify\n"
-   "@param state new target state for the Image\n"
-   "@return the Image's new target state\n\n" )
-{
-   if (slot >= 0 && slot < ShapeBase::MaxMountedImages) {
-      object->setImageTargetState(slot,state);
-      return state;
+   {
+      GameBase* target = object->getImageTarget(slot);
+      return target ? target->getId() : 0;
    }
-   return false;
+   return 0;
 }
 
 DefineEngineMethod( ShapeBase, getImageScriptAnimPrefix, const char*, ( S32 slot ),,

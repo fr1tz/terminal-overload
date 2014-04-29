@@ -3835,6 +3835,79 @@ bool Player::canSprint()
 
 //----------------------------------------------------------------------------
 
+bool Player::updateImageTargetFollow(MountedImage& image)
+{
+	if(!this->checkImageTargetingAim(image))
+		return false;
+
+	// Use the eye as the current position.
+	MatrixF eye;
+	this->getEyeTransform(&eye);
+	Point3F location = eye.getPosition();
+	Point3F rotation = this->getRotation();
+
+	Point3F targetPos;
+	if(image.currTarget->getTypeMask() & PlayerObjectType)
+	{
+		Player* p = (Player*)image.currTarget;
+		MatrixF mat; p->getEyeTransform(&mat);
+		targetPos = mat.getPosition();
+	}
+	else
+	{
+		targetPos = image.currTarget->getBoxCenter();
+	}
+
+	// predict pos on next tick...
+	location  += this->getVelocity() * TickSec;
+	targetPos += image.currTarget->getVelocity() * TickSec;
+
+	F32 xDiff = targetPos.x - location.x;
+	F32 yDiff = targetPos.y - location.y;
+	if(!mIsZero(xDiff) || !mIsZero(yDiff))
+	{
+		// First do Yaw
+		// use the cur yaw between -Pi and Pi
+		F32 curYaw = rotation.z;
+		while (curYaw > M_2PI)
+			curYaw -= M_2PI;
+		while (curYaw < -M_2PI)
+			curYaw += M_2PI;
+
+		// find the yaw offset
+		F32 newYaw = mAtan2( xDiff, yDiff );
+		F32 yawDiff = newYaw - curYaw;
+
+		// make it between 0 and 2PI
+		if( yawDiff < 0.0f )
+			yawDiff += M_2PI;
+		else if( yawDiff >= M_2PI )
+			yawDiff -= M_2PI;
+
+		// now make sure we take the short way around the circle
+		if( yawDiff > M_PI )
+			yawDiff -= M_2PI;
+		else if( yawDiff < -M_PI )
+			yawDiff += M_2PI;
+
+		// This should be adjusted to run from the
+		// eye point to the object's center position. Though this
+		// works well enough for now.
+		F32 vertDist = targetPos.z - location.z;
+		F32 horzDist = mSqrt(xDiff * xDiff + yDiff * yDiff);
+		F32 newPitch = mAtan2( horzDist, vertDist ) - ( M_PI / 2.0f );
+		Point3F headRotation = getHeadRotation();
+		F32 pitchDiff = newPitch - headRotation.x;
+
+		MoveManager::mYaw = yawDiff;
+		MoveManager::mPitch = pitchDiff;
+	}
+
+	return true;
+}
+
+//----------------------------------------------------------------------------
+
 void Player::updateDamageLevel()
 {
    if (!isGhost())

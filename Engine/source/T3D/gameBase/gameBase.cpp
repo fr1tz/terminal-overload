@@ -102,6 +102,7 @@ GameBaseData::GameBaseData()
 {
    category = "";
    packed = false;
+   targetLockTimeMS = 500;
 }
 
 void GameBaseData::inspectPostApply()
@@ -131,6 +132,13 @@ void GameBaseData::initPersistFields()
 
    endGroup("Scripting");
 
+   addGroup("Targeting");
+
+      addField( "targetLockTimeMS", TypeS32, Offset( targetLockTimeMS, GameBaseData ),
+         "Time required for a mounted image to lock on." );
+
+   endGroup("Targeting");
+
    Parent::initPersistFields();
 }
 
@@ -142,9 +150,16 @@ bool GameBaseData::preload(bool server, String &errorStr)
    return true;
 }
 
+void GameBaseData::packData(BitStream* stream)
+{
+   Parent::packData(stream);
+   stream->writeInt(targetLockTimeMS >> 5, 16);
+}
+
 void GameBaseData::unpackData(BitStream* stream)
 {
    Parent::unpackData(stream);
+   targetLockTimeMS = stream->readInt(16) << 5;
    packed = true;
 }
 
@@ -219,6 +234,7 @@ GameBase::GameBase()
    mGhostCleanupCountdown = 0xFFFFFFFF;
    mClient = -1;
    mTeamId = 0;
+   mTargetingMask = 0;
    
 #ifdef TORQUE_DEBUG_NET_MOVES
    mLastMoveId = 0;
@@ -517,6 +533,7 @@ U32 GameBase::packUpdate( NetConnection *connection, U32 mask, BitStream *stream
    if(stream->writeFlag(mask & RareUpdatesMask))
    {
       stream->writeInt(mTeamId, 32);
+      stream->writeInt(mTargetingMask, 32);
       if(stream->writeFlag(mObjScale != Point3F::One))
          mathWrite(*stream, mObjScale);  
    }
@@ -546,6 +563,7 @@ void GameBase::unpackUpdate(NetConnection *con, BitStream *stream)
    if(stream->readFlag())
    {
       mTeamId = stream->readInt(32);
+      mTargetingMask = stream->readInt(32);
       if(stream->readFlag())
       {
          VectorF scale;
@@ -574,6 +592,17 @@ void GameBase::unpackUpdate(NetConnection *con, BitStream *stream)
    mTicksSinceLastMove = 0;
    mIsAiControlled = stream->readFlag();
 #endif
+}
+
+//----------------------------------------------------------------------------
+
+void GameBase::setTargetingMask(U32 mask)
+{
+   if(mTargetingMask != mask)
+   {
+      mTargetingMask = mask;
+      setMaskBits(RareUpdatesMask);
+   }
 }
 
 void GameBase::onMount( SceneObject *obj, S32 node )
@@ -698,4 +727,18 @@ DefineEngineMethod( GameBase, applyRadialImpulse, void, ( Point3F origin, F32 ra
    "@note Not all objects that derrive from GameBase have this defined.\n")
 {
    object->applyRadialImpulse( origin, radius, magnitude );
+}
+
+DefineEngineMethod( GameBase, setTargetingMask, void, ( S32 mask ),,
+   "@brief Set bitmask used for mounted image targeting.\n\n"
+
+   "@param mask The bitmask\n")
+{
+   object->setTargetingMask(mask);
+}
+
+DefineEngineMethod( GameBase, getTargetingMask, S32, ( ),,
+   "@brief Returns bitmask used for mounted image targeting.\n\n")
+{
+   return object->getTargetingMask();
 }

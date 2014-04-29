@@ -159,6 +159,7 @@ struct ShapeBaseImageData: public GameBaseData {
          S32 loaded[2];             ///< NotLoaded/Loaded
          S32 ammo[2];               ///< Noammo/ammo
          S32 target[2];             ///< target/noTarget
+         S32 targetLocked[2];       ///< target/noTarget locked
          S32 trigger[2];            ///< Trigger up/down
          S32 altTrigger[2];         ///< Second trigger up/down
          S32 wet[2];                ///< wet/notWet
@@ -229,6 +230,8 @@ struct ShapeBaseImageData: public GameBaseData {
 
       bool charge;                  ///< Charge on this state?
 
+      bool target;						///< Search for target on this state?
+
 		const char* armThread;		   ///< Arm thread to use when mounted by player
 
       bool flashSequence[MaxShapes];///< Is this a muzzle flash sequence?
@@ -266,6 +269,8 @@ struct ShapeBaseImageData: public GameBaseData {
    const char*             stateTransitionNoAmmo      [MaxStates];
    const char*             stateTransitionTarget      [MaxStates];
    const char*             stateTransitionNoTarget    [MaxStates];
+   const char*             stateTransitionTargetLocked   [MaxStates];
+   const char*             stateTransitionNoTargetLocked [MaxStates];
    const char*             stateTransitionWet         [MaxStates];
    const char*             stateTransitionNotWet      [MaxStates];
    const char*             stateTransitionMotion      [MaxStates];
@@ -306,6 +311,7 @@ struct ShapeBaseImageData: public GameBaseData {
    StateData::SpinState    stateSpin                  [MaxStates];
    StateData::RecoilState  stateRecoil                [MaxStates];
    bool                    stateCharge                [MaxStates];
+   bool                    stateTarget                [MaxStates];
 	const char*             stateArmThread             [MaxStates];
    const char*             stateSequence              [MaxStates];
    bool                    stateSequenceRandomFlash   [MaxStates];
@@ -382,6 +388,13 @@ struct ShapeBaseImageData: public GameBaseData {
 	S32 ammoSource;                  ///< How does the image know whether is has ammo?
                                     ///
                                     ///  One of: Manual, Energy, Magazine, Hybrid.
+
+   /// @name Targeting 
+   /// @{
+   U32 targetingMask;               ///< What types of objects can be targeted?
+   U32 targetingMaxDist;            ///< How far can we target?
+   bool followTarget;               ///< Try to follow target?
+   /// @}
 
    F32   mass;                      ///< Mass!
    F32   minEnergy;                 ///< Minimum energy for the weapon to be operable.
@@ -874,10 +887,19 @@ public:
                                     ///
                                     /// Depends on the ammoSource the image uses.
 
+      enum TargetState {
+         // NOTE: Order is important!
+         NoTarget,
+         HaveTarget,
+         TargetLocked,
+         NumTargetStates
+      } targetState;                ///< Current target state
+      GameBase* currTarget;         ///< Current target object
+      F32 lockTime;                 ///< remaining time until target is locked
+
 		S32 magazineRounds;           ///< How many rounds in the image's magazine?
 		                              ///  (Only used if ammoSource is "magazine".)
 
-      bool target;                  ///< Have we acquired a targer?
       bool wet;                     ///< Is the weapon wet?
 
       bool motion;                  ///< Is the player in motion?
@@ -928,6 +950,8 @@ public:
       ImageEmitter emitter[MaxImageEmitters];
 
       /// @}
+
+      void setCurrTarget(ShapeBase* shape, GameBase* target);
 
       //
       MountedImage();
@@ -1102,7 +1126,6 @@ protected:
    /// @param   ammo        Does the image have ammo?
    /// @param   triggerDown Is the trigger on this image down?
    /// @param   altTriggerDown Is the second trigger on this image down?
-   /// @param   target      Does the image have a target?
    virtual void setImage(  U32 imageSlot, 
                            ShapeBaseImageData* imageData, 
                            NetStringHandle &skinNameHandle,
@@ -1114,7 +1137,6 @@ protected:
                            bool genericTrigger1 = false,
                            bool genericTrigger2 = false,
                            bool genericTrigger3 = false,
-                           bool target = false,
 									S32 magazineRounds = 0);
 
    /// Clear out an image slot
@@ -1170,6 +1192,15 @@ protected:
    /// @param   image   Mounted image
    U32 getImageShapeIndex(const MountedImage& image) const;
 
+   /// Find target for a mounted image
+   bool findImageTarget(const Point3F &start, const Point3F &end, U32 targetingMask, RayInfo* info);
+
+   // Check if image is still aiming somewhere near its target.
+   bool checkImageTargetingAim(MountedImage& image);
+
+   // Only the Player class implements this
+   virtual bool updateImageTargetFollow(MountedImage& image) { return false; }
+
    /// @}
 
    /// Prune out non looping sounds from the sound manager which have expired
@@ -1199,6 +1230,11 @@ protected:
    virtual void updateDamageState();
    virtual void onImpact(SceneObject* obj, VectorF vec);
    virtual void onImpact(VectorF vec);
+   /// @}
+
+   /// @name Targeting
+   /// @{
+   bool findTarget(const Point3F& start, const Point3F& end, RayInfo* rInfo);
    /// @}
 
    /// The inner prep render function that does the 
@@ -1497,6 +1533,9 @@ public:
 	void clientFiredShotgun(NetConnection* client,  int slot, const ShotgunHits& hits,
 		ShotgunProjectileData* datablock, const Point3F& pos, const Point3F& vel);
 
+	/// Client image changed target
+	void clientImageChangedTarget(NetConnection* client, int slot, GameBase* target, bool locked);
+
    /// @name Cloaking
    /// @{
 
@@ -1672,15 +1711,6 @@ public:
    /// @param   imageSlot   image slot
    bool getImageMotionState(U32 imageSlot);
 
-   /// Sets the flag if the image has a target
-   /// @param   imageSlot   Image slot
-   /// @param   ammo        True if the weapon has a target
-   void setImageTargetState(U32 imageSlot,bool ammo);
-
-   /// Returns true if the image has a target
-   /// @param   imageSlot   Image slot
-   bool getImageTargetState(U32 imageSlot);
-
    /// Sets the flag of if the image is loaded with ammo
    /// @param   imageSlot   Image slot
    /// @param   loaded      True if object is loaded with ammo
@@ -1698,6 +1728,15 @@ public:
    /// Returns image charge
    /// @param   imageSlot   Image slot
    F32 getImageCharge(U32 imageSlot);
+
+   /// Sets the target of the image 
+   /// @param   imageSlot   Image slot
+   /// @param   target      Target
+   void setImageTarget(U32 imageSlot, GameBase* target);
+
+   /// Returns image target
+   /// @param   imageSlot   Image slot
+   GameBase* getImageTarget(U32 imageSlot);
 
    /// Set the script animation prefix for the image
    /// @param   imageSlot        Image slot id

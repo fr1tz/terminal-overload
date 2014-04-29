@@ -63,6 +63,8 @@ public:
    bool packed;
    StringTableEntry category;
 
+   S32 targetLockTimeMS; ///< How long does it take a mounted image to get a target lock on this
+
    // Signal triggered when this datablock is modified.
    // GameBase objects referencing this datablock notify with this signal.
    Signal<void(void)> mReloadSignal;
@@ -77,6 +79,7 @@ public:
    GameBaseData();
    static void initPersistFields();
    bool preload(bool server, String &errorStr);
+   void packData(BitStream* stream);
    void unpackData(BitStream* stream);
 
    /// @name Callbacks
@@ -181,6 +184,8 @@ class GameBase : public SceneObject
    S32 mClient; ///< exposed to script under the name 'client' (added for NOTC)
 
    S32 mTeamId; ///< exposed to script under the name 'teamId' (added for NOTC)
+
+   U32 mTargetingMask; ///< target mask for mounted image targeting
 
 public:
 
@@ -395,6 +400,12 @@ public:
 	void setTeamId(S32 id) { mTeamId = id; this->onNewTeamId(); }
 	S32 getTeamId() { return mTeamId; };
 	virtual void onNewTeamId() { /* this->setMaskBits(ColorizationMask); */ };
+   /// @}
+
+	/// @name targeting
+   /// @{
+   void setTargetingMask(U32 mask);
+   U32  getTargetingMask() { return mTargetingMask; };
    /// @}
 
    virtual F32 getDefaultCameraFov() { return 90.f; }

@@ -704,7 +704,7 @@ protected:
    virtual const char* getImageAnimPrefix(U32 imageSlot, S32 imageShapeIndex);
    virtual void onImageAnimThreadChange(U32 imageSlot, S32 imageShapeIndex, ShapeBaseImageData::StateData* lastState, const char* anim, F32 pos, F32 timeScale, bool reset=false);
    virtual void onImageAnimThreadUpdate(U32 imageSlot, S32 imageShapeIndex, F32 dt);
-
+   virtual bool updateImageTargetFollow(MountedImage& image);
    virtual void updateDamageLevel();
    virtual void updateDamageState();
    /// Set which client is controlling this player
