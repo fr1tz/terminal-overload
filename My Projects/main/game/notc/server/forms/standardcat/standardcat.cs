@@ -237,6 +237,7 @@ datablock PlayerData(FrmStandardcat)
    maxInv[ItemImpShield] = 1;
    maxInv[ItemBallast] = 1;
    maxInv[ItemEtherboard] = 1;
+   maxInv[ItemLauncher] = 1;
 
    maxInv[WpnSMG1] = 1;
    maxInv[WpnMGL1] = 1;

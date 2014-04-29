@@ -10,6 +10,7 @@ function executeDeathmatchServerScripts()
    exec("notc/server/items/impshield/exec.cs");
    exec("notc/server/items/ballast/exec.cs");
    exec("notc/server/items/etherboard/exec.cs");
+   exec("notc/server/items/launcher/exec.cs");
 
    exec("notc/server/weapons/smg1/v1/exec.cs");
    exec("notc/server/weapons/mgl1/v1/exec.cs");

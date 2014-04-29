@@ -181,6 +181,8 @@ function GameCoreDM::loadOut(%game, %player)
 
    %player.setInventory(ItemImpShield, 1);
    %player.setInventory(ItemEtherboard, 1);
+   %player.setInventory(ItemLauncher, 1);
+   
    %player.setInventory(WpnSMG1, 1);
 
    if (%player.getDatablock().mainWeapon.image !$= "")

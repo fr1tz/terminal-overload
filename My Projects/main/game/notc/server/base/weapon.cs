@@ -13,6 +13,8 @@
 // system assumes all primary weapons are mounted into this specified slot:
 $WeaponSlot = 0;
 
+$TargetingMask::Launcher = 1;
+
 //-----------------------------------------------------------------------------
 // Weapon Class
 //-----------------------------------------------------------------------------
