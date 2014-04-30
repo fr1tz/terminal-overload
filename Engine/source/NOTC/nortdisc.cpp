@@ -1,30 +1,37 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
-#if 0 // BORQUE_NEEDS_PORTING
+#include "platform/platform.h"
+#include "NOTC/nortdisc.h"
 
-#include "dgl/dgl.h"
-#include "sceneGraph/sceneState.h"
-#include "sceneGraph/sceneGraph.h"
+#include "scene/sceneRenderState.h"
+#include "scene/sceneManager.h"
+#include "lighting/lightInfo.h"
+#include "lighting/lightManager.h"
 #include "console/consoleTypes.h"
 #include "console/typeValidators.h"
-#include "audio/audioDataBlock.h"
-#include "core/bitStream.h"
-#include "game/fx/explosion.h"
-#include "game/shapeBase.h"
-#include "game/player.h"
+#include "core/resourceManager.h"
+#include "core/stream/bitStream.h"
+#include "T3D/fx/explosion.h"
+#include "T3D/shapeBase.h"
 #include "ts/tsShapeInstance.h"
-#include "game/nortdisc.h"
-#include "audio/audio.h"
+#include "sfx/sfxTrack.h"
+#include "sfx/sfxSource.h"
+#include "sfx/sfxSystem.h"
+#include "sfx/sfxTypes.h"
 #include "math/mathUtils.h"
 #include "math/mathIO.h"
 #include "sim/netConnection.h"
-#include "game/fx/particleEngine.h"
-#include "game/fx/laserBeam.h"
-#include "game/fx/fxLight.h"
-#include "game/deflector.h"
-#include "sim/decalManager.h"
-#include "game/gameConnection.h"
+#include "T3D/fx/particleEmitter.h"
+#include "T3D/fx/splash.h"
+#include "T3D/physics/physicsPlugin.h"
+#include "T3D/physics/physicsWorld.h"
+#include "gfx/gfxTransformSaver.h"
+#include "T3D/containerQuery.h"
+#include "T3D/decal/decalManager.h"
+#include "T3D/decal/decalData.h"
+#include "T3D/lightDescription.h"
+#include "console/engineAPI.h"
 
 IMPLEMENT_CO_DATABLOCK_V1(NortDiscData);
 IMPLEMENT_CO_NETOBJECT_V1(NortDisc);
@@ -47,77 +54,6 @@ IMPLEMENT_CO_NETOBJECT_V1(NortDisc);
 
 namespace {
 	MRandomLCG sgRandom(0x1);
-}
-
-//--------------------------------------------------------------------------
-
-IMPLEMENT_CO_CLIENTEVENT_V1(CreateExplosionEvent);
-
-CreateExplosionEvent::CreateExplosionEvent()
-{
-	mGuaranteeType = Guaranteed;
-
-	mData = NULL;
-}
-
-CreateExplosionEvent::CreateExplosionEvent(ExplosionData* data,
-	const Point3F& p, const Point3F &n)
-{
-	mData = data;
-	mPos = p;
-	mNorm = n;
-}
-
-void CreateExplosionEvent::pack(NetConnection* conn, BitStream* bstream)
-{
-	if(bstream->writeFlag(mData))
-	{
-		bstream->writeRangedU32(mData->getId(), DataBlockObjectIdFirst, DataBlockObjectIdLast);
-		mathWrite(*bstream, mPos);
-		mathWrite(*bstream, mNorm);
-	}
-}
-
-void CreateExplosionEvent::unpack(NetConnection* conn, BitStream* bstream)
-{
-	if(bstream->readFlag())
-	{
-		SimObject* ptr = NULL;
-		U32 id = bstream->readRangedU32(DataBlockObjectIdFirst, DataBlockObjectIdLast);
-		if(id != 0 && (ptr = Sim::findObject(id)))
-			mData = dynamic_cast<ExplosionData*>(ptr);
-
-		mathRead(*bstream, &mPos);
-		mathRead(*bstream, &mNorm);
-	}
-}
-
-void CreateExplosionEvent::write(NetConnection* conn, BitStream* bstream)
-{
-	this->pack(conn,bstream);
-}
-
-void CreateExplosionEvent::process(NetConnection* conn)
-{
-	if(!mData)
-		return;
-
-	Explosion* pExplosion = new Explosion;
-	pExplosion->onNewDataBlock(mData);
-   if( pExplosion )
-   {
-      MatrixF xform(true);
-      xform.setPosition(mPos);
-      pExplosion->setTransform(xform);
-      pExplosion->setInitialState(mPos, mNorm);
-      if (pExplosion->registerObject() == false)
-      {
-         Con::errorf(ConsoleLogEntry::General, "CreateExplosionEvent(): couldn't register explosion (%s)",
-                     mData->getName() );
-         delete pExplosion;
-         pExplosion = NULL;
-      }
-   }
 }
 
 //--------------------------------------------------------------------------
@@ -221,17 +157,12 @@ NortDiscData::NortDiscData()
 
 //--------------------------------------------------------------------------
 
-IMPLEMENT_CONSOLETYPE(NortDiscData)
-IMPLEMENT_GETDATATYPE(NortDiscData)
-IMPLEMENT_SETDATATYPE(NortDiscData)
-
 void NortDiscData::initPersistFields()
 {
    Parent::initPersistFields();
 
-   addNamedFieldV(maxVelocity, TypeF32, NortDiscData, new FRangeValidator(0, 10000));
-   addNamedFieldV(acceleration, TypeF32, NortDiscData, new FRangeValidator(0, 10000));
-
+   addNamedField(maxVelocity, TypeF32, NortDiscData);
+   addNamedField(acceleration, TypeF32, NortDiscData);
    addNamedField(startVertical, TypeBool, NortDiscData);
 }
 
@@ -246,9 +177,9 @@ bool NortDiscData::onAdd()
 }
 
 
-bool NortDiscData::preload(bool server, char errorBuffer[256])
+bool NortDiscData::preload(bool server, String &errorStr)
 {
-   if (Parent::preload(server, errorBuffer) == false)
+   if (Parent::preload(server, errorStr) == false)
       return false;
 
    return true;
@@ -343,8 +274,8 @@ bool NortDisc::onAdd()
 
 	// pretty big (currently hardcoded) bounding box
 	// to make targeting a disc possible...
-	mObjBox.min = Point3F(-2,-2,-2);
-	mObjBox.max = Point3F(2,2,2);
+	mObjBox.minExtents = Point3F(-2,-2,-2);
+	mObjBox.maxExtents = Point3F(2,2,2);
 	resetWorldBox();
       
    return true;
@@ -358,10 +289,10 @@ void NortDisc::onRemove()
 }
 
 
-bool NortDisc::onNewDataBlock(GameBaseData* dptr)
+bool NortDisc::onNewDataBlock(GameBaseData* dptr, bool reload)
 {
    mDataBlock = dynamic_cast<NortDiscData*>(dptr);
-   if (!mDataBlock || !Parent::onNewDataBlock(dptr))
+   if (!mDataBlock || !Parent::onNewDataBlock(dptr, reload))
       return false;
 
    return true;
@@ -372,13 +303,13 @@ bool NortDisc::onNewDataBlock(GameBaseData* dptr)
 bool NortDisc::castRay(const Point3F &start, const Point3F &end, RayInfo* info)
 {
    // Collision disabled when hidden or deflected.
-   if(mCollisionsDisabled || mHidden || mState == Deflected)
+   if(mState == Deflected)
       return false;
 
    // Collide against bounding box. Need at least this for the editor.
    F32 st,et,fst = 0,fet = 1;
-   F32 *bmin = &mObjBox.min.x;
-   F32 *bmax = &mObjBox.max.x;
+   F32 *bmin = &mObjBox.minExtents.x;
+   F32 *bmax = &mObjBox.maxExtents.x;
    F32 const *si = &start.x;
    F32 const *ei = &end.x;
 
@@ -452,7 +383,7 @@ void NortDisc::processTick(const Move* move)
 
 	if(mState == Attacking && mInitialTargetExists)		
 	{
-		U32 targetType = mInitialTarget->getType();
+		U32 targetType = mInitialTarget->getTypeMask();
 		if(targetType & ProjectileObjectType)
 		{
 			if(((NortDisc*)mInitialTarget)->mState == Deflected)
@@ -464,9 +395,6 @@ void NortDisc::processTick(const Move* move)
 				this->onTargetLost();
 		}
 	}
-
-	if(mHidden)
-		return;
 
 	F32 timeLeft;
 	RayInfo rInfo;
@@ -532,9 +460,7 @@ void NortDisc::processTick(const Move* move)
 	bool collision = this->findCollision(oldPosition, newPosition, &rInfo);
 	if(collision)
 	{
-		mLastCollisionPos = rInfo.point;
-
-		mTraveledDistance += (rInfo.point-oldPosition).len();
+		//mTraveledDistance += (rInfo.point-oldPosition).len();
 
 		// returned to source?
 		if(mState == Returning && rInfo.object == mTarget)
@@ -555,7 +481,7 @@ void NortDisc::processTick(const Move* move)
 			else
 			{
 				DEBUG(("NortDisc: client: disc retourned to source @ %u",Platform::getVirtualMilliseconds()));
-				mHidden = true;
+				//mHidden = true;
 			}
 
 			return;
@@ -564,17 +490,17 @@ void NortDisc::processTick(const Move* move)
 		bool bounce = true;
 		bool bounceExplosion = false;
 
-		if( rInfo.object->getType() & csmStaticCollisionMask )
+		if( rInfo.object->getTypeMask() & csmStaticCollisionMask )
 			bounceExplosion = true;
 
 		// check if we hit a ShapeBase...
 		ShapeBase* hitShape = NULL;
-		if(rInfo.object->getType() & ShapeBaseObjectType)
+		if(rInfo.object->getTypeMask() & ShapeBaseObjectType)
 			hitShape = (ShapeBase*)rInfo.object;
 
 		// check if we hit another disc...
 		NortDisc* hitDisc = NULL;
-		if(rInfo.object->getType() & ProjectileObjectType)
+		if(rInfo.object->getTypeMask() & ProjectileObjectType)
 			hitDisc = dynamic_cast<NortDisc*>(rInfo.object);
 
 		// if we hit another disc...
@@ -597,9 +523,9 @@ void NortDisc::processTick(const Move* move)
 			}
 		}
 
-		if( mDataBlock->numBounces != 0 && mBounceCount >= mDataBlock->numBounces )
+		if(false) // mDataBlock->numBounces != 0 && mBounceCount >= mDataBlock->numBounces )
 		{
-			this->explode(rInfo.point, rInfo.normal, rInfo.object->getType(), true);
+			this->explode(rInfo.point, rInfo.normal, rInfo.object->getTypeMask());
 
 			MatrixF xform(true);
 			xform.setColumn(3, rInfo.point);
@@ -628,13 +554,13 @@ void NortDisc::processTick(const Move* move)
 	}
 	else // no collision...
 	{
-		mTraveledDistance += (newPosition-oldPosition).len();
+		//mTraveledDistance += (newPosition-oldPosition).len();
 
 		// check if we've missed our target...
 		if(mTarget)
 		{
 			if(this->isServerObject() && this->missedObject(mTarget, oldPosition, newPosition))
-				Con::executef(mDataBlock, 2, "onMissedTarget", scriptThis());
+				Con::executef(mDataBlock, "onMissedTarget", getIdString());
 		}
 	}
 
@@ -654,11 +580,14 @@ void NortDisc::processTick(const Move* move)
 	   // if this is the first particle emission, start the particles \
       // at the creation point to make sure the player sees the particles beginning at the \
       // gun's muzzle point... -mg
+#if 0
 		if( mEmissionCount == 0 )
 			emitParticles(mInitialPosition, newPosition, mCurrVelocity, TickMs);
 		else
+#endif
 			emitParticles(mCurrPosition, newPosition, mCurrVelocity, TickMs);
 
+#if 0
 		// update laser trail...
 		if( mEmissionCount == 0 )
 		{
@@ -671,13 +600,12 @@ void NortDisc::processTick(const Move* move)
 				createBounceExplosion(mBouncePoint[i].pos, mBouncePoint[i].norm, mBouncePoint[i].decal);
 			}
 		}
-
-		if( mFxLight != NULL )
-			mFxLight->setPosition(mCurrDeltaBase);
-
 		addLaserTrailNode(newPosition,false);
+#endif
 
+#if 0
 		mEmissionCount++;     
+#endif
    }
 
    mCurrPosition = newPosition;
@@ -798,7 +726,7 @@ NortDisc::findCollision(const Point3F &start, const Point3F &end, RayInfo* info)
 				deflector->enableCollision();
 			}
 		}
-		else*/ if(info->object->getType() & ProjectileObjectType)
+		else*/ if(info->object->getTypeMask() & ProjectileObjectType)
 		{
 			Projectile* prj = (Projectile*)info->object;
 
@@ -869,8 +797,9 @@ NortDisc::bounce(const RayInfo& rInfo, const Point3F& vec, bool bounceExp)
 {
 	if( isServerObject() )
 	{
-		setMaskBits(MovementMask);
+		setMaskBits(MovementMask | BounceMask);
 
+#if 0
 		// no need to add new bouncePoints if the important ones have been sent already...
 		if( !mBouncePointsSent && mNumBouncePoints < 10 )
 		{
@@ -882,9 +811,11 @@ NortDisc::bounce(const RayInfo& rInfo, const Point3F& vec, bool bounceExp)
 				&& (rInfo.object->getType() & Projectile::csmStaticCollisionMask)
 			);
 		}
+#endif
 	}
 	else
 	{
+#if 0
 		addLaserTrailNode(rInfo.point, false);
 
 		// create bounce explosion...
@@ -907,6 +838,7 @@ NortDisc::bounce(const RayInfo& rInfo, const Point3F& vec, bool bounceExp)
 					decalMngr->addDecal(rInfo.point, vec, rInfo.normal, mDataBlock->decals[idx]);
 			}
 		}
+#endif
 	}
 
 	// reset mCurrTrackingAbility to zero...
@@ -927,41 +859,24 @@ NortDisc::bounce(const RayInfo& rInfo, const Point3F& vec, bool bounceExp)
 	Point3F oldPosition = rInfo.point + rInfo.normal * 0.05;
 	Point3F newPosition = oldPosition + (mCurrVelocity * ((timeLeft/1000.0) * TickMs));
 
+#if 0
 	mBounceCount++;
 
 	mTraveledDistance += (newPosition-oldPosition).len();
+#endif
 
 	return newPosition;
 }
 
 void
-NortDisc::createExplosion(const Point3F& p, const Point3F& n, ExplosionType type)
+NortDisc::createExplosion(const Point3F& p, const Point3F& n)
 {
 	if(isServerObject()) return;
 
-	ExplosionData* data = NULL;
-
-	if      ( type == StandardExplosion && mDataBlock->explosion )
-		data = mDataBlock->explosion;
-
-	else if ( type == HitEnemyExplosion && mDataBlock->hitEnemyExplosion )
-		data = mDataBlock->hitEnemyExplosion;
-
-	else if ( type == NearEnemyExplosion && mDataBlock->nearEnemyExplosion )
-		data = mDataBlock->nearEnemyExplosion;
-
-	else if ( type == HitTeammateExplosion && mDataBlock->hitTeammateExplosion )
-		data = mDataBlock->hitTeammateExplosion;
-
-	else if ( type == HitDeflectorExplosion && mDataBlock->hitDeflectorExplosion )
-		data = mDataBlock->hitDeflectorExplosion;
-
-	else if ( type == BounceExplosion && mDataBlock->bounceExplosion )
-		data = mDataBlock->bounceExplosion;
-
 	Explosion* pExplosion = new Explosion;
-	pExplosion->onNewDataBlock(data);
-   if( pExplosion )
+   pExplosion->setPalette(this->getPalette());
+	pExplosion->onNewDataBlock(mDataBlock->explosion, false);
+   if(pExplosion)
    {
       MatrixF xform(true);
       xform.setPosition(p);
@@ -975,7 +890,6 @@ NortDisc::createExplosion(const Point3F& p, const Point3F& n, ExplosionType type
          pExplosion = NULL;
       }
    }
-
 }
 
 
@@ -1040,7 +954,7 @@ void NortDisc::unpackUpdate(NetConnection* con, BitStream* stream)
 void
 NortDisc::hit(GameBase* obj, const RayInfo& rInfo)
 {
-	mTraveledDistance += (rInfo.point-mCurrPosition).len();
+	//mTraveledDistance += (rInfo.point-mCurrPosition).len();
 
 	this->onCollision(rInfo.point,rInfo.normal,obj);
 
@@ -1048,7 +962,7 @@ NortDisc::hit(GameBase* obj, const RayInfo& rInfo)
 	{			
 		DEBUG(("%s: hit target!", isGhost() ? "CLNT" : "SRVR"));
 		if(isServerObject())
-			Con::executef(mDataBlock, 2, "onHitTarget", scriptThis());
+			Con::executef(mDataBlock, "onHitTarget", getIdString());
 	}
 	else
 	{
@@ -1060,7 +974,7 @@ NortDisc::hit(GameBase* obj, const RayInfo& rInfo)
 	bool bounce = true;
 
 	// don't bounce if the target was a ShapeBase and we killed it...
-	if(obj && obj->getType() & ShapeBaseObjectType)
+	if(obj && obj->getTypeMask() & ShapeBaseObjectType)
 	{
 		ShapeBase* shape = (ShapeBase*)obj;
 		ShapeBase::DamageState state = shape->getDamageState();
@@ -1081,23 +995,14 @@ NortDisc::hit(GameBase* obj, const RayInfo& rInfo)
 	//
 
 	if(isClientObject())
-	{
-		ExplosionType expType;
-
-		if(obj->getTeamId() != mTeamId)
-			expType = HitEnemyExplosion;
-		else
-			expType = HitTeammateExplosion;
-
-		this->createExplosion(rInfo.point,rInfo.normal,expType);
-	}
+		this->createExplosion(rInfo.point,rInfo.normal);
 }
 
 void
 NortDisc::deflected(const Point3F& newVel)
 {
 	if(isServerObject())
-		Con::executef(mDataBlock, 2, "onDeflected", scriptThis());
+		Con::executef(mDataBlock, "onDeflected", getIdString());
 
 	mCurrVelocity = newVel;
 	mState = Deflected;
@@ -1108,15 +1013,16 @@ NortDisc::deflected(const Point3F& newVel)
 	// eyecandy stuff...
 	//
 
+#if 0
 	if(isClientObject())
 	{
 		mHidden = false;
-
 		Point3F normal = newVel;
 		normal.normalize();
 		ExplosionType expType = HitDeflectorExplosion;
 		this->createExplosion(mCurrPosition, normal, expType);
 	}
+#endif
 }
 
 void
@@ -1149,7 +1055,7 @@ NortDisc::stopAttacking(U32 targetType)
 //
 //	if(deflected)
 //	{
-//		Con::executef(mDataBlock, 2, "onDeflected", scriptThis());
+//		Con::executef(mDataBlock, 2, "onDeflected", getIdString());
 //
 //		// clear target...
 //		this->setTarget(NULL);
@@ -1158,7 +1064,7 @@ NortDisc::stopAttacking(U32 targetType)
 //	}
 //	else if(obj == mTarget)
 //	{			
-//		Con::executef(mDataBlock, 2, "onHitTarget", scriptThis());
+//		Con::executef(mDataBlock, 2, "onHitTarget", getIdString());
 //		if(mSourceObject)
 //		{
 //			// return to source...
@@ -1261,6 +1167,8 @@ ConsoleMethod(NortDisc, stopAttacking, void, 2, 2, "")
 	object->stopAttacking(ShapeBaseObjectType);
 }
 
+#if 0
+
 ConsoleFunction( createExplosionOnClient, bool, 5, 5, "(NetConnection conn, DataBlock datablock, Point3F pos, Point3F norm)")
 {
 	NetConnection* nc = NULL;
@@ -1319,4 +1227,4 @@ ConsoleFunction( createExplosionOnClients, bool, 4, 4, "(DataBlock datablock, Po
 	return true;
 }
 
-#endif // BORQUE_NEEDS_PORTING
+#endif

@@ -140,6 +140,9 @@ ProjectileData::ProjectileData()
    missEnemyEffectId = 0;
    missEnemyEffectRadius = 0;
 
+   bounceEffect = NULL;
+   bounceEffectId = 0;
+
    explosion = NULL;
    explosionId = 0;
 
@@ -228,6 +231,9 @@ void ProjectileData::initPersistFields()
       "@brief Explosion datablock used when the projectile misses an enemy.\n\n");
    addField("missEnemyEffectRadius", TypeS32, Offset(missEnemyEffectRadius, ProjectileData),
       "@brief How close the projectile has to be to an enemy to trigger the missedEnemyEffect.\n\n");
+
+   addField("bounceEffect", TYPEID< ExplosionData >(), Offset(bounceEffect, ProjectileData),
+      "@brief Explosion datablock used when the projectile bounces.\n\n");
 
    addField("explosion", TYPEID< ExplosionData >(), Offset(explosion, ProjectileData),
       "@brief Explosion datablock used when the projectile explodes outside of water.\n\n");
@@ -323,6 +329,10 @@ bool ProjectileData::preload(bool server, String &errorStr)
          if (Sim::findObject(missEnemyEffectId, explosion) == false)
             Con::errorf(ConsoleLogEntry::General, "ProjectileData::preload: Invalid packet, bad datablockId(missEnemyEffect): %d", missEnemyEffectId);
 
+      if (!bounceEffect && bounceEffectId != 0)
+         if (Sim::findObject(bounceEffectId, explosion) == false)
+            Con::errorf(ConsoleLogEntry::General, "ProjectileData::preload: Invalid packet, bad datablockId(bounceEffect): %d", bounceEffectId);
+
       if (!explosion && explosionId != 0)
          if (Sim::findObject(explosionId, explosion) == false)
             Con::errorf(ConsoleLogEntry::General, "ProjectileData::preload: Invalid packet, bad datablockId(explosion): %d", explosionId);
@@ -407,6 +417,10 @@ void ProjectileData::packData(BitStream* stream)
                                                  DataBlockObjectIdLast);
    }
 
+   if (stream->writeFlag(bounceEffect != NULL))
+      stream->writeRangedU32(bounceEffect->getId(), DataBlockObjectIdFirst,
+                                                 DataBlockObjectIdLast);
+
    if (stream->writeFlag(explosion != NULL))
       stream->writeRangedU32(explosion->getId(), DataBlockObjectIdFirst,
                                                  DataBlockObjectIdLast);
@@ -489,6 +503,9 @@ void ProjectileData::unpackData(BitStream* stream)
       missEnemyEffectRadius = stream->readInt(10); 
       missEnemyEffectId = stream->readRangedU32(DataBlockObjectIdFirst, DataBlockObjectIdLast);
    }
+
+   if (stream->readFlag())
+      bounceEffectId = stream->readRangedU32(DataBlockObjectIdFirst, DataBlockObjectIdLast);
 
    if (stream->readFlag())
       explosionId = stream->readRangedU32(DataBlockObjectIdFirst, DataBlockObjectIdLast);
@@ -1881,6 +1898,43 @@ bool Projectile::missedObject(const SceneObject* obj, const Point3F& oldPos, con
    }   
 
    return false;
+}
+
+void Projectile::createBounceExplosion(const Point3F& p, const Point3F& n, bool decal)
+{
+   if(isServerObject())
+      return;
+
+   // Explosion
+   Explosion* pExplosion = NULL;
+   if(mDataBlock->bounceEffect)
+   {
+      pExplosion = new Explosion;
+      pExplosion->setPalette(this->getPalette());
+      pExplosion->onNewDataBlock(mDataBlock->bounceEffect, false);
+   }
+   if(pExplosion)
+   {
+      MatrixF xform(true);
+      xform.setPosition(p);
+      pExplosion->setTransform(xform);
+      pExplosion->setInitialState(p, n);
+      if (pExplosion->registerObject() == false)
+      {
+         Con::errorf(ConsoleLogEntry::General, "Projectile(%s)::createBounceExplosion: couldn't register explosion",
+                     mDataBlock->getName() );
+         delete pExplosion;
+         pExplosion = NULL;
+      }
+   }
+
+   // Decal
+   if(decal && mDataBlock->decal)     
+   {
+      DecalInstance* dinst = gDecalManager->addDecal(p, n, 0.0f, mDataBlock->decal);
+      if(dinst)
+         dinst->mPalette = this->getPalette();
+   }
 }
 
 DefineEngineMethod(Projectile, presimulate, void, (F32 seconds), (1.0f), 
