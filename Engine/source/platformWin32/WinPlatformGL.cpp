@@ -1,4 +1,4 @@
-#if TORQUE_OPENGL
+#if defined(TORQUE_OPENGL) && !defined(TORQUE_SDL)
 
 #include "platform/platformGL.h"
 #include "gfx/gl/tGL/tWGL.h"
