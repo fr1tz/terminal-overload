@@ -310,6 +310,8 @@ datablock PlayerData(FrmStandardcat)
 function FrmStandardcat::onAdd(%this, %obj)
 {
    Parent::onAdd(%this, %obj);
+   
+   %obj.discTargets = new SimSet();
 
    %obj.allowJetJumping(false);
    %obj.allowCrouching(false);
@@ -326,6 +328,12 @@ function FrmStandardcat::onAdd(%this, %obj)
 function FrmStandardcat::onRemove(%this, %obj)
 {
    Parent::onRemove(%this, %obj);
+   
+   if(isObject(%obj.discTargets))
+   {
+      %obj.discTargets.clear();
+      %obj.discTargets.delete();
+   }
 }
 
 // callback function: called by engine
@@ -729,5 +737,36 @@ function FrmStandardcat::damage(%this, %obj, %sourceObject, %position, %damage, 
       if(isObject(%vehicle))
          %vehicle.unmountObject(%obj);
    }
+}
+
+// Called from script
+function FrmStandardcat::addDiscTarget(%this, %obj, %target)
+{
+	if(!(%target.getType() & $TypeMasks::ShapeBaseObjectType))
+		return;
+
+	%count = %obj.discTargets.getCount();
+	for(%idx= 0; %idx < %count; %idx++)
+	{
+      %hudInfo = %obj.discTargets.getObject(%idx);
+      if(%hudInfo.getObject() == %target)
+      {
+         cancel(%hudInfo.zTimeoutThread);
+         %hudInfo.zTimeoutThread = %hudInfo.schedule(3000, "delete");
+         return;
+      }
+   }
+   
+   %hudInfo = new HudInfo();
+   %hudInfo.setType($HudInfoType::DiscTarget);
+   %hudInfo.setObject(%target);
+   
+   // Ghost HudInfo object to this CAT's client.
+   %hudInfo.scopeToClient(%obj.client);
+   //%hudInfo.setGhostingListMode("GhostOnly");
+   //%hudInfo.addClientToGhostingList(%obj.client);
+
+   %hudInfo.zTimeoutThread = %hudInfo.schedule(3000, "delete");
+   %obj.discTargets.add(%hudInfo);
 }
 
