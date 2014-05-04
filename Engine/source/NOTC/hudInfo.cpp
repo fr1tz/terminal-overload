@@ -1,34 +1,27 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
-#if 0 // BORQUE_NEEDS_PORTING
+#include "platform/platform.h"
+#include "NOTC/hudInfo.h"
 
 #include "console/consoleTypes.h"
-#include "dgl/dgl.h"
-#include "core/bitStream.h"
+#include "console/engineAPI.h"
+#include "core/stream/bitStream.h"
 #include "math/mathIO.h"
-#include "math/mathUtils.h"
-#include "game/gameConnection.h"
-#include "sceneGraph/sceneGraph.h"
-#include "shapeBase.h"
-#include "hudInfo.h"
+#include "T3D/gameBase/gameConnection.h"
 
 IMPLEMENT_CO_NETOBJECT_V1(HudInfo);
 
-HudInfo::HudInfo(ShapeBase* shape)
+HudInfo::HudInfo()
 {
-	mActive = true;
+   mNetFlags.set(Ghostable);
 
-	mDatablock = shape ? (ShapeBaseData*)shape->getDataBlock() : NULL;
-	mDatablockId = 0;
+   mType = 0;
+   mString = StringTable->insert("");
+	mObject = NULL;
+	mPosition.set(0, 0, 0);
 
-	mShape = shape;
-	mShapeName = StringTable->insert("");
-	mTeamId = 0;
-	mPos.set(0, 0, 0);
-
-	mControllingClient = NULL;
-	mControlSlot = 0;
+   mAge = 0;
 }
 
 
@@ -64,11 +57,7 @@ bool HudInfo::onAdd()
 {
 	if(!Parent::onAdd()) return(false);
 
-    if(!mDatablock && mDatablockId != 0)
-      if(Sim::findObject(mDatablockId, mDatablock) == false)
-         Con::errorf(ConsoleLogEntry::General, "HudInfo::onAdd: Invalid packet, bad datablockId(mDatablock): %d", mDatablockId);
-
-	// add to HudInfo set...
+	// Add to HudInfo set
 	if(isServerObject())
 		Sim::getServerHudInfoSet()->addObject(this);
 	else
@@ -92,12 +81,8 @@ void HudInfo::onDeleteNotify(SimObject* obj)
 {
 	Parent::onDeleteNotify(obj);
 
-	if(obj == mShape)
-		mShape = NULL;
-
-	for(U32 i = 0; i < mShapeGhostNotifyConnections.size(); i++)
-      if(mShapeGhostNotifyConnections[i] == obj)
-         mShapeGhostNotifyConnections.erase(i);
+	if(obj == mObject)
+		mObject = NULL;
 }
 
 
@@ -112,41 +97,28 @@ U32 HudInfo::packUpdate(NetConnection* conn, U32 mask, BitStream* stream)
 {
 	U32 retMask = Parent::packUpdate(conn, mask, stream);
 
-	if( stream->writeFlag(mask & InitialUpdateMask) )
-		stream->writeRangedU32(mDatablock->getId(), DataBlockObjectIdFirst,  DataBlockObjectIdLast);
+	S32 ghostId = mObject ? conn->getGhostIndex(mObject) : -1;
 
-	S32 ghostId = mShape ? conn->getGhostIndex(mShape) : -1;
-	if(stream->writeFlag(ghostId == -1))
-	{
-		// no ghost...
-		const char* name = mShape ? mShape->getShapeName() : mShapeName;
-		if( stream->writeFlag(mask & ShapeNameMask && name) )
-			stream->writeString(name);
+   if(stream->writeFlag(mask & TypeMask))
+      stream->write(mType);
 
-		if( stream->writeFlag(mask & TeamIdMask) )
-			stream->writeInt(mShape ? mShape->getTeamId() : mTeamId, 2);
+   if(stream->writeFlag((mask & StringMask) && mString))
+      stream->writeString(mString);
 
-		if( stream->writeFlag(mask & PositionMask) )
-			mathWrite(*stream, mShape ? mShape->getPosition() : mPos);
-	}
-	else
-		stream->writeRangedU32(U32(ghostId), 0, NetConnection::MaxGhostCount);
+   bool writeGhostId = false;
+   if(mask & ObjectMask)
+   {
+      if(ghostId == -1)     
+         retMask |= ObjectMask; // No ghost, try again later.
+      else
+         writeGhostId = true;
+   }
+   if(stream->writeFlag(writeGhostId))
+      stream->writeRangedU32(U32(ghostId), 0, NetConnection::MaxGhostCount);
 
-	// control info...
-	if( stream->writeFlag(mask & ControlMask) )
-	{
-		if(conn == mControllingClient)
-		{
-			stream->writeSignedInt(mControlSlot, 3);
-		}
-		else
-		{
-			if(mControllingClient)
-				stream->writeSignedInt(0, 3);
-			else
-				stream->writeSignedInt(-1, 3);
-		}
-	}
+   bool writePosition = (mask & PositionMask) && (mObject == NULL || ghostId == -1);
+   if(stream->writeFlag(writePosition))
+      mathWrite(*stream, mObject ? mObject->getPosition() : mPosition);
 
 	return retMask;
 }
@@ -156,80 +128,123 @@ void HudInfo::unpackUpdate(NetConnection* conn, BitStream* stream)
 {
 	Parent::unpackUpdate(conn, stream);
 
-    if(stream->readFlag())
-        mDatablockId = stream->readRangedU32(DataBlockObjectIdFirst, DataBlockObjectIdLast);
+   if(stream->readFlag())
+      stream->read(&mType);
 
-	if( stream->readFlag() )
-	{
-		if( stream->readFlag() )
-			mShapeName = stream->readSTString();
+   if(stream->readFlag())
+      mString = stream->readSTString();
 
-		if( stream->readFlag() )
-			mTeamId = stream->readInt(2);
-
-		if( stream->readFlag() )
-			mathRead(*stream, &mPos);
-	}
-	else
-	{
+   if(stream->readFlag())
+   {
+      SceneObject* obj = NULL;
 		S32 ghostId = stream->readRangedU32(0, NetConnection::MaxGhostCount);
 		NetObject* pObject = conn->resolveGhost(ghostId);
 		if(pObject != NULL)
-		{
-			ShapeBase* shape = dynamic_cast<ShapeBase*>(pObject);
-			if(shape != mShape)
-			{
-				if(mShape)
-					clearNotify(mShape);
+			obj = dynamic_cast<SceneObject*>(pObject);
+      this->setObject(obj);
+   }
 
-				mShape = shape;
-
-				mShapeName = mShape->getShapeName();
-				mTeamId = mShape->getTeamId();
-				mPos = mShape->getPosition();
-
-				deleteNotify(mShape);
-			}
-		}
-	}
-
-	if( stream->readFlag() )
-		mControlSlot = stream->readSignedInt(3);
+   if(stream->readFlag())
+      mathRead(*stream, &mPosition);
 }
 
 //------------------------------------------------------------------------------
 
-void HudInfo::markAsControlled(NetConnection* conn, U32 slot)
+void HudInfo::processTick()
 {
-	mControllingClient = conn;
-	mControlSlot = (S32)slot;
-	this->setMaskBits(ControlMask);
+   mAge++;
+
+   if(this->isServerObject() && mObject)
+      if(mObject->getPosition() != mPosition)
+         this->setMaskBits(PositionMask);
+
 }
 
 //------------------------------------------------------------------------------
 
-ConsoleMethod( HudInfo, setActive, void, 3, 3, "(bool active)")
+void HudInfo::setType(S32 type)
 {
-	object->setActive(dAtob(argv[2]));
+   mType = type;
+   this->setMaskBits(TypeMask);
 }
 
-ConsoleMethod( HudInfo, isActive, bool, 2, 2, "()")
+void HudInfo::setString(StringTableEntry string)
 {
-	return object->isActive();
+   mString = string;
+   this->setMaskBits(StringMask);
 }
 
-ConsoleMethod( HudInfo, markAsControlled, void, 4, 4, "")
+void HudInfo::setObject(SceneObject* obj)
 {
-	NetConnection* client;
-	if(Sim::findObject(argv[2],client))
-	{
-		S32 slot = dAtoi(argv[3]);
-		object->markAsControlled(client, slot);
-	}
-	else
-	{
-		object->markAsControlled(NULL, 0);
-	}
+   if(mObject)
+      this->clearNotify(mObject);
+
+   mObject = obj;
+
+   if(mObject)
+      this->deleteNotify(mObject);
+
+   this->setMaskBits(ObjectMask);
 }
 
-#endif // BORQUE_NEEDS_PORTING
+void HudInfo::setPosition(const Point3F& pos)
+{
+   if(mObject)
+      return;
+   mPosition = pos;
+   this->setMaskBits(PositionMask);
+}
+
+//------------------------------------------------------------------------------
+
+DefineEngineMethod( HudInfo, setType, void, (S32 type),,
+   "@brief Sets the arbitrary type number for this object.\n\n"
+   "@param type The arbitrary type number\n\n")
+{
+   object->setType(type);
+}
+
+DefineEngineMethod( HudInfo, getType, S32, (),,
+   "@brief Returns the arbitrary type number for this object.\n\n")
+{
+   return object->getType();
+}
+
+DefineEngineMethod( HudInfo, setString, void, (const char* string),,
+   "@brief Sets the arbitrary string for this object.\n\n"
+   "@param string The arbitrary string\n\n")
+{
+   object->setString(string);
+}
+
+DefineEngineMethod( HudInfo, getString, const char*, (),,
+   "@brief Returns the arbitrary string for this object.\n\n")
+{
+   return object->getString();
+}
+
+DefineEngineMethod( HudInfo, setObject, void, (SceneObject* obj),,
+   "@brief Sets the object that is linked to this object.\n\n"
+   "@param shape The ShapeBase object\n\n")
+{
+   object->setObject(obj);
+}
+
+DefineEngineMethod( HudInfo, getObject, SceneObject*, (),,
+   "@brief Returns the object this is linked to this object.\n\n")
+{
+   return object->getObject();
+}
+
+DefineEngineMethod( HudInfo, setPosition, void, (Point3F pos),,
+   "@brief Sets the object's position.\n\n"
+   "@param pos The position\n\n")
+{
+   object->setPosition(pos);
+}
+
+DefineEngineMethod( HudInfo, getPosition, Point3F, (),,
+   "@brief Returns the object's position.\n\n")
+{
+   return object->getPosition();
+}

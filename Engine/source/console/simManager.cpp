@@ -530,6 +530,8 @@ void init()
    InstantiateNamedSet(SFXAmbienceSet);
    InstantiateNamedSet(TerrainMaterialSet);
    InstantiateNamedSet(DataBlockSet);
+   InstantiateNamedSet(ServerHudInfoSet);
+   InstantiateNamedSet(ClientHudInfoSet);
    InstantiateNamedGroup(ActionMapGroup);
    InstantiateNamedGroup(ClientGroup);
    InstantiateNamedGroup(GuiGroup);
