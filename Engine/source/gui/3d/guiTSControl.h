@@ -110,6 +110,9 @@ public:
    /// The input z coord is depth, from 0 to 1.
    bool project( const Point3F &pt, Point3F *dest ) const; 
 
+   /// Long range project.
+   bool projectLR(const Point3F& pov, const Point3F& point, Point3F* dest) const;
+
    /// Returns the world space point for X, Y and Z.  The ouput
    /// z coord is depth, from 0 to 1
    bool unproject( const Point3F &pt, Point3F *dest ) const;

@@ -238,6 +238,37 @@ bool GuiTSCtrl::project( const Point3F &pt, Point3F *dest ) const
    return MathUtils::mProjectWorldToScreen(pt,dest,mSaveViewport,mSaveModelview,mSaveProjection);
 }
 
+bool GuiTSCtrl::projectLR(const Point3F& pov, const Point3F& point, Point3F* dest) const
+{
+   // First try to project using GuiTSCtrl::project().
+   bool success =	this->project(point, dest);
+
+   if(success)
+      return true;
+   else
+   {
+      // If the projection failed, simply try to pull the point nearer to the point of view.
+      // Note: Only do this if the point is "pretty far" away, because if it
+      // isn't, using GuiTSCtrl::project() wouldn't have failed in the first place.
+      F32 visDistance = gClientSceneGraph->getVisibleDistance();
+      F32 dist = (pov-point).len();
+      if( dist > visDistance*0.9 )
+      {
+         Point3F newPoint = point-pov;
+         newPoint.normalize(); newPoint *= visDistance*0.9;
+         newPoint = pov+newPoint;
+
+         success = this->project(newPoint, dest);
+         if(success)
+            return true;
+         else 
+            return false;
+      }
+	}
+
+   return false;
+}
+
 //-----------------------------------------------------------------------------
 
 bool GuiTSCtrl::unproject( const Point3F &pt, Point3F *dest ) const
