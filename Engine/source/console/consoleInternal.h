@@ -306,7 +306,7 @@ public:
       /// Whether this is a constant that cannot be assigned to.
       bool mIsConstant;
 
-   protected:
+   public:
 
       // NOTE: This is protected to ensure no one outside
       // of this structure is messing with it.
