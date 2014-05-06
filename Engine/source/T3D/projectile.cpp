@@ -625,6 +625,7 @@ Projectile::Projectile()
    mCurrPosition( 0, 0, 0 ),
    mCurrVelocity( 0, 0, 1 ),
    mExplode(false),
+   mCurrTrackingAbility(0),
    mSourceObjectId( -1 ),
    mSourceObjectSlot( -1 ),
    mCurrTick( 0 ),
@@ -1544,26 +1545,37 @@ U32 Projectile::packUpdate( NetConnection *con, U32 mask, BitStream *stream )
 		stream->writeInt(mCurrTrackingAbility,32);
    }
 
-	// target update...
-	if( stream->writeFlag(mask & TargetMask) )
+	// TargetMask
+	if(stream->writeFlag(mask & TargetMask))
 	{
-		if(stream->writeFlag(mTargetMode != None))
-		{
-			if(stream->writeFlag(mTargetMode == Object && mTarget))
-		    {
-				S32 ghostIndex = con->getGhostIndex(mTarget);
-				if (stream->writeFlag(ghostIndex != -1))
-				{
-					stream->writeRangedU32(U32(ghostIndex), 0, NetConnection::MaxGhostCount);
-					mathWrite(*stream, mTargetPointOffset);
-					//stream->writeFlag(mTargetClientControlled);
-				}
-			}
-			else if(stream->writeFlag(mTargetMode == Position))
-			{
-				mathWrite(*stream, mTargetPosition);
-			}
-		}
+      U32 targetMode = None;
+      if(mTargetMode == Object)
+      {
+         if(mTarget)
+         {
+            S32 ghostIndex = con->getGhostIndex(mTarget);
+            if(ghostIndex == -1)
+               retMask |= TargetMask;
+            else
+               targetMode = Object; // No ghost, try again later.
+         }
+      }
+      else
+         targetMode = mTargetMode;
+
+      stream->writeRangedU32(targetMode, None, Position);
+
+      if(targetMode == Object)
+      {
+         S32 ghostIndex = con->getGhostIndex(mTarget);
+         stream->writeRangedU32(U32(ghostIndex), 0, NetConnection::MaxGhostCount);
+         mathWrite(*stream, mTargetPointOffset);
+         //stream->writeFlag(mTargetClientControlled);
+      }
+      else if(targetMode == Position)
+      {
+         mathWrite(*stream, mTargetPosition);
+      }
 	}
 
    return retMask;
@@ -1630,36 +1642,34 @@ void Projectile::unpackUpdate(NetConnection* con, BitStream* stream)
 		mCurrTrackingAbility = stream->readInt(32);
    }
 
-	// target mask...
+	// TargetMask
 	if(stream->readFlag())
 	{
-		if (stream->readFlag()) // have target?
-		{
-			if(stream->readFlag())
-			{
-				mTargetMode = Object;
-				S32 ghostIndex = stream->readRangedU32(0, NetConnection::MaxGhostCount);
-		        NetObject* pObject = con->resolveGhost(ghostIndex);
-			    if( pObject != NULL )
-				{
-					mTarget = dynamic_cast<GameBase*>(pObject);
-					deleteNotify(mTarget);
-				}
-				mathRead(*stream, &mTargetPointOffset);
-				//mTargetClientControlled = stream->readFlag();
-			}
-			else if(stream->readFlag())
-			{
-				mTarget = NULL;
-				mTargetMode = Position;
-				mathRead(*stream, &mTargetPosition);
-			}
-		}
-		else
-		{
-			mTargetMode = None;
-			mTarget = NULL;
-		}
+      U32 targetMode = stream->readRangedU32(None, Position);
+      if(targetMode == None)
+      {
+         mTargetMode = None;
+         mTarget = NULL;
+      }
+      else if(targetMode == Object)
+      {
+         mTargetMode = Object;
+         U32 ghostIndex = stream->readRangedU32(0, NetConnection::MaxGhostCount);
+         NetObject* pObject = con->resolveGhost(ghostIndex);
+         if( pObject != NULL )
+         {
+            mTarget = dynamic_cast<GameBase*>(pObject);
+            deleteNotify(mTarget);
+         }
+         mathRead(*stream, &mTargetPointOffset);
+         //mTargetClientControlled = stream->readFlag();
+      }
+      else if(targetMode == Position)
+      {
+         mTarget = NULL;
+         mTargetMode = Position;
+         mathRead(*stream, &mTargetPosition);
+      }
 	}
 }
 
