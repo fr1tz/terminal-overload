@@ -74,6 +74,15 @@ $XaNotc1CatMoveMap_RemapCount++;
 $XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Bring up Options Dialog";
 $XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "bringUpOptions";
 $XaNotc1CatMoveMap_RemapCount++;
+$XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Launch Explosive Disc";
+$XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "launchExplosiveDisc";
+$XaNotc1CatMoveMap_RemapCount++;
+$XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Launch Repel Disc";
+$XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "launchRepelDisc";
+$XaNotc1CatMoveMap_RemapCount++;
+$XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Launch Razor Disc";
+$XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "launchRazorDisc";
+$XaNotc1CatMoveMap_RemapCount++;
 
 function XaNotcSettings1_CatControlsGui::onWake(%this)
 {

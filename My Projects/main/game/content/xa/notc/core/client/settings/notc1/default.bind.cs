@@ -243,8 +243,8 @@ XaNotc1CatMoveMap.bind( keyboard, s, movebackward );
 XaNotc1CatMoveMap.bind( keyboard, up, moveforward );
 XaNotc1CatMoveMap.bind( keyboard, down, movebackward );
 
-XaNotc1CatMoveMap.bind( keyboard, e, moveup );
-XaNotc1CatMoveMap.bind( keyboard, c, movedown );
+//XaNotc1CatMoveMap.bind( keyboard, e, moveup );
+//XaNotc1CatMoveMap.bind( keyboard, c, movedown );
 
 XaNotc1CatMoveMap.bind( keyboard, space, jump );
 XaNotc1CatMoveMap.bind( mouse, xaxis, yaw );
@@ -292,6 +292,32 @@ function doSlide(%val)
 XaNotc1CatMoveMap.bind(keyboard, lshift, doWalk);
 XaNotc1CatMoveMap.bind(keyboard, lcontrol, doSlide);
 XaNotc1CatMoveMap.bind(gamepad, btn_b, doSlide);
+
+//------------------------------------------------------------------------------
+// Discs
+//------------------------------------------------------------------------------
+
+function launchExplosiveDisc(%val)
+{
+   if(%val)
+      commandToServer('launchExplosiveDisc');
+}
+
+function launchRepelDisc(%val)
+{
+   if(%val)
+      commandToServer('launchRepelDisc');
+}
+
+function launchRazorDisc(%val)
+{
+   if(%val)
+      commandToServer('launchRazorDisc');
+}
+
+XaNotc1CatMoveMap.bind(keyboard, "e", launchExplosiveDisc);
+XaNotc1CatMoveMap.bind(keyboard, "r", launchRepelDisc);
+XaNotc1CatMoveMap.bind(keyboard, "f", launchRazorDisc);
 
 //------------------------------------------------------------------------------
 // Mouse Trigger
@@ -444,7 +470,7 @@ function mouseZoom(%val)
 	setFov($MouseZoomValue);
 }
 
-XaNotc1CatMoveMap.bind(keyboard, f, setZoomFOV); // f for field of view
+//XaNotc1CatMoveMap.bind(keyboard, f, setZoomFOV); // f for field of view
 XaNotc1CatMoveMap.bind(keyboard, z, toggleZoom); // z for zoom
 //XaNotc1CatMoveMap.bind( mouse, button1, mouseButtonZoom );
 XaNotc1CatMoveMap.bind(mouse, "zaxis", mouseZoom);
@@ -522,9 +548,6 @@ XaNotc1CatMoveMap.bindCmd(keyboard, "F6", "commandToServer('action', 16);", "");
 XaNotc1CatMoveMap.bindCmd(keyboard, "F7", "commandToServer('action', 17);", "");
 XaNotc1CatMoveMap.bindCmd(keyboard, "F8", "commandToServer('action', 18);", "");
 XaNotc1CatMoveMap.bindCmd(keyboard, "q", "commandToServer('action', 19);", "");
-XaNotc1CatMoveMap.bindCmd(keyboard, "e", "commandToServer('action', 20);", "");
-XaNotc1CatMoveMap.bindCmd(keyboard, "r", "commandToServer('action', 21);", "");
-XaNotc1CatMoveMap.bindCmd(keyboard, "c", "commandToServer('action', 22);", "");
 
 function unmountWeapon(%val)
 {
@@ -754,3 +777,4 @@ XaNotc1VehicleMoveMap.bindCmd(keyboard, "escape", "", "handleEscape();");
 XaNotc1VehicleMoveMap.bind( keyboard, v, toggleFreeLook ); // v for vanity
 //XaNotc1VehicleMoveMap.bind(keyboard, tab, toggleFirstPerson );
 XaNotc1VehicleMoveMap.bind(keyboard, "alt c", toggleCamera);
+
