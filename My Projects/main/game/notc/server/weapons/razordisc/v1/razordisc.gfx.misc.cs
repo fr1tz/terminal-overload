@@ -28,33 +28,24 @@ datablock DecalData(WpnRazorDiscDecal)
    paletteSlot = "0";
 };
 
-datablock ParticleData(WpnRazorDiscEmitter : DefaultParticle)
+datablock ParticleData(WpnRazorDiscEmitterParticle : DefaultParticle)
 {
-   sizes[0] = "1.29708";
-   sizes[1] = "0";
-   sizes[2] = "0.997986";
-   sizes[3] = "0.997986";
-   times[1] = "1";
-   times[2] = "1";
    dragCoefficient = "0.99218";
    inheritedVelFactor = "0";
+   lifetimeMS = "500";
+   lifetimeVarianceMS = "0";
+   spinSpeed = "0";
+   useInvAlpha = "0";
    textureName = "content/xa/notc/core/shapes/razordisc/projectile/p1/trail.png";
    animTexName = "content/xa/notc/core/shapes/razordisc/projectile/p1/trail.png";
-   colors[0] = "1 1 1 1";
+   colors[0] = "1 1 1 0.5";
    colors[1] = "1 1 1 0";
-   lifetimeMS = "0";
-   lifetimeVarianceMS = "0";
-   useInvAlpha = "0";
    colors[3] = "0.732283 1 0 0";
-   spinSpeed = "0";
-   spinRandomMin = "-360";
-   spinRandomMax = "360";
-   ejectionPeriodMS = "4";
-   ejectionOffset = "0";
-   thetaMax = "0";
-   orientParticles = "1";
-   particles = "WpnRazorDiscEmitterParticle";
-   paletteSlot = "0";
+   sizes[0] = "3";
+   sizes[1] = "0";
+   sizes[2] = "0.997986";
+   times[1] = "1";
+   times[2] = "1";
 };
 
 datablock ParticleEmitterData(WpnRazorDiscEmitter : DefaultEmitter)
@@ -66,26 +57,6 @@ datablock ParticleEmitterData(WpnRazorDiscEmitter : DefaultEmitter)
    paletteSlot = 0;
    ejectionVelocity = "1";
    orientParticles = "1";
+   thetaMax = "0";
 };
 
-
-
-datablock ParticleData(WpnRazorDiscEmitterParticle : DefaultParticle)
-{
-   dragCoefficient = "0.99218";
-   inheritedVelFactor = "0";
-   lifetimeMS = "500";
-   lifetimeVarianceMS = "0";
-   spinSpeed = "0";
-   useInvAlpha = "0";
-   textureName = "content/xa/notc/core/shapes/razordisc/projectile/p1/trail.png";
-   animTexName = "content/xa/notc/core/shapes/razordisc/projectile/p1/trail.png";
-   colors[0] = "1 1 1 1";
-   colors[1] = "1 1 1 0";
-   colors[3] = "0.732283 1 0 0";
-   sizes[0] = "3";
-   sizes[1] = "0";
-   sizes[2] = "0.997986";
-   times[1] = "1";
-   times[2] = "1";
-};
