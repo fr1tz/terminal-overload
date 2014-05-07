@@ -161,9 +161,9 @@ void NortDiscData::initPersistFields()
 {
    Parent::initPersistFields();
 
-   addNamedField(maxVelocity, TypeF32, NortDiscData);
-   addNamedField(acceleration, TypeF32, NortDiscData);
-   addNamedField(startVertical, TypeBool, NortDiscData);
+   addField("maxVelocity",   TypeF32,  Offset(maxVelocity, NortDiscData));
+   addField("acceleration",  TypeF32,  Offset(acceleration, NortDiscData));
+   addField("startVertical", TypeBool,  Offset(startVertical, NortDiscData));
 }
 
 //--------------------------------------------------------------------------
@@ -213,10 +213,6 @@ void NortDiscData::unpackData(BitStream* stream)
 NortDisc::NortDisc()
 {
 	mState = Attacking;
-
-	mInitialTarget = NULL;
-	mInitialTargetExists = false;
-
 	mSpinTargetPos.set(0, 0, 0);
 }
 
@@ -228,12 +224,6 @@ NortDisc::~NortDisc()
 void NortDisc::onDeleteNotify(SimObject* obj)
 {
 	Parent::onDeleteNotify(obj);
-
-	if(obj == mInitialTarget)
-	{
-		mInitialTargetExists = false;
-		this->onTargetLost();
-	}
 }
 
 //--------------------------------------------------------------------------
@@ -268,7 +258,8 @@ bool NortDisc::onAdd()
 	if(mDataBlock->startVertical)
 	{
 		MatrixF rot(EulerF(0, M_PI_F / 2, 0));
-		mat.mul(mat, rot);
+      MatrixF tmp = mat;
+		mat.mul(tmp, rot);
 		this->setTransform(mat);
 	}
 
@@ -381,17 +372,17 @@ void NortDisc::processTick(const Move* move)
 	//
 
 
-	if(mState == Attacking && mInitialTargetExists)		
+	if(mState == Attacking && mTarget)		
 	{
-		U32 targetType = mInitialTarget->getTypeMask();
+		U32 targetType = mTarget->getTypeMask();
 		if(targetType & ProjectileObjectType)
 		{
-			if(((NortDisc*)mInitialTarget)->mState == Deflected)
+			if(((NortDisc*)mTarget)->mState == Deflected)
 				this->onTargetLost();
 		}
 		else if(targetType & ShapeBaseObjectType)
 		{
-			if(((ShapeBase*)mInitialTarget)->getDamageState() != ShapeBase::Enabled)
+			if(((ShapeBase*)mTarget)->getDamageState() != ShapeBase::Enabled)
 				this->onTargetLost();
 		}
 	}
@@ -447,11 +438,6 @@ void NortDisc::processTick(const Move* move)
 	if(noCollisionWithSource)
 		mSourceObject->disableCollision();
 
-	// never collide with initial target when returning or deflected...
-	bool noCollisionWithInitialTarget = mInitialTargetExists && mState != Attacking;
-	if(noCollisionWithInitialTarget)
-		mInitialTarget->disableCollision();
-
    // Determine if the projectile is going to hit any object between the previous
    // position and the new position. This code is executed both on the server
    // and on the client (for prediction purposes). It is possible that the server
@@ -470,9 +456,6 @@ void NortDisc::processTick(const Move* move)
 			if(noCollisionWithSource)
 				mSourceObject->enableCollision();
 
-			if(noCollisionWithInitialTarget)
-				mInitialTarget->enableCollision();
-
 			if(isServerObject())
 			{
 				DEBUG(("NortDisc: server: disc retourned to source @ %u",Platform::getVirtualMilliseconds()));
@@ -480,8 +463,8 @@ void NortDisc::processTick(const Move* move)
 			}
 			else
 			{
-				DEBUG(("NortDisc: client: disc retourned to source @ %u",Platform::getVirtualMilliseconds()));
-				//mHidden = true;
+				DEBUG(("NortDisc: client: disc retourned to source @ %u",Platform::getVirtualMilliseconds()));				
+            mHasExploded = true;
 			}
 
 			return;
@@ -568,9 +551,6 @@ void NortDisc::processTick(const Move* move)
 
 	if(noCollisionWithSource)
 		mSourceObject->enableCollision();
-
-	if(noCollisionWithInitialTarget)
-		mInitialTarget->enableCollision();
 
    mCurrDeltaBase = newPosition;
 	mCurrBackDelta = mCurrPosition - newPosition;
@@ -730,7 +710,7 @@ NortDisc::findCollision(const Point3F &start, const Point3F &end, RayInfo* info)
 		{
 			Projectile* prj = (Projectile*)info->object;
 
-			if(prj != mInitialTarget)
+			if(prj != mTarget)
 			{
 				DEBUG(("%s: ignoring non-target disc and trying again...", isGhost() ? "CLNT" : "SRVR"));
 
@@ -779,16 +759,6 @@ NortDisc::updateSpin()
 void
 NortDisc::setTarget(GameBase* target)
 {
-	if(target)
-	{
-		if(mInitialTarget == NULL)
-		{
-			mInitialTarget = target;
-			mInitialTargetExists = true;
-			this->deleteNotify(mInitialTarget);
-		}
-	}
-
 	Parent::setTarget(target);
 }
 
@@ -871,7 +841,8 @@ NortDisc::bounce(const RayInfo& rInfo, const Point3F& vec, bool bounceExp)
 void
 NortDisc::createExplosion(const Point3F& p, const Point3F& n)
 {
-	if(isServerObject()) return;
+	if(isServerObject() || !mDataBlock->explosion)
+      return;
 
 	Explosion* pExplosion = new Explosion;
    pExplosion->setPalette(this->getPalette());
@@ -903,18 +874,6 @@ U32 NortDisc::packUpdate(NetConnection* con, U32 mask, BitStream* stream)
 		stream->writeInt(mState,2);
 	}
 
-	if(stream->writeFlag(mask & TargetMask))
-	{
-		if(mInitialTargetExists)
-		{
-			S32 ghostIndex = con->getGhostIndex(mInitialTarget);
-			if(stream->writeFlag(ghostIndex != -1))
-				stream->writeRangedU32(U32(ghostIndex), 0, NetConnection::MaxGhostCount);
-		}
-		else
-			stream->writeFlag(false);	
-	}
-
 	return retMask;
 }
 
@@ -929,23 +888,6 @@ void NortDisc::unpackUpdate(NetConnection* con, BitStream* stream)
 
 		if(mState == Deflected)
 			this->deflected(mCurrVelocity);
-	}
-
-	// target mask...
-	if(stream->readFlag())
-	{
-		if(stream->readFlag()) // have initial target?
-		{
-			S32 ghostIndex = stream->readRangedU32(0, NetConnection::MaxGhostCount);
-
-			NetObject* pObject = con->resolveGhost(ghostIndex);
-			if( pObject != NULL )
-			{
-				mInitialTarget = dynamic_cast<GameBase*>(pObject);
-				mInitialTargetExists = true;
-				deleteNotify(mInitialTarget);
-			}
-		}
 	}
 }
 

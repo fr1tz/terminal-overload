@@ -79,10 +79,6 @@ class NortDisc : public Projectile
 	
  private:
 	State mState;
-
-	GameBase* mInitialTarget;
-	bool      mInitialTargetExists;
-
 	Point3F mSpinTargetPos;
 
  public:
