@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
+  <asset>
+    <contributor>
+      <author>Blender User</author>
+      <authoring_tool>Blender 2.67.0 r57141</authoring_tool>
+    </contributor>
+    <created>2014-05-07T19:42:03</created>
+    <modified>2014-05-07T19:42:03</modified>
+    <unit name="meter" meter="1"/>
+    <up_axis>Z_UP</up_axis>
+  </asset>
+  <library_images/>
+  <library_effects>
+    <effect id="xa_notc_core_shapes_razordisc_projectile_p1_mat1-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color sid="emission">1 1 1 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.64 0.563579 0 1</color>
+            </diffuse>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </lambert>
+        </technique>
+        <extra>
+          <technique profile="GOOGLEEARTH">
+            <double_sided>1</double_sided>
+          </technique>
+        </extra>
+      </profile_COMMON>
+      <extra><technique profile="MAX3D"><double_sided>1</double_sided></technique></extra>
+    </effect>
+  </library_effects>
+  <library_materials>
+    <material id="xa_notc_core_shapes_razordisc_projectile_p1_mat1-material" name="xa_notc_core_shapes_razordisc_projectile_p1_mat1">
+      <instance_effect url="#xa_notc_core_shapes_razordisc_projectile_p1_mat1-effect"/>
+    </material>
+  </library_materials>
+  <library_geometries>
+    <geometry id="Cube-mesh" name="Cube">
+      <mesh>
+        <source id="Cube-mesh-positions">
+          <float_array id="Cube-mesh-positions-array" count="24">-0.7733672 -0.7807707 -0.2870287 -0.7733672 0.7818886 -0.2870287 0.7733672 0.7818886 -0.2870287 0.7733672 -0.7807707 -0.2870287 -0.7733672 -0.7807707 0.287774 -0.7733672 0.7818886 0.287774 0.7733672 0.7818886 0.287774 0.7733672 -0.7807707 0.287774</float_array>
+          <technique_common>
+            <accessor source="#Cube-mesh-positions-array" count="8" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Cube-mesh-normals">
+          <float_array id="Cube-mesh-normals-array" count="36">-1 0 0 0 1 0 1 0 0 0 -1 0 0 0 -1 0 0 1 -1 0 0 0 1 0 1 0 0 0 -1 0 0 0 -1 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#Cube-mesh-normals-array" count="12" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Cube-mesh-vertices">
+          <input semantic="POSITION" source="#Cube-mesh-positions"/>
+        </vertices>
+        <polylist count="12">
+          <input semantic="VERTEX" source="#Cube-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Cube-mesh-normals" offset="1"/>
+          <vcount>3 3 3 3 3 3 3 3 3 3 3 3 </vcount>
+          <p>4 0 5 0 0 0 5 1 6 1 2 1 6 2 7 2 3 2 7 3 4 3 0 3 0 4 1 4 3 4 7 5 6 5 5 5 5 6 1 6 0 6 1 7 5 7 2 7 2 8 6 8 3 8 3 9 7 9 0 9 1 10 2 10 3 10 4 11 7 11 5 11</p>
+        </polylist>
+      </mesh>
+      <extra><technique profile="MAYA"><double_sided>1</double_sided></technique></extra>
+    </geometry>
+    <geometry id="Cylinder_001-mesh" name="Cylinder.001">
+      <mesh>
+        <source id="Cylinder_001-mesh-positions">
+          <float_array id="Cylinder_001-mesh-positions-array" count="72">0 0.4537636 -0.04981601 0 0.4537636 0.04981601 0.4537634 0 -0.04981601 0.4537634 0 0.04981601 0 -0.4537636 -0.04981601 0 -0.4537636 0.04981601 -0.4537635 0 -0.04981601 -0.4537635 0 0.04981601 0.1320856 0.5858492 -0.04981601 0.1320856 0.5858492 0.04981601 0.5858491 0.1320856 0.04981601 0.5858491 0.1320856 -0.04981601 0.5858491 -0.1320856 -0.04981601 0.5858491 -0.1320856 0.04981601 0.1320856 -0.5858492 0.04981601 0.1320856 -0.5858492 -0.04981601 -0.5858492 0.1320856 -0.04981601 -0.5858492 0.1320856 0.04981601 -0.1320856 0.5858492 0.04981601 -0.1320856 0.5858492 -0.04981601 -0.1320857 -0.5858492 -0.04981601 -0.1320857 -0.5858492 0.04981601 -0.5858492 -0.1320856 0.04981601 -0.5858492 -0.1320856 -0.04981601</float_array>
+          <technique_common>
+            <accessor source="#Cylinder_001-mesh-positions-array" count="24" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Cylinder_001-mesh-normals">
+          <float_array id="Cylinder_001-mesh-normals-array" count="132">0 0 1 0 0 -1 0.7071069 0.7071067 0 -0.7071068 0.7071068 0 0 0 1 0.7071067 -0.7071069 0 0 0 -1 0.7071068 -0.7071067 0 0.7071067 0.7071069 0 0 0 1 -0.7071068 -0.7071068 0 0 0 -1 -0.7071068 0.7071067 0 -0.7071067 -0.7071069 0 0 0 1 0.7071067 0.7071069 0 0 0 -1 -0.7071069 -0.7071067 0 0.7071067 -0.7071069 0 0 0 1 -0.7071067 0.7071069 0 0 0 -1 0 0 1 0 0 -1 0.7071069 0.7071067 0 -0.7071068 0.7071068 0 0 0 1 0.7071067 -0.7071069 0 0 0 -1 0.7071068 -0.7071067 0 0.7071067 0.7071069 0 0 0 1 -0.7071068 -0.7071068 0 0 0 -1 -0.7071068 0.7071067 0 -0.7071067 -0.7071069 0 0 0 1 0.7071067 0.7071069 0 0 0 -1 -0.7071069 -0.7071067 0 0.7071067 -0.7071069 0 0 0 1 -0.7071067 0.7071069 0 0 0 -1</float_array>
+          <technique_common>
+            <accessor source="#Cylinder_001-mesh-normals-array" count="44" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Cylinder_001-mesh-map-0">
+          <float_array id="Cylinder_001-mesh-map-0-array" count="264">0 0 1 0 1 1 0 0 1 0 0 1 0 0 1 0 1 1 0 0 1 0 0 1 0 0 1 0 1 1 0 0 1 0 1 1 0 0 1 0 0 1 0 0 1 0 1 1 0 0 1 0 1 1 0 0 1 0 1 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 1 1 0 0 1 0 1 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 1 1 0 0 1 0 1 1 0 0 1 0 0 1 0 0 1 0 0 1 0 1 0 0 1 1 1 0 1 1 0 1 0 1 0 0 1 1 1 0 1 1 0 1 0 1 0 0 1 1 0 1 0 0 1 1 1 0 1 1 0 1 0 1 0 0 1 1 0 1 0 0 1 1 0 1 0 0 1 1 1 0 1 1 0 1 1 0 1 1 0 1 1 0 1 1 0 1 1 0 1 1 0 1 0 1 0 0 1 1 0 1 0 0 1 1 1 0 1 1 0 1 1 0 1 1 0 1 0 1 0 0 1 1 0 1 0 0 1 1 1 0 1 1 0 1 1 0 1 1 0 1</float_array>
+          <technique_common>
+            <accessor source="#Cylinder_001-mesh-map-0-array" count="132" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Cylinder_001-mesh-vertices">
+          <input semantic="POSITION" source="#Cylinder_001-mesh-positions"/>
+        </vertices>
+        <polylist material="xa_notc_core_shapes_razordisc_projectile_p1_mat1-material" count="44">
+          <input semantic="VERTEX" source="#Cylinder_001-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Cylinder_001-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Cylinder_001-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 </vcount>
+          <p>3 0 0 1 0 1 7 0 2 0 1 3 2 1 4 6 1 5 8 2 6 9 2 7 10 2 8 1 3 9 9 3 10 0 3 11 3 4 12 10 4 13 9 4 14 2 5 15 11 5 16 10 5 17 0 6 18 8 6 19 2 6 20 12 7 21 13 7 22 14 7 23 3 8 24 13 8 25 12 8 26 5 9 27 14 9 28 13 9 29 4 10 30 15 10 31 5 10 32 2 11 33 12 11 34 4 11 35 16 12 36 17 12 37 19 12 38 7 13 39 17 13 40 6 13 41 1 14 42 18 14 43 17 14 44 0 15 45 19 15 46 18 15 47 6 16 48 16 16 49 0 16 50 20 17 51 21 17 52 23 17 53 5 18 54 21 18 55 20 18 56 7 19 57 22 19 58 21 19 59 6 20 60 23 20 61 7 20 62 4 21 63 20 21 64 6 21 65 5 22 66 3 22 67 7 22 68 2 23 69 4 23 70 6 23 71 11 24 72 8 24 73 10 24 74 9 25 75 8 25 76 0 25 77 1 26 78 3 26 79 9 26 80 3 27 81 2 27 82 10 27 83 8 28 84 11 28 85 2 28 86 15 29 87 12 29 88 14 29 89 2 30 90 3 30 91 12 30 92 3 31 93 5 31 94 13 31 95 15 32 96 14 32 97 5 32 98 12 33 99 15 33 100 4 33 101 17 34 102 18 34 103 19 34 104 17 35 105 16 35 106 6 35 107 7 36 108 1 36 109 17 36 110 1 37 111 0 37 112 18 37 113 16 38 114 19 38 115 0 38 116 21 39 117 22 39 118 23 39 119 4 40 120 5 40 121 20 40 122 5 41 123 7 41 124 21 41 125 23 42 126 22 42 127 7 42 128 20 43 129 23 43 130 6 43 131</p>
+        </polylist>
+      </mesh>
+      <extra><technique profile="MAYA"><double_sided>1</double_sided></technique></extra>
+    </geometry>
+  </library_geometries>
+  <library_animations>
+    <animation id="Empty_rotation_euler_X">
+      <source id="Empty_rotation_euler_X-input">
+        <float_array id="Empty_rotation_euler_X-input-array" count="5">0.04166662 0.4166666 0.8333333 1.25 1.666667</float_array>
+        <technique_common>
+          <accessor source="#Empty_rotation_euler_X-input-array" count="5" stride="1">
+            <param name="TIME" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Empty_rotation_euler_X-output">
+        <float_array id="Empty_rotation_euler_X-output-array" count="5">0 0 0 0 0</float_array>
+        <technique_common>
+          <accessor source="#Empty_rotation_euler_X-output-array" count="5" stride="1">
+            <param name="ANGLE" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Empty_rotation_euler_X-interpolation">
+        <Name_array id="Empty_rotation_euler_X-interpolation-array" count="5">LINEAR LINEAR LINEAR LINEAR LINEAR</Name_array>
+        <technique_common>
+          <accessor source="#Empty_rotation_euler_X-interpolation-array" count="5" stride="1">
+            <param name="INTERPOLATION" type="name"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <sampler id="Empty_rotation_euler_X-sampler">
+        <input semantic="INPUT" source="#Empty_rotation_euler_X-input"/>
+        <input semantic="OUTPUT" source="#Empty_rotation_euler_X-output"/>
+        <input semantic="INTERPOLATION" source="#Empty_rotation_euler_X-interpolation"/>
+      </sampler>
+      <channel source="#Empty_rotation_euler_X-sampler" target="Empty/rotationX.ANGLE"/>
+    </animation>
+    <animation id="Empty_rotation_euler_Y">
+      <source id="Empty_rotation_euler_Y-input">
+        <float_array id="Empty_rotation_euler_Y-input-array" count="5">0.04166662 0.4166666 0.8333333 1.25 1.666667</float_array>
+        <technique_common>
+          <accessor source="#Empty_rotation_euler_Y-input-array" count="5" stride="1">
+            <param name="TIME" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Empty_rotation_euler_Y-output">
+        <float_array id="Empty_rotation_euler_Y-output-array" count="5">0 0 0 0 0</float_array>
+        <technique_common>
+          <accessor source="#Empty_rotation_euler_Y-output-array" count="5" stride="1">
+            <param name="ANGLE" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Empty_rotation_euler_Y-interpolation">
+        <Name_array id="Empty_rotation_euler_Y-interpolation-array" count="5">LINEAR LINEAR LINEAR LINEAR LINEAR</Name_array>
+        <technique_common>
+          <accessor source="#Empty_rotation_euler_Y-interpolation-array" count="5" stride="1">
+            <param name="INTERPOLATION" type="name"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <sampler id="Empty_rotation_euler_Y-sampler">
+        <input semantic="INPUT" source="#Empty_rotation_euler_Y-input"/>
+        <input semantic="OUTPUT" source="#Empty_rotation_euler_Y-output"/>
+        <input semantic="INTERPOLATION" source="#Empty_rotation_euler_Y-interpolation"/>
+      </sampler>
+      <channel source="#Empty_rotation_euler_Y-sampler" target="Empty/rotationY.ANGLE"/>
+    </animation>
+    <animation id="Empty_rotation_euler_Z">
+      <source id="Empty_rotation_euler_Z-input">
+        <float_array id="Empty_rotation_euler_Z-input-array" count="5">0.04166662 0.4166666 0.8333333 1.25 1.666667</float_array>
+        <technique_common>
+          <accessor source="#Empty_rotation_euler_Z-input-array" count="5" stride="1">
+            <param name="TIME" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Empty_rotation_euler_Z-output">
+        <float_array id="Empty_rotation_euler_Z-output-array" count="5">0 -90 -180 -270 -360</float_array>
+        <technique_common>
+          <accessor source="#Empty_rotation_euler_Z-output-array" count="5" stride="1">
+            <param name="ANGLE" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Empty_rotation_euler_Z-interpolation">
+        <Name_array id="Empty_rotation_euler_Z-interpolation-array" count="5">LINEAR LINEAR LINEAR LINEAR LINEAR</Name_array>
+        <technique_common>
+          <accessor source="#Empty_rotation_euler_Z-interpolation-array" count="5" stride="1">
+            <param name="INTERPOLATION" type="name"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <sampler id="Empty_rotation_euler_Z-sampler">
+        <input semantic="INPUT" source="#Empty_rotation_euler_Z-input"/>
+        <input semantic="OUTPUT" source="#Empty_rotation_euler_Z-output"/>
+        <input semantic="INTERPOLATION" source="#Empty_rotation_euler_Z-interpolation"/>
+      </sampler>
+      <channel source="#Empty_rotation_euler_Z-sampler" target="Empty/rotationZ.ANGLE"/>
+    </animation>
+  </library_animations>
+  <library_controllers/>
+  <library_visual_scenes>
+    <visual_scene id="Scene" name="Scene">
+      <node id="bounds" name="bounds" type="NODE">
+        <translate sid="location">-5.07567e-9 0 0</translate>
+        <rotate sid="rotationZ">0 0 1 0</rotate>
+        <rotate sid="rotationY">0 1 0 0</rotate>
+        <rotate sid="rotationX">1 0 0 0</rotate>
+        <scale sid="scale">1 1 1</scale>
+        <instance_geometry url="#Cube-mesh"/>
+      </node>
+      <node id="Empty" name="Empty" type="NODE">
+        <translate sid="location">-5.07567e-9 0 0</translate>
+        <rotate sid="rotationZ">0 0 1 -30</rotate>
+        <rotate sid="rotationY">0 1 0 0</rotate>
+        <rotate sid="rotationX">1 0 0 0</rotate>
+        <scale sid="scale">0.3530952 0.3530952 0.3530952</scale>
+        <node id="Cylinder" name="Cylinder" type="NODE">
+          <matrix sid="parentinverse">2.832097 0 0 1.43748e-8 0 2.832097 0 0 0 0 2.832097 0 0 0 0 1</matrix>
+          <translate sid="location">-5.07567e-9 0 0</translate>
+          <rotate sid="rotationZ">0 0 1 0</rotate>
+          <rotate sid="rotationY">0 1 0 0</rotate>
+          <rotate sid="rotationX">1 0 0 0</rotate>
+          <scale sid="scale">1 1 1</scale>
+          <instance_geometry url="#Cylinder_001-mesh">
+            <bind_material>
+              <technique_common>
+                <instance_material symbol="xa_notc_core_shapes_razordisc_projectile_p1_mat1-material" target="#xa_notc_core_shapes_razordisc_projectile_p1_mat1-material"/>
+              </technique_common>
+            </bind_material>
+          </instance_geometry>
+        </node>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene"/>
+  </scene>
+</COLLADA>
