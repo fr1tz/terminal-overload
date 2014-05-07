@@ -17,14 +17,14 @@ datablock ShotgunProjectileData(ItemLauncherPseudoProjectile)
 datablock ShapeBaseImageData(ItemLauncherImage)
 {
    // Basic Item properties
-   shapeFile = "content/xa/rotc_hack/shapes/blaster.tp.dts";
-   shapeFileFP = "content/xa/rotc_hack/shapes/blaster.fp.dts";
+   shapeFile = "content/xa/notc/core/shapes/standardcat/launcher/p1/shape.dae";
+   shapeFileFP = "content/xa/notc/core/shapes/standardcat/launcher/p1/shape.dae";
    emap = true;
 
    // Specify mount point & offset for 3rd person, and eye offset
    // for first person rendering.
 	mountPoint = 4;
-	offset = "-0.15 -0.10 -0.05";
+	offset = "-0.20 0 0.05";
 	rotation = "1 0 0 -12";
 
    // When firing from a point offset from the eye, muzzle correction
