@@ -14,7 +14,7 @@ datablock NortDiscData(WpnRazorDisc)
 
    energyDrain = 0; // how much energy does firing this projectile drain?
 
-   //sound = DiscProjectileSound;
+   sound = WpnRazorDiscSound;
 
    targetLockTimeMS = 0;
 
@@ -25,8 +25,8 @@ datablock NortDiscData(WpnRazorDisc)
    explodesNearEnemiesRadius = 5;
 
    muzzleVelocity		= 30;
-   maxVelocity         = 30; // 75
-   acceleration        = 4;
+   maxVelocity       = 75;
+   acceleration      = 4;
    velInheritFactor	= 1.0;
 
    armingDelay			= 0*1000;
@@ -39,8 +39,10 @@ datablock NortDiscData(WpnRazorDisc)
    bounceFriction		 = 0.0;
    numBounces           = 3;
 
-   projectileShapeName = "content/xa/notc/core/shapes/smg1/projectile/p1/shape.dae";
+   projectileShapeName = "content/xa/notc/core/shapes/razordisc/projectile/p1/shape.dae";
 
+   particleEmitter     = "WpnRazorDiscEmitter";
+   
 //	explosion             = WpnRazorDiscExplosion;
 //	hitEnemyExplosion     = WpnRazorDiscHit;
 // nearEnemyExplosion	 = ThisDoesNotExist;
@@ -62,7 +64,6 @@ function WpnRazorDisc::onAdd(%this,%obj)
 {
    echo("WpnRazorDisc::onAdd()");
 // Parent::onAdd(%this,%obj);
-   %obj.setTargetingMask($TargetingMask::Launcher);
 }
 
 function WpnRazorDisc::onRemove(%this,%obj)
@@ -156,8 +157,10 @@ function WpnRazorDisc::launch(%this, %source, %muzzlePoint, %muzzleVec, %targets
 			sourceSlot      = 1;
 			client          = %source.client;
 		};
+      copyPalette(%source, %disc);
 		MissionCleanup.add(%disc);
 
+      %disc.setTargetingMask($TargetingMask::Launcher);
 		%disc.setTarget(%target);
 
 //		%player.clearDiscTarget();
