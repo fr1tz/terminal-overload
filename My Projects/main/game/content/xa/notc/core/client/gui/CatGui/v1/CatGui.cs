@@ -62,9 +62,24 @@ function CatGui::tickThread(%this)
    %control = ServerConnection.getControlObject();
    if(!isObject(%control))
       return;
-
+      
+   CatGuiDamageBufferText.setText(%control.getDamageBufferLevel());
+   CatGuiMassText.setText(%control.getMass());
+   %image = %control.getMountedImage(0);
+   if(isObject(%image))
+   {
+      if(%image.ammoSource $= "Energy")
+         CatGuiAmmoText.setText("-");
+      else
+         CatGuiAmmoText.setText(%control.getImageMagazineRounds(0));
+   }
+   else
+      CatGuiAmmoText.setText("");
+      
    %impshield = "";
-   %n = %control.getMountedObjectCount();
+   %n = 0;
+   if(%control.isMethod("getMountedObjectCount");
+      %n = %control.getMountedObjectCount();
    while(%n--)
    {
       %obj = %control.getMountedObject(%n);
@@ -79,19 +94,6 @@ function CatGui::tickThread(%this)
       CatGuiImpShield.setValue(%impshield.getLevel());
    else
       CatGuiImpShield.setValue(0);
-      
-   CatGuiDamageBufferText.setText(%control.getDamageBufferLevel());
-   CatGuiMassText.setText(%control.getMass());
-   %image = %control.getMountedImage(0);
-   if(isObject(%image))
-   {
-      if(%image.ammoSource $= "Energy")
-         CatGuiAmmoText.setText("-");
-      else
-         CatGuiAmmoText.setText(%control.getImageMagazineRounds(0));
-   }
-   else
-      CatGuiAmmoText.setText("");
 }
 
 //-----------------------------------------------------------------------------
