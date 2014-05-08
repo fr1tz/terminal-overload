@@ -76,13 +76,14 @@ function CatGui::tickThread(%this)
    else
       CatGuiAmmoText.setText("");
       
-   %impshield = "";
+   %impshield = -1;
    %n = 0;
-   if(%control.isMethod("getMountedObjectCount");
+   if(%control.isMethod("getMountedObjectCount"))
       %n = %control.getMountedObjectCount();
-   while(%n--)
+
+   for(%i = 0; %i < %n; %i++)
    {
-      %obj = %control.getMountedObject(%n);
+      %obj = %control.getMountedObject(%i);
       if(isObject(%obj))
       {
          if(%obj.getDataBlock().getName() $= "ItemImpShieldShape")
