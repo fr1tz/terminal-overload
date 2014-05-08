@@ -45,6 +45,10 @@ protected:
    bool onAdd();
 
 public:
+   enum {
+      NumBounceEffects = 4
+   };
+
    // variables set in datablock definition:
    // Shape related
    const char* projectileShapeName;
@@ -93,8 +97,9 @@ public:
    S32 missEnemyEffectRadius;
 
 	/// Explosion when bouncing (purely cosmetic)
-   ExplosionData* bounceEffect;
-   S32 bounceEffectId;
+   ExplosionData* bounceEffect[NumBounceEffects];
+   S32 bounceEffectId[NumBounceEffects];
+   U32 bounceEffectTypeMask[NumBounceEffects];
 
    ExplosionData* explosion;
    S32 explosionId;
@@ -232,7 +237,7 @@ public:
 	Point3F getTargetPosition() { return mTargetPosition; };
    void missedEnemiesCheck(const Point3F& start, const Point3F& end);
    bool missedObject(const SceneObject* obj, const Point3F& oldPos, const Point3F& newPos);
-   void createBounceExplosion(const Point3F& p, const Point3F& n, bool decal = true);
+   void createBounceExplosion(const RayInfo& rInfo, bool decal = true);
 
 public:
    Point3F  mCurrPosition;
