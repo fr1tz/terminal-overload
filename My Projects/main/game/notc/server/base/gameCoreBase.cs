@@ -214,6 +214,7 @@ function GameCoreBase::onClientEnterGame(%game, %client)
       position = "0 0 0 1 0 0 0";
       client = %client;
    };
+   %client.deathCamera.scopeToClient(%client);
    
    %client.packetLineCamera = new PathCamera() {
       dataBlock = PacketLineCamera;
