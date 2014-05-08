@@ -112,7 +112,6 @@ class NortDisc : public Projectile
 	Point3F bounce(const RayInfo& rInfo, const Point3F& vec, bool bounceExp=false);
 	State state() { return mState; };
 	void createExplosion(const Point3F& p, const Point3F& n);
-	void hit(GameBase* obj, const RayInfo& rInfo);
 	void deflected(const Point3F& newVel);
 	void stopAttacking(U32 targetType);
 	//void processNortDiscHitEvent(NetConnection* conn, GameBase* obj,

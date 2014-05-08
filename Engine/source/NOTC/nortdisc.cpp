@@ -446,10 +446,12 @@ void NortDisc::processTick(const Move* move)
 	bool collision = this->findCollision(oldPosition, newPosition, &rInfo);
 	if(collision)
 	{
+      SceneObject* col = rInfo.object;
+
 		//mTraveledDistance += (rInfo.point-oldPosition).len();
 
 		// returned to source?
-		if(mState == Returning && rInfo.object == mTarget)
+		if(mState == Returning && col == mTarget)
 		{
 			this->enableCollision();
 
@@ -470,56 +472,40 @@ void NortDisc::processTick(const Move* move)
 			return;
 		}
 
-		bool bounce = true;
-		bool bounceExplosion = false;
+      this->setMaskBits(MovementMask);
 
-		if( rInfo.object->getTypeMask() & csmStaticCollisionMask )
-			bounceExplosion = true;
+	   this->onCollision(rInfo.point, rInfo.normal, col);
 
-		// check if we hit a ShapeBase...
-		ShapeBase* hitShape = NULL;
-		if(rInfo.object->getTypeMask() & ShapeBaseObjectType)
-			hitShape = (ShapeBase*)rInfo.object;
+	   if(col == mTarget)
+	   {			
+		   DEBUG(("%s: hit target!", isGhost() ? "CLNT" : "SRVR"));
+		   if(isServerObject())
+			   Con::executef(mDataBlock, "onHitTarget", getIdString());
+	   }
+	   else
+	   {
+		   // re-set our target...
+		   //this->setTarget(mTarget);
+	   }
 
-		// check if we hit another disc...
-		NortDisc* hitDisc = NULL;
-		if(rInfo.object->getTypeMask() & ProjectileObjectType)
-			hitDisc = dynamic_cast<NortDisc*>(rInfo.object);
+	   bool bounce = true;
 
-		// if we hit another disc...
-		if(hitDisc)
-		{
-			this->hit(hitDisc, rInfo);
-			bounce = false; // this->hit() already took care of our bouncing...
-		}
-		else if(hitShape) // hit shape...
-		{
-			if(isClientObject() && mState == Deflected)
-			{
-				// create bounce explosion...
-				bounceExplosion = true;
-			}
-			else
-			{
-				this->hit(hitShape, rInfo);
-				bounce = false; // this->hit() already took care of our bouncing...
-			}
-		}
+	   // don't bounce if the target was a ShapeBase and we killed it...
+	   if(col && col->getTypeMask() & ShapeBaseObjectType)
+	   {
+		   ShapeBase* shape = (ShapeBase*)col;
+		   ShapeBase::DamageState state = shape->getDamageState();
+		   if( state  == ShapeBase::Disabled || state == ShapeBase::Destroyed )
+		   {
+			   mCurrTrackingAbility = 0; 
+			   bounce = false;
+		   }
+	   }
 
-		if(false) // mDataBlock->numBounces != 0 && mBounceCount >= mDataBlock->numBounces )
-		{
-			this->explode(rInfo.point, rInfo.normal, rInfo.object->getTypeMask());
-
-			MatrixF xform(true);
-			xform.setColumn(3, rInfo.point);
-			setTransform(xform);
-			mCurrPosition    = rInfo.point;
-			mCurrVelocity    = Point3F(0, 0, 0);
-		}
-		else if(bounce)
+		if(bounce)
 		{
 			// let's bounce...
-			newPosition = this->bounce(rInfo,mCurrVelocity,bounceExplosion);
+			newPosition = this->bounce(rInfo, mCurrVelocity, true);
 
 			//
 			if(mState == Deflected)
@@ -785,12 +771,12 @@ NortDisc::bounce(const RayInfo& rInfo, const Point3F& vec, bool bounceExp)
 	}
 	else
 	{
+      // Create bounce explosion.
+      if(bounceExp)
+         this->createBounceExplosion(rInfo);
+
 #if 0
 		addLaserTrailNode(rInfo.point, false);
-
-		// create bounce explosion...
-		if(bounceExp)
-			this->createBounceExplosion(rInfo.point, rInfo.normal);
 
 		// NortDiscs create oriented decals when bouncing...
 		if(mDataBlock->decalCount > 0
@@ -892,53 +878,6 @@ void NortDisc::unpackUpdate(NetConnection* con, BitStream* stream)
 }
 
 //--------------------------------------------------------------------------
-
-void
-NortDisc::hit(GameBase* obj, const RayInfo& rInfo)
-{
-	//mTraveledDistance += (rInfo.point-mCurrPosition).len();
-
-	this->onCollision(rInfo.point,rInfo.normal,obj);
-
-	if(obj == mTarget)
-	{			
-		DEBUG(("%s: hit target!", isGhost() ? "CLNT" : "SRVR"));
-		if(isServerObject())
-			Con::executef(mDataBlock, "onHitTarget", getIdString());
-	}
-	else
-	{
-		// re-set our target...
-		this->setTarget(mTarget);
-	}
-
-
-	bool bounce = true;
-
-	// don't bounce if the target was a ShapeBase and we killed it...
-	if(obj && obj->getTypeMask() & ShapeBaseObjectType)
-	{
-		ShapeBase* shape = (ShapeBase*)obj;
-		ShapeBase::DamageState state = shape->getDamageState();
-		if( state  == ShapeBase::Disabled || state == ShapeBase::Destroyed )
-		{
-			mCurrTrackingAbility = 0; 
-			bounce = false;
-		}
-	}
-
-	if(bounce)
-		mCurrPosition = this->bounce(rInfo, mCurrVelocity);
-
-	setMaskBits(MovementMask);
-
-	//
-	// eyecandy stuff:
-	//
-
-	if(isClientObject())
-		this->createExplosion(rInfo.point,rInfo.normal);
-}
 
 void
 NortDisc::deflected(const Point3F& newVel)
