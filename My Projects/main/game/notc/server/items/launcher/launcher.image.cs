@@ -10,9 +10,40 @@ datablock ShotgunProjectileData(ItemLauncherPseudoProjectile)
 	referenceSpreadRadius = 0.0;
 	referenceSpreadDistance = 50;
    energyDrain = 0;
-   muzzleVelocity      = 9999;
-   velInheritFactor    = 0;
+   muzzleVelocity = 9999;
+   velInheritFactor = 0;
 };
+
+function ItemLauncherPseudoProjectile::onAdd(%this, %obj)
+{
+   echo("ItemLauncherPseudoProjectile::onAdd()");
+
+	%source = %obj.sourceObject;
+   if(!isObject(%source))
+      return;
+ 
+   %targetSet = new SimSet();
+
+ 	%muzzlePoint = %source.getMuzzlePoint(1);
+   %muzzleVec = %source.getMuzzleVector(1);
+   %target = %source.getImageTarget(1);
+   echo(%target);
+   if(isObject(%target))
+   {
+      %hudInfo = new HudInfo();
+      %hudInfo.schedule(0, "delete");
+      %hudInfo.setType($HudInfoType::LockedDisc);
+      %hudInfo.setObject(%target);
+      %targetSet.add(%hudInfo);
+   }
+ 
+   WpnInterceptorDisc.launch(%source, %muzzlePoint, %muzzleVec, %targetSet);
+   
+   %targetSet.delete();
+   
+	// No need to ghost pseudo projectile to clients.
+	%obj.schedule(0, "delete");
+}
 
 datablock ShapeBaseImageData(ItemLauncherImage)
 {
@@ -70,18 +101,17 @@ datablock ShapeBaseImageData(ItemLauncherImage)
 
 		// target...
 		stateName[2]                      = "Target";
-		//stateTransitionOnNoAmmo[2]        = "NoAmmo";
-		stateTransitionOnTargetLocked[2] = "Locked";
+		//stateTransitionOnNoAmmo[2]      = "NoAmmo";
+		stateTransitionOnTargetLocked[2]  = "Locked";
 		stateTransitionOnNoTarget[2]      = "Ready";
-		//stateTransitionOnTriggerDown[2]   = "SelectAction";
+		stateTransitionOnTriggerDown[2]   = "SelectAction";
 		stateTarget[2]                    = true;
 		stateSound[2]                     = ItemLauncherTargetSound;
       stateScript[2]                    = "onTarget";
 
 		// target locked...
 		stateName[3]                      = "Locked";
-		//stateTransitionOnNoAmmo[3]        = "NoAmmo";
-		//stateTransitionOnTriggerDown[3]   = "SelectAction";
+		stateTransitionOnTriggerDown[3]   = "SelectAction";
 		stateTransitionOnNoTarget[3]      = "Ready";
 		stateTarget[3]                    = true;
 		stateSound[3]                     = ItemLauncherTargetLockedSound;
@@ -110,17 +140,6 @@ datablock ShapeBaseImageData(ItemLauncherImage)
     	stateName[7]                    = "Release";
 		stateTransitionOnTriggerUp[7]   = "Ready";
 		stateTarget[7]                  = false;
-
-		// no ammo...
-		stateName[8]                    = "NoAmmo";
-		stateTransitionOnAmmo[8]        = "Ready";
-		stateTransitionOnTriggerDown[8] = "DryFire";
-		stateTarget[8]                  = false;
-
-		// dry fire...
-		stateName[9]                    = "DryFire";
-		stateTransitionOnTriggerUp[9]   = "NoAmmo";
-		stateSound[9]                  = WeaponEmptySound;
 	//
 	// ...end of image states
 	//-------------------------------------------------
@@ -128,12 +147,11 @@ datablock ShapeBaseImageData(ItemLauncherImage)
 
 function ItemLauncherImage::onTarget(%this, %obj, %slot)
 {
-   echo("ItemLauncherImage::onTarget()");
+   //echo("ItemLauncherImage::onTarget()");
 }
 
 function ItemLauncherImage::onTargetLocked(%this, %obj, %slot)
 {
-   echo("ItemLauncherImage::onTargetLocked()");
-   echo(%obj.getImageTarget(%slot));
+   //echo("ItemLauncherImage::onTargetLocked()");
 }
 

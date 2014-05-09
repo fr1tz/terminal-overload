@@ -15,6 +15,7 @@ function executeDeathmatchServerScripts()
    exec("notc/server/weapons/razordisc/v1/exec.cs");
    exec("notc/server/weapons/explosivedisc/v1/exec.cs");
    exec("notc/server/weapons/repeldisc/v1/exec.cs");
+   exec("notc/server/weapons/interceptordisc/v1/exec.cs");
    
    exec("notc/server/weapons/smg1/v1/exec.cs");
    exec("notc/server/weapons/mgl1/v1/exec.cs");

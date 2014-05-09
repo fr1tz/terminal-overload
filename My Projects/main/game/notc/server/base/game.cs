@@ -2,6 +2,7 @@
 // located in the root directory of this distribution.
 
 $HudInfoType::DiscTarget = 1;
+$HudInfoType::LockedDisc = 2;
 
 //-----------------------------------------------------------------------------
 
