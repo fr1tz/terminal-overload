@@ -1,4 +1,16 @@
 
+singleton Material(xa_notc_core_shapes_razordisc_projectile_p1_decalmat)
+{
+   diffuseMap[0] = "content/xa/notc/core/shapes/standardcat/slidedecal.png";
+   diffuseMap[0] = "content/xa/notc/core/textures/smashdecal2.png";
+   emissive[0] = "1";
+   translucent = "1";
+   translucentBlendOp = "AddAlpha";
+   castShadows = "0";
+   showFootprints = "0";
+   vertColor[0] = "1";
+};
+
 singleton Material(xa_notc_core_shapes_razordisc_projectile_p1_mat1)
 {
    mapTo = "xa_notc_core_shapes_razordisc_projectile_p1_mat1";

@@ -246,6 +246,10 @@ datablock PlayerData(FrmStandardcat)
    maxInv[WpnMG1] = 1;
    maxInv[WpnML1] = 1;
    
+   maxInv[WpnRazorDiscAmmo] = 9999;
+   maxInv[WpnExplosiveDiscAmmo] = 9999;
+   maxInv[WpnRepelDiscAmmo] = 9999;
+   
    maxInv[WpnMGL1Ammo] = 9999;
    maxInv[WpnSG1Ammo] = 9999;
    maxInv[WpnSR1Ammo] = 9999;
@@ -784,7 +788,5 @@ function FrmStandardcat::launchDisc(%this, %obj, %disc)
       WpnRepelDisc.launch(%obj, %muzzlePoint, %muzzleVec, %obj.discTargets);
    else if(%disc $= "razor")
       WpnRazorDisc.launch(%obj, %muzzlePoint, %muzzleVec, %obj.discTargets);
-      
-   %obj.discTargets.clear();
 }
 

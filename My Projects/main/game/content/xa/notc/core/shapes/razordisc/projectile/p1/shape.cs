@@ -1,10 +1,10 @@
 
-singleton TSShapeConstructor(ShapeDae2)
+singleton TSShapeConstructor(xa_notc_core_shapes_razordisc_projectile_p1_dts)
 {
    baseShape = "./shape.dae";
 };
 
-function ShapeDae2::onLoad(%this)
+function xa_notc_core_shapes_razordisc_projectile_p1_dts::onLoad(%this)
 {
    %this.renameSequence("ambient", "timeline");
    %this.addSequence("timeline", "activate", "0", "24", "1", "0");

@@ -43,138 +43,125 @@ datablock NortDiscData(WpnRazorDisc)
 
    particleEmitter     = "WpnRazorDiscEmitter";
    
-//	explosion             = WpnRazorDiscExplosion;
-//	hitEnemyExplosion     = WpnRazorDiscHit;
-// nearEnemyExplosion	 = ThisDoesNotExist;
-//	hitTeammateExplosion  = WpnRazorDiscHit;
-//	hitDeflectorExplosion = WpnRazorDiscDeflectedEffect;
-//	bounceExplosion       = WpnRazorDiscHit;
+   bounceEffect[0] = WpnRazorDiscBounceEffect;
+   bounceEffectTypeMask[0] = $TypeMasks::StaticObjectType;
+   
+   decal = WpnRazorDiscDecal;
+   
+   lightDesc = WpnRazorDiscLightDesc;
 
 //	laserTrail[0]		= WpnRazorDiscInnerLaserTrail;
 //	laserTrail[1]		= WpnRazorDiscOuterLaserTrail;
-
-//	decals[0] = SlashDecalOne;
-
-//lightDesc = "WpnMG1ProjectileLightDesc";
 
    startVertical = true;
 };
 
 function WpnRazorDisc::onAdd(%this,%obj)
 {
-   echo("WpnRazorDisc::onAdd()");
-// Parent::onAdd(%this,%obj);
+   // echo("WpnRazorDisc::onAdd()");
+   // Parent::onAdd(%this,%obj);
 }
 
 function WpnRazorDisc::onRemove(%this,%obj)
 {
-   echo("WpnRazorDisc::onRemove()");
-//	Parent::onRemove(%this,%obj);
-//    if(%obj.state() == $NortDisc::Attacking)
-//        %obj.getTarget().removeAttackingDisc(%obj);
-
-//	%source = %obj.sourceObject;
-//	%source.incDiscs();
+   // echo("WpnRazorDisc::onRemove()");
+   // Parent::onRemove(%this,%obj);
 }
 
 function WpnRazorDisc::onCollision(%this,%obj,%col,%fade,%pos,%normal,%dist)
 {
-   echo("WpnRazorDisc::onCollision()");
+   //echo("WpnRazorDisc::onCollision()");
+   //echo(%col.getClassName());
+   if(%obj.zLastCollisionObject == %col)
+      return;
 	Parent::onCollision(%this,%obj,%col,%fade,%pos,%normal,%dist);
+   %obj.zLastCollisionObject = %col;
 }
 
 function WpnRazorDisc::onDeflected(%this, %obj)
 {
-   echo("WpnRazorDisc::onDeflected()");
-//    if(%obj.state() == $NortDisc::Attacking)
-//        %obj.getTarget().removeAttackingDisc(%obj);
+   //echo("WpnRazorDisc::onDeflected()");
 }
 
 function WpnRazorDisc::onHitTarget(%this, %obj)
 {
-   echo("WpnRazorDisc::onHitTarget()");
-//    %obj.getTarget().removeAttackingDisc(%obj);
-    %obj.stopAttacking();
+   //echo("WpnRazorDisc::onHitTarget()");
+   %obj.stopAttacking();
 }
 
 function WpnRazorDisc::onMissedTarget(%this, %obj)
 {
-   echo("WpnRazorDisc::onMissedTarget()");
-//    if(%obj.state() == $NortDisc::Attacking)
-//        %obj.getTarget().removeAttackingDisc(%obj);
-
+   //echo("WpnRazorDisc::onMissedTarget()");
    %obj.stopAttacking();
 }
 
 function WpnRazorDisc::onLostTarget(%this, %obj)
 {
-   echo("WpnRazorDisc::onLostTarget()");
+   //echo("WpnRazorDisc::onLostTarget()");
    %obj.stopAttacking();
 }
 
 // Called by script
 function WpnRazorDisc::launch(%this, %source, %muzzlePoint, %muzzleVec, %targets)
 {
-   echo("WpnRazorDisc::launch()");
-
-   %target = 0;
+   //echo("WpnRazorDisc::launch()");
+   
+   if(%source.getInventory(WpnRazorDiscAmmo) == 0)
+   {
+      if(isObject(%source.client))
+         %source.playAudio(0, GenericNoAmmoSound);
+      return;
+   }
+   
+   %targetHudInfo = 0;
 	%targetCount = %targets.getCount();
  
    if(%targetCount == 0)
+   {
+      if(isObject(%source.client))
+         %source.client.play2D(GenericNoDiscTargetSound);
       return;
+   }
 
    %lowestTargetDist = -1;
 	for(%idx= 0; %idx < %targetCount; %idx++)
 	{
-      %t = %targets.getObject(%idx).getObject();
-      %dist = VectorLen(VectorSub(%t.getPosition(), %muzzlePoint));
+      %t = %targets.getObject(%idx);
+      %dist = VectorLen(VectorSub(%t.getObject().getPosition(), %muzzlePoint));
       if(%lowestTargetDist == -1 || %dist < %lowestTargetDist)
       {
-         %target = %t;
+         %targetHudInfo = %t;
          %lowestTargetDist = %dist;
       }
    }
    
+   %muzzleSpeed = %this.muzzleVelocity;
+   %objectVelocity = %source.getVelocity();
+   %muzzleVelocity = VectorAdd(
+      VectorScale(%muzzleVec,  %muzzleSpeed),
+      VectorScale(%objectVelocity, %this.velInheritFactor));
 
-//	if(%obj.hasDisc() && %target != 0
-//	&& %target.numAttackingDiscs() == 0
-//	&& !%target.hasBarrier()
-//	)
-//	{
-		%muzzleSpeed = %this.muzzleVelocity;
-		%objectVelocity = %source.getVelocity();
-		%muzzleVelocity = VectorAdd(
-			VectorScale(%muzzleVec,  %muzzleSpeed),
-			VectorScale(%objectVelocity, %this.velInheritFactor));
+   %disc = new (NortDisc)() {
+      dataBlock       = %this;
+      teamId          = %source.teamId;
+      initialVelocity = %muzzleVelocity;
+      initialPosition = %muzzlePoint;
+      sourceObject    = %source;
+      sourceSlot      = 1;
+      client          = %source.client;
+   };
+   copyPalette(%source, %disc);
+   MissionCleanup.add(%disc);
 
-		// create the disc...
-		%disc = new (NortDisc)() {
-			dataBlock       = %this;
-			teamId          = %source.teamId;
-			initialVelocity = %muzzleVelocity;
-			initialPosition = %muzzlePoint;
-			sourceObject    = %source;
-			sourceSlot      = 1;
-			client          = %source.client;
-		};
-      copyPalette(%source, %disc);
-		MissionCleanup.add(%disc);
+   %disc.setTargetingMask($TargetingMask::Launcher);
+   %disc.setTarget(%targetHudInfo.getObject());
+   
+   %source.playAudio(0, GenericDiscLaunchSound);
+   
+   if(isObject(%targetHudInfo.getObject().client))
+      %targetHudInfo.getObject().client.play2D(WpnRazorDiscAlertSound);
 
-      %disc.setTargetingMask($TargetingMask::Launcher);
-		%disc.setTarget(%target);
-
-//		%player.clearDiscTarget();
-//		%player.decDiscs();
-//		%target.addAttackingDisc(%player);
-//		%player.playAudio(0, DiscThrowSound);
-//		if(%target.client)
-//			%target.client.play2D(DiscIncomingSound);
-//	}
-//	else
-//	{
-//		if(%player.client)
-//			%player.client.play2D(DiscSeekerDeniedSound);
-//	}
+   %targetHudInfo.delete();
 }
 
 
