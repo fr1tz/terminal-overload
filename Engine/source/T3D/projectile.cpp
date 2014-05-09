@@ -877,7 +877,6 @@ bool Projectile::onAdd()
 	{
 		processAfter(mSourceObject);
 		deleteNotify(mSourceObject);
-		this->setTeamId(mSourceObject->getTeamId());
 	}
 
    // Setup our bounding box
