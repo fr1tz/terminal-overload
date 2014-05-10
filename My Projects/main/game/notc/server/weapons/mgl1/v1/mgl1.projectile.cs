@@ -92,8 +92,8 @@ function WpnMGL1PseudoProjectile::onAdd(%this, %obj)
 		MissionCleanup.add(%p);
 	}
 
-	// no need to ghost pseudo projectile to clients...
-	//%obj.delete();
+	// No need to ghost pseudo projectile to clients.
+	%obj.schedule(0, "delete");
 }
 
 datablock ProjectileData(WpnMGL1Projectile)
