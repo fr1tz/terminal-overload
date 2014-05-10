@@ -123,8 +123,11 @@ function AIPlayer::spawnAtLocation(%name, %spawnPoint)
       path = "";
    };
    MissionCleanup.add(%player);
+   %player.teamId = %player.getId();
    %player.setShapeName(%name);
    %player.setTransform(%spawnPoint);
+   //%player.setTargetingMask($TargetingMask::Launcher);
+   $aiPlayer = %player;
    return %player;
 }
 
@@ -386,15 +389,23 @@ function AIPlayer::spawn(%path)
    if (isObject(%player))
    {
       Game.loadOut(%player);
-   
-      %player.followPath(%path, -1);
+      
+      %player.setInventory(WpnSG1, 1);
+      %player.setInventory(WpnSG1Ammo, 9999);
+      %player.setInventory(WpnMG1, 1);
+      %player.setInventory(WpnMG1Ammo, 9999);
+      %player.setInventory(WpnMGL1, 1);
+      %player.setInventory(WpnMGL1Ammo, 9999);
+      
+      %player.mountImage(WpnSMG1Image, 0);
 
-      // slow this sucker down, I'm tired of chasing him!
-      %player.setMoveSpeed(0.5);
+      %player.shootingDelay = 100;
+      //%player.followPath(%path, -1);
+      %player.setMoveSpeed(1.0);
       %player.think();
       
-      %player.shootingDelay = 500;
-      %player.singleShot();
+      //%player.singleShot();
+      //%player.setImageTrigger(0, true);
 
       return %player;
    }
