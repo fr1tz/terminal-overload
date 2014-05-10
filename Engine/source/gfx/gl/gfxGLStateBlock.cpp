@@ -1,8 +1,12 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
-#include "core/crc.h"
 #include "gfx/gl/gfxGLStateBlock.h"
+#include "gfx/gl/gfxGLDevice.h"
+#include "gfx/gl/gfxGLEnumTranslate.h"
+#include "gfx/gl/gfxGLUtils.h"
+#include "gfx/gl/gfxGLTextureObject.h"
+#include "core/crc.h"
 
 namespace DictHash
 {
@@ -11,11 +15,6 @@ namespace DictHash
       return CRC::calculateCRC(&data, sizeof(GFXSamplerStateDesc));;
    }
 }
-
-#include "gfx/gl/gfxGLDevice.h"
-#include "gfx/gl/gfxGLEnumTranslate.h"
-#include "gfx/gl/gfxGLUtils.h"
-#include "gfx/gl/gfxGLTextureObject.h"
 
 GFXGLStateBlock::GFXGLStateBlock(const GFXStateBlockDesc& desc) :
    mDesc(desc),
