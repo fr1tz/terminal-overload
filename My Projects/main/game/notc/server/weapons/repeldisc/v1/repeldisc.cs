@@ -77,7 +77,11 @@ function WpnRepelDisc::onCollision(%this,%obj,%col,%fade,%pos,%normal,%dist)
       
 	//Parent::onCollision(%this,%obj,%col,%fade,%pos,%normal,%dist);
  
-	if(%col.getType() & $TypeMasks::PlayerObjectType)
+   if(%col == %obj.sourceObject)
+   {
+      %obj.sourceObject.incInventory(WpnRepelDiscAmmo, 1);
+   }
+   else if(%col.getType() & $TypeMasks::PlayerObjectType)
 	{
       %source = %obj.sourceObject;
 
@@ -127,6 +131,8 @@ function WpnRepelDisc::launch(%this, %source, %muzzlePoint, %muzzleVec, %targets
          %source.playAudio(0, GenericNoAmmoSound);
       return;
    }
+   
+   %source.decInventory(WpnRepelDiscAmmo, 1);
    
    %targetHudInfo = 0;
 	%targetCount = %targets.getCount();
