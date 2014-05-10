@@ -450,6 +450,22 @@ void NortDisc::processTick(const Move* move)
 
 		//mTraveledDistance += (rInfo.point-oldPosition).len();
 
+      this->setMaskBits(MovementMask);
+
+	   this->onCollision(rInfo.point, rInfo.normal, col);
+
+	   if(col == mTarget)
+	   {			
+		   DEBUG(("%s: hit target!", isGhost() ? "CLNT" : "SRVR"));
+		   if(isServerObject())
+			   Con::executef(mDataBlock, "onHitTarget", getIdString());
+	   }
+	   else
+	   {
+		   // re-set our target...
+		   //this->setTarget(mTarget);
+	   }
+
 		// returned to source?
 		if(mState == Returning && col == mTarget)
 		{
@@ -472,21 +488,6 @@ void NortDisc::processTick(const Move* move)
 			return;
 		}
 
-      this->setMaskBits(MovementMask);
-
-	   this->onCollision(rInfo.point, rInfo.normal, col);
-
-	   if(col == mTarget)
-	   {			
-		   DEBUG(("%s: hit target!", isGhost() ? "CLNT" : "SRVR"));
-		   if(isServerObject())
-			   Con::executef(mDataBlock, "onHitTarget", getIdString());
-	   }
-	   else
-	   {
-		   // re-set our target...
-		   //this->setTarget(mTarget);
-	   }
 
 	   bool bounce = true;
 
