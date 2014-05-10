@@ -1452,7 +1452,7 @@ void WorldEditor::renderSplinePath(SimPath::Path *path)
    }
 
    GFX->setStateBlock(mSplineSB);
-
+   GFX->setupGenericShaders();
 
    if (path->isLooping())
    {

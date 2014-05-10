@@ -296,7 +296,6 @@ if(TORQUE_SDL)
       addPathRec("${srcDir}/gfx/gl/sdl")
     endif()
     
-    set(SDL_STATIC FALSE)
     if(UNIX)
        set(CMAKE_SIZEOF_VOID_P 4) #force 32 bit
        set(ENV{CFLAGS} "-m32 -g -O3")
@@ -306,6 +305,10 @@ if(TORQUE_SDL)
          set(ENV{LDFLAGS} "-m32 ${TORQUE_ADDITIONAL_LINKER_FLAGS}")
        endif()
     endif()
+    
+    #override and hide SDL2 cache variables
+    set(SDL_SHARED ON CACHE INTERNAL "" FORCE)
+    set(SDL_STATIC OFF CACHE INTERNAL "" FORCE)
     add_subdirectory( ${libDir}/sdl ${CMAKE_CURRENT_BINARY_DIR}/sdl2)
 endif()
 
