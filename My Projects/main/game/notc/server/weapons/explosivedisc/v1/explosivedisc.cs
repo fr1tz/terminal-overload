@@ -113,6 +113,8 @@ function WpnExplosiveDisc::launch(%this, %source, %muzzlePoint, %muzzleVec, %tar
       return;
    }
    
+   %source.decInventory(WpnExplosiveDiscAmmo, 1);
+   
    %targetHudInfo = 0;
 	%targetCount = %targets.getCount();
  
