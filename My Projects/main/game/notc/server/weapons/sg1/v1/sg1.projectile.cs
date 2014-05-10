@@ -66,5 +66,35 @@ function WpnSG1Projectile::onAdd(%this, %obj)
 function WpnSG1Projectile::onCollision(%this,%obj,%col,%fade,%pos,%normal)
 {
    Parent::onCollision(%this,%obj,%col,%fade,%pos,%normal);
+   
+   if( !(%col.getType() & $TypeMasks::ShapeBaseObjectType) )
+      return;
+
+   %src = %obj.sourceObject;
+   if(!isObject(%src))
+      return;
+
+   %currTime = getSimTime();
+
+   // NOTE: This was a problem with ROTC, may not be
+   //       a problem with Terminal Overload:
+   // FIXME: strange linux version bug:
+   //        after the game has been running a long time
+   //        (%currTime == %obj.hitTime)
+   //        often evaluates to false even if the
+   //        values appear to be equal.
+   //        (%currTime - %obj.hitTime) evaluates to 1
+   //        in those cases.
+   if(%currTime - %obj.hitTime <= 1)
+   {
+      %col.numSG1BulletHits += 1;
+      if(%col.numSG1BulletHits == 4)
+         %src.getDataBlock().addDiscTarget(%src, %col);
+   }
+   else
+   {
+      %obj.hitTime = %currTime;
+      %col.numSG1BulletHits = 1;
+   }
 }
 
