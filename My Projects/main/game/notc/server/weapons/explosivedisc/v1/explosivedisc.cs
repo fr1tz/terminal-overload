@@ -82,11 +82,18 @@ function WpnExplosiveDisc::onDeflected(%this, %obj)
 function WpnExplosiveDisc::onHitTarget(%this, %obj)
 {
    //echo("WpnExplosiveDisc::onHitTarget()");
-   %pos = %obj.getPosition();
-   %norm = VectorNormalize(VectorScale(%obj.getForwardVector(), -1));
-   %this.onExplode(%obj, %pos, 0);
-   createExplosion(WpnExplosiveDiscExplosion, %pos, %norm);
-   %obj.schedule(0, "delete");
+   if(%obj.getTarget() == %obj.sourceObject)
+   {
+      %obj.sourceObject.incInventory(WpnExplosiveDiscAmmo, 1);
+   }
+   else
+   {
+      %pos = %obj.getPosition();
+      %norm = VectorNormalize(VectorScale(%obj.getForwardVector(), -1));
+      %this.onExplode(%obj, %pos, 0);
+      createExplosion(WpnExplosiveDiscExplosion, %pos, %norm);
+      %obj.schedule(0, "delete");
+   }
 }
 
 function WpnExplosiveDisc::onMissedTarget(%this, %obj)
