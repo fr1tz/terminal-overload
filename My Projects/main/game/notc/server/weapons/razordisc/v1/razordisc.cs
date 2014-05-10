@@ -74,7 +74,10 @@ function WpnRazorDisc::onCollision(%this,%obj,%col,%fade,%pos,%normal,%dist)
    //echo(%col.getClassName());
    if(%obj.zLastCollisionObject == %col)
       return;
-	Parent::onCollision(%this,%obj,%col,%fade,%pos,%normal,%dist);
+   if(%col == %obj.sourceObject)
+      %obj.sourceObject.incInventory(WpnRazorDiscAmmo, 1);
+   else
+      Parent::onCollision(%this,%obj,%col,%fade,%pos,%normal,%dist);
    %obj.zLastCollisionObject = %col;
 }
 
@@ -112,6 +115,8 @@ function WpnRazorDisc::launch(%this, %source, %muzzlePoint, %muzzleVec, %targets
          %source.playAudio(0, GenericNoAmmoSound);
       return;
    }
+   
+   %source.decInventory(WpnRazorDiscAmmo, 1);
    
    %targetHudInfo = 0;
 	%targetCount = %targets.getCount();
