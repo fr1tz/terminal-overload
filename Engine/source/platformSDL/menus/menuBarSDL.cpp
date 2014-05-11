@@ -106,6 +106,9 @@ void MenuBar::updateMenuBar(PopupMenu *popupMenu /* = NULL */)
    //if(! isAttachedToCanvas())
    //   return;   
 
+   if(!popupMenu)
+      return;
+
    GuiPlatformGenericMenuBar* menuBarGui = _FindMenuBarCtrl();
    popupMenu->mData->mMenuBar = this;
 
