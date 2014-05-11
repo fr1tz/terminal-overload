@@ -63,6 +63,8 @@ class PlatformWindowManagerSDL : public PlatformWindowManager
 
    Map<U32, PlatformWindowSDL*> mWindowMap;
 
+   SignalSlot<void()> mOnProcessSignalSlot;
+
 public:
    PlatformWindowManagerSDL();
    ~PlatformWindowManagerSDL();
