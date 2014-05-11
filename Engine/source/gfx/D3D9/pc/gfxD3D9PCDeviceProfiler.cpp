@@ -4,7 +4,7 @@
 
 #include "gfx/D3D9/pc/gfxPCD3D9Device.h"
 #include "gfx/D3D9/pc/gfxPCD3D9Target.h"
-#include <d3d.h>
+#include <d3d9.h>
 
 #include "gfx/gfxProfiler.h"
 
