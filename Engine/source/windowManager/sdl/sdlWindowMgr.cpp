@@ -45,7 +45,8 @@ PlatformWindowManager * CreatePlatformWindowManager()
 PlatformWindowManagerSDL::PlatformWindowManagerSDL()
 {
    // Register in the process list.
-   Process::notify(this, &PlatformWindowManagerSDL::_process, PROCESS_INPUT_ORDER);
+   mOnProcessSignalSlot.setDelegate( this, &PlatformWindowManagerSDL::_process );
+   Process::notify( mOnProcessSignalSlot, PROCESS_INPUT_ORDER );
 
    // Init our list of allocated windows.
    mWindowListHead = NULL;
@@ -62,9 +63,6 @@ PlatformWindowManagerSDL::PlatformWindowManagerSDL()
 
 PlatformWindowManagerSDL::~PlatformWindowManagerSDL()
 {
-   // Get ourselves off the process list.
-   Process::remove(this, &PlatformWindowManagerSDL::_process);
-
    // Kill all our windows first.
    while(mWindowListHead)
       // The destructors update the list, so this works just fine.
