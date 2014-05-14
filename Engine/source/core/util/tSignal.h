@@ -13,18 +13,18 @@
 #endif
 
 /// Signals (Multi-cast Delegates)
-/// 
+///
 /// Signals are used throughout this engine to allow subscribers to listen
-/// for generated events for various things.  
-/// 
+/// for generated events for various things.
+///
 /// Signals are called according to their order parameter (lower
 /// numbers first).
 ///
 /// Signal functions can return bool or void.  If bool then returning false
-/// from a signal function will cause entries in the ordered signal list after 
+/// from a signal function will cause entries in the ordered signal list after
 /// that one to not be called.
 ///
-/// This allows handlers of a given event to say to the signal generator, "I handled this message, and 
+/// This allows handlers of a given event to say to the signal generator, "I handled this message, and
 /// it is no longer appropriate for other listeners to handle it"
 
 class SignalBase
@@ -104,11 +104,11 @@ public:
    template<typename X, typename Y>
    void setDelegate( const X &ptr, const Y &fn ) { setDelegate( DelegateSig( ptr, fn ) ); }
 
-   void setDelegate( const DelegateSig &dlg) 
+   void setDelegate( const DelegateSig &dlg)
    {
       SignalSig* signal = mSignal;
       if( isConnected() )
-         disconnect();      
+         disconnect();
 
       mDlg = dlg;
       if( signal && mDlg )
@@ -130,14 +130,14 @@ public:
    }
 
 protected:
-   friend class SignalSig;
+   friend SignalSig;
 
    void _setSignal(SignalSig *sig)
-   {      
+   {
       mSignal = sig;
    }
 
-   SignalSig* _getSignal() const { return mSignal; }   
+   SignalSig* _getSignal() const { return mSignal; }
 
    DelegateSig mDlg;
    SignalSig *mSignal;
@@ -202,7 +202,7 @@ public:
             }
          }
       }
-   } 
+   }
 
    template <class T,class U>
    void notify(T obj,U func, F32 order = 0.5f)
@@ -242,7 +242,7 @@ public:
    {
       DelegateSig compDelegate(func);
       remove(compDelegate);
-   } 
+   }
 
    /// Returns true if the signal already contains this delegate.
    bool contains( const DelegateSig &dlg ) const
@@ -255,7 +255,7 @@ public:
       }
 
       return false;
-   } 
+   }
 
 protected:
 
@@ -266,7 +266,7 @@ protected:
    };
 
    struct SlotLinkImpl : public DelegateLinkImpl
-   {      
+   {
       SlotLinkImpl(SignalSlot<Signature>& slot) : mSlot( &slot ), DelegateLinkImpl( slot.getDelegate() )
       {
 
@@ -275,7 +275,7 @@ protected:
       ~SlotLinkImpl()
       {
          if( mSlot )
-            mSlot->_setSignal( NULL ); 
+            mSlot->_setSignal( NULL );
       }
 
    protected:
@@ -294,7 +294,7 @@ template<typename Signature> class Signal;
 
 // Short-circuit signal implementations
 
-template<> 
+template<>
 class Signal<bool()> : public SignalBaseT<bool()>
 {
    public:
@@ -317,9 +317,9 @@ class Signal<bool()> : public SignalBaseT<bool()>
       }
 };
 
-template<class A> 
+template<class A>
 class Signal<bool(A)> : public SignalBaseT<bool(A)>
-{   
+{
    public:
 
       bool trigger( A a )
@@ -363,7 +363,7 @@ class Signal<bool(A,B)> : public SignalBaseT<bool(A,B)>
       }
 };
 
-template<class A, class B, class C> 
+template<class A, class B, class C>
 class Signal<bool(A,B,C)> : public SignalBaseT<bool(A,B,C)>
 {
    public:
@@ -386,7 +386,7 @@ class Signal<bool(A,B,C)> : public SignalBaseT<bool(A,B,C)>
       }
 };
 
-template<class A, class B, class C, class D> 
+template<class A, class B, class C, class D>
 class Signal<bool(A,B,C,D)> : public SignalBaseT<bool(A,B,C,D)>
 {
    public:
@@ -409,7 +409,7 @@ class Signal<bool(A,B,C,D)> : public SignalBaseT<bool(A,B,C,D)>
       }
 };
 
-template<class A, class B, class C, class D, class E> 
+template<class A, class B, class C, class D, class E>
 class Signal<bool(A,B,C,D,E)> : public SignalBaseT<bool(A,B,C,D,E)>
 {
    public:
@@ -432,7 +432,7 @@ class Signal<bool(A,B,C,D,E)> : public SignalBaseT<bool(A,B,C,D,E)>
       }
 };
 
-template<class A, class B, class C, class D, class E, class F> 
+template<class A, class B, class C, class D, class E, class F>
 class Signal<bool(A,B,C,D,E,F)> : public SignalBaseT<bool(A,B,C,D,E,F)>
 {
    public:
@@ -455,7 +455,7 @@ class Signal<bool(A,B,C,D,E,F)> : public SignalBaseT<bool(A,B,C,D,E,F)>
       }
 };
 
-template<class A, class B, class C, class D, class E, class F, class G> 
+template<class A, class B, class C, class D, class E, class F, class G>
 class Signal<bool(A,B,C,D,E,F,G)> : public SignalBaseT<bool(A,B,C,D,E,F,G)>
 {
    public:
@@ -478,7 +478,7 @@ class Signal<bool(A,B,C,D,E,F,G)> : public SignalBaseT<bool(A,B,C,D,E,F,G)>
       }
 };
 
-template<class A, class B, class C, class D, class E, class F, class G, class H> 
+template<class A, class B, class C, class D, class E, class F, class G, class H>
 class Signal<bool(A,B,C,D,E,F,G,H)> : public SignalBaseT<bool(A,B,C,D,E,F,G,H)>
 {
    public:
@@ -501,7 +501,7 @@ class Signal<bool(A,B,C,D,E,F,G,H)> : public SignalBaseT<bool(A,B,C,D,E,F,G,H)>
       }
 };
 
-template<class A, class B, class C, class D, class E, class F, class G, class H, class I> 
+template<class A, class B, class C, class D, class E, class F, class G, class H, class I>
 class Signal<bool(A,B,C,D,E,F,G,H,I)> : public SignalBaseT<bool(A,B,C,D,E,F,G,H,I)>
 {
    public:
@@ -524,7 +524,7 @@ class Signal<bool(A,B,C,D,E,F,G,H,I)> : public SignalBaseT<bool(A,B,C,D,E,F,G,H,
       }
 };
 
-template<class A, class B, class C, class D, class E, class F, class G, class H, class I, class J> 
+template<class A, class B, class C, class D, class E, class F, class G, class H, class I, class J>
 class Signal<bool(A,B,C,D,E,F,G,H,I,J)> : public SignalBaseT<bool(A,B,C,D,E,F,G,H,I,J)>
 {
    public:
@@ -547,7 +547,7 @@ class Signal<bool(A,B,C,D,E,F,G,H,I,J)> : public SignalBaseT<bool(A,B,C,D,E,F,G,
       }
 };
 
-template<class A, class B, class C, class D, class E, class F, class G, class H, class I, class J, class K> 
+template<class A, class B, class C, class D, class E, class F, class G, class H, class I, class J, class K>
 class Signal<bool(A,B,C,D,E,F,G,H,I,J,K)> : public SignalBaseT<bool(A,B,C,D,E,F,G,H,I,J,K)>
 {
    public:
@@ -570,7 +570,7 @@ class Signal<bool(A,B,C,D,E,F,G,H,I,J,K)> : public SignalBaseT<bool(A,B,C,D,E,F,
       }
 };
 
-template<class A, class B, class C, class D, class E, class F, class G, class H, class I, class J, class K, class L> 
+template<class A, class B, class C, class D, class E, class F, class G, class H, class I, class J, class K, class L>
 class Signal<bool(A,B,C,D,E,F,G,H,I,J,K,L)> : public SignalBaseT<bool(A,B,C,D,E,F,G,H,I,J,K,L)>
 {
    public:
@@ -593,7 +593,7 @@ class Signal<bool(A,B,C,D,E,F,G,H,I,J,K,L)> : public SignalBaseT<bool(A,B,C,D,E,
       }
 };
 
-template<class A, class B, class C, class D, class E, class F, class G, class H, class I, class J, class K, class L, class M> 
+template<class A, class B, class C, class D, class E, class F, class G, class H, class I, class J, class K, class L, class M>
 class Signal<bool(A,B,C,D,E,F,G,H,I,J,K,L,M)> : public SignalBaseT<bool(A,B,C,D,E,F,G,H,I,J,K,L,M)>
 {
    public:
@@ -618,7 +618,7 @@ class Signal<bool(A,B,C,D,E,F,G,H,I,J,K,L,M)> : public SignalBaseT<bool(A,B,C,D,
 
 // Non short-circuit signal implementations
 
-template<> 
+template<>
 class Signal<void()> : public SignalBaseT<void()>
 {
    public:
@@ -654,7 +654,7 @@ class Signal<void(A)> : public SignalBaseT<void(A)>
       }
 };
 
-template<class A, class B> 
+template<class A, class B>
 class Signal<void(A,B)> : public SignalBaseT<void(A,B)>
 {
    public:
@@ -672,7 +672,7 @@ class Signal<void(A,B)> : public SignalBaseT<void(A,B)>
       }
 };
 
-template<class A, class B, class C> 
+template<class A, class B, class C>
 class Signal<void(A,B,C)> : public SignalBaseT<void(A,B,C)>
 {
    public:
@@ -708,7 +708,7 @@ class Signal<void(A,B,C,D)> : public SignalBaseT<void(A,B,C,D)>
       }
 };
 
-template<class A, class B, class C, class D, class E> 
+template<class A, class B, class C, class D, class E>
 class Signal<void(A,B,C,D,E)> : public SignalBaseT<void(A,B,C,D,E)>
 {
    public:
@@ -726,7 +726,7 @@ class Signal<void(A,B,C,D,E)> : public SignalBaseT<void(A,B,C,D,E)>
       }
 };
 
-template<class A, class B, class C, class D, class E, class F> 
+template<class A, class B, class C, class D, class E, class F>
 class Signal<void(A,B,C,D,E,F)> : public SignalBaseT<void(A,B,C,D,E,F)>
 {
    public:
@@ -744,7 +744,7 @@ class Signal<void(A,B,C,D,E,F)> : public SignalBaseT<void(A,B,C,D,E,F)>
       }
 };
 
-template<class A, class B, class C, class D, class E, class F, class G> 
+template<class A, class B, class C, class D, class E, class F, class G>
 class Signal<void(A,B,C,D,E,F,G)> : public SignalBaseT<void(A,B,C,D,E,F,G)>
 {
    public:
@@ -762,7 +762,7 @@ class Signal<void(A,B,C,D,E,F,G)> : public SignalBaseT<void(A,B,C,D,E,F,G)>
       }
 };
 
-template<class A, class B, class C, class D, class E, class F, class G, class H> 
+template<class A, class B, class C, class D, class E, class F, class G, class H>
 class Signal<void(A,B,C,D,E,F,G,H)> : public SignalBaseT<void(A,B,C,D,E,F,G,H)>
 {
    public:
@@ -780,7 +780,7 @@ class Signal<void(A,B,C,D,E,F,G,H)> : public SignalBaseT<void(A,B,C,D,E,F,G,H)>
       }
 };
 
-template<class A, class B, class C, class D, class E, class F, class G, class H, class I> 
+template<class A, class B, class C, class D, class E, class F, class G, class H, class I>
 class Signal<void(A,B,C,D,E,F,G,H,I)> : public SignalBaseT<void(A,B,C,D,E,F,G,H,I)>
 {
    public:
@@ -798,7 +798,7 @@ class Signal<void(A,B,C,D,E,F,G,H,I)> : public SignalBaseT<void(A,B,C,D,E,F,G,H,
       }
 };
 
-template<class A, class B, class C, class D, class E, class F, class G, class H, class I, class J> 
+template<class A, class B, class C, class D, class E, class F, class G, class H, class I, class J>
 class Signal<void(A,B,C,D,E,F,G,H,I,J)> : public SignalBaseT<void(A,B,C,D,E,F,G,H,I,J)>
 {
    public:
@@ -816,7 +816,7 @@ class Signal<void(A,B,C,D,E,F,G,H,I,J)> : public SignalBaseT<void(A,B,C,D,E,F,G,
       }
 };
 
-template<class A, class B, class C, class D, class E, class F, class G, class H, class I, class J, class K> 
+template<class A, class B, class C, class D, class E, class F, class G, class H, class I, class J, class K>
 class Signal<void(A,B,C,D,E,F,G,H,I,J,K)> : public SignalBaseT<void(A,B,C,D,E,F,G,H,I,J,K)>
 {
    public:
@@ -834,7 +834,7 @@ class Signal<void(A,B,C,D,E,F,G,H,I,J,K)> : public SignalBaseT<void(A,B,C,D,E,F,
       }
 };
 
-template<class A, class B, class C, class D, class E, class F, class G, class H, class I, class J, class K, class L> 
+template<class A, class B, class C, class D, class E, class F, class G, class H, class I, class J, class K, class L>
 class Signal<void(A,B,C,D,E,F,G,H,I,J,K,L)> : public SignalBaseT<void(A,B,C,D,E,F,G,H,I,J,K,L)>
 {
    public:
@@ -852,7 +852,7 @@ class Signal<void(A,B,C,D,E,F,G,H,I,J,K,L)> : public SignalBaseT<void(A,B,C,D,E,
       }
 };
 
-template<class A, class B, class C, class D, class E, class F, class G, class H, class I, class J, class K, class L, class M> 
+template<class A, class B, class C, class D, class E, class F, class G, class H, class I, class J, class K, class L, class M>
 class Signal<void(A,B,C,D,E,F,G,H,I,J,K,L,M)> : public SignalBaseT<void(A,B,C,D,E,F,G,H,I,J,K,L,M)>
 {
    public:
