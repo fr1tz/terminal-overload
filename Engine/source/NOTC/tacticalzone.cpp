@@ -1,24 +1,21 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
-#if 0 // BORQUE_NEEDS_PORTING
+#include "platform/platform.h"
+#include "tacticalzone.h"
 
-#include "sceneGraph/sceneGraph.h"
-#include "sceneGraph/sceneState.h"
-#include "dgl/dgl.h"
-#include "dgl/gTexManager.h"
 #include "console/consoleTypes.h"
+#include "core/stream/bitStream.h"
 #include "collision/boxConvex.h"
-#include "terrain/terrData.h"
-#include "terrain/terrRender.h"
-
-#include "core/bitStream.h"
+#include "gfx/gfxDevice.h"
+#include "gfx/primBuilder.h"
+#include "gfx/gfxStateBlock.h"
 #include "math/mathIO.h"
 #include "math/mathUtils.h"
-
-#include "game/gameConnection.h"
-
-#include "game/tacticalzone.h"
+#include "scene/sceneRenderState.h"
+#include "terrain/terrData.h"
+#include "terrain/terrRender.h"
+#include "T3D/gameBase/gameConnection.h"
 
 //-----------------------------------------------------------------------------
 
@@ -122,9 +119,6 @@ TacticalZoneData::TacticalZoneData()
 
 	texture = StringTable->insert("");
 	borderTexture = StringTable->insert("");
-
-	textureHandle = NULL;
-	borderTextureHandle = NULL;
 }
 
 bool TacticalZoneData::onAdd()
@@ -191,16 +185,10 @@ void TacticalZoneData::unpackData(BitStream* stream)
 	borderTexture = StringTable->insert(stream->readSTString());
 }
 
-bool TacticalZoneData::preload(bool server, char errorBuffer[256])
+bool TacticalZoneData::preload(bool server, String &errorStr)
 {
-   if(Parent::preload(server, errorBuffer) == false)
+   if(Parent::preload(server, errorStr) == false)
       return false;
-
-   if(texture && texture[0])
-      textureHandle = TextureHandle(texture, BitmapTexture, true);
-
-   if(borderTexture && borderTexture[0])
-      borderTextureHandle = TextureHandle(borderTexture, BitmapTexture, true);
 
    return true;
 }
@@ -213,9 +201,10 @@ bool TacticalZone::sRenderTerrainDebug = false;
 IMPLEMENT_CO_NETOBJECT_V1(TacticalZone);
 TacticalZone::TacticalZone()
 {
-   mNetFlags.set(ScopeAlways);
+   mNetFlags.set(Ghostable | ScopeAlways);
 
-   mTypeMask = TacticalZoneObjectType; // discard parent masks
+   //mTypeMask = TacticalZoneObjectType; // discard parent masks
+   mTypeMask |= StaticObjectType | StaticShapeObjectType;
 
    mObjScale.set(1, 1, 1);
    mObjToWorld.identity();
@@ -501,8 +490,8 @@ void TacticalZone::computePolys()
 	mTerrainPolys.mPlaneList[4].neg();
 	mTerrainPolys.mPlaneList[5].neg();
 
-	U32 searchMask = TerrainObjectType | InteriorObjectType;
-	Container::FindCallback callback = &TacticalZone::objectFound;
+	U32 searchMask = StaticObjectType;
+	SceneContainer::FindCallback callback = &TacticalZone::objectFound;
 	this->getContainer()->findObjects(mWorldBox, searchMask, callback, this);
 
 	//F32 coat = 0.01;
@@ -555,6 +544,7 @@ static inline TexturedPolyList::Vertex createTerrainVertex(TerrainBlock* terrain
 
 void TacticalZone::computeGrid()
 {
+#if 0
 	typedef Vector<U32> Line;
 	typedef Vector<Line*> Lines;
 
@@ -795,6 +785,7 @@ void TacticalZone::computeGrid()
 
 	mRaisedTerrainGridVertexList = mTerrainGridVertexList;
 	mRenderTerrainGridVertexList = mRaisedTerrainGridVertexList;
+#endif
 }
 
 void TacticalZone::clearGrid()
@@ -812,8 +803,8 @@ bool TacticalZone::onAdd()
       return false;
 
    // setup our bounding box...
-	mObjBox.min = Point3F(-1,-1,-1);
-	mObjBox.max = Point3F(1,1,1);
+	mObjBox.minExtents = Point3F(-1,-1,-1);
+	mObjBox.maxExtents = Point3F(1,1,1);
 	resetWorldBox();
 
 	if(isServerObject())
@@ -838,10 +829,10 @@ void TacticalZone::onRemove()
    Parent::onRemove();
 }
 
-bool TacticalZone::onNewDataBlock(GameBaseData* dptr)
+bool TacticalZone::onNewDataBlock(GameBaseData* dptr, bool reload)
 {
    mDataBlock = dynamic_cast<TacticalZoneData*>(dptr);
-   if (!mDataBlock || !Parent::onNewDataBlock(dptr))
+   if (!mDataBlock || !Parent::onNewDataBlock(dptr, reload))
       return false;
 
    scriptOnNewDataBlock();
@@ -856,7 +847,7 @@ void TacticalZone::onDeleteNotify(SimObject* obj)
       for (U32 i = 0; i < mObjects.size(); i++) {
          if (pScene == mObjects[i]) {
             mObjects.erase(i);
-            Con::executef(mDataBlock, 3, "onLeave", scriptThis(), Con::getIntArg(pScene->getId()));
+            Con::executef(mDataBlock, "onLeave", getIdString(), pScene->getIdString());
             break;
          }
       }
@@ -886,16 +877,16 @@ void TacticalZone::onEditorDisable()
 
 void TacticalZone::buildConvex(const Box3F& box, Convex* convex)
 {
-	if(mCollisionsDisabled)
-		return;
+//	if(mCollisionsDisabled)
+//		return;
 
    // These should really come out of a pool
 	mConvexList->collectGarbage();
 
 	Box3F realBox = box;
 	mWorldToObj.mul(realBox);
-	realBox.min.convolveInverse(mObjScale);
-	realBox.max.convolveInverse(mObjScale);
+	realBox.minExtents.convolveInverse(mObjScale);
+	realBox.maxExtents.convolveInverse(mObjScale);
 
 	if (realBox.isOverlapped(getObjBox()) == false)
 		return;
@@ -944,8 +935,8 @@ void TacticalZone::setTransform(const MatrixF & mat)
 ColorF TacticalZone::getRenderColor()
 {
 	ColorF c = mCurrColor;
-	if(mDataBlock->allowColorization)
-		c.colorize(this->getSceneObjectColorization());
+//	if(mDataBlock->allowColorization)
+//		c.colorize(this->getSceneObjectColorization());
 	return c;
 }
 
@@ -1011,10 +1002,10 @@ bool TacticalZone::testObject(GameBase* enter)
 
    SphereF sphere;
    sphere.center = getBoxCenter();
-   VectorF bv = mWorldBox.max - sphere.center;
+   VectorF bv = mWorldBox.maxExtents - sphere.center;
    sphere.radius = bv.len();
 
-   enter->buildPolyList(&mClippedList, mWorldBox, sphere);
+   enter->buildPolyList(PLC_Collision, &mClippedList, mWorldBox, sphere);
    return !mClippedList.isEmpty();
 }
 
@@ -1034,7 +1025,7 @@ void TacticalZone::potentialEnterObject(GameBase* enter)
       mObjects.push_back(enter);
       deleteNotify(enter);
 
-      Con::executef(mDataBlock, 3, "onEnter", scriptThis(), Con::getIntArg(enter->getId()));
+      Con::executef(mDataBlock, "onEnter", getIdString(), enter->getIdString());
    }
 }
 
@@ -1059,12 +1050,12 @@ void TacticalZone::processTick(const Move* move)
             GameBase* remove = mObjects[i];
             mObjects.erase(i);
             clearNotify(remove);
-            Con::executef(mDataBlock, 3, "onLeave", scriptThis(), remove->scriptThis());
+            Con::executef(mDataBlock, "onLeave", getIdString(), remove->getIdString());
          }
       }
 
       if (mObjects.size() != 0)
-         Con::executef(mDataBlock, 2, "onTick", scriptThis());
+         Con::executef(mDataBlock, "onTick", getIdString());
    } else {
       mCurrTick += TickMs;
    }
@@ -1085,6 +1076,62 @@ void TacticalZone::advanceTime(F32 dt)
 
 //--------------------------------------------------------------------------
 
+void TacticalZone::prepRenderImage(SceneRenderState* state)
+{
+	if(sRenderMode == None && sRenderTerrainDebug == false)
+		return;
+
+	if(isClientObject() && mClientComputePolys)
+	{
+		computePolys();
+		mClientComputePolys = false;
+	}
+
+   ObjectRenderInst *ri = state->getRenderPass()->allocInst<ObjectRenderInst>();
+   ri->renderDelegate.bind( this, &TacticalZone::render );
+   ri->type = RenderPassManager::RIT_Object;
+   ri->defaultKey = 0;
+   ri->defaultKey2 = 0;
+
+   state->getRenderPass()->addInst(ri);
+}
+
+void TacticalZone::render( ObjectRenderInst *ri, SceneRenderState *state, BaseMatInstance *overrideMat )
+{
+   if(overrideMat)
+      return;
+
+   GFXStateBlockDesc solidZDisable;
+   solidZDisable.setCullMode( GFXCullNone );
+   solidZDisable.setZReadWrite( false, false );
+   GFXStateBlockRef sb = GFX->createStateBlock( solidZDisable );
+   GFX->setStateBlock( sb );
+
+   PrimBuild::color3i( 255, 0, 255 );
+
+   TexturedPolyList& pList = mTerrainPolys;
+
+   TexturedPolyList::Poly *p;
+   Point3F *pnt;
+
+   for ( p = pList.mPolyList.begin(); p < pList.mPolyList.end(); p++ )
+   {
+      PrimBuild::begin( GFXLineStrip, p->vertexCount + 1 );      
+
+      for ( U32 i = 0; i < p->vertexCount; i++ )
+      {
+         pnt = &pList.mVertexList[pList.mIndexList[p->vertexStart + i]].point;
+         PrimBuild::vertex3fv( pnt );
+      }
+
+      pnt = &pList.mVertexList[pList.mIndexList[p->vertexStart]].point;
+      PrimBuild::vertex3fv( pnt );
+
+      PrimBuild::end();
+   }   
+}
+
+#if 0
 bool TacticalZone::prepRenderImage(SceneState* state, const U32 stateKey,
                               const U32 startZone, const bool modifyBaseState)
 {
@@ -1163,10 +1210,12 @@ bool TacticalZone::prepRenderImage(SceneState* state, const U32 stateKey,
 
    return false;
 }
+#endif
 
 void
 TacticalZone::updateFogCoords(TexturedPolyList& polyList, const Point3F& camPos)
 {
+#if 0
 	TexturedPolyList::Poly* p;
 	for(p = polyList.mPolyList.begin(); p < polyList.mPolyList.end(); p++)
 	{
@@ -1182,8 +1231,10 @@ TacticalZone::updateFogCoords(TexturedPolyList& polyList, const Point3F& camPos)
 			vertex.texCoord.y = coord[1];
 		}
 	}
+#endif
 }
 
+#if 0
 void TacticalZone::renderObject(SceneState* state, SceneRenderImage* image)
 { 
 	AssertFatal(dglIsInCanonicalState(), "Error, GL not in canonical state on entry");
@@ -1637,12 +1688,13 @@ void TacticalZone::renderTerrainGridLines(VertexList& vertexList)
 	glDisableClientState ( GL_TEXTURE_COORD_ARRAY );
 	glDisableClientState ( GL_VERTEX_ARRAY ); 
 }
+#endif
 
 //--------------------------------------------------------------------------
 
 bool TacticalZone::castRay(const Point3F& start, const Point3F& end, RayInfo* info)
 {
-	if(mCollisionsDisabled || mIgnoreRayCast)
+	if(/*mCollisionsDisabled ||*/ mIgnoreRayCast)
 		return false;
 
 	//
@@ -1650,8 +1702,8 @@ bool TacticalZone::castRay(const Point3F& start, const Point3F& end, RayInfo* in
 	//
 
    F32 st,et,fst = 0,fet = 1;
-   F32 *bmin = &mObjBox.min.x;
-   F32 *bmax = &mObjBox.max.x;
+   F32 *bmin = &mObjBox.minExtents.x;
+   F32 *bmax = &mObjBox.maxExtents.x;
    const F32* si = &start.x;
    const F32* ei = &end.x;
 
@@ -1802,15 +1854,15 @@ void TacticalZone::objectFound(SceneObject* obj, void* key)
 {
 	TacticalZone* zone = (TacticalZone*)key;
 
-	if(obj->getType() & InteriorObjectType)
-		obj->buildPolyList(&zone->mInteriorPolys, zone->mWorldBox, zone->mWorldSphere);
+//	if(obj->getTypeMask() & InteriorObjectType)
+//		obj->buildPolyList(PLC_Collision, &zone->mInteriorPolys, zone->mWorldBox, zone->mWorldSphere);
 
-	if(obj->getType() & TerrainObjectType)
-		obj->buildPolyList(&zone->mTerrainPolys, zone->mWorldBox, zone->mWorldSphere);
+	if(obj->getTypeMask() & StaticObjectType)
+		obj->buildPolyList(PLC_Collision, &zone->mTerrainPolys, zone->mWorldBox, zone->mWorldSphere);
 
 	for(int i = 0; i < 6; i++)
 		if(zone->mBorderWidth[i] > 0.0f)
-			obj->buildPolyList(&zone->mBorderPolys[i], zone->mWorldBox, zone->mWorldSphere);
+			obj->buildPolyList(PLC_Collision, &zone->mBorderPolys[i], zone->mWorldBox, zone->mWorldSphere);
 }
 
 ConsoleMethod( TacticalZone, setColor, void, 5, 5, "(int color1, int color2, float f)")
@@ -1827,5 +1879,3 @@ ConsoleMethod( TacticalZone, computeGrid, void, 2, 2, "")
 {
 	return object->computeGrid();
 }
-
-#endif // BORQUE_NEEDS_PORTING

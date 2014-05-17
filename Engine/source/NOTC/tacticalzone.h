@@ -1,16 +1,14 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
-#if 0 // BORQUE_NEEDS_PORTING
-
-#ifndef TACTICALZONE_H
-#define TACTICALZONE_H
+#ifndef _TACTICALZONE_H_
+#define _TACTICALZONE_H_
 
 #ifndef _PLATFORM_H_
 #include "platform/platform.h"
 #endif
 #ifndef _GAMEBASE_H_
-#include "game/gameBase.h"
+#include "T3D/gameBase/gameBase.h"
 #endif
 #ifndef _MBOX_H_
 #include "math/mBox.h"
@@ -25,18 +23,21 @@
 #include "collision/texturedPolyList.h"
 #endif
 #ifndef _H_TRIGGER
-#include "game/trigger.h"
+#include "T3D/trigger.h"
 #endif
 
 class Convex;
 
+#if 0
 class TacticalZoneFaceRenderImage : public SceneRenderImage
 {
   public:
    U32 face;
 };
+#endif
 
-class TacticalZoneData: public GameBaseData {
+class TacticalZoneData: public GameBaseData
+{
    typedef GameBaseData Parent;
 
   public:	
@@ -53,16 +54,13 @@ class TacticalZoneData: public GameBaseData {
 	StringTableEntry texture;
 	StringTableEntry borderTexture;
 
-	TextureHandle textureHandle;
-	TextureHandle borderTextureHandle;
-
    TacticalZoneData();
    DECLARE_CONOBJECT(TacticalZoneData);
    bool onAdd();
    static void initPersistFields();
    virtual void packData  (BitStream* stream);
    virtual void unpackData(BitStream* stream);
-   virtual bool preload(bool server, char errorBuffer[256]);
+   virtual bool preload(bool server, String &errorStr);
 };
 
 class TacticalZone : public GameBase
@@ -156,7 +154,7 @@ class TacticalZone : public GameBase
    bool onAdd();
    void onRemove();
    void onDeleteNotify(SimObject*);
-   bool onNewDataBlock(GameBaseData* dptr);
+   bool onNewDataBlock(GameBaseData* dptr, bool reload);
    void inspectPostApply();
    void onEditorEnable();
    void onEditorDisable();
@@ -171,13 +169,16 @@ class TacticalZone : public GameBase
    // Rendering
   protected:
 	void updateFogCoords(TexturedPolyList& polyList, const Point3F& camPos);
-	bool prepRenderImage  ( SceneState *state, const U32 stateKey, const U32 startZone, const bool modifyBaseZoneState=false);
+	void prepRenderImage(SceneRenderState *state);
+   void render(ObjectRenderInst *ri, SceneRenderState *state, BaseMatInstance *overrideMat);
+#if 0
 	void renderObject     ( SceneState *state, SceneRenderImage *image);
 	void renderDebug(TacticalZoneFaceRenderImage* image);
 	void renderInteriorPolyList(TexturedPolyList& polyList);
 	void renderBorderPolyList(TexturedPolyList& polyList);
 	void renderTerrainPolyList(TexturedPolyList& polyList);
 	void renderTerrainGridLines(VertexList& vertexList);	
+#endif
 
   public:
    void setTransform(const MatrixF &mat);
@@ -225,6 +226,4 @@ inline GameBase* TacticalZone::getObject(const U32 index)
    return mObjects[index];
 }
 
-#endif // TACTICALZONE_H
-
-#endif // BORQUE_NEEDS_PORTING
+#endif // _TACTICALZONE_H_
