@@ -16,6 +16,10 @@
 #include "terrain/terrData.h"
 #include "terrain/terrRender.h"
 #include "T3D/gameBase/gameConnection.h"
+#include "materials/materialManager.h"
+#include "materials/baseMatInstance.h"
+#include "renderInstance/renderPassManager.h"
+#include "lighting/lightQuery.h"
 
 //-----------------------------------------------------------------------------
 
@@ -118,7 +122,7 @@ TacticalZoneData::TacticalZoneData()
 		colors[i] = sDefaultColor;
 
 	texture = StringTable->insert("");
-	borderTexture = StringTable->insert("");
+	borderTexture = StringTable->insert("");   
 }
 
 bool TacticalZoneData::onAdd()
@@ -217,6 +221,8 @@ TacticalZone::TacticalZone()
    mLastThink = 0;
    mCurrTick  = 0;
 
+   mMaterialInst = NULL;
+
 	mShowOnMinimap = true;
 	mRenderInteriors = true;
 	mRenderTerrain = true;
@@ -266,6 +272,11 @@ void TacticalZone::initPersistFields()
 	addField("borderFront",  TypeF32, Offset(mBorderWidth[3],TacticalZone));
 	addField("borderRight",  TypeF32, Offset(mBorderWidth[4],TacticalZone));
 	addField("borderTop",    TypeF32, Offset(mBorderWidth[5],TacticalZone));
+
+   addGroup( "Rendering" );
+   addField( "material",      TypeMaterialName, Offset( mMaterialName, TacticalZone ),
+      "The name of the material used to render the mesh." );
+   endGroup( "Rendering" );
 }
 
 void TacticalZone::consoleInit()
@@ -503,6 +514,8 @@ void TacticalZone::computePolys()
 	//mBorderPolys[5].addCoat(coat);
 	//mTerrainPolys.addCoat(coat);
 	mTerrainPolys.addTexture(4);
+
+   this->createRenderData(&mTerrainPolys, &mRenderData[Center]);
 }
 
 static inline F32 getTerrainHeight(TerrainBlock* terrain, Point2F pos)
@@ -1073,6 +1086,224 @@ void TacticalZone::advanceTime(F32 dt)
 	}
 }
 
+//--------------------------------------------------------------------------
+
+void TacticalZone::updateMaterial()
+{
+   if ( mMaterialName.isEmpty() )
+      return;
+
+   // If the material name matches then don't bother updating it.
+   if ( mMaterialInst && mMaterialName.equal( mMaterialInst->getMaterial()->getName(), String::NoCase ) )
+      return;
+
+   SAFE_DELETE( mMaterialInst );
+
+   mMaterialInst = MATMGR->createMatInstance( mMaterialName, getGFXVertexFormat< VertexType >() );
+   if ( !mMaterialInst )
+      Con::errorf( "RenderMeshExample::updateMaterial - no Material called '%s'", mMaterialName.c_str() );
+}
+
+void TacticalZone::createRenderData(TexturedPolyList* src, RenderData* dst)
+{  
+   U16 numVerts = 0;
+   U16 numPrims = 0;
+
+   // 
+   Vector<U32> vertIdxBuf;
+   TexturedPolyList::Poly* p;
+   for(p = src->mPolyList.begin(); p < src->mPolyList.end(); p++)
+   {
+      if(p->vertexCount == 3)
+      {
+         U32 idx1 = src->mIndexList[p->vertexStart];
+         U32 idx2 = src->mIndexList[p->vertexStart + 1];
+         U32 idx3 = src->mIndexList[p->vertexStart + 2];
+
+         vertIdxBuf.push_back(idx1);
+         vertIdxBuf.push_back(idx2);
+         vertIdxBuf.push_back(idx3);
+         numPrims++;
+      }
+
+      if(p->vertexCount == 4)
+      {
+         U32 idx1 = src->mIndexList[p->vertexStart];
+         U32 idx2 = src->mIndexList[p->vertexStart + 1];
+         U32 idx3 = src->mIndexList[p->vertexStart + 2];
+         U32 idx4 = src->mIndexList[p->vertexStart + 3];
+
+         vertIdxBuf.push_back(idx1);
+         vertIdxBuf.push_back(idx2);
+         vertIdxBuf.push_back(idx3);
+         numPrims++;
+
+         vertIdxBuf.push_back(idx3);
+         vertIdxBuf.push_back(idx4);
+         vertIdxBuf.push_back(idx1);
+         numPrims++;
+      }
+
+      if(p->vertexCount == 5)
+      {
+         U32 idx1 = src->mIndexList[p->vertexStart];
+         U32 idx2 = src->mIndexList[p->vertexStart + 1];
+         U32 idx3 = src->mIndexList[p->vertexStart + 2];
+         U32 idx4 = src->mIndexList[p->vertexStart + 3];
+         U32 idx5 = src->mIndexList[p->vertexStart + 4];
+
+         vertIdxBuf.push_back(idx1);
+         vertIdxBuf.push_back(idx2);
+         vertIdxBuf.push_back(idx3);
+         numPrims++;
+
+         vertIdxBuf.push_back(idx3);
+         vertIdxBuf.push_back(idx4);
+         vertIdxBuf.push_back(idx5);
+         numPrims++;
+
+         vertIdxBuf.push_back(idx1);
+         vertIdxBuf.push_back(idx3);
+         vertIdxBuf.push_back(idx5);
+         numPrims++;
+      }
+   }
+
+   // Fill the vertex buffer.
+   numVerts = vertIdxBuf.size();
+   if(numVerts == 0)
+      goto abort;
+   dst->vertBuf.set(GFX, numVerts, GFXBufferTypeStatic );
+   VertexType* pVert = dst->vertBuf.lock();
+   for(U16 i = 0; i < numVerts; i++)
+   {
+      U32 idx = vertIdxBuf[i];
+      pVert[i].point    = src->mVertexList[idx].point;
+      pVert[i].normal   = Point3F(0, 0, 1);
+      pVert[i].texCoord = Point2F(0, 0);
+   }
+   dst->vertBuf.unlock();
+
+   // Fill the primitive buffer.
+   if(numPrims == 0)
+      goto abort;
+   dst->primBuf.set( GFX, numVerts, numPrims, GFXBufferTypeStatic );
+   U16 *pIdx = NULL; dst->primBuf.lock(&pIdx);     
+   for(U16 i = 0; i < numVerts; i++)
+      pIdx[i] = i;
+   dst->primBuf.unlock();
+
+ abort:
+   dst->numVerts = numPrims;
+   dst->numPrims = numPrims;
+
+
+#if 0
+   U32 numVerts = 0;
+   U32 numPrims = 0;
+
+   // Fill the vertex buffer.
+   dst->vertBuf.set(GFX, src->mVertexList.size() + 1, GFXBufferTypeStatic );
+   VertexType* pVert = dst->vertBuf.lock();
+   TexturedPolyList::Poly* p;
+   for(p = src->mPolyList.begin(); p < src->mPolyList.end(); p++)
+   {
+      numPrims++;
+      Point3F pnt;
+      for(U32 i = 0; i < p->vertexCount; i++)
+      {
+         pnt = src->mVertexList[src->mIndexList[p->vertexStart + i]].point;
+         pVert[numVerts].point    = pnt;
+         pVert[numVerts].normal   = Point3F(0, 0, 1);
+         pVert[numVerts].texCoord = Point2F(0, 0);
+         numVerts++;
+      }
+
+      pnt = src->mVertexList[src->mIndexList[p->vertexStart]].point;
+      pVert[numVerts].point    = pnt;
+      pVert[numVerts].normal   = Point3F(0, 0, 1);
+      pVert[numVerts].texCoord = Point2F(0, 0);
+      numVerts++;
+   }  
+   dst->vertBuf.unlock();
+
+   // Fill the primitive buffer.
+   dst->primBuf.set( GFX, numVerts, numPrims, GFXBufferTypeStatic );
+   U16 *pIdx = NULL; dst->primBuf.lock(&pIdx);     
+   for(U16 i = 0; i < numVerts; i++)
+      pIdx[i] = i;
+   dst->primBuf.unlock();
+
+   dst->numVerts = numVerts;
+   dst->numPrims = numPrims;
+#endif
+
+#if 0
+   U32 numVerts = 0;
+   U32 numPrims = 0;
+   Vector<U16> primBuf;
+
+   // Fill the vertex buffer.
+   numVerts = src->mVertexList.size();
+   if(numVerts == 0)
+      goto abort;
+   dst->vertBuf.set(GFX, numVerts, GFXBufferTypeStatic);
+   VertexType* pVert = dst->vertBuf.lock();
+   for(U32 i = 0; i < src->mVertexList.size(); i++)
+   {
+      Point3F pnt = src->mVertexList[i].point;
+      pVert[i].point    = pnt;
+      pVert[i].normal   = Point3F(0, 0, 1);
+      pVert[i].texCoord = Point2F(0, 0);
+   }  
+   dst->vertBuf.unlock();
+
+   // Fill temp. primitive buffer.
+   primBuf.reserve(numVerts*2);
+   TexturedPolyList::Poly* p;
+   for(p = src->mPolyList.begin(); p < src->mPolyList.end(); p++)
+   {
+      if(p->vertexCount == 3)
+      {
+         numPrims++;
+         U16 idx1 = src->mIndexList[p->vertexStart];
+         U16 idx2 = src->mIndexList[p->vertexStart + 1];
+         U16 idx3 = src->mIndexList[p->vertexStart + 2];
+         primBuf.push_back(idx1);
+         primBuf.push_back(idx2);
+         primBuf.push_back(idx3);
+         break;
+      }
+
+      /*
+      for(U32 i = 0; i < p->vertexCount - 1; i++)
+      {
+         numPrims++;
+         U16 idx1 = src->mIndexList[p->vertexStart + i];
+         U16 idx2 = src->mIndexList[p->vertexStart + i + 1];
+         primBuf.push_back(idx1);
+         primBuf.push_back(idx2);
+      }
+      */
+   }  
+
+   // Fill the primitive buffer.
+   if(primBuf.size() == 0)
+      goto abort;
+   dst->primBuf.set(GFX, primBuf.size(), numPrims, GFXBufferTypeStatic );
+   U16* pIdx = NULL; dst->primBuf.lock(&pIdx);     
+   for(U16 i = 0; i < primBuf.size(); i++)
+   {
+      U16 idx = primBuf[i];
+      pIdx[i] = i;
+   }
+   dst->primBuf.unlock();
+
+ abort:
+   dst->numVerts = numPrims * 3;
+   dst->numPrims = numPrims;
+#endif
+}
 
 //--------------------------------------------------------------------------
 
@@ -1087,13 +1318,103 @@ void TacticalZone::prepRenderImage(SceneRenderState* state)
 		mClientComputePolys = false;
 	}
 
-   ObjectRenderInst *ri = state->getRenderPass()->allocInst<ObjectRenderInst>();
-   ri->renderDelegate.bind( this, &TacticalZone::render );
-   ri->type = RenderPassManager::RIT_Object;
-   ri->defaultKey = 0;
-   ri->defaultKey2 = 0;
+   {
+      ObjectRenderInst *ri = state->getRenderPass()->allocInst<ObjectRenderInst>();
+      ri->renderDelegate.bind( this, &TacticalZone::render );
+      ri->type = RenderPassManager::RIT_Object;
+      ri->defaultKey = 0;
+      ri->defaultKey2 = 0;
+      state->getRenderPass()->addInst(ri);
+   }
 
-   state->getRenderPass()->addInst(ri);
+   // If we have no material then skip out.
+   if(!mMaterialInst)
+      return;
+
+   // If we don't have a material instance after the override then 
+   // we can skip rendering all together.
+   BaseMatInstance* matInst = state->getOverrideMaterial(mMaterialInst);
+   if(!matInst)
+      return;
+
+   // Get a handy pointer to our RenderPassmanager
+   RenderPassManager* renderPass = state->getRenderPass();
+
+   for(U32 i = 0; i < NumRenderParts; i++)
+   {
+      RenderData* renderData = &mRenderData[i];
+
+      if(renderData->numVerts == 0)
+         continue;
+
+      // Allocate an MeshRenderInst so that we can submit it to the RenderPassManager
+      MeshRenderInst* ri = renderPass->allocInst<MeshRenderInst>();
+
+      // Set our RenderInst as a standard mesh render
+      ri->type = RenderPassManager::RIT_Mesh;
+
+      //If our material has transparency set on this will redirect it to proper render bin
+      if(matInst->getMaterial()->isTranslucent())
+      {
+         ri->type = RenderPassManager::RIT_Translucent;
+         ri->translucentSort = true;
+      }
+
+      // Calculate our sorting point
+      if ( state )
+      {
+         // Calculate our sort point manually.
+         const Box3F& rBox = getRenderWorldBox();
+         ri->sortDistSq = rBox.getSqDistanceToPoint( state->getCameraPosition() );      
+      } 
+      else 
+         ri->sortDistSq = 0.0f;
+
+      // Set up our transforms
+      MatrixF objectToWorld = getRenderTransform();
+      objectToWorld.scale( getScale() );
+
+      //ri->objectToWorld = renderPass->allocUniqueXform(objectToWorld);
+      ri->objectToWorld = &MatrixF::Identity;
+      ri->worldToCamera = renderPass->allocSharedXform(RenderPassManager::View);
+      ri->projection    = renderPass->allocSharedXform(RenderPassManager::Projection);
+
+	   // If our material needs lights then fill the RIs 
+      // light vector with the best lights.
+      if(matInst->isForwardLit())
+      {
+         LightQuery query;
+         query.init( getWorldSphere() );
+		   query.getLights( ri->lights, 8 );
+      }
+
+      // Make sure we have an up-to-date backbuffer in case
+      // our Material would like to make use of it
+      // NOTICE: SFXBB is removed and refraction is disabled!
+      //ri->backBuffTex = GFX->getSfxBackBuffer();
+
+      // Set our Material
+      ri->matInst = matInst;
+
+      // Set up our vertex buffer and primitive buffer
+      ri->vertBuff = &renderData->vertBuf;
+      ri->primBuff = &renderData->primBuf;
+
+      ri->prim = renderPass->allocPrim();
+      ri->prim->type = GFXTriangleList;
+      ri->prim->minIndex = 0;
+      ri->prim->startIndex = 0;
+      ri->prim->numPrimitives = renderData->numPrims;
+      ri->prim->startVertex = 0;
+      ri->prim->numVertices = renderData->numVerts;
+
+      // We sort by the material then vertex buffer
+      ri->defaultKey = matInst->getStateHint();
+      ri->defaultKey2 = (U32)ri->vertBuff; // Not 64bit safe!
+
+      // Submit our RenderInst to the RenderPassManager
+      state->getRenderPass()->addInst( ri );
+   }
 }
 
 void TacticalZone::render( ObjectRenderInst *ri, SceneRenderState *state, BaseMatInstance *overrideMat )
@@ -1105,7 +1426,7 @@ void TacticalZone::render( ObjectRenderInst *ri, SceneRenderState *state, BaseMa
    solidZDisable.setCullMode( GFXCullNone );
    solidZDisable.setZReadWrite( false, false );
    GFXStateBlockRef sb = GFX->createStateBlock( solidZDisable );
-   GFX->setStateBlock( sb );
+   //GFX->setStateBlock( sb );
 
    PrimBuild::color3i( 255, 0, 255 );
 
@@ -1765,6 +2086,8 @@ U32 TacticalZone::packUpdate(NetConnection* con, U32 mask, BitStream* stream)
 			if(stream->writeFlag(mBorderWidth[i] > 0.0f))
 				stream->write(mBorderWidth[i]);
 		}
+
+      stream->write(mMaterialName);
 	}
 
 	if( stream->writeFlag(mask & Color1Mask) )
@@ -1821,6 +2144,11 @@ void TacticalZone::unpackUpdate(NetConnection* con, BitStream* stream)
 			else
 				mBorderWidth[i] = 0.0f;
 		}
+
+      stream->read(&mMaterialName);
+
+      if(this->isProperlyAdded())
+         this->updateMaterial();
 
 		mClientComputePolys = true;
 	}

@@ -25,6 +25,12 @@
 #ifndef _H_TRIGGER
 #include "T3D/trigger.h"
 #endif
+#ifndef _GFXVERTEXBUFFER_H_
+#include "gfx/gfxVertexBuffer.h"
+#endif
+#ifndef _GFXPRIMITIVEBUFFER_H_
+#include "gfx/gfxPrimitiveBuffer.h"
+#endif
 
 class Convex;
 
@@ -122,6 +128,25 @@ class TacticalZone : public GameBase
 	// render stuff...
 	//
 
+   String            mMaterialName;
+   BaseMatInstance*  mMaterialInst;
+
+   typedef GFXVertexPNT VertexType;
+
+   enum RenderPart {
+      Center,
+      NumRenderParts
+   };
+
+   struct RenderData {
+      GFXVertexBufferHandle<VertexType> vertBuf;
+      GFXPrimitiveBufferHandle primBuf;
+      U32 numVerts;
+      U32 numPrims;
+   };
+
+   RenderData mRenderData[NumRenderParts]; 
+
 	bool mShowOnMinimap;
 	bool mRenderInteriors;
 	bool mRenderTerrain;
@@ -162,6 +187,9 @@ class TacticalZone : public GameBase
    bool testObject(GameBase* enter);
    void processTick(const Move *move);
    void advanceTime(F32 dt);
+
+   void updateMaterial();
+   void createRenderData(TexturedPolyList* src, RenderData* dst); 
 
    Convex* mConvexList;
    void buildConvex(const Box3F& box, Convex* convex);
