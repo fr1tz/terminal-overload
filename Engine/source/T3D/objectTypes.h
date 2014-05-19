@@ -132,11 +132,15 @@ enum SceneObjectTypes
    /// @see Grid
    GridObjectType = BIT( 23 ),
 
+   /// A grid object.
+   /// @see Grid
+   TacticalZoneObjectType = BIT( 24 ),
+
    /// @}
 
    /// Next object type not used within the engine.
    /// @see StaticShapeData::dynamicTypeField
-   NextFreeObjectType = BIT( 24 ),
+   NextFreeObjectType = BIT( 25 ),
 };
 
 enum SceneObjectTypeMasks

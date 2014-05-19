@@ -441,6 +441,7 @@ static void RegisterGameFunctions()
    Con::setIntVariable("$TypeMasks::PhysicalZoneObjectType",   PhysicalZoneObjectType);
    Con::setIntVariable("$TypeMasks::LightObjectType",          LightObjectType);
    Con::setIntVariable("$TypeMasks::GridObjectType",           GridObjectType);
+   Con::setIntVariable("$TypeMasks::TacticalZoneObjectType",   TacticalZoneObjectType);
    Con::setIntVariable("$TypeMasks::NextFreeObjectType",       NextFreeObjectType);
 
    Con::addVariable("Ease::InOut", TypeS32, &gEaseInOut, 

@@ -67,6 +67,7 @@ class TacticalZoneData: public GameBaseData
    BaseMatInstance*  otherMaterialInst;
 
    TacticalZoneData();
+   ~TacticalZoneData();
    DECLARE_CONOBJECT(TacticalZoneData);
    bool onAdd();
    static void initPersistFields();

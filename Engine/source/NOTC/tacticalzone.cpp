@@ -76,6 +76,8 @@ static S32 faceToDirMapping[6][2] = {
 
 //-----------------------------------------------------------------------------
 
+extern F32 gDecalBias;
+
 namespace
 {
 	ColorF sDefaultColor(1, 1, 1, 1);
@@ -259,7 +261,9 @@ TacticalZone::TacticalZone()
    mNetFlags.set(Ghostable | ScopeAlways);
 
    //mTypeMask = TacticalZoneObjectType; // discard parent masks
-   mTypeMask |= StaticObjectType | StaticShapeObjectType;
+   //mTypeMask |= StaticObjectType;
+   //mTypeMask |= StaticShapeObjectType;
+   mTypeMask |= TacticalZoneObjectType;
 
    mObjScale.set(1, 1, 1);
    mObjToWorld.identity();
@@ -559,7 +563,7 @@ void TacticalZone::computePolys()
 	//mTerrainPolys.addCoat(coat);
 	mTerrainPolys.addTexture(4);
 
-   this->createRenderDataLines(&mInteriorPolys, &mRenderData[Other]);
+   this->createRenderDataTriangles(&mInteriorPolys, &mRenderData[Other]);
    this->createRenderDataTriangles(&mTerrainPolys, &mRenderData[Terrain]);
    this->createRenderDataTriangles(&mBorderPolys[0], &mRenderData[BorderBottom]);
    this->createRenderDataTriangles(&mBorderPolys[1], &mRenderData[BorderLeft]);
@@ -1360,6 +1364,7 @@ void TacticalZone::prepRenderImage(SceneRenderState* state)
 		mClientComputePolys = false;
 	}
 
+   if(false)
    {
       ObjectRenderInst *ri = state->getRenderPass()->allocInst<ObjectRenderInst>();
       ri->renderDelegate.bind( this, &TacticalZone::render );
@@ -1368,6 +1373,8 @@ void TacticalZone::prepRenderImage(SceneRenderState* state)
       ri->defaultKey2 = 0;
       state->getRenderPass()->addInst(ri);
    }
+
+   const Frustum &frustum = state->getCameraFrustum();
 
    // Get a handy pointer to our RenderPassmanager
    RenderPassManager* renderPass = state->getRenderPass();
@@ -1400,6 +1407,9 @@ void TacticalZone::prepRenderImage(SceneRenderState* state)
       // Allocate an MeshRenderInst so that we can submit it to the RenderPassManager
       MeshRenderInst* ri = renderPass->allocInst<MeshRenderInst>();
 
+      // Set palette.
+      ri->palette = this->getPalette();
+
       // Set our RenderInst as a standard mesh render
       ri->type = RenderPassManager::RIT_Mesh;
 
@@ -1426,8 +1436,13 @@ void TacticalZone::prepRenderImage(SceneRenderState* state)
 
       //ri->objectToWorld = renderPass->allocUniqueXform(objectToWorld);
       ri->objectToWorld = &MatrixF::Identity;
+
       ri->worldToCamera = renderPass->allocSharedXform(RenderPassManager::View);
-      ri->projection    = renderPass->allocSharedXform(RenderPassManager::Projection);
+
+      //ri->projection = renderPass->allocSharedXform(RenderPassManager::Projection);
+      MatrixF *tempMat = renderPass->allocUniqueXform( MatrixF( true ) );   
+      MathUtils::getZBiasProjectionMatrix( gDecalBias, frustum, tempMat );
+      ri->projection = tempMat;
 
 	   // If our material needs lights then fill the RIs 
       // light vector with the best lights.
