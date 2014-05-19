@@ -121,9 +121,24 @@ TacticalZoneData::TacticalZoneData()
 	for(int i = 0; i < MaxColors; i++)
 		colors[i] = sDefaultColor;
 
-	texture = StringTable->insert("");
-	borderTexture = StringTable->insert("");   
+   terrainMaterialInst = NULL;
+   borderMaterialInst = NULL;
+   otherMaterialInst = NULL;
 }
+
+TacticalZoneData::~TacticalZoneData()
+{
+   if(terrainMaterialInst)
+      SAFE_DELETE(terrainMaterialInst);
+
+   if(borderMaterialInst)
+      SAFE_DELETE(borderMaterialInst);
+
+   if(otherMaterialInst)
+      SAFE_DELETE(otherMaterialInst);
+}
+
+
 
 bool TacticalZoneData::onAdd()
 {
@@ -140,8 +155,15 @@ void TacticalZoneData::initPersistFields()
 	addField("tickPeriodMS",        TypeS32,      Offset(tickPeriodMS, TacticalZoneData));
 	addField("colorChangeTimeMS",   TypeS32,      Offset(colorChangeTimeMS, TacticalZoneData));
 	addField("colors",              TypeColorF,   Offset(colors, TacticalZoneData), MaxColors );
-	addField("texture",             TypeFilename, Offset(texture,TacticalZoneData));
-	addField("borderTexture",       TypeFilename, Offset(borderTexture,TacticalZoneData));
+
+   addGroup( "Rendering" );
+   addField( "terrainMaterial",    TypeMaterialName, Offset(terrainMaterialString, TacticalZoneData),
+      "The name of the material used to render the terrain." );
+   addField( "borderMaterial",    TypeMaterialName, Offset(borderMaterialString, TacticalZoneData),
+      "The name of the material used to render the borders." );
+   addField( "otherMaterial",    TypeMaterialName, Offset(otherMaterialString, TacticalZoneData),
+      "The name of the material used to render all other stuff." );
+   endGroup( "Rendering" );
 }
 
 
@@ -164,8 +186,9 @@ void TacticalZoneData::packData(BitStream* stream)
 		}
 	}
 
-	stream->writeString(texture);	
-	stream->writeString(borderTexture);	
+	stream->write(terrainMaterialString);	
+	stream->write(borderMaterialString);	
+   stream->write(otherMaterialString);	
 }
 
 void TacticalZoneData::unpackData(BitStream* stream)
@@ -185,14 +208,42 @@ void TacticalZoneData::unpackData(BitStream* stream)
 		}
 	}
 
-	texture = StringTable->insert(stream->readSTString());
-	borderTexture = StringTable->insert(stream->readSTString());
+	stream->read(&terrainMaterialString);	
+	stream->read(&borderMaterialString);	
+   stream->read(&otherMaterialString);	
 }
 
 bool TacticalZoneData::preload(bool server, String &errorStr)
 {
    if(Parent::preload(server, errorStr) == false)
       return false;
+
+   if(server)
+      return true;
+
+   if(!terrainMaterialString.isEmpty())
+   {
+      SAFE_DELETE(terrainMaterialInst);
+      terrainMaterialInst = MATMGR->createMatInstance(terrainMaterialString, getGFXVertexFormat<TacticalZone::VertexType>());
+      if(!terrainMaterialInst)
+         Con::errorf( "TacticalZoneData::preload - no Material called '%s'", terrainMaterialString.c_str() );
+   }
+
+   if(!borderMaterialString.isEmpty())
+   {
+      SAFE_DELETE(borderMaterialInst);
+      borderMaterialInst = MATMGR->createMatInstance(borderMaterialString, getGFXVertexFormat<TacticalZone::VertexType>());
+      if(!borderMaterialInst)
+         Con::errorf( "TacticalZoneData::preload - no Material called '%s'", borderMaterialString.c_str() );
+   }
+
+   if(!otherMaterialString.isEmpty())
+   {
+      SAFE_DELETE(otherMaterialInst);
+      otherMaterialInst = MATMGR->createMatInstance(otherMaterialString, getGFXVertexFormat<TacticalZone::VertexType>());
+      if(!otherMaterialInst)
+         Con::errorf( "TacticalZoneData::preload - no Material called '%s'", otherMaterialString.c_str() );
+   }
 
    return true;
 }
@@ -220,8 +271,6 @@ TacticalZone::TacticalZone()
 
    mLastThink = 0;
    mCurrTick  = 0;
-
-   mMaterialInst = NULL;
 
 	mShowOnMinimap = true;
 	mRenderInteriors = true;
@@ -272,11 +321,6 @@ void TacticalZone::initPersistFields()
 	addField("borderFront",  TypeF32, Offset(mBorderWidth[3],TacticalZone));
 	addField("borderRight",  TypeF32, Offset(mBorderWidth[4],TacticalZone));
 	addField("borderTop",    TypeF32, Offset(mBorderWidth[5],TacticalZone));
-
-   addGroup( "Rendering" );
-   addField( "material",      TypeMaterialName, Offset( mMaterialName, TacticalZone ),
-      "The name of the material used to render the mesh." );
-   endGroup( "Rendering" );
 }
 
 void TacticalZone::consoleInit()
@@ -501,7 +545,7 @@ void TacticalZone::computePolys()
 	mTerrainPolys.mPlaneList[4].neg();
 	mTerrainPolys.mPlaneList[5].neg();
 
-	U32 searchMask = StaticObjectType;
+	U32 searchMask = StaticShapeObjectType;
 	SceneContainer::FindCallback callback = &TacticalZone::objectFound;
 	this->getContainer()->findObjects(mWorldBox, searchMask, callback, this);
 
@@ -515,7 +559,14 @@ void TacticalZone::computePolys()
 	//mTerrainPolys.addCoat(coat);
 	mTerrainPolys.addTexture(4);
 
-   this->createRenderData(&mTerrainPolys, &mRenderData[Center]);
+   this->createRenderDataLines(&mInteriorPolys, &mRenderData[Other]);
+   this->createRenderDataTriangles(&mTerrainPolys, &mRenderData[Terrain]);
+   this->createRenderDataTriangles(&mBorderPolys[0], &mRenderData[BorderBottom]);
+   this->createRenderDataTriangles(&mBorderPolys[1], &mRenderData[BorderLeft]);
+   this->createRenderDataTriangles(&mBorderPolys[2], &mRenderData[BorderBack]);
+   this->createRenderDataTriangles(&mBorderPolys[3], &mRenderData[BorderFront]);
+   this->createRenderDataTriangles(&mBorderPolys[4], &mRenderData[BorderRight]);
+   this->createRenderDataTriangles(&mBorderPolys[5], &mRenderData[BorderTop]);
 }
 
 static inline F32 getTerrainHeight(TerrainBlock* terrain, Point2F pos)
@@ -1088,23 +1139,7 @@ void TacticalZone::advanceTime(F32 dt)
 
 //--------------------------------------------------------------------------
 
-void TacticalZone::updateMaterial()
-{
-   if ( mMaterialName.isEmpty() )
-      return;
-
-   // If the material name matches then don't bother updating it.
-   if ( mMaterialInst && mMaterialName.equal( mMaterialInst->getMaterial()->getName(), String::NoCase ) )
-      return;
-
-   SAFE_DELETE( mMaterialInst );
-
-   mMaterialInst = MATMGR->createMatInstance( mMaterialName, getGFXVertexFormat< VertexType >() );
-   if ( !mMaterialInst )
-      Con::errorf( "RenderMeshExample::updateMaterial - no Material called '%s'", mMaterialName.c_str() );
-}
-
-void TacticalZone::createRenderData(TexturedPolyList* src, RenderData* dst)
+void TacticalZone::createRenderDataTriangles(TexturedPolyList* src, RenderData* dst)
 {  
    U16 numVerts = 0;
    U16 numPrims = 0;
@@ -1172,7 +1207,7 @@ void TacticalZone::createRenderData(TexturedPolyList* src, RenderData* dst)
    // Fill the vertex buffer.
    numVerts = vertIdxBuf.size();
    if(numVerts == 0)
-      goto abort;
+      goto done;
    dst->vertBuf.set(GFX, numVerts, GFXBufferTypeStatic );
    VertexType* pVert = dst->vertBuf.lock();
    for(U16 i = 0; i < numVerts; i++)
@@ -1180,129 +1215,136 @@ void TacticalZone::createRenderData(TexturedPolyList* src, RenderData* dst)
       U32 idx = vertIdxBuf[i];
       pVert[i].point    = src->mVertexList[idx].point;
       pVert[i].normal   = Point3F(0, 0, 1);
-      pVert[i].texCoord = Point2F(0, 0);
+      pVert[i].texCoord = src->mVertexList[idx].texCoord;
    }
    dst->vertBuf.unlock();
 
    // Fill the primitive buffer.
    if(numPrims == 0)
-      goto abort;
+      goto done;
    dst->primBuf.set( GFX, numVerts, numPrims, GFXBufferTypeStatic );
    U16 *pIdx = NULL; dst->primBuf.lock(&pIdx);     
    for(U16 i = 0; i < numVerts; i++)
       pIdx[i] = i;
    dst->primBuf.unlock();
 
- abort:
+ done:
    dst->numVerts = numPrims;
    dst->numPrims = numPrims;
+   dst->primType = GFXTriangleList;
+}
 
+void TacticalZone::createRenderDataLines(TexturedPolyList* src, RenderData* dst)
+{  
+   U16 numVerts = 0;
+   U16 numPrims = 0;
 
-#if 0
-   U32 numVerts = 0;
-   U32 numPrims = 0;
-
-   // Fill the vertex buffer.
-   dst->vertBuf.set(GFX, src->mVertexList.size() + 1, GFXBufferTypeStatic );
-   VertexType* pVert = dst->vertBuf.lock();
-   TexturedPolyList::Poly* p;
-   for(p = src->mPolyList.begin(); p < src->mPolyList.end(); p++)
-   {
-      numPrims++;
-      Point3F pnt;
-      for(U32 i = 0; i < p->vertexCount; i++)
-      {
-         pnt = src->mVertexList[src->mIndexList[p->vertexStart + i]].point;
-         pVert[numVerts].point    = pnt;
-         pVert[numVerts].normal   = Point3F(0, 0, 1);
-         pVert[numVerts].texCoord = Point2F(0, 0);
-         numVerts++;
-      }
-
-      pnt = src->mVertexList[src->mIndexList[p->vertexStart]].point;
-      pVert[numVerts].point    = pnt;
-      pVert[numVerts].normal   = Point3F(0, 0, 1);
-      pVert[numVerts].texCoord = Point2F(0, 0);
-      numVerts++;
-   }  
-   dst->vertBuf.unlock();
-
-   // Fill the primitive buffer.
-   dst->primBuf.set( GFX, numVerts, numPrims, GFXBufferTypeStatic );
-   U16 *pIdx = NULL; dst->primBuf.lock(&pIdx);     
-   for(U16 i = 0; i < numVerts; i++)
-      pIdx[i] = i;
-   dst->primBuf.unlock();
-
-   dst->numVerts = numVerts;
-   dst->numPrims = numPrims;
-#endif
-
-#if 0
-   U32 numVerts = 0;
-   U32 numPrims = 0;
-   Vector<U16> primBuf;
-
-   // Fill the vertex buffer.
-   numVerts = src->mVertexList.size();
-   if(numVerts == 0)
-      goto abort;
-   dst->vertBuf.set(GFX, numVerts, GFXBufferTypeStatic);
-   VertexType* pVert = dst->vertBuf.lock();
-   for(U32 i = 0; i < src->mVertexList.size(); i++)
-   {
-      Point3F pnt = src->mVertexList[i].point;
-      pVert[i].point    = pnt;
-      pVert[i].normal   = Point3F(0, 0, 1);
-      pVert[i].texCoord = Point2F(0, 0);
-   }  
-   dst->vertBuf.unlock();
-
-   // Fill temp. primitive buffer.
-   primBuf.reserve(numVerts*2);
+   // 
+   Vector<U32> vertIdxBuf;
    TexturedPolyList::Poly* p;
    for(p = src->mPolyList.begin(); p < src->mPolyList.end(); p++)
    {
       if(p->vertexCount == 3)
       {
+         U32 idx1 = src->mIndexList[p->vertexStart];
+         U32 idx2 = src->mIndexList[p->vertexStart + 1];
+         U32 idx3 = src->mIndexList[p->vertexStart + 2];
+
+         vertIdxBuf.push_back(idx1);
+         vertIdxBuf.push_back(idx2);
          numPrims++;
-         U16 idx1 = src->mIndexList[p->vertexStart];
-         U16 idx2 = src->mIndexList[p->vertexStart + 1];
-         U16 idx3 = src->mIndexList[p->vertexStart + 2];
-         primBuf.push_back(idx1);
-         primBuf.push_back(idx2);
-         primBuf.push_back(idx3);
-         break;
+
+         vertIdxBuf.push_back(idx2);
+         vertIdxBuf.push_back(idx3);
+         numPrims++;
+
+         vertIdxBuf.push_back(idx3);
+         vertIdxBuf.push_back(idx1);
+         numPrims++;
       }
 
-      /*
-      for(U32 i = 0; i < p->vertexCount - 1; i++)
+      if(p->vertexCount == 4)
       {
+         U32 idx1 = src->mIndexList[p->vertexStart];
+         U32 idx2 = src->mIndexList[p->vertexStart + 1];
+         U32 idx3 = src->mIndexList[p->vertexStart + 2];
+         U32 idx4 = src->mIndexList[p->vertexStart + 3];
+
+         vertIdxBuf.push_back(idx1);
+         vertIdxBuf.push_back(idx2);
          numPrims++;
-         U16 idx1 = src->mIndexList[p->vertexStart + i];
-         U16 idx2 = src->mIndexList[p->vertexStart + i + 1];
-         primBuf.push_back(idx1);
-         primBuf.push_back(idx2);
+
+         vertIdxBuf.push_back(idx2);
+         vertIdxBuf.push_back(idx3);
+         numPrims++;
+
+         vertIdxBuf.push_back(idx3);
+         vertIdxBuf.push_back(idx4);
+         numPrims++;
+
+         vertIdxBuf.push_back(idx4);
+         vertIdxBuf.push_back(idx1);
+         numPrims++;
       }
-      */
-   }  
+
+      if(p->vertexCount == 5)
+      {
+         U32 idx1 = src->mIndexList[p->vertexStart];
+         U32 idx2 = src->mIndexList[p->vertexStart + 1];
+         U32 idx3 = src->mIndexList[p->vertexStart + 2];
+         U32 idx4 = src->mIndexList[p->vertexStart + 3];
+         U32 idx5 = src->mIndexList[p->vertexStart + 4];
+
+         vertIdxBuf.push_back(idx1);
+         vertIdxBuf.push_back(idx2);
+         numPrims++;
+
+         vertIdxBuf.push_back(idx2);
+         vertIdxBuf.push_back(idx3);
+         numPrims++;
+
+         vertIdxBuf.push_back(idx3);
+         vertIdxBuf.push_back(idx4);
+         numPrims++;
+
+         vertIdxBuf.push_back(idx4);
+         vertIdxBuf.push_back(idx5);
+         numPrims++;
+
+         vertIdxBuf.push_back(idx5);
+         vertIdxBuf.push_back(idx1);
+         numPrims++;
+      }
+   }
+
+   // Fill the vertex buffer.
+   numVerts = vertIdxBuf.size();
+   if(numVerts == 0)
+      goto done;
+   dst->vertBuf.set(GFX, numVerts, GFXBufferTypeStatic );
+   VertexType* pVert = dst->vertBuf.lock();
+   for(U16 i = 0; i < numVerts; i++)
+   {
+      U32 idx = vertIdxBuf[i];
+      pVert[i].point    = src->mVertexList[idx].point;
+      pVert[i].normal   = Point3F(0, 0, 1);
+      pVert[i].texCoord = src->mVertexList[idx].texCoord;
+   }
+   dst->vertBuf.unlock();
 
    // Fill the primitive buffer.
-   if(primBuf.size() == 0)
-      goto abort;
-   dst->primBuf.set(GFX, primBuf.size(), numPrims, GFXBufferTypeStatic );
-   U16* pIdx = NULL; dst->primBuf.lock(&pIdx);     
-   for(U16 i = 0; i < primBuf.size(); i++)
-   {
-      U16 idx = primBuf[i];
+   if(numPrims == 0)
+      goto done;
+   dst->primBuf.set( GFX, numVerts, numPrims, GFXBufferTypeStatic );
+   U16 *pIdx = NULL; dst->primBuf.lock(&pIdx);     
+   for(U16 i = 0; i < numVerts; i++)
       pIdx[i] = i;
-   }
    dst->primBuf.unlock();
 
- abort:
-   dst->numVerts = numPrims * 3;
+ done:
+   dst->numVerts = numPrims;
    dst->numPrims = numPrims;
-#endif
+   dst->primType = GFXLineList;
 }
 
 //--------------------------------------------------------------------------
@@ -1327,16 +1369,6 @@ void TacticalZone::prepRenderImage(SceneRenderState* state)
       state->getRenderPass()->addInst(ri);
    }
 
-   // If we have no material then skip out.
-   if(!mMaterialInst)
-      return;
-
-   // If we don't have a material instance after the override then 
-   // we can skip rendering all together.
-   BaseMatInstance* matInst = state->getOverrideMaterial(mMaterialInst);
-   if(!matInst)
-      return;
-
    // Get a handy pointer to our RenderPassmanager
    RenderPassManager* renderPass = state->getRenderPass();
 
@@ -1345,6 +1377,24 @@ void TacticalZone::prepRenderImage(SceneRenderState* state)
       RenderData* renderData = &mRenderData[i];
 
       if(renderData->numVerts == 0)
+         continue;
+
+      BaseMatInstance* matInst;
+
+      if(i == Other)
+         matInst = mDataBlock->otherMaterialInst;
+      else if(i == Terrain)
+         matInst = mDataBlock->terrainMaterialInst;
+      else
+         matInst = mDataBlock->borderMaterialInst;
+
+      if(!matInst)
+         continue;
+
+      // If we don't have a material instance after the override then 
+      // we can skip rendering all together.
+      matInst = state->getOverrideMaterial(matInst);
+      if(!matInst)
          continue;
 
       // Allocate an MeshRenderInst so that we can submit it to the RenderPassManager
@@ -1401,7 +1451,7 @@ void TacticalZone::prepRenderImage(SceneRenderState* state)
       ri->primBuff = &renderData->primBuf;
 
       ri->prim = renderPass->allocPrim();
-      ri->prim->type = GFXTriangleList;
+      ri->prim->type = renderData->primType;
       ri->prim->minIndex = 0;
       ri->prim->startIndex = 0;
       ri->prim->numPrimitives = renderData->numPrims;
@@ -2086,8 +2136,6 @@ U32 TacticalZone::packUpdate(NetConnection* con, U32 mask, BitStream* stream)
 			if(stream->writeFlag(mBorderWidth[i] > 0.0f))
 				stream->write(mBorderWidth[i]);
 		}
-
-      stream->write(mMaterialName);
 	}
 
 	if( stream->writeFlag(mask & Color1Mask) )
@@ -2145,11 +2193,6 @@ void TacticalZone::unpackUpdate(NetConnection* con, BitStream* stream)
 				mBorderWidth[i] = 0.0f;
 		}
 
-      stream->read(&mMaterialName);
-
-      if(this->isProperlyAdded())
-         this->updateMaterial();
-
 		mClientComputePolys = true;
 	}
 
@@ -2182,11 +2225,10 @@ void TacticalZone::objectFound(SceneObject* obj, void* key)
 {
 	TacticalZone* zone = (TacticalZone*)key;
 
-//	if(obj->getTypeMask() & InteriorObjectType)
-//		obj->buildPolyList(PLC_Collision, &zone->mInteriorPolys, zone->mWorldBox, zone->mWorldSphere);
-
-	if(obj->getTypeMask() & StaticObjectType)
+	if(obj->getTypeMask() & TerrainObjectType)
 		obj->buildPolyList(PLC_Collision, &zone->mTerrainPolys, zone->mWorldBox, zone->mWorldSphere);
+   else
+      obj->buildPolyList(PLC_Collision, &zone->mInteriorPolys, zone->mWorldBox, zone->mWorldSphere);
 
 	for(int i = 0; i < 6; i++)
 		if(zone->mBorderWidth[i] > 0.0f)

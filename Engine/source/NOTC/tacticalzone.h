@@ -57,8 +57,14 @@ class TacticalZoneData: public GameBaseData
 
 	ColorF colors[MaxColors];
 
-	StringTableEntry texture;
-	StringTableEntry borderTexture;
+   String            terrainMaterialString;
+   BaseMatInstance*  terrainMaterialInst;
+
+   String            borderMaterialString;
+   BaseMatInstance*  borderMaterialInst;
+
+   String            otherMaterialString;
+   BaseMatInstance*  otherMaterialInst;
 
    TacticalZoneData();
    DECLARE_CONOBJECT(TacticalZoneData);
@@ -80,6 +86,8 @@ class TacticalZone : public GameBase
 	};
 
  public:
+
+   typedef GFXVertexPNT VertexType;
 
 	enum RenderMode {
 		None,
@@ -128,13 +136,15 @@ class TacticalZone : public GameBase
 	// render stuff...
 	//
 
-   String            mMaterialName;
-   BaseMatInstance*  mMaterialInst;
-
-   typedef GFXVertexPNT VertexType;
-
    enum RenderPart {
-      Center,
+      Other,
+      Terrain,
+      BorderBottom,
+      BorderLeft,
+      BorderBack,
+      BorderFront,
+      BorderRight,
+      BorderTop,
       NumRenderParts
    };
 
@@ -143,6 +153,7 @@ class TacticalZone : public GameBase
       GFXPrimitiveBufferHandle primBuf;
       U32 numVerts;
       U32 numPrims;
+      GFXPrimitiveType primType;
    };
 
    RenderData mRenderData[NumRenderParts]; 
@@ -188,8 +199,8 @@ class TacticalZone : public GameBase
    void processTick(const Move *move);
    void advanceTime(F32 dt);
 
-   void updateMaterial();
-   void createRenderData(TexturedPolyList* src, RenderData* dst); 
+   void createRenderDataTriangles(TexturedPolyList* src, RenderData* dst); 
+   void createRenderDataLines(TexturedPolyList* src, RenderData* dst); 
 
    Convex* mConvexList;
    void buildConvex(const Box3F& box, Convex* convex);
