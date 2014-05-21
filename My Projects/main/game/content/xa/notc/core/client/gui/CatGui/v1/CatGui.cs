@@ -36,7 +36,7 @@ function CatGui::onSleep(%this)
       Canvas.popDialog( MainChatHud );
    
    // pop the keymaps
-   XaNotc1CatMoveMap.pop();
+   //XaNotc1CatMoveMap.pop();
 }
 
 function CatGui::clearHud( %this )
