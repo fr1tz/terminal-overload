@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
+  <asset>
+    <contributor>
+      <author>Blender User</author>
+      <authoring_tool>Blender 2.67.0 r57141</authoring_tool>
+    </contributor>
+    <created>2014-05-21T12:55:27</created>
+    <modified>2014-05-21T12:55:27</modified>
+    <unit name="meter" meter="1"/>
+    <up_axis>Z_UP</up_axis>
+  </asset>
+  <library_images/>
+  <library_effects>
+    <effect id="xa_notc_core_shapes_etherform_p1_mat1-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color sid="emission">1 1 1 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.64 0.563579 0 1</color>
+            </diffuse>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </lambert>
+        </technique>
+        <extra>
+          <technique profile="GOOGLEEARTH">
+            <double_sided>1</double_sided>
+          </technique>
+        </extra>
+      </profile_COMMON>
+      <extra><technique profile="MAX3D"><double_sided>1</double_sided></technique></extra>
+    </effect>
+    <effect id="xa_notc_core_shapes_etherform_p1_mat2-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color sid="emission">1 1 1 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.64 0.563579 0 1</color>
+            </diffuse>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </lambert>
+        </technique>
+        <extra>
+          <technique profile="GOOGLEEARTH">
+            <double_sided>1</double_sided>
+          </technique>
+        </extra>
+      </profile_COMMON>
+      <extra><technique profile="MAX3D"><double_sided>1</double_sided></technique></extra>
+    </effect>
+  </library_effects>
+  <library_materials>
+    <material id="xa_notc_core_shapes_etherform_p1_mat1-material" name="xa_notc_core_shapes_etherform_p1_mat1">
+      <instance_effect url="#xa_notc_core_shapes_etherform_p1_mat1-effect"/>
+    </material>
+    <material id="xa_notc_core_shapes_etherform_p1_mat2-material" name="xa_notc_core_shapes_etherform_p1_mat2">
+      <instance_effect url="#xa_notc_core_shapes_etherform_p1_mat2-effect"/>
+    </material>
+  </library_materials>
+  <library_geometries>
+    <geometry id="Cube-mesh" name="Cube">
+      <mesh>
+        <source id="Cube-mesh-positions">
+          <float_array id="Cube-mesh-positions-array" count="24">-0.7733672 -0.7807707 -0.5567986 -0.7733672 0.7818886 -0.5567986 0.7733672 0.7818886 -0.5567986 0.7733672 -0.7807707 -0.5567986 -0.7733672 -0.7807707 0.5575439 -0.7733672 0.7818886 0.5575439 0.7733672 0.7818886 0.5575439 0.7733672 -0.7807707 0.5575439</float_array>
+          <technique_common>
+            <accessor source="#Cube-mesh-positions-array" count="8" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Cube-mesh-normals">
+          <float_array id="Cube-mesh-normals-array" count="36">-1 0 0 0 1 0 1 0 0 0 -1 0 0 0 -1 0 0 1 -1 0 0 0 1 0 1 0 0 0 -1 0 0 0 -1 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#Cube-mesh-normals-array" count="12" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Cube-mesh-vertices">
+          <input semantic="POSITION" source="#Cube-mesh-positions"/>
+        </vertices>
+        <polylist count="12">
+          <input semantic="VERTEX" source="#Cube-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Cube-mesh-normals" offset="1"/>
+          <vcount>3 3 3 3 3 3 3 3 3 3 3 3 </vcount>
+          <p>4 0 5 0 0 0 5 1 6 1 2 1 6 2 7 2 3 2 7 3 4 3 0 3 0 4 1 4 3 4 7 5 6 5 5 5 5 6 1 6 0 6 1 7 5 7 2 7 2 8 6 8 3 8 3 9 7 9 0 9 1 10 2 10 3 10 4 11 7 11 5 11</p>
+        </polylist>
+      </mesh>
+      <extra><technique profile="MAYA"><double_sided>1</double_sided></technique></extra>
+    </geometry>
+    <geometry id="Sphere-mesh" name="Sphere">
+      <mesh>
+        <source id="Sphere-mesh-positions">
+          <float_array id="Sphere-mesh-positions-array" count="66">0 0 0.2053978 0 0 -0.2053979 -0.0373075 0.1148208 0.1661702 -0.06036484 0.1857841 0.06347137 -0.06036484 0.1857841 -0.06347149 -0.0373075 0.1148208 -0.1661704 0.09767258 0.0709632 0.1661702 0.1580374 0.1148208 0.06347137 0.1580374 0.1148208 -0.06347149 0.09767252 0.0709632 -0.1661704 0.09767258 -0.0709632 0.1661702 0.1580374 -0.1148209 0.06347137 0.1580374 -0.1148209 -0.06347149 0.09767252 -0.0709632 -0.1661704 -0.0373075 -0.1148209 0.1661702 -0.06036484 -0.1857841 0.06347137 -0.06036484 -0.1857841 -0.06347149 -0.0373075 -0.1148209 -0.1661704 -0.1207298 0 0.1661702 -0.1953449 0 0.06347137 -0.1953449 0 -0.06347149 -0.1207298 0 -0.1661704</float_array>
+          <technique_common>
+            <accessor source="#Sphere-mesh-positions-array" count="22" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Sphere-mesh-normals">
+          <float_array id="Sphere-mesh-normals-array" count="120">0.2664046 0.8199094 -0.5067318 0.2664045 0.8199095 0.5067318 0.3090169 0.9510565 0 0.8621037 0 -0.506732 1 0 0 0.8621038 0 0.5067318 0.2664047 -0.8199093 -0.5067321 0.2664049 -0.8199093 0.506732 0.309017 -0.9510565 0 -0.6974564 -0.5067319 -0.506732 -0.6974565 -0.5067319 0.5067319 -0.8090169 -0.5877853 0 -0.3015112 0.2190607 -0.9279566 -0.6974565 0.5067319 -0.5067321 -0.3015115 0.219061 0.9279564 -0.6974564 0.5067319 0.5067319 -0.8090169 0.5877854 0 0.115167 0.3544477 -0.9279566 0.1151671 0.3544481 0.9279565 0.3726884 0 -0.9279565 0.3726887 0 0.9279564 0.115167 -0.3544477 -0.9279566 0.1151672 -0.3544481 0.9279565 -0.3015112 -0.2190607 -0.9279566 -0.3015116 -0.219061 0.9279565 0.2664047 0.8199092 -0.506732 0.2664046 0.8199095 0.5067318 0.3090169 0.9510565 0 0.8621037 0 -0.506732 1 0 0 0.8621038 0 0.5067318 0.2664047 -0.8199092 -0.5067319 0.2664048 -0.8199094 0.5067318 0.309017 -0.9510565 0 -0.6974564 -0.5067319 -0.5067321 -0.6974565 -0.5067319 0.5067319 -0.8090169 -0.5877853 0 -0.6974564 0.5067319 -0.5067319 -0.6974564 0.506732 0.5067319 -0.8090168 0.5877854 0</float_array>
+          <technique_common>
+            <accessor source="#Sphere-mesh-normals-array" count="40" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Sphere-mesh-vertices">
+          <input semantic="POSITION" source="#Sphere-mesh-positions"/>
+        </vertices>
+        <polylist material="xa_notc_core_shapes_etherform_p1_mat1-material" count="40">
+          <input semantic="VERTEX" source="#Sphere-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Sphere-mesh-normals" offset="1"/>
+          <vcount>3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 </vcount>
+          <p>5 0 4 0 8 0 3 1 2 1 6 1 4 2 3 2 7 2 9 3 8 3 12 3 8 4 7 4 11 4 7 5 6 5 10 5 13 6 12 6 16 6 11 7 10 7 14 7 12 8 11 8 15 8 17 9 16 9 21 9 15 10 14 10 19 10 16 11 15 11 20 11 1 12 21 12 5 12 21 13 20 13 5 13 18 14 0 14 2 14 19 15 18 15 3 15 20 16 19 16 4 16 1 17 5 17 9 17 2 18 0 18 6 18 1 19 9 19 13 19 6 20 0 20 10 20 1 21 13 21 17 21 10 22 0 22 14 22 1 23 17 23 21 23 14 24 0 24 18 24 9 25 5 25 8 25 7 26 3 26 6 26 8 27 4 27 7 27 13 28 9 28 12 28 12 29 8 29 11 29 11 30 7 30 10 30 17 31 13 31 16 31 15 32 11 32 14 32 16 33 12 33 15 33 16 34 20 34 21 34 14 35 18 35 19 35 15 36 19 36 20 36 20 37 4 37 5 37 18 38 2 38 3 38 19 39 3 39 4 39</p>
+        </polylist>
+      </mesh>
+      <extra><technique profile="MAYA"><double_sided>1</double_sided></technique></extra>
+    </geometry>
+    <geometry id="Sphere_001-mesh" name="Sphere.001">
+      <mesh>
+        <source id="Sphere_001-mesh-positions">
+          <float_array id="Sphere_001-mesh-positions-array" count="66">0 0 0.4067193 0 0 -0.4067193 -0.07387465 0.227363 0.3290427 -0.1195318 0.367881 0.1256831 -0.1195318 0.367881 -0.1256832 -0.07387465 0.227363 -0.3290429 0.1934066 0.1405181 0.3290427 0.3129384 0.227363 0.1256831 0.3129384 0.227363 -0.1256832 0.1934065 0.140518 -0.3290429 0.1934066 -0.1405181 0.3290427 0.3129384 -0.227363 0.1256831 0.3129384 -0.227363 -0.1256832 0.1934065 -0.1405181 -0.3290429 -0.07387465 -0.2273631 0.3290427 -0.1195318 -0.3678811 0.1256831 -0.1195318 -0.3678811 -0.1256832 -0.07387465 -0.227363 -0.3290429 -0.2390636 0 0.3290427 -0.3868131 0 0.1256831 -0.3868131 0 -0.1256832 -0.2390636 0 -0.3290429</float_array>
+          <technique_common>
+            <accessor source="#Sphere_001-mesh-positions-array" count="22" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Sphere_001-mesh-normals">
+          <float_array id="Sphere_001-mesh-normals-array" count="120">0.2664046 0.8199094 -0.5067318 0.2664046 0.8199095 0.5067318 0.3090169 0.9510566 0 0.8621036 0 -0.506732 1 0 0 0.8621038 0 0.5067318 0.2664048 -0.8199093 -0.506732 0.2664048 -0.8199093 0.506732 0.309017 -0.9510565 0 -0.6974565 -0.5067319 -0.5067321 -0.6974565 -0.5067319 0.5067319 -0.8090169 -0.5877854 0 -0.3015111 0.2190607 -0.9279567 -0.6974565 0.5067319 -0.5067321 -0.3015115 0.219061 0.9279564 -0.6974564 0.5067319 0.5067319 -0.809017 0.5877855 0 0.115167 0.3544476 -0.9279567 0.115167 0.354448 0.9279565 0.3726882 0 -0.9279565 0.3726886 0 0.9279565 0.115167 -0.3544476 -0.9279566 0.1151672 -0.354448 0.9279565 -0.3015111 -0.2190607 -0.9279567 -0.3015115 -0.219061 0.9279564 0.2664047 0.8199093 -0.506732 0.2664046 0.8199095 0.5067318 0.3090169 0.9510566 0 0.8621036 0 -0.506732 1 0 0 0.8621038 0 0.5067318 0.2664047 -0.8199093 -0.5067321 0.2664048 -0.8199093 0.5067318 0.309017 -0.9510565 0 -0.6974564 -0.5067319 -0.5067321 -0.6974565 -0.5067319 0.5067319 -0.809017 -0.5877854 0 -0.6974564 0.506732 -0.5067319 -0.6974564 0.5067321 0.5067319 -0.8090169 0.5877855 0</float_array>
+          <technique_common>
+            <accessor source="#Sphere_001-mesh-normals-array" count="40" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Sphere_001-mesh-vertices">
+          <input semantic="POSITION" source="#Sphere_001-mesh-positions"/>
+        </vertices>
+        <polylist material="xa_notc_core_shapes_etherform_p1_mat2-material" count="40">
+          <input semantic="VERTEX" source="#Sphere_001-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Sphere_001-mesh-normals" offset="1"/>
+          <vcount>3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 </vcount>
+          <p>5 0 4 0 8 0 3 1 2 1 6 1 4 2 3 2 7 2 9 3 8 3 12 3 8 4 7 4 11 4 7 5 6 5 10 5 13 6 12 6 16 6 11 7 10 7 14 7 12 8 11 8 15 8 17 9 16 9 21 9 15 10 14 10 19 10 16 11 15 11 20 11 1 12 21 12 5 12 21 13 20 13 5 13 18 14 0 14 2 14 19 15 18 15 3 15 20 16 19 16 4 16 1 17 5 17 9 17 2 18 0 18 6 18 1 19 9 19 13 19 6 20 0 20 10 20 1 21 13 21 17 21 10 22 0 22 14 22 1 23 17 23 21 23 14 24 0 24 18 24 9 25 5 25 8 25 7 26 3 26 6 26 8 27 4 27 7 27 13 28 9 28 12 28 12 29 8 29 11 29 11 30 7 30 10 30 17 31 13 31 16 31 15 32 11 32 14 32 16 33 12 33 15 33 16 34 20 34 21 34 14 35 18 35 19 35 15 36 19 36 20 36 20 37 4 37 5 37 18 38 2 38 3 38 19 39 3 39 4 39</p>
+        </polylist>
+      </mesh>
+      <extra><technique profile="MAYA"><double_sided>1</double_sided></technique></extra>
+    </geometry>
+    <geometry id="Cube_001-mesh" name="Cube.001">
+      <mesh>
+        <source id="Cube_001-mesh-positions">
+          <float_array id="Cube_001-mesh-positions-array" count="24">-0.1933288 -0.1933288 -0.1933288 -0.1933288 0.1933288 -0.1933288 0.1933288 0.1933288 -0.1933288 0.1933288 -0.1933288 -0.1933288 -0.1933288 -0.1933288 0.1933288 -0.1933288 0.1933288 0.1933288 0.1933288 0.1933288 0.1933288 0.1933288 -0.1933288 0.1933288</float_array>
+          <technique_common>
+            <accessor source="#Cube_001-mesh-positions-array" count="8" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Cube_001-mesh-normals">
+          <float_array id="Cube_001-mesh-normals-array" count="36">-1 0 0 0 1 0 1 0 0 0 -1 0 0 0 -1 0 0 1 -1 0 0 0 1 0 1 0 0 0 -1 0 0 0 -1 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#Cube_001-mesh-normals-array" count="12" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Cube_001-mesh-vertices">
+          <input semantic="POSITION" source="#Cube_001-mesh-positions"/>
+        </vertices>
+        <polylist count="12">
+          <input semantic="VERTEX" source="#Cube_001-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Cube_001-mesh-normals" offset="1"/>
+          <vcount>3 3 3 3 3 3 3 3 3 3 3 3 </vcount>
+          <p>4 0 5 0 0 0 5 1 6 1 2 1 6 2 7 2 3 2 7 3 4 3 0 3 0 4 1 4 3 4 7 5 6 5 5 5 5 6 1 6 0 6 1 7 5 7 2 7 2 8 6 8 3 8 3 9 7 9 0 9 1 10 2 10 3 10 4 11 7 11 5 11</p>
+        </polylist>
+      </mesh>
+      <extra><technique profile="MAYA"><double_sided>1</double_sided></technique></extra>
+    </geometry>
+  </library_geometries>
+  <library_animations>
+    <animation id="Empty_rotation_euler_X">
+      <source id="Empty_rotation_euler_X-input">
+        <float_array id="Empty_rotation_euler_X-input-array" count="5">0.04166662 0.4166666 0.8333333 1.25 1.666667</float_array>
+        <technique_common>
+          <accessor source="#Empty_rotation_euler_X-input-array" count="5" stride="1">
+            <param name="TIME" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Empty_rotation_euler_X-output">
+        <float_array id="Empty_rotation_euler_X-output-array" count="5">0 0 0 0 0</float_array>
+        <technique_common>
+          <accessor source="#Empty_rotation_euler_X-output-array" count="5" stride="1">
+            <param name="ANGLE" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Empty_rotation_euler_X-interpolation">
+        <Name_array id="Empty_rotation_euler_X-interpolation-array" count="5">LINEAR LINEAR LINEAR LINEAR LINEAR</Name_array>
+        <technique_common>
+          <accessor source="#Empty_rotation_euler_X-interpolation-array" count="5" stride="1">
+            <param name="INTERPOLATION" type="name"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <sampler id="Empty_rotation_euler_X-sampler">
+        <input semantic="INPUT" source="#Empty_rotation_euler_X-input"/>
+        <input semantic="OUTPUT" source="#Empty_rotation_euler_X-output"/>
+        <input semantic="INTERPOLATION" source="#Empty_rotation_euler_X-interpolation"/>
+      </sampler>
+      <channel source="#Empty_rotation_euler_X-sampler" target="Empty/rotationX.ANGLE"/>
+    </animation>
+    <animation id="Empty_rotation_euler_Y">
+      <source id="Empty_rotation_euler_Y-input">
+        <float_array id="Empty_rotation_euler_Y-input-array" count="5">0.04166662 0.4166666 0.8333333 1.25 1.666667</float_array>
+        <technique_common>
+          <accessor source="#Empty_rotation_euler_Y-input-array" count="5" stride="1">
+            <param name="TIME" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Empty_rotation_euler_Y-output">
+        <float_array id="Empty_rotation_euler_Y-output-array" count="5">0 0 0 0 0</float_array>
+        <technique_common>
+          <accessor source="#Empty_rotation_euler_Y-output-array" count="5" stride="1">
+            <param name="ANGLE" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Empty_rotation_euler_Y-interpolation">
+        <Name_array id="Empty_rotation_euler_Y-interpolation-array" count="5">LINEAR LINEAR LINEAR LINEAR LINEAR</Name_array>
+        <technique_common>
+          <accessor source="#Empty_rotation_euler_Y-interpolation-array" count="5" stride="1">
+            <param name="INTERPOLATION" type="name"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <sampler id="Empty_rotation_euler_Y-sampler">
+        <input semantic="INPUT" source="#Empty_rotation_euler_Y-input"/>
+        <input semantic="OUTPUT" source="#Empty_rotation_euler_Y-output"/>
+        <input semantic="INTERPOLATION" source="#Empty_rotation_euler_Y-interpolation"/>
+      </sampler>
+      <channel source="#Empty_rotation_euler_Y-sampler" target="Empty/rotationY.ANGLE"/>
+    </animation>
+    <animation id="Empty_rotation_euler_Z">
+      <source id="Empty_rotation_euler_Z-input">
+        <float_array id="Empty_rotation_euler_Z-input-array" count="5">0.04166662 0.4166666 0.8333333 1.25 1.666667</float_array>
+        <technique_common>
+          <accessor source="#Empty_rotation_euler_Z-input-array" count="5" stride="1">
+            <param name="TIME" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Empty_rotation_euler_Z-output">
+        <float_array id="Empty_rotation_euler_Z-output-array" count="5">0 -90 -180 -270 -360</float_array>
+        <technique_common>
+          <accessor source="#Empty_rotation_euler_Z-output-array" count="5" stride="1">
+            <param name="ANGLE" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Empty_rotation_euler_Z-interpolation">
+        <Name_array id="Empty_rotation_euler_Z-interpolation-array" count="5">LINEAR LINEAR LINEAR LINEAR LINEAR</Name_array>
+        <technique_common>
+          <accessor source="#Empty_rotation_euler_Z-interpolation-array" count="5" stride="1">
+            <param name="INTERPOLATION" type="name"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <sampler id="Empty_rotation_euler_Z-sampler">
+        <input semantic="INPUT" source="#Empty_rotation_euler_Z-input"/>
+        <input semantic="OUTPUT" source="#Empty_rotation_euler_Z-output"/>
+        <input semantic="INTERPOLATION" source="#Empty_rotation_euler_Z-interpolation"/>
+      </sampler>
+      <channel source="#Empty_rotation_euler_Z-sampler" target="Empty/rotationZ.ANGLE"/>
+    </animation>
+  </library_animations>
+  <library_controllers/>
+  <library_visual_scenes>
+    <visual_scene id="Scene" name="Scene">
+      <node id="bounds" name="bounds" type="NODE">
+        <translate sid="location">-5.07567e-9 0 0</translate>
+        <rotate sid="rotationZ">0 0 1 0</rotate>
+        <rotate sid="rotationY">0 1 0 0</rotate>
+        <rotate sid="rotationX">1 0 0 0</rotate>
+        <scale sid="scale">1 1 1</scale>
+        <instance_geometry url="#Cube-mesh"/>
+      </node>
+      <node id="Empty" name="Empty" type="NODE">
+        <translate sid="location">-5.07567e-9 0 0</translate>
+        <rotate sid="rotationZ">0 0 1 -30</rotate>
+        <rotate sid="rotationY">0 1 0 0</rotate>
+        <rotate sid="rotationX">1 0 0 0</rotate>
+        <scale sid="scale">0.3530952 0.3530952 0.3530952</scale>
+      </node>
+      <node id="Core" name="Core" type="NODE">
+        <translate sid="location">-5.07567e-9 0 0</translate>
+        <rotate sid="rotationZ">0 0 1 0</rotate>
+        <rotate sid="rotationY">0 1 0 0</rotate>
+        <rotate sid="rotationX">1 0 0 0</rotate>
+        <scale sid="scale">1 1 1</scale>
+        <instance_geometry url="#Sphere-mesh">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="xa_notc_core_shapes_etherform_p1_mat1-material" target="#xa_notc_core_shapes_etherform_p1_mat1-material"/>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+      <node id="Halo" name="Halo" type="NODE">
+        <translate sid="location">-5.07567e-9 0 0</translate>
+        <rotate sid="rotationZ">0 0 1 0</rotate>
+        <rotate sid="rotationY">0 1 0 0</rotate>
+        <rotate sid="rotationX">1 0 0 0</rotate>
+        <scale sid="scale">1 1 1</scale>
+        <instance_geometry url="#Sphere_001-mesh">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="xa_notc_core_shapes_etherform_p1_mat2-material" target="#xa_notc_core_shapes_etherform_p1_mat2-material"/>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+      <node id="Collision-1" name="Collision-1" type="NODE">
+        <translate sid="location">-5.07567e-9 0 0</translate>
+        <rotate sid="rotationZ">0 0 1 0</rotate>
+        <rotate sid="rotationY">0 1 0 0</rotate>
+        <rotate sid="rotationX">1 0 0 0</rotate>
+        <scale sid="scale">1 1 1</scale>
+        <instance_geometry url="#Cube_001-mesh"/>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene"/>
+  </scene>
+</COLLADA>
