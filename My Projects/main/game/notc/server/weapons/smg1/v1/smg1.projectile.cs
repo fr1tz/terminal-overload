@@ -3,11 +3,11 @@
 
 datablock ShotgunProjectileData(WpnSMG1Projectile)
 {
-   projectileShapeName = "content/xa/notc/core/shapes/smg1/projectile/p1/shape.dae";
+   projectileShapeName = "content/xa/notc/core/shapes/smg1/projectile/p2/shape.dae";
 
    // ShotgunProjectileData fields
 	numBullets = 1;
-	range = 100;
+	range = 200;
 	muzzleSpreadRadius = 0.0;
 	referenceSpreadRadius = 0.0;
 	referenceSpreadDistance = 50;

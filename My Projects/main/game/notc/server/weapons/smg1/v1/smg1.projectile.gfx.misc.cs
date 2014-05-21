@@ -51,7 +51,7 @@ datablock LightDescription(WpnSMG1ProjectileLightDesc : BulletProjectileLightDes
 
 datablock DecalData(WpnSMG1ProjectileDecal)
 {
-   Material = "xa_notc_core_shapes_smg1_projectile_p1_decalmat";
+   Material = "xa_notc_core_shapes_smg1_projectile_p2_decalmat";
    size = "1";
    lifeSpan = "5000";
    randomize = "1";

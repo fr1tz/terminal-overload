@@ -136,16 +136,16 @@ function WpnSMG1Image::onMount(%this, %obj, %slot)
    Parent::onMount(%this, %obj, %slot);
 
    // Set up inaccuracy.
-   %obj.setImageInaccuracy(%slot, "radiusmin", 2.0);
+   %obj.setImageInaccuracy(%slot, "radiusmin", 1.0);
    %obj.setImageInaccuracy(%slot, "radiusmax", 20.0);
    %obj.setImageInaccuracy(%slot, "a1", 0.0);
    %obj.setImageInaccuracy(%slot, "a2", 0.0);
-   %obj.setImageInaccuracy(%slot, "b1", 0.95);
+   %obj.setImageInaccuracy(%slot, "b1", 0.90);
    %obj.setImageInaccuracy(%slot, "b2", 0.0);
    %obj.setImageInaccuracy(%slot, "c", 20.0);
    %obj.setImageInaccuracy(%slot, "d", 0.0);
    %obj.setImageInaccuracy(%slot, "f1", 1.00);
-   %obj.setImageInaccuracy(%slot, "f2", 1.80);
+   %obj.setImageInaccuracy(%slot, "f2", 2.50);
    %obj.setImageInaccuracy(%slot, "enabled", true);
 
    // Set up recoil.
