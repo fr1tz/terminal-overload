@@ -131,3 +131,17 @@ singleton Material(xa_rotc_hack_shapes_mat9)
    showFootprints = "0";
 };
 
+singleton Material(xa_rotc_hack_shapes_mat10)
+{
+   mapTo = "grid.bluegrey";
+   diffuseMap[0] = "content/xa/rotc/p.5.4/shapes/eth/grid.bluegrey.png";
+   glow[0] = "1";
+   doubleSided = "1";
+   castShadows = "0";
+   translucent = "1";
+   translucentBlendOp = "AddAlpha";
+   showFootprints = "0";
+   materialTag0 = "Miscellaneous";
+   diffuseColor[0] = "0.996078 0.996078 0.996078 1";
+};
+
