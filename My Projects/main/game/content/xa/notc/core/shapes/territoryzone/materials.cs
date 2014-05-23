@@ -1,7 +1,7 @@
 
 singleton Material(xa_notc_core_shapes_territoryzone_terrainmat)
 {
-   diffuseColor[0] = "0.482353 0.482353 0.482353 1";
+   diffuseColor[0] = "0.435294 0.435294 0.435294 1";
    diffuseColorPaletteSlot[0] = "0";
    doubleSided = "0";
    translucentBlendOp = "AddAlpha";
@@ -12,7 +12,7 @@ singleton Material(xa_notc_core_shapes_territoryzone_terrainmat)
    glow[0] = "0";
    emissive[0] = "1";
    materialTag0 = "Miscellaneous";
-   diffuseMap[0] = "content/xa/rotc/p.5.4/textures/rotc/zone.grid.png";
+   diffuseMap[0] = "content/xa/rotc/p.5.4/textures/rotc/zone.png";
    animFlags[0] = "0x00000009";
    scrollDir[0] = "1 1";
    scrollSpeed[0] = "0.471";
