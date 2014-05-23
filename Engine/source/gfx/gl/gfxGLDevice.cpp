@@ -114,6 +114,10 @@ void GFXGLDevice::initGLState()
 
    mSupportsAnisotropic = mCardProfiler->queryProfile( "GL::suppAnisotropic" );
 
+   String vendorStr = (const char*)glGetString( GL_VENDOR );
+   if( vendorStr.find("NVIDIA") != String::NPos)
+      mUseGlMap = false;
+
 #if TORQUE_DEBUG
    if( gglHasExtension(ARB_debug_output) )
    {
@@ -161,7 +165,8 @@ GFXGLDevice::GFXGLDevice(U32 adapterIndex) :
    mClip(0, 0, 0, 0),
    mCurrentShader( NULL ),
    mNeedUpdateVertexAttrib(false),
-   mWindowRT(NULL)
+   mWindowRT(NULL),
+   mUseGlMap(true)
 {
    for(int i = 0; i < VERTEX_STREAM_COUNT; ++i)
    {
@@ -491,7 +496,7 @@ inline void GFXGLDevice::preDrawPrimitive()
          if(mCurrentVB[i])
          {
             mCurrentVB[i]->prepare(i, mCurrentVB_Divisor[i]);    // GL_ARB_vertex_attrib_binding  
-            decl->prepareBuffer_old( i, mCurrentVB[i]->mBuffer, mCurrentVB_Divisor[i] ); // old vertex buffer/format
+            decl->prepareBuffer_old( i, mCurrentVB[i]->mBuffer, mCurrentVB[i]->mBufferOffset, mCurrentVB_Divisor[i] ); // old vertex buffer/format
          }
       }
 
