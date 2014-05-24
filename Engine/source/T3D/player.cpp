@@ -37,6 +37,7 @@
 #include "T3D/decal/decalManager.h"
 #include "T3D/decal/decalData.h"
 #include "materials/baseMatInstance.h"
+#include "NOTC/tacticalzone.h"
 
 #ifdef TORQUE_EXTENDED_MOVE
    #include "T3D/gameBase/extended/extendedMove.h"
@@ -95,12 +96,13 @@ static U32 sCollisionMoveMask =  TerrainObjectType       |
                                  VehicleObjectType       |
                                  PhysicalZoneObjectType;
 
-static U32 sServerCollisionContactMask = sCollisionMoveMask |
-                                         ItemObjectType     |
-                                         TriggerObjectType  |
+static U32 sServerCollisionContactMask = sCollisionMoveMask      |
+                                         ItemObjectType          |
+                                         TriggerObjectType       |
+                                         TacticalZoneObjectType  |
                                          CorpseObjectType;
 
-static U32 sClientCollisionContactMask = sCollisionMoveMask |
+static U32 sClientCollisionContactMask = sCollisionMoveMask      |
                                          TriggerObjectType;
 
 enum PlayerConstants {
@@ -5797,12 +5799,17 @@ void Player::findContact( bool *run, bool *jump, VectorF *contactNormal )
       if ( !( objectMask & filterMask ) )
          continue;
 
-      // Check: triggers, corpses and items...
+      // Check: triggers, tactical zones, corpses and items...
       //
       if (objectMask & TriggerObjectType)
       {
          Trigger* pTrigger = static_cast<Trigger*>( obj );
          pTrigger->potentialEnterObject(this);
+      }
+      else if (objectMask & TacticalZoneObjectType)
+      {
+         TacticalZone* pZone = static_cast<TacticalZone*>( obj );
+         pZone->potentialEnterObject(this);
       }
       else if (objectMask & CorpseObjectType)
       {

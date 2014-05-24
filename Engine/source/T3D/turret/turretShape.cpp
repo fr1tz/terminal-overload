@@ -27,8 +27,9 @@ const U32 sClientCollisionMask = (TerrainObjectType     |
 const U32 sServerCollisionMask = (sClientCollisionMask);
 
 // Trigger objects that are not normally collided with.
-static U32 sTriggerMask = ItemObjectType     |
-                          TriggerObjectType  |
+static U32 sTriggerMask = ItemObjectType         |
+                          TriggerObjectType      |
+                          TacticalZoneObjectType |
                           CorpseObjectType;
 
 //----------------------------------------------------------------------------

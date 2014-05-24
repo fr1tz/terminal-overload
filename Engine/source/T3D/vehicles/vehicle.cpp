@@ -27,6 +27,7 @@
 #include "gfx/primBuilder.h"
 #include "gfx/gfxDrawUtil.h"
 #include "materials/materialDefinition.h"
+#include "NOTC/tacticalzone.h"
 
 
 namespace {
@@ -55,8 +56,9 @@ static int sRestCount = 10;            // Consecutive ticks before comming to re
 } // namespace {}
 
 // Trigger objects that are not normally collided with.
-static U32 sTriggerMask = ItemObjectType     |
-                          TriggerObjectType  |
+static U32 sTriggerMask = ItemObjectType         |
+                          TriggerObjectType      |
+                          TacticalZoneObjectType |
                           CorpseObjectType;
 
 IMPLEMENT_CONOBJECT(VehicleData);
@@ -1542,11 +1544,15 @@ void Vehicle::findCallback(SceneObject* obj,void *key)
    Vehicle* vehicle = reinterpret_cast<Vehicle*>(key);
    U32 objectMask = obj->getTypeMask();
 
-   // Check: triggers, corpses and items, basically the same things
-   // that the player class checks for
+   // Check: triggers, tactical zones, corpses and items, basically
+   // the same things that the player class checks for
    if (objectMask & TriggerObjectType) {
       Trigger* pTrigger = static_cast<Trigger*>(obj);
       pTrigger->potentialEnterObject(vehicle);
+   }
+   else if (objectMask & TacticalZoneObjectType) {
+      TacticalZone* pZone = static_cast<TacticalZone*>(obj);
+      pZone->potentialEnterObject(vehicle);
    }
    else if (objectMask & CorpseObjectType) {
       ShapeBase* col = static_cast<ShapeBase*>(obj);

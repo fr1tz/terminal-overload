@@ -2115,9 +2115,10 @@ void ShapeBase::getCameraTransform(F32* pos,MatrixF* mat)
          getObjectMount()->disableCollision();
       RayInfo collision;
       if( mContainer && mContainer->castRay(sp, ep,
-                              (0xFFFFFFFF & ~(WaterObjectType      |
-                                              GameBaseObjectType   |
-                                              TriggerObjectType    |
+                              (0xFFFFFFFF & ~(WaterObjectType        |
+                                              GameBaseObjectType     |
+                                              TriggerObjectType      |
+                                              TacticalZoneObjectType |
                                               DefaultObjectType)),
                               &collision) == true) {
          F32 vecLenSq = vec.lenSquared();

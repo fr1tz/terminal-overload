@@ -4,6 +4,7 @@
 #include "T3D/shapeBase.h"
 #include "T3D/item.h"
 #include "T3D/trigger.h"
+#include "NOTC/tacticalzone.h"
 
 //----------------------------------------------------------------------------
 
@@ -23,6 +24,11 @@ void collisionFilter(SceneObject* object,void *key)
          // We've hit it's bounding box, that's close enough for triggers
          Trigger* pTrigger = static_cast<Trigger*>(object);
          pTrigger->potentialEnterObject(ptr);
+      }
+      else if (object->getTypeMask() & TacticalZoneObjectType) {
+         // We've hit it's bounding box, that's close enough for tactical zones
+         TacticalZone* pZone = static_cast<TacticalZone*>(object);
+         pZone->potentialEnterObject(ptr);
       }
       else
          if (object->getTypeMask() & CorpseObjectType)  {

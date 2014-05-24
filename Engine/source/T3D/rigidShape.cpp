@@ -28,6 +28,7 @@
 #include "sfx/sfxSystem.h"
 #include "T3D/fx/particleEmitter.h"
 #include "console/engineAPI.h"
+#include "NOTC/tacticalzone.h"
 
 
 IMPLEMENT_CO_DATABLOCK_V1(RigidShapeData);
@@ -196,9 +197,10 @@ namespace {
 
 
 // Trigger objects that are not normally collided with.
-static U32 sTriggerMask = ItemObjectType     |
-TriggerObjectType  |
-CorpseObjectType;
+static U32 sTriggerMask = ItemObjectType         |
+                          TriggerObjectType      |
+                          TacticalZoneObjectType |
+                          CorpseObjectType;
 
 
 //----------------------------------------------------------------------------
@@ -1374,11 +1376,15 @@ void RigidShape::findCallback(SceneObject* obj,void *key)
    RigidShape* shape = reinterpret_cast<RigidShape*>(key);
    U32 objectMask = obj->getTypeMask();
 
-   // Check: triggers, corpses and items, basically the same things
-   // that the player class checks for
+   // Check: triggers, tactical zones, corpses and items, basically
+   // the same things that the player class checks for
    if (objectMask & TriggerObjectType) {
       Trigger* pTrigger = static_cast<Trigger*>(obj);
       pTrigger->potentialEnterObject(shape);
+   }
+   else if (objectMask & TacticalZoneObjectType) {
+      TacticalZone* pZone = static_cast<TacticalZone*>(obj);
+      pZone->potentialEnterObject(shape);
    }
    else if (objectMask & CorpseObjectType) {
       ShapeBase* col = static_cast<ShapeBase*>(obj);
