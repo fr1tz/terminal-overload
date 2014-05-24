@@ -57,7 +57,7 @@ GFXGLPrimitiveBuffer::~GFXGLPrimitiveBuffer()
 {
 	// This is heavy handed, but it frees the buffer memory
    if( mBufferType != GFXBufferType::GFXBufferTypeVolatile )
-	   glDeleteBuffersARB(1, &mBuffer);
+	   glDeleteBuffers(1, &mBuffer);
    
    if( mZombieCache )
       delete [] mZombieCache;
