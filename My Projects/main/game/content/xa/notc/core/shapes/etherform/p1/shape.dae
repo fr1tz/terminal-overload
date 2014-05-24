@@ -5,8 +5,8 @@
       <author>Blender User</author>
       <authoring_tool>Blender 2.67.0 r57141</authoring_tool>
     </contributor>
-    <created>2014-05-21T12:55:27</created>
-    <modified>2014-05-21T12:55:27</modified>
+    <created>2014-05-24T08:45:35</created>
+    <modified>2014-05-24T08:45:35</modified>
     <unit name="meter" meter="1"/>
     <up_axis>Z_UP</up_axis>
   </asset>
@@ -362,6 +362,34 @@
         <rotate sid="rotationX">1 0 0 0</rotate>
         <scale sid="scale">1 1 1</scale>
         <instance_geometry url="#Cube_001-mesh"/>
+      </node>
+      <node id="Cam" name="Cam" type="NODE">
+        <translate sid="location">-5.07567e-9 -3 2.5</translate>
+        <rotate sid="rotationZ">0 0 1 0</rotate>
+        <rotate sid="rotationY">0 1 0 0</rotate>
+        <rotate sid="rotationX">1 0 0 0</rotate>
+        <scale sid="scale">0.2151724 0.2151724 0.2151724</scale>
+      </node>
+      <node id="Eye" name="Eye" type="NODE">
+        <translate sid="location">-5.07567e-9 0 0</translate>
+        <rotate sid="rotationZ">0 0 1 0</rotate>
+        <rotate sid="rotationY">0 1 0 0</rotate>
+        <rotate sid="rotationX">1 0 0 0</rotate>
+        <scale sid="scale">0.2151724 0.2151724 0.2151724</scale>
+      </node>
+      <node id="Contrail0" name="Contrail0" type="NODE">
+        <translate sid="location">-5.07567e-9 0 0</translate>
+        <rotate sid="rotationZ">0 0 1 0</rotate>
+        <rotate sid="rotationY">0 1 0 0</rotate>
+        <rotate sid="rotationX">1 0 0 0</rotate>
+        <scale sid="scale">0.2151724 0.2151724 0.2151724</scale>
+      </node>
+      <node id="LaserTrailNode0" name="LaserTrailNode0" type="NODE">
+        <translate sid="location">-5.07567e-9 0 0</translate>
+        <rotate sid="rotationZ">0 0 1 0</rotate>
+        <rotate sid="rotationY">0 1 0 0</rotate>
+        <rotate sid="rotationX">1 0 0 0</rotate>
+        <scale sid="scale">0.2151724 0.2151724 0.2151724</scale>
       </node>
     </visual_scene>
   </library_visual_scenes>
