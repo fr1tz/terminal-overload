@@ -23,6 +23,7 @@
 #include "T3D/fx/particleEmitter.h"
 #include "T3D/item.h"
 #include "ts/tsShapeInstance.h"
+#include "NOTC/tacticalzone.h"
 
 #define MaxPitch 1.3962
 #define EtherformRadius    0.05;
@@ -45,12 +46,13 @@ static U32 sCollisionMoveMask =  TerrainObjectType       |
                                  VehicleObjectType       |
                                  PhysicalZoneObjectType;
 
-static U32 sServerCollisionContactMask = sCollisionMoveMask |
-                                         ItemObjectType     |
-                                         TriggerObjectType  |
+static U32 sServerCollisionContactMask = sCollisionMoveMask      |
+                                         ItemObjectType          |
+                                         TriggerObjectType       |
+                                         TacticalZoneObjectType  |
                                          CorpseObjectType;
 
-static U32 sClientCollisionContactMask = sCollisionMoveMask |
+static U32 sClientCollisionContactMask = sCollisionMoveMask      |
                                          TriggerObjectType;
 
 //----------------------------------------------------------------------------
@@ -337,6 +339,8 @@ void Etherform::processTick(const Move* move)
          }
 
 			this->updateVelocity(move);
+         VectorF contactNormal(0,0,0);
+         this->findContact(&contactNormal );
 			this->updatePos();
 		}
 	}
@@ -795,12 +799,17 @@ void Etherform::findContact(VectorF *contactNormal)
       if ( !( objectMask & filterMask ) )
          continue;
 
-      // Check: triggers, corpses and items...
+      // Check: triggers, tactical zones, corpses and items...
       //
       if (objectMask & TriggerObjectType)
       {
          Trigger* pTrigger = static_cast<Trigger*>( obj );
          pTrigger->potentialEnterObject(this);
+      }
+      else if (objectMask & TacticalZoneObjectType)
+      {
+         TacticalZone* pZone = static_cast<TacticalZone*>( obj );
+         pZone->potentialEnterObject(this);
       }
       else if (objectMask & CorpseObjectType)
       {
@@ -999,26 +1008,21 @@ void Etherform::updateVelocity(const Move* move)
 		mObjToWorld.getColumn(3,&pos);
 		// sideways...
 		mObjToWorld.getColumn(0,&vec);
-		vec.z = 0; vec.normalize();
 		acc += vec * move->x * TickSec * scale;
 		// forward/backward...
 		mObjToWorld.getColumn(1,&vec);
-		vec.z = 0; vec.normalize();
 		acc += vec * move->y * TickSec * scale;
 		// up/down...
 		mObjToWorld.getColumn(2,&vec);
-		vec.set(0, 0, 1); vec.normalize();
 		acc += vec * move->trigger[2] * TickSec * scale;
 		vec.neg();
-		acc += vec * move->trigger[3] * TickSec * scale;
+		acc += vec * move->trigger[6] * TickSec * scale;
 
 		// Ignore force from physical zones...
 		// acc += (mAppliedForce / mMass) * TickSec;
 
 		mVelocity += acc;
 		mVelocity -= mVelocity * mDrag * TickSec; // drag
-		if(move->trigger[1])
-			mVelocity *= 0.5;
 
 		setMaskBits(MoveMask);
 	}
