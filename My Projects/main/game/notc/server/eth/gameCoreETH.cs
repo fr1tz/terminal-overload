@@ -76,6 +76,7 @@ function GameCoreETH::prepareClient(%game, %client)
             "xa/notc/core/client/audio/Hearing/v1/exec.cs" TAB
             "xa/notc/core/client/audio/HitSound/v1/exec.cs" TAB
             "xa/notc/core/client/gui/CatGui/v1/exec.cs" TAB
+            "xa/notc/core/client/gui/EtherformGui/v1/exec.cs" TAB
             "xa/notc/core/client/gui/ChatHud/v1/exec.cs" TAB
             "xa/notc/core/client/gui/GuiChanger/v1/exec.cs" TAB
             "xa/notc/core/client/gui/MiscHud/v1/exec.cs" TAB
@@ -173,6 +174,8 @@ function GameCoreETH::loadOut(%game, %player)
    %player.setInventory(ItemLauncher, 1);
    
    %player.setInventory(WpnSMG1, 1);
+   %player.setInventory(WpnMGL1, 1);
+   %player.setInventory(WpnMGL1Ammo, 9999);
 
    if (%player.getDatablock().mainWeapon.image !$= "")
       %player.mountImage(%player.getDatablock().mainWeapon.image, 0);

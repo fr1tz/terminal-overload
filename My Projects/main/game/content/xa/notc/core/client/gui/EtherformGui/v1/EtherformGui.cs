@@ -1,7 +1,7 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
-function CatGui::onWake(%this)
+function EtherformGui::onWake(%this)
 {
    // Turn off any shell sounds...
    // sfxStop( ... );
@@ -18,7 +18,7 @@ function CatGui::onWake(%this)
    }      
    
    // just update the action map here
-   XaNotc1CatMoveMap_activate();
+   XaNotc1EthernetMoveMap_activate();
    
    // Start tick thread.
    %this.tickThread();
@@ -30,7 +30,7 @@ function CatGui::onWake(%this)
       schedule(0, 0, "refreshBottomTextCtrl");
 }
 
-function CatGui::onSleep(%this)
+function EtherformGui::onSleep(%this)
 {
    if ( isObject( MainChatHud ) )
       Canvas.popDialog( MainChatHud );
@@ -39,7 +39,7 @@ function CatGui::onSleep(%this)
    //XaNotc1CatMoveMap.pop();
 }
 
-function CatGui::clearHud( %this )
+function EtherformGui::clearHud( %this )
 {
    Canvas.popDialog( MainChatHud );
 
@@ -47,7 +47,7 @@ function CatGui::clearHud( %this )
       %this.getObject( 0 ).delete();
 }
 
-function CatGui::tickThread(%this)
+function EtherformGui::tickThread(%this)
 {
    if(%this.zTickThread !$= "")
    {
@@ -63,38 +63,7 @@ function CatGui::tickThread(%this)
    if(!isObject(%control))
       return;
       
-   CatGuiDamageBufferText.setText(%control.getDamageBufferLevel());
-   CatGuiMassText.setText(%control.getMass());
-   %image = %control.getMountedImage(0);
-   if(isObject(%image))
-   {
-      if(%image.ammoSource $= "Energy")
-         CatGuiAmmoText.setText("-");
-      else
-         CatGuiAmmoText.setText(%control.getImageMagazineRounds(0));
-   }
-   else
-      CatGuiAmmoText.setText("");
-      
-   %impshield = -1;
-   %n = 0;
-   if(%control.isMethod("getMountedObjectCount"))
-      %n = %control.getMountedObjectCount();
-
-   for(%i = 0; %i < %n; %i++)
-   {
-      %obj = %control.getMountedObject(%i);
-      if(isObject(%obj))
-      {
-         if(%obj.getDataBlock().getName() $= "ItemImpShieldShape")
-            %impshield = %obj;
-      }
-   }
-
-   if(isObject(%impshield))
-      CatGuiImpShield.setValue(%impshield.getLevel());
-   else
-      CatGuiImpShield.setValue(0);
+   EtherformGuiDamageBufferText.setText(%control.getDamageBufferLevel());
 }
 
 //-----------------------------------------------------------------------------

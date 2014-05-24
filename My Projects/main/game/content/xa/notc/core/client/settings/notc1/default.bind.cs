@@ -5,6 +5,12 @@ if ( isObject( XaNotc1CatMoveMap ) )
    XaNotc1CatMoveMap.delete();
 new ActionMap(XaNotc1CatMoveMap);
 
+$mvTriggerCount5 = true; // sprint by default
+
+function XaNotc1CatMoveMap_activate()
+{
+   XaNotc1CatMoveMap.push();
+}
 
 //------------------------------------------------------------------------------
 // Non-remapable binds
@@ -267,8 +273,6 @@ XaNotc1CatMoveMap.bindCmd(gamepad, dpadr, "toggleLightSpecularViz();", "");
 // Stance/pose
 // ----------------------------------------------------------------------------
 
-$mvTriggerCount5 = true; // sprint by default
-
 function doCrouch(%val)
 {
    $mvTriggerCount3++;
@@ -286,7 +290,7 @@ function doWalk(%val)
 
 function doSlide(%val)
 {
-   $mvTriggerCount6++;
+   $mvTriggerCount6 = %val;
 }
 
 XaNotc1CatMoveMap.bind(keyboard, lshift, doWalk);
