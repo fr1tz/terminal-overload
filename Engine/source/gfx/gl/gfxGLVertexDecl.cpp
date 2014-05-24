@@ -31,7 +31,7 @@ void GFXGLVertexDecl::prepareVertexFormat() const
    }
 }
 
-void GFXGLVertexDecl::prepareBuffer_old(U32 stream, GLint mBuffer, GLint mDivisor) const
+void GFXGLVertexDecl::prepareBuffer_old(U32 stream, GLint mBuffer, U32 bufferStart, GLint mDivisor) const
 {
    PROFILE_SCOPE(GFXGLVertexDecl_prepare);
    AssertFatal(mFormat, "GFXGLVertexDecl - Not inited");
@@ -58,7 +58,7 @@ void GFXGLVertexDecl::prepareBuffer_old(U32 stream, GLint mBuffer, GLint mDiviso
          e.type,           // the type of each element
          e.normalized,     // take our values as-is
          e.stride,         // stride between each position
-         e.pointerFirst    // offset of first element
+         (U8*)(e.pointerFirst) + bufferStart    // offset of first element
       );
       glVertexAttribDivisor( e.attrIndex, mDivisor );
    }

@@ -8,11 +8,24 @@
 #include "gfx/gl/tGL/tGL.h"
 #include "gfx/gl/gfxGLUtils.h"
 
+#include "gfx/gl/gfxGLCircularVolatileBuffer.h"
+
+GLCircularVolatileBuffer* getCircularVolatileIndexBuffer()
+{
+   static GLCircularVolatileBuffer sCircularVolatileIndexBuffer(GL_ELEMENT_ARRAY_BUFFER);
+   return &sCircularVolatileIndexBuffer;
+}
+
 GFXGLPrimitiveBuffer::GFXGLPrimitiveBuffer(GFXDevice *device, U32 indexCount, U32 primitiveCount, GFXBufferType bufferType) :
    GFXPrimitiveBuffer(device, indexCount, primitiveCount, bufferType), mZombieCache(NULL),
-   mFrameAllocatorMark(0),
-   mFrameAllocatorPtr(NULL)
+   mBufferOffset(0)
 {
+   if( mBufferType == GFXBufferType::GFXBufferTypeVolatile )
+   {
+      mBuffer = getCircularVolatileIndexBuffer()->getHandle();
+      return;
+   }
+
    // Generate a buffer and allocate the needed memory
    glGenBuffers(1, &mBuffer);
    
@@ -24,7 +37,8 @@ GFXGLPrimitiveBuffer::GFXGLPrimitiveBuffer(GFXDevice *device, U32 indexCount, U3
 GFXGLPrimitiveBuffer::~GFXGLPrimitiveBuffer()
 {
 	// This is heavy handed, but it frees the buffer memory
-	glDeleteBuffersARB(1, &mBuffer);
+   if( mBufferType != GFXBufferType::GFXBufferTypeVolatile )
+	   glDeleteBuffersARB(1, &mBuffer);
    
    if( mZombieCache )
       delete [] mZombieCache;
@@ -32,43 +46,51 @@ GFXGLPrimitiveBuffer::~GFXGLPrimitiveBuffer()
 
 void GFXGLPrimitiveBuffer::lock(U32 indexStart, U32 indexEnd, void **indexPtr)
 {
-   AssertFatal(!mFrameAllocatorMark && !mFrameAllocatorPtr, "");
-   mFrameAllocatorMark = FrameAllocator::getWaterMark();
-   mFrameAllocatorPtr = (U8*)FrameAllocator::alloc( mIndexCount * sizeof(U16) );
-#if TORQUE_DEBUG
-   mFrameAllocatorMarkGuard = FrameAllocator::getWaterMark();
-#endif
+   if( mBufferType == GFXBufferType::GFXBufferTypeVolatile )
+   {
+      AssertFatal(indexStart == 0, "");
+      getCircularVolatileIndexBuffer()->lock( mIndexCount * sizeof(U16), mBufferOffset, *indexPtr );
+   }
+   else
+   {
+      mFrameAllocator.lock( mIndexCount * sizeof(U16) );
+
+      *indexPtr = (void*)(mFrameAllocator.getlockedPtr() + (indexStart * sizeof(U16)) );
+   }
 
    lockedIndexStart = indexStart;
    lockedIndexEnd = indexEnd;
-
-   *indexPtr = (void*)(mFrameAllocatorPtr + (indexStart * sizeof(U16)) );
 }
 
 void GFXGLPrimitiveBuffer::unlock()
 {
    PROFILE_SCOPE(GFXGLPrimitiveBuffer_unlock);
-   
-   U32 offset = lockedIndexStart * sizeof(U16);
-   U32 length = (lockedIndexEnd - lockedIndexStart) * sizeof(U16);
-   
-   // Preserve previous binding
-   PRESERVE_INDEX_BUFFER();
-   
-   // Bind ourselves
-   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mBuffer);
 
-   if( !lockedIndexStart && lockedIndexEnd == mIndexCount)
-      glBufferData(GL_ELEMENT_ARRAY_BUFFER, mIndexCount * sizeof(U16), NULL, GFXGLBufferType[mBufferType]); // orphan the buffer
-
-   glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, offset, length, mFrameAllocatorPtr + offset );
+   if( mBufferType == GFXBufferType::GFXBufferTypeVolatile )
+   {
+      getCircularVolatileIndexBuffer()->unlock();
+   }
+   else
+   {   
+      U32 offset = lockedIndexStart * sizeof(U16);
+      U32 length = (lockedIndexEnd - lockedIndexStart) * sizeof(U16);
    
-#if TORQUE_DEBUG
-   AssertFatal(mFrameAllocatorMarkGuard == FrameAllocator::getWaterMark(), "");
-#endif
-   FrameAllocator::setWaterMark(mFrameAllocatorMark);
-   mFrameAllocatorMark = 0;
-   mFrameAllocatorPtr = NULL;
+      // Preserve previous binding
+      PRESERVE_INDEX_BUFFER();
+   
+      // Bind ourselves
+      glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mBuffer);
+
+      if( !lockedIndexStart && lockedIndexEnd == mIndexCount)
+         glBufferData(GL_ELEMENT_ARRAY_BUFFER, mIndexCount * sizeof(U16), NULL, GFXGLBufferType[mBufferType]); // orphan the buffer
+
+      glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, offset, length, mFrameAllocator.getlockedPtr() + offset );
+   
+      mFrameAllocator.unlock();
+   }
+
+   lockedIndexStart = 0;
+   lockedIndexEnd = 0;
 }
 
 void GFXGLPrimitiveBuffer::prepare()
@@ -89,7 +111,7 @@ void GFXGLPrimitiveBuffer::finish()
 GLvoid* GFXGLPrimitiveBuffer::getBuffer()
 {
 	// NULL specifies no offset into the hardware buffer
-	return (GLvoid*)NULL;
+   return (GLvoid*)mBufferOffset;
 }
 
 void GFXGLPrimitiveBuffer::zombify()
@@ -117,4 +139,20 @@ void GFXGLPrimitiveBuffer::resurrect()
    
    delete[] mZombieCache;
    mZombieCache = NULL;
+}
+
+namespace
+{
+   bool onGFXDeviceSignal( GFXDevice::GFXDeviceEventType type )
+   {
+      if( GFXDevice::deEndOfFrame == type )
+         getCircularVolatileIndexBuffer()->protectUsedRange();
+
+      return true;
+   }
+}
+
+AFTER_MODULE_INIT( GFX )
+{
+   GFXDevice::getDeviceEventSignal().notify( &onGFXDeviceSignal );
 }

@@ -123,6 +123,8 @@ public:
 
    /// Returns the number of vertex streams supported by the device.	
    const U32 getNumVertexStreams() const { return mNumVertexStream; }
+
+   bool glUseMap() const { return mUseGlMap; }   
       
 protected:   
    /// Called by GFXDevice to create a device specific stateblock
@@ -232,6 +234,8 @@ private:
    GFXGLStateCache *mOpenglStateCache;
 
    GFXWindowTargetRef *mWindowRT;
+
+   bool mUseGlMap;
 };
 
 #define GFXGL static_cast<GFXGLDevice*>(GFXDevice::get())

@@ -5,6 +5,7 @@
 #define _GFXGLPRIMITIVEBUFFER_H_
 
 #include "gfx/gfxPrimitiveBuffer.h"
+#include "gfx/gl/util/glFrameAllocatorLockableHelper.h"
 
 /// This is a primitive buffer (index buffer to GL users) which uses VBOs.
 class GFXGLPrimitiveBuffer : public GFXPrimitiveBuffer
@@ -27,16 +28,12 @@ public:
 private:
 	/// Handle to our GL buffer object
 	GLuint mBuffer;
+   U32 mBufferOffset;
    U8* mZombieCache;
 
    U32 lockedIndexEnd, lockedIndexStart;
 
-   //FrameAllocator
-   U32 mFrameAllocatorMark;
-#if TORQUE_DEBUG
-   U32 mFrameAllocatorMarkGuard;
-#endif
-   U8 *mFrameAllocatorPtr;
+   FrameAllocatorLockableHelper mFrameAllocator;
 };
 
 #endif
