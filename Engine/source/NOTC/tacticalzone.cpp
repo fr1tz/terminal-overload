@@ -343,27 +343,7 @@ void TacticalZone::consoleInit()
 
 void TacticalZone::computePolys()
 {
-	// create polyhedron from bounding box...
-	MatrixF imat(true);
-	Polyhedron tempPolyhedron;
-	tempPolyhedron.buildBox(imat,mObjBox);
-
-	// setup mClippedList...
-	mClippedList.clear();
-	mClippedList.mPlaneList = tempPolyhedron.planeList;
-	MatrixF base(true);
-	base.scale(Point3F(1.0/mObjScale.x, 1.0/mObjScale.y, 1.0/mObjScale.z));
-	base.mul(mWorldToObj);
-	mClippedList.setBaseTransform(base);
-
-	if(isServerObject())
-		return;
-
-	//
-	// compute render stuff...
-	//
-
-	// compute world coordinates of points...
+	// Compute world coordinates of points.
 	MatrixF mat(getTransform());
 	Point3F pos = mat.getPosition();
 	Point3F x; mat.getColumn(0,&x); x.normalize(); x *= mObjScale.x;
@@ -372,7 +352,7 @@ void TacticalZone::computePolys()
 	for(U32 i = 0; i < 8; i++)
 		mPoints[i] = pos + x*cubePoints[i].x + y*cubePoints[i].y + z*cubePoints[i].z;
 
-	// compute world coordinates of faces...
+	// Compute world coordinates of faces.
 	Point3F vec;
 	for(U32 i = 0; i < 6; i++)
 	{
@@ -382,6 +362,23 @@ void TacticalZone::computePolys()
 		mFaces[i].center = pos + vec*mObjScale[index];
 		mFaces[i].plane.set(mFaces[i].center, vec);
 	}
+
+	// Setup mClippedList.
+	mClippedList.clear();
+	mClippedList.mPlaneList.setSize(6);
+	mClippedList.mPlaneList[0] = mFaces[0].plane;
+	mClippedList.mPlaneList[1] = mFaces[1].plane;
+	mClippedList.mPlaneList[2] = mFaces[2].plane;
+	mClippedList.mPlaneList[3] = mFaces[3].plane;
+	mClippedList.mPlaneList[4] = mFaces[4].plane;
+	mClippedList.mPlaneList[5] = mFaces[5].plane;
+
+	if(isServerObject())
+		return;
+
+	//
+	// compute render stuff...
+	//
 
 	// compute the clipping planes that define the start of the border
 	for(U32 i = 0; i < 6; i++)
