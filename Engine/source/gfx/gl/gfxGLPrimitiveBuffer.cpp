@@ -68,7 +68,7 @@ void GFXGLPrimitiveBuffer::lock(U32 indexStart, U32 indexEnd, void **indexPtr)
    if( mBufferType == GFXBufferType::GFXBufferTypeVolatile )
    {
       AssertFatal(indexStart == 0, "");
-      getCircularVolatileIndexBuffer()->lock( mIndexCount * sizeof(U16), mBufferOffset, *indexPtr );
+      getCircularVolatileIndexBuffer()->lock( mIndexCount * sizeof(U16), 0, mBufferOffset, *indexPtr );
    }
    else
    {

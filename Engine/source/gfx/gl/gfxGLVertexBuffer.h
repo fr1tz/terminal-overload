@@ -58,7 +58,13 @@ public:
 private:
    friend class GFXGLDevice;
 	/// GL buffer handle
-	GLuint mBuffer, mBufferOffset;
+	GLuint mBuffer;
+
+    /// bytes offset in buffer 
+	U32 mBufferOffset;
+
+	/// start vertex offset in buffer
+	U32 mBufferVertexOffset;
    U8* mZombieCache;
 
    FrameAllocatorLockableHelper mFrameAllocator;
