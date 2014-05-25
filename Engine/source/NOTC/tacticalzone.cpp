@@ -188,16 +188,16 @@ void TacticalZoneData::packData(BitStream* stream)
 		}
 	}
 
-	stream->write(terrainMaterialString);	
-	stream->write(borderMaterialString);	
-   stream->write(otherMaterialString);	
+	stream->write(terrainMaterialString);
+	stream->write(borderMaterialString);
+   stream->write(otherMaterialString);
 }
 
 void TacticalZoneData::unpackData(BitStream* stream)
 {
    Parent::unpackData(stream);
    stream->read(&tickPeriodMS);
-   stream->read(&colorChangeTimeMS);	
+   stream->read(&colorChangeTimeMS);
 
 	for(int i = 0; i < MaxColors; i++)
 	{
@@ -210,9 +210,9 @@ void TacticalZoneData::unpackData(BitStream* stream)
 		}
 	}
 
-	stream->read(&terrainMaterialString);	
-	stream->read(&borderMaterialString);	
-   stream->read(&otherMaterialString);	
+	stream->read(&terrainMaterialString);
+	stream->read(&borderMaterialString);
+   stream->read(&otherMaterialString);
 }
 
 bool TacticalZoneData::preload(bool server, String &errorStr)
@@ -578,7 +578,7 @@ static inline F32 getTerrainHeight(TerrainBlock* terrain, Point2F pos)
     pos -= Point2F(offset.x, offset.y);
 	if(terrain->getHeight(pos, &height))
 		return height;
-	else 
+	else
 		return 0;
 }
 
@@ -599,7 +599,7 @@ static inline TexturedPolyList::Vertex createTerrainVertex(TerrainBlock* terrain
 	TexturedPolyList::Vertex vert;
 	vert.point.x = pos.x;
 	vert.point.y = pos.y;
-	getTerrainHeightAndNormal(terrain, 
+	getTerrainHeightAndNormal(terrain,
 		Point2F(vert.point.x, vert.point.y),
 		&vert.point.z,
 		&vert.normal);
@@ -676,7 +676,7 @@ void TacticalZone::computeGrid()
 
 	mTerrainGridLines.reserve(numLinesX * numLinesY);
 	for(int i = 0; i <= 1; i++)
-	{	
+	{
 		for(int j = 0; j < gridLines[i].size(); j++)
 		{
 			Line* line = gridLines[i][j];
@@ -707,12 +707,12 @@ void TacticalZone::computeGrid()
 				}
 			}
 
-			U32 lineDirection = i;			
+			U32 lineDirection = i;
 			mTerrainGridLines.push_back(lineDirection);
 			mTerrainGridLines.push_back(0);
 			U32 numVerticesIdx = mTerrainGridLines.size() - 1;
 
-			// 
+			//
 			F32 pos = minPos;
 			{
 				Point2F point;
@@ -817,7 +817,7 @@ void TacticalZone::computeGrid()
 			vertex.peakness[lineDirection] += vertex.point.z - p1.z;
 			vertex.peakness[lineDirection] += vertex.point.z - p2.z;
 		}
-			
+
 		i += numVertices;
 	}
 
@@ -1009,7 +1009,7 @@ ColorF TacticalZone::getZoneColor()
 {
 	ColorF color;
 
-	color.interpolate(mDataBlock->colors[mColor1], 
+	color.interpolate(mDataBlock->colors[mColor1],
 		mDataBlock->colors[mColor2], mFactor);
 
 	return color;
@@ -1141,11 +1141,12 @@ void TacticalZone::advanceTime(F32 dt)
 //--------------------------------------------------------------------------
 
 void TacticalZone::createRenderDataTriangles(TexturedPolyList* src, RenderData* dst)
-{  
-   U16 numVerts = 0;
-   U16 numPrims = 0;
+{
+   dst->primType = GFXTriangleList;
+   dst->numVerts = 0;
+   dst->numPrims = 0;
 
-   // 
+   //
    Vector<U32> vertIdxBuf;
    TexturedPolyList::Poly* p;
    for(p = src->mPolyList.begin(); p < src->mPolyList.end(); p++)
@@ -1159,7 +1160,7 @@ void TacticalZone::createRenderDataTriangles(TexturedPolyList* src, RenderData* 
          vertIdxBuf.push_back(idx1);
          vertIdxBuf.push_back(idx2);
          vertIdxBuf.push_back(idx3);
-         numPrims++;
+         dst->numPrims++;
       }
 
       if(p->vertexCount == 4)
@@ -1172,12 +1173,12 @@ void TacticalZone::createRenderDataTriangles(TexturedPolyList* src, RenderData* 
          vertIdxBuf.push_back(idx1);
          vertIdxBuf.push_back(idx2);
          vertIdxBuf.push_back(idx3);
-         numPrims++;
+         dst->numPrims++;
 
          vertIdxBuf.push_back(idx3);
          vertIdxBuf.push_back(idx4);
          vertIdxBuf.push_back(idx1);
-         numPrims++;
+         dst->numPrims++;
       }
 
       if(p->vertexCount == 5)
@@ -1191,27 +1192,27 @@ void TacticalZone::createRenderDataTriangles(TexturedPolyList* src, RenderData* 
          vertIdxBuf.push_back(idx1);
          vertIdxBuf.push_back(idx2);
          vertIdxBuf.push_back(idx3);
-         numPrims++;
+         dst->numPrims++;
 
          vertIdxBuf.push_back(idx3);
          vertIdxBuf.push_back(idx4);
          vertIdxBuf.push_back(idx5);
-         numPrims++;
+         dst->numPrims++;
 
          vertIdxBuf.push_back(idx1);
          vertIdxBuf.push_back(idx3);
          vertIdxBuf.push_back(idx5);
-         numPrims++;
+         dst->numPrims++;
       }
    }
 
    // Fill the vertex buffer.
-   numVerts = vertIdxBuf.size();
-   if(numVerts == 0)
-      goto done;
-   dst->vertBuf.set(GFX, numVerts, GFXBufferTypeStatic );
+   dst->numVerts = vertIdxBuf.size();
+   if(dst->numVerts == 0)
+      return;
+   dst->vertBuf.set(GFX, dst->numVerts, GFXBufferTypeStatic );
    VertexType* pVert = dst->vertBuf.lock();
-   for(U16 i = 0; i < numVerts; i++)
+   for(U16 i = 0; i < dst->numVerts; i++)
    {
       U32 idx = vertIdxBuf[i];
       pVert[i].point    = src->mVertexList[idx].point;
@@ -1221,26 +1222,22 @@ void TacticalZone::createRenderDataTriangles(TexturedPolyList* src, RenderData* 
    dst->vertBuf.unlock();
 
    // Fill the primitive buffer.
-   if(numPrims == 0)
-      goto done;
-   dst->primBuf.set( GFX, numVerts, numPrims, GFXBufferTypeStatic );
-   U16 *pIdx = NULL; dst->primBuf.lock(&pIdx);     
-   for(U16 i = 0; i < numVerts; i++)
+   if(dst->numPrims == 0)
+      return;
+   dst->primBuf.set( GFX, dst->numVerts, dst->numPrims, GFXBufferTypeStatic );
+   U16 *pIdx = NULL; dst->primBuf.lock(&pIdx);
+   for(U16 i = 0; i < dst->numVerts; i++)
       pIdx[i] = i;
    dst->primBuf.unlock();
-
- done:
-   dst->numVerts = numPrims;
-   dst->numPrims = numPrims;
-   dst->primType = GFXTriangleList;
 }
 
 void TacticalZone::createRenderDataLines(TexturedPolyList* src, RenderData* dst)
-{  
-   U16 numVerts = 0;
-   U16 numPrims = 0;
+{
+   dst->primType = GFXLineList;
+   dst->numVerts = 0;
+   dst->numPrims = 0;
 
-   // 
+   //
    Vector<U32> vertIdxBuf;
    TexturedPolyList::Poly* p;
    for(p = src->mPolyList.begin(); p < src->mPolyList.end(); p++)
@@ -1253,15 +1250,15 @@ void TacticalZone::createRenderDataLines(TexturedPolyList* src, RenderData* dst)
 
          vertIdxBuf.push_back(idx1);
          vertIdxBuf.push_back(idx2);
-         numPrims++;
+         dst->numPrims++;
 
          vertIdxBuf.push_back(idx2);
          vertIdxBuf.push_back(idx3);
-         numPrims++;
+         dst->numPrims++;
 
          vertIdxBuf.push_back(idx3);
          vertIdxBuf.push_back(idx1);
-         numPrims++;
+         dst->numPrims++;
       }
 
       if(p->vertexCount == 4)
@@ -1273,19 +1270,19 @@ void TacticalZone::createRenderDataLines(TexturedPolyList* src, RenderData* dst)
 
          vertIdxBuf.push_back(idx1);
          vertIdxBuf.push_back(idx2);
-         numPrims++;
+         dst->numPrims++;
 
          vertIdxBuf.push_back(idx2);
          vertIdxBuf.push_back(idx3);
-         numPrims++;
+         dst->numPrims++;
 
          vertIdxBuf.push_back(idx3);
          vertIdxBuf.push_back(idx4);
-         numPrims++;
+         dst->numPrims++;
 
          vertIdxBuf.push_back(idx4);
          vertIdxBuf.push_back(idx1);
-         numPrims++;
+         dst->numPrims++;
       }
 
       if(p->vertexCount == 5)
@@ -1298,33 +1295,33 @@ void TacticalZone::createRenderDataLines(TexturedPolyList* src, RenderData* dst)
 
          vertIdxBuf.push_back(idx1);
          vertIdxBuf.push_back(idx2);
-         numPrims++;
+         dst->numPrims++;
 
          vertIdxBuf.push_back(idx2);
          vertIdxBuf.push_back(idx3);
-         numPrims++;
+         dst->numPrims++;
 
          vertIdxBuf.push_back(idx3);
          vertIdxBuf.push_back(idx4);
-         numPrims++;
+         dst->numPrims++;
 
          vertIdxBuf.push_back(idx4);
          vertIdxBuf.push_back(idx5);
-         numPrims++;
+         dst->numPrims++;
 
          vertIdxBuf.push_back(idx5);
          vertIdxBuf.push_back(idx1);
-         numPrims++;
+         dst->numPrims++;
       }
    }
 
    // Fill the vertex buffer.
-   numVerts = vertIdxBuf.size();
-   if(numVerts == 0)
-      goto done;
-   dst->vertBuf.set(GFX, numVerts, GFXBufferTypeStatic );
+   dst->numVerts = vertIdxBuf.size();
+   if(dst->numVerts == 0)
+      return;
+   dst->vertBuf.set(GFX, dst->numVerts, GFXBufferTypeStatic );
    VertexType* pVert = dst->vertBuf.lock();
-   for(U16 i = 0; i < numVerts; i++)
+   for(U16 i = 0; i < dst->numVerts; i++)
    {
       U32 idx = vertIdxBuf[i];
       pVert[i].point    = src->mVertexList[idx].point;
@@ -1334,18 +1331,13 @@ void TacticalZone::createRenderDataLines(TexturedPolyList* src, RenderData* dst)
    dst->vertBuf.unlock();
 
    // Fill the primitive buffer.
-   if(numPrims == 0)
-      goto done;
-   dst->primBuf.set( GFX, numVerts, numPrims, GFXBufferTypeStatic );
-   U16 *pIdx = NULL; dst->primBuf.lock(&pIdx);     
-   for(U16 i = 0; i < numVerts; i++)
+   if(dst->numPrims == 0)
+      return;
+   dst->primBuf.set( GFX, dst->numVerts, dst->numPrims, GFXBufferTypeStatic );
+   U16 *pIdx = NULL; dst->primBuf.lock(&pIdx);
+   for(U16 i = 0; i < dst->numVerts; i++)
       pIdx[i] = i;
    dst->primBuf.unlock();
-
- done:
-   dst->numVerts = numPrims;
-   dst->numPrims = numPrims;
-   dst->primType = GFXLineList;
 }
 
 //--------------------------------------------------------------------------
@@ -1395,7 +1387,7 @@ void TacticalZone::prepRenderImage(SceneRenderState* state)
       if(!matInst)
          continue;
 
-      // If we don't have a material instance after the override then 
+      // If we don't have a material instance after the override then
       // we can skip rendering all together.
       matInst = state->getOverrideMaterial(matInst);
       if(!matInst)
@@ -1422,9 +1414,9 @@ void TacticalZone::prepRenderImage(SceneRenderState* state)
       {
          // Calculate our sort point manually.
          const Box3F& rBox = getRenderWorldBox();
-         ri->sortDistSq = rBox.getSqDistanceToPoint( state->getCameraPosition() );      
-      } 
-      else 
+         ri->sortDistSq = rBox.getSqDistanceToPoint( state->getCameraPosition() );
+      }
+      else
          ri->sortDistSq = 0.0f;
 
       // Set up our transforms
@@ -1437,11 +1429,11 @@ void TacticalZone::prepRenderImage(SceneRenderState* state)
       ri->worldToCamera = renderPass->allocSharedXform(RenderPassManager::View);
 
       //ri->projection = renderPass->allocSharedXform(RenderPassManager::Projection);
-      MatrixF *tempMat = renderPass->allocUniqueXform( MatrixF( true ) );   
+      MatrixF *tempMat = renderPass->allocUniqueXform( MatrixF( true ) );
       MathUtils::getZBiasProjectionMatrix( gDecalBias, frustum, tempMat );
       ri->projection = tempMat;
 
-	   // If our material needs lights then fill the RIs 
+	   // If our material needs lights then fill the RIs
       // light vector with the best lights.
       if(matInst->isForwardLit())
       {
@@ -1499,7 +1491,7 @@ void TacticalZone::render( ObjectRenderInst *ri, SceneRenderState *state, BaseMa
 
    for ( p = pList.mPolyList.begin(); p < pList.mPolyList.end(); p++ )
    {
-      PrimBuild::begin( GFXLineStrip, p->vertexCount + 1 );      
+      PrimBuild::begin( GFXLineStrip, p->vertexCount + 1 );
 
       for ( U32 i = 0; i < p->vertexCount; i++ )
       {
@@ -1511,7 +1503,7 @@ void TacticalZone::render( ObjectRenderInst *ri, SceneRenderState *state, BaseMa
       PrimBuild::vertex3fv( pnt );
 
       PrimBuild::end();
-   }   
+   }
 }
 
 #if 0
@@ -1548,7 +1540,7 @@ bool TacticalZone::prepRenderImage(SceneState* state, const U32 stateKey,
 			Face& face = mFaces[faceidx];
 			//Point3F p = mFaces[i].center + mFaces[i].normal*0.1;
 			//mIgnoreRayCast = false;
-			//bool col = getContainer()->castRay(p,camPos,TacticalZoneObjectType,&rInfo); 
+			//bool col = getContainer()->castRay(p,camPos,TacticalZoneObjectType,&rInfo);
 			//mIgnoreRayCast = true;
 			//if(!col)
 			{
@@ -1568,13 +1560,13 @@ bool TacticalZone::prepRenderImage(SceneState* state, const U32 stateKey,
 
 					F32 d = otherface.plane.intersect(face.center, p);
 
-					//Con::printf("%i to %i: %f", faceidx, otherfaceidx, d);	
+					//Con::printf("%i to %i: %f", faceidx, otherfaceidx, d);
 
 					if(d != PARALLEL_PLANE && d >= 0 && d <= 1 && d < bestd)
-						bestd = d;	
+						bestd = d;
 				}
 
-				//Con::printf("%i bestd: %f", faceidx, bestd);	
+				//Con::printf("%i bestd: %f", faceidx, bestd);
 
 				if(bestd != PARALLEL_PLANE)
 					p = face.center + (p - face.center) * bestd;
@@ -1619,7 +1611,7 @@ TacticalZone::updateFogCoords(TexturedPolyList& polyList, const Point3F& camPos)
 
 #if 0
 void TacticalZone::renderObject(SceneState* state, SceneRenderImage* image)
-{ 
+{
 	AssertFatal(dglIsInCanonicalState(), "Error, GL not in canonical state on entry");
 
 	TacticalZoneFaceRenderImage* faceImage = dynamic_cast<TacticalZoneFaceRenderImage*>(image);
@@ -1646,7 +1638,7 @@ void TacticalZone::renderObject(SceneState* state, SceneRenderImage* image)
 	//glGetTexParameteriv ( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, &temp ); wrapS = temp;
 	//glGetTexParameteriv ( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, &temp ); wrapT = temp;
 
-	// 
+	//
 	//glDepthMask         ( GL_TRUE );
 	//glEnable            ( GL_DEPTH_TEST );
 	//glDepthFunc         ( GL_LEQUAL );
@@ -1691,7 +1683,7 @@ void TacticalZone::renderObject(SceneState* state, SceneRenderImage* image)
 					MatrixF cam;
 					conn->getControlCameraTransform(0, &cam);
 					cam.getColumn(1, &camVec);
-				}			
+				}
 
 				for(int i = 0; i < mTerrainGridVertices.size(); i++)
 				{
@@ -1725,7 +1717,7 @@ void TacticalZone::renderObject(SceneState* state, SceneRenderImage* image)
 							// decrease scale based on viewing angle...
 							//if(camVec.z > 0) camVec.z = 0;
 							//F32 dot = mDot(-camVec, render_vertex.normal);
-							//if(dot < 0) dot = 0;				
+							//if(dot < 0) dot = 0;
 							//normal_scale *= dot;
 
 							//Point3F p; p.interpolate(render_vertex.point, render_point, 0.1);
@@ -1763,13 +1755,13 @@ void TacticalZone::renderObject(SceneState* state, SceneRenderImage* image)
 							glColor4f(1, 0, 1, 1);
 					}
 
-					glPointSize(4);		
+					glPointSize(4);
 					glBegin(GL_POINTS);
 					glVertex3fv(render_vertex.point);
 					glEnd();
 
 					glColor4f(0, 0, 0, vertex.dangerScale);
-					glPointSize(2);		
+					glPointSize(2);
 					glBegin(GL_POINTS);
 					glVertex3fv(render_vertex.point);
 					glEnd();
@@ -1778,7 +1770,7 @@ void TacticalZone::renderObject(SceneState* state, SceneRenderImage* image)
 					glDisable(GL_POINT_SIZE);
 					glBlendFunc(GL_SRC_ALPHA, GL_ONE); // restore additive blending
 
-					Point3F p;	
+					Point3F p;
 
 					p = render_vertex.point + render_vertex.normal * vertex.peakness[0] * 10;
 					glColor4f(1, 0, 0, 1);
@@ -1793,7 +1785,7 @@ void TacticalZone::renderObject(SceneState* state, SceneRenderImage* image)
 					glVertex3fv(render_vertex.point);
 					glVertex3fv(p);
 					glEnd();
-#endif 
+#endif
 				}
 
 				if(TerrainRender::getScreenError() == 0)
@@ -1801,7 +1793,7 @@ void TacticalZone::renderObject(SceneState* state, SceneRenderImage* image)
 				else
 					this->renderTerrainGridLines(mRenderTerrainGridVertexList);
 
-			} 
+			}
 		} // if(face == 0)
 
 		if(!mBorderPolys[face].isEmpty())
@@ -1874,8 +1866,8 @@ void TacticalZone::renderDebug(TacticalZoneFaceRenderImage* image)
 	glEnd();
 	glEnable(GL_POINT_SIZE);
 	glEnable(GL_POINT_SMOOTH);
-	glPointSize(3); 
-	glBegin(GL_POINTS);  
+	glPointSize(3);
+	glBegin(GL_POINTS);
 		glVertex3f(image->poly[0].x, image->poly[0].y, image->poly[0].z);
 	glEnd();
 	glPointSize(1.0);
@@ -1961,7 +1953,7 @@ void TacticalZone::renderBorderPolyList(TexturedPolyList& polyList)
 	glDisable            ( GL_TEXTURE_2D );
 
 	glDisableClientState ( GL_TEXTURE_COORD_ARRAY );
-	glDisableClientState ( GL_VERTEX_ARRAY ); 
+	glDisableClientState ( GL_VERTEX_ARRAY );
 }
 
 void TacticalZone::renderTerrainPolyList(TexturedPolyList& polyList)
@@ -1995,7 +1987,7 @@ void TacticalZone::renderTerrainPolyList(TexturedPolyList& polyList)
 		//glTranslatef        ( BaseDriftX, BaseDriftY, 0.0f );									// MM: Added Drift Translation.
 		//glRotatef           ( 30.0f, 0.0f, 0.0f, 1.0f );										// MM: Removed Rotation.
 		//glColorPointer      ( 4, GL_FLOAT, sizeof(vertex), &(m_pVertex[0].RGBA1a) );			// MM: Removed Colour Array.
-		//glColor4f			( 1.0f, 1.0f, 1.0f, 1.0f );	
+		//glColor4f			( 1.0f, 1.0f, 1.0f, 1.0f );
 	}
 
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -2021,7 +2013,7 @@ void TacticalZone::renderTerrainPolyList(TexturedPolyList& polyList)
 	glTexEnvi            ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
 	glDisable            ( GL_TEXTURE_2D );
 
-	glDisableClientState ( GL_VERTEX_ARRAY ); 
+	glDisableClientState ( GL_VERTEX_ARRAY );
 }
 
 void TacticalZone::renderTerrainGridLines(VertexList& vertexList)
@@ -2069,7 +2061,7 @@ void TacticalZone::renderTerrainGridLines(VertexList& vertexList)
 	glDisable            ( GL_TEXTURE_2D );
 
 	glDisableClientState ( GL_TEXTURE_COORD_ARRAY );
-	glDisableClientState ( GL_VERTEX_ARRAY ); 
+	glDisableClientState ( GL_VERTEX_ARRAY );
 }
 #endif
 
@@ -2195,7 +2187,7 @@ void TacticalZone::unpackUpdate(NetConnection* con, BitStream* stream)
 		mShowOnMinimap = stream->readFlag();
 		mRenderInteriors = stream->readFlag();
 		mRenderTerrain = stream->readFlag();
-		mRenderTerrainGrid = stream->readFlag();		
+		mRenderTerrainGrid = stream->readFlag();
 
 		for(int i = 0; i < 6; i++)
 		{
@@ -2228,7 +2220,7 @@ void TacticalZone::unpackUpdate(NetConnection* con, BitStream* stream)
 
 	if( stream->readFlag() )
 	{
-		mCurrColor.interpolate(mDataBlock->colors[mFlashColor1], 
+		mCurrColor.interpolate(mDataBlock->colors[mFlashColor1],
 			mDataBlock->colors[mFlashColor2], mFlashFactor);
 	}
 }
