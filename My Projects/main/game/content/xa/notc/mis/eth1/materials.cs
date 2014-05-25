@@ -32,7 +32,7 @@ singleton Material(xa_notc_mis_eth1_termat1fx)
 new TerrainMaterial()
 {
    diffuseMap = "content/xa/notc/mis/eth1/textures/xa_notc_mis_eth1_termat1";
-   detailMap = "content/xa/rotc/p.5.4/textures/rotc/zone.grid";
+   detailMap = "content/xa/notc/core/textures/grid.128.4";
    internalName = "xa_notc_mis_eth1_termat1";
    diffuseSize = "16";
    detailSize = "4";

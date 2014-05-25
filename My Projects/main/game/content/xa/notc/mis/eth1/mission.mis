@@ -426,7 +426,7 @@ new SimGroup(MissionGroup) {
          type = "Normal";
          msToNext = "1000";
          smoothingType = "Spline";
-         position = "136 170 202";
+         position = "303.324 445.677 34.4283";
          rotation = "0.0217651 0.0211336 -0.99954 88.3396";
          scale = "1 1 1";
          paletteColors[0] = "150 150 150 51";
@@ -454,7 +454,7 @@ new SimGroup(MissionGroup) {
          msToNext = "1000";
          smoothingType = "Spline";
          position = "37 116 201";
-         rotation = "0.0209759 0.0211819 -0.999556 90.5889";
+         rotation = "0.0209759 0.0211819 -0.999556 90.589";
          scale = "1 1 1";
          paletteColors[0] = "227 209 124 255";
          paletteColors[1] = "227 209 124 255";
