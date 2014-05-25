@@ -39,7 +39,7 @@ GFXGLPrimitiveBuffer::GFXGLPrimitiveBuffer(GFXDevice *device, U32 indexCount, U3
    GFXPrimitiveBuffer(device, indexCount, primitiveCount, bufferType), mZombieCache(NULL),
    mBufferOffset(0)
 {
-   if( mBufferType == GFXBufferType::GFXBufferTypeVolatile )
+   if( mBufferType == GFXBufferTypeVolatile )
    {
       mBuffer = getCircularVolatileIndexBuffer()->getHandle();
       return;
@@ -56,7 +56,7 @@ GFXGLPrimitiveBuffer::GFXGLPrimitiveBuffer(GFXDevice *device, U32 indexCount, U3
 GFXGLPrimitiveBuffer::~GFXGLPrimitiveBuffer()
 {
 	// This is heavy handed, but it frees the buffer memory
-   if( mBufferType != GFXBufferType::GFXBufferTypeVolatile )
+   if( mBufferType != GFXBufferTypeVolatile )
 	   glDeleteBuffers(1, &mBuffer);
    
    if( mZombieCache )
@@ -65,7 +65,7 @@ GFXGLPrimitiveBuffer::~GFXGLPrimitiveBuffer()
 
 void GFXGLPrimitiveBuffer::lock(U32 indexStart, U32 indexEnd, void **indexPtr)
 {
-   if( mBufferType == GFXBufferType::GFXBufferTypeVolatile )
+   if( mBufferType == GFXBufferTypeVolatile )
    {
       AssertFatal(indexStart == 0, "");
       getCircularVolatileIndexBuffer()->lock( mIndexCount * sizeof(U16), 0, mBufferOffset, *indexPtr );
@@ -85,7 +85,7 @@ void GFXGLPrimitiveBuffer::unlock()
 {
    PROFILE_SCOPE(GFXGLPrimitiveBuffer_unlock);
 
-   if( mBufferType == GFXBufferType::GFXBufferTypeVolatile )
+   if( mBufferType == GFXBufferTypeVolatile )
    {
       getCircularVolatileIndexBuffer()->unlock();
    }
@@ -164,7 +164,7 @@ namespace
 {
    bool onGFXDeviceSignal( GFXDevice::GFXDeviceEventType type )
    {
-      if( GFXDevice::deEndOfFrame == type )
+      if( GFX->getAdapterType() == OpenGL && GFXDevice::deEndOfFrame == type )
          getCircularVolatileIndexBuffer()->protectUsedRange();
 
       return true;

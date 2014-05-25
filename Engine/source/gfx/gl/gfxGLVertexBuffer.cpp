@@ -46,7 +46,7 @@ GFXGLVertexBuffer::GFXGLVertexBuffer(  GFXDevice *device,
       mBufferOffset(0),
       mBufferVertexOffset(0)
 {
-   if( mBufferType == GFXBufferType::GFXBufferTypeVolatile )
+   if( mBufferType == GFXBufferTypeVolatile )
    {
       mBuffer = getCircularVolatileVertexBuffer()->getHandle();
       return;
@@ -64,7 +64,7 @@ GFXGLVertexBuffer::GFXGLVertexBuffer(  GFXDevice *device,
 GFXGLVertexBuffer::~GFXGLVertexBuffer()
 {
 	// While heavy handed, this does delete the buffer and frees the associated memory.
-   if( mBufferType != GFXBufferType::GFXBufferTypeVolatile )
+   if( mBufferType != GFXBufferTypeVolatile )
       glDeleteBuffers(1, &mBuffer);
 
    if( mZombieCache )
@@ -75,7 +75,7 @@ void GFXGLVertexBuffer::lock( U32 vertexStart, U32 vertexEnd, void **vertexPtr )
 {
    PROFILE_SCOPE(GFXGLVertexBuffer_lock);
 
-   if( mBufferType == GFXBufferType::GFXBufferTypeVolatile )
+   if( mBufferType == GFXBufferTypeVolatile )
    {
       AssertFatal(vertexStart == 0, "");
       if( gglHasExtension(ARB_vertex_attrib_binding) )
@@ -104,7 +104,7 @@ void GFXGLVertexBuffer::unlock()
 {
    PROFILE_SCOPE(GFXGLVertexBuffer_unlock);
 
-   if( mBufferType == GFXBufferType::GFXBufferTypeVolatile )
+   if( mBufferType == GFXBufferTypeVolatile )
    {
       getCircularVolatileVertexBuffer()->unlock();
    }
