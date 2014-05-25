@@ -91,11 +91,11 @@ protected:
    static Point3F sBasePoints[4];
 
    // Fields...
-
    F32 mScale;
    bool mFlareEnabled;
    String mFlareTextureName;
    GFXTexHandle mFlareTexture;
+   S32 mLOSMask;
    F32 mOcclusionRadius;
    bool mRenderReflectPass;
 

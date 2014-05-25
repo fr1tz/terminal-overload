@@ -103,6 +103,7 @@ LightFlareData::LightFlareData()
  : mFlareEnabled( true ),
    mElementCount( 0 ),
    mScale( 1.0f ),
+   mLOSMask( LosMask ),
    mOcclusionRadius( 0.0f ),
    mRenderReflectPass( true )
 {
@@ -126,6 +127,9 @@ void LightFlareData::initPersistFields()
 
       addField( "overallScale", TypeF32, Offset( mScale, LightFlareData ),
          "Size scale applied to all elements of the flare." );
+
+      addField( "losMask", TypeS32, Offset( mLOSMask, LightFlareData ), 
+         "Object type mask for LOS test." );
 
       addField( "occlusionRadius", TypeF32, Offset( mOcclusionRadius, LightFlareData ), 
          "If positive an occlusion query is used to test flare visibility, else it uses simple raycasts." );
@@ -201,6 +205,7 @@ void LightFlareData::packData( BitStream *stream )
    stream->writeFlag( mFlareEnabled );
    stream->write( mFlareTextureName );   
    stream->write( mScale );
+   stream->write( mLOSMask );
    stream->write( mOcclusionRadius );
    stream->writeFlag( mRenderReflectPass );
 
@@ -224,6 +229,7 @@ void LightFlareData::unpackData( BitStream *stream )
    mFlareEnabled = stream->readFlag();
    stream->read( &mFlareTextureName );   
    stream->read( &mScale );
+   stream->read( &mLOSMask );
    stream->read( &mOcclusionRadius );
    mRenderReflectPass = stream->readFlag();
 
@@ -336,7 +342,7 @@ bool LightFlareData::_testVisibility(const SceneRenderState *state, LightFlareSt
 
       RayInfo rayInfo;
 
-      if ( !gClientContainer.castRay( camPos, lightPos, LosMask, &rayInfo ) )
+      if ( !gClientContainer.castRay( camPos, lightPos, mLOSMask, &rayInfo ) )
          *outOcclusionFade = 1.0f;
 
       if ( control && fps )
