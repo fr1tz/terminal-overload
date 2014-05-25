@@ -24,7 +24,8 @@ GFXGLVertexBuffer::GFXGLVertexBuffer(  GFXDevice *device,
                                        GFXBufferType bufferType )
    :  GFXVertexBuffer( device, numVerts, vertexFormat, vertexSize, bufferType ), 
       mZombieCache(NULL),
-      mBufferOffset(0)
+      mBufferOffset(0),
+      mBufferVertexOffset(0)
 {
    if( mBufferType == GFXBufferType::GFXBufferTypeVolatile )
    {
@@ -58,7 +59,15 @@ void GFXGLVertexBuffer::lock( U32 vertexStart, U32 vertexEnd, void **vertexPtr )
    if( mBufferType == GFXBufferType::GFXBufferTypeVolatile )
    {
       AssertFatal(vertexStart == 0, "");
-      getCircularVolatileVertexBuffer()->lock( mNumVerts * mVertexSize, mBufferOffset, *vertexPtr );
+      if( gglHasExtension(ARB_vertex_attrib_binding) )
+      {
+         getCircularVolatileVertexBuffer()->lock( mNumVerts * mVertexSize, 0, mBufferOffset, *vertexPtr );
+      }
+      else
+      {
+         getCircularVolatileVertexBuffer()->lock( mNumVerts * mVertexSize, mVertexSize, mBufferOffset, *vertexPtr );
+         mBufferVertexOffset = mBufferOffset / mVertexSize;
+      }
    }
    else
    {

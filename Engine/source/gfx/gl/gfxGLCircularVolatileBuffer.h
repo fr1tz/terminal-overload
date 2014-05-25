@@ -161,13 +161,13 @@ public:
       U32 mOffset, mSize;
    }_getBufferData;
 
-   void lock(const U32 size, U32 &offset, void* &ptr)
+   void lock(const U32 size, U32 offsetAlign, U32 &outOffset, void* &outPtr)
    {
       if( !size )
       {
          AssertFatal(0, "");
-         offset = 0;
-         ptr = NULL;
+         outOffset = 0;
+         outPtr = NULL;
       }
 
       mLockManager.waitFirstRange( mBufferFreePos, (mBufferFreePos + size)-1 );
@@ -178,11 +178,15 @@ public:
          mBufferFreePos = 0;
       }
 
-      offset = mBufferFreePos;
+      // force offset buffer align
+      if( offsetAlign )
+         mBufferFreePos = ( (mBufferFreePos/offsetAlign) + 1 ) * offsetAlign;
+
+      outOffset = mBufferFreePos;
 
       if( gglHasExtension(ARB_buffer_storage) )
       {         
-         ptr = (U8*)(mBufferPtr) + mBufferFreePos; 
+         outPtr = (U8*)(mBufferPtr) + mBufferFreePos; 
       }
       else if( GFXGL->glUseMap() )
       {
@@ -190,18 +194,18 @@ public:
          glBindBuffer(GL_ARRAY_BUFFER, mBufferName);
 
          const GLbitfield access = GL_MAP_WRITE_BIT | GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_UNSYNCHRONIZED_BIT;
-         ptr = glMapBufferRange(GL_ARRAY_BUFFER, offset, size, access);
+         outPtr = glMapBufferRange(GL_ARRAY_BUFFER, outOffset, size, access);
       }
       else
       {
-         _getBufferData.mOffset = offset;
+         _getBufferData.mOffset = outOffset;
          _getBufferData.mSize = size;
 
-         ptr = mFrameAllocator.lock( size );
+         outPtr = mFrameAllocator.lock( size );
       }      
 
-      //set new buffer pos, fix overflow
-      mBufferFreePos = ( mBufferFreePos + size ) % mBufferSize;
+      //set new buffer pos
+      mBufferFreePos = mBufferFreePos + size;
 
       //align 4bytes
       mBufferFreePos = ( (mBufferFreePos/4) + 1 ) * 4;

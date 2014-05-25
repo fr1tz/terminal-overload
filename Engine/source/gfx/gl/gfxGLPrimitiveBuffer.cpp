@@ -38,7 +38,7 @@ GFXGLPrimitiveBuffer::~GFXGLPrimitiveBuffer()
 {
 	// This is heavy handed, but it frees the buffer memory
    if( mBufferType != GFXBufferType::GFXBufferTypeVolatile )
-	   glDeleteBuffersARB(1, &mBuffer);
+	   glDeleteBuffers(1, &mBuffer);
    
    if( mZombieCache )
       delete [] mZombieCache;
@@ -49,7 +49,7 @@ void GFXGLPrimitiveBuffer::lock(U32 indexStart, U32 indexEnd, void **indexPtr)
    if( mBufferType == GFXBufferType::GFXBufferTypeVolatile )
    {
       AssertFatal(indexStart == 0, "");
-      getCircularVolatileIndexBuffer()->lock( mIndexCount * sizeof(U16), mBufferOffset, *indexPtr );
+      getCircularVolatileIndexBuffer()->lock( mIndexCount * sizeof(U16), 0, mBufferOffset, *indexPtr );
    }
    else
    {

@@ -11,7 +11,7 @@ public:
    void init(const GFXVertexFormat *format);
 
    void prepareVertexFormat() const;
-   void prepareBuffer_old(U32 stream, GLint mBuffer, U32 bufferStart, GLint mDivisor) const;
+   void prepareBuffer_old(U32 stream, GLint mBuffer, GLint mDivisor) const;
    void updateActiveVertexAttrib(U32 lastActiveMask) const;
 
    struct glVertexAttribData

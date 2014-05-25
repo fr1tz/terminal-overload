@@ -477,7 +477,7 @@ inline void GFXGLDevice::preDrawPrimitive()
          if(mCurrentVB[i])
          {
             mCurrentVB[i]->prepare(i, mCurrentVB_Divisor[i]);    // GL_ARB_vertex_attrib_binding  
-            decl->prepareBuffer_old( i, mCurrentVB[i]->mBuffer, mCurrentVB[i]->mBufferOffset, mCurrentVB_Divisor[i] ); // old vertex buffer/format
+            decl->prepareBuffer_old( i, mCurrentVB[i]->mBuffer, mCurrentVB_Divisor[i] ); // old vertex buffer/format
          }
       }
 
@@ -496,6 +496,8 @@ inline void GFXGLDevice::postDrawPrimitive(U32 primitiveCount)
 void GFXGLDevice::drawPrimitive( GFXPrimitiveType primType, U32 vertexStart, U32 primitiveCount ) 
 {
    preDrawPrimitive();
+  
+   vertexStart += mCurrentVB[0]->mBufferVertexOffset;
 
    if(mDrawInstancesCount)
       glDrawArraysInstanced(GFXGLPrimType[primType], vertexStart, primCountToIndexCount(primType, primitiveCount), mDrawInstancesCount);
@@ -518,10 +520,12 @@ void GFXGLDevice::drawIndexedPrimitive(   GFXPrimitiveType primType,
 
    U16* buf = (U16*)static_cast<GFXGLPrimitiveBuffer*>(mCurrentPrimitiveBuffer.getPointer())->getBuffer() + startIndex;
 
+   const U32 baseVertex = mCurrentVB[0]->mBufferVertexOffset;
+
    if(mDrawInstancesCount)
-      glDrawElementsInstanced(GFXGLPrimType[primType], primCountToIndexCount(primType, primitiveCount), GL_UNSIGNED_SHORT, buf, mDrawInstancesCount);
+      glDrawElementsInstancedBaseVertex(GFXGLPrimType[primType], primCountToIndexCount(primType, primitiveCount), GL_UNSIGNED_SHORT, buf, mDrawInstancesCount, baseVertex);
    else
-      glDrawElements(GFXGLPrimType[primType], primCountToIndexCount(primType, primitiveCount), GL_UNSIGNED_SHORT, buf);
+      glDrawElementsBaseVertex(GFXGLPrimType[primType], primCountToIndexCount(primType, primitiveCount), GL_UNSIGNED_SHORT, buf, baseVertex);
 
    postDrawPrimitive(primitiveCount);
 }
