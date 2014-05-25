@@ -100,7 +100,7 @@ function FrmEtherform::onAdd(%this, %obj)
       brightness = "2";
       castShadows = "0";
       flareType = "FrmEtherformLightFlare";
-      flareScale = "1";
+      flareScale = "2";
    };
    MissionCleanup.add(%obj.light);
    %obj.mountObject(%obj.light, 0);
