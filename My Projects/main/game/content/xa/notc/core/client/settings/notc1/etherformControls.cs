@@ -1,88 +1,88 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
-$XaNotc1CatMoveMap_RemapCount = 0;
-$XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Forward";
-$XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "moveforward";
-$XaNotc1CatMoveMap_RemapCount++;
-$XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Backward";
-$XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "movebackward";
-$XaNotc1CatMoveMap_RemapCount++;
-$XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Strafe Left";
-$XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "moveleft";
-$XaNotc1CatMoveMap_RemapCount++;
-$XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Strafe Right";
-$XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "moveright";
-$XaNotc1CatMoveMap_RemapCount++;
-$XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Turn Left";
-$XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "turnLeft";
-$XaNotc1CatMoveMap_RemapCount++;
-$XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Turn Right";
-$XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "turnRight";
-$XaNotc1CatMoveMap_RemapCount++;
-$XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Look Up";
-$XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "panUp";
-$XaNotc1CatMoveMap_RemapCount++;
-$XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Look Down";
-$XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "panDown";
-$XaNotc1CatMoveMap_RemapCount++;
-$XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Jump";
-$XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "jump";
-$XaNotc1CatMoveMap_RemapCount++;
-$XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Fire Weapon";
-$XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "mouseFire";
-$XaNotc1CatMoveMap_RemapCount++;
-$XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Adjust Zoom";
-$XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "setZoomFov";
-$XaNotc1CatMoveMap_RemapCount++;
-$XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Toggle Zoom";
-$XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "toggleZoom";
-$XaNotc1CatMoveMap_RemapCount++;
-$XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Free Look";
-$XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "toggleFreeLook";
-$XaNotc1CatMoveMap_RemapCount++;
-$XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Switch 1st/3rd";
-$XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "toggleFirstPerson";
-$XaNotc1CatMoveMap_RemapCount++;
-$XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Chat to Everyone";
-$XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "toggleMessageHud";
-$XaNotc1CatMoveMap_RemapCount++;
-$XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Message Hud PageUp";
-$XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "pageMessageHudUp";
-$XaNotc1CatMoveMap_RemapCount++;
-$XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Message Hud PageDown";
-$XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "pageMessageHudDown";
-$XaNotc1CatMoveMap_RemapCount++;
-$XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Resize Message Hud";
-$XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "resizeMessageHud";
-$XaNotc1CatMoveMap_RemapCount++;
-$XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Show Scores";
-$XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "showPlayerList";
-$XaNotc1CatMoveMap_RemapCount++;
-$XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Suicide";
-$XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "suicide";
-$XaNotc1CatMoveMap_RemapCount++;
-$XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Toggle Camera";
-$XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "toggleCamera";
-$XaNotc1CatMoveMap_RemapCount++;
-$XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Drop Camera at Player";
-$XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "dropCameraAtPlayer";
-$XaNotc1CatMoveMap_RemapCount++;
-$XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Drop Player at Camera";
-$XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "dropPlayerAtCamera";
-$XaNotc1CatMoveMap_RemapCount++;
-$XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Bring up Options Dialog";
-$XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "bringUpOptions";
-$XaNotc1CatMoveMap_RemapCount++;
-$XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Launch Explosive Disc";
-$XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "launchExplosiveDisc";
-$XaNotc1CatMoveMap_RemapCount++;
-$XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Launch Repel Disc";
-$XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "launchRepelDisc";
-$XaNotc1CatMoveMap_RemapCount++;
-$XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Launch Razor Disc";
-$XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "launchRazorDisc";
-$XaNotc1CatMoveMap_RemapCount++;
+$XaNotc1EtherformMoveMap_RemapCount = 0;
+$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Forward";
+$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "moveforward";
+$XaNotc1EtherformMoveMap_RemapCount++;
+$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Backward";
+$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "movebackward";
+$XaNotc1EtherformMoveMap_RemapCount++;
+$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Strafe Left";
+$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "moveleft";
+$XaNotc1EtherformMoveMap_RemapCount++;
+$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Strafe Right";
+$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "moveright";
+$XaNotc1EtherformMoveMap_RemapCount++;
+$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Turn Left";
+$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "turnLeft";
+$XaNotc1EtherformMoveMap_RemapCount++;
+$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Turn Right";
+$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "turnRight";
+$XaNotc1EtherformMoveMap_RemapCount++;
+$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Look Up";
+$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "panUp";
+$XaNotc1EtherformMoveMap_RemapCount++;
+$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Look Down";
+$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "panDown";
+$XaNotc1EtherformMoveMap_RemapCount++;
+$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Jump";
+$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "jump";
+$XaNotc1EtherformMoveMap_RemapCount++;
+$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Fire Weapon";
+$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "mouseFire";
+$XaNotc1EtherformMoveMap_RemapCount++;
+$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Adjust Zoom";
+$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "setZoomFov";
+$XaNotc1EtherformMoveMap_RemapCount++;
+$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Toggle Zoom";
+$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "toggleZoom";
+$XaNotc1EtherformMoveMap_RemapCount++;
+$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Free Look";
+$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "toggleFreeLook";
+$XaNotc1EtherformMoveMap_RemapCount++;
+$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Switch 1st/3rd";
+$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "toggleFirstPerson";
+$XaNotc1EtherformMoveMap_RemapCount++;
+$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Chat to Everyone";
+$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "toggleMessageHud";
+$XaNotc1EtherformMoveMap_RemapCount++;
+$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Message Hud PageUp";
+$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "pageMessageHudUp";
+$XaNotc1EtherformMoveMap_RemapCount++;
+$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Message Hud PageDown";
+$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "pageMessageHudDown";
+$XaNotc1EtherformMoveMap_RemapCount++;
+$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Resize Message Hud";
+$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "resizeMessageHud";
+$XaNotc1EtherformMoveMap_RemapCount++;
+$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Show Scores";
+$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "showPlayerList";
+$XaNotc1EtherformMoveMap_RemapCount++;
+$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Suicide";
+$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "suicide";
+$XaNotc1EtherformMoveMap_RemapCount++;
+$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Toggle Camera";
+$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "toggleCamera";
+$XaNotc1EtherformMoveMap_RemapCount++;
+$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Drop Camera at Player";
+$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "dropCameraAtPlayer";
+$XaNotc1EtherformMoveMap_RemapCount++;
+$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Drop Player at Camera";
+$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "dropPlayerAtCamera";
+$XaNotc1EtherformMoveMap_RemapCount++;
+$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Bring up Options Dialog";
+$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "bringUpOptions";
+$XaNotc1EtherformMoveMap_RemapCount++;
+$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Launch Explosive Disc";
+$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "launchExplosiveDisc";
+$XaNotc1EtherformMoveMap_RemapCount++;
+$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Launch Repel Disc";
+$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "launchRepelDisc";
+$XaNotc1EtherformMoveMap_RemapCount++;
+$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Launch Razor Disc";
+$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "launchRazorDisc";
+$XaNotc1EtherformMoveMap_RemapCount++;
 
 function XaNotcSettings1_CatControlsGui::onWake(%this)
 {
@@ -108,7 +108,7 @@ function XaNotcSettings1_CatControlsGui::fillRemapList( %this )
    %remapList = %this-->RemapList;
 
 	%remapList.clear();
-   for ( %i = 0; %i < $XaNotc1CatMoveMap_RemapCount; %i++ )
+   for ( %i = 0; %i < $XaNotc1EtherformMoveMap_RemapCount; %i++ )
       %remapList.addRow( %i, XaNotcSettings1_CatControls_buildFullMapString( %i ) );
 }
 
@@ -117,7 +117,7 @@ function XaNotcSettings1_CatControlsGui::doRemap( %this )
    %remapList = %this-->RemapList;
 
 	%selId = %remapList.getSelectedId();
-   %name = $XaNotc1CatMoveMap_RemapName[%selId];
+   %name = $XaNotc1EtherformMoveMap_RemapName[%selId];
 
 	XaNotcSettings1_Controls_RemapDlg-->OptRemapText.setValue( "Re-bind \"" @ %name @ "\" to..." );
 	XaNotcSettings1_Controls_RemapInputCtrl.index = %selId;
@@ -143,8 +143,8 @@ function XaNotcSettings1_CatControls_onRemapCtrlInputEvent(%device, %action)
       }
    }
 
-   %cmd  = $XaNotc1CatMoveMap_RemapCmd[%index];
-   %name = $XaNotc1CatMoveMap_RemapName[%index];
+   %cmd  = $XaNotc1EtherformMoveMap_RemapCmd[%index];
+   %name = $XaNotc1EtherformMoveMap_RemapName[%index];
 
    // Grab the friendly display name for this action
    // which we'll use when prompting the user below.
@@ -192,7 +192,7 @@ function XaNotcSettings1_CatControls_onRemapCtrlInputEvent(%device, %action)
 
    // Warn that we're about to remove the old mapping and
    // replace it with another.
-   %prevCmdName = $XaNotc1CatMoveMap_RemapName[%prevMapIndex];
+   %prevCmdName = $XaNotc1EtherformMoveMap_RemapName[%prevMapIndex];
    MessageBoxYesNo( "Warning",
       "\"" @ %mapName @ "\" is already bound to \""
       @ %prevCmdName @ "\"!\nDo you wish to replace this mapping?",
@@ -260,8 +260,8 @@ function XaNotcSettings1_CatControls_getMapDisplayName( %device, %action )
 
 function XaNotcSettings1_CatControls_buildFullMapString( %index )
 {
-   %name       = $XaNotc1CatMoveMap_RemapName[%index];
-   %cmd        = $XaNotc1CatMoveMap_RemapCmd[%index];
+   %name       = $XaNotc1EtherformMoveMap_RemapName[%index];
+   %cmd        = $XaNotc1EtherformMoveMap_RemapCmd[%index];
 
    %temp = XaNotc1CatMoveMap.getBinding( %cmd );
    if ( %temp $= "" )
@@ -285,7 +285,7 @@ function XaNotcSettings1_CatControls_buildFullMapString( %index )
 
 function XaNotcSettings1_CatControls_redoMapping( %device, %action, %cmd, %oldIndex, %newIndex )
 {
-	//%actionMap.bind( %device, %action, $XaNotc1CatMoveMap_RemapCmd[%newIndex] );
+	//%actionMap.bind( %device, %action, $XaNotc1EtherformMoveMap_RemapCmd[%newIndex] );
 	XaNotc1CatMoveMap.bind( %device, %action, %cmd );
 
    %remapList = XaNotcSettings1_CatControlsGui-->RemapList;
@@ -295,9 +295,9 @@ function XaNotcSettings1_CatControls_redoMapping( %device, %action, %cmd, %oldIn
 
 function XaNotcSettings1_CatControls_findRemapCmdIndex( %command )
 {
-	for ( %i = 0; %i < $XaNotc1CatMoveMap_RemapCount; %i++ )
+	for ( %i = 0; %i < $XaNotc1EtherformMoveMap_RemapCount; %i++ )
 	{
-		if ( %command $= $XaNotc1CatMoveMap_RemapCmd[%i] )
+		if ( %command $= $XaNotc1EtherformMoveMap_RemapCmd[%i] )
 			return( %i );
 	}
 	return( -1 );

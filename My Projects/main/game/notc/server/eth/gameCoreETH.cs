@@ -23,8 +23,8 @@ function GameCoreETH::initGameVars(%game)
    
    // Leave $Game::defaultPlayerClass and $Game::defaultPlayerDataBlock as empty strings ("")
    // to spawn a the $Game::defaultCameraClass as the control object.
-   $Game::defaultPlayerClass = "Player";
-   $Game::defaultPlayerDataBlock = "FrmStandardcat";
+   $Game::defaultPlayerClass = "Etherform";
+   $Game::defaultPlayerDataBlock = "FrmEtherform";
    $Game::defaultPlayerSpawnGroups = "PlayerSpawnPoints PlayerDropPoints";
 
    //-----------------------------------------------------------------------------
@@ -160,6 +160,18 @@ function GameCoreETH::loadOut(%game, %player)
    //echo (%game @"\c4 -> "@ %game.class @" -> GameCoreETH::loadOut");
    
    Parent::loadOut(%game, %player);
+   
+   if(isObject(%player.light))
+   {
+      %colorI = %player.client.paletteColors[0];
+      %colorF = getWord(%colorI, 0) / 255 SPC
+                getWord(%colorI, 1) / 255 SPC
+                getWord(%colorI, 2) / 255 SPC
+                1;
+      %player.light.color = %colorF;
+   }
+
+   return;
 
    %player.clearWeaponCycle();
    %player.addToWeaponCycle(WpnSMG1);

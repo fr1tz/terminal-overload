@@ -7,7 +7,7 @@ new ActionMap(XaNotc1EtherformMoveMap);
 
 function XaNotc1EtherformMoveMap_activate()
 {
-   XaNotc1CatMoveMap.push();
+   XaNotc1EtherformMoveMap.push();
 }
 
 XaNotc1EtherformMoveMap.bind( keyboard, a, moveleft );
