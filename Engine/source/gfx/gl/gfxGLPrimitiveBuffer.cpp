@@ -145,7 +145,7 @@ namespace
 {
    bool onGFXDeviceSignal( GFXDevice::GFXDeviceEventType type )
    {
-      if( GFXDevice::deEndOfFrame == type )
+      if( GFX->getAdapterType() == OpenGL && GFXDevice::deEndOfFrame == type )
          getCircularVolatileIndexBuffer()->protectUsedRange();
 
       return true;
