@@ -69,12 +69,13 @@ public:
     #define AssertWarn(x, y)  { if ((x) == 0) {::PlatformAssert::processAssert(::PlatformAssert::Warning, __FILE__, __LINE__,  y);} }   
 
    /*!
-      Helper macro function called when AssertFatal failed.
+      Helper macro called when AssertFatal failed.
       Used for help static code analyzers.
    */
-   #ifndef onFail_AssertFatal_Delegate
-      #define onFail_AssertFatal_Delegate()
+   #ifndef ON_FAIL_ASSERTFATAL
+      #define ON_FAIL_ASSERTFATAL
    #endif
+
    /*!
       Assert that the statement x is true, otherwise halt.
 
@@ -89,7 +90,7 @@ public:
       This assert is very useful for verifying data as well as function entry and
       exit conditions.
     */
-   #define AssertFatal(x, y) { if ( ((bool)(x)) == (bool)0 ) { if( ::PlatformAssert::processAssert(::PlatformAssert::Fatal, __FILE__, __LINE__,  y) ) { TORQUE_DEBUGBREAK(); } onFail_AssertFatal_Delegate(); } }
+   #define AssertFatal(x, y) { if ( ((bool)(x)) == (bool)0 ) { if( ::PlatformAssert::processAssert(::PlatformAssert::Fatal, __FILE__, __LINE__,  y) ) { TORQUE_DEBUGBREAK(); } ON_FAIL_ASSERTFATAL; } }
 
 #else
    #define AssertFatal(x, y)   { (void)sizeof(x); (void)sizeof(y); }
