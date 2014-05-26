@@ -23,6 +23,9 @@ new SimGroup(MissionGroup) {
          desc0 = "TODO";
          levelName = "ETH1";
          missionScript = "notc/server/init_eth.cs";
+         teamColors[0] = "1 1 1";
+         teamColors[1] = "1 0 0";
+         teamColors[2] = "0 0 1";
    };
    new SimGroup(CameraBookmarks) {
       canSave = "1";
@@ -454,7 +457,7 @@ new SimGroup(MissionGroup) {
          msToNext = "1000";
          smoothingType = "Spline";
          position = "37 116 201";
-         rotation = "0.0209759 0.0211819 -0.999556 90.5891";
+         rotation = "0.0209759 0.0211819 -0.999556 90.5892";
          scale = "1 1 1";
          paletteColors[0] = "227 209 124 255";
          paletteColors[1] = "227 209 124 255";
@@ -1263,7 +1266,7 @@ new SimGroup(MissionGroup) {
          borderRight = "1";
          borderTop = "1";
             initiallyProtected = "0";
-            initialOwner = "0";
+            initialOwner = "1";
             zNumBlues = "0";
             zNumReds = "0";
       };
@@ -1303,7 +1306,7 @@ new SimGroup(MissionGroup) {
          borderRight = "1";
          borderTop = "1";
             initiallyProtected = "0";
-            initialOwner = "0";
+            initialOwner = "1";
             zNumBlues = "0";
             zNumReds = "0";
       };
@@ -1343,7 +1346,7 @@ new SimGroup(MissionGroup) {
          borderRight = "1";
          borderTop = "1";
             initiallyProtected = "0";
-            initialOwner = "0";
+            initialOwner = "1";
             zNumBlues = "0";
             zNumReds = "0";
       };
@@ -1383,7 +1386,7 @@ new SimGroup(MissionGroup) {
          borderRight = "1";
          borderTop = "1";
             initiallyProtected = "0";
-            initialOwner = "0";
+            initialOwner = "1";
             zNumBlues = "0";
             zNumReds = "0";
       };
@@ -1423,7 +1426,7 @@ new SimGroup(MissionGroup) {
          borderRight = "1";
          borderTop = "1";
             initiallyProtected = "0";
-            initialOwner = "0";
+            initialOwner = "1";
             zNumBlues = "0";
             zNumReds = "0";
       };
@@ -1943,7 +1946,7 @@ new SimGroup(MissionGroup) {
          borderRight = "1";
          borderTop = "1";
             initiallyProtected = "0";
-            initialOwner = "0";
+            initialOwner = "2";
             zNumBlues = "0";
             zNumReds = "0";
       };
@@ -1983,7 +1986,7 @@ new SimGroup(MissionGroup) {
          borderRight = "1";
          borderTop = "1";
             initiallyProtected = "0";
-            initialOwner = "0";
+            initialOwner = "2";
             zNumBlues = "0";
             zNumReds = "0";
       };
@@ -2023,7 +2026,7 @@ new SimGroup(MissionGroup) {
          borderRight = "1";
          borderTop = "1";
             initiallyProtected = "0";
-            initialOwner = "0";
+            initialOwner = "2";
             zNumBlues = "0";
             zNumReds = "0";
       };
@@ -2063,7 +2066,7 @@ new SimGroup(MissionGroup) {
          borderRight = "1";
          borderTop = "1";
             initiallyProtected = "0";
-            initialOwner = "0";
+            initialOwner = "2";
             zNumBlues = "0";
             zNumReds = "0";
       };
@@ -2103,7 +2106,7 @@ new SimGroup(MissionGroup) {
          borderRight = "1";
          borderTop = "1";
             initiallyProtected = "0";
-            initialOwner = "0";
+            initialOwner = "2";
             zNumBlues = "0";
             zNumReds = "0";
       };
