@@ -90,39 +90,30 @@ datablock MultiNodeLaserBeamData(WpnMGL1ProjectileLaserTrail)
 };
 
 //-----------------------------------------------------------------------------
-// laser tail...
+// laser trail
 
-datablock LaserBeamData(WpnMGL1ProjectileLaserTail)
+datablock MultiNodeLaserBeamData(WpnMGL1ProjectileLaserTrail)
 {
-	hasLine = true;
-	lineStartColor	= "1.00 0.00 0.00 0.0";
-	lineBetweenColor = "1.00 0.00 0.00 0.5";
-	lineEndColor	  = "1.00 0.00 0.00 1.0";
- 	lineWidth		  = 2.0;
+	material = "xa_notc_core_shapes_mgl1_projectile_p1_lasertrail0mat";
+	renderMode = $MultiNodeLaserBeamRenderMode::FaceViewer;
+   width = 0.1;
+	fadeTime = 1000;
+	windCoefficient = 0.0;
 
-	hasInner = false;
-	innerStartColor	= "1.00 1.00 0.00 0.5";
-	innerBetweenColor = "1.00 1.00 0.00 0.5";
-	innerEndColor	  = "1.00 1.00 0.00 0.5";
-	innerStartWidth	= "0.0";
-	innerBetweenWidth = "0.05";
-	innerEndWidth	  = "0.1";
+	// node x movement...
+	nodeMoveMode[0]     = $NodeMoveMode::None;
+	nodeMoveSpeed[0]    = -0.002;
+	nodeMoveSpeedAdd[0] =  0.004;
+	// node y movement...
+	nodeMoveMode[1]     = $NodeMoveMode::None;
+	nodeMoveSpeed[1]    = -0.002;
+	nodeMoveSpeedAdd[1] =  0.004;
+	// node z movement...
+	nodeMoveMode[2]     = $NodeMoveMode::ConstantSpeed;
+	nodeMoveSpeed[2]    = 0.5;
+	nodeMoveSpeedAdd[2] = 0.5;
 
-	hasOuter = false;
-	outerStartColor	= "1.00 1.00 0.00 0.0";
-	outerBetweenColor = "1.00 1.00 0.00 0.2";
-	outerEndColor	  = "1.00 1.00 0.00 0.2";
-	outerStartWidth	= "0.0";
-	outerBetweenWidth = "0.3";
-	outerEndWidth	  = "0.0";
-
-	bitmap = "share/shapes/rotc/weapons/blaster/lasertail.red";
-	bitmapWidth = 0.1;
-	//crossBitmap = "share/shapes/rotc/weapons/blaster/projectile.impact.green";
-	//crossBitmapWidth = 4.25;
-
-	betweenFactor = 0.5;
-	blendMode = 1;
+	nodeDistance = 2;
 };
 
 //-----------------------------------------------------------------------------

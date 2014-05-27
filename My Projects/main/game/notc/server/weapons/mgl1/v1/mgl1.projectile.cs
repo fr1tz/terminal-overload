@@ -118,6 +118,7 @@ datablock ProjectileData(WpnMGL1Projectile)
 
    explosion           = "WpnMGL1ProjectileExplosion";
    decal               = "WpnMGL1ProjectileDecal";
+   laserTrail[0]       = "WpnMGL1ProjectileLaserTrail";
 
    muzzleVelocity      = 300;
    velInheritFactor    = 0.75;
