@@ -298,6 +298,27 @@ void ShotgunProjectileTracer::processTick(const Move* move)
 	if(mDataBlock->muzzleVelocity > 9000)
 	{
       this->missedEnemiesCheck(mInitialPosition, mImpactPos);
+		this->addLaserTrailNode(mInitialPosition);
+		this->addLaserTrailNode(mImpactPos);
+
+#if 0
+		for(S32 i = 0; i < NUM_LASERTRAILS; i++)
+		{
+			if( mLaserTrailList[i] != NULL )
+			{
+				mLaserTrailList[i]->setSceneObjectColorization(this->getSceneObjectColorization());
+				if(mDataBlock->smoothLaserTrail)
+					mLaserTrailList[i]->smooth();
+				if(mDataBlock->laserTrailFlagsList[i] & 1)
+					mLaserTrailList[i]->smoothReverseDist(mDataBlock->range);
+				if(mDataBlock->laserTrailFlagsList[i] & 2)
+					mLaserTrailList[i]->smooth();
+				if(mDataBlock->laserTrailFlagsList[i] & 4)
+					mLaserTrailList[i]->smoothDist(2);
+			}
+		}
+#endif
+
 #if 0
 		if(mDataBlock->laserTail != NULL)
 		{
@@ -319,23 +340,7 @@ void ShotgunProjectileTracer::processTick(const Move* move)
 					vel, mDataBlock->laserTailLen);
 			}
 		}
-		addLaserTrailNode(mInitialPosition, false);
-		addLaserTrailNode(mImpactPos, false);
-		for(S32 i = 0; i < NUM_LASERTRAILS; i++)
-		{
-			if( mLaserTrailList[i] != NULL )
-			{
-				mLaserTrailList[i]->setSceneObjectColorization(this->getSceneObjectColorization());
-				if(mDataBlock->smoothLaserTrail)
-					mLaserTrailList[i]->smooth();
-				if(mDataBlock->laserTrailFlagsList[i] & 1)
-					mLaserTrailList[i]->smoothReverseDist(mDataBlock->range);
-				if(mDataBlock->laserTrailFlagsList[i] & 2)
-					mLaserTrailList[i]->smooth();
-				if(mDataBlock->laserTrailFlagsList[i] & 4)
-					mLaserTrailList[i]->smoothDist(2);
-			}
-		}
+
 #endif
 
 		this->deleteObject();
@@ -433,6 +438,9 @@ void ShotgunProjectileTracer::simulate(F32 dt)
 
 	oldPosition = mCurrPosition;
 
+   if(oldPosition == mInitialPosition)
+      this->addLaserTrailNode(mInitialPosition);
+
 	newPosition = oldPosition + mCurrVelocity * dt;
 
 	F32 oldDist = (oldPosition-mImpactPos).len();
@@ -446,8 +454,14 @@ void ShotgunProjectileTracer::simulate(F32 dt)
 	mCurrDeltaBase = newPosition;
 	mCurrBackDelta = mCurrPosition - newPosition;
 
+   if(mEmissionCount == 0)
+      this->addLaserTrailNode(mInitialPosition);
+
 	this->emitParticles(oldPosition, newPosition, mCurrVelocity, dt*1000);
    this->missedEnemiesCheck(oldPosition, newPosition);
+   this->addLaserTrailNode(newPosition);
+
+   mEmissionCount++;
 
 	mCurrPosition = newPosition;
 
