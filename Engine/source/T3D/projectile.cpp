@@ -1190,6 +1190,10 @@ void Projectile::explode( const Point3F &p, const Point3F &n, const U32 collideT
             dinst->mPalette = this->getPalette();
       }
 
+      if(mEmissionCount == 0)
+         this->addLaserTrailNode(mInitialPosition);
+      this->addLaserTrailNode(p);
+
       // Client object
       updateSound();
    }
@@ -1399,8 +1403,15 @@ void Projectile::simulate( F32 dt )
 
    if ( isClientObject() )
    {
-      emitParticles( mCurrPosition, newPosition, mCurrVelocity, U32( dt * 1000.0f ) );
+      if(mEmissionCount == 0)
+      {
+         emitParticles(mInitialPosition, newPosition, mCurrVelocity, U32( dt * 1000.0f ) );
+         this->addLaserTrailNode(mInitialPosition);
+      }
+      else
+         emitParticles(mCurrPosition, newPosition, mCurrVelocity, U32( dt * 1000.0f ) );
       this->addLaserTrailNode(newPosition);
+      mEmissionCount++;
       updateSound();
    }
 
