@@ -3,7 +3,7 @@
 
 datablock ProjectileData(WpnMG1Projectile)
 {
-   projectileShapeName = "content/xa/notc/core/shapes/mg1/projectile/p1/shape.dae";
+   projectileShapeName = "content/xa/notc/core/shapes/mg1/projectile/p2/shape.dae";
 
    //lightDesc = BulletProjectileLightDesc;
 
@@ -22,8 +22,8 @@ datablock ProjectileData(WpnMG1Projectile)
 
    explosion           = "WpnMG1ProjectileExplosion";
    decal               = "WpnMG1ProjectileDecal";
-   particleEmitter     = "WpnMG1ProjectileParticleEmitter";
-   laserTrail[0]       = "WpnMG1ProjectileLaserTrail";
+   //particleEmitter     = "WpnMG1ProjectileParticleEmitter";
+   //laserTrail[0]       = "WpnMG1ProjectileLaserTrail";
 
    muzzleVelocity      = 400;
    velInheritFactor    = 1.0;
