@@ -32,6 +32,7 @@
 #include "T3D/decal/decalData.h"
 #include "T3D/lightDescription.h"
 #include "console/engineAPI.h"
+#include "NOTC/fx/multiNodeLaserBeam.h"
 
 
 IMPLEMENT_CO_DATABLOCK_V1(ProjectileData);
@@ -147,6 +148,9 @@ ProjectileData::ProjectileData()
       bounceEffectTypeMask[i] = 0xFFFFFFFF;
    }
 
+   dMemset( laserTrail, 0, sizeof( laserTrail ) );
+   dMemset( laserTrailId, 0, sizeof( laserTrailId ) );
+
    explosion = NULL;
    explosionId = 0;
 
@@ -241,6 +245,9 @@ void ProjectileData::initPersistFields()
    addField("bounceEffectTypeMask", TypeS32, Offset(bounceEffectTypeMask, ProjectileData), NumBounceEffects,
       "@brief Use corresponding bounce effect when colliding with objects of this type.\n\n");
 
+   addField("laserTrail", TYPEID< MultiNodeLaserBeamData >(), Offset(laserTrail, ProjectileData), NumLaserTrails,
+      "@brief MultiNodeLaserBeam datablocks used for projectile trails.\n\n");
+
    addField("explosion", TYPEID< ExplosionData >(), Offset(explosion, ProjectileData),
       "@brief Explosion datablock used when the projectile explodes outside of water.\n\n");
    addField("waterExplosion", TYPEID< ExplosionData >(), Offset(waterExplosion, ProjectileData),
@@ -332,14 +339,21 @@ bool ProjectileData::preload(bool server, String &errorStr)
             Con::errorf(ConsoleLogEntry::General, "ProjectileData::preload: Invalid packet, bad datablockId(particleWaterEmitter): %d", particleWaterEmitterId);
 
       if (!missEnemyEffect && missEnemyEffectId != 0)
-         if (Sim::findObject(missEnemyEffectId, explosion) == false)
+         if (Sim::findObject(missEnemyEffectId, missEnemyEffect) == false)
             Con::errorf(ConsoleLogEntry::General, "ProjectileData::preload: Invalid packet, bad datablockId(missEnemyEffect): %d", missEnemyEffectId);
 
       for(U32 i = 0; i < NumBounceEffects; i++)
       {
          if (!bounceEffect[i] && bounceEffectId[i] != 0)
-            if (Sim::findObject(bounceEffectId[i], explosion) == false)
+            if (Sim::findObject(bounceEffectId[i], bounceEffect[i]) == false)
                Con::errorf(ConsoleLogEntry::General, "ProjectileData::preload: Invalid packet, bad datablockId(bounceEffect[%i]): %d", i, bounceEffectId[i]);
+      }
+
+      for(U32 i = 0; i < NumLaserTrails; i++)
+      {
+         if (!laserTrail[i] && laserTrailId[i] != 0)
+            if (Sim::findObject(laserTrailId[i], laserTrail[i]) == false)
+               Con::errorf(ConsoleLogEntry::General, "ProjectileData::preload: Invalid packet, bad datablockId(laserTrail[%i]): %d", i, laserTrailId[i]);
       }
 
       if (!explosion && explosionId != 0)
@@ -436,6 +450,15 @@ void ProjectileData::packData(BitStream* stream)
       }
    }
 
+   for(U32 i = 0; i < NumLaserTrails; i++)
+   {
+      if(stream->writeFlag(laserTrail[i] != NULL))
+      {
+         stream->writeRangedU32(laserTrail[i]->getId(), DataBlockObjectIdFirst,
+                                                    DataBlockObjectIdLast);
+      }
+   }
+
    if (stream->writeFlag(explosion != NULL))
       stream->writeRangedU32(explosion->getId(), DataBlockObjectIdFirst,
                                                  DataBlockObjectIdLast);
@@ -525,6 +548,14 @@ void ProjectileData::unpackData(BitStream* stream)
       {
          bounceEffectId[i] = stream->readRangedU32(DataBlockObjectIdFirst, DataBlockObjectIdLast);
          stream->read(&bounceEffectTypeMask[i]);
+      }
+   }
+
+   for(U32 i = 0; i < NumLaserTrails; i++)
+   {
+      if(stream->readFlag())
+      {
+         laserTrailId[i] = stream->readRangedU32(DataBlockObjectIdFirst, DataBlockObjectIdLast);
       }
    }
 
@@ -656,6 +687,7 @@ Projectile::Projectile()
    mProjectileShape( NULL ),
    mActivateThread( NULL ),
    mMaintainThread( NULL ),
+   mEmissionCount( 0 ),
    mHasExploded( false ),
    mFadeValue( 1.0f )
 {
@@ -668,6 +700,8 @@ Projectile::Projectile()
 
    mLightState.clear();
    mLightState.setLightInfo( mLight );
+
+   dMemset( mLaserTrailList, 0, sizeof(mLaserTrailList) );
 
 	mTargetMode = None;
 	mTarget = NULL;
@@ -903,6 +937,15 @@ bool Projectile::onAdd()
 void Projectile::onRemove()
 {
 	this->scriptOnRemove();
+
+   for( S32 i = 0; i < ProjectileData::NumLaserTrails; i++ )
+   {
+      if(mLaserTrailList[i])
+      {
+         mLaserTrailList[i]->deleteOnFadeout();
+         mLaserTrailList[i] = NULL;
+      }
+   }
 
    if( !mParticleEmitter.isNull() )
    {
@@ -1357,6 +1400,7 @@ void Projectile::simulate( F32 dt )
    if ( isClientObject() )
    {
       emitParticles( mCurrPosition, newPosition, mCurrVelocity, U32( dt * 1000.0f ) );
+      this->addLaserTrailNode(newPosition);
       updateSound();
    }
 
@@ -1414,6 +1458,44 @@ void Projectile::updateTargetTracking()
 
 	mCurrVelocity = targetDir;
 	mCurrVelocity *= speed; 
+}
+
+void Projectile::addLaserTrailNode(const Point3F& pos, bool minorNode)
+{
+   if(this->isServerObject())
+      return;
+
+   if(mHasExploded)
+      return;
+
+   for(S32 i = 0; i < ProjectileData::NumLaserTrails; i++)
+   {
+      if( mLaserTrailList[i] == NULL )
+      {
+         if( mDataBlock->laserTrail[i] )
+         {
+            mLaserTrailList[i] = new MultiNodeLaserBeam();
+            mLaserTrailList[i]->setPalette(this->getPalette());
+            mLaserTrailList[i]->onNewDataBlock(mDataBlock->laserTrail[i], false);
+            if( !mLaserTrailList[i]->registerObject() )
+            {
+               Con::warnf( ConsoleLogEntry::General, "Could not register laserTrail %d for class: %s",i, mDataBlock->getName() );
+               delete mLaserTrailList[i];
+               mLaserTrailList[i] = NULL;
+            }
+            else
+            {
+               mLaserTrailList[i]->addNodes(pos);
+               mLaserTrailList[i]->setRender(true);
+               mLaserTrailList[i]->fade();
+            }
+         }
+      }
+      else
+      {
+         mLaserTrailList[i]->addNodes(pos);
+      }
+   }
 }
 
 void Projectile::advanceTime(F32 dt)

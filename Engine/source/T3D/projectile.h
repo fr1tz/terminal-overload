@@ -34,6 +34,8 @@ class SFXSource;
 class ParticleEmitterData;
 class ParticleEmitter;
 class Projectile;
+class MultiNodeLaserBeamData;
+class MultiNodeLaserBeam;
 
 //--------------------------------------------------------------------------
 /// Datablock for projectiles.  This class is the base class for all other projectiles.
@@ -46,7 +48,8 @@ protected:
 
 public:
    enum {
-      NumBounceEffects = 4
+      NumBounceEffects = 4,
+      NumLaserTrails = 3
    };
 
    // variables set in datablock definition:
@@ -100,6 +103,10 @@ public:
    ExplosionData* bounceEffect[NumBounceEffects];
    S32 bounceEffectId[NumBounceEffects];
    U32 bounceEffectTypeMask[NumBounceEffects];
+
+	// Laser trails (purely cosmetic)
+   MultiNodeLaserBeamData* laserTrail[NumLaserTrails];
+   S32 laserTrailId[NumLaserTrails];
 
    ExplosionData* explosion;
    S32 explosionId;
@@ -238,6 +245,7 @@ public:
    void missedEnemiesCheck(const Point3F& start, const Point3F& end);
    bool missedObject(const SceneObject* obj, const Point3F& oldPos, const Point3F& newPos);
    void createBounceExplosion(const RayInfo& rInfo, bool decal = true);
+   void addLaserTrailNode(const Point3F& pos, bool minorNode = false);
 
 public:
    Point3F  mCurrPosition;
@@ -282,6 +290,8 @@ protected:
    SimObjectPtr< ParticleEmitter > mParticleEmitter;
    SimObjectPtr< ParticleEmitter > mParticleWaterEmitter;
 
+   MultiNodeLaserBeam* mLaserTrailList[ProjectileData::NumLaserTrails];
+
    SFXSource* mSound;
 
    Point3F  mInitialPosition;
@@ -312,6 +322,7 @@ protected:
    LightInfo *mLight;
    LightState mLightState;   
 
+   U32              mEmissionCount;
    bool             mHasExploded;   ///< Prevent rendering, lighting, and duplicate explosions.
    F32              mFadeValue;     ///< set in processTick, interpolation between fadeDelay and lifetime
                                     ///< in data block
