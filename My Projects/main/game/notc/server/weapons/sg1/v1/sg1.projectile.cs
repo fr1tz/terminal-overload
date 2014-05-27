@@ -29,9 +29,10 @@ datablock ShotgunProjectileData(WpnSG1Projectile)
 
    explosion           = "WpnSG1ProjectileExplosion";
    decal               = "WpnSG1ProjectileDecal";
-   particleEmitter     = "WpnSG1ProjectileEmitter";
+   //particleEmitter     = "WpnSG1ProjectileEmitter";
+   laserTrail[0]       = "WpnSG1ProjectileLaserTrail";
 
-   muzzleVelocity      = "2000";
+   muzzleVelocity      = 9999;
    velInheritFactor    = 0;
 
    armingDelay         = 0;

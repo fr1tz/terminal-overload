@@ -28,33 +28,28 @@ datablock DecalData(WpnSG1ProjectileDecal)
    paletteSlot = "0";
 };
 
-datablock ParticleData(WpnSG1ProjectileEmitterParticle : DefaultParticle)
+datablock MultiNodeLaserBeamData(WpnSG1ProjectileLaserTrail)
 {
-   sizes[0] = "0.0976622";
-   sizes[1] = "0.399805";
-   sizes[2] = "0.997986";
-   sizes[3] = "0.997986";
-   times[1] = "1";
-   times[2] = "1";
-   dragCoefficient = "0.99218";
-   inheritedVelFactor = "0";
-   textureName = "content/xa/rotc/p.5.4/textures/rotc/zone.grid.png";
-   animTexName = "content/xa/rotc/p.5.4/textures/rotc/zone.grid.png";
-   colors[0] = "1 1 1 1";
-   colors[1] = "1 1 1 0";
-   lifetimeMS = "500";
-   lifetimeVarianceMS = "250";
-   useInvAlpha = "0";
-   colors[3] = "0.732283 1 0 0";
-};
+	material = "xa_notc_core_shapes_sg1_projectile_p1_lasertrail0mat";
+	renderMode = $MultiNodeLaserBeamRenderMode::FaceViewer;
+   width = 0.5;
+	fadeTime = 100;
+	windCoefficient = 0.0;
 
-datablock ParticleEmitterData(WpnSG1ProjectileEmitter : DefaultEmitter)
-{
-   particles = "WpnSG1ProjectileEmitterParticle";
-   ejectionPeriodMS = "1";
-   ejectionOffset = "0";
-   periodVarianceMS = "0";
-   paletteSlot = 0;
+	// node x movement...
+	nodeMoveMode[0]     = $NodeMoveMode::DynamicSpeed;
+	nodeMoveSpeed[0]    = 6.0;
+	nodeMoveSpeedAdd[0] = -12.0;
+	// node y movement...
+	nodeMoveMode[1]     = $NodeMoveMode::DynamicSpeed;
+	nodeMoveSpeed[1]    = 6.0;
+	nodeMoveSpeedAdd[1] = -12.0;
+	// node z movement...
+	nodeMoveMode[2]     = $NodeMoveMode::DynamicSpeed;
+	nodeMoveSpeed[2]    = 6.0;
+	nodeMoveSpeedAdd[2] = -12.0;
+
+   nodeDistance = 5;
 };
 
 
