@@ -866,7 +866,8 @@ function MaterialEditorGui::guiSync( %this, %material )
       MaterialEditorPropertiesWindow-->specMapNameText.setText( (%material).specularMap[%layer] );
       MaterialEditorPropertiesWindow-->specMapDisplayBitmap.setBitmap( (%material).specularMap[%layer] );
    }
-   
+
+   MaterialEditorPropertiesWindow-->diffuseColorPaletteSlotTextEdit.setText( getWord((%material).diffuseColorPaletteSlot[%layer], 0) );
    MaterialEditorPropertiesWindow-->detailScaleTextEdit.setText( getWord((%material).detailScale[%layer], 0) );
    MaterialEditorPropertiesWindow-->detailNormalStrengthTextEdit.setText( getWord((%material).detailNormalMapStrength[%layer], 0) );
    
@@ -879,7 +880,9 @@ function MaterialEditorGui::guiSync( %this, %material )
    MaterialEditorPropertiesWindow-->specularStrengthSlider.setValue((%material).specularStrength[%layer]);
    MaterialEditorPropertiesWindow-->pixelSpecularCheckbox.setValue((%material).pixelSpecular[%layer]);
    MaterialEditorPropertiesWindow-->glowCheckbox.setValue((%material).glow[%layer]);
+   MaterialEditorPropertiesWindow-->glowOnlyCheckbox.setValue((%material).glowOnly[%layer]);
    MaterialEditorPropertiesWindow-->emissiveCheckbox.setValue((%material).emissive[%layer]);
+   MaterialEditorPropertiesWindow-->wireframeCheckbox.setValue((%material).wireframe[%layer]);
    MaterialEditorPropertiesWindow-->parallaxTextEdit.setText((%material).parallaxScale[%layer]);
    MaterialEditorPropertiesWindow-->parallaxSlider.setValue((%material).parallaxScale[%layer]);
 
@@ -1113,6 +1116,12 @@ function MaterialEditorGui::updateTextureMap( %this, %type, %action )
       %bitmapCtrl.setBitmap("tools/materialeditor/gui/unknownImage");
       MaterialEditorGui.updateActiveMaterial(%type @ "Map[" @ %layer @ "]","");
    }
+}
+
+function MaterialEditorGui::updateDiffuseColorPaletteSlot(%this, %slot)
+{
+   %layer = MaterialEditorGui.currentLayer;
+   MaterialEditorGui.updateActiveMaterial("diffuseColorPaletteSlot[" @ %layer @ "]", %slot);
 }
 
 function MaterialEditorGui::updateDetailScale(%this,%newScale)
