@@ -729,6 +729,19 @@ DefineEngineMethod( GameBase, applyRadialImpulse, void, ( Point3F origin, F32 ra
    object->applyRadialImpulse( origin, radius, magnitude );
 }
 
+DefineEngineMethod( GameBase, setTeamId, void, ( S32 teamId ),,
+   "@brief Set the object's team ID.\n\n"
+   "@param teamId The team ID\n")
+{
+   object->setTeamId(teamId);
+}
+
+DefineEngineMethod( GameBase, getTeamId, S32, ( ),,
+   "@brief Returns object's teamID.\n\n")
+{
+   return object->getTeamId();
+}
+
 DefineEngineMethod( GameBase, setTargetingMask, void, ( S32 mask ),,
    "@brief Set bitmask used for mounted image targeting.\n\n"
 
