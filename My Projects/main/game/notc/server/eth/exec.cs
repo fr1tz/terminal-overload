@@ -25,6 +25,7 @@ function executeEthernetServerScripts()
    exec("notc/server/weapons/mg1/v1/exec.cs");
    exec("notc/server/weapons/ml1/v1/exec.cs");
 
+   exec("./eth.cs");
    exec("./gameCoreETH.cs");
    exec("./territoryZone.cs");
 }

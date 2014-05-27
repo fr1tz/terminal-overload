@@ -6,7 +6,8 @@ function GameCoreETH::onMissionLoaded(%game)
    //echo (%game @"\c4 -> "@ %game.class @" -> GameCoreETH::onMissionLoaded");
 
    $Server::MissionType = "ETH";
-   parent::onMissionLoaded(%game);
+   ETH::createTeams(%game);
+   Parent::onMissionLoaded(%game);
 }
 
 function GameCoreETH::initGameVars(%game)
@@ -97,6 +98,12 @@ function GameCoreETH::onClientEnterGame(%game, %client)
 {
    //echo (%game @"\c4 -> "@ %game.class @" -> GameCoreETH::onClientEnterGame");
 
+	// Join team with less players.
+	if(Game.team1.numPlayers > Game.team2.numPlayers)
+   	ETH::joinTeam(%client, 2);
+   else
+      ETH::joinTeam(%client, 1);
+
    Parent::onClientEnterGame(%game, %client);
    
    if($Game::Duration)
@@ -129,7 +136,7 @@ function GameCoreETH::processClientSettingsReply(%game, %client, %setting, %valu
    //echo (%game @"\c4 -> "@ %game.class @" -> GameCoreETH::processClientSettingsReply");
    
    %status = "Ignored";
-   
+
    if(%setting $= "PlayerColor0")
    {
       if(isValidPlayerColor(%value))
@@ -139,7 +146,7 @@ function GameCoreETH::processClientSettingsReply(%game, %client, %setting, %valu
       }
       else
          %status = "Invalid";
-      
+
    }
    else if(%setting $= "PlayerColor1")
    {
@@ -161,9 +168,20 @@ function GameCoreETH::loadOut(%game, %player)
    
    Parent::loadOut(%game, %player);
    
+   %team = %player.client.team;
+   %player.setTeamId(%team.teamId);
+   %teamColorF = %team.color;
+   %teamColorI = getWord(%teamColorF, 0)*255 SPC
+                 getWord(%teamColorF, 1)*255 SPC
+                 getWord(%teamColorF, 2)*255 SPC
+                 255;
+
+   %player.paletteColors[0] = %teamColorI;
+   %player.paletteColors[1] = %teamColorI;
+   
    if(isObject(%player.light))
    {
-      %colorI = %player.client.paletteColors[0];
+      %colorI = %player.paletteColors[0];
       %colorF = getWord(%colorI, 0) / 255 SPC
                 getWord(%colorI, 1) / 255 SPC
                 getWord(%colorI, 2) / 255 SPC
@@ -203,7 +221,7 @@ function GameCoreETH::onUnitDestroyed(%game, %obj)
    
    %client = %obj.client;
    if(isObject(%client) && %client.player == %obj)
-      DM::onDeath(%client);
+      ETH::onDeath(%client);
 }
 
 function GameCoreETH::clientAction(%game, %client, %nr)

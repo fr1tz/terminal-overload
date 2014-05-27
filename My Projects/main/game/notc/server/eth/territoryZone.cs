@@ -136,9 +136,31 @@ function TerritoryZones_reset()
 				for (%i = 0; %i < %count; %i++)
 				{
 					%zone = %group.getObject(%i);
-					%zone.getDataBlock().reset(%zone);
+     
+               if(%i > 0)
+               {
+                  %z = %group.getObject(%i-1);
+                  %zone.zNeighbour[0] = %z;
+               }
+               
+               if(%i < %count - 1)
+               {
+                  %z = %group.getObject(%i+1);
+                  %zone.zNeighbour[1] = %z;
+               }
+               
+               %zone.zNeighbour[2] = -1;
+               %zone.zNeighbour[3] = -1;
+     
+         		if( %zone.initialOwner != 0 )
+         			%zone.getDataBlock().setZoneOwner(%zone, %zone.initialOwner);
+         		else
+         			%zone.getDataBlock().setZoneOwner(%zone, 0);
+
+         		%zone.zProtected = %zone.initiallyProtected;
+
+         		%zone.getDataBlock().updateOwner(%zone);
 				}
-				
 				TerritoryZones_repairTick();
 		}
 		else
@@ -380,7 +402,16 @@ function TerritoryZone::updateOwner(%this, %zone)
 	else if(%zone.getTeamId() == 1)
 		%color = 2;
 
-	%zone.setColor(%color, %color, 1);
+	//%zone.setColor(%color, %color, 1);
+ 
+   %colorF = %this.colors[%color];
+ 
+   %colorI = getWord(%colorF, 0)*255 SPC
+             getWord(%colorF, 1)*255 SPC
+             getWord(%colorF, 2)*255 SPC
+             getWord(%colorF, 3)*255;
+   echo(%colorF SPC "->" SPC %colorI);
+   %zone.paletteColors[0] = %colorI;
 
 	if(%color != %zone.zColor)
 		%zone.flash(%color + 5, %color + 5, 1);
@@ -446,73 +477,4 @@ function TerritoryZone::setZoneOwner(%this, %zone, %teamId)
 	checkRoundEnd();
 }
 
-function TerritoryZone::reset(%this, %zone)
-{
-	if($Game::GameType == $Game::TeamJoust)
-	{
-		if($Game::TeamJoustState == 0)
-		{
-			%zone.setTeamId(%zone.initialOwner);
-			if(%zone.initiallyProtected)
-				%zone.isProtected = true;
-
-			if(%zone.getTeamId() == 0 || %zone.initiallyProtected)
-				%color = 7;
-			else
-				%color = 1 + %zone.getTeamId();
-			%zone.setColor(%color, %color, 1);
-		}
-		else if($Game::TeamJoustState == 1)
-		{
-			if(%zone.getTeamId() == 0 || %zone.initiallyProtected)
-				%zone.setColor(12, 12, 1);
-		}
-		else if($Game::TeamJoustState == 2)
-		{
-			if(%zone.getTeamId() == 0 || %zone.initiallyProtected)
-				%zone.setColor(11, 11, 1);
-		}
-		else if($Game::TeamJoustState == 3)
-		{
-			if(%zone.getTeamId() == 0 || %zone.initiallyProtected)
-			{
-				if(%zone.getTeamId() == 0)
-					%color = 13;
-				else if(%zone.initiallyProtected)
-					%color = 3 + %zone.getTeamId();
-				%zone.setColor(%color, %color, 1);
-			}
-		}
-
-		if($Game::TeamJoustState < 4)
-		{
-	  		if(%zone.getTeamId() == 0 || %zone.initiallyProtected)
-	  			%zone.flash(15, 15, 1);
-		}
-	}
-	else
-	{
-		%zone.zHasNeighbour = false;
-		for(%i = 0; %i < 4; %i++)
-		{	
-			%z = TerritoryZone_find(%zone.connection[%i]);
-			if(isObject(%z))
-			{
-				%zone.zNeighbour[%i] = %z;
-				%zone.zHasNeighbour = true;
-			}
-			else
-				%zone.zNeighbour[%i] = -1;
-		}
-	
-		if( %zone.initialOwner != 0 )
-			%this.setZoneOwner(%zone, %zone.initialOwner);
-		else
-			%this.setZoneOwner(%zone, 0);
-	
-		%zone.zProtected = %zone.initiallyProtected;
-	
-		%this.updateOwner(%zone);
-	}
-}
 
