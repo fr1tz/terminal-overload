@@ -32,7 +32,7 @@ datablock MultiNodeLaserBeamData(WpnSG1ProjectileLaserTrail)
 {
 	material = "xa_notc_core_shapes_sg1_projectile_p1_lasertrail0mat";
 	renderMode = $MultiNodeLaserBeamRenderMode::FaceViewer;
-   width = 0.5;
+   width = 0.25;
 	fadeTime = 100;
 	windCoefficient = 0.0;
 

@@ -24,14 +24,17 @@ singleton Material(xa_notc_core_shapes_sg1_projectile_p1_lasertrail0mat)
    castShadows = "0";
    translucent = "1";
    showFootprints = "0";
-   glow[0] = "0";
+   glow[0] = "1";
    emissive[0] = "1";
    mapTo = "zone.png";
    vertColor[0] = "1";
-   diffuseMap[0] = "content/xa/notc/core/shapes/sg1/projectile/p1/trail2.png";
    vertColor[1] = "1";
    glow[1] = "1";
    emissive[1] = "1";
-   diffuseMap[1] = "content/xa/notc/core/shapes/sg1/projectile/p1/trail.png";
+   diffuseColorPaletteSlot[1] = "-1";
+   glowOnly[1] = "1";
+   wireframe[0] = "1";
+   wireframe[1] = "1";
+   materialTag0 = "Miscellaneous";
 };
 
