@@ -77,3 +77,32 @@ datablock ParticleEmitterData(WpnMG1ProjectileParticleEmitter)
 	particles = "WpnMG1ProjectileParticleEmitter_Particles";
    paletteSlot = 0;
 };
+
+//-----------------------------------------------------------------------------
+// laser trail
+
+datablock MultiNodeLaserBeamData(WpnMG1ProjectileLaserTrail)
+{
+	material = "xa_notc_core_shapes_mg1_projectile_p1_lasertrail0mat";
+	renderMode = $MultiNodeLaserBeamRenderMode::FaceViewer;
+   width = 0.2;
+	fadeTime = 1000;
+	windCoefficient = 0.0;
+
+   // node x movement...
+   nodeMoveMode[0]     = $NodeMoveMode::None;
+   nodeMoveSpeed[0]    = -0.002;
+   nodeMoveSpeedAdd[0] =  0.004;
+   // node y movement...
+   nodeMoveMode[1]     = $NodeMoveMode::None;
+   nodeMoveSpeed[1]    = -0.002;
+   nodeMoveSpeedAdd[1] =  0.004;
+   // node z movement...
+   nodeMoveMode[2]     = $NodeMoveMode::ConstantSpeed;
+   nodeMoveSpeed[2]    = 0.5;
+   nodeMoveSpeedAdd[2] = 1.0;
+
+	nodeDistance = 3;
+
+	fadeTime = 1000;
+};
