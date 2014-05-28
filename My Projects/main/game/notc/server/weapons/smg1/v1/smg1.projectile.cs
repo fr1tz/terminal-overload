@@ -7,7 +7,7 @@ datablock ShotgunProjectileData(WpnSMG1Projectile)
 
    // ShotgunProjectileData fields
 	numBullets = 1;
-	range = 200;
+	range = 1000;
 	muzzleSpreadRadius = 0.0;
 	referenceSpreadRadius = 0.0;
 	referenceSpreadDistance = 50;
@@ -31,8 +31,9 @@ datablock ShotgunProjectileData(WpnSMG1Projectile)
    explosion           = "WpnSMG1ProjectileExplosion";
    decal               = "WpnSMG1ProjectileDecal";
    //particleEmitter     = "WpnSMG1ProjectileParticleEmitter";
+   laserTrail[0]       = WpnSMG1ProjectileLaserTrail0;
+   laserTrail[1]       = WpnSMG1ProjectileLaserTrail1;
 
-   muzzleVelocity      = 5;
    velInheritFactor    = 0;
 
    armingDelay         = 0;
