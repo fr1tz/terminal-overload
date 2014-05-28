@@ -3354,7 +3354,6 @@ void ShapeBase::setImageState(U32 imageSlot, U32 newState,bool force)
 
 					Point3F vel = muzzleVector;
 					vel.normalize();
-					vel *= shotgunData->muzzleVelocity;
 					vel += this->getVelocity()*shotgunData->velInheritFactor;
 
 					ShotgunProjectile* prj  = new ShotgunProjectile(isClientObject(), true);

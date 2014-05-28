@@ -33,6 +33,7 @@
 #include "T3D/lightDescription.h"
 #include "console/engineAPI.h"
 #include "T3D/gameBase/gameConnection.h"
+#include "NOTC/fx/multiNodeLaserBeam.h"
 
 static MRandomLCG sRandom(0x1);
 
@@ -1028,40 +1029,67 @@ void ShotgunProjectile::clientProcessHits()
 		{
 			Point3F impactVec = hit->impactVecs[i];
 			Point3F impactNormal = hit->impactNormals[i];
-
 			Point3F impactPos = objectPos + impactVec;
 
-			Point3F velocity = impactPos - muzzlePoint;
-			F32 dist = velocity.len();
-			velocity.normalize(); 
-			//if(mDataBlock->spread == 0.0 && !hit->object.isNull())
-			//	velocity *= dist / (mDataBlock->lifetime * (F32(TickMs) / 1000.0f));
-			//else
-				velocity *= mDataBlock->muzzleVelocity;
+         this->missedEnemiesCheck(muzzlePoint, impactPos);
 
-			ShotgunProjectileTracer* prj = new ShotgunProjectileTracer(&impactPos);
-			prj->mCurrPosition     = muzzlePoint;
-			prj->mCurrVelocity     = velocity;
-			prj->mSourceObject     = mSourceObject;
-			prj->mSourceObjectSlot = mSourceObjectSlot;
+         if(false /*mDataBlock->muzzleVelocity > 0*/)
+         {
+			   Point3F velocity = impactPos - muzzlePoint;
+			   F32 dist = velocity.len();
+			   velocity.normalize(); 
+			   //if(mDataBlock->spread == 0.0 && !hit->object.isNull())
+			   //	velocity *= dist / (mDataBlock->lifetime * (F32(TickMs) / 1000.0f));
+			   //else
+				   velocity *= mDataBlock->muzzleVelocity;
 
-			prj->setTeamId(this->getTeamId());
-         prj->setPalette(this->getPalette());
-			prj->onNewDataBlock(mDataBlock, false);
-			if(!prj->registerObject())
-			{
-				Con::warnf(ConsoleLogEntry::General, "Could not register shotgun tracer projectile for image: %s", mDataBlock->getName());
-				delete prj;
-				prj = NULL;
-			}
+			   ShotgunProjectileTracer* prj = new ShotgunProjectileTracer(&impactPos);
+			   prj->mCurrPosition     = muzzlePoint;
+			   prj->mCurrVelocity     = velocity;
+			   prj->mSourceObject     = mSourceObject;
+			   prj->mSourceObjectSlot = mSourceObjectSlot;
 
-			if(hit->object.isNull())
-			{
-#if 0
-				prj->disableLaserTrail(1);
-#endif
-				continue;
-			}
+			   prj->setTeamId(this->getTeamId());
+            prj->setPalette(this->getPalette());
+			   prj->onNewDataBlock(mDataBlock, false);
+			   if(!prj->registerObject())
+			   {
+				   Con::warnf(ConsoleLogEntry::General, "Could not register shotgun tracer projectile for image: %s", mDataBlock->getName());
+				   delete prj;
+				   prj = NULL;
+			   }
+
+			   if(hit->object.isNull())
+			   {
+   #if 0
+				   prj->disableLaserTrail(1);
+   #endif
+				   continue;
+			   }
+         }
+
+         for(S32 i = 0; i < ProjectileData::NumLaserTrails; i++)
+         {
+            if( mDataBlock->laserTrail[i] )
+            {
+               MultiNodeLaserBeam* trail = new MultiNodeLaserBeam();
+               trail->setPalette(this->getPalette());
+               trail->onNewDataBlock(mDataBlock->laserTrail[i], false);
+               if(!trail->registerObject())
+               {
+                  Con::warnf( ConsoleLogEntry::General, "Could not register laserTrail %d for class: %s",i, mDataBlock->getName() );
+                  delete trail;
+               }
+               else
+               {
+                  trail->setRender(true);
+                  trail->addNodes(muzzlePoint);
+                  trail->addNodes(impactPos);
+                  trail->fade();
+                  trail->deleteOnFadeout();
+               }
+            }
+         }
 
 			SceneObject* sObj = hit->object.operator->();
 #if 0
@@ -1106,7 +1134,7 @@ void ShotgunProjectile::clientProcessHits()
 				xform.setPosition(expPos);
 				pExplosion->setTransform(xform);
 				pExplosion->setInitialState(expPos, impactNormal);
-				pExplosion->setCollideType(hit->object->getTypeMask());
+				pExplosion->setCollideType(hit->object ? hit->object->getTypeMask() : 0);
 				if (pExplosion->registerObject() == false)
 				{
 					Con::errorf(ConsoleLogEntry::General, "ShotgunProjectile(%s)::explode: couldn't register explosion",
@@ -1115,8 +1143,8 @@ void ShotgunProjectile::clientProcessHits()
 					pExplosion = NULL;
 				}
 
-				if(mDataBlock->decal
-				&& !(sObj->getTypeMask() & Projectile::csmDynamicCollisionMask)
+				if(mDataBlock->decal && hit->object
+				&& !(hit->object->getTypeMask() & Projectile::csmDynamicCollisionMask)
 				&& (hit->object->getTypeMask() & Projectile::csmStaticCollisionMask))
 				{
 					DecalInstance* dinst = gDecalManager->addDecal(impactPos, impactNormal, 0.0f, mDataBlock->decal );
