@@ -559,6 +559,10 @@ if(TORQUE_SDL)
     addLib(SDL2)
 endif()
 
+if(TORQUE_STATIC_CODE_ANALYSIS)
+    addDef( "ON_FAIL_ASSERTFATAL=exit(1)" )
+endif()
+
 ###############################################################################
 # Include Paths
 ###############################################################################
