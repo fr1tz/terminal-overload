@@ -9,11 +9,9 @@ singleton Material(xa_notc_core_shapes_standardcat_etherboard_p1_mat1)
    glow[0] = "1";
    emissive[0] = "1";
    translucent = "1";
-   diffuseColor[1] = "1 1 1 1";
-   diffuseMap[1] = "content/xa/notc/core/textures/white.128.png";
-   detailMap[1] = "content/xa/notc/core/textures/grid.128.4.png";
+   diffuseColor[1] = "0.556863 0.556863 0.556863 0";
    detailScale[1] = "4 4";
-   glow[1] = "1";
+   glow[1] = "0";
    emissive[1] = "1";
    animFlags[1] = "0x00000001";
    scrollDir[1] = "1 1";
