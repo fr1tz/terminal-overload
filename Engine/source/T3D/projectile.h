@@ -107,6 +107,7 @@ public:
 	// Laser trails (purely cosmetic)
    MultiNodeLaserBeamData* laserTrail[NumLaserTrails];
    S32 laserTrailId[NumLaserTrails];
+   S32 laserTrailFlags[NumLaserTrails];
 
    ExplosionData* explosion;
    S32 explosionId;

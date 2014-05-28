@@ -150,6 +150,7 @@ ProjectileData::ProjectileData()
 
    dMemset( laserTrail, 0, sizeof( laserTrail ) );
    dMemset( laserTrailId, 0, sizeof( laserTrailId ) );
+   dMemset( laserTrailFlags, 0, sizeof( laserTrailFlags ) );
 
    explosion = NULL;
    explosionId = 0;
@@ -247,6 +248,8 @@ void ProjectileData::initPersistFields()
 
    addField("laserTrail", TYPEID< MultiNodeLaserBeamData >(), Offset(laserTrail, ProjectileData), NumLaserTrails,
       "@brief MultiNodeLaserBeam datablocks used for projectile trails.\n\n");
+   addField("laserTrailFlags", TypeS32, Offset(laserTrailFlags, ProjectileData), NumLaserTrails,
+      "@brief Flags for the corresponding laser trail.\n\n");
 
    addField("explosion", TYPEID< ExplosionData >(), Offset(explosion, ProjectileData),
       "@brief Explosion datablock used when the projectile explodes outside of water.\n\n");
@@ -456,6 +459,7 @@ void ProjectileData::packData(BitStream* stream)
       {
          stream->writeRangedU32(laserTrail[i]->getId(), DataBlockObjectIdFirst,
                                                     DataBlockObjectIdLast);
+         stream->write(laserTrailFlags[i]);
       }
    }
 
@@ -556,6 +560,7 @@ void ProjectileData::unpackData(BitStream* stream)
       if(stream->readFlag())
       {
          laserTrailId[i] = stream->readRangedU32(DataBlockObjectIdFirst, DataBlockObjectIdLast);
+         stream->read(&laserTrailFlags[i]);
       }
    }
 

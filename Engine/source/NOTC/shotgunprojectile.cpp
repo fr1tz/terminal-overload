@@ -1085,6 +1085,12 @@ void ShotgunProjectile::clientProcessHits()
                   trail->setRender(true);
                   trail->addNodes(muzzlePoint);
                   trail->addNodes(impactPos);
+                  if(mDataBlock->laserTrailFlags[i] & 1)
+                     trail->smooth();
+                  if(mDataBlock->laserTrailFlags[i] & 2)
+                     trail->smoothDist(2);
+                  if(mDataBlock->laserTrailFlags[i] & 4)
+                     trail->smoothReverseDist(mDataBlock->range);
                   trail->fade();
                   trail->deleteOnFadeout();
                }
