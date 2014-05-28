@@ -47,7 +47,7 @@ function onStart()
    //$pref::Video::forcePixVersion = true;
    //$pref::Video::forcedPixVersion = 0;
 
-   if ($platform $= "macos")
+   //if ($platform $= "macos")
       $pref::Video::displayDevice = "OpenGL";
    //else
       //$pref::Video::displayDevice = "D3D9";
