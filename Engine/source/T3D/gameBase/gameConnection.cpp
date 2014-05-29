@@ -595,7 +595,7 @@ bool GameConnection::getControlCameraTransform(F32 dt, MatrixF* mat)
 
    if (dt) 
    {
-      if (mFirstPerson || obj->onlyFirstPerson()) 
+      if (!obj->onlyThirdPerson() && (mFirstPerson || obj->onlyFirstPerson())) 
       {
          if (mCameraPos > 0)
             if ((mCameraPos -= mCameraSpeed * dt) <= 0)
@@ -609,7 +609,7 @@ bool GameConnection::getControlCameraTransform(F32 dt, MatrixF* mat)
       }
    }
 
-   if (!sChaseQueueSize || mFirstPerson || obj->onlyFirstPerson())
+   if (!sChaseQueueSize || ((mFirstPerson || obj->onlyFirstPerson() && !obj->onlyThirdPerson())))
       obj->getCameraTransform(&mCameraPos,mat);
    else 
    {

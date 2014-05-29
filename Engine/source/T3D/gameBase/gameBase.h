@@ -414,6 +414,7 @@ public:
    virtual bool isValidCameraFov( F32 fov ) { return true; }
    virtual bool useObjsEyePoint() const { return false; }
    virtual bool onlyFirstPerson() const { return false; }
+   virtual bool onlyThirdPerson() const { return false; }
    virtual F32 getDamageFlash() const { return 0.0f; }
    virtual F32 getWhiteOut() const { return 0.0f; }
    

@@ -175,6 +175,7 @@ ShapeBaseData::ShapeBaseData()
    shapeTrailsMaterialName( StringTable->insert("") ),
    shapeTrailsMatInst( NULL ),
    firstPersonOnly( false ),
+   thirdPersonOnly( false ),
    useEyePoint( false ),
    cubeDescId( 0 ),
    reflectorDesc( NULL ),
@@ -571,6 +572,9 @@ void ShapeBaseData::initPersistFields()
       addField( "firstPersonOnly", TypeBool, Offset(firstPersonOnly, ShapeBaseData),
          "Flag controlling whether the view from this object is first person "
          "only." );
+      addField( "thirdPersonOnly", TypeBool, Offset(thirdPersonOnly, ShapeBaseData),
+         "Flag controlling whether the view from this object is third person "
+         "only." );
       addField( "useEyePoint", TypeBool, Offset(useEyePoint, ShapeBaseData),
          "Flag controlling whether the client uses this object's eye point to "
          "view from." );
@@ -745,6 +749,7 @@ void ShapeBaseData::packData(BitStream* stream)
 
    stream->writeFlag(inheritEnergyFromMount);
    stream->writeFlag(firstPersonOnly);
+   stream->writeFlag(thirdPersonOnly);
    stream->writeFlag(useEyePoint);
    
    if( stream->writeFlag( reflectorDesc != NULL ) )
@@ -854,6 +859,7 @@ void ShapeBaseData::unpackData(BitStream* stream)
 
    inheritEnergyFromMount = stream->readFlag();
    firstPersonOnly = stream->readFlag();
+   thirdPersonOnly = stream->readFlag();
    useEyePoint = stream->readFlag();
 
    if( stream->readFlag() )
@@ -2302,6 +2308,11 @@ void ShapeBase::setWhiteOut(const F32 flash)
 bool ShapeBase::onlyFirstPerson() const
 {
    return mDataBlock->firstPersonOnly;
+}
+
+bool ShapeBase::onlyThirdPerson() const
+{
+   return mDataBlock->thirdPersonOnly;
 }
 
 bool ShapeBase::useObjsEyePoint() const

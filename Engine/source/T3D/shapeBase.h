@@ -647,6 +647,7 @@ public:
    /// @name Misc. Settings
    /// @{
    bool firstPersonOnly;            ///< Do we allow only first person view of this image?
+   bool thirdPersonOnly;            ///< Do we allow only third person view of this image?
    bool useEyePoint;                ///< Do we use this object's eye point to view from?
    bool isInvincible;               ///< If set, object cannot take damage (won't show up with damage bar either)
    bool renderWhenDestroyed;        ///< If set, will not render this object when destroyed.
@@ -1960,6 +1961,9 @@ public:
 
    /// Returns true if this object can only be used as a first person camera
    bool onlyFirstPerson() const;
+
+   /// Returns true if this object can only be used as a third person camera
+   bool onlyThirdPerson() const;
 
    /// Returns the vertical field of view in degrees for 
    /// this object if used as a camera.
