@@ -171,6 +171,8 @@ function ETH::onDeath(%client)
 
 function ETH::startNewRound()
 {
+   Game.roundRestarting = true;
+
    // Cleanup
    for( %idx = MissionCleanup.getCount()-1; %idx >= 0; %idx-- )
    {
@@ -178,8 +180,7 @@ function ETH::startNewRound()
       if(!%obj.isMethod("getType"))
          continue;
       if(%obj.getType() & $TypeMasks::ProjectileObjectType
-      || %obj.getType() & $TypeMasks::PlayerObjectType
-      || %obj.getType() & $TypeMasks::CorpseObjectType)
+      || %obj.getType() & $TypeMasks::ShapeBaseObjectType)
          %obj.delete();
    }
 

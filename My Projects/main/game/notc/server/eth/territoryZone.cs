@@ -55,15 +55,15 @@ function TerritoryZones_enableRepair(%shape)
 	if(%shape.isCAT)
 		return;
 
-	if(%shape.getTeamId() == $Team1.teamId)
+	if(%shape.getTeamId() == Game.team1.teamId)
 	{
-		if(!$Team1.repairObjects.isMember(%shape))
-			$Team1.repairObjects.add(%shape);
+		if(!Game.team1.repairObjects.isMember(%shape))
+			Game.team1.repairObjects.add(%shape);
 	}
-	else if(%shape.getTeamId() == $Team2.teamId)
+	else if(%shape.getTeamId() == Game.team2.teamId)
 	{
-		if(!$Team2.repairObjects.isMember(%shape))
-			$Team2.repairObjects.add(%shape);
+		if(!Game.team2.repairObjects.isMember(%shape))
+			Game.team2.repairObjects.add(%shape);
 	}
 }
 
@@ -72,15 +72,15 @@ function TerritoryZones_disableRepair(%shape)
 	if(%shape.isCAT)
 		return;
 
-	if(%shape.getTeamId() == $Team1.teamId)
+	if(%shape.getTeamId() == Game.team1.teamId)
 	{
-		if($Team1.repairObjects.isMember(%shape))
-			$Team1.repairObjects.remove(%shape);
+		if(Game.team1.repairObjects.isMember(%shape))
+			Game.team1.repairObjects.remove(%shape);
 	}
-	else if(%shape.getTeamId() == $Team2.teamId)
+	else if(%shape.getTeamId() == Game.team2.teamId)
 	{
-		if($Team2.repairObjects.isMember(%shape))
-			$Team2.repairObjects.remove(%shape);
+		if(Game.team2.repairObjects.isMember(%shape))
+			Game.team2.repairObjects.remove(%shape);
 	}
 	
 	%shape.setRepairRate(0);
@@ -92,27 +92,27 @@ function TerritoryZones_repairTick()
 {
 	cancel($TerritoryZones_repairTickThread);
  
-    if(!isObject($Team1.repairObjects) || !isObject($Team2.repairObjects))
+    if(!isObject(Game.team1.repairObjects) || !isObject(Game.team2.repairObjects))
         return;
 
-	%count = $Team1.repairObjects.getCount();
+	%count = Game.team1.repairObjects.getCount();
 	if(%count != 0)
 	{
-		%repair = $Team1.repairSpeed / %count;
+		%repair = Game.team1.repairSpeed / %count;
 		for (%i = 0; %i < %count; %i++)
 		{
-			%obj = $Team1.repairObjects.getObject(%i);
+			%obj = Game.team1.repairObjects.getObject(%i);
 			%obj.setRepairRate(%repair);
 		}
 	}
 
-	%count = $Team2.repairObjects.getCount();
+	%count = Game.team2.repairObjects.getCount();
 	if(%count != 0)
 	{
-		%repair = $Team2.repairSpeed / %count;
+		%repair = Game.team2.repairSpeed / %count;
 		for (%i = 0; %i < %count; %i++)
 		{
-			%obj = $Team2.repairObjects.getObject(%i);
+			%obj = Game.team2.repairObjects.getObject(%i);
 			%obj.setRepairRate(%repair);
 		}
 	}
@@ -126,6 +126,9 @@ function TerritoryZones_repairTick()
 // to reset all the territory zones...
 function TerritoryZones_reset()
 {
+   Game.team1.numTerritoryZones = 0;
+   Game.team2.numTerritoryZones = 0;
+
 	%group = nameToID("TerritoryZones");
 
 	if (%group != -1)
@@ -136,6 +139,7 @@ function TerritoryZones_reset()
 				for (%i = 0; %i < %count; %i++)
 				{
 					%zone = %group.getObject(%i);
+               %zone.setTeamId(3);
      
                if(%i > 0)
                {
@@ -270,7 +274,7 @@ function TerritoryZone::onEnter(%this,%zone,%obj)
 	{
 		if(%obj.isCAT && %zone.initialOwner != 0 && %obj.getTeamId() != %zone.getTeamId())
         {
-			%team = %obj.getTeamId() == 1 ? $Team1 : $Team2;
+			%team = %obj.getTeamId() == 1 ? Game.team1 : Game.team2;
 			%val = 1 - %obj.getDamagePercent();
 			%val = %val / %team.numPlayersOnRoundStart;
 			%team.score += %val;
@@ -318,9 +322,9 @@ function TerritoryZone::onTick(%this, %zone)
 		{
             if(%zone.zProtected && %obj.getTeamId() != %zone.getTeamId())
                 %obj.kill();
-            else if(%obj.getTeamId() == $Team1.teamId)
+            else if(%obj.getTeamId() == Game.team1.teamId)
 				%zone.zNumReds++;
-			else if(%obj.getTeamId() == $Team2.teamId)
+			else if(%obj.getTeamId() == Game.team2.teamId)
 				%zone.zNumBlues++;
 		}
 	}
@@ -402,28 +406,28 @@ function TerritoryZone::setZoneOwner(%this, %zone, %teamId)
 		return;
 		
 	if(%oldTeamId == 1)
-		$Team1.numTerritoryZones--;
+		Game.team1.numTerritoryZones--;
 	else if(%oldTeamId == 2)
-		$Team2.numTerritoryZones--;
+		Game.team2.numTerritoryZones--;
   
    %alpha = 255;
    if(%teamId == 0)
       %alpha = 100;
-		
+
    %colorF = Game.team[%teamId].color;
    %colorI = getWord(%colorF, 0)*255 SPC
              getWord(%colorF, 1)*255 SPC
              getWord(%colorF, 2)*255 SPC
              %alpha;
-   echo(%colorF SPC "->" SPC %colorI);
+   //echo(%colorF SPC "->" SPC %colorI);
    %zone.paletteColors[0] = %colorI;
-   
+
 	%zone.setTeamId(%teamId);
 	
 	if(%teamId == 1)
-		$Team1.numTerritoryZones++;
+		Game.team1.numTerritoryZones++;
 	else if(%teamId == 2)
-		$Team2.numTerritoryZones++;
+		Game.team2.numTerritoryZones++;
 
 	for(%idx = 0; %idx < ClientGroup.getCount(); %idx++)
 	{
@@ -431,14 +435,14 @@ function TerritoryZone::setZoneOwner(%this, %zone, %teamId)
 	
 		%sound = 0;
 
-		if(%client.team == $Team1)
+		if(%client.team == Game.team1)
 		{
 			if(%teamId == 1)
 				%sound = ZoneAquiredSound;
 			else if(%teamId == 2)
 				%sound = ZoneAttackedSound;
 		}
-		else if(%client.team == $Team2)
+		else if(%client.team == Game.team2)
 		{
 			if(%teamId == 2)
 				%sound = ZoneAquiredSound;
@@ -458,8 +462,8 @@ function TerritoryZone::setZoneOwner(%this, %zone, %teamId)
 	}
 		
 	echo("Number of zones:" SPC
-		$Team1.numTerritoryZones SPC "red /" SPC
-		$Team2.numTerritoryZones SPC "blue");
+		Game.team1.numTerritoryZones SPC "red /" SPC
+		Game.team2.numTerritoryZones SPC "blue");
 		
 	ETH::checkRoundEnd();
 }

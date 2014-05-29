@@ -50,7 +50,8 @@ function GameCoreETH::startGame(%game)
 {
    //echo (%game @"\c4 -> "@ %game.class @" -> GameCoreETH::startGame");
 
-   parent::startGame(%game);
+   Parent::startGame(%game);
+   ETH::startNewRound();
 }
 
 function GameCoreETH::endGame(%game)
