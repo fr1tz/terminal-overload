@@ -32,7 +32,11 @@ datablock ShotgunProjectileData(WpnSMG1Projectile)
    decal               = "WpnSMG1ProjectileDecal";
    //particleEmitter     = "WpnSMG1ProjectileParticleEmitter";
    laserTrail[0]       = WpnSMG1ProjectileLaserTrail0;
+   laserTrailFlags[0]  = 0;
    laserTrail[1]       = WpnSMG1ProjectileLaserTrail1;
+   laserTrailFlags[1]  = 0;
+   laserTrail[2]       = WpnSMG1ProjectileLaserTrail2;
+   laserTrailFlags[2]  = 0;
 
    velInheritFactor    = 0;
 

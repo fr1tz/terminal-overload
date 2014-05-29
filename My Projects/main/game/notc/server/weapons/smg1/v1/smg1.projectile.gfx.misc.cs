@@ -98,7 +98,30 @@ datablock MultiNodeLaserBeamData(WpnSMG1ProjectileLaserTrail1)
 {
 	material = "xa_notc_core_shapes_smg1_projectile_p3_lasertrail1mat";
 	renderMode = $MultiNodeLaserBeamRenderMode::FaceViewer;
-   width = 0.3;
+   width = 0.1;
+	fadeTime = 150;
+	windCoefficient = 0.0;
+	//nodeDistance = 3;
+
+   // node x movement...
+   nodeMoveMode[0]     = $NodeMoveMode::None;
+   nodeMoveSpeed[0]    = -0.002;
+   nodeMoveSpeedAdd[0] =  0.004;
+   // node y movement...
+   nodeMoveMode[1]     = $NodeMoveMode::None;
+   nodeMoveSpeed[1]    = -0.002;
+   nodeMoveSpeedAdd[1] =  0.004;
+   // node z movement...
+   nodeMoveMode[2]     = $NodeMoveMode::None;
+   nodeMoveSpeed[2]    = 0.5;
+   nodeMoveSpeedAdd[2] = 1.0;
+};
+
+datablock MultiNodeLaserBeamData(WpnSMG1ProjectileLaserTrail2)
+{
+	material = "xa_notc_core_shapes_smg1_projectile_p3_lasertrail2mat";
+	renderMode = $MultiNodeLaserBeamRenderMode::FaceViewer;
+   width = 0.6;
 	fadeTime = 300;
 	windCoefficient = 0.0;
 	//nodeDistance = 3;
