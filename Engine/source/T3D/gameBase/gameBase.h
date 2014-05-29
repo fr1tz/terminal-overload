@@ -399,7 +399,7 @@ public:
    /// @{
 	void setTeamId(S32 id) { mTeamId = id; this->onNewTeamId(); }
 	S32 getTeamId() { return mTeamId; };
-	virtual void onNewTeamId() { /* this->setMaskBits(ColorizationMask); */ };
+	virtual void onNewTeamId() { this->setMaskBits(RareUpdatesMask); };
    /// @}
 
 	/// @name targeting
