@@ -84,9 +84,9 @@ $XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Launc
 $XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "launchRazorDisc";
 $XaNotc1EtherformMoveMap_RemapCount++;
 
-function XaNotcSettings1_CatControlsGui::onWake(%this)
+function XaNotcSettings1_EtherformControlsGui::onWake(%this)
 {
-   //echo("XaNotcSettings1_CatControlsGui::onWake");
+   //echo("XaNotcSettings1_EtherformControlsGui::onWake");
    
    if($InGuiEditor)
       return;
@@ -95,24 +95,24 @@ function XaNotcSettings1_CatControlsGui::onWake(%this)
    %this.fillRemapList();
 }
 
-function XaNotcSettings1_CatControlsGui::onSleep(%this)
+function XaNotcSettings1_EtherformControlsGui::onSleep(%this)
 {
-   //echo("XaNotcSettings1_CatControlsGui::onSleep");
+   //echo("XaNotcSettings1_EtherformControlsGui::onSleep");
 
    // write out the control config into the rw config file
    XaNotc1CatMoveMap.save("notc/client/settings/XaNotc1EtherformMoveMap.cs");
 }
 
-function XaNotcSettings1_CatControlsGui::fillRemapList( %this )
+function XaNotcSettings1_EtherformControlsGui::fillRemapList( %this )
 {
    %remapList = %this-->RemapList;
 
 	%remapList.clear();
    for ( %i = 0; %i < $XaNotc1EtherformMoveMap_RemapCount; %i++ )
-      %remapList.addRow( %i, XaNotcSettings1_CatControls_buildFullMapString( %i ) );
+      %remapList.addRow( %i, XaNotcSettings1_EtherformControls_buildFullMapString( %i ) );
 }
 
-function XaNotcSettings1_CatControlsGui::doRemap( %this )
+function XaNotcSettings1_EtherformControlsGui::doRemap( %this )
 {
    %remapList = %this-->RemapList;
 
@@ -121,11 +121,11 @@ function XaNotcSettings1_CatControlsGui::doRemap( %this )
 
 	XaNotcSettings1_Controls_RemapDlg-->OptRemapText.setValue( "Re-bind \"" @ %name @ "\" to..." );
 	XaNotcSettings1_Controls_RemapInputCtrl.index = %selId;
-   XaNotcSettings1_Controls_RemapInputCtrl.inputEventCallback = "XaNotcSettings1_CatControls_onRemapCtrlInputEvent";
+   XaNotcSettings1_Controls_RemapInputCtrl.inputEventCallback = "XaNotcSettings1_EtherformControls_onRemapCtrlInputEvent";
 	Canvas.pushDialog(XaNotcSettings1_Controls_RemapDlg);
 }
 
-function XaNotcSettings1_CatControls_onRemapCtrlInputEvent(%device, %action)
+function XaNotcSettings1_EtherformControls_onRemapCtrlInputEvent(%device, %action)
 {
    //error( "** onInputEvent called - device = " @ %device @ ", action = " @ %action @ " **" );
    Canvas.popDialog(XaNotcSettings1_Controls_RemapDlg);
@@ -148,7 +148,7 @@ function XaNotcSettings1_CatControls_onRemapCtrlInputEvent(%device, %action)
 
    // Grab the friendly display name for this action
    // which we'll use when prompting the user below.
-   %mapName = XaNotcSettings1_CatControls_getMapDisplayName( %device, %action );
+   %mapName = XaNotcSettings1_EtherformControls_getMapDisplayName( %device, %action );
 
    // Get the current command this action is mapped to.
    %prevMap = XaNotc1CatMoveMap.getCommand( %device, %action );
@@ -157,9 +157,9 @@ function XaNotcSettings1_CatControls_onRemapCtrlInputEvent(%device, %action)
    // mapping then it's easy... just bind it.
    if ( %prevMap $= "" )
    {
-      XaNotcSettings1_CatControls_unbindExtraActions( %cmd, 1 );
+      XaNotcSettings1_EtherformControls_unbindExtraActions( %cmd, 1 );
       XaNotc1CatMoveMap.bind( %device, %action, %cmd );
-      optionsDlg-->RemapList.setRowById( %index, XaNotcSettings1_CatControls_buildFullMapString( %index ) );
+      optionsDlg-->RemapList.setRowById( %index, XaNotcSettings1_EtherformControls_buildFullMapString( %index ) );
       return;
    }
 
@@ -168,14 +168,14 @@ function XaNotcSettings1_CatControls_onRemapCtrlInputEvent(%device, %action)
    // was already assigned.
    if ( %prevMap $= %cmd )
    {
-      XaNotcSettings1_CatControls_unbindExtraActions( %cmd, 0 );
+      XaNotcSettings1_EtherformControls_unbindExtraActions( %cmd, 0 );
       XaNotc1CatMoveMap.bind( %device, %action, %cmd );
-      optionsDlg-->RemapList.setRowById( %index, XaNotcSettings1_CatControls_buildFullMapString( %index ) );
+      optionsDlg-->RemapList.setRowById( %index, XaNotcSettings1_EtherformControls_buildFullMapString( %index ) );
       return;
    }
 
    // Look for the index of the previous mapping.
-   %prevMapIndex = XaNotcSettings1_CatControls_findRemapCmdIndex( %prevMap );
+   %prevMapIndex = XaNotcSettings1_EtherformControls_findRemapCmdIndex( %prevMap );
 
    // If we get a negative index then the previous
    // mapping was to an item that isn't included in
@@ -187,7 +187,7 @@ function XaNotcSettings1_CatControls_onRemapCtrlInputEvent(%device, %action)
    }
 
    // Setup the forced remapping callback command.
-   %callback = "XaNotcSettings1_CatControls_redoMapping(" @ %device @ ", \"" @ %action @ "\", \"" @
+   %callback = "XaNotcSettings1_EtherformControls_redoMapping(" @ %device @ ", \"" @ %action @ "\", \"" @
                               %cmd @ "\", " @ %prevMapIndex @ ", " @ %index @ ");";
 
    // Warn that we're about to remove the old mapping and
@@ -199,7 +199,7 @@ function XaNotcSettings1_CatControls_onRemapCtrlInputEvent(%device, %action)
        %callback, "" );
 }
 
-function XaNotcSettings1_CatControls_getMapDisplayName( %device, %action )
+function XaNotcSettings1_EtherformControls_getMapDisplayName( %device, %action )
 {
 	if ( %device $= "keyboard" )
 		return( %action );
@@ -258,7 +258,7 @@ function XaNotcSettings1_CatControls_getMapDisplayName( %device, %action )
 	return( "??" );
 }
 
-function XaNotcSettings1_CatControls_buildFullMapString( %index )
+function XaNotcSettings1_EtherformControls_buildFullMapString( %index )
 {
    %name       = $XaNotc1EtherformMoveMap_RemapName[%index];
    %cmd        = $XaNotc1EtherformMoveMap_RemapCmd[%index];
@@ -277,23 +277,23 @@ function XaNotcSettings1_CatControls_buildFullMapString( %index )
 
       %device = getField( %temp, %i + 0 );
       %object = getField( %temp, %i + 1 );
-      %mapString = %mapString @ XaNotcSettings1_CatControls_getMapDisplayName( %device, %object );
+      %mapString = %mapString @ XaNotcSettings1_EtherformControls_getMapDisplayName( %device, %object );
    }
 
    return %name TAB %mapString;
 }
 
-function XaNotcSettings1_CatControls_redoMapping( %device, %action, %cmd, %oldIndex, %newIndex )
+function XaNotcSettings1_EtherformControls_redoMapping( %device, %action, %cmd, %oldIndex, %newIndex )
 {
 	//%actionMap.bind( %device, %action, $XaNotc1EtherformMoveMap_RemapCmd[%newIndex] );
 	XaNotc1CatMoveMap.bind( %device, %action, %cmd );
 
-   %remapList = XaNotcSettings1_CatControlsGui-->RemapList;
-	%remapList.setRowById( %oldIndex, XaNotcSettings1_CatControls_buildFullMapString( %oldIndex ) );
-	%remapList.setRowById( %newIndex, XaNotcSettings1_CatControls_buildFullMapString( %newIndex ) );
+   %remapList = XaNotcSettings1_EtherformControlsGui-->RemapList;
+	%remapList.setRowById( %oldIndex, XaNotcSettings1_EtherformControls_buildFullMapString( %oldIndex ) );
+	%remapList.setRowById( %newIndex, XaNotcSettings1_EtherformControls_buildFullMapString( %newIndex ) );
 }
 
-function XaNotcSettings1_CatControls_findRemapCmdIndex( %command )
+function XaNotcSettings1_EtherformControls_findRemapCmdIndex( %command )
 {
 	for ( %i = 0; %i < $XaNotc1EtherformMoveMap_RemapCount; %i++ )
 	{
@@ -305,7 +305,7 @@ function XaNotcSettings1_CatControls_findRemapCmdIndex( %command )
 
 /// This unbinds actions beyond %count associated to the
 /// particular XaNotc1CatMoveMap %commmand.
-function XaNotcSettings1_CatControls_unbindExtraActions( %command, %count )
+function XaNotcSettings1_EtherformControls_unbindExtraActions( %command, %count )
 {
    %temp = XaNotc1CatMoveMap.getBinding( %command );
    if ( %temp $= "" )
@@ -321,14 +321,14 @@ function XaNotcSettings1_CatControls_unbindExtraActions( %command, %count )
    }
 }
 
-function XaNotcSettings1_CatControls_restoreDefaultMappings()
+function XaNotcSettings1_EtherformControls_restoreDefaultMappings()
 {
    XaNotc1CatMoveMap.delete();
    exec("notc/client/settings/XaNotc1EtherformMoveMap.cs");
    optionsDlg.fillRemapList();
 }
 
-function XaNotcSettings1_CatControls_MouseSetSensitivity(%value)
+function XaNotcSettings1_EtherformControls_MouseSetSensitivity(%value)
 {
    $pref::Input::LinkMouseSensitivity = %value;
 }

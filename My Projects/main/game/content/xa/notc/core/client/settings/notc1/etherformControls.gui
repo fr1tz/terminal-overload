@@ -1,5 +1,5 @@
 //--- OBJECT WRITE BEGIN ---
-%guiContent = new GuiControl(EDIT__XaNotcSettings1_CatControlsGui) {
+%guiContent = new GuiControl(EDIT__XaNotcSettings1_EtherformControlsGui) {
    position = "0 0";
    extent = "640 480";
    minExtent = "8 8";
@@ -15,7 +15,7 @@
    canSaveDynamicFields = "1";
       fixedAspectRatio = "0";
 
-   new GuiControl(XaNotcSettings1_CatControlsGui) {
+   new GuiControl(XaNotcSettings1_EtherformControlsGui) {
       position = "9 55";
       extent = "480 210";
       minExtent = "8 8";
@@ -71,7 +71,7 @@
             profile = "GuiDefaultProfile";
             visible = "1";
             active = "1";
-            altCommand = "XaNotcSettings1_CatControlsGui.doRemap();";
+            altCommand = "XaNotcSettings1_EtherformControlsGui.doRemap();";
             tooltipProfile = "GuiToolTipProfile";
             hovertime = "1000";
             isContainer = "1";
