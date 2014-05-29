@@ -18,10 +18,8 @@
 
 #define NUM_ETHERFORM_LASERTRAILS 3
 
-#if 0 // BORQUE_NEEDS_PORTING
 class MultiNodeLaserBeam;
 class MultiNodeLaserBeamData;
-#endif
 
 class EtherformData: public ShapeBaseData 
 {
@@ -42,10 +40,8 @@ public:
 	F32 accelerationForce;
 
 	// laser trail list...
-#if 0 // BORQUE_NEEDS_PORTING
 	MultiNodeLaserBeamData* laserTrailList[NUM_ETHERFORM_LASERTRAILS];
 	S32 laserTrailIdList[NUM_ETHERFORM_LASERTRAILS];
-#endif
 
 	// Particle trail
    enum Jets {
@@ -120,9 +116,7 @@ class Etherform : public ShapeBase
 	Point3F mRot;
 	Point3F mVelocity;
 
-#if 0 // BORQUE_NEEDS_PORTING
-	MultiNodeLaserBeam* mLaserTrailList[NUM_LASERTRAILS];
-#endif
+	MultiNodeLaserBeam* mLaserTrailList[NUM_ETHERFORM_LASERTRAILS];
 	SimObjectPtr<ParticleEmitter> mJetEmitter[EtherformData::MaxJetEmitters];
 
 public:

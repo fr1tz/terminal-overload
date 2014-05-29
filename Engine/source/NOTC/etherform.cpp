@@ -24,6 +24,7 @@
 #include "T3D/item.h"
 #include "ts/tsShapeInstance.h"
 #include "NOTC/tacticalzone.h"
+#include "NOTC/fx/multiNodeLaserBeam.h"
 
 #define MaxPitch 1.3962
 #define EtherformRadius    0.05;
@@ -65,10 +66,8 @@ EtherformData::EtherformData()
 
 	accelerationForce = 200;
 
-#if 0 // BORQUE_NEEDS_PORTING
 	dMemset( laserTrailList, 0, sizeof( laserTrailList ) );
 	dMemset( laserTrailIdList, 0, sizeof( laserTrailIdList ) );
-#endif
 
    for (S32 j = 0; j < MaxJetEmitters; j++)
       jetEmitter[j] = 0;
@@ -91,8 +90,7 @@ bool EtherformData::preload(bool server, String &errorStr)
    // Resolve objects transmitted from server.
    if(!server)
 	{
-#if 0 // BORQUE_NEEDS_PORTING
-		for( S32 i=0; i<NUM_LASERTRAILS; i++ )
+		for( S32 i=0; i<NUM_ETHERFORM_LASERTRAILS; i++ )
 		{
 			if( !laserTrailList[i] && laserTrailIdList[i] != 0 )
 			{
@@ -102,7 +100,6 @@ bool EtherformData::preload(bool server, String &errorStr)
 				}
 			}
 		}
-#endif
 
 		for (S32 j = 0; j < MaxJetEmitters; j++)
 		{
@@ -126,15 +123,13 @@ void EtherformData::packData(BitStream* stream)
 
    stream->write(accelerationForce);
 
-#if 0 // BORQUE_NEEDS_PORTING
-   for( S32 i=0; i<NUM_LASERTRAILS; i++ )
+   for( S32 i=0; i<NUM_ETHERFORM_LASERTRAILS; i++ )
    {
       if( stream->writeFlag( laserTrailList[i] != NULL ) )
       {
          stream->writeRangedU32( laserTrailList[i]->getId(), DataBlockObjectIdFirst,  DataBlockObjectIdLast );
       }
    }
-#endif
 
    for (S32 j = 0; j < MaxJetEmitters; j++)
    {
@@ -157,15 +152,13 @@ void EtherformData::unpackData(BitStream* stream)
 
    stream->read(&accelerationForce);
 
-#if 0 // BORQUE_NEEDS_PORTING
-   for( S32 i=0; i<NUM_LASERTRAILS; i++ )
+   for( S32 i=0; i<NUM_ETHERFORM_LASERTRAILS; i++ )
    {
       if( stream->readFlag() )
       {
          laserTrailIdList[i] = stream->readRangedU32( DataBlockObjectIdFirst, DataBlockObjectIdLast );
       }
    }
-#endif
 
    for (S32 j = 0; j < MaxJetEmitters; j++) {
       jetEmitter[j] = NULL;
@@ -182,9 +175,7 @@ void EtherformData::initPersistFields()
 
 	addField("boundingBox", TypePoint3F, Offset(boxSize, EtherformData));
 	addField("accelerationForce", TypeF32, Offset(accelerationForce, EtherformData));
-#if 0 // BORQUE_NEEDS_PORTING
-	addField("laserTrail", TYPEID<MultiNodeLaserBeamData>(), Offset(laserTrailList, EtherformData), NUM_LASERTRAILS );
-#endif
+	addField("laserTrail", TYPEID<MultiNodeLaserBeamData>(), Offset(laserTrailList, EtherformData), NUM_ETHERFORM_LASERTRAILS );
    addField("particleTrail", TYPEID<ParticleEmitterData>(), Offset(jetEmitter[TrailEmitter], EtherformData));
    addField("minTrailSpeed", TypeF32, Offset(minTrailSpeed, EtherformData));
 }
@@ -210,9 +201,7 @@ Etherform::Etherform()
 	mRot.set(0, 0, 0);
 	mVelocity.set(0.0f, 0.0f, 0.0f);
 
-#if 0 // BORQUE_NEEDS_PORTING
 	dMemset( mLaserTrailList, 0, sizeof( mLaserTrailList ) );
-#endif
 
    for (S32 j = 0; j < EtherformData::MaxJetEmitters; j++)
       mJetEmitter[j] = 0;
@@ -247,8 +236,7 @@ bool Etherform::onAdd()
 
 void Etherform::onRemove()
 {
-#if 0 // BORQUE_NEEDS_PORTING
-	for( S32 i = 0; i < NUM_LASERTRAILS; i++ )
+	for( S32 i = 0; i < NUM_ETHERFORM_LASERTRAILS; i++ )
 	{
 		if(mLaserTrailList[i])
 		{
@@ -256,7 +244,6 @@ void Etherform::onRemove()
 			mLaserTrailList[i] = NULL;
 		}
 	}
-#endif
 
 	scriptOnRemove();
 	removeFromScene();
@@ -345,7 +332,6 @@ void Etherform::processTick(const Move* move)
 		}
 	}
 
-#if 0 // BORQUE_NEEDS_PORTING
 	// Add node to lasertrails.
 	if(this->isClientObject())
 	{
@@ -357,18 +343,7 @@ void Etherform::processTick(const Move* move)
 		}
 		else
 			this->addLaserTrailNode(this->getPosition());
-
-#if 0
-		mMLDontRender = false;
-		if(conn)
-		{
-			Etherform* ef = dynamic_cast<Etherform*>(conn->getControlObject());
-			if(ef == NULL)
-				mMLDontRender = true;
-		}
-#endif
 	}
-#endif
 }
 
 
@@ -383,14 +358,12 @@ void Etherform::interpolateTick(F32 dt)
 
 		this->setRenderPosition(pos, rot, dt);
 
-#if 0 // BORQUE_NEEDS_PORTING
 		// update laser trails...
-		for( S32 i=0; i < NUM_LASERTRAILS; i++ )
+		for( S32 i=0; i < NUM_ETHERFORM_LASERTRAILS; i++ )
 		{
 			if(mLaserTrailList[i])
 				mLaserTrailList[i]->setLastNodePos(pos);
 		}
-#endif
 
 		// apply camera effects - is this the best place? - bramage
 		GameConnection* connection = GameConnection::getConnectionToServer();
@@ -844,8 +817,7 @@ void Etherform::addLaserTrailNode(const Point3F& pos)
 	if( isServerObject() )
 		return;
 
-#if 0 // BORQUE_NEEDS_PORTING
-	for(S32 i = 0; i < NUM_LASERTRAILS; i++)
+	for(S32 i = 0; i < NUM_ETHERFORM_LASERTRAILS; i++)
 	{
 		if( mLaserTrailList[i] == NULL )
 		{
@@ -853,8 +825,8 @@ void Etherform::addLaserTrailNode(const Point3F& pos)
 			if( mDataBlock->laserTrailList[i] )
 			{
 				mLaserTrailList[i] = new MultiNodeLaserBeam();
-				mLaserTrailList[i]->setSceneObjectColorization(this->getSceneObjectColorization());
-				mLaserTrailList[i]->onNewDataBlock(mDataBlock->laserTrailList[i]);
+				mLaserTrailList[i]->setPalette(this->getPalette());
+				mLaserTrailList[i]->onNewDataBlock(mDataBlock->laserTrailList[i], false);
 				if( !mLaserTrailList[i]->registerObject() )
 				{
 					Con::warnf( ConsoleLogEntry::General, "Could not register laserTrail %d for class: %s",i, mDataBlock->getName() );
@@ -874,7 +846,6 @@ void Etherform::addLaserTrailNode(const Point3F& pos)
 			mLaserTrailList[i]->addNodes(pos);
 		}
 	}
-#endif
 }
 
 //----------------------------------------------------------------------------
