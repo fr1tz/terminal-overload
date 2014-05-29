@@ -54,8 +54,7 @@ datablock EtherformData(FrmEtherform)
 //	bufferRepairParticleEmitter = FrmEtherformBufferRepairEmitter;
 
 	// laser trail...
-	laserTrail[0] = FrmEtherform_LaserTrailOne;
-	laserTrail[1] = FrmEtherform_LaserTrailTwo;
+	laserTrail[0] = FrmEtherformLaserTrail0;
 
 	// contrail...
 	minTrailSpeed = 1;
