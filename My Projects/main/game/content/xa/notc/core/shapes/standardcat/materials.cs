@@ -48,16 +48,18 @@ singleton Material(xa_notc_core_shapes_standardcat_trailsmat)
 {
    translucentBlendOp = "AddAlpha";
    emissive[0] = "1";
-   glow[0] = "0";
+   glow[0] = "1";
    wireframe[0] = "1";
-   diffuseColor[0] = "0.996078 0.996078 0.996078 1";
+   diffuseColor[0] = "0.431373 0.431373 0.431373 1";
    diffuseColorPaletteSlot[0] = "0";
    materialTag0 = "Miscellaneous";
    doubleSided = "0";
-   translucent = "0";
+   translucent = "1";
    alphaRef = "0";
    showFootprints = "0";
    castShadows = "0";
+   vertColor[0] = "1";
+   glowOnly[0] = "0";
 };
 
 singleton Material(xa_notc_core_shapes_standardcat_mat2)
