@@ -412,6 +412,11 @@ function GameCoreBase::getTeamScore(%client)
 // Spawning
 // ----------------------------------------------------------------------------
 
+function GameCoreBase::etherformManifest(%game, %obj)
+{
+   //echo (%game @"\c4 -> "@ %game.class @" -> GameCoreBase::etherformManifest");
+}
+
 function GameCoreBase::spawnPlayer(%game, %client, %spawnPoint, %noControl)
 {
    //echo (%game @"\c4 -> "@ %game.class @" -> GameCoreBase::spawnPlayer");

@@ -235,3 +235,123 @@ function GameCoreETH::clientAction(%game, %client, %nr)
 
    %obj.getDataBlock().clientAction(%obj, %nr);
 }
+
+function GameCoreETH::etherformManifest(%game, %obj)
+{
+   echo(%game @"\c4 -> "@ %game.class @" -> GameCoreETH::etherformManifest");
+   
+   %client = %obj.client;
+   
+   if(!isObject(%client))
+      return;
+   
+   if(%client.player.getDamageLevel() > %client.player.getDataBlock().maxDamage*0.75)
+   {
+      error("You need at least 25% health to manifest!");
+      return;
+   }
+
+   if(%client.player.getEnergyLevel() < 50)
+   {
+      error("You need at least 50% energy to manifest!");
+      return;
+   }
+
+   %ownTeamId = %client.player.getTeamId();
+
+   %inOwnZone = false;
+   %inOwnTerritory = false;
+   %inEnemyZone = false;
+
+   %pos = %obj.getPosition();
+   InitContainerRadiusSearch(%pos, 0.0001, $TypeMasks::TacticalZoneObjectType);
+   while((%srchObj = containerSearchNext()) != 0)
+   {
+      // object actually in this zone?
+      %inSrchZone = false;
+      for(%i = 0; %i < %srchObj.getNumObjects(); %i++)
+      {
+         if(%srchObj.getObject(%i) == %client.player)
+         {
+            %inSrchZone = true;
+            break;
+         }
+      }
+      if(!%inSrchZone)
+         continue;
+
+      %zoneTeamId = %srchObj.getTeamId();
+      %zoneBlocked = %srchObj.zBlocked;
+
+      if(%zoneTeamId != %ownTeamId && %zoneTeamId != 0)
+      {
+         %inEnemyZone = true;
+         break;
+      }
+      else if(%zoneTeamId == %ownTeamId)
+      {
+         %inOwnZone = true;
+         if(%srchObj.getDataBlock().getName() $= "TerritoryZone"
+         || %srchObj.getDataBlock().isTerritoryZone)
+            %inOwnTerritory = true;
+      }
+   }
+
+   if(%inEnemyZone)
+   {
+      error("You can not manifest in an enemy zone!");
+      return;
+   }
+   else if(%inOwnZone && !%inOwnTerritory)
+   {
+      error("This is not a territory zone!");
+      return;
+   }
+   else if(!%inOwnZone)
+   {
+      error("You can only manifest in your team's territory zones!");
+      return;
+   }
+   else if(%zoneBlocked)
+   {
+      error("This zone is currently blocked!");
+      return;
+   }
+
+   %player = new Player() {
+      dataBlock = FrmStandardcat;
+      client = %client;
+      teamId = %client.team.teamId;
+   };
+   copyPalette(%obj, %player);
+   MissionCleanup.add(%player);
+
+   %mat = %obj.getTransform();
+   %dmg = %obj.getDamageLevel();
+   %nrg = %obj.getEnergyLevel();
+   %buf = %obj.getDamageBufferLevel();
+   %vel = %obj.getVelocity();
+
+   %player.setTransform(%mat);
+   %player.setTransform(%pos);
+   %player.setDamageLevel(%dmg);
+   %player.setShieldLevel(%buf);
+
+	//if(%tagged || $Server::Game.tagMode == $Server::Game.alwaystag)
+	//	%player.setTagged();
+
+   %client.control(%player);
+
+   // Remove any z-velocity.
+   %vel = getWord(%vel, 0) SPC getWord(%vel, 1) SPC "0";
+
+   %player.setEnergyLevel(%nrg);
+   %player.setVelocity(VectorScale(%vel, 0.25));
+
+   %player.startFade(1000,0,false);
+   %player.playAudio(0, CatSpawnSound);
+
+   %client.player.schedule(9, "delete");
+	%client.player = %player;
+}
+
