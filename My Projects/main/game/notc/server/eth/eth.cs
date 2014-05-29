@@ -168,3 +168,58 @@ function ETH::onDeath(%client)
          Game.cycleGame();
    }
 }
+
+function ETH::startNewRound()
+{
+   // Cleanup
+   for( %idx = MissionCleanup.getCount()-1; %idx >= 0; %idx-- )
+   {
+      %obj = MissionCleanup.getObject(%idx);
+      if(!%obj.isMethod("getType"))
+         continue;
+      if(%obj.getType() & $TypeMasks::ProjectileObjectType
+      || %obj.getType() & $TypeMasks::PlayerObjectType
+      || %obj.getType() & $TypeMasks::CorpseObjectType)
+         %obj.delete();
+   }
+
+   Game.team1.numPlayersOnRoundStart = 0;
+   Game.team2.numPlayersOnRoundStart = 0;
+
+   TerritoryZones_reset();
+
+   for( %clientIndex = 0; %clientIndex < ClientGroup.getCount(); %clientIndex++ )
+   {
+      %client = ClientGroup.getObject(%clientIndex);
+
+      // Do not respawn observers.
+      if(%client.team == Game.team1 || %client.team == Game.team2 )
+         Game.preparePlayer(%client);
+   }
+
+   //serverUpdateMusic();
+   //serverUpdateGameStatus();
+
+   Game.roundRestarting = false;
+}
+
+function ETH::checkRoundEnd()
+{
+   if(Game.roundRestarting)
+      return;
+
+   if(Game.team1.numTerritoryZones == 0 && Game.team1.numCATs == 0)
+   {
+      centerPrintAll(Game.team2.name @ " have won!",3);
+      serverPlay2D(BlueVictorySound);
+      schedule(5000, MissionEnvironment, "startNewRound");
+      Game.roundRestarting = true;
+   }
+   else if(Game.team2.numTerritoryZones == 0 && Game.team2.numCATs == 0)
+   {
+      centerPrintAll(Game.team1.name @ " have won!",3);
+      serverPlay2D(RedVictorySound);
+      schedule(5000, MissionEnvironment, "startNewRound");
+      Game.roundRestarting = true;
+   }
+}

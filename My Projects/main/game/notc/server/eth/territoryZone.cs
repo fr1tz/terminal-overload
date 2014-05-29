@@ -381,42 +381,17 @@ function TerritoryZone::updateOwner(%this, %zone)
 	}
 
 	%zone.zBlocked = false;
-
-	%color = 1;
-	if(!%zone.zHasNeighbour)
-	{
-		%color = 13;
-	}
-	else if(%zone.getTeamId() == 2 && %zone.zNumReds != 0)
-	{
+	if(%zone.getTeamId() == 2 && %zone.zNumReds != 0)
 		%zone.zBlocked = true;
-		%color = 5;
-	}
 	else if(%zone.getTeamId() == 1 && %zone.zNumBlues != 0)
-	{
 		%zone.zBlocked = true;
-		%color = 4;
-	}
-	else if(%zone.getTeamId() == 2)
-		%color = 3;
-	else if(%zone.getTeamId() == 1)
-		%color = 2;
 
 	//%zone.setColor(%color, %color, 1);
  
-   %colorF = %this.colors[%color];
- 
-   %colorI = getWord(%colorF, 0)*255 SPC
-             getWord(%colorF, 1)*255 SPC
-             getWord(%colorF, 2)*255 SPC
-             getWord(%colorF, 3)*255;
-   echo(%colorF SPC "->" SPC %colorI);
-   %zone.paletteColors[0] = %colorI;
+	//if(%color != %zone.zColor)
+	//	%zone.flash(%color + 5, %color + 5, 1);
 
-	if(%color != %zone.zColor)
-		%zone.flash(%color + 5, %color + 5, 1);
-
-	%zone.zColor = %color;
+	//%zone.zColor = %color;
 }
 
 function TerritoryZone::setZoneOwner(%this, %zone, %teamId)
@@ -430,7 +405,19 @@ function TerritoryZone::setZoneOwner(%this, %zone, %teamId)
 		$Team1.numTerritoryZones--;
 	else if(%oldTeamId == 2)
 		$Team2.numTerritoryZones--;
+  
+   %alpha = 255;
+   if(%teamId == 0)
+      %alpha = 100;
 		
+   %colorF = Game.team[%teamId].color;
+   %colorI = getWord(%colorF, 0)*255 SPC
+             getWord(%colorF, 1)*255 SPC
+             getWord(%colorF, 2)*255 SPC
+             %alpha;
+   echo(%colorF SPC "->" SPC %colorI);
+   %zone.paletteColors[0] = %colorI;
+   
 	%zone.setTeamId(%teamId);
 	
 	if(%teamId == 1)
@@ -474,7 +461,7 @@ function TerritoryZone::setZoneOwner(%this, %zone, %teamId)
 		$Team1.numTerritoryZones SPC "red /" SPC
 		$Team2.numTerritoryZones SPC "blue");
 		
-	checkRoundEnd();
+	ETH::checkRoundEnd();
 }
 
 
