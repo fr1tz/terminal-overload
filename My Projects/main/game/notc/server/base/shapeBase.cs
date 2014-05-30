@@ -137,6 +137,17 @@ function ShapeBase::playHitSound(%this)
 // ShapeBase datablock
 //-----------------------------------------------------------------------------
 
+function ShapeBaseData::onAdd(%this, %obj)
+{
+   Parent::onAdd(%this, %obj);
+
+   // Default dynamic armor stats
+   %obj.setDamageBufferRechargeRate(%this.damageBufferRechargeRate);
+   %obj.setDamageBufferDischargeRate(%this.damageBufferDischargeRate);
+   %obj.setRechargeRate(%this.rechargeRate);
+   %obj.setRepairRate(0);
+}
+
 function ShapeBaseData::damage(%this, %obj, %source, %position, %amount, %damageType)
 {
    if(%this.ignoreDamage)

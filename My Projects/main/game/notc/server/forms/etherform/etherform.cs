@@ -31,12 +31,12 @@ datablock EtherformData(FrmEtherform)
 	density = 10;
 
 	maxDamage = 0;
-	damageBuffer = 100;
+	damageBuffer = 50;
 	maxEnergy = 100;
 
-	damageBufferRechargeRate = 0;
-	damageBufferDischargeRate = 0;
-	energyRechargeRate = 0.5;
+	damageBufferRechargeRate = 0.15;
+	damageBufferDischargeRate = 0.05;
+	rechargeRate = 0.4;
  
     // collision box...
     boundingBox = "1.0 1.0 1.0";
