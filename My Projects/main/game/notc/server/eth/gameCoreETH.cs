@@ -222,7 +222,9 @@ function GameCoreETH::onUnitDestroyed(%game, %obj)
    
    %client = %obj.client;
    if(isObject(%client) && %client.player == %obj)
-      ETH::onDeath(%client);
+   {
+      ETH::switchToEtherform(%client);
+   }
 }
 
 function GameCoreETH::clientAction(%game, %client, %nr)
@@ -322,9 +324,23 @@ function GameCoreETH::etherformManifest(%game, %obj)
       dataBlock = FrmStandardcat;
       client = %client;
       teamId = %client.team.teamId;
+      isCAT = true;
    };
-   copyPalette(%obj, %player);
    MissionCleanup.add(%player);
+   copyPalette(%obj, %player);
+
+   %player.clearWeaponCycle();
+   %player.addToWeaponCycle(WpnSMG1);
+   %player.addToWeaponCycle(WpnMGL1);
+   %player.addToWeaponCycle(WpnSG1);
+   %player.addToWeaponCycle(WpnSR1);
+   %player.addToWeaponCycle(WpnMG1);
+   //%player.addToWeaponCycle(WpnML1);
+
+   %player.setInventory(ItemImpShield, 1);
+   %player.setInventory(ItemEtherboard, 1);
+   %player.setInventory(ItemLauncher, 1);
+   %player.setInventory(WpnSMG1, 1);
 
    %mat = %obj.getTransform();
    %dmg = %obj.getDamageLevel();
@@ -353,5 +369,11 @@ function GameCoreETH::etherformManifest(%game, %obj)
 
    %client.player.schedule(9, "delete");
 	%client.player = %player;
+}
+
+function GameCoreETH::suicide(%game, %client)
+{
+   //echo (%game @"\c4 -> "@ %game.class @" -> GameCoreETH::suicide");
+   ETH::switchToEtherform(%client);
 }
 

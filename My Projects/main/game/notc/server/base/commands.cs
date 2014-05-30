@@ -63,8 +63,7 @@ function serverCmdLaunchRazorDisc(%client)
 
 function serverCmdSuicide(%client)
 {
-   if (isObject(%client.player))
-      %client.player.kill("Suicide");
+   Game.suicide(%client);
 }
 
 function serverCmdPlayCel(%client,%anim)

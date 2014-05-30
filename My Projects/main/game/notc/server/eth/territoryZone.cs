@@ -265,34 +265,19 @@ function TerritoryZone::onAdd(%this, %zone)
 
 function TerritoryZone::onEnter(%this,%zone,%obj)
 {
-	echo("TerritoryZone::onEnter()");
+	//echo("TerritoryZone::onEnter()");
 	
 	if(!%obj.getType() & $TypeMasks::ShapeBaseObjectType)
 		return;
 
-	if($Game::GameType == $Game::TeamJoust)
-	{
-		if(%obj.isCAT && %zone.initialOwner != 0 && %obj.getTeamId() != %zone.getTeamId())
-        {
-			%team = %obj.getTeamId() == 1 ? Game.team1 : Game.team2;
-			%val = 1 - %obj.getDamagePercent();
-			%val = %val / %team.numPlayersOnRoundStart;
-			%team.score += %val;
-			%zone.zValue -= %val;
-			%zone.setColor(1, 8 + %zone.getTeamId(), %zone.zValue);
-			%zone.zBlocked = true;
-			%obj.kill();
-		}
-	}
-	else
-		%this.onTick(%zone);
-	
-	%obj.getDataBlock().updateZone(%obj, %zone);
+   %this.onTick(%zone);
+   
+	//%obj.getDataBlock().updateZone(%obj, %zone);
 }
 
 function TerritoryZone::onLeave(%this,%zone,%obj)
 {
-	echo("TerritoryZone::onLeave()");
+	//echo("TerritoryZone::onLeave()");
 
 	// note that this function does not get called immediately when an
 	// object leaves the zone but when the zone registers the object's
@@ -303,14 +288,11 @@ function TerritoryZone::onLeave(%this,%zone,%obj)
 		
 	%this.onTick(%zone);
 
-	%obj.getDataBlock().updateZone(%obj, 0);
+	//%obj.getDataBlock().updateZone(%obj, 0);
 }
 
 function TerritoryZone::onTick(%this, %zone)
 {
-	if($Game::GameType == $Game::TeamJoust)
-		return;
-
 	%zone.zNumReds = 0;
 	%zone.zNumBlues = 0;
 	

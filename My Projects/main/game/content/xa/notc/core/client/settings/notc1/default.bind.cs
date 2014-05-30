@@ -526,7 +526,13 @@ XaNotc1CatMoveMap.bind(keyboard, "p", toggleFirstPerson );
 //XaNotc1CatMoveMap.bindCmd(keyboard, "ctrl w", "commandToServer('playCel',\"wave\");", "");
 //XaNotc1CatMoveMap.bindCmd(keyboard, "ctrl s", "commandToServer('playCel',\"salute\");", "");
 
-XaNotc1CatMoveMap.bindCmd(keyboard, "lalt", "commandToServer('suicide');", "");
+function suicide(%val)
+{
+   if (%val)
+      commandToServer('suicide');
+}
+
+XaNotc1CatMoveMap.bind(keyboard, "lalt", "suicide");
 
 //------------------------------------------------------------------------------
 // Item manipulation

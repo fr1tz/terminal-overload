@@ -104,6 +104,8 @@ function FrmEtherform::onAdd(%this, %obj)
    MissionCleanup.add(%obj.light);
    %obj.mountObject(%obj.light, 0);
    
+   return;
+   
    // Setup pointer.
    //%this.createPointer(%obj);
 

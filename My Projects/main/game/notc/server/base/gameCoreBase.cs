@@ -412,6 +412,13 @@ function GameCoreBase::getTeamScore(%client)
 // Spawning
 // ----------------------------------------------------------------------------
 
+function GameCoreBase::suicide(%game, %client)
+{
+   //echo (%game @"\c4 -> "@ %game.class @" -> GameCoreBase::suicide");
+   if(isObject(%client.player))
+      %client.player.kill("Suicide");
+}
+
 function GameCoreBase::etherformManifest(%game, %obj)
 {
    //echo (%game @"\c4 -> "@ %game.class @" -> GameCoreBase::etherformManifest");

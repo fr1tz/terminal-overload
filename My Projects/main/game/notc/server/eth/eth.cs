@@ -213,14 +213,71 @@ function ETH::checkRoundEnd()
    {
       centerPrintAll(Game.team2.name @ " have won!",3);
       serverPlay2D(BlueVictorySound);
-      schedule(5000, MissionEnvironment, "startNewRound");
+      schedule(5000, MissionGroup, "ETH::startNewRound");
       Game.roundRestarting = true;
    }
    else if(Game.team2.numTerritoryZones == 0 && Game.team2.numCATs == 0)
    {
       centerPrintAll(Game.team1.name @ " have won!",3);
       serverPlay2D(RedVictorySound);
-      schedule(5000, MissionEnvironment, "startNewRound");
+      schedule(5000, MissionGroup, "ETH::startNewRound");
       Game.roundRestarting = true;
    }
 }
+
+function ETH::switchToEtherform(%client)
+{
+   %player = %client.player;
+   if(!isObject(%player))
+      return;
+      
+   if(%player.getClassName() $= "Etherform")
+      return;
+
+   %tagged = %player.isTagged();
+   %pos = %player.getWorldBoxCenter();
+
+   %etherform = new Etherform() {
+      dataBlock = FrmEtherform;
+      client = %client;
+      teamId = %client.team.teamId;
+   };
+	MissionCleanup.add(%etherform);
+   Game.loadout(%etherform);
+
+   %mat = %player.getTransform();
+   %dmg = %player.getDamageLevel();
+   %nrg = %player.getEnergyLevel();
+   %buf = %player.getDamageBufferLevel();
+   %vel = %player.getVelocity();
+
+   %etherform.setTransform(%mat);
+   %etherform.setTransform(%pos);
+   %etherform.setDamageLevel(%dmg);
+   %etherform.setShieldLevel(%buf);
+
+//   if(%tagged || $Server::Game.tagMode == $Server::Game.alwaystag)
+//      %etherform.setTagged();
+
+   %client.control(%etherform);
+
+   if(%player.getDamageState() $= "Enabled")
+   {
+      //if(%player.getDataBlock().damageBuffer - %buf > 1)
+      //{
+      //	%player.setDamageState("Disabled");
+      //	%player.playDeathAnimation(0, 0);
+      //}
+      //else
+      //{
+         %player.setDamageState("Destroyed");
+      //}
+   }
+
+   %etherform.setEnergyLevel(%nrg - 50);
+   %etherform.applyImpulse(%pos, VectorScale(%vel,100));
+   %etherform.playAudio(0, EtherformSpawnSound);
+
+	%client.player = %etherform;
+}
+
