@@ -125,6 +125,8 @@ void MultiNodeLaserBeamData::packData(BitStream* stream)
 {
 	Parent::packData(stream);
 
+   stream->write(materialString);
+
 	stream->write(width);
 
 	stream->writeInt(renderMode,8);
@@ -151,6 +153,8 @@ void MultiNodeLaserBeamData::packData(BitStream* stream)
 void MultiNodeLaserBeamData::unpackData(BitStream* stream)
 {
 	Parent::unpackData(stream);
+
+   stream->read(&materialString);
 
 	stream->read(&width);
 
