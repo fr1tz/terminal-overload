@@ -1,6 +1,12 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
+datablock StaticShapeData(FrmStandardcatDemanifestShape)
+{
+   ignoreDamage = true;
+   shapeFile = "content/xa/notc/core/shapes/standardcat/demanifest/p1/shape.dae";
+};
+
 datablock PlayerData(FrmStandardcat)
 {
    proxy = FrmStandardcatProxy; // script field

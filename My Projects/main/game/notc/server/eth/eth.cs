@@ -260,24 +260,31 @@ function ETH::switchToEtherform(%client)
 //      %etherform.setTagged();
 
    %client.control(%etherform);
-
+   
    if(%player.getDamageState() $= "Enabled")
-   {
-      //if(%player.getDataBlock().damageBuffer - %buf > 1)
-      //{
-      //	%player.setDamageState("Disabled");
-      //	%player.playDeathAnimation(0, 0);
-      //}
-      //else
-      //{
-         %player.setDamageState("Destroyed");
-      //}
-   }
+      %player.schedule(0, "delete");
 
    %etherform.setEnergyLevel(%nrg - 50);
    %etherform.applyImpulse(%pos, VectorScale(%vel,100));
    %etherform.playAudio(0, EtherformSpawnSound);
 
 	%client.player = %etherform;
+ 
+   // Demanifest effect
+   if(%player.getDamageState() $= "Enabled")
+   {
+      %shape = new StaticShape() {
+         dataBlock = FrmStandardcatDemanifestShape;
+      };
+      MissionCleanup.add(%shape);
+      copyPalette(%etherform, %shape);
+      %shape.playThread(0, "ambient");
+      %shape.setThreadTimeScale(0, 3);
+      %shape.setThreadDir(0, true);
+      %shape.startFade(200, 50, true);
+      %shape.schedule(500, "delete");
+      
+      %etherform.mountObject(%shape, 8);
+   }
 }
 
