@@ -76,7 +76,7 @@ datablock MultiNodeLaserBeamData(WpnSMG1ProjectileLaserTrail0)
 	material = "xa_notc_core_shapes_smg1_projectile_p3_lasertrail0mat";
 	renderMode = $MultiNodeLaserBeamRenderMode::FaceViewer;
    width = 0.01;
-	fadeTime = 150;
+	fadeTime = 75;
 	windCoefficient = 0.0;
 	//nodeDistance = 3;
 
@@ -99,7 +99,7 @@ datablock MultiNodeLaserBeamData(WpnSMG1ProjectileLaserTrail1)
 	material = "xa_notc_core_shapes_smg1_projectile_p3_lasertrail1mat";
 	renderMode = $MultiNodeLaserBeamRenderMode::FaceViewer;
    width = 0.1;
-	fadeTime = 150;
+	fadeTime = 75;
 	windCoefficient = 0.0;
 	//nodeDistance = 3;
 
@@ -122,7 +122,7 @@ datablock MultiNodeLaserBeamData(WpnSMG1ProjectileLaserTrail2)
 	material = "xa_notc_core_shapes_smg1_projectile_p3_lasertrail2mat";
 	renderMode = $MultiNodeLaserBeamRenderMode::FaceViewer;
    width = 0.6;
-	fadeTime = 300;
+	fadeTime = 150;
 	windCoefficient = 0.0;
 	//nodeDistance = 3;
 
