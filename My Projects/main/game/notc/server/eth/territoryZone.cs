@@ -230,26 +230,8 @@ datablock TacticalZoneData(TerritoryZone)
 	// in the zone.  The default value is 100 MS.
 	tickPeriodMS = 200;
 
-	colorChangeTimeMS = 200;
+	colorChangeTimeMS = 400;
 
-	colors[1]  = "1 1 1 0.05";  // neutral
-	colors[2]  = "1 0 0 0.1";   // red
-	colors[3]  = "0 0 1 0.1";   // blue
-	colors[4]  = "1 0.5 0 0.1";   // red zBlocked
-	colors[5]  = "0 0.5 1 0.1";   // blue zBlocked
-
-	colors[6]  = "1 1 1 0.75";  // white flash
-	colors[7]  = "1 0 0 0.75";   // red flash
-	colors[8]  = "0 0 1 0.75";   // blue flash
-	colors[9]  = "1 0.5 0 0.75";   // red zBlocked flash
-	colors[10] = "0 0.5 1 0.75";   // blue zBlocked flash
-
-	colors[11] = "0 1 0 0.75";   // bright green
-	colors[12] = "1 1 0 0.75";   // bright yellow
-	colors[13] = "0 1 0 0.1";   // constantly neutral
-	colors[14] = "0 1 0 0.4";   // protected
-	colors[15] = "1 1 1 1"; 
- 
    terrainMaterial = "xa_notc_core_shapes_territoryzone_terrainmat";
    borderMaterial = "xa_notc_core_shapes_territoryzone_bordermat";
    otherMaterial = "xa_notc_core_shapes_territoryzone_othermat";
@@ -371,13 +353,7 @@ function TerritoryZone::updateOwner(%this, %zone)
 		%zone.zBlocked = true;
 	else if(%zone.getTeamId() == 1 && %zone.zNumBlues != 0)
 		%zone.zBlocked = true;
-
-	//%zone.setColor(%color, %color, 1);
- 
-	//if(%color != %zone.zColor)
-	//	%zone.flash(%color + 5, %color + 5, 1);
-
-	//%zone.zColor = %color;
+   %zone.setFlicker(%zone.zBlocked ? 200 : 0);
 }
 
 function TerritoryZone::setZoneOwner(%this, %zone, %teamId)
@@ -392,18 +368,18 @@ function TerritoryZone::setZoneOwner(%this, %zone, %teamId)
 	else if(%oldTeamId == 2)
 		Game.team2.numTerritoryZones--;
   
-   %alpha = 255;
+   %mod = 50;
    if(%teamId == 0)
-      %alpha = 100;
+      %alpha = 25;
 
    %colorF = Game.team[%teamId].color;
-   %colorI = getWord(%colorF, 0)*255 SPC
-             getWord(%colorF, 1)*255 SPC
-             getWord(%colorF, 2)*255 SPC
-             %alpha;
+   %colorI = getWord(%colorF, 0)*%mod SPC
+             getWord(%colorF, 1)*%mod SPC
+             getWord(%colorF, 2)*%mod SPC
+             255;
    //echo(%colorF SPC "->" SPC %colorI);
    %zone.paletteColors[0] = %colorI;
-
+   %zone.flash(%colorF SPC "1");
 	%zone.setTeamId(%teamId);
 	
 	if(%teamId == 1)
