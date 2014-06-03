@@ -99,14 +99,9 @@ class TacticalZone : public GameBase
 	enum UpdateMasks {
 		ColorMask        = Parent::NextFreeMask,
 		EditorMask       = Parent::NextFreeMask << 1,	
-		Color1Mask       = Parent::NextFreeMask << 2,
-		Color2Mask       = Parent::NextFreeMask << 3,
-		FactorMask       = Parent::NextFreeMask << 4,
-		FlashColor1Mask  = Parent::NextFreeMask << 5,
-		FlashColor2Mask  = Parent::NextFreeMask << 6,
-		FlashFactorMask  = Parent::NextFreeMask << 7,
-		FlashMask        = Parent::NextFreeMask << 8,
-		NextFreeMask     = Parent::NextFreeMask << 9
+		FlashMask        = Parent::NextFreeMask << 2,
+      FlickerMask      = Parent::NextFreeMask << 3,
+		NextFreeMask     = Parent::NextFreeMask << 4
 	};
 
  private:
@@ -121,15 +116,9 @@ class TacticalZone : public GameBase
 	U32	mLastThink;
 	U32	mCurrTick;
 
-	ColorF mCurrColor;
-
-	U8     mColor1;
-	U8     mColor2;
-	F32    mFactor;
-
-	U8     mFlashColor1;
-	U8     mFlashColor2;
-	F32    mFlashFactor;
+   ColorF mCurrColor;
+   ColorF mFlashColor;
+   U32 mFlickerTime;
 
 	F32 mBorderWidth[6];
 
@@ -232,10 +221,10 @@ class TacticalZone : public GameBase
 	bool renderInteriors() { return mRenderInteriors; }
 	bool renderTerrain() { return mRenderTerrain; }
 
-	void   setColor(U8 color1, U8 color2, F32 f);
-	void   flash(U8 color1, U8 color2, F32 f);
-	ColorF getZoneColor();
-	ColorF getRenderColor();
+   ColorF getZoneColor() const;
+
+	void flash(const ColorF& color);
+   void setFlicker(U32 flickerTime);
 
    void      potentialEnterObject(GameBase*);
    U32       getNumTacticalZoneObjects() const;

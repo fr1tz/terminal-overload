@@ -5,6 +5,7 @@
 #include "tacticalzone.h"
 
 #include "console/consoleTypes.h"
+#include "console/engineAPI.h"
 #include "core/stream/bitStream.h"
 #include "collision/boxConvex.h"
 #include "gfx/gfxDevice.h"
@@ -282,14 +283,8 @@ TacticalZone::TacticalZone()
 	mRenderTerrainGrid = false;
 
 	mCurrColor.set(0, 0, 0, 0);
-
-	mColor1 = 0;
-	mColor2 = 0;
-	mFactor = 0;
-
-	mFlashColor1 = 0;
-	mFlashColor2 = 0;
-	mFlashFactor = 0;
+   mFlashColor.set(0, 0, 0, 0);
+   mFlickerTime = 0;
 
 	for(int i = 0; i < 6; i++)
 		mBorderWidth[i] = 5.0f;
@@ -997,66 +992,30 @@ void TacticalZone::setTransform(const MatrixF & mat)
 	}
 }
 
-ColorF TacticalZone::getRenderColor()
+ColorF TacticalZone::getZoneColor() const
 {
-	ColorF c = mCurrColor;
-//	if(mDataBlock->allowColorization)
-//		c.colorize(this->getSceneObjectColorization());
-	return c;
+   if(mFlickerTime == 0)
+      return mCurrColor;
+
+   U32 time = Platform::getRealMilliseconds();
+   if((time/mFlickerTime) % 2 == 0)
+      return mCurrColor;
+   else
+      return ColorF(0,0,0,0);
 }
 
-ColorF TacticalZone::getZoneColor()
+void TacticalZone::flash(const ColorF& color)
 {
-	ColorF color;
-
-	color.interpolate(mDataBlock->colors[mColor1],
-		mDataBlock->colors[mColor2], mFactor);
-
-	return color;
+   mFlashColor = color;
+   this->setMaskBits(FlashMask);
 }
 
-void TacticalZone::setColor(U8 color1, U8 color2, F32 f)
+void TacticalZone::setFlicker(U32 flickerTime)
 {
-	if(mColor1 != color1)
-	{
-		mColor1 = color1;
-		this->setMaskBits(Color1Mask);
-	}
-
-	if(mColor2 != color2)
-	{
-		mColor2 = color2;
-		this->setMaskBits(Color2Mask);
-	}
-
-	if(mFactor != f)
-	{
-		mFactor = f;
-		this->setMaskBits(FactorMask);
-	}
-}
-
-void TacticalZone::flash(U8 color1, U8 color2, F32 f)
-{
-	if(mFlashColor1 != color1)
-	{
-		mFlashColor1 = color1;
-		this->setMaskBits(FlashColor1Mask);
-	}
-
-	if(mFlashColor2 != color2)
-	{
-		mFlashColor2 = color2;
-		this->setMaskBits(FlashColor2Mask);
-	}
-
-	if(mFlashFactor != f)
-	{
-		mFlashFactor = f;
-		this->setMaskBits(FlashFactorMask);
-	}
-
-	this->setMaskBits(FlashMask);
+   if(mFlickerTime == flickerTime)
+      return;
+   mFlickerTime = flickerTime;  
+	this->setMaskBits(FlickerMask);
 }
 
 //--------------------------------------------------------------------------
@@ -1130,7 +1089,7 @@ void TacticalZone::advanceTime(F32 dt)
 {
 	Parent::advanceTime(dt);
 
-	ColorF targetColor = this->getZoneColor();
+	ColorF targetColor = mPalette.colors[0];
 	if(mCurrColor != targetColor)
 	{
 		F32 delta = dt / (F32(mDataBlock->colorChangeTimeMS) / 1000.0f);
@@ -1353,6 +1312,9 @@ void TacticalZone::prepRenderImage(SceneRenderState* state)
 		mClientComputePolys = false;
 	}
 
+   if(this->getZoneColor() == ColorF(0,0,0,0))
+      return;
+
    if(false)
    {
       ObjectRenderInst *ri = state->getRenderPass()->allocInst<ObjectRenderInst>();
@@ -1398,6 +1360,7 @@ void TacticalZone::prepRenderImage(SceneRenderState* state)
 
       // Set palette.
       ri->palette = this->getPalette();
+      ri->palette.colors[0] = this->getZoneColor();
 
       // Set our RenderInst as a standard mesh render
       ri->type = RenderPassManager::RIT_Mesh;
@@ -2142,25 +2105,11 @@ U32 TacticalZone::packUpdate(NetConnection* con, U32 mask, BitStream* stream)
 		}
 	}
 
-	if( stream->writeFlag(mask & Color1Mask) )
-		stream->writeInt(mColor1, TacticalZoneData::MaxColorsBits);
+   if(stream->writeFlag(mask & FlashMask))
+      stream->write(mFlashColor);
 
-	if( stream->writeFlag(mask & Color2Mask) )
-		stream->writeInt(mColor2, TacticalZoneData::MaxColorsBits);
-
-	if( stream->writeFlag(mask & FactorMask) )
-		writeRangedF32(stream, mFactor, 0, 1, 4);
-
-	if( stream->writeFlag(mask & FlashColor1Mask) )
-		stream->writeInt(mFlashColor1, TacticalZoneData::MaxColorsBits);
-
-	if( stream->writeFlag(mask & FlashColor2Mask) )
-		stream->writeInt(mFlashColor2, TacticalZoneData::MaxColorsBits);
-
-	if( stream->writeFlag(mask & FlashFactorMask) )
-		writeRangedF32(stream, mFlashFactor, 0, 1, 4);
-
-	stream->writeFlag(mask & FlashMask);
+   if(stream->writeFlag(mask & FlickerMask))
+      stream->write(mFlickerTime);
 
 	return retMask;
 }
@@ -2201,28 +2150,13 @@ void TacticalZone::unpackUpdate(NetConnection* con, BitStream* stream)
 	}
 
 	if( stream->readFlag() )
-		mColor1 = stream->readInt(TacticalZoneData::MaxColorsBits);
-
-	if( stream->readFlag() )
-		mColor2 = stream->readInt(TacticalZoneData::MaxColorsBits);
-
-	if( stream->readFlag() )
-		mFactor = readRangedF32(stream, 0, 1, 4);
-
-	if( stream->readFlag() )
-		mFlashColor1 = stream->readInt(TacticalZoneData::MaxColorsBits);
-
-	if( stream->readFlag() )
-		mFlashColor2 = stream->readInt(TacticalZoneData::MaxColorsBits);
-
-	if( stream->readFlag() )
-		mFlashFactor = readRangedF32(stream, 0, 1, 4);
-
-	if( stream->readFlag() )
 	{
-		mCurrColor.interpolate(mDataBlock->colors[mFlashColor1],
-			mDataBlock->colors[mFlashColor2], mFlashFactor);
+      stream->read(&mFlashColor);
+      mCurrColor = mFlashColor;
 	}
+
+	if( stream->readFlag() )
+      stream->read(&mFlickerTime);
 }
 
 void TacticalZone::objectFound(SceneObject* obj, void* key)
@@ -2239,17 +2173,21 @@ void TacticalZone::objectFound(SceneObject* obj, void* key)
 			obj->buildPolyList(PLC_Collision, &zone->mBorderPolys[i], zone->mWorldBox, zone->mWorldSphere);
 }
 
-ConsoleMethod( TacticalZone, setColor, void, 5, 5, "(int color1, int color2, float f)")
-{
-	object->setColor(dAtoi(argv[2]), dAtoi(argv[3]), dAtof(argv[4]));
-}
-
-ConsoleMethod( TacticalZone, flash, void, 5, 5, "(int color1, int color2, float f)")
-{
-	object->flash(dAtoi(argv[2]), dAtoi(argv[3]), dAtof(argv[4]));
-}
-
 ConsoleMethod( TacticalZone, computeGrid, void, 2, 2, "")
 {
 	return object->computeGrid();
+}
+
+DefineEngineMethod( TacticalZone, flash, void, ( ColorF color ),,
+   "@brief Make the zone flash in the specified color.\n\n"
+   "@param color The flash color\n\n" )
+{
+   object->flash(color);
+}
+
+DefineEngineMethod( TacticalZone, setFlicker, void, ( S32 time ),,
+   "@brief Make the zone flicker.\n\n"
+   "@param time The flicker time\n\n" )
+{
+   object->setFlicker(time);
 }
