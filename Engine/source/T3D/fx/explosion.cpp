@@ -800,7 +800,7 @@ void Explosion::initPersistFields()
 {
    Parent::initPersistFields();
 
-   //
+   addField("normal", TypePoint3F, Offset(mInitialNormal, Explosion));  
 }
 
 //--------------------------------------------------------------------------
