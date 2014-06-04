@@ -36,9 +36,9 @@ function isValidPlayerColor(%colori)
    return true;
 }
 
-function createExplosion(%data, %pos, %norm)
+function createExplosion(%data, %pos, %norm, %colorI)
 {
-	%visibleDistance = 1000; // getVisibleDistance(); FIXME
+	%visibleDistance = theLevelInfo.visibleDistance;
 	%count = ClientGroup.getCount();
 	for(%i = 0; %i < %count; %i++)
 	{
@@ -52,7 +52,7 @@ function createExplosion(%data, %pos, %norm)
 		// can the player potentially see it?
 		if(%dist <= %visibleDistance)
 		{
-			createExplosionOnClient(%client, %data, %pos, %norm);
+         commandToClient(%client, 'CreateExplosion', %data, %pos, %norm, %colorI);
 		}
 		else
 		{
