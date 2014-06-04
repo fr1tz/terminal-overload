@@ -133,6 +133,7 @@ singleton Material(xa_rotc_hack_shapes_mat9)
    diffuseColor[0] = "0.996078 0.988235 0.996078 0.568";
    diffuseColor[1] = "0 1 0.0823529 0";
    emissive[1] = "1";
+   diffuseColorPaletteSlot[0] = "0";
 };
 
 singleton Material(xa_rotc_hack_shapes_mat10)

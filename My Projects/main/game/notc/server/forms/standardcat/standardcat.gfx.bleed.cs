@@ -8,6 +8,7 @@ datablock DecalData(FrmStandardCatBleedEffect_Decal)
    textureCoordCount = "0";
    lifeSpan = "250";
    fadeTime = "2500";
+   paletteSlot = 0;
 };
 
 datablock DebrisData(FrmStandardCatBleedEffect_Debris)
@@ -39,7 +40,7 @@ datablock DebrisData(FrmStandardCatBleedEffect_Debris)
 
 datablock ParticleData(FrmStandardCatBleedEffect_Particles : DefaultParticle)
 {
-   sizes[0] = "0.2";
+   sizes[0] = "0.5";
    sizes[1] = "0";
    sizes[2] = "0";
    sizes[3] = "0";
@@ -52,15 +53,15 @@ datablock ParticleData(FrmStandardCatBleedEffect_Particles : DefaultParticle)
    spinSpeed = "0";
    textureName = "content/xa/torque3d/3.0/particles/droplet.png";
    animTexName = "content/xa/torque3d/3.0/particles/droplet.png";
-   colors[1] = "0.996078 0.713726 0.854902 0";
-   colors[2] = "0.996078 0.0784314 0.00784314 0.330709";
-   colors[3] = "1 0.0705882 0 0";
+   colors[1] = "1 1 1 0";
+   colors[2] = "1 1 1 0.330709";
+   colors[3] = "1 1 1 0";
    ejectionPeriodMS = "2";
    ejectionVelocity = "0";
    softnessDistance = "1";
    ejectionOffset = "0";
    gravityCoefficient = "0.998779";
-   colors[0] = "0.996078 0.780392 0.929412 1";
+   colors[0] = "0.996078 0.996078 0.996078 1";
 };
 
 //------------------------------------------------------------------------------
@@ -107,6 +108,7 @@ datablock ParticleEmitterData(FrmStandardCatBleedEffect10Emitter : DefaultEmitte
    lightEndColor = "0.992126 0 0 1";
    lightStartBrightness = "0.784314";
    lightEndBrightness = "1.80392";
+   paletteSlot = 0;
 };
 
 datablock ExplosionData(FrmStandardCatBleedEffect10)
