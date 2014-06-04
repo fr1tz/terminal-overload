@@ -22,18 +22,6 @@ package Commands
          $PostFX::MotionBlur::VelMul = %velmul;
    }
 
-   function clientCmdCreateExplosion(%position, %effectDataBlock)
-   {
-      if(isObject(%effectDataBlock))
-      {
-         new Explosion()
-         {
-            position = %position;
-            dataBlock = %effectDataBlock;
-         };
-      }
-   }
-   
    function clientCmdSyncClock(%time)
    {
       // Time update from the server, this is only sent at the start of a mission
@@ -67,6 +55,24 @@ package Commands
             };
          }
       }
+   }
+   
+   function clientCmdCreateExplosion(%datablock, %pos, %norm, %colorI)
+   {
+      if(!isObject(%datablock))
+         return;
+         
+      if(%colorI $= "")
+         %colorI = "255 255 255 255";
+
+      %obj = new Explosion()
+      {
+         position = %pos;
+         normal = %norm;
+         dataBlock = %datablock;
+      };
+
+      %obj.paletteColors[0] = %colorI;
    }
 };
 
