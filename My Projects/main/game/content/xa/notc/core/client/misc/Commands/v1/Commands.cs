@@ -70,9 +70,8 @@ package Commands
          position = %pos;
          normal = %norm;
          dataBlock = %datablock;
+         paletteColors[0] = %colorI;
       };
-
-      %obj.paletteColors[0] = %colorI;
    }
 };
 
