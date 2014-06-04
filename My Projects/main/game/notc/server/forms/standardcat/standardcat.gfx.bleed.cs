@@ -21,7 +21,7 @@ datablock DebrisData(FrmStandardCatBleedEffect_Debris)
 
 	// bounce...
 	staticOnMaxBounce = "0";
-	numBounces = "0";
+	numBounces = "3";
 
 	// physics...
 	gravModifier = 4.0;
@@ -40,7 +40,7 @@ datablock DebrisData(FrmStandardCatBleedEffect_Debris)
 
 datablock ParticleData(FrmStandardCatBleedEffect_Particles : DefaultParticle)
 {
-   sizes[0] = "0.5";
+   sizes[0] = "0.497467";
    sizes[1] = "0";
    sizes[2] = "0";
    sizes[3] = "0";
@@ -51,8 +51,8 @@ datablock ParticleData(FrmStandardCatBleedEffect_Particles : DefaultParticle)
    lifetimeVarianceMS = "0";
    dragCoefficient = "0";
    spinSpeed = "0";
-   textureName = "content/xa/torque3d/3.0/particles/droplet.png";
-   animTexName = "content/xa/torque3d/3.0/particles/droplet.png";
+   textureName = "content/xa/rotc/p.5.4/textures/rotc/corona.png";
+   animTexName = "content/xa/rotc/p.5.4/textures/rotc/corona.png";
    colors[1] = "1 1 1 0";
    colors[2] = "1 1 1 0.330709";
    colors[3] = "1 1 1 0";
@@ -60,8 +60,8 @@ datablock ParticleData(FrmStandardCatBleedEffect_Particles : DefaultParticle)
    ejectionVelocity = "0";
    softnessDistance = "1";
    ejectionOffset = "0";
-   gravityCoefficient = "0.998779";
-   colors[0] = "0.996078 0.996078 0.996078 1";
+   gravityCoefficient = "2.99634";
+   colors[0] = "0.992126 0.992126 0.992126 1";
 };
 
 //------------------------------------------------------------------------------
@@ -92,12 +92,12 @@ datablock ParticleEmitterData(FrmStandardCatBleedEffect10Emitter : DefaultEmitte
    ejectionPeriodMS = "1";
    periodVarianceMS = "0";
    softnessDistance = "1";
-   ejectionVelocity = "5";
+   ejectionVelocity = "10";
    ejectionOffset = "0";
    thetaMin = "0";
-   thetaMax = "33";
-   orientParticles = "1";
-   blendStyle = "NORMAL";
+   thetaMax = "180";
+   orientParticles = "0";
+   blendStyle = "ADDITIVE";
    soundProfile = "FrmStandardcatBleedEffectSound";
    particleDensity = "2";
    particleRadius = "0.1";
@@ -109,6 +109,7 @@ datablock ParticleEmitterData(FrmStandardCatBleedEffect10Emitter : DefaultEmitte
    lightStartBrightness = "0.784314";
    lightEndBrightness = "1.80392";
    paletteSlot = 0;
+   emitter0 = "FrmStandardCatBleedEffect_Sting_Emitter";
 };
 
 datablock ExplosionData(FrmStandardCatBleedEffect10)
