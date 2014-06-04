@@ -122,13 +122,17 @@ singleton Material(xa_rotc_hack_shapes_mat8)
 singleton Material(xa_rotc_hack_shapes_mat9)
 {
    mapTo = "explosion_white";
-   diffuseMap[0] = "content/xa/rotc/p.5.4/shapes/rotc/effects/explosion_white.png";
-   glow[0] = "0";
+   glow[0] = "1";
    castShadows = "0";
    translucent = "1";
    translucentBlendOp = "AddAlpha";
    emissive[0] = "1";
    showFootprints = "0";
+   glowOnly[0] = "0";
+   materialTag0 = "Miscellaneous";
+   diffuseColor[0] = "0.996078 0.988235 0.996078 0.568";
+   diffuseColor[1] = "0 1 0.0823529 0";
+   emissive[1] = "1";
 };
 
 singleton Material(xa_rotc_hack_shapes_mat10)
