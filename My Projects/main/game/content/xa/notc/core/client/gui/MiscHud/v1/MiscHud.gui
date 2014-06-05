@@ -22,9 +22,9 @@
       margin = "0 0 0 0";
       noCursor = "1";
       padding = "0 0 0 0";
-      
+
    new GuiTextCtrl(HudGameTimer) {
-      text = "---";
+      text = "535.9";
       maxLength = "1024";
       margin = "0 0 0 0";
       padding = "0 0 0 0";
@@ -160,15 +160,32 @@
       canSaveDynamicFields = "0";
    };
    new GuiIrisHud(Iris) {
-      sizeX = "2.24208e-044";
-      sizeY = "0";
-      bitmap = "./graphics/iris.png";
+      sizeX = "8";
+      sizeY = "8";
+      bitmap = "content/xa/notc/core/client/gui/MiscHud/v1/graphics/iris.png";
       wrap = "0";
       position = "0 0";
       extent = "640 480";
       minExtent = "8 2";
       horizSizing = "width";
       vertSizing = "height";
+      profile = "GuiDefaultProfile";
+      visible = "1";
+      active = "1";
+      tooltipProfile = "GuiToolTipProfile";
+      hovertime = "1000";
+      isContainer = "0";
+      canSave = "1";
+      canSaveDynamicFields = "0";
+   };
+   new GuiMiniMapHud() {
+      rotate = "1";
+      visRadius = "2000";
+      position = "16 264";
+      extent = "200 200";
+      minExtent = "8 2";
+      horizSizing = "right";
+      vertSizing = "top";
       profile = "GuiDefaultProfile";
       visible = "1";
       active = "1";
