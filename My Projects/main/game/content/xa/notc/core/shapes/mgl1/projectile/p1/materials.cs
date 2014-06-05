@@ -39,7 +39,7 @@ singleton Material(xa_notc_core_shapes_mgl1_projectile_p1_mat3)
 
 singleton Material(xa_notc_core_shapes_mgl1_projectile_p1_lasertrail0mat)
 {
-   diffuseColor[0] = "0.478431 0.478431 0.478431 1";
+   diffuseColor[0] = "0.270588 0.270588 0.270588 1";
    doubleSided = "1";
    translucentBlendOp = "AddAlpha";
    castShadows = "0";
@@ -52,7 +52,7 @@ singleton Material(xa_notc_core_shapes_mgl1_projectile_p1_lasertrail0mat)
    diffuseMap[0] = "content/xa/rotc/p.5.4/textures/rotc/ring1.png";
    materialTag0 = "Miscellaneous";
    mapTo = "trail.png";
-   diffuseColorPaletteSlot[0] = "0";
+   diffuseColorPaletteSlot[0] = "-1";
    wireframe[0] = "1";
 };
 

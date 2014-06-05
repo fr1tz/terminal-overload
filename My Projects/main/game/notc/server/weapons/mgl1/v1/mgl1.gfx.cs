@@ -6,47 +6,46 @@
 
 datablock ParticleData(WpnMGL1ProjectileParticleEmitter_Particles)
 {
-	dragCoeffiecient	  = 0.0;
-	gravityCoefficient	= 0.0;
+	dragCoefficient      = "0.99218";
+	gravityCoefficient   = 0.0;
+	windCoefficient      = 0.0;
 	inheritedVelFactor	= 0.0;
-
-	lifetimeMS			  = 200;
+	constantAcceleration = 0.0;
+	lifetimeMS			   = "400";
 	lifetimeVarianceMS	= 0;
-
-	useInvAlpha =  true;
-	spinRandomMin = -200.0;
-	spinRandomMax =  200.0;
-
-	textureName = "content/xa/rotc/p.5.4/textures/rotc/smoke_particle.png";
-
-	colors[0]	  = "0.9 0.9 0.9 0.6";
-	colors[1]	  = "0.9 0.9 0.9 0.3";
-	colors[2]	  = "0.9 0.9 0.9 0.0";
-	sizes[0]		= 0.6;
-	sizes[1]		= 0.3;
-	sizes[2]		= 0.0;
-	times[0]		= 0.0;
-	times[1]		= 0.5;
-	times[2]		= 1.0;
-
-	allowLighting = true;
+	spinRandomMin        = 0;
+	spinRandomMax        = 0;
+	textureName			   = "content/xa/rotc/p.5.4/textures/rotc/corona";
+	colors[0]            = "0.996078 0.996078 0.996078 1";
+	colors[1]            = "1 1 1 0";
+	sizes[0]             = "2";
+	sizes[1]             = "0";
+	times[0]             = 0.0;
+	times[1]             = 1.0;
+	useInvAlpha          = false;
+	renderDot            = 0;
+   animTexName = "content/xa/rotc/p.5.4/textures/rotc/corona";
+   times[2] = "1";
 };
 
 datablock ParticleEmitterData(WpnMGL1ProjectileParticleEmitter)
 {
-	ejectionPeriodMS = 2;
+	ejectionPeriodMS = "5";
 	periodVarianceMS = 0;
-	ejectionVelocity = 0.0;
-	velocityVariance = 0.0;
-	ejectionOffset	 = 0.0;
-	thetaMin		 = 0;
-	thetaMax		 = 0;
+	ejectionVelocity = 0;
+	velocityVariance = 2.5;
+	ejectionOffset   = 0.0;
+	thetaMin         = 0;
+	thetaMax         = 0;
 	phiReferenceVel  = 0;
-	phiVariance		 = 0;
-	overrideAdvances = false;
+	phiVariance      = 0;
+	overrideAdvances = 0;
 	orientParticles  = false;
-	lifetimeMS		 = 0;
+	//lifetimeMS		 = 1000;
 	particles = "WpnMGL1ProjectileParticleEmitter_Particles";
+   paletteSlot = 0;
+   blendStyle = "ADDITIVE";
+   targetLockTimeMS = "480";
 };
 
 //-----------------------------------------------------------------------------
@@ -495,7 +494,7 @@ datablock ExplosionData(WpnMGL1ProjectileExplosion)
 {
 	soundProfile = WpnMGL1ProjectileExplosionSound;
 
-	lifetimeMS = 200;
+	lifetimeMS = "192";
 
  	// shape...
 	//explosionShape = "share/shapes/rotc/effects/explosion2_white.dts";
@@ -531,10 +530,13 @@ datablock ExplosionData(WpnMGL1ProjectileExplosion)
 	camShakeRadius = 20.0;
 
 	// Dynamic light
-	lightStartRadius = 7;
+	lightStartRadius = "10";
 	lightEndRadius = 0;
-	lightStartColor = "1.0 1.0 1.0";
-	lightEndColor = "0.0 0.0 0.0";
+	lightStartColor = "0.984252 0.992126 0.992126 1";
+	lightEndColor = "0.984252 0.984252 0.984252 1";
+   lightStartBrightness = "16.0784";
+   lightEndBrightness = "16.1569";
+   targetLockTimeMS = "480";
 };
 
 //-----------------------------------------------------------------------------
