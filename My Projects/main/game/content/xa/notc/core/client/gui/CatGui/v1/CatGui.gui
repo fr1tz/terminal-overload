@@ -27,11 +27,28 @@
       helpTag = "0";
       noCursor = "1";
       zTeamId = "0";
-      zTickThread = "284640";
+      zTickThread = "37929";
 
    new GuiDiscTargetsHud() {
       frameColor = "1 1 1 1";
       hudInfoType = "1";
+      position = "0 0";
+      extent = "640 480";
+      minExtent = "8 2";
+      horizSizing = "width";
+      vertSizing = "height";
+      profile = "GuiDefaultProfile";
+      visible = "1";
+      active = "1";
+      tooltipProfile = "GuiToolTipProfile";
+      hovertime = "1000";
+      isContainer = "0";
+      canSave = "1";
+      canSaveDynamicFields = "0";
+   };
+   new GuiImageTargetsHud() {
+      color = "1 1 1 1";
+      blinkTime = "50";
       position = "0 0";
       extent = "640 480";
       minExtent = "8 2";
@@ -111,7 +128,7 @@
       canSaveDynamicFields = "0";
    };
    new GuiTextCtrl(CatGuiDamageBufferText) {
-      text = "50.0028";
+      text = "49.901";
       maxLength = "1024";
       margin = "0 0 0 0";
       padding = "0 0 0 0";
@@ -158,7 +175,7 @@
       canSaveDynamicFields = "0";
    };
    new GuiTextCtrl(CatGuiAmmoText) {
-      text = "9998";
+      text = "-";
       maxLength = "1024";
       margin = "0 0 0 0";
       padding = "0 0 0 0";
