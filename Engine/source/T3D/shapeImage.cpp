@@ -1586,7 +1586,8 @@ ShapeBase::MountedImage::MountedImage()
    charged = false;
 
    currTarget = NULL;
-   lockTime = 0;
+   initialLockTime = 0;
+   remainingLockTime = 0;
    targetState = NoTarget;
 
    for (U32 i=0; i<ShapeBaseImageData::MaxShapes; ++i)
@@ -1775,12 +1776,12 @@ ShapeBaseImageData* ShapeBase::getMountedImage(U32 imageSlot)
    return mMountedImageList[imageSlot].dataBlock;
 }
 
-
 ShapeBase::MountedImage* ShapeBase::getImageStruct(U32 imageSlot)
 {
+   AssertFatal(imageSlot<MaxMountedImages,"Out of range image slot");
+
    return &mMountedImageList[imageSlot];
 }
-
 
 ShapeBaseImageData* ShapeBase::getPendingImage(U32 imageSlot)
 {
@@ -3865,7 +3866,7 @@ TICKAGAIN:
 			{
 				if(image.targetState == MountedImage::NoTarget)
 				{
-					if(image.lockTime <= 0)
+					if(image.remainingLockTime <= 0)
 						image.targetState = MountedImage::TargetLocked;
 					else
 						image.targetState = MountedImage::HaveTarget;
@@ -3882,10 +3883,10 @@ TICKAGAIN:
 				}
 				else
 				{
-					image.lockTime -= dt;
-					if(image.targetState == MountedImage::HaveTarget && image.lockTime < 0)
+					image.remainingLockTime -= dt;
+					if(image.targetState == MountedImage::HaveTarget && image.remainingLockTime < 0)
 					{
-						image.lockTime = 0;
+						image.remainingLockTime = 0;
 						image.targetState = MountedImage::TargetLocked;
 
 						GameConnection* conn = GameConnection::getConnectionToServer();
@@ -3929,7 +3930,8 @@ TICKAGAIN:
 			{
 				// reset lock time
 				S32 lockTimeMS = ((GameBaseData*)target->getDataBlock())->targetLockTimeMS;
-				image.lockTime = (F32)lockTimeMS/1000.0;
+            image.initialLockTime = (F32)lockTimeMS/1000.0;
+				image.remainingLockTime = image.initialLockTime;
 
 				// aquire new target...
 				image.setCurrTarget(this, target);

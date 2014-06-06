@@ -896,7 +896,8 @@ public:
          NumTargetStates
       } targetState;                ///< Current target state
       GameBase* currTarget;         ///< Current target object
-      F32 lockTime;                 ///< remaining time until target is locked
+      F32 initialLockTime;
+      F32 remainingLockTime;        ///< remaining time until target is locked
 
 		S32 magazineRounds;           ///< How many rounds in the image's magazine?
 		                              ///  (Only used if ammoSource is "magazine".)

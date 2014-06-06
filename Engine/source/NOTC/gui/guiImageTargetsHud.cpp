@@ -15,7 +15,7 @@
 #include "gfx/gfxDrawUtil.h"
 #include "console/engineAPI.h"
 
-class GuiImageTargetsHud : public GuiControl, public virtual ITickable
+class GuiImageTargetsHud : public GuiControl
 {
    typedef GuiControl Parent;
 
@@ -25,21 +25,11 @@ class GuiImageTargetsHud : public GuiControl, public virtual ITickable
    ColorF mColor;
    S32 mBlinkTime;
 
-   U32 mCurrTick;
-
-protected:
-   void drawTarget(GameBase* control, HudInfo* hudInfo);
-
 public:
    GuiImageTargetsHud();
 
    // GuiControl
    virtual void onRender(Point2I offset, const RectI &updateRect);
-
-   // ITickable
-   void processTick();
-   void interpolateTick(F32 delta) {};
-   void advanceTime(F32 timeDelta) {};
 
    static void initPersistFields();
    DECLARE_CONOBJECT( GuiImageTargetsHud );
@@ -87,7 +77,6 @@ GuiImageTargetsHud::GuiImageTargetsHud()
    mParent = NULL;
    mColor.set( 1, 1, 1, 1 );
    mBlinkTime = 200;
-   mCurrTick = 0;
 }
 
 void GuiImageTargetsHud::initPersistFields()
@@ -111,10 +100,10 @@ void GuiImageTargetsHud::onRender( Point2I, const RectI &updateRect)
 
    // Must have a connection and control object
    GameConnection* conn = GameConnection::getConnectionToServer();
-   if (!conn)
+   if(!conn)
       return;
    ShapeBase* control = dynamic_cast<ShapeBase*>(conn->getControlObject());
-   if (!control)
+   if(!control)
       return;
 
 	for(int i = 0; i < ShapeBase::MaxMountedImages - 1; i++)
@@ -166,63 +155,3 @@ void GuiImageTargetsHud::onRender( Point2I, const RectI &updateRect)
 		}	
 	}
 }
-
-void GuiImageTargetsHud::processTick()
-{
-   mCurrTick++;
-}
-
-//----------------------------------------------------------------------------
-
-void GuiImageTargetsHud::drawTarget(GameBase* control, HudInfo* hudInfo)
-{
-   SceneObject* obj = hudInfo->getObject();
-
-   Point3F targetPos = obj ? obj->getBoxCenter() : hudInfo->getPosition();
-
-   Point3F shapePos = control->getBoxCenter();
-
-   F32 targetDist = Point3F(targetPos - control->getPosition()).len();
-
-   Point3F targetVec = targetPos - shapePos;
-   MatrixF mat = MathUtils::createOrientFromDir(targetVec);
-
-   Box3F box(-1, -1, -1, 1, 1, 1); 
-   if(obj)
-      box = obj->getRenderWorldBox();
-
-   F32 len = box.len_x() > box.len_z() ? box.len_x()/2 : box.len_z()/2;
-
-   Point3F x; mat.getColumn(0,&x); x.normalize(); x *= len; 
-   Point3F z; mat.getColumn(2,&z); z.normalize(); z *= len;
-
-   Point3F a = targetPos - x + z;
-   Point3F b = targetPos + x - z;
-
-   if(mParent->projectLR(shapePos,a,&a) && mParent->projectLR(shapePos,b,&b))
-   {
-      Point2I A(a.x,a.y);
-      Point2I B(b.x,b.y);
-
-      F32 s = Point2I(B-A).len();
-
-      Point2I extent(b.x-a.x,b.y-a.y);
-
-      Point3F targetPos2D;
-      if(!mParent->projectLR(shapePos,targetPos,&targetPos2D))
-         return;
-
-      U32 offset = s;
-      if( offset < 24 ) offset = 24;
-
-      Point2I upperLeft(targetPos2D.x-offset/2,targetPos2D.y-offset/2);
-      extent.set(offset,offset);
-      RectI rect(upperLeft,extent);
-
-      if(!rect.isValidRect())
-         return;
-
-      GFX->getDrawUtil()->drawRect(rect, mColor);
-   }
-}
-
