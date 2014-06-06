@@ -27,9 +27,11 @@
       helpTag = "0";
       noCursor = "1";
       zTeamId = "0";
-      zTickThread = "5085";
+      zTickThread = "284640";
 
    new GuiDiscTargetsHud() {
+      frameColor = "1 1 1 1";
+      hudInfoType = "1";
       position = "0 0";
       extent = "640 480";
       minExtent = "8 2";
@@ -44,10 +46,10 @@
       canSave = "1";
       canSaveDynamicFields = "0";
    };
-   new GuiDynamicCrossHairHud(CatGuiCrosshairSharp) {
-      size = "0";
-      alphaFactor = "6";
-      bitmap = "content/xa/notc/core/client/gui/CatGui/v1/graphics/crossHairSharp.png";
+   new GuiDynamicCrossHairHud() {
+      size = "16";
+      alphaFactor = "0";
+      bitmap = "content/xa/notc/core/client/gui/CatGui/v1/graphics/crossHair.png";
       wrap = "0";
       position = "0 0";
       extent = "640 480";
@@ -63,10 +65,10 @@
       canSave = "1";
       canSaveDynamicFields = "0";
    };
-   new GuiDynamicCrossHairHud(CatGuiCrosshairBlur) {
+   new GuiDynamicCrossHairHud() {
       size = "0";
       alphaFactor = "0";
-      bitmap = "content/xa/notc/core/client/gui/CatGui/v1/graphics/crossHairBlur.png";
+      bitmap = "content/xa/notc/core/client/gui/CatGui/v1/graphics/crossHairSpread.png";
       wrap = "0";
       position = "0 0";
       extent = "640 480";
@@ -109,7 +111,7 @@
       canSaveDynamicFields = "0";
    };
    new GuiTextCtrl(CatGuiDamageBufferText) {
-      text = "49.9501";
+      text = "50.0028";
       maxLength = "1024";
       margin = "0 0 0 0";
       padding = "0 0 0 0";
@@ -132,7 +134,7 @@
       canSaveDynamicFields = "0";
    };
    new GuiTextCtrl(CatGuiMassText) {
-      text = "90";
+      text = "90.0075";
       maxLength = "1024";
       margin = "0 0 0 0";
       padding = "0 0 0 0";
@@ -156,7 +158,7 @@
       canSaveDynamicFields = "0";
    };
    new GuiTextCtrl(CatGuiAmmoText) {
-      text = "90";
+      text = "9998";
       maxLength = "1024";
       margin = "0 0 0 0";
       padding = "0 0 0 0";
