@@ -254,7 +254,7 @@ void RenderFormatToken::_teardownTargets()
 {
    mTarget.release();
 
-   for(int i = 0; i < TargetChainLength; i++)
+   for(S32 i = 0; i < TargetChainLength; i++)
    {
       mTargetColorTexture[i] = NULL;
       mTargetDepthStencilTexture[i] = NULL;
