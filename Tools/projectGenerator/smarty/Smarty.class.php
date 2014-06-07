@@ -20,17 +20,17 @@
  *
  * For questions, help, comments, discussion, etc., please join the
  * Smarty mailing list. Send a blank e-mail to
- * smarty-discussion-subscribe@googlegroups.com
+ * smarty-general-subscribe@lists.php.net
  *
- * @link http://www.smarty.net/
+ * @link http://smarty.php.net/
  * @copyright 2001-2005 New Digital Group, Inc.
  * @author Monte Ohrt <monte at ohrt dot com>
  * @author Andrei Zmievski <andrei@php.net>
  * @package Smarty
- * @version 2.6.28
+ * @version 2.6.18
  */
 
-/* $Id: Smarty.class.php 4660 2012-09-24 20:05:15Z uwe.tews@googlemail.com $ */
+/* $Id: Smarty.class.php,v 1.528 2007/03/06 10:40:06 messju Exp $ */
 
 /**
  * DIR_SEP isn't used anymore, but third party apps might
@@ -107,7 +107,7 @@ class Smarty
     /**
      * When set, smarty does uses this value as error_reporting-level.
      *
-     * @var integer
+     * @var boolean
      */
     var $error_reporting  =  null;
 
@@ -236,8 +236,7 @@ class Smarty
                                     'INCLUDE_ANY'     => false,
                                     'PHP_TAGS'        => false,
                                     'MODIFIER_FUNCS'  => array('count'),
-                                    'ALLOW_CONSTANTS'  => false,
-                                    'ALLOW_SUPER_GLOBALS' => true
+                                    'ALLOW_CONSTANTS'  => false
                                    );
 
     /**
@@ -465,7 +464,7 @@ class Smarty
      *
      * @var string
      */
-    var $_version              = '2.6.28';
+    var $_version              = '2.6.18';
 
     /**
      * current template inclusion depth
@@ -839,66 +838,69 @@ class Smarty
      * Registers a prefilter function to apply
      * to a template before compiling
      *
-     * @param callback $function
+     * @param string $function name of PHP function to register
      */
     function register_prefilter($function)
     {
-        $this->_plugins['prefilter'][$this->_get_filter_name($function)]
+    $_name = (is_array($function)) ? $function[1] : $function;
+        $this->_plugins['prefilter'][$_name]
             = array($function, null, null, false);
     }
 
     /**
      * Unregisters a prefilter function
      *
-     * @param callback $function
+     * @param string $function name of PHP function
      */
     function unregister_prefilter($function)
     {
-        unset($this->_plugins['prefilter'][$this->_get_filter_name($function)]);
+        unset($this->_plugins['prefilter'][$function]);
     }
 
     /**
      * Registers a postfilter function to apply
      * to a compiled template after compilation
      *
-     * @param callback $function
+     * @param string $function name of PHP function to register
      */
     function register_postfilter($function)
     {
-        $this->_plugins['postfilter'][$this->_get_filter_name($function)]
+    $_name = (is_array($function)) ? $function[1] : $function;
+        $this->_plugins['postfilter'][$_name]
             = array($function, null, null, false);
     }
 
     /**
      * Unregisters a postfilter function
      *
-     * @param callback $function
+     * @param string $function name of PHP function
      */
     function unregister_postfilter($function)
     {
-        unset($this->_plugins['postfilter'][$this->_get_filter_name($function)]);
+        unset($this->_plugins['postfilter'][$function]);
     }
 
     /**
      * Registers an output filter function to apply
      * to a template output
      *
-     * @param callback $function
+     * @param string $function name of PHP function
      */
     function register_outputfilter($function)
     {
-        $this->_plugins['outputfilter'][$this->_get_filter_name($function)]
+    $_name = (is_array($function)) ? $function[1] : $function;
+        $this->_plugins['outputfilter'][$_name]
             = array($function, null, null, false);
     }
 
     /**
      * Unregisters an outputfilter function
      *
-     * @param callback $function
+     * @param string $function name of PHP function
      */
     function unregister_outputfilter($function)
     {
-        unset($this->_plugins['outputfilter'][$this->_get_filter_name($function)]);
+        unset($this->_plugins['outputfilter'][$function]);
     }
 
     /**
@@ -1058,7 +1060,7 @@ class Smarty
         } else {
             // var non-existant, return valid reference
             $_tmp = null;
-            return $_tmp;
+            return $_tmp;   
         }
     }
 
@@ -1090,8 +1092,7 @@ class Smarty
      */
     function trigger_error($error_msg, $error_type = E_USER_WARNING)
     {
-        $msg = htmlentities($error_msg);
-        trigger_error("Smarty error: $msg", $error_type);
+        trigger_error("Smarty error: $error_msg", $error_type);
     }
 
 
@@ -1118,7 +1119,7 @@ class Smarty
     function fetch($resource_name, $cache_id = null, $compile_id = null, $display = false)
     {
         static $_cache_info = array();
-
+        
         $_smarty_old_error_level = $this->debugging ? error_reporting() : error_reporting(isset($this->error_reporting)
                ? $this->error_reporting : error_reporting() & ~E_NOTICE);
 
@@ -1550,7 +1551,7 @@ class Smarty
                         $params['source_content'] = $this->_read_file($_resource_name);
                     }
                     $params['resource_timestamp'] = filemtime($_resource_name);
-                    $_return = is_file($_resource_name) && is_readable($_resource_name);
+                    $_return = is_file($_resource_name);
                     break;
 
                 default:
@@ -1713,7 +1714,7 @@ class Smarty
      */
     function _read_file($filename)
     {
-        if ( file_exists($filename) && is_readable($filename) && ($fd = @fopen($filename, 'rb')) ) {
+        if ( file_exists($filename) && ($fd = @fopen($filename, 'rb')) ) {
             $contents = '';
             while (!feof($fd)) {
                 $contents .= fread($fd, 8192);
@@ -1934,25 +1935,6 @@ class Smarty
     {
         return eval($code);
     }
-
-    /**
-     * Extracts the filter name from the given callback
-     *
-     * @param callback $function
-     * @return string
-     */
-	function _get_filter_name($function)
-	{
-		if (is_array($function)) {
-			$_class_name = (is_object($function[0]) ?
-				get_class($function[0]) : $function[0]);
-			return $_class_name . '_' . $function[1];
-		}
-		else {
-			return $function;
-		}
-	}
-
     /**#@-*/
 
 }

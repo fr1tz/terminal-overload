@@ -31,11 +31,6 @@ echo( "Released under a MIT license.\n" );
 echo( "\n" );
 
 //
-//	Set default timezone for solve warnings
-//
-date_default_timezone_set('UTC');
-
-//
 //	Configure error logging
 //
 error_reporting( E_ALL & ~E_NOTICE );
@@ -45,7 +40,7 @@ error_reporting( E_ALL & ~E_NOTICE );
 //
 require_once( "classes/BuildTarget.php" );
 require_once( "btargets/targets.inc" );
-require_once( "classes/TorqueGenerator.php" );
+require_once( "classes/Generator.php" );
 require_once( "projectGenUtils.inc" );
 require_once( "smarty/Smarty.class.php" );
 
@@ -75,7 +70,7 @@ if ( $argc >= 3 )
     $torqueRoot = str_replace( "\\", "/", $argv[2] );
 
 // Kick off the generator
-TorqueGenerator::init( $torqueRoot );
+T3D_Generator::init( $torqueRoot );
 
 // Ready to read our config file.
 echo( "   - Loading config file " . realpath($argv[1])."\n" );
@@ -83,12 +78,12 @@ echo( "   - Loading config file " . realpath($argv[1])."\n" );
 require( $argv[ 1 ] );
 
 // Generate all projects
-TorqueGenerator::generateProjects( $tpl );
+T3D_Generator::generateProjects( $tpl );
 
 // Now the solutions (if any)
 $tpl->clear_all_cache();
 
-TorqueGenerator::generateSolutions( $tpl );
+T3D_Generator::generateSolutions( $tpl );
 
 // finally write out the sample.html for web deployment (if any)
 WebPlugin::writeSampleHtml();

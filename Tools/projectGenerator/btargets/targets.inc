@@ -151,7 +151,7 @@ $c = BuildTarget::add( 'Make',                // Name
 		       '',                    // NP Plugin
 		       '' );                  // File ext to write the project to
 
-$c->setSolutionInfo( 'makeSolution.tpl', '', '.makefile', '' );
+$c->setSolutionInfo( 'makeSolution.tpl', '', '' );
 
 $c->setFileExtensions( 'c', 'cc', 'cpp', 'asm' );
 
@@ -173,7 +173,7 @@ $c = BuildTarget::add( 'Make Dedicated',      // Name
 		       '',                    // NP Plugin
 		       '' );                  // File ext to write the project to
 
-$c->setSolutionInfo( 'makeSolution.tpl', '', '.makefile', '' );
+$c->setSolutionInfo( 'makeSolution.tpl', '', '' );
 
 $c->setFileExtensions( 'c', 'cc', 'cpp', 'asm' );
 
@@ -184,7 +184,7 @@ $c->setDontCompilePatterns( "*\.h*", "*win32*", "*\.win\.*", "/D3D.*/", "#/gl/#"
 
 ///////////////////////////// Build /////////////////////////////
 
-// 'buildManifest_'.$name.'_'.TorqueGenerator::$platform.'.txt',
+// 'buildManifest_'.$name.'_'.T3D_Generator::$platform.'.txt',
 
 $c = BuildTarget::add( 'build',						// Name         
                   'buildFiles',         			// Solution output directory
@@ -201,29 +201,6 @@ $c->setFileExtensions( 'c', 'cc', 'cpp', 'asm', 'm', 'mm' );
 
 // NO PLATFORMS - SO ALL OR NONE?
 $c->setPlatforms("");
-
-///////////////////////////// CODEBLOCKS /////////////////////////////
-
-$c = BuildTarget::add(	'codeblocks',							    // Name
-                        'buildFiles/codeblocks',	   		 		// Solution output directory
-                        'projects/',                                // Project output directory (relative to solution)
-                        '../../source/',                            // Base directory         
-                        'codeblocks/codeblocks_proj.tpl',           // App Project Template
-                        'codeblocks/codeblocks_shared_proj.tpl',    // Shared App Project Template
-                        'codeblocks/codeblocks_lib_proj.tpl',       // Lib Project Template
-                        'codeblocks/codeblocks_dll_proj.tpl',       // Shared Lib Project Template
-                        '',		   // ActiveX Control	
-                        '.cbp' );				       // File ext to write the project to
-                  
-// Solution template and extension
-$c->setSolutionInfo( 'codeblocks/codeblocks_workspace.tpl', '', '.workspace', '' );
-
-$c->setFileExtensions( 'c', 'cc', 'h', 'cpp', 'inl', 'asm', 'rc', 'm', 'mm', 'cs' );
-$c->setSourceFileExtensions( 'c', 'cc', 'cpp' );
-
-$c->setPlatforms( "linux" );
-
-$c->setDontCompilePatterns( "*\.h*", "*win32*", "*\.win\.*", "/D3D.*/", "*dsound*", "#/mac/#", "#\.mm$#", "#\.m$#", "*\.dedicated\.*" );
 
 ////////////////////
 
