@@ -85,6 +85,11 @@ class GLOrderedFenceRangeManager
 {
 public:
 
+   ~GLOrderedFenceRangeManager( )
+   {
+      waitAllRanges( );
+   }
+
    void protectOrderedRange( U32 start, U32 end )
    {
       mFenceRanges.increment();

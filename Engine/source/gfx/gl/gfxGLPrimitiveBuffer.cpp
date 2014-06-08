@@ -171,7 +171,17 @@ namespace
    }
 }
 
-AFTER_MODULE_INIT( GFX )
-{
-   GFXDevice::getDeviceEventSignal().notify( &onGFXDeviceSignal );
-}
+MODULE_BEGIN( GFX_GL_PrimitiveBuffer )
+   MODULE_INIT_AFTER( gfx )
+   MODULE_SHUTDOWN_BEFORE( gfx )
+
+   MODULE_INIT
+   {
+      GFXDevice::getDeviceEventSignal( ).notify( &onGFXDeviceSignal );
+   }
+
+   MODULE_SHUTDOWN
+   {
+      GFXDevice::getDeviceEventSignal( ).remove( &onGFXDeviceSignal );
+   }
+MODULE_END
