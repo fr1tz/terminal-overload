@@ -46,6 +46,26 @@ if(WIN32)
 else()
 	set(TORQUE_OPENGL ON) # we need OpenGL to render on Linux/Mac
 endif()
+option(TORQUE_NAVIGATION "Enable Navigation module" OFF)
+#mark_as_advanced(TORQUE_NAVIGATION)
+
+#Oculus VR
+option(TORQUE_OCULUSVR "Enable OCULUSVR module" OFF)
+mark_as_advanced(TORQUE_OCULUSVR)
+if(TORQUE_OCULUSVR)
+    set(TORQUE_OCULUSVR_SDK_PATH "" CACHE PATH "OCULUSVR library path" FORCE)
+else() # hide variable
+    set(TORQUE_OCULUSVR_SDK_PATH "" CACHE INTERNAL "" FORCE) 
+endif()
+
+#Hydra
+option(TORQUE_HYDRA "Enable HYDRA module" OFF)
+mark_as_advanced(TORQUE_HYDRA)
+if(TORQUE_HYDRA)
+    set(TORQUE_HYDRA_SDK_PATH "" CACHE PATH "HYDRA library path" FORCE)
+else() # hide variable
+    set(TORQUE_HYDRA_SDK_PATH "" CACHE INTERNAL "" FORCE) 
+endif()
 
 
 ###############################################################################
@@ -99,15 +119,13 @@ mark_as_advanced(TORQUE_DEBUG_GFX_MODE)
 set(TORQUE_NO_DSO_GENERATION ON)
 
 if(WIN32)
-	# warning C4800: 'XXX' : forcing value to bool 'true' or 'false' (performance warning)
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -wd4800")
-	# warning C4018: '<' : signed/unsigned mismatch
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -wd4018")
-	# warning C4244: 'initializing' : conversion from 'XXX' to 'XXX', possible loss of data
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -wd4244")
-endif()
+    # warning C4800: 'XXX' : forcing value to bool 'true' or 'false' (performance warning)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -wd4800")
+    # warning C4018: '<' : signed/unsigned mismatch
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -wd4018")
+    # warning C4244: 'initializing' : conversion from 'XXX' to 'XXX', possible loss of data
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -wd4244")
 
-if(WIN32)
     link_directories($ENV{DXSDK_DIR}/Lib/x86)
 endif()
 
@@ -311,6 +329,18 @@ if(TORQUE_SDL)
     add_subdirectory( ${libDir}/sdl ${CMAKE_CURRENT_BINARY_DIR}/sdl2)
 endif()
 
+if(TORQUE_NAVIGATION)
+   include( "modules/module_navigation.cmake" )
+endif()
+
+if(TORQUE_OCULUSVR)
+    include( "modules/module_oculusVR.cmake" )
+endif()
+
+if(TORQUE_HYDRA)
+    include( "modules/module_hydra.cmake" )
+endif()
+
 ###############################################################################
 # platform specific things
 ###############################################################################
@@ -462,7 +492,7 @@ if(WIN32)
     # copy pasted from T3D build system, some might not be needed
 	set(TORQUE_EXTERNAL_LIBS "COMCTL32.LIB;COMDLG32.LIB;USER32.LIB;ADVAPI32.LIB;GDI32.LIB;WINMM.LIB;WSOCK32.LIB;vfw32.lib;Imm32.lib;d3d9.lib;d3dx9.lib;DxErr.lib;ole32.lib;shell32.lib;oleaut32.lib;version.lib" CACHE STRING "external libs to link against")
 	mark_as_advanced(TORQUE_EXTERNAL_LIBS)
-   addLib("${TORQUE_EXTERNAL_LIBS}")
+    addLib("${TORQUE_EXTERNAL_LIBS}")
    
    if(TORQUE_OPENGL)
       addLib(OpenGL32.lib)
@@ -607,10 +637,14 @@ endif()
 ###############################################################################
 # Installation
 ###############################################################################
-INSTALL(DIRECTORY "${CMAKE_SOURCE_DIR}/Templates/${TORQUE_TEMPLATE}/game"                 DESTINATION "${projectDir}")
-if(WIN32)
-	INSTALL(FILES "${CMAKE_SOURCE_DIR}/Templates/${TORQUE_TEMPLATE}/cleanShaders.bat"     DESTINATION "${projectDir}")
-	INSTALL(FILES "${CMAKE_SOURCE_DIR}/Templates/${TORQUE_TEMPLATE}/DeleteCachedDTSs.bat" DESTINATION "${projectDir}")
-	INSTALL(FILES "${CMAKE_SOURCE_DIR}/Templates/${TORQUE_TEMPLATE}/DeleteDSOs.bat"       DESTINATION "${projectDir}")
-	INSTALL(FILES "${CMAKE_SOURCE_DIR}/Templates/${TORQUE_TEMPLATE}/DeletePrefs.bat"      DESTINATION "${projectDir}")
+
+if(TORQUE_TEMPLATE)
+    message("Prepare Template(${TORQUE_TEMPLATE}) install...")
+    INSTALL(DIRECTORY "${CMAKE_SOURCE_DIR}/Templates/${TORQUE_TEMPLATE}/game"                 DESTINATION "${projectDir}")
+    if(WIN32)
+        INSTALL(FILES "${CMAKE_SOURCE_DIR}/Templates/${TORQUE_TEMPLATE}/cleanShaders.bat"     DESTINATION "${projectDir}")
+        INSTALL(FILES "${CMAKE_SOURCE_DIR}/Templates/${TORQUE_TEMPLATE}/DeleteCachedDTSs.bat" DESTINATION "${projectDir}")
+        INSTALL(FILES "${CMAKE_SOURCE_DIR}/Templates/${TORQUE_TEMPLATE}/DeleteDSOs.bat"       DESTINATION "${projectDir}")
+        INSTALL(FILES "${CMAKE_SOURCE_DIR}/Templates/${TORQUE_TEMPLATE}/DeletePrefs.bat"      DESTINATION "${projectDir}")
+    endif()
 endif()

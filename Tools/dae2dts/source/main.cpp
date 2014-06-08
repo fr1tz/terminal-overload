@@ -12,7 +12,7 @@
 #include "ts/tsShape.h"
 #include "ts/tsShapeConstruct.h"
 
-#ifdef TORQUE_OS_WIN32
+#ifdef TORQUE_OS_WIN
 #include "platformWin32/platformWin32.h"
 #include "platformWin32/winConsole.h"
 #endif

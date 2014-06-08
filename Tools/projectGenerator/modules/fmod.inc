@@ -6,11 +6,10 @@ beginModule( 'fmod' );
   $allgood = true;
 
 	// Additional includes
-	switch( TorqueGenerator::$platform )
+	switch( T3D_Generator::$platform )
    {
       case "win32":
       case "mac":
-	  case "linux":
         //addLibIncludePath( 'fmod/inc' );
         // Look for the optional global from the project.conf.
         global $FMOD_SDK_PATH;

@@ -136,7 +136,7 @@ S32 TSShape::addDetail(const String& dname, S32 size, S32 subShapeNum)
    alphaOut.increment();
 
    // Fixup objectDetailNum in other detail levels
-   for (int i = index+1; i < details.size(); i++)
+   for (S32 i = index+1; i < details.size(); i++)
    {
       if ((details[i].subShapeNum >= 0) &&
          ((subShapeNum == -1) || (details[i].subShapeNum == subShapeNum)))
@@ -1502,7 +1502,7 @@ bool TSShape::addSequence(const Torque::Path& path, const String& fromSeq,
          // Check if visibility is animated within the frames to be copied
          const F32 defaultVis = srcShape->objectStates[i].vis;
          S32 objNum = srcSeq->visMatters.count(i);
-         for (int iFrame = startFrame; iFrame <= endFrame; iFrame++)
+         for (S32 iFrame = startFrame; iFrame <= endFrame; iFrame++)
          {
             if (srcShape->getObjectState(*srcSeq, iFrame, objNum).vis != defaultVis)
             {
@@ -1581,7 +1581,7 @@ bool TSShape::addSequence(const Torque::Path& path, const String& fromSeq,
          // Check if node position is animated within the frames to be copied
          const Point3F& defaultTrans = srcShape->defaultTranslations[i];
          S32 tranNum = srcSeq->translationMatters.count(i);
-         for (int iFrame = startFrame; iFrame <= endFrame; iFrame++)
+         for (S32 iFrame = startFrame; iFrame <= endFrame; iFrame++)
          {
             if (srcShape->getTranslation(*srcSeq, iFrame, tranNum) != defaultTrans)
             {
@@ -1596,7 +1596,7 @@ bool TSShape::addSequence(const Torque::Path& path, const String& fromSeq,
          // Check if node rotation is animated within the frames to be copied
          const QuatF defaultRot = srcShape->defaultRotations[i].getQuatF();
          S32 rotNum = srcSeq->rotationMatters.count(i);
-         for (int iFrame = startFrame; iFrame <= endFrame; iFrame++)
+         for (S32 iFrame = startFrame; iFrame <= endFrame; iFrame++)
          {
             QuatF temp;
             if (srcShape->getRotation(*srcSeq, iFrame, rotNum, &temp) != defaultRot)
@@ -1615,7 +1615,7 @@ bool TSShape::addSequence(const Torque::Path& path, const String& fromSeq,
          {
             TSScale defaultScale;
             defaultScale.identity();
-            for (int iFrame = startFrame; iFrame <= endFrame; iFrame++)
+            for (S32 iFrame = startFrame; iFrame <= endFrame; iFrame++)
             {
                TSScale temp;
                if (!(srcShape->getArbitraryScale(*srcSeq, iFrame, scaleNum, &temp) == defaultScale))
@@ -1628,7 +1628,7 @@ bool TSShape::addSequence(const Torque::Path& path, const String& fromSeq,
          else if (srcSeq->animatesAlignedScale())
          {
             const Point3F defaultScale(Point3F::One);
-            for (int iFrame = startFrame; iFrame <= endFrame; iFrame++)
+            for (S32 iFrame = startFrame; iFrame <= endFrame; iFrame++)
             {
                if (srcShape->getAlignedScale(*srcSeq, iFrame, scaleNum) != defaultScale)
                {
@@ -1640,7 +1640,7 @@ bool TSShape::addSequence(const Torque::Path& path, const String& fromSeq,
          else if (srcSeq->animatesUniformScale())
          {
             const F32 defaultScale = 1.0f;
-            for (int iFrame = startFrame; iFrame <= endFrame; iFrame++)
+            for (S32 iFrame = startFrame; iFrame <= endFrame; iFrame++)
             {
                if (srcShape->getUniformScale(*srcSeq, iFrame, scaleNum) != defaultScale)
                {

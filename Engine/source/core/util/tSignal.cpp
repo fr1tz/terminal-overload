@@ -5,7 +5,7 @@
 #include "core/util/tSignal.h"
 
 
-void SignalBase::DelegateLink::insert(DelegateLink* node, float order)
+void SignalBase::DelegateLink::insert(DelegateLink* node, F32 order)
 {
    // Note: can only legitimately be called on list head
    DelegateLink * walk = next;

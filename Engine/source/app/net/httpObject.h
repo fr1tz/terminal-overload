@@ -53,7 +53,7 @@ public:
    virtual void onConnected();
    virtual void onConnectFailed();
    virtual void onDisconnect();
-   bool processLine(U8 *line);
+   bool processLine(UTF8 *line);
 
    DECLARE_CONOBJECT(HTTPObject);
 };

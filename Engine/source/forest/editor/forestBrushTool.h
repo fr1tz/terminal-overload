@@ -63,7 +63,7 @@ public:
    void setPressure( F32 val );
    void setHardness( F32 val );
    void collectElements() { _collectElements(); }
-   bool getGroundAt( const Point3F &worldPt, float *zValueOut, VectorF *normalOut );
+   bool getGroundAt( const Point3F &worldPt, F32 *zValueOut, VectorF *normalOut );
 
 protected:      
 

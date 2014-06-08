@@ -51,7 +51,7 @@ const F32 sVehicleGravity = -20;
 
 // Physics and collision constants
 static F32 sRestTol = 0.5;             // % of gravity energy to be at rest
-static int sRestCount = 10;            // Consecutive ticks before comming to rest
+static S32 sRestCount = 10;            // Consecutive ticks before comming to rest
 
 } // namespace {}
 
@@ -201,6 +201,7 @@ bool VehicleData::preload(bool server, String &errorStr)
    if (!collisionDetails.size() || collisionDetails[0] == -1)
    {
       Con::errorf("VehicleData::preload failed: Vehicle models must define a collision-1 detail");
+      errorStr = String::ToString("VehicleData: Couldn't load shape \"%s\"",shapeName);
       return false;
    }
 
@@ -324,14 +325,14 @@ void VehicleData::packData(BitStream* stream)
       }
    }
 
-   for (int j = 0;  j < VC_NUM_DAMAGE_EMITTER_AREAS; j++)
+   for (S32 j = 0;  j < VC_NUM_DAMAGE_EMITTER_AREAS; j++)
    {
       stream->write( damageEmitterOffset[j].x );
       stream->write( damageEmitterOffset[j].y );
       stream->write( damageEmitterOffset[j].z );
    }
 
-   for (int k = 0; k < VC_NUM_DAMAGE_LEVELS; k++)
+   for (S32 k = 0; k < VC_NUM_DAMAGE_LEVELS; k++)
    {
       stream->write( damageLevelTolerance[k] );
    }
@@ -423,14 +424,14 @@ void VehicleData::unpackData(BitStream* stream)
       }
    }
 
-   for( int j=0; j<VC_NUM_DAMAGE_EMITTER_AREAS; j++ )
+   for( S32 j=0; j<VC_NUM_DAMAGE_EMITTER_AREAS; j++ )
    {
       stream->read( &damageEmitterOffset[j].x );
       stream->read( &damageEmitterOffset[j].y );
       stream->read( &damageEmitterOffset[j].z );
    }
 
-   for( int k=0; k<VC_NUM_DAMAGE_LEVELS; k++ )
+   for( S32 k=0; k<VC_NUM_DAMAGE_LEVELS; k++ )
    {
       stream->read( &damageLevelTolerance[k] );
    }
@@ -701,7 +702,7 @@ bool Vehicle::onAdd()
    {
       if( mDataBlock->dustEmitter )
       {
-         for( int i=0; i<VehicleData::VC_NUM_DUST_EMITTERS; i++ )
+         for( S32 i=0; i<VehicleData::VC_NUM_DUST_EMITTERS; i++ )
          {
             mDustEmitterList[i] = new ParticleEmitter;
             mDustEmitterList[i]->onNewDataBlock( mDataBlock->dustEmitter, false );
@@ -1791,7 +1792,7 @@ void Vehicle::updateDamageSmoke( F32 dt )
       F32 damagePercent = mDamage / mDataBlock->maxDamage;
       if( damagePercent >= mDataBlock->damageLevelTolerance[j] )
       {
-         for( int i=0; i<mDataBlock->numDmgEmitterAreas; i++ )
+         for( S32 i=0; i<mDataBlock->numDmgEmitterAreas; i++ )
          {
             MatrixF trans = getTransform();
             Point3F offset = mDataBlock->damageEmitterOffset[i];
@@ -1922,7 +1923,7 @@ void Vehicle::_renderMassAndContacts( ObjectRenderInst *ri, SceneRenderState *st
    GFX->getDrawUtil()->drawCube(desc, Point3F(0.1f,0.1f,0.1f),mDataBlock->massCenter, ColorI(255, 255, 255), &mRenderObjToWorld);
 
    // Now render all the contact points.
-   for (int i = 0; i < mCollisionList.getCount(); i++)
+   for (S32 i = 0; i < mCollisionList.getCount(); i++)
    {
       const Collision& collision = mCollisionList[i];
       GFX->getDrawUtil()->drawCube(desc, Point3F(0.05f,0.05f,0.05f),collision.point, ColorI(0, 0, 255));
@@ -1930,7 +1931,7 @@ void Vehicle::_renderMassAndContacts( ObjectRenderInst *ri, SceneRenderState *st
 
    // Finally render the normals as one big batch.
    PrimBuild::begin(GFXLineList, mCollisionList.getCount() * 2);
-   for (int i = 0; i < mCollisionList.getCount(); i++)
+   for (S32 i = 0; i < mCollisionList.getCount(); i++)
    {
       const Collision& collision = mCollisionList[i];
       PrimBuild::color3f(1, 1, 1);

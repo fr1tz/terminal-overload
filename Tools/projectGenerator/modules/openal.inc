@@ -7,10 +7,7 @@ addEngineSrcDir('sfx/openal');
 addEngineSrcDir('sfx/openal/mac');
 addEngineSrcDir('sfx/openal/win32');
 
-if ( TorqueGenerator::$platform == "win32" )
+if ( T3D_Generator::$platform == "win32" )
    addIncludePath( getAppLibSrcDir() . 'openal/win32' );
-   
-if( TorqueGenerator::$platform == "linux" )
-   addEngineSrcDir('sfx/openal/linux');
 
 ?>

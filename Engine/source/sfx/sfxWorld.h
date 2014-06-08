@@ -82,7 +82,7 @@ enum SFXObjectFlags
 /// 3D voices active on the device at any one point is defined as the set of
 /// current sound sources.
 ///
-template< int NUM_DIMENSIONS >
+template< S32 NUM_DIMENSIONS >
 class SFXObject : public ScopeTrackerObject< NUM_DIMENSIONS >
 {
    public:
@@ -165,7 +165,7 @@ class SFXObject : public ScopeTrackerObject< NUM_DIMENSIONS >
 /// occlusion manager installed on the system and tracking the listener traveling through
 /// the ambient spaces is 
 ///
-template< int NUM_DIMENSIONS, typename Object >
+template< S32 NUM_DIMENSIONS, typename Object >
 class SFXWorld : public ScopeTracker< NUM_DIMENSIONS, Object >
 {
    public:
@@ -231,7 +231,7 @@ class SFXWorld : public ScopeTracker< NUM_DIMENSIONS, Object >
 
 //-----------------------------------------------------------------------------
 
-template< int NUM_DIMENSIONS, class Object >
+template< S32 NUM_DIMENSIONS, class Object >
 SFXWorld< NUM_DIMENSIONS, Object >::SFXWorld()
 {
    VECTOR_SET_ASSOCIATION( mScopeStack );
@@ -239,7 +239,7 @@ SFXWorld< NUM_DIMENSIONS, Object >::SFXWorld()
 
 //-----------------------------------------------------------------------------
 
-template< int NUM_DIMENSIONS, class Object >
+template< S32 NUM_DIMENSIONS, class Object >
 void SFXWorld< NUM_DIMENSIONS, Object >::update()
 {
    if( !this->mReferenceObject )
@@ -301,7 +301,7 @@ void SFXWorld< NUM_DIMENSIONS, Object >::update()
 
 //-----------------------------------------------------------------------------
 
-template< int NUM_DIMENSIONS, class Object >
+template< S32 NUM_DIMENSIONS, class Object >
 void SFXWorld< NUM_DIMENSIONS, Object >::notifyChanged( Object object )
 {
    SFXAmbience* ambience = Deref( object ).getAmbience();
@@ -350,7 +350,7 @@ void SFXWorld< NUM_DIMENSIONS, Object >::_onScopeIn( Object object )
 
 //-----------------------------------------------------------------------------
 
-template< int NUM_DIMENSIONS, class Object >
+template< S32 NUM_DIMENSIONS, class Object >
 void SFXWorld< NUM_DIMENSIONS, Object >::_onScopeOut( Object object )
 {
    #ifdef DEBUG_SPEW
@@ -374,7 +374,7 @@ void SFXWorld< NUM_DIMENSIONS, Object >::_onScopeOut( Object object )
 
 //-----------------------------------------------------------------------------
 
-template< int NUM_DIMENSIONS, class Object >
+template< S32 NUM_DIMENSIONS, class Object >
 F32 SFXWorld< NUM_DIMENSIONS, Object >::_getSortValue( Object object )
 {
    //RDTODO: probably need to work with the overlap here instead of the full volumes
@@ -395,7 +395,7 @@ F32 SFXWorld< NUM_DIMENSIONS, Object >::_getSortValue( Object object )
 
 //-----------------------------------------------------------------------------
 
-template< int NUM_DIMENSIONS, class Object >
+template< S32 NUM_DIMENSIONS, class Object >
 S32 SFXWorld< NUM_DIMENSIONS, Object >::_findScope( Object object )
 {
    for( U32 i = 0; i < mScopeStack.size(); ++ i )

@@ -1,6 +1,25 @@
 <?php
-// Copyright information can be found in the file named COPYING
-// located in the root directory of this distribution.
+//-----------------------------------------------------------------------------
+// Copyright (c) 2012 GarageGames, LLC
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to
+// deal in the Software without restriction, including without limitation the
+// rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+// sell copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+// IN THE SOFTWARE.
+//-----------------------------------------------------------------------------
 
 addEngineSrcDir('sfx/media');
 addEngineSrcDir('sfx/null');
@@ -12,7 +31,7 @@ addEngineSrcDir('component');
 addEngineSrcDir('component/interfaces');
 
 // Core
-if (TorqueGenerator::isApp())
+if (T3D_Generator::isApp())
 	addSrcDir( '../source' );
     
 addEngineSrcDir('console');
@@ -40,7 +59,7 @@ addEngineSrcDir('math/test');
 addEngineSrcDir('platform');
 addEngineSrcDir('cinterface');
 
-switch( TorqueGenerator::$platform )
+switch( T3D_Generator::$platform )
 {
    case "win32":
    case "mac":
@@ -61,7 +80,7 @@ addEngineSrcDir('app/net');
 // Moved this here temporarily because PopupMenu uses on it and is currently in core
 addEngineSrcDir('util/messaging');
 
-switch( TorqueGenerator::$platform )
+switch( T3D_Generator::$platform )
 {
    case "win32":
      addEngineSrcDir('platformWin32');
@@ -95,21 +114,11 @@ switch( TorqueGenerator::$platform )
 
    case "linux_dedicated":
      addEngineSrcDir('windowManager/dedicated');
-     addEngineSrcDir('platformX86UNIX');
-     addEngineSrcDir('platformX86UNIX/threads');
-     addEngineSrcDir('platformPOSIX');
-     break;
 
    case "linux":
      addEngineSrcDir('platformX86UNIX');
      addEngineSrcDir('platformX86UNIX/threads');
-     //addEngineSrcDir('platformX86UNIX/nativeDialogs');
-     //addEngineSrcDir('platformX86UNIX/menus');
-     addEngineSrcFile('platformX86UNIX/nativeDialogs/x11MsgBox.cpp');
-     addEngineSrcDir('platformPortable/menus');
-     addEngineSrcFile('platformPortable/nativeDialogs/portableFileDialog.cpp');
      addEngineSrcDir('platformPOSIX');
-     addEngineSrcDir('windowManager/x11');
      break;
 }
 
@@ -123,7 +132,7 @@ addEngineSrcDir( 'gfx/video' );
 addEngineSrcDir( 'gfx' );
 addEngineSrcDir( 'shaderGen' );
 
-switch( TorqueGenerator::$platform )
+switch( T3D_Generator::$platform )
 {
    case "win32":
       //addEngineSrcDir( 'gfx/D3D8' );
@@ -131,16 +140,6 @@ switch( TorqueGenerator::$platform )
       addEngineSrcDir( 'gfx/D3D9' );
       addEngineSrcDir( 'gfx/D3D9/pc' );
       addEngineSrcDir( 'shaderGen/HLSL' );
-	  
-	  // GFX - GGL
-	  addProjectDefines( 'TORQUE_OPENGL' );
-     addProjectDefines( 'GLEW_STATIC' );
-     addLibSrcFile( 'glew/src/glew.c' );
-     addIncludePath( getAppLibSrcDir() . 'glew/include' );
-     addEngineSrcDir( 'gfx/gl' );
-     addEngineSrcDir( 'gfx/gl/win32' );
-     addEngineSrcDir( 'gfx/gl/tGL' );
-     addEngineSrcDir( 'shaderGen/GLSL' );
       break;
    case "360":
       addEngineSrcDir( 'gfx/D3D9' );
@@ -149,30 +148,30 @@ switch( TorqueGenerator::$platform )
       addEngineSrcDir( 'shaderGen/360' );
       break;
    case "mac":
+      addEngineSrcDir( 'gfx/gl/ggl/mac' );
+
       // GFX - GGL
-      addProjectDefines( 'TORQUE_OPENGL' );
-      addLibSrcFile( 'glew/src/glew.c' );
-      addIncludePath( getAppLibSrcDir() . 'glew/include' );
       addEngineSrcDir( 'gfx/gl' );
-      addEngineSrcDir( 'gfx/gl/tGL' );
+      addEngineSrcDir( 'gfx/gl/ggl' );
+      addEngineSrcDir( 'gfx/gl/ggl/generated' );
       addEngineSrcDir( 'shaderGen/GLSL' );
       break;
    case "linux":
    case "linux_dedicated":
+      //addEngineSrcDir( 'gfx/gl/ggl/x11' ); // This one is not yet implemented!
       // GFX - GGL
-	   addProjectDefines( 'TORQUE_OPENGL' );
-      addLibSrcFile( 'glew/src/glew.c' );
-      addIncludePath( getAppLibSrcDir() . 'glew/include' );
       addEngineSrcDir( 'gfx/gl' );
-      addEngineSrcDir( 'gfx/gl/x11' );
-      addEngineSrcDir( 'gfx/gl/tGL' );
+      addEngineSrcDir( 'gfx/gl/ggl' );
+      addEngineSrcDir( 'gfx/gl/ggl/generated' );
       addEngineSrcDir( 'shaderGen/GLSL' );
       break;
    case "ps3":
+      addEngineSrcDir( 'gfx/gl/ggl/ps3' );
+
       // GFX - GGL
-      addProjectDefines( 'TORQUE_OPENGL' );
       addEngineSrcDir( 'gfx/gl' );
-      addEngineSrcDir( 'gfx/gl/tGL' );
+      addEngineSrcDir( 'gfx/gl/ggl' );
+      addEngineSrcDir( 'gfx/gl/ggl/generated' );
       addEngineSrcDir( 'shaderGen/GLSL' );
       break;
 }
@@ -200,25 +199,14 @@ addIncludePath( '../../source' );		   // product source (relative to solution ou
 addIncludePath( getAppEngineSrcDir() );	// main engine source dir relative to app project file 
 addIncludePath( getAppLibSrcDir() ); 	   // main lib source dir relative to app project file
 
-if ( TorqueGenerator::$platform == "win32" )
+if ( T3D_Generator::$platform == "win32" )
 {
-}
-
-switch( TorqueGenerator::$platform )
-{
-   case "win32":
    addIncludePath( getAppLibSrcDir() . 'directx8' );
    addIncludePath( getAppLibSrcDir() . 'openal/win32' );
    
    addProjectLibDir( getAppLibSrcDir() . 'SDL/win32' );
    addProjectLibDir( getAppLibSrcDir() . 'unicode' );
    addProjectLibDir( getAppLibSrcDir() . 'directx8' );
-      
-      addProjectLibInput("Opengl32.lib");
-      break;
-   case "linux":
-      addIncludePath( '/usr/include/freetype2' );
-      break;
 }
 
 ?>

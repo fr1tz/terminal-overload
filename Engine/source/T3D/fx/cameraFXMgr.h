@@ -26,6 +26,7 @@ protected:
 
 public:
    CameraFX();
+   virtual ~CameraFX() { }
 
    MatrixF &   getTrans(){ return mCamFXTrans; }
    virtual bool isExpired(){ return mElapsedTime >= mDuration; }

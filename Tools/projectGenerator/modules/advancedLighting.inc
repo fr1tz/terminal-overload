@@ -9,11 +9,10 @@ beginModule( 'advancedLighting' );
 	addEngineSrcDir( 'lighting/advanced' );
 	addEngineSrcDir( 'lighting/shadowMap' );
 
-   switch( TorqueGenerator::$platform )
+   switch( T3D_Generator::$platform )
    {
       case "win32":
          addEngineSrcDir( 'lighting/advanced/hlsl' );
-		 addEngineSrcDir( 'lighting/advanced/glsl' );
          break;
       case "360":
          addEngineSrcDir( 'lighting/advanced/hlsl' );

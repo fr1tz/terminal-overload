@@ -10,6 +10,7 @@
 #include "core/color.h"
 #include "console/simBase.h"
 #include "math/mRect.h"
+#include "core/strings/stringUnit.h"
 
 //-----------------------------------------------------------------------------
 // TypeString
@@ -548,7 +549,17 @@ ImplementConsoleTypeCasters( TypeColorF, ColorF )
 
 ConsoleGetType( TypeColorF )
 {
-   ColorF * color = (ColorF*)dptr;
+   // Fetch color.
+   const ColorF* color = (ColorF*)dptr;
+
+   // Fetch stock color name.
+   StringTableEntry colorName = StockColor::name( *color );
+
+   // Write as color name if was found.
+   if ( colorName != StringTable->EmptyString() ) 
+      return colorName;
+
+   // Format as color components.
    char* returnBuffer = Con::getReturnBuffer(256);
    dSprintf(returnBuffer, 256, "%g %g %g %g", color->red, color->green, color->blue, color->alpha);
    return(returnBuffer);
@@ -559,6 +570,22 @@ ConsoleSetType( TypeColorF )
    ColorF *tmpColor = (ColorF *) dptr;
    if(argc == 1)
    {
+      // Is only a single argument passed?
+      if ( StringUnit::getUnitCount( argv[0], " " ) == 1 )
+      {
+         // Is this a stock color name?
+         if ( !StockColor::isColor(argv[0]) )
+         {
+            // No, so warn.
+            Con::warnf( "TypeColorF() - Invalid single argument of '%s' could not be interpreted as a stock color name.  Using default.", argv[0] );
+         }
+
+         // Set stock color (if it's invalid we'll get the default.
+         tmpColor->set( argv[0] );
+
+         return;
+      }
+
       tmpColor->set(0, 0, 0, 1);
       F32 r,g,b,a;
       S32 args = dSscanf(argv[0], "%g %g %g %g", &r, &g, &b, &a);
@@ -583,7 +610,7 @@ ConsoleSetType( TypeColorF )
       tmpColor->alpha  = dAtof(argv[3]);
    }
    else
-      Con::printf("Color must be set as { r, g, b [,a] }");
+      Con::printf("Color must be set as { r, g, b [,a] }, { r g b [b] } or { stockColorName }");
 }
 
 //-----------------------------------------------------------------------------
@@ -594,7 +621,17 @@ ImplementConsoleTypeCasters( TypeColorI, ColorI )
 
 ConsoleGetType( TypeColorI )
 {
-   ColorI *color = (ColorI *) dptr;
+   // Fetch color.
+   ColorI* color = (ColorI*)dptr;
+
+   // Fetch stock color name.
+   StringTableEntry colorName = StockColor::name( *color );
+
+   // Write as color name if was found.
+   if ( colorName != StringTable->EmptyString() ) 
+      return colorName;
+
+   // Format as color components.
    char* returnBuffer = Con::getReturnBuffer(256);
    dSprintf(returnBuffer, 256, "%d %d %d %d", color->red, color->green, color->blue, color->alpha);
    return returnBuffer;
@@ -605,6 +642,22 @@ ConsoleSetType( TypeColorI )
    ColorI *tmpColor = (ColorI *) dptr;
    if(argc == 1)
    {
+      // Is only a single argument passed?
+      if ( StringUnit::getUnitCount( argv[0], " " ) == 1 )
+      {
+         // Is this a stock color name?
+         if ( !StockColor::isColor(argv[0]) )
+         {
+            // No, so warn.
+            Con::warnf( "TypeColorF() - Invalid single argument of '%s' could not be interpreted as a stock color name.  Using default.", argv[0] );
+         }
+
+         // Set stock color (if it's invalid we'll get the default.
+         tmpColor->set( argv[0] );
+
+         return;
+      }
+
       tmpColor->set(0, 0, 0, 255);
       S32 r,g,b,a;
       S32 args = dSscanf(argv[0], "%d %d %d %d", &r, &g, &b, &a);
@@ -629,7 +682,7 @@ ConsoleSetType( TypeColorI )
       tmpColor->alpha  = dAtoi(argv[3]);
    }
    else
-      Con::printf("Color must be set as { r, g, b [,a] }");
+      Con::printf("Color must be set as { r, g, b [,a] }, { r g b [b] }  or { stockColorName }");
 }
 
 //-----------------------------------------------------------------------------

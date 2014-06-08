@@ -150,7 +150,7 @@ void SFXFMODProvider::init()
    const char* pDllName; // plugin-based DLL
    const char* eventDllName;
    
-#ifdef TORQUE_OS_WIN32
+#ifdef TORQUE_OS_WIN
    dllName = "fmodex.dll";
    pDllName = "fmodexp.dll";
    eventDllName = "fmod_event.dll";

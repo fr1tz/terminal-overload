@@ -28,7 +28,7 @@
 
 
 /// Base class for objects registered with a ScopeTracker.
-template< int NUM_DIMENSIONS >
+template< S32 NUM_DIMENSIONS >
 class ScopeTrackerObject
 {
    public:
@@ -245,7 +245,7 @@ class ScopeTrackerObject
 ///
 /// @param NUM_DIMENSIONS Number of dimensions to track; must be <=4.
 /// @param Object Value type for objects tracked by the ScopeTracker.  Must have pointer behavior.
-template< int NUM_DIMENSIONS, typename Object >
+template< S32 NUM_DIMENSIONS, typename Object >
 class ScopeTracker
 {
    public:
@@ -337,7 +337,7 @@ class ScopeTracker
 
 //-----------------------------------------------------------------------------
 
-template< int NUM_DIMENSIONS, class Object >
+template< S32 NUM_DIMENSIONS, class Object >
 ScopeTracker< NUM_DIMENSIONS, Object >::ScopeTracker()
    : mReferenceObject( NULL )
 {
@@ -366,7 +366,7 @@ ScopeTracker< NUM_DIMENSIONS, Object >::ScopeTracker()
 
 //-----------------------------------------------------------------------------
 
-template< int NUM_DIMENSIONS, class Object >
+template< S32 NUM_DIMENSIONS, class Object >
 void ScopeTracker< NUM_DIMENSIONS, Object >::setReferenceObject( Object object )
 {
    AssertFatal( !object || !Deref( object ).isRegistered(),
@@ -414,7 +414,7 @@ void ScopeTracker< NUM_DIMENSIONS, Object >::setReferenceObject( Object object )
 
 //-----------------------------------------------------------------------------
 
-template< int NUM_DIMENSIONS, class Object >
+template< S32 NUM_DIMENSIONS, class Object >
 void ScopeTracker< NUM_DIMENSIONS, Object >::registerObject( Object object )
 {
    PROFILE_SCOPE( ScopeTracker_registerObject );
@@ -450,7 +450,7 @@ void ScopeTracker< NUM_DIMENSIONS, Object >::registerObject( Object object )
 
 //-----------------------------------------------------------------------------
 
-template< int NUM_DIMENSIONS, class Object >
+template< S32 NUM_DIMENSIONS, class Object >
 void ScopeTracker< NUM_DIMENSIONS, Object >::unregisterObject( Object object )
 {
    PROFILE_SCOPE( ScopeTracker_unregisterObject );
@@ -475,7 +475,7 @@ void ScopeTracker< NUM_DIMENSIONS, Object >::unregisterObject( Object object )
 
 //-----------------------------------------------------------------------------
 
-template< int NUM_DIMENSIONS, class Object >
+template< S32 NUM_DIMENSIONS, class Object >
 void ScopeTracker< NUM_DIMENSIONS, Object >::updateObject( Object object )
 {
    PROFILE_SCOPE( ScopeTracker_updateObject );
@@ -535,7 +535,7 @@ void ScopeTracker< NUM_DIMENSIONS, Object >::updateObject( Object object )
 
 //-----------------------------------------------------------------------------
 
-template< int NUM_DIMENSIONS, class Object >
+template< S32 NUM_DIMENSIONS, class Object >
 void ScopeTracker< NUM_DIMENSIONS, Object >::_insertTrackingNode( U32 dimension, NodeType* node )
 {
    //RDTODO: substitute brute-force search with some smarter insertion algorithm
@@ -560,7 +560,7 @@ void ScopeTracker< NUM_DIMENSIONS, Object >::_insertTrackingNode( U32 dimension,
 
 //-----------------------------------------------------------------------------
 
-template< int NUM_DIMENSIONS, class Object >
+template< S32 NUM_DIMENSIONS, class Object >
 void ScopeTracker< NUM_DIMENSIONS, Object >::_removeTrackingNode( U32 dimension, NodeType* node )
 {
    NodeType* next = node->getNext();
@@ -578,7 +578,7 @@ void ScopeTracker< NUM_DIMENSIONS, Object >::_removeTrackingNode( U32 dimension,
 
 //-----------------------------------------------------------------------------
 
-template< int NUM_DIMENSIONS, class Object >
+template< S32 NUM_DIMENSIONS, class Object >
 void ScopeTracker< NUM_DIMENSIONS, Object >::_moveTrackingNode( U32 dimension, NodeType* node, F32 newPosition )
 {
    PROFILE_SCOPE( ScopeTracker_moveTrackingNode );
@@ -694,7 +694,7 @@ void ScopeTracker< NUM_DIMENSIONS, Object >::_moveTrackingNode( U32 dimension, N
 
 //-----------------------------------------------------------------------------
 
-template< int NUM_DIMENSIONS, class Object >
+template< S32 NUM_DIMENSIONS, class Object >
 void ScopeTracker< NUM_DIMENSIONS, Object >::_setScope( Object object )
 {
    // If there's no reference object, all objects are out of scope.
@@ -737,7 +737,7 @@ void ScopeTracker< NUM_DIMENSIONS, Object >::_setScope( Object object )
 
 //-----------------------------------------------------------------------------
 
-template< int NUM_DIMENSIONS, class Object >
+template< S32 NUM_DIMENSIONS, class Object >
 void ScopeTracker< NUM_DIMENSIONS, Object >::_initTracking()
 {
    PROFILE_SCOPE( ScopeTracker_initTracking );
@@ -794,7 +794,7 @@ void ScopeTracker< NUM_DIMENSIONS, Object >::_initTracking()
 
 //-----------------------------------------------------------------------------
 
-template< int NUM_DIMENSIONS, class Object >
+template< S32 NUM_DIMENSIONS, class Object >
 void ScopeTracker< NUM_DIMENSIONS, Object >::_uninitTracking()
 {
    PROFILE_SCOPE( ScopeTracker_uninitTracking );
@@ -823,7 +823,7 @@ void ScopeTracker< NUM_DIMENSIONS, Object >::_uninitTracking()
 
 //-----------------------------------------------------------------------------
 
-template< int NUM_DIMENSIONS, class Object >
+template< S32 NUM_DIMENSIONS, class Object >
 void ScopeTracker< NUM_DIMENSIONS, Object >::debugDump()
 {
    for( U32 n = 0; n < NUM_DIMENSIONS; ++ n )

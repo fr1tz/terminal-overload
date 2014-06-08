@@ -12,14 +12,14 @@
 #define MAXPACKETSIZE 1500
 #endif
 
-typedef int NetConnectionId;
+typedef S32 NetConnectionId;
 
 /// Generic network address
 ///
 /// This is used to represent IP addresses.
 struct NetAddress 
 {
-   int type;        ///< Type of address (IPAddress currently)
+   S32 type;        ///< Type of address (IPAddress currently)
 
    /// Acceptable NetAddress types.
    enum 
@@ -74,7 +74,7 @@ struct Net
       TCPProtocol
    };
 
-   static const int MaxPacketDataSize = MAXPACKETSIZE;
+   static const S32 MaxPacketDataSize = MAXPACKETSIZE;
 
    static ConnectionNotifyEvent   smConnectionNotify;
    static ConnectionAcceptedEvent smConnectionAccept;

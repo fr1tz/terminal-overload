@@ -6,7 +6,7 @@
 #include "platform/threads/threadPool.h"
 #include "console/console.h"
 
-#if defined(TORQUE_OS_WIN32)
+#if defined(TORQUE_OS_WIN)
 #  include <winsock.h>
 #elif defined(TORQUE_OS_XENON)
 #  include <Xtl.h>
@@ -29,7 +29,7 @@ struct NetAsync::NameLookupRequest
       NetSocket sock;
       char remoteAddr[4096];
       char out_h_addr[4096];
-      int out_h_length;
+      S32 out_h_length;
       bool complete;
 
       NameLookupRequest()
@@ -121,7 +121,7 @@ void NetAsync::queueLookup(const char* remoteAddr, NetSocket socket)
 {
    // do we have it already?
    
-   unsigned int i = 0;
+   U32 i = 0;
    for (i = 0; i < mLookupRequests.size(); ++i)
    {
       if (mLookupRequests[i].sock == socket)
@@ -141,7 +141,7 @@ void NetAsync::queueLookup(const char* remoteAddr, NetSocket socket)
 }
 
 bool NetAsync::checkLookup(NetSocket socket, char* out_h_addr, 
-                           int* out_h_length, int out_h_addr_size)
+                           S32* out_h_length, S32 out_h_addr_size)
 {
    bool found = false;
 

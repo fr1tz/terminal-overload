@@ -36,7 +36,7 @@ public:
    }
 
 protected:
-   int mOffset;
+   S32 mOffset;
 };
 
 #endif // _UTIL_DELEGATE_H_

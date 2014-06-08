@@ -24,7 +24,7 @@ extern "C" {
       return so->getClassName();
    }
 
-   void *SimObject_GetFieldList(SimObject *so, int &outNumFields)
+   void *SimObject_GetFieldList(SimObject *so, S32 &outNumFields)
    {
       const AbstractClassRep::FieldList &fl = so->getFieldList();
       outNumFields = fl.size();

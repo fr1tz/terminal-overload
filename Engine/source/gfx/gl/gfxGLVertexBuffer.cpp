@@ -1,5 +1,24 @@
-// Copyright information can be found in the file named COPYING
-// located in the root directory of this distribution.
+//-----------------------------------------------------------------------------
+// Copyright (c) 2012 GarageGames, LLC
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to
+// deal in the Software without restriction, including without limitation the
+// rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+// sell copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+// IN THE SOFTWARE.
+//-----------------------------------------------------------------------------
 
 #include "platform/platform.h"
 #include "gfx/gl/gfxGLVertexBuffer.h"
@@ -17,12 +36,12 @@ GLCircularVolatileBuffer* getCircularVolatileVertexBuffer()
    return &sCircularVolatileVertexBuffer;
 }
 
-GFXGLVertexBuffer::GFXGLVertexBuffer(  GFXDevice *device,
-                                       U32 numVerts,
-                                       const GFXVertexFormat *vertexFormat,
-                                       U32 vertexSize,
+GFXGLVertexBuffer::GFXGLVertexBuffer(  GFXDevice *device, 
+                                       U32 numVerts, 
+                                       const GFXVertexFormat *vertexFormat, 
+                                       U32 vertexSize, 
                                        GFXBufferType bufferType )
-   :  GFXVertexBuffer( device, numVerts, vertexFormat, vertexSize, bufferType ),
+   :  GFXVertexBuffer( device, numVerts, vertexFormat, vertexSize, bufferType ), 
       mZombieCache(NULL),
       mBufferOffset(0),
       mBufferVertexOffset(0)
@@ -93,10 +112,10 @@ void GFXGLVertexBuffer::unlock()
    {
       U32 offset = lockedVertexStart * mVertexSize;
       U32 length = (lockedVertexEnd - lockedVertexStart) * mVertexSize;
-
+   
       PRESERVE_VERTEX_BUFFER();
       glBindBuffer(GL_ARRAY_BUFFER, mBuffer);
-
+   
       if( !lockedVertexStart && lockedVertexEnd == mNumVerts)
          glBufferData(GL_ARRAY_BUFFER, mNumVerts * mVertexSize, NULL, GFXGLBufferType[mBufferType]); // orphan the buffer
 
@@ -118,7 +137,7 @@ void GFXGLVertexBuffer::prepare()
 void GFXGLVertexBuffer::prepare(U32 stream, U32 divisor)
 {
    if( gglHasExtension(ARB_vertex_attrib_binding) )
-   {
+   {      
       glBindVertexBuffer( stream, mBuffer, mBufferOffset, mVertexSize );
       glVertexBindingDivisor( stream, divisor );
       return;
@@ -127,7 +146,7 @@ void GFXGLVertexBuffer::prepare(U32 stream, U32 divisor)
 
 void GFXGLVertexBuffer::finish()
 {
-
+   
 }
 
 GLvoid* GFXGLVertexBuffer::getBuffer()
@@ -140,7 +159,7 @@ void GFXGLVertexBuffer::zombify()
 {
    if(mZombieCache || !mBuffer)
       return;
-
+      
    mZombieCache = new U8[mNumVerts * mVertexSize];
    glBindBuffer(GL_ARRAY_BUFFER, mBuffer);
    glGetBufferSubData(GL_ARRAY_BUFFER, 0, mNumVerts * mVertexSize, mZombieCache);
@@ -153,28 +172,38 @@ void GFXGLVertexBuffer::resurrect()
 {
    if(!mZombieCache)
       return;
-
+   
    glGenBuffers(1, &mBuffer);
    glBindBuffer(GL_ARRAY_BUFFER, mBuffer);
    glBufferData(GL_ARRAY_BUFFER, mNumVerts * mVertexSize, mZombieCache, GFXGLBufferType[mBufferType]);
    glBindBuffer(GL_ARRAY_BUFFER, 0);
-
+   
    delete[] mZombieCache;
    mZombieCache = NULL;
 }
 
 namespace
-{
+{   
    bool onGFXDeviceSignal( GFXDevice::GFXDeviceEventType type )
    {
-      if( GFXDevice::deEndOfFrame == type )
+      if( GFX->getAdapterType() == OpenGL && GFXDevice::deEndOfFrame == type )
          getCircularVolatileVertexBuffer()->protectUsedRange();
 
       return true;
    }
 }
 
-AFTER_MODULE_INIT( GFX )
-{
-   GFXDevice::getDeviceEventSignal().notify( &onGFXDeviceSignal );
-}
+MODULE_BEGIN( GFX_GL_VertexBuffer )
+   MODULE_INIT_AFTER( gfx )
+   MODULE_SHUTDOWN_BEFORE( gfx )
+
+   MODULE_INIT
+   {
+      GFXDevice::getDeviceEventSignal().notify( &onGFXDeviceSignal );
+   }
+
+   MODULE_SHUTDOWN
+   {
+      GFXDevice::getDeviceEventSignal( ).remove( &onGFXDeviceSignal );
+   }
+MODULE_END

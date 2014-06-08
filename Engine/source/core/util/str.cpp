@@ -741,7 +741,7 @@ String& String::operator=(const String &src)
 
 String& String::operator+=(const StringChar *src)
 {
-   if( src == NULL && !*src )
+   if( src == NULL || !*src )
       return *this;
 
    // Append the given string into a new string
@@ -1400,7 +1400,7 @@ void String::copy(StringChar* dst, const StringChar *src, U32 len)
 
 //-----------------------------------------------------------------------------
 
-#if defined(TORQUE_OS_WIN32) || defined(TORQUE_OS_XBOX) || defined(TORQUE_OS_XENON)
+#if defined(TORQUE_OS_WIN) || defined(TORQUE_OS_XBOX) || defined(TORQUE_OS_XENON)
 // This standard function is not defined when compiling with VC7...
 #define vsnprintf	_vsnprintf
 #endif

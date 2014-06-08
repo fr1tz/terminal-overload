@@ -5,7 +5,7 @@
 #define _BULLET_H_
 
 // NOTE: We set these defines which bullet needs here.
-#ifdef TORQUE_OS_WIN32
+#ifdef TORQUE_OS_WIN
 #define WIN32
 #endif
 
