@@ -12,7 +12,7 @@ SOURCES := {foreach from=$dirWalk item=file key=key}
 {/foreach}
 
 LDFLAGS := -g -m32
-LDLIBS := -lstdc++ -lm -lSDL -lpthread -lrt -lXxf86vm -lXft
+LDLIBS := -lstdc++ -lm -lpthread -lrt
 {foreach item=def from=$projLibs}LDLIBS += -l{$def}
 {/foreach}
 
@@ -42,11 +42,9 @@ APP_TARGETS_DEBUG += $(APPNAME)_DEBUG
 
 OBJS_{$projName} := $(patsubst ../../../../Engine/source/%,Release/{$projName}/%.o,$(SOURCES))
 OBJS_{$projName} += $(patsubst ../../source/%, Release/{$projName}/%.o,$(SOURCES))
-OBJS_{$projName} += $(patsubst ../../../../Engine/lib/%,Release/{$projName}/%.o,$(SOURCES))
 OBJS_{$projName} := $(filter %.o, $(OBJS_{$projName}))
 OBJS_{$projName}_DEBUG := $(patsubst ../../../../Engine/source/%,Debug/{$projName}/%.o,$(SOURCES))
 OBJS_{$projName}_DEBUG += $(patsubst ../../source/%, Debug/{$projName}/%.o,$(SOURCES))
-OBJS_{$projName}_DEBUG += $(patsubst ../../../../Engine/lib/%, Debug/{$projName}/%.o,$(SOURCES))
 OBJS_{$projName}_DEBUG := $(filter %.o, $(OBJS_{$projName}_DEBUG))
 
 # Deriving the actual prerequisite list name to use from the target 
@@ -70,10 +68,6 @@ Release/{$projName}/%.o:	../../../../Engine/source/%
 Release/{$projName}/%.o:	../../source/%
 	@mkdir -p $(dir $@)
 	$(CC) -c $(CFLAGS) $< -o $@
-	
-Release/{$projName}/%.o:	../../../../Engine/lib/%
-	@mkdir -p $(dir $@)
-	$(CC) -c $(CFLAGS) $< -o $@
    
 Debug/{$projName}/%.asm.o:	../../../../Engine/source/%.asm
 	@mkdir -p $(dir $@)
@@ -84,10 +78,6 @@ Debug/{$projName}/%.o:	../../../../Engine/source/%
 	$(CC) -c $(CFLAGS_DEBUG) $< -o $@
 
 Debug/{$projName}/%.o:	../../source/%
-	@mkdir -p $(dir $@)
-	$(CC) -c $(CFLAGS_DEBUG) $< -o $@
-	
-Debug/{$projName}/%.o:	../../../../Engine/lib/%
 	@mkdir -p $(dir $@)
 	$(CC) -c $(CFLAGS_DEBUG) $< -o $@
    

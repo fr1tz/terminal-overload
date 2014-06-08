@@ -165,7 +165,7 @@ class Project
 
         foreach( $this->dependencies as $pname )
         {
-            $p = TorqueGenerator::lookupProjectByName( $pname );
+            $p = T3D_Generator::lookupProjectByName( $pname );
 
             if( $p )
                 array_push( $pguids, $p->guid );
@@ -193,24 +193,17 @@ class Project
 
         // Cool - note in the list!
         $newEntry       = new stdClass();
-        $newEntry->name = $curFile;		
+        $newEntry->name = $curFile;
         $newEntry->path = FileUtil::collapsePath( $curPath . "/" . $curFile );
-		
-		$path_parts = pathinfo($newEntry->path);
-		$newEntry->dirname = $path_parts['dirname'];
-		$newEntry->basename =  $path_parts['basename'];
-		$newEntry->extension =  $path_parts['extension'];
-		$newEntry->filename =  $path_parts['filename'];
-		$newEntry->offsetPath =  str_replace("../", "", $curPath);
         
         if ( !FileUtil::isAbsolutePath( $newEntry->path ) )
         {
            // This could be consolidated into a single OR statement but it is easier to
            // read as two separate if's
-           if ( !TorqueGenerator::$absPath )
+           if ( !T3D_Generator::$absPath )
               $newEntry->path = $output->project_rel_path . $newEntry->path;
               
-           if ( TorqueGenerator::$absPath && !stristr($newEntry->path, TorqueGenerator::$absPath) )
+           if ( T3D_Generator::$absPath && !stristr($newEntry->path, T3D_Generator::$absPath) )
               $newEntry->path = $output->project_rel_path . $newEntry->path;
          }
          
@@ -237,10 +230,10 @@ class Project
                $curPath  = FileUtil::collapsePath( $output->base_dir . $dir );
             $pathWalk = &$projectFiles[ $projName ];
             
-            if ( TorqueGenerator::$absPath )
+            if ( T3D_Generator::$absPath )
             {
                if ( stristr($curPath, getEngineSrcDir()) || stristr($curPath, getLibSrcDir()) )
-                  $curPath = TorqueGenerator::$absPath . "/". str_replace("../", "", $curPath);
+                  $curPath = T3D_Generator::$absPath . "/". str_replace("../", "", $curPath);
             }
 
             // Check if its a file or a directory.
@@ -351,7 +344,7 @@ class Project
         $tpl->assign_by_ref( 'projModuleDefinitionFile',   $this->moduleDefinitionFile );
         $tpl->assign_by_ref( 'projSubSystem', $this->projSubSystem );
         
-        if (TorqueGenerator::$useDLLRuntime)
+        if (T3D_Generator::$useDLLRuntime)
         {
             // /MD and /MDd
             $tpl->assign( 'projRuntimeRelease', 2 );
@@ -388,7 +381,7 @@ class Project
         
         foreach ($this->dependencies as $pname)
         {          
-          $p = TorqueGenerator::lookupProjectByName( $pname );
+          $p = T3D_Generator::lookupProjectByName( $pname );
           $projectDepends[$pname] = $p;
           
           if ( $p )
@@ -401,18 +394,18 @@ class Project
         // Assign some handy paths for the template to reference
         $tpl->assign( 'projectOffset', $output->project_rel_path );
         
-        if ( TorqueGenerator::$absPath )
-           $tpl->assign( 'srcDir', TorqueGenerator::$absPath . "/". str_replace("../", "", getAppEngineSrcDir()) );
+        if ( T3D_Generator::$absPath )
+           $tpl->assign( 'srcDir', T3D_Generator::$absPath . "/". str_replace("../", "", getAppEngineSrcDir()) );
         else
            $tpl->assign( 'srcDir', $output->project_rel_path . getAppEngineSrcDir() );
            
-        if ( TorqueGenerator::$absPath )
-           $tpl->assign( 'libDir', TorqueGenerator::$absPath . "/". str_replace("../", "", getAppLibSrcDir()) );
+        if ( T3D_Generator::$absPath )
+           $tpl->assign( 'libDir', T3D_Generator::$absPath . "/". str_replace("../", "", getAppLibSrcDir()) );
         else
            $tpl->assign( 'libDir', $output->project_rel_path . getAppLibSrcDir() );
         
-        if ( TorqueGenerator::$absPath )
-           $tpl->assign( 'binDir', TorqueGenerator::$absPath . "/". str_replace("../", "", getAppEngineBinDir()) );
+        if ( T3D_Generator::$absPath )
+           $tpl->assign( 'binDir', T3D_Generator::$absPath . "/". str_replace("../", "", getAppEngineBinDir()) );
         else
            $tpl->assign( 'binDir', $output->project_rel_path . getAppEngineBinDir() );
            
@@ -434,18 +427,18 @@ class Project
             $libDirs = $output->project_rel_path . $libDirs;
       }
 
-       if ( TorqueGenerator::$absPath )
+       if ( T3D_Generator::$absPath )
        {
           foreach ($this->includes as &$include)
           {
              if ( stristr($include, getEngineSrcDir()) || stristr($include, getLibSrcDir()) )
-               $include = TorqueGenerator::$absPath . "/". str_replace("../", "", $include);
+               $include = T3D_Generator::$absPath . "/". str_replace("../", "", $include);
           }
              
           foreach ($this->lib_dirs as &$libDirs)
           {
              if ( stristr($libDirs, getEngineSrcDir()) || stristr($libDirs, getLibSrcDir()) )
-                $libDirs = TorqueGenerator::$absPath . "/". str_replace("../", "", $libDirs);
+                $libDirs = T3D_Generator::$absPath . "/". str_replace("../", "", $libDirs);
           }
        }
     }

@@ -93,8 +93,8 @@ public:
    #define AssertFatal(x, y) { if ( ((bool)(x)) == (bool)0 ) { if( ::PlatformAssert::processAssert(::PlatformAssert::Fatal, __FILE__, __LINE__,  y) ) { TORQUE_DEBUGBREAK(); } ON_FAIL_ASSERTFATAL; } }
 
 #else
-   #define AssertFatal(x, y)   { (void)sizeof(x); (void)sizeof(y); }
-   #define AssertWarn(x, y)    { (void)sizeof(x); (void)sizeof(y); }
+   #define AssertFatal(x, y)   { TORQUE_UNUSED(x); TORQUE_UNUSED(y); }
+   #define AssertWarn(x, y)    { TORQUE_UNUSED(x); TORQUE_UNUSED(y); }
 #endif
 
 /*!
