@@ -784,6 +784,7 @@ U32 SceneObject::packUpdate( NetConnection* conn, U32 mask, BitStream* stream )
 
    if ( stream->writeFlag( mask & RareUpdatesMask ) )
 	{
+      stream->write(mCollisionMask);
       stream->writeRangedU32( (U32)mObjectFlags, 0, getObjectFlagMax() );
 
       ColorI defaultColor;
@@ -832,6 +833,7 @@ void SceneObject::unpackUpdate( NetConnection* conn, BitStream* stream )
    // Rare updates
    if ( stream->readFlag() )      
 	{
+      stream->read(&mCollisionMask);
       mObjectFlags = stream->readRangedU32( 0, getObjectFlagMax() );
 
       ColorI defaultColor;
