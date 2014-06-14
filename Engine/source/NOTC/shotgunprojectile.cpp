@@ -711,7 +711,7 @@ void ShotgunProjectile::findHits()
 			Point3F end = endCenter + endVec * r;
 
 			RayInfo rInfo;
-			bool collision = getContainer()->castRay(start, end, csmDynamicCollisionMask | csmStaticCollisionMask, &rInfo);
+			bool collision = getContainer()->castRay(start, end, csmDynamicCollisionMask | csmStaticCollisionMask, mDataBlock->collisionMask, &rInfo);
 			if(collision)
 			{
 				ShotgunHit* hit = NULL;
@@ -778,7 +778,7 @@ void ShotgunProjectile::findHits()
 				Point3F end = endCenter + endVec;
 
 				RayInfo rInfo;
-				bool collision = getContainer()->castRay(start, end, csmDynamicCollisionMask | csmStaticCollisionMask, &rInfo);
+				bool collision = getContainer()->castRay(start, end, csmDynamicCollisionMask | csmStaticCollisionMask, mDataBlock->collisionMask, &rInfo);
 				if(collision)
 				{
 					ShotgunHit* hit = NULL;

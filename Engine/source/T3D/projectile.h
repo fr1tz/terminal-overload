@@ -60,6 +60,9 @@ public:
    bool faceViewer;
    Point3F scale;
 
+   // What collision mask should trigger collisions?
+   U8 collisionMask;
+
 	// target-tracking related...
 	S32 maxTrackingAbility;
 	S32 trackingAgility;

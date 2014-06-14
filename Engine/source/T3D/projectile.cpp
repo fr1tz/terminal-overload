@@ -166,6 +166,8 @@ ProjectileData::ProjectileData()
    faceViewer = false;
    scale.set( 1.0f, 1.0f, 1.0f );
 
+   collisionMask = 0xFF;
+
 	maxTrackingAbility = 0;
 	trackingAgility = 1;
 
@@ -225,6 +227,9 @@ void ProjectileData::initPersistFields()
    addField("scale", TypePoint3F, Offset(scale, ProjectileData),
       "@brief Scale to apply to the projectile's size.\n\n"
       "@note This is applied after SceneObject::scale\n");
+
+   addField("collisionMask", TypeS8, Offset(collisionMask, ProjectileData),
+      "@brief What collision mask should trigger collisions?\n\n");
 
    addField("sound", TypeSFXTrackName, Offset(sound, ProjectileData),
       "@brief SFXTrack datablock used to play sounds while in flight.\n\n");
@@ -422,6 +427,8 @@ void ProjectileData::packData(BitStream* stream)
       stream->write(scale.z);
    }
 
+   stream->write(collisionMask);
+
    if(stream->writeFlag(explodesNearEnemies))
    {
       stream->writeInt(explodesNearEnemiesRadius, 32);
@@ -526,6 +533,8 @@ void ProjectileData::unpackData(BitStream* stream)
    }
    else
       scale.set(1,1,1);
+
+   stream->read(&collisionMask);
 
    explodesNearEnemies = stream->readFlag();
    if(explodesNearEnemies)
@@ -1323,7 +1332,7 @@ void Projectile::simulate( F32 dt )
    if ( mPhysicsWorld )
       hit = mPhysicsWorld->castRay( oldPosition, newPosition, &rInfo, Point3F( newPosition - oldPosition) * mDataBlock->impactForce );            
    else 
-      hit = getContainer()->castRay(oldPosition, newPosition, csmDynamicCollisionMask | csmStaticCollisionMask, &rInfo);
+      hit = getContainer()->castRay(oldPosition, newPosition, csmDynamicCollisionMask | csmStaticCollisionMask, mDataBlock->collisionMask, &rInfo);
 
    if ( hit )
    {
