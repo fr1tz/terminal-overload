@@ -1,6 +1,15 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
+$CollisionMask::Normal = 1;
+$CollisionMask::Alt    = 2;
+$CollisionMask::Free1  = 4;
+$CollisionMask::Free2  = 8;
+$CollisionMask::Free3  = 16;
+$CollisionMask::Free4  = 32;
+$CollisionMask::Free5  = 64;
+$CollisionMask::Free6  = 128;
+
 $HudInfoType::DiscTarget = 1;
 $HudInfoType::LockedDisc = 2;
 
