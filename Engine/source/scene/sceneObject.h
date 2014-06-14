@@ -162,6 +162,9 @@ class SceneObject : public NetObject, private SceneContainer::Link, public Proce
       /// @see SimObjectTypes
       U32 mTypeMask;
 
+      /// Object collision mask.
+      U8 mCollisionMask;
+
       /// @name Mounting
       /// @{
 
@@ -376,6 +379,15 @@ class SceneObject : public NetObject, private SceneContainer::Link, public Proce
       /// Return the type mask that indicates to which broad object categories
       /// this object belongs.
       U32 getTypeMask() const { return mTypeMask; }
+
+      /// Set the collision mask.
+      void setCollisionMask(U8 mask) {
+         mCollisionMask = mask;
+         this->setMaskBits(RareUpdatesMask);
+      };
+
+      /// Return the collision mask.
+      U8 getCollisionMask() const { return mCollisionMask; }
 
       /// @name SceneManager Functionality
       /// @{

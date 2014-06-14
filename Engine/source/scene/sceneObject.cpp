@@ -79,6 +79,7 @@ SceneObject::SceneObject()
 {
    mContainer = 0;
    mTypeMask = DefaultObjectType;
+   mCollisionMask = 0xFF;
    mCollisionCount = 0;
    mGlobalBounds = false;
 
@@ -1489,4 +1490,18 @@ DefineEngineMethod( SceneObject, getMass, F32, (),,
    "Get the object's mass.\n")
 {
    return object->getMass();
+}
+
+//-----------------------------------------------------------------------------
+
+DefineEngineMethod( SceneObject, setCollisionMask, void, (S8 mask),,
+   "Get the object's collision mask.\n")
+{
+   object->setCollisionMask(mask);
+}
+
+DefineEngineMethod( SceneObject, getCollisionMask, S8, (),,
+   "Get the object's collision mask.\n")
+{
+   return object->getCollisionMask();
 }
