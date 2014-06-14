@@ -140,6 +140,9 @@ function ShapeBase::playHitSound(%this)
 function ShapeBaseData::onAdd(%this, %obj)
 {
    Parent::onAdd(%this, %obj);
+   
+   // Set default collision mask
+   %obj.setCollisionMask($CollisionMask::Normal);
 
    // Default dynamic armor stats
    %obj.setDamageBufferRechargeRate(%this.damageBufferRechargeRate);
