@@ -394,20 +394,25 @@ void SceneContainer::checkBins(SceneObject* obj)
 
 void SceneContainer::findObjects(const Box3F& box, U32 mask, FindCallback callback, void *key)
 {
+   findObjects(box, mask, 0xFF, callback, key);
+}
+
+void SceneContainer::findObjects(const Box3F& box, U32 typeMask, U8 collisionMask, FindCallback callback, void *key)
+{
    PROFILE_SCOPE(ContainerFindObjects_Box);
 
    // If we're searching for just water, just physical zones, or
    // just water and physical zones then use the optimized path.
-   if ( mask == WaterObjectType || 
-        mask == PhysicalZoneObjectType ||
-        mask == (WaterObjectType|PhysicalZoneObjectType) )
+   if ( typeMask == WaterObjectType || 
+        typeMask == PhysicalZoneObjectType ||
+        typeMask == (WaterObjectType|PhysicalZoneObjectType) )
    {
-      _findSpecialObjects( mWaterAndZones, box, mask, callback, key );
+      _findSpecialObjects( mWaterAndZones, box, typeMask, collisionMask, callback, key );
       return;
    }
-   else if( mask == TerrainObjectType )
+   else if( typeMask == TerrainObjectType )
    {
-      _findSpecialObjects( mTerrains, box, mask, callback, key );
+      _findSpecialObjects( mTerrains, box, typeMask, collisionMask, callback, key );
       return;
    }
 
@@ -433,7 +438,8 @@ void SceneContainer::findObjects(const Box3F& box, U32 mask, FindCallback callba
             {
                chain->object->setContainerSeqKey(mCurrSeqKey);
 
-               if ((chain->object->getTypeMask() & mask) != 0 &&
+               if ((chain->object->getTypeMask() & typeMask) != 0 &&
+                   (chain->object->getCollisionMask() & collisionMask) != 0 &&
                    chain->object->isCollisionEnabled())
                {
                   if (chain->object->getWorldBox().isOverlapped(box) || chain->object->isGlobalBounds())
@@ -453,7 +459,8 @@ void SceneContainer::findObjects(const Box3F& box, U32 mask, FindCallback callba
       {
          chain->object->setContainerSeqKey(mCurrSeqKey);
 
-         if ((chain->object->getTypeMask() & mask) != 0 &&
+         if ((chain->object->getTypeMask() & typeMask) != 0 &&
+             (chain->object->getCollisionMask() & collisionMask) != 0 &&
              chain->object->isCollisionEnabled())
          {
             if (chain->object->getWorldBox().isOverlapped(box) || chain->object->isGlobalBounds())
@@ -472,20 +479,25 @@ void SceneContainer::findObjects(const Box3F& box, U32 mask, FindCallback callba
 
 void SceneContainer::findObjects( const Frustum &frustum, U32 mask, FindCallback callback, void *key )
 {
+   findObjects(frustum, mask, 0xFF, callback, key);
+}
+
+void SceneContainer::findObjects( const Frustum &frustum, U32 typeMask, U8 collisionMask, FindCallback callback, void *key )
+{
    PROFILE_SCOPE(ContainerFindObjects_Frustum);
 
    Box3F searchBox = frustum.getBounds();
 
-   if (  mask == WaterObjectType || 
-         mask == PhysicalZoneObjectType ||
-         mask == (WaterObjectType|PhysicalZoneObjectType) )
+   if (  typeMask == WaterObjectType || 
+         typeMask == PhysicalZoneObjectType ||
+         typeMask == (WaterObjectType|PhysicalZoneObjectType) )
    {
-      _findSpecialObjects( mWaterAndZones, searchBox, mask, callback, key );
+      _findSpecialObjects( mWaterAndZones, searchBox, typeMask, collisionMask, callback, key );
       return;
    }
-   else if( mask == TerrainObjectType )
+   else if( typeMask == TerrainObjectType )
    {
-      _findSpecialObjects( mTerrains, searchBox, mask, callback, key );
+      _findSpecialObjects( mTerrains, searchBox, typeMask, collisionMask, callback, key );
       return;
    }
 
@@ -514,7 +526,8 @@ void SceneContainer::findObjects( const Frustum &frustum, U32 mask, FindCallback
             {
                object->setContainerSeqKey(mCurrSeqKey);
 
-               if ((object->getTypeMask() & mask) != 0 &&
+               if ((object->getTypeMask() & typeMask) != 0 &&
+                   (object->getCollisionMask() & collisionMask) != 0 &&
                   object->isCollisionEnabled())
                {
                   const Box3F &worldBox = object->getWorldBox();
@@ -539,7 +552,8 @@ void SceneContainer::findObjects( const Frustum &frustum, U32 mask, FindCallback
       {
          object->setContainerSeqKey(mCurrSeqKey);
 
-         if ((object->getTypeMask() & mask) != 0 &&
+         if ((object->getTypeMask() & typeMask) != 0 &&
+             (object->getCollisionMask() & collisionMask) != 0 &&
             object->isCollisionEnabled())
          {
             const Box3F &worldBox = object->getWorldBox();
@@ -561,6 +575,11 @@ void SceneContainer::findObjects( const Frustum &frustum, U32 mask, FindCallback
 
 void SceneContainer::polyhedronFindObjects(const Polyhedron& polyhedron, U32 mask, FindCallback callback, void *key)
 {
+   polyhedronFindObjects(polyhedron, mask, 0xFF, callback, key);
+}
+
+void SceneContainer::polyhedronFindObjects(const Polyhedron& polyhedron, U32 typeMask, U8 collisionMask, FindCallback callback, void *key)
+{
    PROFILE_SCOPE(ContainerFindObjects_polyhedron);
 
    U32 i;
@@ -573,16 +592,16 @@ void SceneContainer::polyhedronFindObjects(const Polyhedron& polyhedron, U32 mas
       box.maxExtents.setMax(polyhedron.pointList[i]);
    }
 
-   if (  mask == WaterObjectType || 
-         mask == PhysicalZoneObjectType ||
-         mask == (WaterObjectType|PhysicalZoneObjectType) )
+   if (  typeMask == WaterObjectType || 
+         typeMask == PhysicalZoneObjectType ||
+         typeMask == (WaterObjectType|PhysicalZoneObjectType) )
    {
-      _findSpecialObjects( mWaterAndZones, box, mask, callback, key );
+      _findSpecialObjects( mWaterAndZones, box, typeMask, collisionMask, callback, key );
       return;
    }
-   else if( mask == TerrainObjectType )
+   else if( typeMask == TerrainObjectType )
    {
-      _findSpecialObjects( mTerrains, mask, callback, key );
+      _findSpecialObjects( mTerrains, typeMask, collisionMask, callback, key );
       return;
    }
 
@@ -608,7 +627,8 @@ void SceneContainer::polyhedronFindObjects(const Polyhedron& polyhedron, U32 mas
             {
                chain->object->setContainerSeqKey(mCurrSeqKey);
 
-               if ((chain->object->getTypeMask() & mask) != 0 &&
+               if ((chain->object->getTypeMask() & typeMask) != 0 &&
+                   (chain->object->getCollisionMask() & collisionMask) != 0 &&
                    chain->object->isCollisionEnabled())
                {
                   if (chain->object->getWorldBox().isOverlapped(box) || chain->object->isGlobalBounds())
@@ -628,7 +648,8 @@ void SceneContainer::polyhedronFindObjects(const Polyhedron& polyhedron, U32 mas
       {
          chain->object->setContainerSeqKey(mCurrSeqKey);
 
-         if ((chain->object->getTypeMask() & mask) != 0 &&
+         if ((chain->object->getTypeMask() & typeMask) != 0 &&
+             (chain->object->getCollisionMask() & collisionMask) != 0 &&
              chain->object->isCollisionEnabled())
          {
             if (chain->object->getWorldBox().isOverlapped(box) || chain->object->isGlobalBounds())
@@ -646,6 +667,11 @@ void SceneContainer::polyhedronFindObjects(const Polyhedron& polyhedron, U32 mas
 //-----------------------------------------------------------------------------
 
 void SceneContainer::renderFindObjectList( const Box3F& searchBox, U32 mask, Vector<SceneObject*> *outFound )
+{
+   renderFindObjectList(searchBox, mask, 0xFF, outFound);
+}
+
+void SceneContainer::renderFindObjectList( const Box3F& searchBox, U32 typeMask, U8 collisionMask, Vector<SceneObject*> *outFound )
 {
    PROFILE_SCOPE( Container_RenderFindObjectList_Box );
 
@@ -676,7 +702,8 @@ void SceneContainer::renderFindObjectList( const Box3F& searchBox, U32 mask, Vec
             {
                object->setContainerSeqKey(mCurrSeqKey);
 
-               if ((object->getTypeMask() & mask) != 0 &&
+               if ((object->getTypeMask() & typeMask) != 0 &&
+                   (object->getCollisionMask() & collisionMask) != 0 &&
                   object->isCollisionEnabled())
                {
                   const Box3F &worldBox = object->getRenderWorldBox();
@@ -700,7 +727,8 @@ void SceneContainer::renderFindObjectList( const Box3F& searchBox, U32 mask, Vec
       {
          object->setContainerSeqKey(mCurrSeqKey);
 
-         if ((object->getTypeMask() & mask) != 0 &&
+         if ((object->getTypeMask() & typeMask) != 0 &&
+             (object->getCollisionMask() & collisionMask) != 0 &&
             object->isCollisionEnabled())
          {
             const Box3F &worldBox = object->getRenderWorldBox();
@@ -718,6 +746,11 @@ void SceneContainer::renderFindObjectList( const Box3F& searchBox, U32 mask, Vec
 }
 
 void SceneContainer::findObjectList( const Box3F& searchBox, U32 mask, Vector<SceneObject*> *outFound )
+{
+   findObjectList(searchBox, mask, 0xFF, outFound);
+}
+
+void SceneContainer::findObjectList( const Box3F& searchBox, U32 typeMask, U8 collisionMask, Vector<SceneObject*> *outFound )
 {
    PROFILE_SCOPE( Container_FindObjectList_Box );
 
@@ -748,7 +781,8 @@ void SceneContainer::findObjectList( const Box3F& searchBox, U32 mask, Vector<Sc
             {
                object->setContainerSeqKey(mCurrSeqKey);
 
-               if ((object->getTypeMask() & mask) != 0 &&
+               if ((object->getTypeMask() & typeMask) != 0 &&
+                   (object->getCollisionMask() & collisionMask) != 0 &&
                   object->isCollisionEnabled())
                {
                   const Box3F &worldBox = object->getWorldBox();
@@ -772,7 +806,8 @@ void SceneContainer::findObjectList( const Box3F& searchBox, U32 mask, Vector<Sc
       {
          object->setContainerSeqKey(mCurrSeqKey);
 
-         if ((object->getTypeMask() & mask) != 0 &&
+         if ((object->getTypeMask() & typeMask) != 0 &&
+             (object->getCollisionMask() & collisionMask) != 0 &&
             object->isCollisionEnabled())
          {
             const Box3F &worldBox = object->getWorldBox();
@@ -793,10 +828,15 @@ void SceneContainer::findObjectList( const Box3F& searchBox, U32 mask, Vector<Sc
 
 void SceneContainer::findObjectList( const Frustum &frustum, U32 mask, Vector<SceneObject*> *outFound )
 {
+   findObjectList(frustum, mask, 0xFF, outFound);
+}
+
+void SceneContainer::findObjectList( const Frustum &frustum, U32 typeMask, U8 collisionMask, Vector<SceneObject*> *outFound )
+{
    PROFILE_SCOPE( Container_FindObjectList_Frustum );
 
    // Do a box find first.
-   findObjectList( frustum.getBounds(), mask, outFound );
+   findObjectList( frustum.getBounds(), typeMask, outFound );
 
    // Now do the frustum testing.
    for ( U32 i=0; i < outFound->size(); )
@@ -813,10 +853,15 @@ void SceneContainer::findObjectList( const Frustum &frustum, U32 mask, Vector<Sc
 
 void SceneContainer::findObjectList( U32 mask, Vector<SceneObject*> *outFound )
 {
+   findObjectList(mask, 0xFF, outFound);
+}
+
+void SceneContainer::findObjectList( U32 typeMask, U8 collisionMask, Vector<SceneObject*> *outFound )
+{
    for ( Link* itr = mStart.next; itr != &mEnd; itr = itr->next )
    {
       SceneObject* ptr = static_cast<SceneObject*>( itr );
-      if ( ( ptr->getTypeMask() & mask ) != 0 )
+      if ( ( ptr->getTypeMask() & typeMask ) != 0 && ( ptr->getCollisionMask() & collisionMask ) != 0 )
          outFound->push_back( ptr );
    }
 }
@@ -825,9 +870,14 @@ void SceneContainer::findObjectList( U32 mask, Vector<SceneObject*> *outFound )
 
 void SceneContainer::findObjects( U32 mask, FindCallback callback, void *key )
 {
+   findObjects(mask, 0xFF, callback, key);
+}
+
+void SceneContainer::findObjects( U32 typeMask, U8 collisionMask, FindCallback callback, void *key )
+{
    for (Link* itr = mStart.next; itr != &mEnd; itr = itr->next) {
       SceneObject* ptr = static_cast<SceneObject*>(itr);
-      if ((ptr->getTypeMask() & mask) != 0 && !ptr->mCollisionCount)
+      if ((ptr->getTypeMask() & typeMask) != 0 && ( ptr->getCollisionMask() & collisionMask ) != 0 && !ptr->mCollisionCount)
          (*callback)(ptr,key);
    }
 }
@@ -835,6 +885,11 @@ void SceneContainer::findObjects( U32 mask, FindCallback callback, void *key )
 //-----------------------------------------------------------------------------
 
 U32 SceneContainer::countObjectsStrict( const Box3F& searchBox, U32 mask )
+{
+   return countObjectsStrict(searchBox, mask, 0xFF);
+}
+
+U32 SceneContainer::countObjectsStrict( const Box3F& searchBox, U32 typeMask, U8 collisionMask)
 {
    PROFILE_SCOPE( Container_CountObjects_Box );
 
@@ -866,7 +921,8 @@ U32 SceneContainer::countObjectsStrict( const Box3F& searchBox, U32 mask )
             {
                object->setContainerSeqKey(mCurrSeqKey);
 
-               if ((object->getTypeMask() & mask) == mask &&
+               if ((object->getTypeMask() & typeMask) == typeMask &&
+                   (object->getCollisionMask() & collisionMask) != 0 &&
                   object->isCollisionEnabled())
                {
                   const Box3F &worldBox = object->getWorldBox();
@@ -890,7 +946,8 @@ U32 SceneContainer::countObjectsStrict( const Box3F& searchBox, U32 mask )
       {
          object->setContainerSeqKey(mCurrSeqKey);
 
-         if ((object->getTypeMask() & mask) == mask &&
+         if ((object->getTypeMask() & typeMask) == typeMask &&
+            (object->getCollisionMask() & collisionMask) != 0 &&
             object->isCollisionEnabled())
          {
             const Box3F &worldBox = object->getWorldBox();
@@ -911,21 +968,21 @@ U32 SceneContainer::countObjectsStrict( const Box3F& searchBox, U32 mask )
 
 //-----------------------------------------------------------------------------
 
-void SceneContainer::_findSpecialObjects( const Vector< SceneObject* >& vector, U32 mask, FindCallback callback, void *key )
+void SceneContainer::_findSpecialObjects( const Vector< SceneObject* >& vector, U32 typeMask, U8 collisionMask, FindCallback callback, void *key )
 {
    PROFILE_SCOPE( Container_findSpecialObjects );
 
    Vector<SceneObject*>::const_iterator iter = vector.begin();
    for ( ; iter != vector.end(); iter++ )
    {
-      if ( (*iter)->getTypeMask() & mask )
+      if ( (*iter)->getTypeMask() & typeMask && (*iter)->getCollisionMask() & collisionMask  )
          callback( *iter, key );
    }   
 }
 
 //-----------------------------------------------------------------------------
 
-void SceneContainer::_findSpecialObjects( const Vector< SceneObject* >& vector, const Box3F &box, U32 mask, FindCallback callback, void *key )
+void SceneContainer::_findSpecialObjects( const Vector< SceneObject* >& vector, const Box3F &box, U32 typeMask, U8 collisionMask, FindCallback callback, void *key )
 {
    PROFILE_SCOPE( Container_findSpecialObjects_Box );
 
@@ -935,7 +992,8 @@ void SceneContainer::_findSpecialObjects( const Vector< SceneObject* >& vector, 
    {
       SceneObject *pObj = *iter;
       
-      if ( pObj->getTypeMask() & mask &&
+      if ( pObj->getTypeMask() & typeMask &&
+           pObj->getCollisionMask() & collisionMask &&
            ( pObj->isGlobalBounds() || pObj->getWorldBox().isOverlapped(box) ) )
       {
          callback( pObj, key );
@@ -947,10 +1005,15 @@ void SceneContainer::_findSpecialObjects( const Vector< SceneObject* >& vector, 
 
 bool SceneContainer::castRay( const Point3F& start, const Point3F& end, U32 mask, RayInfo* info, CastRayCallback callback )
 {
+   return castRay(start, end, mask, 0xFF, info, callback);
+}
+
+bool SceneContainer::castRay( const Point3F& start, const Point3F& end, U32 typeMask, U8 collisionMask, RayInfo* info, CastRayCallback callback )
+{
    AssertFatal( info->userData == NULL, "SceneContainer::castRay - RayInfo->userData cannot be used here!" );
 
    PROFILE_START( SceneContainer_CastRay );
-   bool result = _castRay( CollisionGeometry, start, end, mask, info, callback );
+   bool result = _castRay( CollisionGeometry, start, end, typeMask, collisionMask, info, callback );
    PROFILE_END();
    return result;
 }
@@ -959,10 +1022,15 @@ bool SceneContainer::castRay( const Point3F& start, const Point3F& end, U32 mask
 
 bool SceneContainer::castRayRendered( const Point3F& start, const Point3F& end, U32 mask, RayInfo* info, CastRayCallback callback )
 {
+   return castRayRendered(start, end, mask, 0xFF, info, callback);
+}
+
+bool SceneContainer::castRayRendered( const Point3F& start, const Point3F& end, U32 typeMask, U8 collisionMask, RayInfo* info, CastRayCallback callback )
+{
    AssertFatal( info->userData == NULL, "SceneContainer::castRayRendered - RayInfo->userData cannot be used here!" );
 
    PROFILE_START( SceneContainer_CastRayRendered );
-   bool result = _castRay( RenderedGeometry, start, end, mask, info, callback );
+   bool result = _castRay( RenderedGeometry, start, end, typeMask, collisionMask, info, callback );
    PROFILE_END();
    return result;
 }
@@ -981,7 +1049,7 @@ bool SceneContainer::castRayRendered( const Point3F& start, const Point3F& end, 
 //             rasterizer for anti-aliased lines that will serve better than what
 //             we have below.
 
-bool SceneContainer::_castRay( U32 type, const Point3F& start, const Point3F& end, U32 mask, RayInfo* info, CastRayCallback callback )
+bool SceneContainer::_castRay( U32 type, const Point3F& start, const Point3F& end, U32 typeMask, U8 collisionMask, RayInfo* info, CastRayCallback callback )
 {
    AssertFatal( !mSearchInProgress, "SceneContainer::_castRay - Container queries are not re-entrant" );
    mSearchInProgress = true;
@@ -999,7 +1067,8 @@ bool SceneContainer::_castRay( U32 type, const Point3F& start, const Point3F& en
 
          // In the overflow bin, the world box is always going to intersect the line,
          //  so we can omit that test...
-         if ((ptr->getTypeMask() & mask) != 0 &&
+         if ((ptr->getTypeMask() & typeMask) != 0 &&
+             (ptr->getCollisionMask() & collisionMask) != 0 &&
              ptr->isCollisionEnabled() == true)
          {
             Point3F xformedStart, xformedEnd;
@@ -1096,7 +1165,8 @@ bool SceneContainer::_castRay( U32 type, const Point3F& start, const Point3F& en
             {
                ptr->setContainerSeqKey(mCurrSeqKey);
 
-               if ((ptr->getTypeMask() & mask) != 0      &&
+               if ((ptr->getTypeMask() & typeMask) != 0 &&
+                   (ptr->getCollisionMask() & collisionMask) != 0 &&
                    ptr->isCollisionEnabled() == true)
                {
                   if (ptr->getWorldBox().collideLine(start, end) || chain->object->isGlobalBounds())
@@ -1188,7 +1258,8 @@ bool SceneContainer::_castRay( U32 type, const Point3F& start, const Point3F& en
                   {
                      ptr->setContainerSeqKey(mCurrSeqKey);
 
-                     if ((ptr->getTypeMask() & mask) != 0      &&
+                     if ((ptr->getTypeMask() & typeMask) != 0 &&
+                         (ptr->getCollisionMask() & collisionMask) != 0 &&
                          ptr->isCollisionEnabled() == true)
                      {
                         if (ptr->getWorldBox().collideLine(start, end))
@@ -1260,13 +1331,20 @@ bool SceneContainer::_castRay( U32 type, const Point3F& start, const Point3F& en
 // collide with the objects projected object box
 bool SceneContainer::collideBox(const Point3F &start, const Point3F &end, U32 mask, RayInfo * info)
 {
+   return collideBox(start, end, mask, 0xFF, info);
+}
+
+bool SceneContainer::collideBox(const Point3F &start, const Point3F &end, U32 typeMask, U8 collisionMask, RayInfo * info)
+{
    AssertFatal( info->userData == NULL, "SceneContainer::collideBox - RayInfo->userData cannot be used here!" );
 
    F32 currentT = 2;
    for (Link* itr = mStart.next; itr != &mEnd; itr = itr->next)
    {
       SceneObject* ptr = static_cast<SceneObject*>(itr);
-      if (ptr->getTypeMask() & mask && !ptr->mCollisionCount)
+      if (ptr->getTypeMask() & typeMask &&
+          ptr->getCollisionMask() & collisionMask &&
+          !ptr->mCollisionCount)
       {
          Point3F xformedStart, xformedEnd;
          ptr->mWorldToObj.mulP(start, &xformedStart);
@@ -1299,6 +1377,11 @@ static void buildCallback(SceneObject* object,void *key)
 
 bool SceneContainer::buildPolyList(PolyListContext context, const Box3F &box, U32 mask, AbstractPolyList *polyList)
 {
+   return buildPolyList(context, box, mask, 0xFF, polyList);
+}
+
+bool SceneContainer::buildPolyList(PolyListContext context, const Box3F &box, U32 typeMask, U8 collisionMask, AbstractPolyList *polyList)
+{
    CallbackInfo info;
    info.context = context;
    info.boundingBox = box;
@@ -1310,7 +1393,7 @@ bool SceneContainer::buildPolyList(PolyListContext context, const Box3F &box, U3
    info.boundingSphere.radius = bv.len();
 
    sPolyList = polyList;
-   findObjects(box,mask,buildCallback,&info);
+   findObjects(box,typeMask,collisionMask,buildCallback,&info);
    return !polyList->isEmpty();
 }
 

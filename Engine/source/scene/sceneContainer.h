@@ -196,31 +196,41 @@ class SceneContainer
       /// @param callback Pointer to function to invoke for each object.
       /// @param key User data to pass to the "key" argument of @a callback.
       void findObjects( U32 mask, FindCallback callback, void* key = NULL );
+      void findObjects( U32 typeMask, U8 collisionMask, FindCallback callback, void* key = NULL );
 
       void findObjects( const Box3F& box, U32 mask, FindCallback, void *key = NULL );
+      void findObjects( const Box3F& box, U32 typeMask, U8 collisionMask, FindCallback, void *key = NULL );
+
       void findObjects( const Frustum& frustum, U32 mask, FindCallback, void *key = NULL );
+      void findObjects( const Frustum& frustum, U32 typeMask, U8 collisionMask, FindCallback, void *key = NULL );
 
       void polyhedronFindObjects( const Polyhedron& polyhedron, U32 mask, FindCallback, void *key = NULL );
+      void polyhedronFindObjects( const Polyhedron& polyhedron, U32 typeMask, U8 collisionMask, FindCallback, void *key = NULL );
 
       /// Identical to findObjectList() except that it checks the objects'
 		/// render world boxes. Used in SceneManager::_renderScene().
 		void renderFindObjectList( const Box3F& box, U32 mask, Vector< SceneObject* >* outFound );
+      void renderFindObjectList( const Box3F& box, U32 typeMask, U8 collisionMask, Vector< SceneObject* >* outFound );
 
       /// Find all objects of the given type(s) and add them to the given vector.
       /// @param mask Object type mask (@see SimObjectTypes).
       /// @param outFound Vector to add found objects to.
       void findObjectList( U32 mask, Vector< SceneObject* >* outFound );
+      void findObjectList( U32 typeMask, U8 collisionMask, Vector< SceneObject* >* outFound );
 
       ///
       void findObjectList( const Box3F& box, U32 mask, Vector< SceneObject* >* outFound );
+      void findObjectList( const Box3F& box, U32 typeMask, U8 collisionMask, Vector< SceneObject* >* outFound );
 
       ///
       void findObjectList( const Frustum& frustum, U32 mask, Vector< SceneObject* >* outFound );
+      void findObjectList( const Frustum& frustum, U32 typeMask, U8 collisionMask, Vector< SceneObject* >* outFound );
 
 		/// Return number of objects of a certain type in a certain area.
 		/// Note: "Strict" means that the object's typeMask must contain 
 		///       all bits set in "mask".
       U32 countObjectsStrict( const Box3F& box, U32 mask);
+      U32 countObjectsStrict( const Box3F& box, U32 typeMask, U8 collisionMask);
 
       /// @}
 
@@ -231,11 +241,14 @@ class SceneContainer
 
       /// Test against collision geometry -- fast.
       bool castRay( const Point3F &start, const Point3F &end, U32 mask, RayInfo* info, CastRayCallback callback = NULL );
+      bool castRay( const Point3F &start, const Point3F &end, U32 typeMask, U8 collisionMask, RayInfo* info, CastRayCallback callback = NULL );
 
       /// Test against rendered geometry -- slow.
       bool castRayRendered( const Point3F &start, const Point3F &end, U32 mask, RayInfo* info, CastRayCallback callback = NULL );
+      bool castRayRendered( const Point3F &start, const Point3F &end, U32 typeMask, U8 collisionMask, RayInfo* info, CastRayCallback callback = NULL );
 
       bool collideBox(const Point3F &start, const Point3F &end, U32 mask, RayInfo* info);
+      bool collideBox(const Point3F &start, const Point3F &end, U32 typeMask, U8 collisionMask, RayInfo* info);
 
       /// @}
 
@@ -246,6 +259,11 @@ class SceneContainer
       bool buildPolyList(  PolyListContext context, 
                            const Box3F &box, 
                            U32 typeMask, 
+                           AbstractPolyList *polylist );
+      bool buildPolyList(  PolyListContext context, 
+                           const Box3F &box, 
+                           U32 typeMask,
+                           U8 collisionMask,
                            AbstractPolyList *polylist );
 
       /// @}
@@ -288,10 +306,10 @@ class SceneContainer
       void cleanupSearchVectors();
 
       /// Base cast ray code
-      bool _castRay( U32 type, const Point3F &start, const Point3F &end, U32 mask, RayInfo* info, CastRayCallback callback );
+      bool _castRay( U32 type, const Point3F &start, const Point3F &end, U32 typeMask, U8 collisionMask, RayInfo* info, CastRayCallback callback );
 
-      void _findSpecialObjects( const Vector< SceneObject* >& vector, U32 mask, FindCallback, void *key = NULL );
-      void _findSpecialObjects( const Vector< SceneObject* >& vector, const Box3F &box, U32 mask, FindCallback callback, void *key = NULL );   
+      void _findSpecialObjects( const Vector< SceneObject* >& vector, U32 typeMask, U8 collisionMask, FindCallback, void *key = NULL );
+      void _findSpecialObjects( const Vector< SceneObject* >& vector, const Box3F &box, U32 typeMask, U8 collisionMask, FindCallback callback, void *key = NULL );   
 
       static void getBinRange( const F32 min, const F32 max, U32& minBin, U32& maxBin );
 };
