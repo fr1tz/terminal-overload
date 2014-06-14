@@ -939,17 +939,9 @@ ShapeBase::ShapeBase()
    mCloakLevel( 0.0f ),
    mDamageFlash( 0.0f ),
    mWhiteOut( 0.0f ),
-   mInvincibleEffect( 0.0f ),
-   mInvincibleDelta( 0.0f ),
-   mInvincibleCount( 0.0f ),
-   mInvincibleSpeed( 0.0f ),
-   mInvincibleTime( 0.0f ),
-   mInvincibleFade( 0.1f ),
-   mInvincibleOn( false ),
    mIsControlled( false ),
    mConvexList( new Convex ),
    mCameraFov( 90.0f ),
-   mShieldNormal( 0.0f, 0.0f, 1.0f ),
    mFadeOut( true ),
    mFading( false ),
    mFadeVal( 1.0f ),
@@ -1492,8 +1484,6 @@ void ShapeBase::advanceTime(F32 dt)
             mCloakLevel = 0.0;
       }
    }
-   if(mInvincibleOn)
-      updateInvincibleEffect(dt);
 
    if(mFading)
    {
@@ -2318,52 +2308,6 @@ bool ShapeBase::onlyThirdPerson() const
 bool ShapeBase::useObjsEyePoint() const
 {
    return mDataBlock->useEyePoint;
-}
-
-
-//----------------------------------------------------------------------------
-F32 ShapeBase::getInvincibleEffect() const
-{
-   return mInvincibleEffect;
-}
-
-void ShapeBase::setupInvincibleEffect(F32 time, F32 speed)
-{
-   if(isClientObject())
-   {
-      mInvincibleCount = mInvincibleTime = time;
-      mInvincibleSpeed = mInvincibleDelta = speed;
-      mInvincibleEffect = 0.0f;
-      mInvincibleOn = true;
-      mInvincibleFade = 1.0f;
-   }
-   else
-   {
-      mInvincibleTime  = time;
-      mInvincibleSpeed = speed;
-      setMaskBits(InvincibleMask);
-   }
-}
-
-void ShapeBase::updateInvincibleEffect(F32 dt)
-{
-   if(mInvincibleCount > 0.0f )
-   {
-      if(mInvincibleEffect >= ((0.3 * mInvincibleFade) + 0.05f) && mInvincibleDelta > 0.0f)
-         mInvincibleDelta = -mInvincibleSpeed;
-      else if(mInvincibleEffect <= 0.05f && mInvincibleDelta < 0.0f)
-      {
-         mInvincibleDelta = mInvincibleSpeed;
-         mInvincibleFade = mInvincibleCount / mInvincibleTime;
-      }
-      mInvincibleEffect += mInvincibleDelta;
-      mInvincibleCount -= dt;
-   }
-   else
-   {
-      mInvincibleEffect = 0.0f;
-      mInvincibleOn = false;
-   }
 }
 
 //----------------------------------------------------------------------------
@@ -3312,8 +3256,7 @@ U32 ShapeBase::packUpdate(NetConnection *con, U32 mask, BitStream *stream)
    }
 
    if(!stream->writeFlag(mask & (RareUpdatesMask | NameMask | DamageMask | SoundMask | MeshHiddenMask |
-         ThreadMask | ImageMask | CloakMask | InvincibleMask |
-         ShieldMask | SkinMask)))
+         ThreadMask | ImageMask | CloakMask | SkinMask)))
       return retMask;
 
    // Rare updates
@@ -3475,7 +3418,7 @@ U32 ShapeBase::packUpdate(NetConnection *con, U32 mask, BitStream *stream)
 	}
 
    // Group some of the uncommon stuff together.
-   if (stream->writeFlag(mask & (NameMask | ShieldMask | CloakMask | InvincibleMask | SkinMask | MeshHiddenMask ))) {
+   if (stream->writeFlag(mask & (NameMask | CloakMask | SkinMask | MeshHiddenMask ))) {
          
       if (stream->writeFlag(mask & CloakMask))
       {
@@ -3496,15 +3439,6 @@ U32 ShapeBase::packUpdate(NetConnection *con, U32 mask, BitStream *stream)
       if (stream->writeFlag(mask & NameMask)) {
          con->packNetStringHandleU(stream, mShapeNameHandle);
       }
-      if (stream->writeFlag(mask & ShieldMask)) {
-         stream->writeNormalVector(mShieldNormal, ShieldNormalBits);
-         stream->writeFloat( getEnergyValue(), EnergyLevelBits );
-      }
-      if (stream->writeFlag(mask & InvincibleMask)) {
-         stream->write(mInvincibleTime);
-         stream->write(mInvincibleSpeed);
-      }
-
       if ( stream->writeFlag( mask & MeshHiddenMask ) )
          stream->writeBits( mMeshHidden );
 
@@ -3818,25 +3752,6 @@ void ShapeBase::unpackUpdate(NetConnection *con, BitStream *stream)
       }
       if (stream->readFlag())  { // NameMask
          mShapeNameHandle = con->unpackNetStringHandleU(stream);
-      }
-      if(stream->readFlag())     // ShieldMask
-      {
-         // Cloaking, Shield, and invul masking
-         Point3F shieldNormal;
-         stream->readNormalVector(&shieldNormal, ShieldNormalBits);
-         
-         // CodeReview [bjg 4/6/07] This is our energy level - why aren't we storing it? Was in a
-         // local variable called energyPercent.
-         stream->readFloat(EnergyLevelBits);
-      }
-
-      if (stream->readFlag()) 
-      {
-         // InvincibleMask
-         F32 time, speed;
-         stream->read(&time);
-         stream->read(&speed);
-         setupInvincibleEffect(time, speed);
       }
       
       if ( stream->readFlag() ) // MeshHiddenMask
@@ -5439,18 +5354,6 @@ DefineEngineMethod( ShapeBase, setCameraFov, void, ( F32 fov ),,
 {
    if (object->isServerObject())
       object->setCameraFov( fov );
-}
-
-DefineEngineMethod( ShapeBase, setInvincibleMode, void, ( F32 time, F32 speed ),,
-   "@brief Setup the invincible effect.\n\n"
-
-   "This effect is used for HUD feedback to the user that they are invincible.\n"
-   "@note Currently not implemented\n"
-
-   "@param time duration in seconds for the invincible effect\n"
-   "@param speed speed at which the invincible effect progresses\n" )
-{
-   object->setupInvincibleEffect( time, speed );
 }
 
 DefineEngineMethod( ShapeBase, startFade, void, ( S32 time, S32 delay, bool fadeOut ),,
