@@ -796,3 +796,26 @@ function FrmStandardcat::launchDisc(%this, %obj, %disc)
       WpnRazorDisc.launch(%obj, %muzzlePoint, %muzzleVec, %obj.discTargets);
 }
 
+// Called from script
+function FrmStandardcat::activateStealth(%this, %obj, %time)
+{
+   %obj.setCollisionMask($CollisionMask::Stealth);
+   %obj.zStealthActive = true;
+   %obj.setSkinName("base=xa_notc_core_shapes_standardcat_stealthmat1;armor_red0024=xa_notc_core_shapes_standardcat_stealthmat2");
+   %obj.schedule(%time, "deactivateStealth");
+}
+
+// Called from script
+function FrmStandardcat::deactivateStealth(%this, %obj)
+{
+   %obj.setCollisionMask($CollisionMask::Normal);
+   %obj.zStealthActive = false;
+   %obj.setSkinName("xa_notc_core_shapes_standardcat_stealthmat1=base;xa_notc_core_shapes_standardcat_stealthmat2=armor_red0024");
+}
+
+// Called from script
+function FrmStandardcat::isStealthActive(%this, %obj)
+{
+   return %obj.zStealthActive;
+}
+

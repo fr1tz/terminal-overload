@@ -133,6 +133,28 @@ function ShapeBase::playHitSound(%this)
    %this.inflictedDamageSoundLocked = false;
 }
 
+function ShapeBase::activateStealth(%this, %time)
+{
+   %data = %this.getDataBlock();
+   if(%data.isMethod("activateStealth"))
+      %data.activateStealth(%this, %time);
+}
+
+function ShapeBase::deactivateStealth(%this)
+{
+   %data = %this.getDataBlock();
+   if(%data.isMethod("deactivateStealth"))
+      %data.deactivateStealth(%this);
+}
+
+function ShapeBase::isStealthActive(%this)
+{
+   %data = %this.getDataBlock();
+   if(%data.isMethod("isStealthActive"))
+      return %data.isStealthActive(%this);
+   return false;
+}
+
 //-----------------------------------------------------------------------------
 // ShapeBase datablock
 //-----------------------------------------------------------------------------
