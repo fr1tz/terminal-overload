@@ -29,7 +29,8 @@ datablock ShapeBaseImageData(WpnSR1Image)
    class = "WeaponImage";
 
    ammoSource = "Energy";
-   minEnergy = 16;
+   minEnergy = 30;
+   minCharge = 0.4;
 
    projectile = WpnSR1Projectile;
 
@@ -104,7 +105,7 @@ datablock ShapeBaseImageData(WpnSR1Image)
 		stateTransitionOnCharged[4]      = "Fire";
 		stateTransitionOnNotCharged[4]   = "Ready";
 		//stateFire[4]                     = true;
-		stateTarget[4]                   = true;
+		//stateTarget[4]                   = true;
 		stateAllowImageChange[4]         = false;
 
 		// fire!...
@@ -115,9 +116,10 @@ datablock ShapeBaseImageData(WpnSR1Image)
 		stateFireProjectile[5]           = WpnSR1Projectile;
 		stateRecoil[5]                   = NoRecoil;
 		stateAllowImageChange[5]         = false;
-		stateEjectShell[5]               = true;
+		//stateEjectShell[5]               = true;
 		stateArmThread[5]                = "aimrifle";
 		stateSequence[5]                 = "fire";
+      stateSound[5]                    = WpnSR1FireSound;
 		stateScript[5]                   = "onFire";
 
 		// after fire...
@@ -178,32 +180,32 @@ function WpnSR1Image::onMount(%this, %obj, %slot)
 function WpnSR1Image::onUnmount(%this, %obj, %slot)
 {
     Parent::onUnmount(%this, %obj, %slot);
-    %obj.setSniping(false);
+    //%obj.setSniping(false);
 }
 
 function WpnSR1Image::onReady(%this, %obj, %slot)
 {
 	//error("onReady");
-    %obj.setSniping(false);
+    //%obj.setSniping(false);
 }
 
 function WpnSR1Image::onCharge(%this, %obj, %slot)
 {
 	//error("onCharge");
-    %obj.sniperTarget = "";
-    %obj.setSniping(true);
+    //%obj.sniperTarget = "";
+    //%obj.setSniping(true);
 }
 
 function WpnSR1Image::onFire(%this, %obj, %slot)
 {
 	//error("onFire");
-    %obj.setSniping(false);
+    //%obj.setSniping(false);
 }
 
 function WpnSR1Image::onNoAmmo(%this, %obj, %slot)
 {
 	//error("onNoAmmo");
-    %obj.setSniping(false);
+    //%obj.setSniping(false);
 }
 
 

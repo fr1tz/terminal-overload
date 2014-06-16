@@ -150,3 +150,23 @@ singleton Material(xa_rotc_hack_shapes_mat10)
    diffuseColor[0] = "0.996078 0.996078 0.996078 1";
 };
 
+singleton Material(xa_rotc_hack_shapes_mat11)
+{
+   mapTo = "red";
+   diffuseColor[0] = "0.992157 0.992157 0.992157 1";
+   diffuseColorPaletteSlot[0] = "0";
+   vertColor[0] = "1";
+   glow[0] = "1";
+   emissive[0] = "1";
+   translucent = "1";
+   translucentBlendOp = "AddAlpha";
+   materialTag0 = "Miscellaneous";
+   diffuseColor[1] = "0.988235 0.988235 0.996078 1";
+   diffuseColorPaletteSlot[1] = "0";
+   vertColor[1] = "1";
+   glow[1] = "1";
+   emissive[1] = "1";
+   wireframe[1] = "1";
+   specular[2] = "1 1 1 1";
+};
+

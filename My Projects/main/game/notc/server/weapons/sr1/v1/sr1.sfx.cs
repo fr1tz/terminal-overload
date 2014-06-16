@@ -38,7 +38,7 @@ datablock SFXProfile(WpnSR1ProjectileImpactSound)
 
 datablock SFXProfile(WpnSR1ProjectileMissedEnemySound)
 {
-   filename = "content/xa/rotc/p.5.4/sounds/rotc/flyby1";
+   filename = "content/xa/rotc/p.5.4/sounds/rotc/impact4";
    description = AudioClose3D;
    preload = true;
 };
