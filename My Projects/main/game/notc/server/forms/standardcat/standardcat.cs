@@ -801,7 +801,14 @@ function FrmStandardcat::activateStealth(%this, %obj, %time)
 {
    %obj.setCollisionMask($CollisionMask::Stealth);
    %obj.zStealthActive = true;
-   %obj.setSkinName("base=xa_notc_core_shapes_standardcat_stealthmat1;armor_red0024=xa_notc_core_shapes_standardcat_stealthmat2");
+   
+   // Change skin
+   %old[0] = %obj.getTargetName(0);
+   %old[1] = %obj.getTargetName(1);
+   %new[0] = "xa_notc_core_shapes_standardcat_stealthmat1";
+   %new[1] = "xa_notc_core_shapes_standardcat_stealthmat2";
+   %obj.setSkinName(%old[0] @ "=" @ %new[0] @ ";" @ %old[1] @ "=" @ %new[1]);
+
    %obj.schedule(%time, "deactivateStealth");
 }
 
@@ -810,7 +817,13 @@ function FrmStandardcat::deactivateStealth(%this, %obj)
 {
    %obj.setCollisionMask($CollisionMask::Normal);
    %obj.zStealthActive = false;
-   %obj.setSkinName("xa_notc_core_shapes_standardcat_stealthmat1=base;xa_notc_core_shapes_standardcat_stealthmat2=armor_red0024");
+   
+   // Change skin
+   %old[0] = %obj.getTargetName(0);
+   %old[1] = %obj.getTargetName(1);
+   %new[0] = "base";
+   %new[1] = "armor_red0024";
+   %obj.setSkinName(%old[0] @ "=" @ %new[0] @ ";" @ %old[1] @ "=" @ %new[1]);
 }
 
 // Called from script
