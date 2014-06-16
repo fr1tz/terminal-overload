@@ -188,9 +188,27 @@ function ShapeBaseData::damage(%this, %obj, %source, %position, %amount, %damage
          %originalSource = %source.client.player;
    }
    
-   %damageBufStore = %obj.getDamageBufferLevel();
-   %healthDamageDealt = %obj.applyDamage(%amount);
-   %bufDamageDealt = %damageBufStore - %obj.getDamageBufferLevel();
+   %bypassDamageBuffer = false;
+   if(isObject(%source) && %source.getDataBlock().bypassDamageBuffer)
+      %bypassDamageBuffer = true;
+
+   if(%bypassDamageBuffer)
+	{
+      %maxDamage = %obj.getDataBlock().maxDamage;
+      %oldDmgLevel = %obj.getDamageLevel();
+      %newDmgLevel = %oldDmgLevel + %amount;
+      if(%newDmgLevel > %maxDamage)
+         %newDmgLevel = %maxDamage;
+      %obj.setDamageLevel(%newDmgLevel);
+      %healthDamageDealt = (%newDmgLevel-%oldDmgLevel);
+      %bufDamageDealt = 0;
+   }
+   else
+   {
+      %damageBufStore = %obj.getDamageBufferLevel();
+      %healthDamageDealt = %obj.applyDamage(%amount);
+      %bufDamageDealt = %damageBufStore - %obj.getDamageBufferLevel();
+   }
    
    //error("ShapeBaseData::damage()");
    //echo("source:" SPC %source);
