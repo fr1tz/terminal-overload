@@ -1,24 +1,6 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
-datablock DecalData(WpnSR1ProjectileDecal)
-{
-   Material = "xa_notc_core_shapes_smg1_projectile_p1_decalmat";
-   size = "0.25";
-   lifeSpan = "5000";
-   randomize = "1";
-   texRows = "2";
-   texCols = "2";
-   screenStartRadius = "20";
-   screenEndRadius = "5";
-   clippingAngle = "180";
-   textureCoordCount = "3";
-   textureCoords[0] = "0 0 0.5 0.5";
-   textureCoords[1] = "0.5 0 0.5 0.5";
-   textureCoords[2] = "0 0.5 0.5 0.5";
-   textureCoords[3] = "0.5 0.5 0.5 0.5";
-};
-
 datablock ShotgunProjectileData(WpnSR1Projectile)
 {
    collisionMask = $CollisionMask::Normal;
@@ -46,8 +28,8 @@ datablock ShotgunProjectileData(WpnSR1Projectile)
    explodesNearEnemiesRadius = 5;
    missEnemyEffect = WpnSR1ProjectileMissedEnemyEffect;
 
-   explosion           = "WpnSR1ProjectileExplosion";
-   decal               = "WpnSR1ProjectileDecal";
+   explosion           = WpnSR1ProjectileExplosion;
+   decal               = WpnSR1ProjectileDecal;
    laserTrail[0]       = WpnSR1ProjectileLaserTrail0;
    laserTrailFlags[0]  = 0;
    laserTrail[1]       = WpnSR1ProjectileLaserTrail1;
