@@ -89,6 +89,43 @@ datablock ParticleEmitterData(WpnSMG1ProjectileExplosion_DebrisEmitter)
 	particles = "WpnSMG1ProjectileExplosion_DebrisParticles";
 };
 
+datablock ParticleData(WpnSMG1ProjectileExplosion_CloudParticle : DefaultParticle)
+{
+   sizes[0] = "0";
+   sizes[1] = "5";
+   sizes[2] = "0";
+   sizes[3] = "0";
+   times[1] = "1";
+   times[2] = "1";
+   textureName = "content/xa/rotc/p.5.4/textures/rotc/unnamed1.png";
+   animTexName = "content/xa/rotc/p.5.4/textures/rotc/unnamed1.png";
+   lifetimeMS = "100";
+   lifetimeVarianceMS = "0";
+   spinSpeed = "0";
+   spinRandomMin = "-573";
+   spinRandomMax = "541";
+   colors[0] = "0.996078 0.996078 0.996078 0.556";
+   colors[2] = "1 1 1 1";
+   colors[3] = "1 1 1 1";
+   inheritedVelFactor = "0";
+   constantAcceleration = "0";
+   useInvAlpha = "0";
+   colors[1] = "0.996078 0.992157 0.996078 0";
+};
+
+datablock ParticleEmitterData(WpnSMG1ProjectileExplosion_CloudEmitter : DefaultEmitter)
+{
+   ejectionVelocity = "0";
+   ejectionOffset = "0";
+   particles = "WpnSMG1ProjectileExplosion_CloudParticle";
+   ejectionPeriodMS = "1";
+   lifetimeMS = "1";
+   originalName = "WpnSR1ProjectileExplosionCloudEmitter";
+   thetaMax = "153";
+   softnessDistance = "1";
+   paletteSlot = 0;
+};
+
 datablock ExplosionData(WpnSMG1ProjectileExplosion)
 {
 	soundProfile = WpnSMG1ProjectileExplosionSound;
@@ -105,7 +142,8 @@ datablock ExplosionData(WpnSMG1ProjectileExplosion)
 	times[1] = 1.0;
 
 	emitter[0] = WpnSMG1ProjectileExplosion_DebrisEmitter;
-	emitter[1] = WpnSMG1ProjectileExplosion_SmokeEmitter;
+	//emitter[1] = WpnSMG1ProjectileExplosion_SmokeEmitter;
+   emitter[2] = WpnSMG1ProjectileExplosion_CloudEmitter;
 
 	//debris = WpnSMG1ProjectileExplosion_Debris;
 	//debrisThetaMin = 0;
