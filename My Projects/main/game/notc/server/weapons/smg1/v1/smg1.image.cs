@@ -4,8 +4,8 @@
 datablock ShapeBaseImageData(WpnSMG1Image)
 {
    // Basic Item properties
-   shapeFile = "content/xa/notc/core/shapes/smg1/image/p1/shape.tp.dae";
-   shapeFileFP = "content/xa/notc/core/shapes/smg1/image/p1/shape.fp.dae";
+   shapeFile = "content/xa/notc/core/shapes/smg1/image/p2/shape.tp.dae";
+   shapeFileFP = "content/xa/notc/core/shapes/smg1/image/p2/shape.fp.dae";
    emap = true;
 
    imageAnimPrefix = "Rifle";
@@ -17,7 +17,7 @@ datablock ShapeBaseImageData(WpnSMG1Image)
    firstPerson = true;
    animateOnServer = true;
    useEyeNode = "0";
-   eyeOffset = "0.15 0.1 -0.25";
+   eyeOffset = "0.15 -0.1 -0.20";
 
    // When firing from a point offset from the eye, muzzle correction
    // will adjust the muzzle vector to point to the eye LOS point.
@@ -64,9 +64,9 @@ datablock ShapeBaseImageData(WpnSMG1Image)
 	//-------------------------------------------------
 	// image states...
 	//
-      stateName[0]                     = "Preactivate";
-      stateTransitionGeneric3In[0]     = "Ready";
-      stateTransitionGeneric3Out[0]    = "Activate";
+		stateName[0]                     = "Preactivate";
+		stateTransitionOnAmmo[0]         = "Ready";
+		stateTransitionOnNoAmmo[0]		   = "NoAmmo";
 
       stateName[1]                     = "Activate";
       stateArmThread[1]                = "holdblaster";
@@ -75,7 +75,7 @@ datablock ShapeBaseImageData(WpnSMG1Image)
       stateSequence[1]                 = "idle";
 
       stateName[2]                     = "Ready";
-      stateArmThread[2]                = "holdblaster";
+      stateArmThread[2]                = "holdrifle";
       //stateTransitionOnTimeout[2]      = "ReadyFidget";
       stateTimeoutValue[2]             = 10;
       stateWaitForTimeout[2]           = false;
@@ -84,7 +84,7 @@ datablock ShapeBaseImageData(WpnSMG1Image)
       stateSequence[2]                 = "idle";
 
       stateName[5]                     = "Fire";
-      stateArmThread[5]                = "aimblaster";
+      stateArmThread[5]                = "aimrifle";
       stateTransitionOnTriggerUp[5]    = "KeepAiming";
       stateTransitionOnNoAmmo[5]       = "NoAmmo";
       stateTransitionOnTimeout[5]      = "Fire";
@@ -98,6 +98,7 @@ datablock ShapeBaseImageData(WpnSMG1Image)
       stateSequenceNeverTransition[5]  = true;
       stateSequenceRandomFlash[5]      = false;        // use muzzle flash sequence
       stateSound[5]                    = WpnSMG1FireSound;
+      stateSoundFlags[5]               = 1;
       //stateScript[5]                 = "onFire";
       //stateEmitter[5]                = WpnSMG1FireSmokeEmitter;
       //stateEmitterTime[5]            = 0.025;
