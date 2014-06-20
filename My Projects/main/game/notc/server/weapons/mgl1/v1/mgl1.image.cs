@@ -89,12 +89,13 @@ datablock ShapeBaseImageData(WpnMGL1Image)
 		stateTimeoutValue[3]             = 0.0;
 		stateFire[3]                     = true;
 		stateFireProjectile[3]           = WpnMGL1PseudoProjectile;
-		stateRecoil[3]                   = MediumRecoil;
+		stateRecoil[3]                   = "LightRecoil";
 		stateAllowImageChange[3]         = false;
 		stateEjectShell[3]               = true;
 		stateArmThread[3]                = "aimrifle";
 		stateSequence[3]                 = "Fire";
 		stateSound[3]                    = WpnMGL1FireSound;
+      stateSoundFlags[3]               = 1;
 
 		// after fire...
 		stateName[8]                     = "AfterFire";
