@@ -80,7 +80,7 @@ datablock ShapeBaseImageData(WpnSG2Image)
 		stateTransitionOnNoAmmo[2]       = "NoAmmo";
   		stateTransitionOnNotLoaded[2]    = "Disabled";
 		stateTransitionOnTriggerDown[2]  = "Fire";
-      stateArmThread[2]                = "aimblaster";
+      stateArmThread[2]                = "holdgun_onehand";
 		stateSequence[2]                 = "idle";
 
 		stateName[3]                     = "Fire";
@@ -91,7 +91,7 @@ datablock ShapeBaseImageData(WpnSG2Image)
 		stateRecoil[3]                   = "LightRecoil";
 		stateAllowImageChange[3]         = false;
 		stateEjectShell[3]               = true;
-		stateArmThread[3]                = "aimblaster";
+		//stateArmThread[3]                = "aimblaster";
 		stateSequence[3]                 = "Fire";
 		stateSound[3]                    = WpnSG2FireSound;
       stateSoundFlags[3]               = 1;
