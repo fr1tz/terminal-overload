@@ -113,8 +113,6 @@ datablock ShapeBaseImageData(WpnSMG1Image)
 		stateTimeoutValue[7]             = 2.00;
 
       stateName[6]                     = "NoAmmo";
-      stateTransitionGeneric0In[6]     = "SprintEnter";
-      stateTransitionOnMotion[6]       = "NoAmmoMotion";
       stateTransitionOnAmmo[6]         = "Ready";
       stateTimeoutValue[6]             = 10;
       stateWaitForTimeout[6]           = false;
@@ -122,7 +120,6 @@ datablock ShapeBaseImageData(WpnSMG1Image)
       stateTransitionOnTriggerDown[6]  = "DryFire";
 
       stateName[8]                     = "DryFire";
-      stateTransitionGeneric0In[8]     = "SprintEnter";
       stateWaitForTimeout[8]           = false;
       stateTimeoutValue[8]             = 0.7;
       stateTransitionOnTimeout[8]      = "NoAmmo";
