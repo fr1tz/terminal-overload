@@ -51,4 +51,5 @@ function xa_notc_core_shaapes_standardcat_old_dts::onLoad(%this)
    %this.renameNode("pelvis", "Mount3");
    %this.renameNode("head", "Mount4");
    %this.addSequence("./oldanims/a/holdgun_onehand.dsq", "holdgun_onehand", "0", "15", "1", "0");
+   %this.addSequence("./oldanims/ub/aimarmcannon.dsq", "aimarmcannon", "0", "15", "1", "0");
 }
