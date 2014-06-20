@@ -4,7 +4,7 @@
 datablock ShapeBaseImageData(WpnSG1Image)
 {
    // Basic Item properties
-   shapeFile = "content/xa/rotc_hack/shapes/blaster.tp.dts";
+   shapeFile = "content/xa/notc/core/shapes/sg1/image/p1/shape.tp.dae";
    shapeFileFP = "content/xa/notc/core/shapes/sg1/image/p1/shape.fp.dae";
    emap = true;
 
@@ -80,7 +80,7 @@ datablock ShapeBaseImageData(WpnSG1Image)
 		stateTransitionOnNoAmmo[2]       = "NoAmmo";
   		stateTransitionOnNotLoaded[2]    = "Disabled";
 		stateTransitionOnTriggerDown[2]  = "Fire";
-      stateArmThread[2]                = "aimblaster";
+      stateArmThread[2]                = "holdgun_onehand";
 		stateSequence[2]                 = "idle";
 
 		// fire!...
@@ -92,7 +92,7 @@ datablock ShapeBaseImageData(WpnSG1Image)
 		stateRecoil[3]                   = "LightRecoil";
 		stateAllowImageChange[3]         = false;
 		stateEjectShell[3]               = false;
-		stateArmThread[3]                = "aimblaster";
+		//stateArmThread[3]                = "aimblaster";
 		stateSequence[3]                 = "fire";
 		stateSound[3]                    = WpnSG1FireSound;
 		stateSoundFlags[3]               = 1;
