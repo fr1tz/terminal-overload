@@ -5,7 +5,7 @@ datablock ShapeBaseImageData(WpnSG1Image)
 {
    // Basic Item properties
    shapeFile = "content/xa/rotc_hack/shapes/blaster.tp.dts";
-   shapeFileFP = "content/xa/rotc_hack/shapes/blaster.fp.dts";
+   shapeFileFP = "content/xa/notc/core/shapes/sg1/image/p1/shape.fp.dae";
    emap = true;
 
    imageAnimPrefix = "Rifle";
@@ -17,7 +17,7 @@ datablock ShapeBaseImageData(WpnSG1Image)
    firstPerson = true;
    animateOnServer = true;
    useEyeNode = "0";
-   eyeOffset = "0.3 -0.025 -0.15";
+   eyeOffset = "0.1 -0.1 -0.2";
 
    // When firing from a point offset from the eye, muzzle correction
    // will adjust the muzzle vector to point to the eye LOS point.
@@ -75,33 +75,39 @@ datablock ShapeBaseImageData(WpnSG1Image)
 
 		// ready to fire, just waiting for the trigger...
 		stateName[2]                     = "Ready";
+		stateTimeoutValue[2]             = 10;
+		stateWaitForTimeout[2]           = false;
 		stateTransitionOnNoAmmo[2]       = "NoAmmo";
-		stateTransitionOnNotLoaded[2]    = "Disabled";
+  		stateTransitionOnNotLoaded[2]    = "Disabled";
 		stateTransitionOnTriggerDown[2]  = "Fire";
-		stateArmThread[2]                = "holdblaster";
-		stateSpinThread[2]               = "Stop";
-		//stateSequence[2]                 = "idle";
+      stateArmThread[2]                = "aimblaster";
+		stateSequence[2]                 = "idle";
 
 		// fire!...
 		stateName[3]                     = "Fire";
-		stateTransitionOnTimeout[3]      = "AfterFire";
-		stateTimeoutValue[3]             = 0.8;
+		stateTransitionOnTimeout[3]      = "Reload";
+		stateTimeoutValue[3]             = 0.320;
 		stateFire[3]                     = true;
 		stateFireProjectile[3]           = WpnSG1Projectile;
-		stateRecoil[3]                   = MediumRecoil;
+		stateRecoil[3]                   = "LightRecoil";
 		stateAllowImageChange[3]         = false;
 		stateEjectShell[3]               = false;
 		stateArmThread[3]                = "aimblaster";
 		stateSequence[3]                 = "fire";
 		stateSound[3]                    = WpnSG1FireSound;
+		stateSoundFlags[3]               = 1;
 		//stateEmitter[3]                  = RedBlaster4FireEmitter;
 		stateEmitterNode[3]              = "fireparticles";
 		stateEmitterTime[3]              = 0.1;
 		stateSpinThread[3]               = "Stop";
 
-		// after fire...
-		stateName[4]                     = "AfterFire";
-		stateTransitionOnTriggerUp[4]    = "KeepAiming";
+		stateName[4]                     = "Reload";
+      stateTransitionOnNoAmmo[4]       = "NoAmmo";
+		stateTransitionOnTimeout[4]      = "Ready";
+		stateTimeoutValue[4]             = 0.960;
+		stateAllowImageChange[4]         = false;
+		stateSequence[4]                 = "Reload";
+		stateSound[4]                    = WpnSG2ReloadSound;
 
 		// keep aiming...
 		stateName[5]                     = "KeepAiming";
@@ -114,10 +120,10 @@ datablock ShapeBaseImageData(WpnSG1Image)
 
 		// no ammo...
 		stateName[6]                     = "NoAmmo";
-        stateTransitionOnTriggerDown[6]  = "DryFire";
-		stateTransitionOnAmmo[6]         = "Ready";
+      stateTransitionOnTriggerDown[6]  = "DryFire";
+		stateTransitionOnAmmo[6]         = "Reload";
 		stateTimeoutValue[6]             = 0.50;
-		//stateSequence[6]                 = "idle";
+		stateSequence[6]                 = "empty";
 
         // dry fire...
 		stateName[7]                     = "DryFire";

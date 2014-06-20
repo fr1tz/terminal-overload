@@ -6,7 +6,8 @@ datablock ShotgunProjectileData(WpnSG1Projectile)
    //projectileShapeName = "content/xa/notc/core/shapes/smg1/projectile/p1/shape.dae";
 
    // ShotgunProjectileData fields
-	numBullets = 9;
+   bulletDistMode = 1;
+	numBullets = 10;
 	range = 500;
 	muzzleSpreadRadius = 0.5;
 	referenceSpreadRadius = 1.0;

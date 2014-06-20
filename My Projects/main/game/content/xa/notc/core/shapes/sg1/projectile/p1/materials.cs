@@ -18,7 +18,7 @@ singleton Material(xa_notc_core_shapes_sg1_projectile_p1_decalmat)
 singleton Material(xa_notc_core_shapes_sg1_projectile_p1_lasertrail0mat)
 {
    diffuseColor[0] = "0.992157 0.992157 0.992157 1";
-   diffuseColorPaletteSlot[0] = "0";
+   diffuseColorPaletteSlot[0] = "-1";
    doubleSided = "1";
    translucentBlendOp = "AddAlpha";
    castShadows = "0";
@@ -31,10 +31,11 @@ singleton Material(xa_notc_core_shapes_sg1_projectile_p1_lasertrail0mat)
    vertColor[1] = "1";
    glow[1] = "1";
    emissive[1] = "1";
-   diffuseColorPaletteSlot[1] = "-1";
-   glowOnly[1] = "1";
-   wireframe[0] = "1";
+   diffuseColorPaletteSlot[1] = "0";
+   glowOnly[1] = "0";
+   wireframe[0] = "0";
    wireframe[1] = "1";
    materialTag0 = "Miscellaneous";
+   specular[0] = "White";
 };
 
