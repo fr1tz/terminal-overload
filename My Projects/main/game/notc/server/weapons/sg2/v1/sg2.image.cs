@@ -75,13 +75,12 @@ datablock ShapeBaseImageData(WpnSG2Image)
 
 		// ready to fire, just waiting for the trigger...
 		stateName[2]                     = "Ready";
-		stateTimeoutValue[2]             = 1.0;
+		stateTimeoutValue[2]             = 10;
 		stateWaitForTimeout[2]           = false;
 		stateTransitionOnNoAmmo[2]       = "NoAmmo";
   		stateTransitionOnNotLoaded[2]    = "Disabled";
 		stateTransitionOnTriggerDown[2]  = "Fire";
-      stateArmThread[2]                = "holdblaster";
-		stateSpinThread[2]               = "FullSpeed";
+      stateArmThread[2]                = "aimblaster";
 		stateSequence[2]                 = "idle";
 
 		stateName[3]                     = "Fire";
@@ -89,16 +88,16 @@ datablock ShapeBaseImageData(WpnSG2Image)
 		stateTimeoutValue[3]             = 0.320;
 		stateFire[3]                     = true;
 		stateFireProjectile[3]           = WpnSG2PseudoProjectile;
-		stateRecoil[3]                   = MediumRecoil;
+		stateRecoil[3]                   = "LightRecoil";
 		stateAllowImageChange[3]         = false;
 		stateEjectShell[3]               = true;
 		stateArmThread[3]                = "aimblaster";
 		stateSequence[3]                 = "Fire";
 		stateSound[3]                    = WpnSG2FireSound;
+      stateSoundFlags[3]               = 1;
 
-		// after fire...
 		stateName[8]                     = "Reload";
-		stateTransitionOnTriggerUp[8]    = "KeepAiming";
+		stateTransitionOnTriggerUp[8]    = "Ready";
 		stateTimeoutValue[8]             = 0.960;
 		stateWaitForTimeout[8]           = true;
 		stateAllowImageChange[8]         = false;
@@ -112,7 +111,6 @@ datablock ShapeBaseImageData(WpnSG2Image)
 		stateTransitionOnTimeout[4]      = "Ready";
 		stateWaitForTimeout[4]           = false;
 		stateTimeoutValue[4]             = 2.00;
-		stateSequence[4]                 = "idle";
 
         // no ammo...
 		stateName[5]                     = "NoAmmo";
