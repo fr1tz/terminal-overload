@@ -153,6 +153,8 @@ datablock PlayerData(FrmStandardcat)
    hardSplashSoundVelocity = 20.0;
    exitSplashSoundVelocity = 5.0;
    
+   repairParticleEmitter = FrmStandardcatRepairEmitter;
+   
    // Shape trails
    numShapeTrails = 5;
    shapeTrailsMaterial = xa_notc_core_shapes_standardcat_trailsmat;
