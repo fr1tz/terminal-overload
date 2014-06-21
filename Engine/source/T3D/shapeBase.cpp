@@ -171,6 +171,8 @@ ShapeBaseData::ShapeBaseData()
    explosionID( 0 ),
    underwaterExplosion( NULL ),
    underwaterExplosionID( 0 ),
+   repairParticleEmitter( NULL ),
+   repairParticleID( 0 ),
    numShapeTrails( 0 ),
    shapeTrailsMaterialName( StringTable->insert("") ),
    shapeTrailsMatInst( NULL ),
@@ -251,6 +253,16 @@ bool ShapeBaseData::preload(bool server, String &errorStr)
          }
          AssertFatal(!(underwaterExplosion && ((underwaterExplosionID < DataBlockObjectIdFirst) || (underwaterExplosionID > DataBlockObjectIdLast))),
             "ShapeBaseData::preload: invalid underwaterExplosion data");
+      }
+
+      if( !repairParticleEmitter && repairParticleID != 0 )
+      {
+         if( Sim::findObject( repairParticleID, repairParticleEmitter ) == false)
+         {
+            Con::errorf( ConsoleLogEntry::General, "ShapeBaseData::preload: Invalid packet, bad datablockId(repairParticleEmitter): 0x%x", repairParticleID );
+         }
+         AssertFatal(!(repairParticleEmitter && ((repairParticleID < DataBlockObjectIdFirst) || (repairParticleID > DataBlockObjectIdLast))),
+            "ShapeBaseData::preload: invalid repairParticleEmitter data");
       }
 
       if( !debris && debrisID != 0 )
@@ -505,12 +517,19 @@ void ShapeBaseData::initPersistFields()
       addField( "debrisShapeName", TypeShapeFilename, Offset(debrisShapeName, ShapeBaseData),
          "The DTS or DAE model to use for auto-generated breakups. @note may not be functional." );
 
+   endGroup( "Destruction" );
+
+   addGroup( "Eyecandy", "Misc visual stuff." );
+
+      addField( "repairParticleEmitter", TYPEID< ParticleEmitterData >(), Offset(repairParticleEmitter, ShapeBaseData),
+         "Particle emitter to use when object's damage level decreases." );
+
       addField( "numShapeTrails", TypeS32, Offset(numShapeTrails, ShapeBaseData),
          "Max. number of shape trails to render when moving.");
       addField( "shapeTrailsMaterial", TypeMaterialName, Offset( shapeTrailsMaterialName, ShapeBaseData ),
          "Material to use for the shape trails." );
 
-   endGroup( "Destruction" );
+   endGroup( "Eyecandy" );
 
    addGroup( "Physics" );
    
@@ -744,6 +763,11 @@ void ShapeBaseData::packData(BitStream* stream)
       stream->writeRangedU32( underwaterExplosion->getId(), DataBlockObjectIdFirst,  DataBlockObjectIdLast );
    }
 
+   if( stream->writeFlag( repairParticleEmitter ) )
+   {
+      stream->writeRangedU32( repairParticleEmitter->getId(), DataBlockObjectIdFirst,  DataBlockObjectIdLast );
+   }
+
    stream->write(numShapeTrails);
    stream->writeString(shapeTrailsMaterialName);
 
@@ -854,6 +878,11 @@ void ShapeBaseData::unpackData(BitStream* stream)
       underwaterExplosionID = stream->readRangedU32( DataBlockObjectIdFirst, DataBlockObjectIdLast );
    }
 
+   if( stream->readFlag() )
+   {
+      repairParticleID = (S32)stream->readRangedU32(DataBlockObjectIdFirst, DataBlockObjectIdLast);
+   }
+
    stream->read(&numShapeTrails);
    shapeTrailsMaterialName = stream->readSTString();
 
@@ -949,6 +978,9 @@ ShapeBase::ShapeBase()
    mFadeElapsedTime( 0.0f ),
    mFadeDelay( 0.0f ),
    mFlipFadeVal( false ),
+   mRepairEmitter( NULL ),
+   mDamageDelta( 0 ),
+   mLastTickDamage( 0 ),
    damageDir( 0.0f, 0.0f, 1.0f ),
    mShapeBaseMount( NULL ),
    mMass( 1.0f ),
@@ -1081,6 +1113,27 @@ bool ShapeBase::onAdd()
          updateThread(st);
    }   
 
+   if(this->isGhost())
+   {
+      if(mDataBlock->repairParticleEmitter != NULL)
+      {
+         mRepairEmitter = new ParticleEmitter;
+         mRepairEmitter->setPalette(this->getPalette());
+         mRepairEmitter->onNewDataBlock(mDataBlock->repairParticleEmitter, false);
+         if( !mRepairEmitter->registerObject() )
+         {
+            Con::warnf( ConsoleLogEntry::General, "Could not register repair particle emitter for class: %s", mDataBlock->getName() );
+            delete mRepairEmitter;
+            mRepairEmitter = NULL;
+         }	
+         else
+         {
+            mRepairEmitter->moveParticlesWithObject(this);
+            mRepairEmitter->processAfter(this);
+         }
+      }
+   }
+
 /*
       if(mDataBlock->cloakTexName != StringTable->insert(""))
         mCloakTexture = TextureHandle(mDataBlock->cloakTexName, MeshTexture, false);
@@ -1110,6 +1163,12 @@ void ShapeBase::onRemove()
             gCamFXMgr.removeFX( mWeaponCamShake );
 
          SAFE_DELETE( mWeaponCamShake );
+      }
+
+      if(mRepairEmitter)
+      {
+         mRepairEmitter->deleteWhenEmpty();
+         mRepairEmitter = NULL;
       }
    }
 }
@@ -1275,6 +1334,8 @@ void ShapeBase::onImpact(VectorF vec)
 
 void ShapeBase::processTick(const Move* move)
 {
+   F32 beginTickDamage = mDamage;
+
    Parent::processTick(move);
 
    PROFILE_SCOPE( ShapeBase_ProcessTick );
@@ -1437,6 +1498,30 @@ void ShapeBase::processTick(const Move* move)
       if (mWhiteOut <= 0.0)
          mWhiteOut = 0.0;
    }
+
+   // Damage info eyecandy stuff
+   if(this->isGhost())
+   {
+      // Add damage that occured between end of last tick and begin of this tick.
+      mDamageDelta += beginTickDamage - mLastTickDamage;
+
+      // Add damage that occured in this tick.
+      mDamageDelta += mDamage - beginTickDamage;
+
+      const Point3F& pos = this->getRenderPosition();
+      const Point3F axis(0, 1, 0);
+      const Point3F& vel = this->getVelocity();
+
+      if(mDamageDelta < 0)
+      {
+         if(mRepairEmitter)
+	         mRepairEmitter->emitParticles(pos, axis, 0, vel, -mDamageDelta);
+      }  
+
+      mDamageDelta = 0;
+   }
+
+   mLastTickDamage = mDamage;
 }
 
 void ShapeBase::advanceTime(F32 dt)

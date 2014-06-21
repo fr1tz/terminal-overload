@@ -572,6 +572,13 @@ public:
    S32               underwaterExplosionID;
    /// @}
 
+   /// @name Eyecandy
+   ///
+   /// @{
+   ParticleEmitterData* repairParticleEmitter;
+   S32 repairParticleID;
+   /// @}
+
    /// @name Shape trails
    /// @{
    S32  numShapeTrails;                 ///< Max. number of shape trails to render when moving
@@ -1075,6 +1082,13 @@ public:
    F32   getFadeVal() { return mFadeVal; }
    /// @}
 protected:
+
+   /// @name Damage info eyecandy
+   /// @{
+   ParticleEmitter* mRepairEmitter;
+   F32 mDamageDelta;
+   F32 mLastTickDamage;
+   /// @}
 
    /// @name Control info
    /// @{
