@@ -221,6 +221,7 @@ ShapeBaseImageData::StateData::StateData()
    target = false;
    armThread = NULL;
    sound = 0;
+   soundFlags = 0;
    emitter = NULL;
    script = 0;
    ignoreLoadedForReady = false;
@@ -361,6 +362,7 @@ ShapeBaseImageData::ShapeBaseImageData()
       stateScaleShapeSequence[i] = false;
 
       stateSound[i] = 0;
+      stateSoundFlags[i] = 0;
       stateScript[i] = 0;
       stateEmitter[i] = 0;
       stateEmitterTime[i] = 0;
@@ -476,6 +478,7 @@ bool ShapeBaseImageData::onAdd()
          s.shapeSequenceScale = stateScaleShapeSequence[i];
 
          s.sound = stateSound[i];
+         s.soundFlags = stateSoundFlags[i];
          s.script = stateScript[i];
          s.emitter = stateEmitter[i];
          s.emitterTime = stateEmitterTime[i];
@@ -1067,6 +1070,8 @@ void ShapeBaseImageData::initPersistFields()
 
       addField( "stateSound", TypeSFXTrackName, Offset(stateSound, ShapeBaseImageData), MaxStates,
          "Sound to play on entry to this state." );
+      addField( "stateSoundFlags", TypeS8, Offset(stateSoundFlags, ShapeBaseImageData), MaxStates,
+         "Flags that modify how this state's sound is played." );
       addField( "stateScript", TypeCaseString, Offset(stateScript, ShapeBaseImageData), MaxStates,
          "@brief Method to execute on entering this state.\n\n"
          "Scoped to this image class name, then ShapeBaseImageData. The script "
@@ -1308,6 +1313,7 @@ void ShapeBaseImageData::packData(BitStream* stream)
          }
 
          sfxWrite( stream, s.sound );
+         stream->write(s.soundFlags);
       }
    stream->write(maxConcurrentSounds);
    stream->writeFlag(useRemainderDT);
@@ -1545,6 +1551,7 @@ void ShapeBaseImageData::unpackData(BitStream* stream)
             s.emitter = 0;
             
          sfxRead( stream, &s.sound );
+         stream->read(&s.soundFlags);
       }
    }
    
@@ -3502,8 +3509,11 @@ void ShapeBase::setImageState(U32 imageSlot, U32 newState,bool force)
    // Play sound
    if( stateData.sound && isGhost() )
    {
-      const Point3F& velocity         = getVelocity();
-	   image.addSoundSource(SFX->createSource( stateData.sound, &getRenderTransform(), &velocity )); 
+      const Point3F& velocity = getVelocity();
+      if(stateData.soundFlags & 1)
+         SFX->playOnce(stateData.sound, &getRenderTransform(), &velocity);
+      else
+	      image.addSoundSource(SFX->createSource( stateData.sound, &getRenderTransform(), &velocity )); 
    }
 
    // Play animation

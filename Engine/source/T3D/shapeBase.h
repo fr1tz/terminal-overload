@@ -252,6 +252,7 @@ struct ShapeBaseImageData: public GameBaseData {
       ParticleEmitterData* emitter; ///< A particle emitter; this emitter will emit as long as the gun is in this
                                     ///  this state.
       SFXTrack* sound;
+      U8 soundFlags;
       F32 emitterTime;              ///<
       S32 emitterNode[MaxShapes];   ///< Node ID on the shape to emit from
    };
@@ -322,6 +323,7 @@ struct ShapeBaseImageData: public GameBaseData {
    bool                    stateIgnoreLoadedForReady  [MaxStates];
 
    SFXTrack*               stateSound                 [MaxStates];
+   U8                      stateSoundFlags            [MaxStates];
    const char*             stateScript                [MaxStates];
 
    ParticleEmitterData*    stateEmitter               [MaxStates];
