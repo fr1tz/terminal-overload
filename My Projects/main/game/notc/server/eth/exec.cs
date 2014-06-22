@@ -8,6 +8,7 @@ function executeEthernetServerScripts()
    exec("notc/server/forms/etherform/exec.cs");
    exec("notc/server/forms/standardcat/exec.cs");
 
+   exec("notc/server/items/impshield/vamp.cs");
    exec("notc/server/items/impshield/exec.cs");
    exec("notc/server/items/ballast/exec.cs");
    exec("notc/server/items/etherboard/exec.cs");

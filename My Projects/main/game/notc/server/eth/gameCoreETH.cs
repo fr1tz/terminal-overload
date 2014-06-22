@@ -337,6 +337,7 @@ function GameCoreETH::etherformManifest(%game, %obj)
    %player.addToWeaponCycle(WpnMG1);
    //%player.addToWeaponCycle(WpnML1);
 
+   %player.setInventory(ItemVAMP, 1);
    %player.setInventory(ItemImpShield, 1);
    %player.setInventory(ItemEtherboard, 1);
    %player.setInventory(ItemLauncher, 1);

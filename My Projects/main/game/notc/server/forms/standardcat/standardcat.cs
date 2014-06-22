@@ -242,6 +242,7 @@ datablock PlayerData(FrmStandardcat)
    // Allowable Inventory Items
    mainWeapon = WpnSMG1;
 
+   maxInv[ItemVAMP] = 1;
    maxInv[ItemImpShield] = 1;
    maxInv[ItemBallast] = 1;
    maxInv[ItemEtherboard] = 1;

@@ -264,10 +264,16 @@ function ShapeBaseData::onDamage(%this, %obj, %delta)
 // Called by script
 function ShapeBaseData::onHitEnemy(%this, %obj, %enemy, %healthDmg, %bufDmg)
 {
-   %client = %obj.client;
-   if(!isObject(%client))
-      return;
-  
    %obj.setHitSoundPitch(%enemy.getDamagePercent());
+   
+   // Health takeback
+	if(%obj.zVAMP > 0)
+	{
+      %healthTakeback = %healthDmg * %obj.zVAMP;
+      %newSrcDamage = %obj.getDamageLevel() - %healthTakeback;
+      %obj.setDamageLevel(%newSrcDamage);
+      //if(%newSrcDamage < 0)
+      //   %obj.setDamageBufferLevel(%obj.getDamageBufferLevel() - %newSrcDamage);
+   }
 }
 
