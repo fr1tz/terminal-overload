@@ -31,7 +31,7 @@
 
    new GuiDiscTargetsHud() {
       frameColor = "1 1 1 1";
-      hudInfoType = "1";
+      discTargetHudInfoDataSetType = "1";
       position = "0 0";
       extent = "640 480";
       minExtent = "8 2";

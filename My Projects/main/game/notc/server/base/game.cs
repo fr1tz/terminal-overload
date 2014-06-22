@@ -10,8 +10,14 @@ $CollisionMask::Free4   = 32;
 $CollisionMask::Free5   = 64;
 $CollisionMask::Free6   = 128;
 
-$HudInfoType::DiscTarget = 1;
-$HudInfoType::LockedDisc = 2;
+//-----------------------------------------------------------------------------
+// HudInfo DataSet types
+
+$HudInfoDataSetType::DiscTarget = 1;
+// string field: unused
+//    int field: unused
+//  float field: unused
+//   bool field: true
 
 //-----------------------------------------------------------------------------
 

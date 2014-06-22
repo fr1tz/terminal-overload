@@ -32,11 +32,10 @@ function ItemLauncherPseudoProjectile::onAdd(%this, %obj)
    {
       %hudInfo = new HudInfo();
       %hudInfo.schedule(0, "delete");
-      %hudInfo.setType($HudInfoType::LockedDisc);
       %hudInfo.setObject(%target);
       %targetSet.add(%hudInfo);
    }
- 
+
    WpnInterceptorDisc.launch(%source, %muzzlePoint, %muzzleVec, %targetSet);
    
    %targetSet.delete();
