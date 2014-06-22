@@ -22,7 +22,7 @@ class GuiDiscTargetsHud : public GuiControl, public virtual ITickable
    GuiTSCtrl* mParent;
 
    // Field data
-   S32 mHudInfoType;
+   S32 mHudInfoDataSetType;
    ColorF   mFrameColor;
 
    U32 mCurrTick;
@@ -85,7 +85,7 @@ ConsoleDocClass( GuiDiscTargetsHud,
 GuiDiscTargetsHud::GuiDiscTargetsHud()
 {
    mParent = NULL;
-   mHudInfoType = 1;
+   mHudInfoDataSetType = 1;
    mFrameColor.set( 1, 1, 1, 1 );
    mCurrTick = 0;
 }
@@ -97,7 +97,8 @@ void GuiDiscTargetsHud::initPersistFields()
    endGroup("Colors");     
 
    addGroup("Misc");       
-   addField( "hudInfoType",   TypeS32, Offset( mHudInfoType, GuiDiscTargetsHud ), "The type of HudInfo objects to render." );
+   addField( "discTargetHudInfoDataSetType",   TypeS32, Offset( mHudInfoDataSetType, GuiDiscTargetsHud ),
+      "The type of HudInfo data set that identifies a disc target." );
    endGroup("Misc");
 
    Parent::initPersistFields();
@@ -127,7 +128,7 @@ void GuiDiscTargetsHud::onRender( Point2I, const RectI &updateRect)
 	for(SimObject** itr = hudInfoSet->begin(); itr != hudInfoSet->end(); itr++)
 	{
 		HudInfo* hudInfo = dynamic_cast<HudInfo*>(*itr);
-		if(hudInfo && hudInfo->getType() == mHudInfoType)
+		if(hudInfo && hudInfo->getDataSetBoolField(mHudInfoDataSetType))
 		{  
 			drawTarget(control, hudInfo);			
 		}

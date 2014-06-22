@@ -16,12 +16,18 @@ HudInfo::HudInfo()
 {
    mNetFlags.set(Ghostable);
 
-   mType = 0;
-   mString = StringTable->insert("");
 	mObject = NULL;
 	mPosition.set(0, 0, 0);
-
    mAge = 0;
+
+   for(U32 i = 0; i < NumDataSets; i++)
+   {
+      mDataSets[i].type = 0;
+      mDataSets[i].stringField = StringTable->insert("");
+      mDataSets[i].intField = 0;
+      mDataSets[i].floatField = 0;
+      mDataSets[i].boolField = false;
+   }
 }
 
 
@@ -99,12 +105,6 @@ U32 HudInfo::packUpdate(NetConnection* conn, U32 mask, BitStream* stream)
 
 	S32 ghostId = mObject ? conn->getGhostIndex(mObject) : -1;
 
-   if(stream->writeFlag(mask & TypeMask))
-      stream->write(mType);
-
-   if(stream->writeFlag((mask & StringMask) && mString))
-      stream->writeString(mString);
-
    bool writeGhostId = false;
    if(mask & ObjectMask)
    {
@@ -120,6 +120,27 @@ U32 HudInfo::packUpdate(NetConnection* conn, U32 mask, BitStream* stream)
    if(stream->writeFlag(writePosition))
       mathWrite(*stream, mObject ? mObject->getPosition() : mPosition);
 
+   // Data sets
+   for(U32 i = 0; i < NumDataSets; i++)
+   {
+      if(stream->writeFlag(mask & (DataSetMask<<i)))
+      {
+         if(stream->writeFlag(mDataSets[i].type != 0))
+            stream->write(mDataSets[i].type);
+
+         if(stream->writeFlag(!mDataSets[i].stringField.isEmpty()))
+            stream->write(mDataSets[i].stringField);
+
+         if(stream->writeFlag(mDataSets[i].intField != 0))
+            stream->write(mDataSets[i].intField);
+
+         if(stream->writeFlag(mDataSets[i].floatField != 0))
+            stream->write(mDataSets[i].floatField);
+
+         stream->writeFlag(mDataSets[i].boolField);
+      }
+   }
+
 	return retMask;
 }
 
@@ -127,12 +148,6 @@ U32 HudInfo::packUpdate(NetConnection* conn, U32 mask, BitStream* stream)
 void HudInfo::unpackUpdate(NetConnection* conn, BitStream* stream)
 {
 	Parent::unpackUpdate(conn, stream);
-
-   if(stream->readFlag())
-      stream->read(&mType);
-
-   if(stream->readFlag())
-      mString = stream->readSTString();
 
    if(stream->readFlag())
    {
@@ -146,6 +161,35 @@ void HudInfo::unpackUpdate(NetConnection* conn, BitStream* stream)
 
    if(stream->readFlag())
       mathRead(*stream, &mPosition);
+
+   // Data sets
+   for(U32 i = 0; i < NumDataSets; i++)
+   {
+      if(stream->readFlag())
+      {
+         if(stream->readFlag())
+            stream->read(&mDataSets[i].type);
+         else
+            mDataSets[i].type = 0;
+
+         if(stream->readFlag())
+            stream->read(&mDataSets[i].stringField);
+         else
+            mDataSets[i].stringField = "";
+
+         if(stream->readFlag())
+            stream->read(&mDataSets[i].intField);
+         else
+            mDataSets[i].intField = 0;
+
+         if(stream->readFlag())
+            stream->read(&mDataSets[i].floatField);
+         else
+            mDataSets[i].floatField = 0;
+
+         mDataSets[i].boolField = stream->readFlag();
+      }
+   }
 }
 
 //------------------------------------------------------------------------------
@@ -161,18 +205,6 @@ void HudInfo::processTick()
 }
 
 //------------------------------------------------------------------------------
-
-void HudInfo::setType(S32 type)
-{
-   mType = type;
-   this->setMaskBits(TypeMask);
-}
-
-void HudInfo::setString(StringTableEntry string)
-{
-   mString = string;
-   this->setMaskBits(StringMask);
-}
 
 void HudInfo::setObject(SceneObject* obj)
 {
@@ -197,31 +229,89 @@ void HudInfo::setPosition(const Point3F& pos)
 
 //------------------------------------------------------------------------------
 
-DefineEngineMethod( HudInfo, setType, void, (S32 type),,
-   "@brief Sets the arbitrary type number for this object.\n\n"
-   "@param type The arbitrary type number\n\n")
+String HudInfo::getDataSetStringField(U32 dataSetType)
 {
-   object->setType(type);
+   for(U32 i = 0; i < NumDataSets; i++)
+   {
+      if(mDataSets[i].type == dataSetType)
+         return mDataSets[i].stringField;
+   }
+   return String("");
 }
 
-DefineEngineMethod( HudInfo, getType, S32, (),,
-   "@brief Returns the arbitrary type number for this object.\n\n")
+S32 HudInfo::getDataSetIntField(U32 dataSetType)
 {
-   return object->getType();
+   for(U32 i = 0; i < NumDataSets; i++)
+   {
+      if(mDataSets[i].type == dataSetType)
+         return mDataSets[i].intField;
+   }
+   return 0;
 }
 
-DefineEngineMethod( HudInfo, setString, void, (const char* string),,
-   "@brief Sets the arbitrary string for this object.\n\n"
-   "@param string The arbitrary string\n\n")
+F32 HudInfo::getDataSetFloatField(U32 dataSetType)
 {
-   object->setString(string);
+   for(U32 i = 0; i < NumDataSets; i++)
+   {
+      if(mDataSets[i].type == dataSetType)
+         return mDataSets[i].floatField;
+   }
+   return 0;
 }
 
-DefineEngineMethod( HudInfo, getString, const char*, (),,
-   "@brief Returns the arbitrary string for this object.\n\n")
+bool HudInfo::getDataSetBoolField(U32 dataSetType)
 {
-   return object->getString();
+   for(U32 i = 0; i < NumDataSets; i++)
+   {
+      if(mDataSets[i].type == dataSetType)
+         return mDataSets[i].boolField;
+   }
+   return false;
 }
+
+//------------------------------------------------------------------------------
+
+void HudInfo::setDataSetType(U32 dataSetIndex, U32 type)
+{
+   if(!this->isServerObject() || dataSetIndex > NumDataSets-1)
+      return;
+   mDataSets[dataSetIndex].type = type;
+   this->setMaskBits(DataSetMask << dataSetIndex);
+}
+
+void HudInfo::setDataSetStringField(U32 dataSetIndex, String s)
+{
+   if(!this->isServerObject() || dataSetIndex > NumDataSets-1)
+      return;
+   mDataSets[dataSetIndex].stringField = s;
+   this->setMaskBits(DataSetMask << dataSetIndex);
+}
+
+void HudInfo::setDataSetIntField(U32 dataSetIndex, S32 i)
+{
+   if(!this->isServerObject() || dataSetIndex > NumDataSets-1)
+      return;
+   mDataSets[dataSetIndex].intField = i;
+   this->setMaskBits(DataSetMask << dataSetIndex);
+}
+
+void HudInfo::setDataSetFloatField(U32 dataSetIndex, F32 f)
+{
+   if(!this->isServerObject() || dataSetIndex > NumDataSets-1)
+      return;
+   mDataSets[dataSetIndex].floatField = f;
+   this->setMaskBits(DataSetMask << dataSetIndex);
+}
+
+void HudInfo::setDataSetBoolField(U32 dataSetIndex, bool b)
+{
+   if(!this->isServerObject() || dataSetIndex > NumDataSets-1)
+      return;
+   mDataSets[dataSetIndex].boolField = b;
+   this->setMaskBits(DataSetMask << dataSetIndex);
+}
+
+//------------------------------------------------------------------------------
 
 DefineEngineMethod( HudInfo, setObject, void, (SceneObject* obj),,
    "@brief Sets the object that is linked to this object.\n\n"
@@ -247,4 +337,34 @@ DefineEngineMethod( HudInfo, getPosition, Point3F, (),,
    "@brief Returns the object's position.\n\n")
 {
    return object->getPosition();
+}
+
+DefineEngineMethod( HudInfo, setDataSetType, void, (U32 dataSetIndex, U32 type),,
+   "@brief Sets the name of a data set.\n\n")
+{
+   object->setDataSetType(dataSetIndex, type);
+}
+
+DefineEngineMethod( HudInfo, setDataSetStringField, void, (U32 dataSetIndex, String s),,
+   "@brief Sets the string field of a data set.\n\n")
+{
+   object->setDataSetStringField(dataSetIndex, s);
+}
+
+DefineEngineMethod( HudInfo, setDataSetIntField, void, (U32 dataSetIndex, S32 i),,
+   "@brief Sets the int field of a data set.\n\n")
+{
+   object->setDataSetIntField(dataSetIndex, i);
+}
+
+DefineEngineMethod( HudInfo, setDataSetFloatField, void, (U32 dataSetIndex, F32 f),,
+   "@brief Sets the float field of a data set.\n\n")
+{
+   object->setDataSetFloatField(dataSetIndex, f);
+}
+
+DefineEngineMethod( HudInfo, setDataSetBoolField, void, (U32 dataSetIndex, bool b),,
+   "@brief Sets the bool field of a data set.\n\n")
+{
+   object->setDataSetBoolField(dataSetIndex, b);
 }

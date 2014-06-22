@@ -20,20 +20,28 @@ class HudInfo : public NetObject, public virtual ITickable
 {
 	typedef NetObject Parent;
 
-   S32              mType;
-   StringTableEntry mString;
+   enum Constants {
+      NumDataSets = 8
+   };
+
    SceneObject*     mObject;
 	Point3F          mPosition;
-
    S32              mAge;
+
+   struct DataSet {
+      U32 type;
+      String stringField;
+      S32 intField;
+      F32 floatField;
+      bool boolField;      
+   } mDataSets[NumDataSets];
 
  public:
    enum MaskBits
 	{
-		TypeMask     = BIT(0),
-		StringMask   = BIT(1),
-      ObjectMask   = BIT(2),
-		PositionMask = BIT(3)
+      ObjectMask   = BIT(0),
+		PositionMask = BIT(1),
+      DataSetMask  = BIT(2)
    };
 
 	HudInfo();
@@ -59,15 +67,23 @@ class HudInfo : public NetObject, public virtual ITickable
    void advanceTime(F32 timeDelta) {};
 
    // HudInfo
-   void setType(S32 type);
-   void setString(StringTableEntry string);
-   void setObject(SceneObject* obj);
-   void setPosition(const Point3F& pos);
-   S32 getType() { return mType; }
-   StringTableEntry getString() { return mString; }
    SceneObject* getObject() { return mObject; }
 	Point3F getPosition() { return mObject ? mObject->getPosition() : mPosition; }
    S32 getAge() { return mAge; }
+   // Data set access
+   String getDataSetStringField(U32 dataSetType);
+   S32 getDataSetIntField(U32 dataSetType);
+   F32 getDataSetFloatField(U32 dataSetType);
+   bool getDataSetBoolField(U32 dataSetType);
+   // Data set manipulation (server-side only)
+   void setDataSetType(U32 dataSetIndex, U32 type);
+   void setDataSetStringField(U32 dataSetIndex, String s);
+   void setDataSetIntField(U32 dataSetIndex, S32 i);
+   void setDataSetFloatField(U32 dataSetIndex, F32 f);
+   void setDataSetBoolField(U32 dataSetIndex, bool b);
+   //
+   void setObject(SceneObject* obj);
+   void setPosition(const Point3F& pos);
 
 	DECLARE_CONOBJECT(HudInfo);
 };
