@@ -31,7 +31,7 @@ datablock EtherformData(FrmEtherform)
 	density = 10;
 
 	maxDamage = 0;
-	damageBuffer = 50;
+	damageBuffer = 0;
 	maxEnergy = 100;
 
 	damageBufferRechargeRate = 0.15;
@@ -49,8 +49,8 @@ datablock EtherformData(FrmEtherform)
 	speedDamageScale = 0.0;	// Dynamic field: impact damage multiplier
 
 	// damage info eyecandy...
-   damageBufferParticleEmitter = FrmEtherformDamageBufferEmitter;
-//	repairParticleEmitter = FrmEtherformRepairEmitter;
+// damageBufferParticleEmitter = FrmEtherformDamageBufferEmitter;
+   repairParticleEmitter = FrmEtherformRepairEmitter;
 //	bufferRepairParticleEmitter = FrmEtherformBufferRepairEmitter;
 
 	// laser trail...

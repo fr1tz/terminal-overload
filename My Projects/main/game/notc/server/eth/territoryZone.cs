@@ -90,6 +90,8 @@ function TerritoryZones_disableRepair(%shape)
 
 function TerritoryZones_repairTick()
 {
+   //echo("TerritoryZones_repairTick()");
+
 	cancel($TerritoryZones_repairTickThread);
  
     if(!isObject(Game.team1.repairObjects) || !isObject(Game.team2.repairObjects))
@@ -102,7 +104,12 @@ function TerritoryZones_repairTick()
 		for (%i = 0; %i < %count; %i++)
 		{
 			%obj = Game.team1.repairObjects.getObject(%i);
-			%obj.setRepairRate(%repair);
+         %client = %obj.client;
+         %slot = %client.zActiveLoadout;
+         %progress = %client.zLoadoutProgress[%slot] + %repair;
+         %client.zLoadoutProgress[%slot] = %progress;
+         %client.LoadoutHud_UpdateSlot(%slot, "", "", %progress);
+			//%obj.setRepairRate(%repair);
 		}
 	}
 
@@ -113,12 +120,17 @@ function TerritoryZones_repairTick()
 		for (%i = 0; %i < %count; %i++)
 		{
 			%obj = Game.team2.repairObjects.getObject(%i);
-			%obj.setRepairRate(%repair);
+         %client = %obj.client;
+         %slot = %client.zActiveLoadout;
+         %progress = %client.zLoadoutProgress[%slot] + %repair;
+         %client.zLoadoutProgress[%slot] = %progress;
+         %client.LoadoutHud_UpdateSlot(%slot, "", "", %progress);
+			//%obj.setRepairRate(%repair);
 		}
 	}
 
 	$TerritoryZones_repairTickThread =
-		schedule(100, 0, "TerritoryZones_repairTick");
+		schedule(500, 0, "TerritoryZones_repairTick");
 }
 
 //-----------------------------------------------------------------------------
@@ -200,6 +212,86 @@ function TerritoryZones_call(%func)
 		error("TerritoryZones_call(): missing TerritoryZones group!");
 }
 
+function TerritoryZones_objectUpdateZone(%obj, %enterZone, %leftZone)
+{
+	%ownTeamId = %obj.getTeamId();
+
+	%inZone = false;
+	%inOwnZone = false;
+	%inEnemyZone = false;
+    %zoneTeamId = -1;
+
+	%obj.zCurrentZone = -1;
+
+   %pos = %obj.getPosition();
+   InitContainerRadiusSearch(%pos, 0.0001, $TypeMasks::TacticalZoneObjectType);
+   while( (%srchObj = %enterZone) != 0 || (%srchObj = containerSearchNext()) != 0)
+   {
+      %inSrchZone = false;
+      if(%srchObj == %enterZone)
+      {
+         %inSrchZone = true;
+      }
+      else if(%srchObj != %leftZone)
+      {
+         // object actually in this zone?
+         for(%i = 0; %i < %srchObj.getNumObjects(); %i++)
+         {
+            if(%srchObj.getObject(%i) == %obj)
+            {
+               %inSrchZone = true;
+               break;
+            }
+         }
+      }
+
+      %enterZone = 0;
+
+      if(!%inSrchZone)
+         continue;
+
+      %inZone = true;
+      %obj.zCurrentZone = %srchObj;
+
+      %zoneTeamId = %srchObj.getTeamId();
+
+      if(%zoneTeamId != %ownTeamId && %zoneTeamId != 0)
+      {
+         %inEnemyZone = true;
+      }
+      else if(%zoneTeamId == %ownTeamId)
+      {
+         %inOwnZone = true;
+      }
+   }
+   
+   if(%obj.beingRemoved
+   || %obj.isCAT
+   || !%inOwnZone
+   || %inEnemyZone
+   //|| %obj.getDamageLevel() == 0
+   )
+      TerritoryZones_disableRepair(%obj);
+   else
+      TerritoryZones_enableRepair(%obj);
+
+   if(%inZone)
+   {
+      //echo(" in zone");
+      %obj.getDataBlock().onEnterMissionArea(%obj);
+   }
+   else
+   {
+      //echo(" not in zone");
+      %obj.getDataBlock().onLeaveMissionArea(%obj);
+   }
+
+   // save these...
+   %obj.zInZone = %inZone;
+   %obj.zInOwnZone = %inOwnZone;
+   %obj.zInEnemyZone = %inEnemyZone;
+}
+
 //-----------------------------------------------------------------------------
 // Territory Zone Sounds
 
@@ -254,6 +346,7 @@ function TerritoryZone::onEnter(%this,%zone,%obj)
 
    %this.onTick(%zone);
    
+   TerritoryZones_objectUpdateZone(%obj, %zone);
 	//%obj.getDataBlock().updateZone(%obj, %zone);
 }
 
@@ -270,6 +363,7 @@ function TerritoryZone::onLeave(%this,%zone,%obj)
 		
 	%this.onTick(%zone);
 
+   TerritoryZones_objectUpdateZone(%obj, 0);
 	//%obj.getDataBlock().updateZone(%obj, 0);
 }
 
@@ -416,7 +510,7 @@ function TerritoryZone::setZoneOwner(%this, %zone, %teamId)
 	{
 		%obj = %zone.getObject(%i);
 		if(%obj.getType() & $TypeMasks::ShapeBaseObjectType)
-			%obj.getDataBlock().updateZone(%obj, 0);
+         TerritoryZones_objectUpdateZone(%obj, 0);
 	}
 		
 	echo("Number of zones:" SPC

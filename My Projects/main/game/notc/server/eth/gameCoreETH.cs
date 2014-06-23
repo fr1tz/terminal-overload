@@ -81,6 +81,7 @@ function GameCoreETH::prepareClient(%game, %client)
             "xa/notc/core/client/gui/EtherformGui/v1/exec.cs" TAB
             "xa/notc/core/client/gui/ChatHud/v1/exec.cs" TAB
             "xa/notc/core/client/gui/GuiChanger/v1/exec.cs" TAB
+            "xa/notc/core/client/gui/LoadoutHud/v1/exec.cs" TAB
             "xa/notc/core/client/gui/MiscHud/v1/exec.cs" TAB
             "xa/notc/core/client/misc/Commands/v1/exec.cs" TAB
             "xa/notc/core/client/postfx/ChromaticLens/v1/exec.cs" TAB
@@ -98,6 +99,26 @@ function GameCoreETH::prepareClient(%game, %client)
 function GameCoreETH::onClientEnterGame(%game, %client)
 {
    //echo (%game @"\c4 -> "@ %game.class @" -> GameCoreETH::onClientEnterGame");
+   
+   // Setup loadouts
+   %client.zActiveLoadout = 0;
+   for(%i = 0; %i < 9; %i++)
+   {
+      %client.zLoadoutProgress[%i] = 1.0;
+      %client.zLoadoutProgressDt[%i] = 0.0;
+   }
+   
+   // Setup loadout HUD
+   %client.LoadoutHud_UpdateSlot(0, true,
+      "content/xa/notc/core/icons/p1/smg1.32x32.png", 1.0);
+   %client.LoadoutHud_UpdateSlot(1, true,
+      "content/xa/notc/core/icons/p1/mgl1.32x32.png", 1.0);
+   %client.LoadoutHud_UpdateSlot(2, true,
+      "content/xa/notc/core/icons/p1/sr1.32x32.png", 1.0);
+   %client.LoadoutHud_UpdateSlot(3, false);
+   %client.LoadoutHud_UpdateSlot(4, false);
+   %client.LoadoutHud_UpdateSlot(5, false);
+   %client.LoadoutHud_SelectSlot(0);
 
 	// Join team with less players.
 	if(Game.team1.numPlayers > Game.team2.numPlayers)

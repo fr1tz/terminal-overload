@@ -28,7 +28,7 @@ function ETH::createTeams(%game)
 			numPlayers = 0;
 			numTerritoryZones = 0;
 			numCATs = 0;
-            repairSpeed = 0.5;
+         repairSpeed = 0.025;
 		};
 		MissionCleanup.add(%game.team1);
 
@@ -47,7 +47,7 @@ function ETH::createTeams(%game)
 			numPlayers = 0;
 			numTerritoryZones = 0;
 			numCATs = 0;
-            repairSpeed = 0.5;
+         repairSpeed = 0.025;
 		};
 		MissionCleanup.add(%game.team2);
 
@@ -233,6 +233,15 @@ function ETH::switchToEtherform(%client)
       
    if(%player.getClassName() $= "Etherform")
       return;
+      
+   // Update loadout
+   %damage = %player.getDamageLevel();
+   %maxDamage = %player.getDataBlock().maxDamage;
+   %percent = 1 - %damage/%maxDamage;
+   %slot = %client.zActiveLoadout;
+   %client.zLoadoutProgress[%slot] = %percent;
+   %client.LoadoutHud_UpdateSlot(%slot, "", "", %percent);
+   error(%percent);
 
    %tagged = %player.isTagged();
    %pos = %player.getWorldBoxCenter();

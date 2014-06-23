@@ -10,6 +10,69 @@ function XaNotc1EtherformMoveMap_activate()
    XaNotc1EtherformMoveMap.push();
 }
 
+//------------------------------------------------------------------------------
+
+function XaNotc1EtherformMoveMap_selectLoadout0(%val)
+{
+   if(%val) commandToServer('SelectLoadout', 0);
+}
+
+function XaNotc1EtherformMoveMap_selectLoadout1(%val)
+{
+   if(%val) commandToServer('SelectLoadout', 1);
+}
+
+function XaNotc1EtherformMoveMap_selectLoadout2(%val)
+{
+   if(%val) commandToServer('SelectLoadout', 2);
+}
+
+function XaNotc1EtherformMoveMap_selectLoadout3(%val)
+{
+   if(%val) commandToServer('SelectLoadout', 3);
+}
+
+function XaNotc1EtherformMoveMap_selectLoadout4(%val)
+{
+   if(%val) commandToServer('SelectLoadout', 4);
+}
+
+function XaNotc1EtherformMoveMap_selectLoadout5(%val)
+{
+   if(%val) commandToServer('SelectLoadout', 5);
+}
+
+function XaNotc1EtherformMoveMap_selectLoadout6(%val)
+{
+   if(%val) commandToServer('SelectLoadout', 6);
+}
+
+function XaNotc1EtherformMoveMap_selectLoadout7(%val)
+{
+   if(%val) commandToServer('SelectLoadout', 7);
+}
+
+function XaNotc1EtherformMoveMap_selectLoadout8(%val)
+{
+   if(%val) commandToServer('SelectLoadout', 8);
+}
+
+function XaNotc1EtherformMoveMap_selectLoadout9(%val)
+{
+   if(%val) commandToServer('SelectLoadout', 9);
+}
+
+XaNotc1EtherformMoveMap.bind( keyboard, 1, XaNotc1EtherformMoveMap_selectLoadout0 );
+XaNotc1EtherformMoveMap.bind( keyboard, 2, XaNotc1EtherformMoveMap_selectLoadout1 );
+XaNotc1EtherformMoveMap.bind( keyboard, 3, XaNotc1EtherformMoveMap_selectLoadout2 );
+XaNotc1EtherformMoveMap.bind( keyboard, 4, XaNotc1EtherformMoveMap_selectLoadout3 );
+XaNotc1EtherformMoveMap.bind( keyboard, 5, XaNotc1EtherformMoveMap_selectLoadout4 );
+XaNotc1EtherformMoveMap.bind( keyboard, 6, XaNotc1EtherformMoveMap_selectLoadout5 );
+XaNotc1EtherformMoveMap.bind( keyboard, 7, XaNotc1EtherformMoveMap_selectLoadout6 );
+XaNotc1EtherformMoveMap.bind( keyboard, 8, XaNotc1EtherformMoveMap_selectLoadout7 );
+XaNotc1EtherformMoveMap.bind( keyboard, 9, XaNotc1EtherformMoveMap_selectLoadout8 );
+XaNotc1EtherformMoveMap.bind( keyboard, 0, XaNotc1EtherformMoveMap_selectLoadout9 );
+
 XaNotc1EtherformMoveMap.bind( keyboard, a, moveleft );
 XaNotc1EtherformMoveMap.bind( keyboard, d, moveright );
 XaNotc1EtherformMoveMap.bind( keyboard, left, moveleft );
