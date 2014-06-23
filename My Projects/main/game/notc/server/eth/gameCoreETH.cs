@@ -267,10 +267,12 @@ function GameCoreETH::etherformManifest(%game, %obj)
    
    if(!isObject(%client))
       return;
-   
-   if(%client.player.getDamageLevel() > %client.player.getDataBlock().maxDamage*0.75)
+      
+   %percent = %client.zLoadoutProgress[%client.zActiveLoadout];
+
+   if(%percent < 0.5)
    {
-      error("You need at least 25% health to manifest!");
+      error("Class needs at least 50% health to manifest!");
       return;
    }
 
@@ -350,42 +352,39 @@ function GameCoreETH::etherformManifest(%game, %obj)
    MissionCleanup.add(%player);
    copyPalette(%obj, %player);
 
-   %player.clearWeaponCycle();
-   %player.addToWeaponCycle(WpnSMG1);
-   %player.addToWeaponCycle(WpnMGL1);
-   %player.addToWeaponCycle(WpnSG1);
-   %player.addToWeaponCycle(WpnSR1);
-   %player.addToWeaponCycle(WpnMG1);
-   //%player.addToWeaponCycle(WpnML1);
-
    %player.setInventory(ItemVAMP, 1);
    %player.setInventory(ItemImpShield, 1);
    %player.setInventory(ItemEtherboard, 1);
    %player.setInventory(ItemLauncher, 1);
    %player.setInventory(WpnSMG1, 1);
-   
-   
+
    %player.clearWeaponCycle();
-   %player.addToWeaponCycle(WpnSMG1);
-   %player.addToWeaponCycle(WpnMGL1);
-   %player.addToWeaponCycle(WpnSG1);
-   %player.addToWeaponCycle(WpnSR1);
-   %player.addToWeaponCycle(WpnMG1);
-   //%player.addToWeaponCycle(WpnML1);
-
-   %player.setInventory(ItemImpShield, 1);
-   %player.setInventory(ItemEtherboard, 1);
-   %player.setInventory(ItemLauncher, 1);
-
-   %player.setInventory(WpnSMG1, 1);
-   %player.setInventory(WpnMGL1, 1);
-   %player.setInventory(WpnMGL1Ammo, 9999);
-   %player.setInventory(WpnSG1, 1);
-   %player.setInventory(WpnSG1Ammo, 9999);
-   %player.setInventory(WpnMG1, 1);
-   %player.setInventory(WpnMG1Ammo, 9999);
-
-   %player.mountImage(WpnSMG1Image, 0);
+   switch(%client.zActiveLoadout)
+   {
+      case 0:
+         %player.setInventory(WpnSMG1, 1);
+         %player.setInventory(WpnSG1, 1);
+         %player.setInventory(WpnSG1Ammo, 9999);
+         %player.addToWeaponCycle(WpnSMG1);
+         %player.addToWeaponCycle(WpnSG1);
+         %player.mountImage(WpnSMG1Image, 0);
+      case 1:
+         %player.setInventory(WpnMGL1, 1);
+         %player.setInventory(WpnMGL1Ammo, 9999);
+         %player.setInventory(WpnSG2, 1);
+         %player.setInventory(WpnSG2Ammo, 9999);
+         %player.addToWeaponCycle(WpnMGL1);
+         %player.addToWeaponCycle(WpnSG2);
+         %player.mountImage(WpnMGL1Image, 0);
+      case 2:
+         %player.setInventory(WpnSR1, 1);
+         %player.setInventory(WpnSR1Ammo, 9999);
+         %player.setInventory(WpnMG1, 1);
+         %player.setInventory(WpnMG1Ammo, 9999);
+         %player.addToWeaponCycle(WpnSR1);
+         %player.addToWeaponCycle(WpnMG1);
+         %player.mountImage(WpnSR1Image, 0);
+   }
 
    %mat = %obj.getTransform();
    %dmg = %obj.getDamageLevel();
@@ -395,8 +394,8 @@ function GameCoreETH::etherformManifest(%game, %obj)
 
    %player.setTransform(%mat);
    %player.setTransform(%pos);
-   %player.setDamageLevel(%dmg);
-   %player.setShieldLevel(%buf);
+   %player.setDamageLevel(%player.getDataBlock().maxDamage * (1-%percent));
+   //%player.setShieldLevel(%buf);
 
 	//if(%tagged || $Server::Game.tagMode == $Server::Game.alwaystag)
 	//	%player.setTagged();
