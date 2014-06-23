@@ -34,6 +34,8 @@ function CatGui::onSleep(%this)
 {
    if ( isObject( MainChatHud ) )
       Canvas.popDialog( MainChatHud );
+      
+   cancel(%this.zTickThread);
    
    // pop the keymaps
    //XaNotc1CatMoveMap.pop();
