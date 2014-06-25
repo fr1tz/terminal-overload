@@ -1,31 +1,6 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
-datablock LightDescription(WpnSG2ProjectileLightDesc : BulletProjectileLightDesc)
-{
-   color = "0 1 0.952941 1";
-   range = "10";
-   brightness = "1";
-};
-
-datablock DecalData(WpnSG2ProjectileDecal)
-{
-   Material = "DECAL_RocketEXP";
-   size = "2";
-   lifeSpan = "5000";
-   randomize = "1";
-   texRows = "2";
-   texCols = "2";
-   screenStartRadius = "20";
-   screenEndRadius = "5";
-   clippingAngle = "180";
-   textureCoordCount = "3";
-   textureCoords[0] = "0 0 0.5 0.5";
-   textureCoords[1] = "0.5 0 0.5 0.5";
-   textureCoords[2] = "0 0.5 0.5 0.5";
-   textureCoords[3] = "0.5 0.5 0.5 0.5";
-};
-
 datablock ShotgunProjectileData(WpnSG2PseudoProjectile)
 {
    //projectileShapeName = "content/xa/oldshapes/siberion/projectile/p1/shape.dae";
@@ -58,6 +33,8 @@ function WpnSG2PseudoProjectile::onAdd(%this, %obj)
 
    %muzzleVector = %player.getMuzzleVector(0);
 	%muzzlePoint = %player.getMuzzlePoint(0);
+ 
+   createExplosion(WpnMGL1FireExplosion, %muzzlePoint, %muzzleVector);
  
    // Velocity inherited from player
    %iVel = VectorScale(%player.getVelocity(), %data.velInheritFactor);
@@ -100,6 +77,8 @@ datablock ProjectileData(WpnSG2Projectile)
 {
    projectileShapeName = "content/xa/notc/core/shapes/mgl1/projectile/p1/shape.dae";
 
+   sound = WpnSG2ProjectileSound;
+
    //lightDesc = BulletProjectileLightDesc;
 
 	// script damage properties...
@@ -114,11 +93,9 @@ datablock ProjectileData(WpnSG2Projectile)
    explodesNearEnemiesRadius = 10;
    missEnemyEffect = WpnMG1ProjectileMissEnemyEffect;
  
-   energyDrain = 36;
-
    explosion           = "WpnSG2ProjectileExplosion";
    decal               = "WpnSG2ProjectileDecal";
-   laserTrail[0]       = 0; //"WpnSG2ProjectileLaserTrail";
+   laserTrail[0]       = "WpnSG2ProjectileLaserTrail0";
    //particleEmitter     = "WpnSG2ProjectileParticleEmitter";
 
    muzzleVelocity      = 200;

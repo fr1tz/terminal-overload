@@ -35,9 +35,16 @@ datablock SFXProfile(WpnSG2SwitchinSound)
    preload = true;
 };
 
+datablock SFXProfile(WpnSG2ProjectileSound)
+{
+   filename = "content/xa/rotc/p.5.4/sounds/rotc/slide3";
+   description = AudioCloseLoop3D;
+   preload = true;
+};
+
 datablock SFXProfile(WpnSG2ProjectileExplosionSound)
 {
-   filename = "content/xa/rotc/p.5.4/sounds/rotc/explosion13";
+   filename = "content/xa/rotc/p.5.4/sounds/rotc/explosion5";
    description = AudioClose3D;
    preload = true;
 };
