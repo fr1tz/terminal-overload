@@ -1802,6 +1802,7 @@ Player::Player()
    mActionAnimation.animateOnServer = false;
    mActionAnimation.atEnd = false;
    mState = MoveState;
+   mRunSurface = false;
    mJetting = false;
    mFalling = false;
    mSwimming = false;
@@ -3089,10 +3090,11 @@ void Player::updateMove(const Move* move)
 
    // Determine ground contact normal. Only look for contacts if
    // we can move and aren't mounted.
+   mRunSurface = false;
    VectorF contactNormal(0,0,0);
-   bool jumpSurface = false, runSurface = false;
+   bool jumpSurface = false;
    if ( !isMounted() )
-      findContact( &runSurface, &jumpSurface, &contactNormal );
+      findContact( &mRunSurface, &jumpSurface, &contactNormal );
    if ( jumpSurface )
       mJumpSurfaceNormal = contactNormal;
 
@@ -3114,7 +3116,7 @@ void Player::updateMove(const Move* move)
    // Deflect the force of gravity by the normal so we slide.
    // We could also try aligning it to the runSurface instead,
    // but this seems to work well.
-   if ( !runSurface && !contactNormal.isZero() )  
+   if ( !mRunSurface && !contactNormal.isZero() )  
       acc = ( acc - 2 * contactNormal * mDot( acc, contactNormal ) );   
 
    // Remove acc into contact surface (should only be gravity)
@@ -3122,7 +3124,7 @@ void Player::updateMove(const Move* move)
    // the player to "rest" on the ground.
    // However, no need to do that if we're using a physics library.
    // It will take care of itself.
-   if(runSurface && !mPhysicsRep)
+   if(mRunSurface && !mPhysicsRep)
    {
       F32 vd = -mDot(acc,contactNormal);
       if (vd > 0.0f) {
@@ -3134,7 +3136,7 @@ void Player::updateMove(const Move* move)
    }
 
    // Acceleration on run surface
-   if(runSurface && !mSwimming && !this->isSliding())
+   if(mRunSurface && !mSwimming && !this->isSliding())
    {
       mContactTimer = 0;
 
@@ -3550,7 +3552,7 @@ void Player::updateMove(const Move* move)
 
    // If we are not touching anything and have sufficient -z vel,
    // we are falling.
-   if (runSurface)
+   if (mRunSurface)
       mFalling = false;
    else
    {
@@ -3590,9 +3592,9 @@ void Player::updateMove(const Move* move)
 
    if ( mSwimming )
       desiredPose = SwimPose; 
-   else if ( runSurface && move->trigger[sCrouchTrigger] && canCrouch() )     
+   else if ( mRunSurface && move->trigger[sCrouchTrigger] && canCrouch() )     
       desiredPose = CrouchPose;
-   else if ( runSurface && move->trigger[sProneTrigger] && canProne() )
+   else if ( mRunSurface && move->trigger[sProneTrigger] && canProne() )
       desiredPose = PronePose;
    else if ( move->trigger[sSprintTrigger] && canSprint() )
       desiredPose = SprintPose;
@@ -3672,7 +3674,7 @@ bool Player::isSliding()
 
 bool Player::isSkidding()
 {
-   return (mContactTimer == 0 && mVelocity.len() > mDataBlock->skidSpeed && !this->isSliding());
+   return (mRunSurface && mVelocity.len() > mDataBlock->skidSpeed && !this->isSliding());
 }
 
 //----------------------------------------------------------------------------
@@ -5126,7 +5128,7 @@ void Player::updateAnimation(F32 dt)
 	// Wings animation
    if(mShapeInstance && mWingsThread)
    {
-      bool open = (mContactTimer > 0 || this->isSliding());
+      bool open = (!mRunSurface || this->isSliding());
       mShapeInstance->advanceTime(open ? dt : -dt, mWingsThread);
    }
 
@@ -5291,6 +5293,17 @@ Point3F Player::_move( const F32 travelTime, Collision *outCol )
          VectorF  resVel;
          getTransform().mulV(deathVel, & resVel);
          end += resVel;
+      }
+      else
+      {
+         // simulate stepping...
+         bool justJumped = mJumpSurfaceLastContact == JumpSkipContactsMax;
+         if(!this->isSliding() && mRunSurface && !justJumped && end.z != start.z)
+         {
+            RayInfo rInfo;
+            if(getContainer()->castRay(end, Point3F(end.x, end.y, end.z - maxStep), sCollisionMoveMask, &rInfo))
+               end = rInfo.point;
+         }
       }
       Point3F distance = end - start;
 
@@ -6778,6 +6791,7 @@ U32 Player::packUpdate(NetConnection *con, U32 mask, BitStream *stream)
 
    if (stream->writeFlag(mask & MoveMask))
    {
+      stream->writeFlag(mRunSurface);
       stream->writeFlag(mFalling);
 
       stream->writeInt(mState,NumStateBits);
@@ -6872,6 +6886,7 @@ void Player::unpackUpdate(NetConnection *con, BitStream *stream)
    // MoveMask
    if (stream->readFlag()) {
       mPredictionCount = sMaxPredictionTicks;
+      mRunSurface = stream->readFlag();
       mFalling = stream->readFlag();
 
       ActionState actionState = (ActionState)stream->readInt(NumStateBits);

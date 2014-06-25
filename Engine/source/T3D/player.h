@@ -501,6 +501,7 @@ protected:
       NumStateBits = 3
    };
    ActionState mState;              ///< What is the player doing? @see ActionState
+   bool mRunSurface;                ///< Is the player currently in contact with a surface he can run on?
    bool mFalling;                   ///< Falling in mid-air?
    F32 mSlideContact;               ///< FIXME insert desc
    S32 mJumpDelay;                  ///< Delay till next jump   
