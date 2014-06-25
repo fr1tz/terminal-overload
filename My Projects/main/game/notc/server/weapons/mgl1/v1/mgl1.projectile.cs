@@ -99,6 +99,8 @@ function WpnMGL1PseudoProjectile::onAdd(%this, %obj)
 datablock ProjectileData(WpnMGL1Projectile)
 {
    projectileShapeName = "content/xa/notc/core/shapes/mgl1/projectile/p1/shape.dae";
+   
+   sound = WpnMGL1ProjectileSound;
 
    //lightDesc = BulletProjectileLightDesc;
 
