@@ -40,7 +40,7 @@ function GameCoreETH::initGameVars(%game)
    $Game::defaultCameraSpawnGroups = "CameraSpawnPoints PlayerSpawnPoints PlayerDropPoints";
 
    // Set the gameplay parameters
-   %game.duration = 10 * 60;
+   %game.duration = 0;
    %game.endgameScore = 0;
    %game.endgamePause = 10;
    %game.allowCycling = true;   // Is mission cycling allowed?
@@ -115,7 +115,8 @@ function GameCoreETH::onClientEnterGame(%game, %client)
       "content/xa/notc/core/icons/p1/mgl1.32x32.png", 1.0);
    %client.LoadoutHud_UpdateSlot(2, true,
       "content/xa/notc/core/icons/p1/sr1.32x32.png", 1.0);
-   %client.LoadoutHud_UpdateSlot(3, false);
+   %client.LoadoutHud_UpdateSlot(3, true,
+      "content/xa/notc/core/icons/p1/mg1.32x32.png", 1.0);
    %client.LoadoutHud_UpdateSlot(4, false);
    %client.LoadoutHud_UpdateSlot(5, false);
    %client.LoadoutHud_SelectSlot(0);
@@ -342,9 +343,16 @@ function GameCoreETH::etherformManifest(%game, %obj)
       error("This zone is currently blocked!");
       return;
    }
+   
+   %data = FrmStandardcat;
+   switch(%client.zActiveLoadout)
+   {
+      case 2:
+         %data = FrmSnipercat;
+   }
 
    %player = new Player() {
-      dataBlock = FrmStandardcat;
+      dataBlock = %data;
       client = %client;
       teamId = %client.team.teamId;
       isCAT = true;
@@ -354,7 +362,6 @@ function GameCoreETH::etherformManifest(%game, %obj)
 
    %player.setInventory(ItemVAMP, 1);
    %player.setInventory(ItemImpShield, 1);
-   %player.setInventory(ItemEtherboard, 1);
    %player.setInventory(ItemLauncher, 1);
    %player.setInventory(ItemBounce, 1);
 
@@ -362,6 +369,7 @@ function GameCoreETH::etherformManifest(%game, %obj)
    switch(%client.zActiveLoadout)
    {
       case 0:
+         %player.setInventory(ItemEtherboard, 1);
          %player.setInventory(WpnSMG1, 1);
          %player.setInventory(WpnSG1, 1);
          %player.setInventory(WpnSG1Ammo, 9999);
@@ -369,6 +377,7 @@ function GameCoreETH::etherformManifest(%game, %obj)
          %player.addToWeaponCycle(WpnSG1);
          %player.mountImage(WpnSMG1Image, 0);
       case 1:
+         %player.setInventory(ItemEtherboard, 1);
          %player.setInventory(WpnMGL1, 1);
          %player.setInventory(WpnMGL1Ammo, 9999);
          %player.setInventory(WpnSG2, 1);
@@ -379,11 +388,16 @@ function GameCoreETH::etherformManifest(%game, %obj)
       case 2:
          %player.setInventory(WpnSR1, 1);
          %player.setInventory(WpnSR1Ammo, 9999);
+         %player.addToWeaponCycle(WpnSR1);
+         %player.addToWeaponCycle(WpnMG1);
+         %player.mountImage(WpnSR1Image, 0);
+      case 3:
+         %player.setInventory(ItemEtherboard, 1);
          %player.setInventory(WpnMG1, 1);
          %player.setInventory(WpnMG1Ammo, 9999);
          %player.addToWeaponCycle(WpnSR1);
          %player.addToWeaponCycle(WpnMG1);
-         %player.mountImage(WpnSR1Image, 0);
+         %player.mountImage(WpnMG1Image, 0);
    }
 
    %mat = %obj.getTransform();

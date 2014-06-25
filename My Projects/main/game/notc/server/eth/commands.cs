@@ -7,7 +7,7 @@ function serverCmdSelectLoadout(%client, %nr)
    if(%player.getClassName() !$= "Etherform")
       return;
       
-   if(%nr < 0 || %nr > 2)
+   if(%nr < 0 || %nr > 3)
       return;
       
    %client.LoadoutHud_SelectSlot(%nr);
