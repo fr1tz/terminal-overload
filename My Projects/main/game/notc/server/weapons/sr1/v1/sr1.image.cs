@@ -174,38 +174,38 @@ datablock ShapeBaseImageData(WpnSR1Image)
 
 function WpnSR1Image::onMount(%this, %obj, %slot)
 {
-    Parent::onMount(%this, %obj, %slot);
+   Parent::onMount(%this, %obj, %slot);
 }
 
 function WpnSR1Image::onUnmount(%this, %obj, %slot)
 {
-    Parent::onUnmount(%this, %obj, %slot);
-    //%obj.setSniping(false);
+   Parent::onUnmount(%this, %obj, %slot);
+   %obj.allowSprinting(true);
 }
 
 function WpnSR1Image::onReady(%this, %obj, %slot)
 {
 	//error("onReady");
-    //%obj.setSniping(false);
+    %obj.allowSprinting(true);
 }
 
 function WpnSR1Image::onCharge(%this, %obj, %slot)
 {
 	//error("onCharge");
-    //%obj.sniperTarget = "";
-    //%obj.setSniping(true);
+   //%obj.sniperTarget = "";
+   %obj.allowSprinting(false);
 }
 
 function WpnSR1Image::onFire(%this, %obj, %slot)
 {
 	//error("onFire");
-    //%obj.setSniping(false);
+   %obj.allowSprinting(true);
 }
 
 function WpnSR1Image::onNoAmmo(%this, %obj, %slot)
 {
 	//error("onNoAmmo");
-    //%obj.setSniping(false);
+   %obj.allowSprinting(true);
 }
 
 
