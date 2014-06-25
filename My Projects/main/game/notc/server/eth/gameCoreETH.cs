@@ -356,7 +356,7 @@ function GameCoreETH::etherformManifest(%game, %obj)
    %player.setInventory(ItemImpShield, 1);
    %player.setInventory(ItemEtherboard, 1);
    %player.setInventory(ItemLauncher, 1);
-   %player.setInventory(WpnSMG1, 1);
+   %player.setInventory(ItemBounce, 1);
 
    %player.clearWeaponCycle();
    switch(%client.zActiveLoadout)
