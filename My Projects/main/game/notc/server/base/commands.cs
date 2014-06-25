@@ -58,6 +58,19 @@ function serverCmdLaunchRazorDisc(%client)
 }
 
 //-----------------------------------------------------------------------------
+// B.O.U.N.C.E.
+//-----------------------------------------------------------------------------
+
+function serverCmdFireBounce(%client)
+{
+   //echo("serverCmdFireBounce(): client" SPC %client);
+   %player = %client.player;
+   if(isObject(%player))
+      if(%player.getDataBlock().isMethod("fireBounce"))
+         %player.getDataBlock().fireBounce(%player);
+}
+
+//-----------------------------------------------------------------------------
 // Misc server commands avialable to clients
 //-----------------------------------------------------------------------------
 

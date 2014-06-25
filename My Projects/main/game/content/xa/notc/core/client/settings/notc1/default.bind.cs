@@ -324,6 +324,18 @@ XaNotc1CatMoveMap.bind(keyboard, "r", launchRepelDisc);
 XaNotc1CatMoveMap.bind(keyboard, "f", launchRazorDisc);
 
 //------------------------------------------------------------------------------
+// B.O.U.N.C.E.
+//------------------------------------------------------------------------------
+
+function fireBounce(%val)
+{
+   if(%val)
+      commandToServer('fireBounce');
+}
+
+XaNotc1CatMoveMap.bind(keyboard, "x", fireBounce);
+
+//------------------------------------------------------------------------------
 // Mouse Trigger
 //------------------------------------------------------------------------------
 

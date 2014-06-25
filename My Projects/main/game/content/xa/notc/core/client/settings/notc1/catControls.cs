@@ -83,6 +83,9 @@ $XaNotc1CatMoveMap_RemapCount++;
 $XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Launch Razor Disc";
 $XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "launchRazorDisc";
 $XaNotc1CatMoveMap_RemapCount++;
+$XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Fire B.O.U.N.C.E.";
+$XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "fireBounce";
+$XaNotc1CatMoveMap_RemapCount++;
 
 function XaNotcSettings1_CatControlsGui::onWake(%this)
 {

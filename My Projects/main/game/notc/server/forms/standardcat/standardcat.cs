@@ -247,6 +247,7 @@ datablock PlayerData(FrmStandardcat)
    maxInv[ItemBallast] = 1;
    maxInv[ItemEtherboard] = 1;
    maxInv[ItemLauncher] = 1;
+   maxInv[ItemBounce] = 1;
 
    maxInv[WpnSMG1] = 1;
    maxInv[WpnMGL1] = 1;
@@ -800,6 +801,14 @@ function FrmStandardcat::launchDisc(%this, %obj, %disc)
       WpnRepelDisc.launch(%obj, %muzzlePoint, %muzzleVec, %obj.discTargets);
    else if(%disc $= "razor")
       WpnRazorDisc.launch(%obj, %muzzlePoint, %muzzleVec, %obj.discTargets);
+}
+
+// Called from script
+function FrmStandardcat::fireBounce(%this, %obj)
+{
+   //echo("FrmStandardcat::fireBounce()");
+   if(isObject(%obj.zBounce))
+      %obj.zBounce.getDataBlock().fire(%obj.zBounce);
 }
 
 // Called from script
