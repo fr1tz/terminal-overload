@@ -361,6 +361,7 @@ function GameCoreETH::etherformManifest(%game, %obj)
    copyPalette(%obj, %player);
 
    %player.setInventory(ItemVAMP, 1);
+   %player.setInventory(ItemEtherboard, 1);
    %player.setInventory(ItemImpShield, 1);
    %player.setInventory(ItemLauncher, 1);
    %player.setInventory(ItemBounce, 1);
@@ -369,7 +370,6 @@ function GameCoreETH::etherformManifest(%game, %obj)
    switch(%client.zActiveLoadout)
    {
       case 0:
-         %player.setInventory(ItemEtherboard, 1);
          %player.setInventory(WpnSMG1, 1);
          %player.setInventory(WpnSG1, 1);
          %player.setInventory(WpnSG1Ammo, 9999);
@@ -377,7 +377,6 @@ function GameCoreETH::etherformManifest(%game, %obj)
          %player.addToWeaponCycle(WpnSG1);
          %player.mountImage(WpnSMG1Image, 0);
       case 1:
-         %player.setInventory(ItemEtherboard, 1);
          %player.setInventory(WpnMGL1, 1);
          %player.setInventory(WpnMGL1Ammo, 9999);
          %player.setInventory(WpnSG2, 1);
@@ -392,7 +391,6 @@ function GameCoreETH::etherformManifest(%game, %obj)
          %player.addToWeaponCycle(WpnMG1);
          %player.mountImage(WpnSR1Image, 0);
       case 3:
-         %player.setInventory(ItemEtherboard, 1);
          %player.setInventory(WpnMG1, 1);
          %player.setInventory(WpnMG1Ammo, 9999);
          %player.addToWeaponCycle(WpnSR1);
