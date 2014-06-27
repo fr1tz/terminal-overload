@@ -56,7 +56,29 @@ datablock MultiNodeLaserBeamData(WpnMGL1ProjectileLaserTrail0)
 	material = "xa_notc_core_shapes_mgl1_projectile_p1_lasertrail0mat";
 	renderMode = $MultiNodeLaserBeamRenderMode::FaceViewer;
    width = 0.1;
-	fadeTime = 75;
+	fadeTime = 100;
+	windCoefficient = 0.0;
+
+	// node x movement...
+	nodeMoveMode[0]     = $NodeMoveMode::None;
+	nodeMoveSpeed[0]    = -0.002;
+	nodeMoveSpeedAdd[0] =  0.004;
+	// node y movement...
+	nodeMoveMode[1]     = $NodeMoveMode::None;
+	nodeMoveSpeed[1]    = -0.002;
+	nodeMoveSpeedAdd[1] =  0.004;
+	// node z movement...
+	nodeMoveMode[2]     = $NodeMoveMode::None;
+	nodeMoveSpeed[2]    = 0.5;
+	nodeMoveSpeedAdd[2] = 0.5;
+};
+
+datablock MultiNodeLaserBeamData(WpnMGL1ProjectileLaserTrail1)
+{
+	material = "xa_notc_core_shapes_mgl1_projectile_p1_lasertrail1mat";
+	renderMode = $MultiNodeLaserBeamRenderMode::FaceViewer;
+   width = 0.1;
+	fadeTime = 100;
 	windCoefficient = 0.0;
 
 	// node x movement...
@@ -74,9 +96,9 @@ datablock MultiNodeLaserBeamData(WpnMGL1ProjectileLaserTrail0)
 };
 
 
-datablock MultiNodeLaserBeamData(WpnMGL1ProjectileLaserTrail1)
+datablock MultiNodeLaserBeamData(WpnMGL1ProjectileLaserTrail2)
 {
-	material = "xa_notc_core_shapes_mgl1_projectile_p1_lasertrail1mat";
+	material = "xa_notc_core_shapes_mgl1_projectile_p1_lasertrail2mat";
 	renderMode = $MultiNodeLaserBeamRenderMode::FaceViewer;
    width = 0.1;
 	fadeTime = 1000;

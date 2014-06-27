@@ -122,6 +122,7 @@ datablock ProjectileData(WpnMGL1Projectile)
    decal               = "WpnMGL1ProjectileDecal";
    laserTrail[0]       = "WpnMGL1ProjectileLaserTrail0";
    laserTrail[1]       = "WpnMGL1ProjectileLaserTrail1";
+   laserTrail[2]       = "WpnMGL1ProjectileLaserTrail2";
    //particleEmitter     = "WpnMGL1ProjectileParticleEmitter";
 
    muzzleVelocity      = 300;

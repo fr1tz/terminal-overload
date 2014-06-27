@@ -39,7 +39,7 @@ singleton Material(xa_notc_core_shapes_mgl1_projectile_p1_mat3)
 
 singleton Material(xa_notc_core_shapes_mgl1_projectile_p1_lasertrail0mat)
 {
-   diffuseColor[0] = "0.423529 0.423529 0.423529 1";
+   diffuseColor[0] = "0.992157 0.992157 0.992157 1";
    doubleSided = "1";
    translucentBlendOp = "AddAlpha";
    castShadows = "0";
@@ -56,6 +56,24 @@ singleton Material(xa_notc_core_shapes_mgl1_projectile_p1_lasertrail0mat)
 };
 
 singleton Material(xa_notc_core_shapes_mgl1_projectile_p1_lasertrail1mat)
+{
+   diffuseColor[0] = "0.992157 0.992157 0.992157 1";
+   doubleSided = "1";
+   translucentBlendOp = "AddAlpha";
+   castShadows = "0";
+   translucent = "1";
+   showFootprints = "0";
+   glow[0] = "1";
+   glowOnly[0] = "0";
+   emissive[0] = "1";
+   vertColor[0] = "1";
+   materialTag0 = "Miscellaneous";
+   mapTo = "trail.png";
+   diffuseColorPaletteSlot[0] = "0";
+   wireframe[0] = "0";
+};
+
+singleton Material(xa_notc_core_shapes_mgl1_projectile_p1_lasertrail2mat)
 {
    diffuseColor[0] = "0.627451 0.627451 0.627451 1";
    doubleSided = "1";
