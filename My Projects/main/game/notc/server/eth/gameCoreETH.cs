@@ -257,13 +257,13 @@ function GameCoreETH::etherformManifest(%game, %obj)
 
    if(%percent < 0.5)
    {
-      error("Class needs at least 50% health to manifest!");
+      %client.BeepMsg("Class needs at least 50% health to manifest!");
       return;
    }
 
    if(%client.player.getEnergyLevel() < 50)
    {
-      error("You need at least 50% energy to manifest!");
+      %client.BeepMsg("You need at least 50% energy to manifest!");
       return;
    }
 
@@ -309,22 +309,22 @@ function GameCoreETH::etherformManifest(%game, %obj)
 
    if(%inEnemyZone)
    {
-      error("You can not manifest in an enemy zone!");
+      %client.BeepMsg("You can not manifest in an enemy zone!");
       return;
    }
    else if(%inOwnZone && !%inOwnTerritory)
    {
-      error("This is not a territory zone!");
+      %client.BeepMsg("This is not a territory zone!");
       return;
    }
    else if(!%inOwnZone)
    {
-      error("You can only manifest in your team's territory zones!");
+      %client.BeepMsg("You can only manifest in your team's territory zones!");
       return;
    }
    else if(%zoneBlocked)
    {
-      error("This zone is currently blocked!");
+      %client.BeepMsg("This zone is currently blocked!");
       return;
    }
    

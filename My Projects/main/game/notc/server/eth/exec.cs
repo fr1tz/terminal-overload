@@ -5,6 +5,7 @@ function executeEthernetServerScripts()
 {
    exec("notc/server/base/exec.cs");
 
+   exec("notc/server/client/gui/BeepMsgHud/v1/exec.cs");
    exec("notc/server/client/gui/MinimapHud/v1/exec.cs");
    exec("notc/server/client/gui/LoadoutHud/v1/exec.cs");
    
