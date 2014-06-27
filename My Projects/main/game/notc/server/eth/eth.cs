@@ -11,7 +11,7 @@ function ETH::createTeams(%game)
 		{
 			teamId = 0;
 			name = "Observers";
-         color = theLevelInfo.teamColors0;
+         color = "1 1 1";
 			numPlayers = 0;
 		};
 		MissionCleanup.add(%game.team0);
@@ -23,7 +23,7 @@ function ETH::createTeams(%game)
 		{
 			teamId = 1;
 			name = "Reds";
-         color = theLevelInfo.teamColors1;
+         color = "1 0 0";
 			score = 0;
 			numPlayers = 0;
 			numTerritoryZones = 0;
@@ -41,7 +41,7 @@ function ETH::createTeams(%game)
 		%game.team2 = new ScriptObject()
 		{
 			teamId = 2;
-			name = "Blues";
+			name = "0 0 1";
          color = theLevelInfo.teamColors2;
 			score = 0;
 			numPlayers = 0;
@@ -172,6 +172,12 @@ function ETH::onDeath(%client)
 function ETH::startNewRound()
 {
    Game.roundRestarting = true;
+   
+   // Update team colors here so mappers don't have to restart the
+   // server when experimenting with team colors.
+   Game.team0.color = theLevelInfo.teamColors0;
+   Game.team1.color = theLevelInfo.teamColors1;
+   Game.team2.color = theLevelInfo.teamColors2;
 
    // Cleanup
    for( %idx = MissionCleanup.getCount()-1; %idx >= 0; %idx-- )

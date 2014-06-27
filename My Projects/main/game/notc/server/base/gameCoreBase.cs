@@ -433,7 +433,8 @@ function GameCoreBase::spawnPlayer(%game, %client, %spawnPoint, %noControl)
    {
       // The client should not already have a player. Assigning
       // a new one could result in an uncontrolled player object.
-      error("Attempting to create a player for a client that already has one!");
+      warn("Creating a player for a client that already has one! Deleting old player.");
+      %client.player.delete();
    }
 
    // Attempt to treat %spawnPoint as an object
@@ -714,3 +715,7 @@ function GameCoreBase::pickObserverSpawnPoint(%game)
    return "0 0 300 1 0 0 0";
 }
 
+function GameCoreBase::F(%game, %client, %nr)
+{
+   //echo (%game @"\c4 -> "@ %game.class @" -> GameCoreBase::F");
+}

@@ -381,3 +381,15 @@ function GameCoreETH::suicide(%game, %client)
    ETH::switchToEtherform(%client);
 }
 
+function GameCoreETH::F(%game, %client, %nr)
+{
+   //echo (%game @"\c4 -> "@ %game.class @" -> GameCoreETH::F");
+   if(%nr >= 1 && %nr <= 2)
+   {
+      ETH::joinTeam(%client, %nr);
+      Game.preparePlayer(%client);
+   }
+}
+
+  
+

@@ -1,16 +1,10 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
-function serverCmdAction(%client, %nr)
+function serverCmd_F(%client, %nr)
 {
-   echo("serverCmdAction(): client" SPC %client SPC "action" SPC %nr);
-   Game.clientAction(%client, %nr);
-}
-
-function serverCmdJoinTeam(%client, %nr)
-{
-   echo("serverCmdJoinTeam(): client" SPC %client SPC "action" SPC %nr);
-   Game.joinTeam(%client, %nr);
+   //echo("serverCmd_F(): client" SPC %client SPC "nr" SPC %nr);
+   Game.F(%client, %nr);
 }
 
 // ----------------------------------------------------------------------------
