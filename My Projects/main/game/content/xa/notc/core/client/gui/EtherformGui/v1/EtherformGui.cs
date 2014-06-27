@@ -13,6 +13,7 @@ function EtherformGui::onWake(%this)
    if ( isObject( MainChatHud ) )
    {
       Canvas.pushDialog( XaNotcLoadoutHud );
+      Canvas.pushDialog( XaNotcMinimapHud );
       Canvas.pushDialog( MiscHud );
       Canvas.pushDialog( MainChatHud );
       chatHud.attach(HudMessageVector);
