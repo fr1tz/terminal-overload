@@ -81,6 +81,7 @@ function GameCoreETH::prepareClient(%game, %client)
             "xa/notc/core/client/gui/EtherformGui/v1/exec.cs" TAB
             "xa/notc/core/client/gui/ChatHud/v1/exec.cs" TAB
             "xa/notc/core/client/gui/GuiChanger/v1/exec.cs" TAB
+            "xa/notc/core/client/gui/MinimapHud/v1/exec.cs" TAB
             "xa/notc/core/client/gui/LoadoutHud/v1/exec.cs" TAB
             "xa/notc/core/client/gui/MiscHud/v1/exec.cs" TAB
             "xa/notc/core/client/misc/Commands/v1/exec.cs" TAB
@@ -107,6 +108,19 @@ function GameCoreETH::onClientEnterGame(%game, %client)
       %client.zLoadoutProgress[%i] = 1.0;
       %client.zLoadoutProgressDt[%i] = 0.0;
    }
+   
+   // Setup minimap HUD
+   %client.MinimapHud_SetHudInfoDatasetType_Color(2);
+   %client.MinimapHud_SetHudInfoDatasetType_Icon(3);
+   %client.MinimapHud_ClearColors();
+   %client.MinimapHud_AddColor(1, Game.team1.color);
+   %client.MinimapHud_AddColor(2, Game.team2.color);
+   %client.MinimapHud_ClearIcons();
+   %client.MinimapHud_AddIcon(1, "content/xa/notc/core/icons/p1/class0.8x8.png", 8);
+   %client.MinimapHud_AddIcon(2, "content/xa/notc/core/icons/p1/class1.8x8.png", 8);
+   %client.MinimapHud_AddIcon(3, "content/xa/notc/core/icons/p1/class2.8x8.png", 8);
+   %client.MinimapHud_AddIcon(4, "content/xa/notc/core/icons/p1/class3.8x8.png", 8);
+   %client.MinimapHud_AddIcon(128, "content/xa/notc/core/icons/p1/etherform.8x8.png", 8);
    
    // Setup loadout HUD
    %client.LoadoutHud_UpdateSlot(0, true,
@@ -201,7 +215,7 @@ function GameCoreETH::loadOut(%game, %player)
 
    %player.paletteColors[0] = %teamColorI;
    %player.paletteColors[1] = %teamColorI;
-   
+
    if(isObject(%player.light))
    {
       %colorI = %player.paletteColors[0];
@@ -212,28 +226,14 @@ function GameCoreETH::loadOut(%game, %player)
       %player.light.color = %colorF;
    }
 
-   return;
+   // Setup ShapeBase HudInfo object team ID
+   %player.zShapeBaseHudInfo.setDatasetType(0, $HudInfoDatasetType::TeamID);
+   %player.zShapeBaseHudInfo.setDatasetIntField(0, %player.getTeamId());
 
-   %player.clearWeaponCycle();
-   %player.addToWeaponCycle(WpnSMG1);
-   %player.addToWeaponCycle(WpnMGL1);
-   %player.addToWeaponCycle(WpnSG1);
-   %player.addToWeaponCycle(WpnSR1);
-   %player.addToWeaponCycle(WpnMG1);
-   //%player.addToWeaponCycle(WpnML1);
-
-   %player.setInventory(ItemImpShield, 1);
-   %player.setInventory(ItemEtherboard, 1);
-   %player.setInventory(ItemLauncher, 1);
-   
-   %player.setInventory(WpnSMG1, 1);
-   %player.setInventory(WpnMGL1, 1);
-   %player.setInventory(WpnMGL1Ammo, 9999);
-
-   if (%player.getDatablock().mainWeapon.image !$= "")
-      %player.mountImage(%player.getDatablock().mainWeapon.image, 0);
-   else
-      %player.mountImage(WpnBadgerImage, 0);
+   if(%player.getClassName() $= "Player" || %player.getClassName() $= "AiPlayer")
+      ETH::loadoutPlayer(%player);
+   else if(%player.getClassName() $= "Etherform")
+      ETH::loadoutEtherform(%player);
 }
 
 function GameCoreETH::onUnitDestroyed(%game, %obj)
@@ -360,43 +360,7 @@ function GameCoreETH::etherformManifest(%game, %obj)
    MissionCleanup.add(%player);
    copyPalette(%obj, %player);
 
-   %player.setInventory(ItemVAMP, 1);
-   %player.setInventory(ItemEtherboard, 1);
-   %player.setInventory(ItemImpShield, 1);
-   %player.setInventory(ItemLauncher, 1);
-   %player.setInventory(ItemBounce, 1);
-
-   %player.clearWeaponCycle();
-   switch(%client.zActiveLoadout)
-   {
-      case 0:
-         %player.setInventory(WpnSMG1, 1);
-         %player.setInventory(WpnSG1, 1);
-         %player.setInventory(WpnSG1Ammo, 9999);
-         %player.addToWeaponCycle(WpnSMG1);
-         %player.addToWeaponCycle(WpnSG1);
-         %player.mountImage(WpnSMG1Image, 0);
-      case 1:
-         %player.setInventory(WpnMGL1, 1);
-         %player.setInventory(WpnMGL1Ammo, 9999);
-         %player.setInventory(WpnSG2, 1);
-         %player.setInventory(WpnSG2Ammo, 9999);
-         %player.addToWeaponCycle(WpnMGL1);
-         %player.addToWeaponCycle(WpnSG2);
-         %player.mountImage(WpnMGL1Image, 0);
-      case 2:
-         %player.setInventory(WpnSR1, 1);
-         %player.setInventory(WpnSR1Ammo, 9999);
-         %player.addToWeaponCycle(WpnSR1);
-         %player.addToWeaponCycle(WpnMG1);
-         %player.mountImage(WpnSR1Image, 0);
-      case 3:
-         %player.setInventory(WpnMG1, 1);
-         %player.setInventory(WpnMG1Ammo, 9999);
-         %player.addToWeaponCycle(WpnSR1);
-         %player.addToWeaponCycle(WpnMG1);
-         %player.mountImage(WpnMG1Image, 0);
-   }
+   Game.loadOut(%player);
 
    %mat = %obj.getTransform();
    %dmg = %obj.getDamageLevel();
@@ -420,7 +384,7 @@ function GameCoreETH::etherformManifest(%game, %obj)
    %player.setEnergyLevel(%nrg);
    %player.setVelocity(VectorScale(%vel, 0.25));
 
-   %player.startFade(1000,0,false);
+   //%player.startFade(1000,0,false);
    %player.playAudio(0, CatSpawnSound);
 
    %client.player.schedule(9, "delete");

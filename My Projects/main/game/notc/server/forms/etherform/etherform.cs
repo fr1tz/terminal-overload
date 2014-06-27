@@ -173,6 +173,8 @@ function FrmEtherform::onAdd(%this, %obj)
 // callback function: called by engine
 function FrmEtherform::onRemove(%this, %obj)
 {
+   Parent::onRemove(%this, %obj);
+
    if(isObject(%obj.pointer))
       %obj.pointer.delete();
    if(isObject(%obj.emitter))

@@ -225,6 +225,64 @@ function ETH::checkRoundEnd()
    }
 }
 
+function ETH::loadoutEtherform(%player)
+{
+   // Setup ShapeBase HudInfo object icon
+   %player.zShapeBaseHudInfo.setDatasetType(1, $HudInfoDatasetType::IconID);
+   %player.zShapeBaseHudInfo.setDatasetIntField(1, 128);
+}
+
+function ETH::loadoutPlayer(%player)
+{
+   //echo("ETH::loadoutPlayer()");
+
+   %client = %player.client;
+   if(!isObject(%client))
+      return;
+
+   // Setup ShapeBase HudInfo object icon
+   %player.zShapeBaseHudInfo.setDatasetType(1, $HudInfoDatasetType::IconID);
+   %player.zShapeBaseHudInfo.setDatasetIntField(1, %client.zActiveLoadout+1);
+
+   %player.setInventory(ItemVAMP, 1);
+   %player.setInventory(ItemEtherboard, 1);
+   %player.setInventory(ItemImpShield, 1);
+   %player.setInventory(ItemLauncher, 1);
+   %player.setInventory(ItemBounce, 1);
+
+   %player.clearWeaponCycle();
+   switch(%client.zActiveLoadout)
+   {
+      case 0:
+         %player.setInventory(WpnSMG1, 1);
+         %player.setInventory(WpnSG1, 1);
+         %player.setInventory(WpnSG1Ammo, 9999);
+         %player.addToWeaponCycle(WpnSMG1);
+         %player.addToWeaponCycle(WpnSG1);
+         %player.mountImage(WpnSMG1Image, 0);
+      case 1:
+         %player.setInventory(WpnMGL1, 1);
+         %player.setInventory(WpnMGL1Ammo, 9999);
+         %player.setInventory(WpnSG2, 1);
+         %player.setInventory(WpnSG2Ammo, 9999);
+         %player.addToWeaponCycle(WpnMGL1);
+         %player.addToWeaponCycle(WpnSG2);
+         %player.mountImage(WpnMGL1Image, 0);
+      case 2:
+         %player.setInventory(WpnSR1, 1);
+         %player.setInventory(WpnSR1Ammo, 9999);
+         %player.addToWeaponCycle(WpnSR1);
+         %player.addToWeaponCycle(WpnMG1);
+         %player.mountImage(WpnSR1Image, 0);
+      case 3:
+         %player.setInventory(WpnMG1, 1);
+         %player.setInventory(WpnMG1Ammo, 9999);
+         %player.addToWeaponCycle(WpnSR1);
+         %player.addToWeaponCycle(WpnMG1);
+         %player.mountImage(WpnMG1Image, 0);
+   }
+}
+
 function ETH::switchToEtherform(%client)
 {
    %player = %client.player;

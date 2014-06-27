@@ -163,6 +163,11 @@ function ShapeBaseData::onAdd(%this, %obj)
 {
    Parent::onAdd(%this, %obj);
    
+   // Create ShapeBase HudInfo object
+   %obj.zShapeBaseHudInfo = new HudInfo();
+   %obj.zShapeBaseHudInfo.setObject(%obj);
+   %obj.zShapeBaseHudInfo.setScopeAlways(true);
+   
    // Set default collision mask
    %obj.setCollisionMask($CollisionMask::Normal);
 
@@ -171,6 +176,14 @@ function ShapeBaseData::onAdd(%this, %obj)
    %obj.setDamageBufferDischargeRate(%this.damageBufferDischargeRate);
    %obj.setRechargeRate(%this.rechargeRate);
    %obj.setRepairRate(0);
+}
+
+function ShapeBaseData::onRemove(%this, %obj)
+{
+   Parent::onRemove(%this, %obj);
+   
+   if(isObject(%obj.zShapeBaseHudInfo))
+      %obj.zShapeBaseHudInfo.delete();
 }
 
 function ShapeBaseData::damage(%this, %obj, %source, %position, %amount, %damageType)

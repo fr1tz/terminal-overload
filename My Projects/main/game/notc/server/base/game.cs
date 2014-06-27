@@ -1,6 +1,9 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
+//-----------------------------------------------------------------------------
+// SceneObject collision masks
+
 $CollisionMask::Normal  = 1;
 $CollisionMask::Stealth = 2;
 $CollisionMask::Free1   = 4;
@@ -11,13 +14,25 @@ $CollisionMask::Free5   = 64;
 $CollisionMask::Free6   = 128;
 
 //-----------------------------------------------------------------------------
-// HudInfo DataSet types
+// HudInfo Dataset types
 
-$HudInfoDataSetType::DiscTarget = 1;
+$HudInfoDatasetType::DiscTarget = 1;
 // string field: unused
 //    int field: unused
 //  float field: unused
 //   bool field: true
+
+$HudInfoDatasetType::TeamID = 2;
+// string field: unused
+//    int field: the team ID
+//  float field: unused
+//   bool field: unused
+
+$HudInfoDatasetType::IconID = 3;
+// string field: unused
+//    int field: the icon ID
+//  float field: unused
+//   bool field: unused
 
 //-----------------------------------------------------------------------------
 

@@ -775,7 +775,7 @@ function FrmStandardcat::addDiscTarget(%this, %obj, %target)
    
    %hudInfo = new HudInfo();
    %hudInfo.setObject(%target);
-   %hudInfo.setDataSetType(0, $HudInfoDataSetType::DiscTarget);
+   %hudInfo.setDataSetType(0, $HudInfoDatasetType::DiscTarget);
    %hudInfo.setDataSetBoolField(0, true);
    
    // Ghost HudInfo object to this CAT's client.

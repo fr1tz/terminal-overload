@@ -4,7 +4,8 @@
 function executeEthernetServerScripts()
 {
    exec("notc/server/base/exec.cs");
-   
+
+   exec("notc/server/client/gui/MinimapHud/v1/exec.cs");
    exec("notc/server/client/gui/LoadoutHud/v1/exec.cs");
    
    exec("notc/server/forms/etherform/exec.cs");
@@ -31,6 +32,7 @@ function executeEthernetServerScripts()
    exec("notc/server/weapons/mg1/v1/exec.cs");
    exec("notc/server/weapons/ml1/v1/exec.cs");
 
+   exec("./aiPlayer.cs");
    exec("./commands.cs");
    exec("./eth.cs");
    exec("./gameCoreETH.cs");
