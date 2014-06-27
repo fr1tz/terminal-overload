@@ -7,6 +7,12 @@ function serverCmd_F(%client, %nr)
    Game.F(%client, %nr);
 }
 
+function serverCmdAction(%client, %nr)
+{
+   //echo("serverCmdAction(): client" SPC %client SPC "action" SPC %nr);
+   Game.clientAction(%client, %nr);
+}
+
 // ----------------------------------------------------------------------------
 // Settings
 // ----------------------------------------------------------------------------
