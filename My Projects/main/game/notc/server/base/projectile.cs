@@ -15,7 +15,8 @@ function ProjectileData::onCollision(%data, %proj, %col, %fade, %pos, %normal)
 	// apply impulse...
 	if(%data.impactImpulse > 0)
 	{
-		%impulseVec = VectorScale(%normal, -%data.impactImpulse);
+      %impulseVec = VectorNormalize(%proj.getVelocity());
+		%impulseVec = VectorScale(%impulseVec, %data.impactImpulse);
 		%col.impulse(%pos, %impulseVec, %proj);
 	}
 
