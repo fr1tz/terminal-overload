@@ -12,16 +12,15 @@ singleton Material(xa_notc_core_shapes_territoryzone_terrainmat)
    glow[0] = "0";
    emissive[0] = "1";
    materialTag0 = "Miscellaneous";
-   diffuseMap[0] = "content/xa/rotc/p.5.4/textures/rotc/armor.white.png";
-   animFlags[0] = "0x00000009";
+   animFlags[0] = "0x00000008";
    scrollDir[0] = "1 1";
-   scrollSpeed[0] = "0.235";
+   scrollSpeed[0] = "0";
    rotSpeed[0] = "1.294";
    rotPivotOffset[0] = "-0.48 -0.52";
    waveFreq[0] = "0.469";
    waveAmp[0] = "1";
    mapTo = "zone.grid.png";
-   wireframe[0] = "1";
+   wireframe[0] = "0";
    diffuseColorPaletteSlot[1] = "-1";
    glow[1] = "0";
    emissive[1] = "0";
@@ -31,8 +30,8 @@ singleton Material(xa_notc_core_shapes_territoryzone_terrainmat)
 
 singleton Material(xa_notc_core_shapes_territoryzone_bordermat)
 {
-   diffuseColor[0] = "0.992157 0.988235 0.992157 1";
-   diffuseColorPaletteSlot[0] = "0";
+   diffuseColor[0] = "0.501961 0.501961 0.501961 1";
+   diffuseColorPaletteSlot[0] = "1";
    doubleSided = "0";
    translucentBlendOp = "AddAlpha";
    parallaxScale[0] = "0.25";
@@ -42,6 +41,10 @@ singleton Material(xa_notc_core_shapes_territoryzone_bordermat)
    glow[0] = "1";
    emissive[0] = "1";
    materialTag0 = "Miscellaneous";
+   wireframe[0] = "0";
+   diffuseColorPaletteSlot[1] = "1";
+   glow[1] = "1";
+   wireframe[1] = "1";
 };
 
 singleton Material(xa_notc_core_shapes_territoryzone_othermat)

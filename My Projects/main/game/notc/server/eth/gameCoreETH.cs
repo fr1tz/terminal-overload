@@ -103,12 +103,9 @@ function GameCoreETH::onClientEnterGame(%game, %client)
    
    // Setup loadouts
    %client.zActiveLoadout = 0;
-   for(%i = 0; %i < 9; %i++)
-   {
-      %client.zLoadoutProgress[%i] = 1.0;
-      %client.zLoadoutProgressDt[%i] = 0.0;
-   }
-   
+   ETH::resetLoadout(%client);
+   %client.LoadoutHud_SelectSlot(0);
+
    // Setup minimap HUD
    %client.MinimapHud_SetHudInfoDatasetType_Color(2);
    %client.MinimapHud_SetHudInfoDatasetType_Icon(3);
@@ -122,19 +119,6 @@ function GameCoreETH::onClientEnterGame(%game, %client)
    %client.MinimapHud_AddIcon(4, "content/xa/notc/core/icons/p1/class3.8x8.png", 8);
    %client.MinimapHud_AddIcon(128, "content/xa/notc/core/icons/p1/etherform.8x8.png", 8);
    
-   // Setup loadout HUD
-   %client.LoadoutHud_UpdateSlot(0, true,
-      "content/xa/notc/core/icons/p1/smg1.32x32.png", 1.0);
-   %client.LoadoutHud_UpdateSlot(1, true,
-      "content/xa/notc/core/icons/p1/mgl1.32x32.png", 1.0);
-   %client.LoadoutHud_UpdateSlot(2, true,
-      "content/xa/notc/core/icons/p1/sr1.32x32.png", 1.0);
-   %client.LoadoutHud_UpdateSlot(3, true,
-      "content/xa/notc/core/icons/p1/mg1.32x32.png", 1.0);
-   %client.LoadoutHud_UpdateSlot(4, false);
-   %client.LoadoutHud_UpdateSlot(5, false);
-   %client.LoadoutHud_SelectSlot(0);
-
 	// Join team with less players.
 	if(Game.team1.numPlayers > Game.team2.numPlayers)
    	ETH::joinTeam(%client, 2);

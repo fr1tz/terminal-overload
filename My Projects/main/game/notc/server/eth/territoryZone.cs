@@ -462,20 +462,35 @@ function TerritoryZone::setZoneOwner(%this, %zone, %teamId)
 	else if(%oldTeamId == 2)
 		Game.team2.numTerritoryZones--;
   
+   // Base color
+   %colorF = Game.team[%teamId].color;
+   
+   // Flash base color
+   %zone.flash(%colorF SPC "1");
+   
+   // First palette slot
    %mod = 50;
    if(%teamId == 0)
-      %alpha = 25;
-
-   %colorF = Game.team[%teamId].color;
+      %mod = 25;
    %colorI = getWord(%colorF, 0)*%mod SPC
              getWord(%colorF, 1)*%mod SPC
              getWord(%colorF, 2)*%mod SPC
              255;
-   //echo(%colorF SPC "->" SPC %colorI);
    %zone.paletteColors[0] = %colorI;
-   %zone.flash(%colorF SPC "1");
+   //echo(%colorF SPC "->" SPC %colorI);
+   
+   // Second palette slot
+   %mod = 100;
+   if(%teamId == 0)
+      %mod = 25;
+   %colorI = getWord(%colorF, 0)*%mod SPC
+             getWord(%colorF, 1)*%mod SPC
+             getWord(%colorF, 2)*%mod SPC
+             255;
+   %zone.paletteColors[1] = %colorI;
+   //echo(%colorF SPC "->" SPC %colorI);
+
 	%zone.setTeamId(%teamId);
-	
 	if(%teamId == 1)
 		Game.team1.numTerritoryZones++;
 	else if(%teamId == 2)

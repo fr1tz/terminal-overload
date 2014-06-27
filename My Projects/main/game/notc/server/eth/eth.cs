@@ -28,7 +28,7 @@ function ETH::createTeams(%game)
 			numPlayers = 0;
 			numTerritoryZones = 0;
 			numCATs = 0;
-         repairSpeed = 0.025;
+         repairSpeed = 0.05;
 		};
 		MissionCleanup.add(%game.team1);
 
@@ -47,7 +47,7 @@ function ETH::createTeams(%game)
 			numPlayers = 0;
 			numTerritoryZones = 0;
 			numCATs = 0;
-         repairSpeed = 0.025;
+         repairSpeed = 0.05;
 		};
 		MissionCleanup.add(%game.team2);
 
@@ -179,6 +179,10 @@ function ETH::startNewRound()
       %obj = MissionCleanup.getObject(%idx);
       if(!%obj.isMethod("getType"))
          continue;
+         
+      if(%obj.getType() & $TypeMasks::CameraObjectType)
+         continue;
+         
       if(%obj.getType() & $TypeMasks::ProjectileObjectType
       || %obj.getType() & $TypeMasks::ShapeBaseObjectType)
          %obj.delete();
@@ -192,6 +196,8 @@ function ETH::startNewRound()
    for( %clientIndex = 0; %clientIndex < ClientGroup.getCount(); %clientIndex++ )
    {
       %client = ClientGroup.getObject(%clientIndex);
+      
+      ETH::resetLoadout(%client);
 
       // Do not respawn observers.
       if(%client.team == Game.team1 || %client.team == Game.team2 )
@@ -222,6 +228,26 @@ function ETH::checkRoundEnd()
       serverPlay2D(RedVictorySound);
       schedule(5000, MissionGroup, "ETH::startNewRound");
       Game.roundRestarting = true;
+   }
+}
+
+function ETH::resetLoadout(%client)
+{
+   %active[0] = true;
+   %active[1] = true;
+   %active[2] = true;
+   %active[3] = true;
+
+   %icon[0] = "content/xa/notc/core/icons/p1/smg1.32x32.png";
+   %icon[1] = "content/xa/notc/core/icons/p1/mgl1.32x32.png";
+   %icon[2] = "content/xa/notc/core/icons/p1/sr1.32x32.png";
+   %icon[3] = "content/xa/notc/core/icons/p1/mg1.32x32.png";
+
+   for(%i = 0; %i < 5; %i++)
+   {
+      %client.zLoadoutProgress[%i] = 1.0;
+      %client.zLoadoutProgressDt[%i] = 0.0;
+      %client.LoadoutHud_UpdateSlot(%i, %active[%i], %icon[%i], 1.0);
    }
 }
 

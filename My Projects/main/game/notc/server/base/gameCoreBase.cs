@@ -322,6 +322,7 @@ function GameCoreBase::preparePlayer(%game, %client)
    // Spawn a camera for this client using the found %spawnPoint
    //%client.spawnPlayer(%playerSpawnPoint);
    %game.spawnPlayer(%client, %playerSpawnPoint);
+   MissionCleanup.add(%client.player);
 
    // Starting equipment
    %game.loadOut(%client.player);
