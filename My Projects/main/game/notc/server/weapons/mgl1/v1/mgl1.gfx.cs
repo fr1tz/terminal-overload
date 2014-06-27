@@ -56,7 +56,7 @@ datablock MultiNodeLaserBeamData(WpnMGL1ProjectileLaserTrail0)
 	material = "xa_notc_core_shapes_mgl1_projectile_p1_lasertrail0mat";
 	renderMode = $MultiNodeLaserBeamRenderMode::FaceViewer;
    width = 0.1;
-	fadeTime = 150;
+	fadeTime = 75;
 	windCoefficient = 0.0;
 
 	// node x movement...
