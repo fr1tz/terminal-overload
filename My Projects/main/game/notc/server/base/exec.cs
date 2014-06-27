@@ -3,7 +3,6 @@
 
 function executeBaseServerScripts()
 {
-   exec("./aiPlayer.cs");
    exec("./bleedfx.cs");
    exec("./commands.cs");
    exec("./deathCamera.cs");

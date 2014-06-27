@@ -116,17 +116,24 @@ function FrmStandardCat::onEndSequence(%this,%obj,%slot)
 
 function AIPlayer::spawnAtLocation(%name, %spawnPoint)
 {
+   if(!isObject($aiPlayerPseudoClient))
+   {
+      $aiPlayerPseudoClient = new ScriptObject();
+      MissionCleanup.add($aiPlayerPseudoClient);
+   }
+
    // Create the demo player object
    %player = new AiPlayer()
    {
       dataBlock = FrmStandardCat;
+      client = $aiPlayerPseudoClient;
       path = "";
    };
    MissionCleanup.add(%player);
    %player.teamId = %player.getId();
    %player.setShapeName(%name);
    %player.setTransform(%spawnPoint);
-   //%player.setTargetingMask($TargetingMask::Launcher);
+   %player.setTargetingMask($TargetingMask::Launcher);
    $aiPlayer = %player;
    return %player;
 }
@@ -374,10 +381,15 @@ function AIPlayer::think(%player)
    }
 }
 
-function AIPlayer::spawn(%path)
+function AIPlayer::spawn(%loadout, %path)
 {
+   if(%loadout $= "")
+      %weapn = 1;
+
    if(%path $= "")
       %path = "botpath";
+      
+   $aiPlayerPseudoClient.zActiveLoadout = %loadout;
       
    %player = AIPlayer::spawnOnPath("Shootme", %path);
    
@@ -392,20 +404,50 @@ function AIPlayer::spawn(%path)
       
       %player.setInventory(WpnSG1, 1);
       %player.setInventory(WpnSG1Ammo, 9999);
+      %player.setInventory(WpnSG2, 1);
+      %player.setInventory(WpnSG2Ammo, 9999);
       %player.setInventory(WpnMG1, 1);
       %player.setInventory(WpnMG1Ammo, 9999);
       %player.setInventory(WpnMGL1, 1);
       %player.setInventory(WpnMGL1Ammo, 9999);
+      %player.setInventory(WpnSR1, 1);
+      %player.setInventory(WpnSR1Ammo, 9999);
       
-      %player.mountImage(WpnSMG1Image, 0);
-
       %player.shootingDelay = 100;
       //%player.followPath(%path, -1);
       %player.setMoveSpeed(1.0);
       %player.think();
       
-      //%player.singleShot();
-      //%player.setImageTrigger(0, true);
+      if(%loadout == 1)
+      {
+         %player.mountImage(WpnSMG1Image, 0);
+         %player.singleShot();
+      }
+      else if(%loadout == 2)
+      {
+         %player.mountImage(WpnSG1Image, 0);
+         %player.singleShot();
+      }
+      else if(%loadout == 3)
+      {
+         %player.mountImage(WpnMGL1Image, 0);
+         %player.singleShot();
+      }
+      else if(%loadout == 4)
+      {
+         %player.mountImage(WpnSG2Image, 0);
+         %player.singleShot();
+      }
+      else if(%loadout == 5)
+      {
+         %player.mountImage(WpnSR1Image, 0);
+         %player.singleShot();
+      }
+      else if(%loadout == 6)
+      {
+         %player.mountImage(WpnMG1Image, 0);
+         %player.setImageTrigger(0, true);
+      }
 
       return %player;
    }

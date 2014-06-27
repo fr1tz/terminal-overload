@@ -26,6 +26,7 @@ function executeDeathmatchServerScripts()
    exec("notc/server/weapons/mg1/v1/exec.cs");
    exec("notc/server/weapons/ml1/v1/exec.cs");
 
+   exec("./aiPlayer.cs");
    exec("./dm.cs");
    exec("./gameCoreDM.cs");
    exec("./health.cs");
