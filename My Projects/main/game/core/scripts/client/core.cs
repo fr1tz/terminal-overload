@@ -17,6 +17,15 @@ function initializeCore()
    GlobalActionMap.bindcmd(keyboard, "alt enter", "Canvas.attemptFullscreenToggle();","");
    GlobalActionMap.bindcmd(keyboard, "alt k", "cls();",  "");
 //   GlobalActionMap.bindCmd(keyboard, "escape", "", "handleEscape();");
+
+   GlobalActionMap.bindCmd(keyboard, "F1", "commandToServer('_F', 1);", "");
+   GlobalActionMap.bindCmd(keyboard, "F2", "commandToServer('_F', 2);", "");
+   GlobalActionMap.bindCmd(keyboard, "F3", "commandToServer('_F', 3);", "");
+   GlobalActionMap.bindCmd(keyboard, "F4", "commandToServer('_F', 4);", "");
+   GlobalActionMap.bindCmd(keyboard, "F5", "commandToServer('_F', 5);", "");
+   GlobalActionMap.bindCmd(keyboard, "F6", "commandToServer('_F', 6);", "");
+   GlobalActionMap.bindCmd(keyboard, "F7", "commandToServer('_F', 7);", "");
+   GlobalActionMap.bindCmd(keyboard, "F8", "commandToServer('_F', 8);", "");
    
    
    
