@@ -181,12 +181,16 @@ function WpnSR1Image::onUnmount(%this, %obj, %slot)
 {
    Parent::onUnmount(%this, %obj, %slot);
    %obj.allowSprinting(true);
+   if(%obj.hasInventory(ItemEtherboard))
+      %obj.allowSliding(true);
 }
 
 function WpnSR1Image::onReady(%this, %obj, %slot)
 {
 	//error("onReady");
-    %obj.allowSprinting(true);
+   %obj.allowSprinting(true);
+   if(%obj.hasInventory(ItemEtherboard))
+      %obj.allowSliding(true);
 }
 
 function WpnSR1Image::onCharge(%this, %obj, %slot)
@@ -194,18 +198,23 @@ function WpnSR1Image::onCharge(%this, %obj, %slot)
 	//error("onCharge");
    //%obj.sniperTarget = "";
    %obj.allowSprinting(false);
+   %obj.allowSliding(false);
 }
 
 function WpnSR1Image::onFire(%this, %obj, %slot)
 {
 	//error("onFire");
    %obj.allowSprinting(true);
+   if(%obj.hasInventory(ItemEtherboard))
+      %obj.allowSliding(true);
 }
 
 function WpnSR1Image::onNoAmmo(%this, %obj, %slot)
 {
 	//error("onNoAmmo");
    %obj.allowSprinting(true);
+   if(%obj.hasInventory(ItemEtherboard))
+      %obj.allowSliding(true);
 }
 
 
