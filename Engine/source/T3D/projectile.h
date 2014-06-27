@@ -225,6 +225,7 @@ public:
    virtual void onCollision(const Point3F& p, const Point3F& n, SceneObject*);
 
    /// What to do when this projectile explodes
+   virtual void explode();
    virtual void explode(const Point3F& p, const Point3F& n, const U32 collideType );
       
    bool pointInWater(const Point3F &point);
@@ -250,6 +251,7 @@ public:
    bool missedObject(const SceneObject* obj, const Point3F& oldPos, const Point3F& newPos);
    void createBounceExplosion(const RayInfo& rInfo, bool decal = true);
    void addLaserTrailNode(const Point3F& pos, bool minorNode = false);
+   bool isAlive() { return !mHasExploded; }
 
 public:
    Point3F  mCurrPosition;

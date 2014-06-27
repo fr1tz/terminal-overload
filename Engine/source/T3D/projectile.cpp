@@ -1135,6 +1135,17 @@ void Projectile::emitParticles(const Point3F& from, const Point3F& to, const Poi
    }
 }
 
+void Projectile::explode()
+{
+   MatrixF xform(true);
+   xform.setColumn(3, mCurrPosition);
+   setTransform(xform);
+   mCurrVelocity    = Point3F(0, 0, 0);
+   Point3F normal = mCurrPosition;
+   normal.normalize();
+   this->explode(mCurrPosition, normal, 0);
+}
+
 void Projectile::explode( const Point3F &p, const Point3F &n, const U32 collideType )
 {
    // Make sure we don't explode twice...
@@ -2153,4 +2164,34 @@ DefineEngineMethod(Projectile, setTargetPosition, void, (Point3F pos),,
 )
 {
    object->setTargetPosition(pos);
+}
+
+DefineEngineMethod(Projectile, setVelocity, void, (Point3F vel),,
+   "@brief Set projectile's velocity.\n\n"
+   "@param vel The new velocity vector\n"
+)
+{
+   object->mCurrVelocity = vel;
+   object->setMaskBits(Projectile::MovementMask);
+}
+
+DefineEngineMethod(Projectile, getVelocity, Point3F, (),,
+   "@brief Returns the projectile's velocity.\n\n"
+)
+{
+   return object->mCurrVelocity;
+}
+
+DefineEngineMethod(Projectile, explode, void, (),,
+   "@brief Causes the projectile to explode.\n\n"
+)
+{
+   object->explode();
+}
+
+DefineEngineMethod(Projectile, isAlive, bool, (),,
+   "@brief Returns wether the projectile is alive.\n\n"
+)
+{
+   return object->isAlive();
 }
