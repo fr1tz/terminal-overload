@@ -168,5 +168,35 @@ singleton Material(xa_notc_core_shapes_standardcat_stealthmat2)
    scrollSpeed[0] = "0.5";
 };
 
-
+singleton Material(xa_notc_core_shapes_standardcat_erasemat)
+{
+   mapTo = "xa_notc_core_shapes_standardcat_erasemat";
+   emissive[0] = "1";
+   glow[0] = "1";
+   diffuseColor[0] = "1 1 1 1";
+   diffuseColorPaletteSlot[0] = "-1";
+   diffuseMap[0] = "content/xa/notc/core/shapes/standardcat/armor.png";
+   pixelSpecular[0] = "0";
+   diffuseColor[1] = "0.996078 0.996078 0.996078 1";
+   diffuseMap[1] = "content/xa/notc/core/textures/grid128.12.png";
+   diffuseColorPaletteSlot[1] = "-1";
+   glow[1] = "1";
+   emissive[1] = "1";
+   wireframe[1] = "1";
+   materialTag0 = "Miscellaneous";
+   doubleSided = "0";
+   translucent = "1";
+   translucentZWrite = "0";
+   translucentBlendOp = "AddAlpha";
+   alphaRef = "1";
+   showFootprints = "0";
+   wireframe[0] = "0";
+   glowOnly[0] = "1";
+   animFlags[0] = "0x00000001";
+   scrollDir[0] = "1 1";
+   scrollSpeed[0] = "1";
+   animFlags[1] = "0x00000001";
+   scrollDir[1] = "1 1";
+   scrollSpeed[1] = "2";
+};
 

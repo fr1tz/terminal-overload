@@ -327,7 +327,7 @@ function FrmStandardcat::onAdd(%this, %obj)
 {
    Parent::onAdd(%this, %obj);
    
-   %obj.discTargets = new SimSet();
+   %obj.zDiscTargetSet = new SimSet();
 
    %obj.allowJetJumping(false);
    %obj.allowCrouching(false);
@@ -345,10 +345,11 @@ function FrmStandardcat::onRemove(%this, %obj)
 {
    Parent::onRemove(%this, %obj);
    
-   if(isObject(%obj.discTargets))
+   if(isObject(%obj.zDiscTargetSet))
    {
-      %obj.discTargets.clear();
-      %obj.discTargets.delete();
+      %obj.zDiscTargetSet.callOnChildren("schedule", 0, "delete");
+      %obj.zDiscTargetSet.clear();
+      %obj.zDiscTargetSet.delete();
    }
 }
 
@@ -743,6 +744,32 @@ function FrmStandardcat::onLightLeft(%this, %obj)
    %this.onTrigger(%obj, 5, true);
 }
 
+// Called by engine
+function FrmStandardcat::onDisabled(%this, %obj, %state)
+{
+   Parent::onDisabled(%this, %obj, %state);
+   
+   // Delete all HudInfo objects linked to this object
+   while(%obj.zHudInfoSet.getCount() > 0)
+      %obj.zHudInfoSet.getObject(0).delete();
+
+   %obj.deactivateStealth();
+   %obj.unmountImage(0); // Unmount weapon
+   
+   // Clear inventory
+   %obj.setInventory(ItemVAMP, 0);
+   %obj.setInventory(ItemEtherboard, 0);
+   %obj.setInventory(ItemImpShield, 0);
+   %obj.setInventory(ItemLauncher, 0);
+   %obj.setInventory(ItemBounce, 0);
+   
+   %old[0] = %obj.getTargetName(0);
+   %old[1] = %obj.getTargetName(1);
+   %new[0] = "xa_notc_core_shapes_standardcat_erasemat";
+   %new[1] = "xa_notc_core_shapes_standardcat_erasemat";
+   %obj.setSkinName(%old[0] @ "=" @ %new[0] @ ";" @ %old[1] @ "=" @ %new[1]);
+}
+
 // Called from script
 function FrmStandardcat::damage(%this, %obj, %sourceObject, %position, %damage, %damageType)
 {
@@ -761,10 +788,10 @@ function FrmStandardcat::addDiscTarget(%this, %obj, %target)
 	if(!(%target.getType() & $TypeMasks::ShapeBaseObjectType))
 		return;
 
-	%count = %obj.discTargets.getCount();
+	%count = %obj.zDiscTargetSet.getCount();
 	for(%idx= 0; %idx < %count; %idx++)
 	{
-      %hudInfo = %obj.discTargets.getObject(%idx);
+      %hudInfo = %obj.zDiscTargetSet.getObject(%idx);
       if(%hudInfo.getObject() == %target)
       {
          cancel(%hudInfo.zTimeoutThread);
@@ -784,7 +811,8 @@ function FrmStandardcat::addDiscTarget(%this, %obj, %target)
    //%hudInfo.addClientToGhostingList(%obj.client);
 
    %hudInfo.zTimeoutThread = %hudInfo.schedule(3000, "delete");
-   %obj.discTargets.add(%hudInfo);
+   %obj.zDiscTargetSet.add(%hudInfo);
+   %target.zHudInfoSet.add(%hudInfo);
 }
 
 // Called from script
@@ -796,11 +824,11 @@ function FrmStandardcat::launchDisc(%this, %obj, %disc)
    %muzzleVec = %obj.getMuzzleVector(%slot);
 
    if(%disc $= "explosive")
-      WpnExplosiveDisc.launch(%obj, %muzzlePoint, %muzzleVec, %obj.discTargets);
+      WpnExplosiveDisc.launch(%obj, %muzzlePoint, %muzzleVec, %obj.zDiscTargetSet);
    else if(%disc $= "repel")
-      WpnRepelDisc.launch(%obj, %muzzlePoint, %muzzleVec, %obj.discTargets);
+      WpnRepelDisc.launch(%obj, %muzzlePoint, %muzzleVec, %obj.zDiscTargetSet);
    else if(%disc $= "razor")
-      WpnRazorDisc.launch(%obj, %muzzlePoint, %muzzleVec, %obj.discTargets);
+      WpnRazorDisc.launch(%obj, %muzzlePoint, %muzzleVec, %obj.zDiscTargetSet);
 }
 
 // Called from script
@@ -824,12 +852,15 @@ function FrmStandardcat::activateStealth(%this, %obj, %time)
    %new[1] = "xa_notc_core_shapes_standardcat_stealthmat2";
    %obj.setSkinName(%old[0] @ "=" @ %new[0] @ ";" @ %old[1] @ "=" @ %new[1]);
 
-   %obj.schedule(%time, "deactivateStealth");
+   %obj.zStealthThread = %obj.schedule(%time, "deactivateStealth");
 }
 
 // Called from script
 function FrmStandardcat::deactivateStealth(%this, %obj)
 {
+   cancel(%obj.zStealthThread);
+   %obj.zStealthThread = "";
+
    %obj.setCollisionMask($CollisionMask::Normal);
    %obj.zStealthActive = false;
    

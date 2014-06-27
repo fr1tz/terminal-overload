@@ -1,10 +1,6 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
-// Timeouts for corpse deletion.
-$CorpseTimeoutValue = 45 * 1000;
-
-
 //----------------------------------------------------------------------------
 // Player Datablock methods
 //----------------------------------------------------------------------------
@@ -256,8 +252,8 @@ function PlayerData::onDisabled(%this, %obj, %state)
    commandToClient(%obj.client, 'toggleVehicleMap', false);
 
    // Schedule corpse removal. Just keeping the place clean.
-   %obj.schedule($CorpseTimeoutValue - 1000, "startFade", 1000, 0, true);
-   %obj.schedule($CorpseTimeoutValue, "delete");
+   %obj.schedule(0, "startFade", 3000, 0, true);
+   %obj.schedule(3000, "delete");
 }
 
 //-----------------------------------------------------------------------------
