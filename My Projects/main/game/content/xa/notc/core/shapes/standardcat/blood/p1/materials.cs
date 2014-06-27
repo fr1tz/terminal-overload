@@ -27,5 +27,6 @@ singleton Material(xa_notc_core_shapes_standardcat_blood_p1_mat1)
    diffuseColorPaletteSlot[0] = "0";
    wireframe[0] = "1";
    materialTag0 = "Player";
+   translucentBlendOp = "AddAlpha";
 };
 
