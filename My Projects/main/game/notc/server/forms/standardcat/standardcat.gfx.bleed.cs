@@ -21,7 +21,7 @@ datablock DebrisData(FrmStandardCatBleedEffect_Debris)
 
 	// bounce...
 	staticOnMaxBounce = "0";
-	numBounces = "3";
+	numBounces = "0";
 
 	// physics...
 	gravModifier = 4.0;
