@@ -23,17 +23,35 @@ class GuiMiniMapHud : public GuiControl
 {
    typedef GuiControl Parent;
 
+   struct Color {
+      S32 id;
+      ColorI color;
+   };
+
+   struct Icon {
+      S32 id;
+      GFXTexHandle tex;
+      U32 size;
+   };
+
 	bool mRotate;
 	F32 mRadius;			//  Radar Range
 	F32 mZoomAngle;		//  Viewing Angle
+
+   S32 mHudInfoDatasetType_Color;
+   S32 mHudInfoDatasetType_Icon;
 
 	Point3F mCameraPos;
    Point3F mCenter;
 	F32 mCameraAngle;
 	F32 mHW;
 
+   Vector<Color*> mColors;
+   Vector<Icon*> mIcons;
+
 public:
    GuiMiniMapHud();
+   ~GuiMiniMapHud();
 
    // GuiControl
    virtual void onRender(Point2I offset, const RectI &updateRect);
@@ -41,6 +59,10 @@ public:
    // GuiMiniMapHud
    Point3F project(const Point3F& point);
    F32 scale(F32 len);
+   void clearColors();
+   void addColor(S32 id, ColorI color);
+   void clearIcons();
+   void addIcon(S32 id, String bitmap, U32 size);
    void drawTacticalZone(TacticalZone* obj);
 
    static void initPersistFields();
@@ -129,6 +151,15 @@ GuiMiniMapHud::GuiMiniMapHud()
 
    mCameraAngle = 0;
    mHW = 0;
+
+   mHudInfoDatasetType_Color = 2;
+   mHudInfoDatasetType_Icon = 3;
+}
+
+GuiMiniMapHud::~GuiMiniMapHud()
+{
+   this->clearColors();
+   this->clearIcons();
 }
 
 void GuiMiniMapHud::initPersistFields()
@@ -136,7 +167,14 @@ void GuiMiniMapHud::initPersistFields()
    addGroup("Main");
    addField("rotate",	    TypeBool, Offset( mRotate, GuiMiniMapHud ) );
    addField("visRadius",   TypeF32, Offset( mRadius, GuiMiniMapHud ) );
+   addField( "hudInfoDatasetType_Color", TypeS32, Offset( mHudInfoDatasetType_Color, GuiMiniMapHud ),
+      "The type of HudInfo dataset that identifies a color." );
+   addField( "hudInfoDatasetType_Icon", TypeS32, Offset( mHudInfoDatasetType_Icon, GuiMiniMapHud ),
+      "The type of HudInfo dataset that identifies an icon." );
    endGroup("Main");
+
+   addGroup("Misc");       
+   endGroup("Misc");
 
    Parent::initPersistFields();
 }
@@ -229,6 +267,91 @@ void GuiMiniMapHud::onRender( Point2I, const RectI &updateRect)
             this->drawTacticalZone(tZone);
       }
    }
+
+   SimSet* hudInfoSet = Sim::getClientHudInfoSet();
+   for(SimObject** itr = hudInfoSet->begin(); itr != hudInfoSet->end(); itr++)
+   {
+      HudInfo* hudInfo = dynamic_cast<HudInfo*>(*itr);
+      if(!hudInfo)
+         continue;
+
+      // Grab icon ID
+      S32 iconID = hudInfo->getDataSetIntField(mHudInfoDatasetType_Icon);
+      if(!iconID)
+         continue;
+
+      // Map icon ID to icon
+      const Icon* icon = NULL;
+      for(U32 i = 0; i < mIcons.size(); i++)
+      {
+         if(mIcons[i]->id == iconID)
+         {
+            icon = mIcons[i];
+            break;
+         }
+      }
+
+      if(!icon)
+         continue;
+
+      // Determine color of icon
+      GFX->getDrawUtil()->clearBitmapModulation();
+      S32 colorID = hudInfo->getDataSetIntField(mHudInfoDatasetType_Color);
+      if(colorID)
+      {
+         for(U32 i = 0; i < mColors.size(); i++)
+         {
+            if(mColors[i]->id == colorID)
+            {
+               GFX->getDrawUtil()->setBitmapModulation(mColors[i]->color);
+               break;
+            }
+         }
+      }
+
+      // Render icon
+      Point3F c = this->project(hudInfo->getPosition());
+      Point2I offset(c.x-icon->size/2, c.y-icon->size/2);
+      Point2I extent(icon->size, icon->size);
+      RectI rect(offset, extent);
+      GFX->getDrawUtil()->drawBitmapStretch(icon->tex, rect,
+         GFXBitmapFlip_None, GFXTextureFilterLinear, false);
+   }
+}
+
+//----------------------------------------------------------------------------
+
+void GuiMiniMapHud::clearColors()
+{
+   for(U32 i = 0; i < mColors.size(); i++)
+      delete mColors[i];
+   mColors.clear();
+}
+
+void GuiMiniMapHud::addColor(S32 id, ColorI color)
+{
+   Color* c = new Color;
+   c->id = id;
+   c->color = color;
+   mColors.push_back(c);
+}
+
+//----------------------------------------------------------------------------
+
+void GuiMiniMapHud::clearIcons()
+{
+   for(U32 i = 0; i < mIcons.size(); i++)
+      delete mIcons[i];
+   mIcons.clear();
+}
+
+void GuiMiniMapHud::addIcon(S32 id, String bitmap, U32 size)
+{
+   Icon* icon = new Icon;
+   icon->id = id;
+   icon->tex.set(bitmap, &GFXDefaultGUIProfile, avar("%s() - Icon.tex (line %d)", __FUNCTION__, __LINE__) );
+   icon->size = size;
+   mIcons.push_back(icon);
 }
 
 //----------------------------------------------------------------------------
@@ -287,9 +410,36 @@ void GuiMiniMapHud::drawTacticalZone(TacticalZone* obj)
    GFX->setVertexBuffer( verts );
    GFX->setStateBlock( rectFillSB );
    GFX->setupGenericShaders();
-   GFX->drawPrimitive( GFXTriangleList, 0, 3 );
+   GFX->drawPrimitive( GFXTriangleList, 0, 2 );
 }
 
 //----------------------------------------------------------------------------
 
+DefineEngineMethod( GuiMiniMapHud, clearColors, void, (),,
+   "@brief Clear all color mappings.\n\n")
+{
+   object->clearColors();
+}
 
+DefineEngineMethod( GuiMiniMapHud, addColor, void, (S32 id, ColorI color),,
+   "@brief Add color mapping.\n\n"
+   "@param id ID of the color.\n"
+   "@param color The color.\n")
+{
+   object->addColor(id, color);
+}
+
+DefineEngineMethod( GuiMiniMapHud, clearIcons, void, (),,
+   "@brief Clear all icon mappings.\n\n")
+{
+   object->clearIcons();
+}
+
+DefineEngineMethod( GuiMiniMapHud, addIcon, void, (S32 id, String bitmap, U32 size),,
+   "@brief Add icon mapping.\n\n"
+   "@param id ID of the icon.\n"
+   "@param bitmap The bitmap to use.\n"
+   "@param size The width/height of the icon.\n")
+{
+   object->addIcon(id, bitmap, size);
+}
