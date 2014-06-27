@@ -255,7 +255,7 @@ function GameCoreBase::onClientEnterGame(%game, %client)
 
    // Inform the client we've joined up
    messageClient(%client,
-      'MsgClientJoin', '\c2Welcome to OpenROTC %1.',
+      'MsgClientJoin', '\c2Welcome to Terminal Overload %1.',
       %client.playerName,
       %client,
       %client.sendGuid,
