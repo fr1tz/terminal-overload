@@ -163,11 +163,15 @@ function ShapeBaseData::onAdd(%this, %obj)
 {
    Parent::onAdd(%this, %obj);
    
+   // SimSet to keep track of HudInfo objects linked to this shape
+   %obj.zHudInfoSet = new SimSet();
+   
    // Create ShapeBase HudInfo object
    %obj.zShapeBaseHudInfo = new HudInfo();
    %obj.zShapeBaseHudInfo.setObject(%obj);
    %obj.zShapeBaseHudInfo.setScopeAlways(true);
-   
+   %obj.zHudInfoSet.add(%obj.zShapeBaseHudInfo);
+
    // Set default collision mask
    %obj.setCollisionMask($CollisionMask::Normal);
 
@@ -181,7 +185,14 @@ function ShapeBaseData::onAdd(%this, %obj)
 function ShapeBaseData::onRemove(%this, %obj)
 {
    Parent::onRemove(%this, %obj);
-   
+
+   if(isObject(%obj.zHudInfoSet))
+   {
+      while(%obj.zHudInfoSet.getCount() > 0)
+         %obj.zHudInfoSet.getObject(0).delete();
+      %obj.zHudInfoSet.delete();
+   }
+
    if(isObject(%obj.zShapeBaseHudInfo))
       %obj.zShapeBaseHudInfo.delete();
 }
