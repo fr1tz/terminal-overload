@@ -19,6 +19,7 @@ function CatGui::onWake(%this)
    }      
    
    // just update the action map here
+   XaNotc1MiscMoveMap_activate();
    XaNotc1CatMoveMap_activate();
    
    // Start tick thread.

@@ -73,22 +73,18 @@ XaNotc1EtherformMoveMap.bind( keyboard, 8, XaNotc1EtherformMoveMap_selectLoadout
 XaNotc1EtherformMoveMap.bind( keyboard, 9, XaNotc1EtherformMoveMap_selectLoadout8 );
 XaNotc1EtherformMoveMap.bind( keyboard, 0, XaNotc1EtherformMoveMap_selectLoadout9 );
 
-XaNotc1EtherformMoveMap.bind( keyboard, a, moveleft );
-XaNotc1EtherformMoveMap.bind( keyboard, d, moveright );
-XaNotc1EtherformMoveMap.bind( keyboard, left, moveleft );
-XaNotc1EtherformMoveMap.bind( keyboard, right, moveright );
+XaNotc1EtherformMoveMap.bind( keyboard, a, XaNotc1CatMoveMap_moveleft );
+XaNotc1EtherformMoveMap.bind( keyboard, d, XaNotc1CatMoveMap_moveright );
 
-XaNotc1EtherformMoveMap.bind( keyboard, w, moveforward );
-XaNotc1EtherformMoveMap.bind( keyboard, s, movebackward );
-XaNotc1EtherformMoveMap.bind( keyboard, up, moveforward );
-XaNotc1EtherformMoveMap.bind( keyboard, down, movebackward );
+XaNotc1EtherformMoveMap.bind( keyboard, w, XaNotc1CatMoveMap_moveforward );
+XaNotc1EtherformMoveMap.bind( keyboard, s, XaNotc1CatMoveMap_movebackward );
 
-XaNotc1EtherformMoveMap.bind(keyboard, space, jump);
-XaNotc1EtherformMoveMap.bind(keyboard, lcontrol, doSlide);
+XaNotc1EtherformMoveMap.bind(keyboard, space, XaNotc1CatMoveMap_jump);
+XaNotc1EtherformMoveMap.bind(keyboard, lcontrol, XaNotc1CatMoveMap_doSlide);
 
-XaNotc1EtherformMoveMap.bind( mouse, xaxis, yaw );
-XaNotc1EtherformMoveMap.bind( mouse, yaxis, pitch );
+XaNotc1EtherformMoveMap.bind( mouse, xaxis, XaNotc1CatMoveMap_yaw );
+XaNotc1EtherformMoveMap.bind( mouse, yaxis, XaNotc1CatMoveMap_pitch );
 
-XaNotc1EtherformMoveMap.bind( mouse, button0, mouseFire );
-XaNotc1EtherformMoveMap.bind( mouse, button1, altTrigger );
+XaNotc1EtherformMoveMap.bind( mouse, button0, XaNotc1CatMoveMap_mouseFire );
+XaNotc1EtherformMoveMap.bind( mouse, button1, XaNotc1CatMoveMap_altTrigger );
 

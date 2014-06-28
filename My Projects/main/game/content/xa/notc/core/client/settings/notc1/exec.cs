@@ -3,24 +3,30 @@
 
 exec("./cmds.cs");
 exec("./default.prefs.cs");
-exec("./default.bind.cs");
+exec("./default.bind.cat.cs");
 exec("./default.bind.etherform.cs");
-exec("./catControls.gui");
+exec("./default.bind.misc.cs");
 exec("./catControls.cs");
-exec("./etherformControls.gui");
+exec("./catControls.gui");
 exec("./etherformControls.cs");
-exec("./controlsRemapDlg.gui");
+exec("./etherformControls.gui");
 exec("./controlsRemapDlg.cs");
-exec("./misc.gui");
+exec("./controlsRemapDlg.gui");
 exec("./misc.cs");
-exec("./muxer.gui");
+exec("./misc.gui");
+exec("./miscControls.cs");
+exec("./miscControls.gui");
 exec("./muxer.cs");
+exec("./muxer.gui");
 
 if(isFile("notc/client/settings/XaNotc1CatMoveMap.cs"))
    exec("notc/client/settings/XaNotc1CatMoveMap.cs");
    
 if(isFile("notc/client/settings/XaNotc1EtherformMoveMap.cs"))
    exec("notc/client/settings/XaNotc1EtherformMoveMap.cs");
+   
+if(isFile("notc/client/settings/XaNotc1MiscMoveMap.cs"))
+   exec("notc/client/settings/XaNotc1MiscMoveMap.cs");
 
 gameSettingsAddEditor(XaNotcSettings1_MuxerGui);
 

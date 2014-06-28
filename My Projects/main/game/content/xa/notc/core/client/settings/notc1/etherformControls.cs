@@ -2,86 +2,56 @@
 // located in the root directory of this distribution.
 
 $XaNotc1EtherformMoveMap_RemapCount = 0;
-$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Forward";
-$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "moveforward";
+$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Fly Forward";
+$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "XaNotc1CatMoveMap_moveforward";
 $XaNotc1EtherformMoveMap_RemapCount++;
-$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Backward";
-$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "movebackward";
+$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Fly Backward";
+$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "XaNotc1CatMoveMap_movebackward";
 $XaNotc1EtherformMoveMap_RemapCount++;
-$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Strafe Left";
-$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "moveleft";
+$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Fly Left";
+$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "XaNotc1CatMoveMap_moveleft";
 $XaNotc1EtherformMoveMap_RemapCount++;
-$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Strafe Right";
-$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "moveright";
+$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Fly Right";
+$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "XaNotc1CatMoveMap_moveright";
 $XaNotc1EtherformMoveMap_RemapCount++;
-$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Turn Left";
-$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "turnLeft";
+$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Fly Up";
+$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "XaNotc1CatMoveMap_jump";
 $XaNotc1EtherformMoveMap_RemapCount++;
-$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Turn Right";
-$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "turnRight";
+$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Fly Down";
+$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "XaNotc1CatMoveMap_doSlide";
 $XaNotc1EtherformMoveMap_RemapCount++;
-$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Look Up";
-$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "panUp";
+$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Manifest";
+$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "XaNotc1CatMoveMap_mouseFire";
 $XaNotc1EtherformMoveMap_RemapCount++;
-$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Look Down";
-$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "panDown";
+$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Select class #1";
+$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "XaNotc1EtherformMoveMap_selectLoadout0";
 $XaNotc1EtherformMoveMap_RemapCount++;
-$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Jump";
-$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "jump";
+$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Select class #2";
+$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "XaNotc1EtherformMoveMap_selectLoadout1";
 $XaNotc1EtherformMoveMap_RemapCount++;
-$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Fire Weapon";
-$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "mouseFire";
+$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Select class #3";
+$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "XaNotc1EtherformMoveMap_selectLoadout2";
 $XaNotc1EtherformMoveMap_RemapCount++;
-$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Adjust Zoom";
-$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "setZoomFov";
+$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Select class #4";
+$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "XaNotc1EtherformMoveMap_selectLoadout3";
 $XaNotc1EtherformMoveMap_RemapCount++;
-$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Toggle Zoom";
-$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "toggleZoom";
+$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Select class #5";
+$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "XaNotc1EtherformMoveMap_selectLoadout4";
 $XaNotc1EtherformMoveMap_RemapCount++;
-$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Free Look";
-$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "toggleFreeLook";
+$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Select class #6";
+$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "XaNotc1EtherformMoveMap_selectLoadout5";
 $XaNotc1EtherformMoveMap_RemapCount++;
-$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Switch 1st/3rd";
-$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "toggleFirstPerson";
+$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Select class #7";
+$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "XaNotc1EtherformMoveMap_selectLoadout6";
 $XaNotc1EtherformMoveMap_RemapCount++;
-$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Chat to Everyone";
-$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "toggleMessageHud";
+$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Select class #8";
+$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "XaNotc1EtherformMoveMap_selectLoadout7";
 $XaNotc1EtherformMoveMap_RemapCount++;
-$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Message Hud PageUp";
-$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "pageMessageHudUp";
+$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Select class #9";
+$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "XaNotc1EtherformMoveMap_selectLoadout8";
 $XaNotc1EtherformMoveMap_RemapCount++;
-$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Message Hud PageDown";
-$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "pageMessageHudDown";
-$XaNotc1EtherformMoveMap_RemapCount++;
-$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Resize Message Hud";
-$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "resizeMessageHud";
-$XaNotc1EtherformMoveMap_RemapCount++;
-$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Show Scores";
-$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "showPlayerList";
-$XaNotc1EtherformMoveMap_RemapCount++;
-$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Suicide";
-$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "suicide";
-$XaNotc1EtherformMoveMap_RemapCount++;
-$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Toggle Camera";
-$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "toggleCamera";
-$XaNotc1EtherformMoveMap_RemapCount++;
-$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Drop Camera at Player";
-$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "dropCameraAtPlayer";
-$XaNotc1EtherformMoveMap_RemapCount++;
-$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Drop Player at Camera";
-$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "dropPlayerAtCamera";
-$XaNotc1EtherformMoveMap_RemapCount++;
-$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Bring up Options Dialog";
-$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "bringUpOptions";
-$XaNotc1EtherformMoveMap_RemapCount++;
-$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Launch Explosive Disc";
-$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "launchExplosiveDisc";
-$XaNotc1EtherformMoveMap_RemapCount++;
-$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Launch Repel Disc";
-$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "launchRepelDisc";
-$XaNotc1EtherformMoveMap_RemapCount++;
-$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Launch Razor Disc";
-$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "launchRazorDisc";
+$XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Select class #10";
+$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "XaNotc1EtherformMoveMap_selectLoadout9";
 $XaNotc1EtherformMoveMap_RemapCount++;
 
 function XaNotcSettings1_EtherformControlsGui::onWake(%this)
@@ -100,7 +70,7 @@ function XaNotcSettings1_EtherformControlsGui::onSleep(%this)
    //echo("XaNotcSettings1_EtherformControlsGui::onSleep");
 
    // write out the control config into the rw config file
-   XaNotc1CatMoveMap.save("notc/client/settings/XaNotc1EtherformMoveMap.cs");
+   XaNotc1EtherformMoveMap.save("notc/client/settings/XaNotc1EtherformMoveMap.cs");
 }
 
 function XaNotcSettings1_EtherformControlsGui::fillRemapList( %this )
@@ -151,14 +121,14 @@ function XaNotcSettings1_EtherformControls_onRemapCtrlInputEvent(%device, %actio
    %mapName = XaNotcSettings1_EtherformControls_getMapDisplayName( %device, %action );
 
    // Get the current command this action is mapped to.
-   %prevMap = XaNotc1CatMoveMap.getCommand( %device, %action );
+   %prevMap = XaNotc1EtherformMoveMap.getCommand( %device, %action );
 
    // If nothing was mapped to the previous command
    // mapping then it's easy... just bind it.
    if ( %prevMap $= "" )
    {
       XaNotcSettings1_EtherformControls_unbindExtraActions( %cmd, 1 );
-      XaNotc1CatMoveMap.bind( %device, %action, %cmd );
+      XaNotc1EtherformMoveMap.bind( %device, %action, %cmd );
       optionsDlg-->RemapList.setRowById( %index, XaNotcSettings1_EtherformControls_buildFullMapString( %index ) );
       return;
    }
@@ -169,7 +139,7 @@ function XaNotcSettings1_EtherformControls_onRemapCtrlInputEvent(%device, %actio
    if ( %prevMap $= %cmd )
    {
       XaNotcSettings1_EtherformControls_unbindExtraActions( %cmd, 0 );
-      XaNotc1CatMoveMap.bind( %device, %action, %cmd );
+      XaNotc1EtherformMoveMap.bind( %device, %action, %cmd );
       optionsDlg-->RemapList.setRowById( %index, XaNotcSettings1_EtherformControls_buildFullMapString( %index ) );
       return;
    }
@@ -263,7 +233,7 @@ function XaNotcSettings1_EtherformControls_buildFullMapString( %index )
    %name       = $XaNotc1EtherformMoveMap_RemapName[%index];
    %cmd        = $XaNotc1EtherformMoveMap_RemapCmd[%index];
 
-   %temp = XaNotc1CatMoveMap.getBinding( %cmd );
+   %temp = XaNotc1EtherformMoveMap.getBinding( %cmd );
    if ( %temp $= "" )
       return %name TAB "";
 
@@ -286,7 +256,7 @@ function XaNotcSettings1_EtherformControls_buildFullMapString( %index )
 function XaNotcSettings1_EtherformControls_redoMapping( %device, %action, %cmd, %oldIndex, %newIndex )
 {
 	//%actionMap.bind( %device, %action, $XaNotc1EtherformMoveMap_RemapCmd[%newIndex] );
-	XaNotc1CatMoveMap.bind( %device, %action, %cmd );
+	XaNotc1EtherformMoveMap.bind( %device, %action, %cmd );
 
    %remapList = XaNotcSettings1_EtherformControlsGui-->RemapList;
 	%remapList.setRowById( %oldIndex, XaNotcSettings1_EtherformControls_buildFullMapString( %oldIndex ) );
@@ -304,10 +274,10 @@ function XaNotcSettings1_EtherformControls_findRemapCmdIndex( %command )
 }
 
 /// This unbinds actions beyond %count associated to the
-/// particular XaNotc1CatMoveMap %commmand.
+/// particular XaNotc1EtherformMoveMap %commmand.
 function XaNotcSettings1_EtherformControls_unbindExtraActions( %command, %count )
 {
-   %temp = XaNotc1CatMoveMap.getBinding( %command );
+   %temp = XaNotc1EtherformMoveMap.getBinding( %command );
    if ( %temp $= "" )
       return;
 
@@ -317,13 +287,13 @@ function XaNotcSettings1_EtherformControls_unbindExtraActions( %command, %count 
       %device = getField( %temp, %i + 0 );
       %action = getField( %temp, %i + 1 );
 
-      XaNotc1CatMoveMap.unbind( %device, %action );
+      XaNotc1EtherformMoveMap.unbind( %device, %action );
    }
 }
 
 function XaNotcSettings1_EtherformControls_restoreDefaultMappings()
 {
-   XaNotc1CatMoveMap.delete();
+   XaNotc1EtherformMoveMap.delete();
    exec("notc/client/settings/XaNotc1EtherformMoveMap.cs");
    optionsDlg.fillRemapList();
 }

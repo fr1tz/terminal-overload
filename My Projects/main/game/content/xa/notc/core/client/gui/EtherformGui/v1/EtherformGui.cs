@@ -20,7 +20,7 @@ function EtherformGui::onWake(%this)
    }      
    
    // just update the action map here
-   XaNotc1CatMoveMap_activate();
+   XaNotc1MiscMoveMap_activate();
    XaNotc1EtherformMoveMap_activate();
    
    // Start tick thread.
