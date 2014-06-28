@@ -252,8 +252,8 @@ function PlayerData::onDisabled(%this, %obj, %state)
    commandToClient(%obj.client, 'toggleVehicleMap', false);
 
    // Schedule corpse removal. Just keeping the place clean.
-   %obj.schedule(0, "startFade", 3000, 0, true);
-   %obj.schedule(3000, "delete");
+   %obj.schedule(0, "startFade", 4000, 0, true);
+   %obj.schedule(4000, "delete");
 }
 
 //-----------------------------------------------------------------------------
