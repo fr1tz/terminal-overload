@@ -140,7 +140,7 @@ singleton Material(xa_rotc_hack_shapes_mat10)
 {
    mapTo = "grid.bluegrey";
    diffuseMap[0] = "content/xa/rotc/p.5.4/shapes/eth/grid.bluegrey.png";
-   glow[0] = "1";
+   glow[0] = "0";
    doubleSided = "1";
    castShadows = "0";
    translucent = "1";
@@ -148,6 +148,10 @@ singleton Material(xa_rotc_hack_shapes_mat10)
    showFootprints = "0";
    materialTag0 = "Miscellaneous";
    diffuseColor[0] = "0.996078 0.996078 0.996078 1";
+   diffuseColor[1] = "0.988235 0.996078 0.988235 1";
+   diffuseMap[1] = "content/xa/notc/core/textures/grid.128.4.png";
+   emissive[1] = "1";
+   wireframe[1] = "1";
 };
 
 singleton Material(xa_rotc_hack_shapes_mat11)
