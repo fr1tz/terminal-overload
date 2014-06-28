@@ -175,7 +175,7 @@ singleton Material(xa_notc_core_shapes_standardcat_erasemat)
    emissive[0] = "1";
    glow[0] = "1";
    diffuseColor[0] = "1 1 1 1";
-   diffuseColorPaletteSlot[0] = "-1";
+   diffuseColorPaletteSlot[0] = "0";
    diffuseMap[0] = "content/xa/notc/core/shapes/standardcat/armor.png";
    pixelSpecular[0] = "0";
    diffuseColor[1] = "0.996078 0.996078 0.996078 1";
@@ -193,11 +193,17 @@ singleton Material(xa_notc_core_shapes_standardcat_erasemat)
    showFootprints = "0";
    wireframe[0] = "0";
    glowOnly[0] = "1";
-   animFlags[0] = "0x00000001";
+   animFlags[0] = "0x00000009";
    scrollDir[0] = "1 1";
    scrollSpeed[0] = "1";
-   animFlags[1] = "0x00000001";
+   animFlags[1] = "0x00000005";
    scrollDir[1] = "1 1";
    scrollSpeed[1] = "2";
+   waveType[0] = "Square";
+   waveFreq[0] = "10";
+   waveFreq[1] = "4.531";
+   waveAmp[0] = "1";
+   waveAmp[1] = "0.547";
+   diffuseColor[3] = "1 1 1 1";
 };
 
