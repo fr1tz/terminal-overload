@@ -97,6 +97,11 @@ singleton Material(xa_rotc_hack_shapes_mat6)
    materialTag0 = "Miscellaneous";
    specularStrength[0] = "1.25";
    doubleSided = "1";
+   diffuseColorPaletteSlot[0] = "0";
+   diffuseColor[1] = "0.996078 0.996078 0.996078 1";
+   diffuseColorPaletteSlot[1] = "0";
+   wireframe[1] = "1";
+   emissive[1] = "1";
 };
 
 singleton Material(xa_rotc_hack_shapes_mat7)
