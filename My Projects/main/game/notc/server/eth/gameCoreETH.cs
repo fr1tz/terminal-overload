@@ -192,10 +192,11 @@ function GameCoreETH::loadOut(%game, %player)
    %team = %player.client.team;
    %player.setTeamId(%team.teamId);
    %teamColorF = %team.color;
-   %teamColorI = getWord(%teamColorF, 0)*255 SPC
-                 getWord(%teamColorF, 1)*255 SPC
-                 getWord(%teamColorF, 2)*255 SPC
+   %teamColorI = mFloatLength(getWord(%teamColorF, 0)*255, 0) SPC
+                 mFloatLength(getWord(%teamColorF, 1)*255, 0) SPC
+                 mFloatLength(getWord(%teamColorF, 2)*255, 0) SPC
                  255;
+   //echo(%teamColorF SPC "->" SPC %teamColorI);
 
    %player.paletteColors[0] = %teamColorI;
    %player.paletteColors[1] = %teamColorI;
