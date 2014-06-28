@@ -23,9 +23,9 @@ function GameConnection::MinimapHud_ClearIcons(%client)
 
 function GameConnection::MinimapHud_AddColor(%client, %id, %colorF)
 {
-   %colorI = getWord(%colorF, 0)*255 SPC
-             getWord(%colorF, 1)*255 SPC
-             getWord(%colorF, 2)*255 SPC
+   %colorI = mFloatLength(getWord(%colorF, 0)*255, 0) SPC
+             mFloatLength(getWord(%colorF, 1)*255, 0) SPC
+             mFloatLength(getWord(%colorF, 2)*255, 0) SPC
              255;
    commandToClient(%client, '_XaNotcMinimapHud_AddColor', %id, %colorI);
 }
