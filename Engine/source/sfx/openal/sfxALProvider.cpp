@@ -57,10 +57,6 @@ MODULE_END;
 
 void SFXALProvider::init()
 {
-#ifdef TORQUE_OS_LINUX
-   return;
-#endif
-
    if( LoadOAL10Library( NULL, &mOpenAL ) != AL_TRUE )
    {
       Con::printf( "SFXALProvider - OpenAL not available." );
@@ -113,10 +109,6 @@ void SFXALProvider::init()
 
 SFXALProvider::~SFXALProvider()
 {
-#ifdef TORQUE_OS_LINUX
-   return;
-#endif
-
    UnloadOAL10Library();
 
    if (mALDL)
