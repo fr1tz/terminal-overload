@@ -63,6 +63,7 @@ function initClient()
                        // fast whiteout flash decays.
 
    // Load up the shell GUIs
+   exec("notc/client/shell/mainMenuGui.cs");
    exec("notc/client/shell/mainMenuGui.gui");
    exec("notc/client/shell/joinServerDlg.gui");
    exec("notc/client/shell/StartupGui.gui");

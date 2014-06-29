@@ -37,10 +37,10 @@
       new GuiBitmapCtrl(LoadingLogo) {
          bitmap = "notc/client/graphics/logo.png";
          wrap = "0";
-         position = "148 30";
+         position = "60 30";
          extent = "394 87";
          minExtent = "8 2";
-         horizSizing = "center";
+         horizSizing = "right";
          vertSizing = "bottom";
          profile = "GuiDefaultProfile";
          visible = "1";
