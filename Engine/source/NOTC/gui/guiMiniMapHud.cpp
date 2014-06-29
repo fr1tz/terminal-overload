@@ -10,7 +10,7 @@
 #include "console/consoleTypes.h"
 #include "scene/sceneManager.h"
 #include "NOTC/hudInfo.h"
-#include "NOTC/tacticalZone.h"
+#include "NOTC/tacticalzone.h"
 #include "T3D/gameBase/gameConnection.h"
 #include "T3D/shapeBase.h"
 #include "gfx/gfxDrawUtil.h"
