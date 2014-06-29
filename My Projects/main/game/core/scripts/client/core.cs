@@ -16,7 +16,7 @@ function initializeCore()
    GlobalActionMap.bind(keyboard, "ctrl p", doScreenShot);
    GlobalActionMap.bindcmd(keyboard, "alt enter", "Canvas.attemptFullscreenToggle();","");
    GlobalActionMap.bindcmd(keyboard, "alt k", "cls();",  "");
-//   GlobalActionMap.bindCmd(keyboard, "escape", "", "handleEscape();");
+   GlobalActionMap.bindCmd(keyboard, "escape", "", "handleEscape();");
 
    GlobalActionMap.bindCmd(keyboard, "F1", "commandToServer('_F', 1);", "");
    GlobalActionMap.bindCmd(keyboard, "F2", "commandToServer('_F', 2);", "");
@@ -173,7 +173,12 @@ function handleEscape()
    }
 
    if ($PlayGui.isAwake())
-      escapeFromGame();	
+   {
+      if ( $Server::ServerType $= "SinglePlayer" )
+         MessageBoxYesNo( "Exit", "Exit from this Mission?", "disconnect();", "");
+      else
+         MessageBoxYesNo( "Disconnect", "Disconnect from the server?", "disconnect();", "");
+   }
 }
 
 //-----------------------------------------------------------------------------
