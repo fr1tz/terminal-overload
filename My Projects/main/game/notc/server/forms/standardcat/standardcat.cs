@@ -338,6 +338,18 @@ function FrmStandardcat::onAdd(%this, %obj)
    %obj.setEnergyLevel(%this.maxEnergy);
 	%obj.isCAT = true;
 	%obj.getTeamObject().numCATs++;
+ 
+   // Setup light
+   %obj.zLight = new PointLight() {
+      attenuationRatio = "0 1 1";
+      radius = "10";
+      isEnabled = "1";
+      color = "1 1 1 1";
+      brightness = "2";
+      castShadows = "0";
+   };
+   MissionCleanup.add(%obj.zLight);
+   %obj.mountObject(%obj.zLight, 3);
 }
 
 // callback function: called by engine
@@ -351,6 +363,9 @@ function FrmStandardcat::onRemove(%this, %obj)
       %obj.zDiscTargetSet.clear();
       %obj.zDiscTargetSet.delete();
    }
+   
+   if(isObject(%obj.zLight))
+      %obj.zLight.delete();
 }
 
 // callback function: called by engine
