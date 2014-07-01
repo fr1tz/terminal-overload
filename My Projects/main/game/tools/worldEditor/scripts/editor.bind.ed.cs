@@ -5,6 +5,12 @@
 // Mission Editor Manager
 new ActionMap(EditorMap);
 
+function EditorMap_getMouseAdjustAmount(%val)
+{
+   // based on a default camera FOV of 90'
+   return(%val * ($cameraFov / 90) * 0.01) * $pref::Input::LinkMouseSensitivity;
+}
+
 function mouseWheelScroll( %val )
 {
    //$Camera::speedCurveTime += $Camera::scrollStepSize * ( (%val>0.0) ? 1 : -1 );
@@ -12,14 +18,14 @@ function mouseWheelScroll( %val )
    //calculateCameraSpeed();   
    //EditorGui-->CameraSpeedSpinner.setText( $Camera::movementSpeed );
 
-   %rollAdj = getMouseAdjustAmount(%val);
+   %rollAdj = EditorMap_getMouseAdjustAmount(%val);
    %rollAdj = mClamp(%rollAdj, -mPi()+0.01, mPi()-0.01);
    $mvRoll += %rollAdj;
 }
 
 function editorYaw(%val)
 {
-   %yawAdj = getMouseAdjustAmount(%val);
+   %yawAdj = EditorMap_getMouseAdjustAmount(%val);
 
    if(ServerConnection.isControlObjectRotDampedCamera() || EWorldEditor.isMiddleMouseDown())
    {
@@ -36,7 +42,7 @@ function editorYaw(%val)
 
 function editorPitch(%val)
 {
-   %pitchAdj = getMouseAdjustAmount(%val);
+   %pitchAdj = EditorMap_getMouseAdjustAmount(%val);
 
    if(ServerConnection.isControlObjectRotDampedCamera() || EWorldEditor.isMiddleMouseDown())
    {
