@@ -250,7 +250,7 @@ function PlatformFileDialog::freeItem( %this, %item )
 
 function PlatformFileDialog::addDir( %this, %dir )
 {
-   //echo( "Dir: " @ %dir );
+   //echo("PlatformFileDialog::addDir(): " @ %dir );
    %item = %this.getNewItem();
    %item.setText( %dir );
    %item.isDir = true;
@@ -263,7 +263,7 @@ function PlatformFileDialog::addDir( %this, %dir )
 
 function PlatformFileDialog::addFile( %this, %file )
 {
-   //echo( "File: " @ %file );
+   //echo("PlatformFileDialog::addFile(): " @ %file );
    %item = %this.getNewItem();
    %item.text = strreplace( %file, %this.searchDir, "" );
    %item.isDir = false;
@@ -282,12 +282,14 @@ function PlatformFileDialog::onSleep( %this )
 
 function PlatformFileDialog::update( %this )
 {
+   //echo("PlatformFileDialog::update()");
    %this.clear();
    
    %this-->popUpMenu.text = %this.searchDir;
 
    // dirs
-   %dirList = getDirectoryList( %this.searchDir, 0 );
+   %dirList = getDirectoryList( %this.searchDir, 1 );
+   //echo("dirList:" SPC %dirList);
    %wordCount = getFieldCount( %dirList );
    for( %i = 0; %i < %wordCount; %i++ )
    {
@@ -298,10 +300,11 @@ function PlatformFileDialog::update( %this )
    //files
    %pattern = %this.filter[0];
    //echo( %pattern );
-   %file = findFirstFileMultiExpr( %this.searchDir @ %pattern, false);
-   
+   //echo("search:" SPC %this.searchDir @ %pattern);
+   %file = findFirstFileMultiExpr( %this.searchDir @ %pattern, false);  
    while( %file !$= "" )
    {      
+      //echo("file:" SPC %file);
       %this.addFile( %file );
       %file = findNextFileMultiExpr( %pattern );
    }
