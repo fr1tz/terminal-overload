@@ -243,13 +243,16 @@ function ETH::resetLoadout(%client)
    %active[1] = true;
    %active[2] = true;
    %active[3] = true;
+   %active[4] = false;
+   %active[5] = false;
+   %active[6] = false;
 
    %icon[0] = "content/xa/notc/core/icons/p1/smg1.32x32.png";
    %icon[1] = "content/xa/notc/core/icons/p1/mgl1.32x32.png";
    %icon[2] = "content/xa/notc/core/icons/p1/sr1.32x32.png";
    %icon[3] = "content/xa/notc/core/icons/p1/mg1.32x32.png";
 
-   for(%i = 0; %i < 5; %i++)
+   for(%i = 0; %i < 6; %i++)
    {
       %client.zLoadoutProgress[%i] = 1.0;
       %client.zLoadoutProgressDt[%i] = 0.0;
