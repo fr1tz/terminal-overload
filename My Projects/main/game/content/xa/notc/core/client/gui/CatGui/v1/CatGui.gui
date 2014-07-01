@@ -63,6 +63,24 @@
       canSave = "1";
       canSaveDynamicFields = "0";
    };
+   new GuiFriendOrFoeHud() {
+      hudInfoDatasetType_TeamID = "2";
+      friendBitmap = "content/xa/notc/core/icons/p1/teammate.png";
+      foeBitmap = "content/xa/notc/core/icons/p1/enemy.png";
+      position = "0 0";
+      extent = "640 480";
+      minExtent = "8 2";
+      horizSizing = "width";
+      vertSizing = "height";
+      profile = "GuiDefaultProfile";
+      visible = "1";
+      active = "1";
+      tooltipProfile = "GuiToolTipProfile";
+      hovertime = "1000";
+      isContainer = "0";
+      canSave = "1";
+      canSaveDynamicFields = "0";
+   };
    new GuiDynamicCrossHairHud() {
       size = "16";
       alphaFactor = "0";
