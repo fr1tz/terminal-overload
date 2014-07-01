@@ -317,6 +317,29 @@ void GuiMiniMapHud::onRender( Point2I, const RectI &updateRect)
       GFX->getDrawUtil()->drawBitmapStretch(icon->tex, rect,
          GFXBitmapFlip_None, GFXTextureFilterLinear, false);
    }
+
+   // Draw FOV lines.
+   if(mZoomAngle != 0)
+   {
+      F32 angle = (mZoomAngle/360)*M_PI;
+      MatrixF mat;
+      Point3F a(0, 0, 0);
+      Point3F b(0, -mHW, 0);
+
+      GFX->pushWorldMatrix();
+      mat.set(EulerF( 0.0, 0.0, angle ));
+      mat.setPosition(mCenter);
+      GFX->multWorld(mat);
+      GFX->getDrawUtil()->drawLine(a, b, ColorI(255,255,255,100));
+      GFX->popWorldMatrix();
+
+      GFX->pushWorldMatrix();
+      mat.set(EulerF( 0.0, 0.0, -angle ));
+      mat.setPosition(mCenter);
+      GFX->multWorld(mat);
+      GFX->getDrawUtil()->drawLine(a, b, ColorI(255,255,255,100));
+      GFX->popWorldMatrix();
+   }
 }
 
 //----------------------------------------------------------------------------
@@ -362,6 +385,7 @@ void GuiMiniMapHud::drawTacticalZone(TacticalZone* obj)
       return;
 
    ColorF color = obj->getZoneColor();
+   ColorF borderColor = obj->getPaletteColor(1);
 
    Point3F pos = obj->getBoxCenter();
    MatrixF mat = obj->getTransform();
@@ -377,10 +401,10 @@ void GuiMiniMapHud::drawTacticalZone(TacticalZone* obj)
    Point3F c = pos - yVec + xVec; c = project(c);
    Point3F d = pos - yVec - xVec; d = project(d);
 
-   GFX->getDrawUtil()->drawLine(a, b, color);
-   GFX->getDrawUtil()->drawLine(b, c, color);
-   GFX->getDrawUtil()->drawLine(c, d, color);
-   GFX->getDrawUtil()->drawLine(d, a, color);
+   GFX->getDrawUtil()->drawLine(a, b, borderColor);
+   GFX->getDrawUtil()->drawLine(b, c, borderColor);
+   GFX->getDrawUtil()->drawLine(c, d, borderColor);
+   GFX->getDrawUtil()->drawLine(d, a, borderColor);
 
    GFXStateBlockDesc rectFill;
    rectFill.setCullMode(GFXCullNone);
