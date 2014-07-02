@@ -634,6 +634,7 @@ void Win32Window::_registerWindowClass()
 
 	HMODULE appInstance = GetModuleHandle(NULL);
 	HICON   appIcon = LoadIcon(appInstance, MAKEINTRESOURCE(IDI_ICON1));
+	HICON   appIconSm = LoadIcon(appInstance, MAKEINTRESOURCE(IDI_ICON2));
 
 	// Window class shared by all MainWindow objects
 	classInfo.lpszClassName = _MainWindowClassName;
@@ -642,7 +643,7 @@ void Win32Window::_registerWindowClass()
 	classInfo.lpfnWndProc   = (WNDPROC)WindowProc;
 	classInfo.hInstance     = appInstance;       // Owner of this class
 	classInfo.hIcon         = appIcon;           // Icon name
-	classInfo.hIconSm       = appIcon;           // Icon name
+	classInfo.hIconSm       = appIconSm;         // Icon name
 	classInfo.hCursor       = LoadCursor(NULL, IDC_ARROW); // Cursor
 	classInfo.hbrBackground = (HBRUSH)(COLOR_WINDOW+1);    // Default color
 	classInfo.lpszMenuName  = NULL;
