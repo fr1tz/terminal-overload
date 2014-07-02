@@ -36,7 +36,7 @@ datablock PlayerData(FrmStandardcat)
    cameraMinFov = "10";
    cameraMaxFov = "180";
 
-   debrisShapeName = "content/xa/torque3d/3.0/shapes/actors/common/debris_player.dts";
+   //debrisShapeName = "content/xa/torque3d/3.0/shapes/actors/common/debris_player.dts";
    debris = PlayerDebris;
 
    throwForce = 30;
