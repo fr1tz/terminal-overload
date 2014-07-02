@@ -28,7 +28,7 @@ create_packages()
 
 	tar -czf $SOURCE_DIST_NAME.tar.gz $SOURCE_DIST_NAME
 	tar -czf $LINUX_DIST_NAME.tar.gz $LINUX_DIST_NAME
-	zip -r $LINUX_DIST_NAME.zip $LINUX_DIST_NAME
+	zip -r $WIN32_DIST_NAME.zip $WIN32_DIST_NAME
 
 	echo 'Done creating packages!'
 )
