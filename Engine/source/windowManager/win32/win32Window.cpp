@@ -50,7 +50,11 @@ const UTF16* _CurtainWindowClassName = L"TorqueJuggernaughtCurtainWindow";
 #define SCREENSAVER_QUERY_DENY 0 // Disable screensaver
 
 #ifndef IDI_ICON1 
-#define IDI_ICON1 107
+#define IDI_ICON1 103
+#endif
+
+#ifndef IDI_ICON2 
+#define IDI_ICON2 107
 #endif
 
 static bool isScreenSaverRunning()
