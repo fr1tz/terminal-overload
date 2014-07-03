@@ -504,12 +504,13 @@ if(WIN32)
 endif()
 
 if(UNIX)
-    # copy pasted from T3D build system, some might not be needed
+	# list of libs copy pasted from T3D build system, some might not be needed
 	set(TORQUE_EXTERNAL_LIBS "dl Xxf86vm Xext X11 Xft stdc++ pthread GL" CACHE STRING "external libs to link against")
 	mark_as_advanced(TORQUE_EXTERNAL_LIBS)
-    
-    string(REPLACE " " ";" TORQUE_EXTERNAL_LIBS_LIST ${TORQUE_EXTERNAL_LIBS})
-    addLib( "${TORQUE_EXTERNAL_LIBS_LIST}" )
+	string(REPLACE " " ";" TORQUE_EXTERNAL_LIBS_LIST ${TORQUE_EXTERNAL_LIBS})
+	foreach(TORQUE_EXT_LIB ${TORQUE_EXTERNAL_LIBS_LIST})
+		addLib("${TORQUE_EXT_LIB}")
+	endforeach(TORQUE_EXT_LIB)
 endif()
 
 ###############################################################################
