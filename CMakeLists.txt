@@ -1,6 +1,6 @@
 cmake_minimum_required (VERSION 2.8.3)
 
-set(TORQUE_APP_NAME "" CACHE STRING "the app name")
+set(TORQUE_APP_NAME "main" CACHE STRING "the app name")
 
 if("${TORQUE_APP_NAME}" STREQUAL "")
 	message(FATAL_ERROR "Please set TORQUE_APP_NAME first")
