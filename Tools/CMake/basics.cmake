@@ -315,9 +315,9 @@ endif()
 
 if(UNIX)
 	SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${projectOutDir}")
-	set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${projectOutDir}")
+	set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${projectOutDir}/lib")
 	SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG "${projectOutDir}")
-	set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_DEBUG "${projectOutDir}")
+	set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_DEBUG "${projectOutDir}/lib")
 endif()
 
 
