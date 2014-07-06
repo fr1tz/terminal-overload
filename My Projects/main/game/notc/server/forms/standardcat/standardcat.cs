@@ -496,6 +496,7 @@ function FrmStandardcat::onStartSliding(%this, %obj)
 {
    //echo("FrmStandardcat::onStartSliding()");
    
+   %obj.zIsSliding = true;
    if(isObject(%obj.etherboard))
       %obj.etherboard.getDataBlock().activate(%obj);
 }
@@ -504,7 +505,8 @@ function FrmStandardcat::onStartSliding(%this, %obj)
 function FrmStandardcat::onStopSliding(%this, %obj)
 {
    //echo("FrmStandardcat::onStopSliding()");
-   
+
+   %obj.zIsSliding = false;
    if(isObject(%obj.etherboard))
       %obj.etherboard.getDataBlock().deactivate(%obj);
 }

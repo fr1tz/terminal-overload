@@ -61,36 +61,26 @@ function ItemImpShieldShape::updateThread(%this, %obj)
       return;
    
    %level = %obj.getLevel();
-   %vel = %mount.getVelocity();
-   %vel = setWord(%vel, 2, 0); // clear out z component
-   %speed = VectorLen(%vel);
    
-   if(%mount.zImpShieldLimit $= "")
-      %mount.zImpShieldLimit = 0.75;
-   
-   if(%level <= 0.75)
+   %contact = false;
+	if(!%mount.zIsSliding)
    {
-      %level += 0.0001*%dtTime;
-      if(%speed > 16)
-         %level -= %speed/(50*%dtTime);
-      if(%level > %mount.zImpShieldLimit)
-         %level = %mount.zImpShieldLimit;
+      %start = %mount.getWorldBoxCenter();
+      %end	= VectorAdd(%start, "0 0 -3");
+      %mask = $TypeMasks::StaticObjectType;
+      %contact = containerRayCast(%start, %end, %mask, %mount);
+   }
+
+   if(%contact)
+   {
+      %dt = 0.010;
    }
    else
    {
-      %level += 0.0003125*%dtTime;
-      %level -= %speed/(6.25*%dtTime);
-      %level = mClamp(%level, 0.02, 1.0);
+      %dt = -0.008;
    }
    
-   //echo(%mount.zImpShieldLimit);
-   //echo("speed:" SPC %speed);
-   //echo("level:" SPC %level SPC "(" @ %level * %this.mass @ ")");
-   
-   if(%level > %mount.zImpShieldLimit)
-      %this.drop(%obj);
-
-   %level = mClamp(%level, 0, %mount.zImpShieldLimit);
+   %level = mClamp(%level+%dt, 0, 0.75);
 
    %obj.setLevel(%level);
    %mount.zImpShield = %level;
