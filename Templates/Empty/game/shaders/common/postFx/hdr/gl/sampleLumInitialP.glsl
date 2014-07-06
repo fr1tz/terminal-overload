@@ -41,16 +41,16 @@ void main()
 {
    vec2 tsize = 1.0 / texSize0;
 
-   vec3 sample;
+   vec3 _sample;
    float average = 0.0;
      
    for ( int i = 0; i < 9; i++ )
    {
       // Decode the hdr value.
-      sample = hdrDecode( texture( inputTex, IN_uv0 + ( gTapOffsets[i] * tsize ) ).rgb );
+      _sample = hdrDecode( texture( inputTex, IN_uv0 + ( gTapOffsets[i] * tsize ) ).rgb );
 
       // Get the luminance and add it to the average.
-      float lum = max( hdrLuminance( sample ), g_fMinLuminace );
+      float lum = max( hdrLuminance( _sample ), g_fMinLuminace );
       average += log( lum );
    }
 

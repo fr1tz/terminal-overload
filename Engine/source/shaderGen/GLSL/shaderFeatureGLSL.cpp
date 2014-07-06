@@ -2386,7 +2386,7 @@ void GlowMaskGLSL::processPix(   Vector<ShaderComponent*> &componentList,
    // code above that doesn't contribute to the alpha mask.
    Var *color = (Var*)LangElement::find( "col" );
    if ( color )
-      output = new GenOp( "   @.rgb = 0;\r\n", color );
+      output = new GenOp( "   @.rgb = vec3(0);\r\n", color );
 }
 
 

@@ -37,12 +37,12 @@ void main()
 {
    // We calculate the texture coords
    // in the vertex shader as an optimization.
-   vec4 sample = vec4(0.0f);
+   vec4 _sample = vec4(0.0f);
    for ( int i = 0; i < 8; i++ )
    {
-      sample += texture( inputTex, IN_texCoords[i].xy );
-      sample += texture( inputTex, IN_texCoords[i].zw );
+      _sample += texture( inputTex, IN_texCoords[i].xy );
+      _sample += texture( inputTex, IN_texCoords[i].zw );
    }
    
-	OUT_FragColor0 = sample / 16;
+	OUT_FragColor0 = _sample / 16;
 }

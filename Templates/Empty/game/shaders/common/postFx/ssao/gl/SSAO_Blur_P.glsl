@@ -47,7 +47,7 @@ uniform float blurDepthTol;
 uniform float blurNormalTol;
 
 
-void sample( vec2 uv, float weight, vec4 centerTap, inout int usedCount, inout float occlusion, inout float total )
+void _sample( vec2 uv, float weight, vec4 centerTap, inout int usedCount, inout float occlusion, inout float total )
 {
    //return;
    vec4 tap = prepassUncondition( prepassMap, uv );   
@@ -79,15 +79,15 @@ void main()
    int usedCount = 0;
    float total = 0.0;
          
-   sample( IN_uv0.xy, kernel.x, centerTap, usedCount, occlusion, total );
-   sample( IN_uv1, kernel.y, centerTap, usedCount, occlusion, total );
-   sample( IN_uv2, kernel.z, centerTap, usedCount, occlusion, total );
-   sample( IN_uv3, kernel.w, centerTap, usedCount, occlusion, total );
+   _sample( IN_uv0.xy, kernel.x, centerTap, usedCount, occlusion, total );
+   _sample( IN_uv1, kernel.y, centerTap, usedCount, occlusion, total );
+   _sample( IN_uv2, kernel.z, centerTap, usedCount, occlusion, total );
+   _sample( IN_uv3, kernel.w, centerTap, usedCount, occlusion, total );
    
-   sample( IN_uv4, kernel.x, centerTap, usedCount, occlusion, total );
-   sample( IN_uv5, kernel.y, centerTap, usedCount, occlusion, total );
-   sample( IN_uv6, kernel.z, centerTap, usedCount, occlusion, total );
-   sample( IN_uv7, kernel.w, centerTap, usedCount, occlusion, total );   
+   _sample( IN_uv4, kernel.x, centerTap, usedCount, occlusion, total );
+   _sample( IN_uv5, kernel.y, centerTap, usedCount, occlusion, total );
+   _sample( IN_uv6, kernel.z, centerTap, usedCount, occlusion, total );
+   _sample( IN_uv7, kernel.w, centerTap, usedCount, occlusion, total );   
    
    occlusion += texture( occludeMap, IN_uv0.zw ).r * 0.5;
    total += 0.5;
