@@ -7899,7 +7899,7 @@ void Player::updateFirstPersonWeaponBob(F32 dt)
    {
       F32 vel = this->getVelocity().len();
       mFirstPersonWeaponBob.counter += vel * 0.5 * dt;
-      mFirstPersonWeaponBob.pos.x = 0.075 * mSin(mFirstPersonWeaponBob.counter);
+      mFirstPersonWeaponBob.pos.x = 0.05 * mSin(mFirstPersonWeaponBob.counter);
    }
 }
 
