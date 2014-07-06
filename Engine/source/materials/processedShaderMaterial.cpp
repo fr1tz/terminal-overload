@@ -524,7 +524,7 @@ bool ProcessedShaderMaterial::_createPasses( MaterialFeatureData &stageFeatures,
       if(oldTexNumber != texIndex)
       {
          for(int i = oldTexNumber; i < texIndex; i++)
-            AssertFatal(passData.mSamplerNames[ oldTexNumber ].isNotEmpty(),"");
+            AssertFatal(passData.mSamplerNames[ oldTexNumber ].isNotEmpty(), avar( "ERROR: ShaderGen feature %s don't set used sampler name", info.feature->getName().c_str()) );
       }
 #endif
 
