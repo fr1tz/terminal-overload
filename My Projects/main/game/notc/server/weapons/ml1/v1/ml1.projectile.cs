@@ -21,7 +21,7 @@ function WpnML1_spawnProjectile(%datablock, %srcObj, %slot, %muzzlePoint, %muzzl
 
 datablock ProjectileData(WpnML1Projectile)
 {
-   projectileShapeName = "content/xa/oldshapes/raptor/magazine/p1/shape.dae";
+   //projectileShapeName = "content/xa/oldshapes/raptor/magazine/p1/shape.dae";
 
    //lightDesc = BulletProjectileLightDesc;
 
