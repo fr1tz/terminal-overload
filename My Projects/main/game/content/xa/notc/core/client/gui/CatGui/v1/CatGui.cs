@@ -58,7 +58,7 @@ function CatGui::tickThread(%this)
       cancel(%this.zTickThread);
       %this.zTickThread = "";
    }
-   %this.zTickThread = %this.schedule(32, "tickThread");
+   %this.zTickThread = %this.schedule(128, "tickThread");
 
    if(!isObject(ServerConnection))
       return;
@@ -88,9 +88,10 @@ function CatGui::tickThread(%this)
    for(%i = 0; %i < %n; %i++)
    {
       %obj = %control.getMountedObject(%i);
-      if(isObject(%obj))
+      if(isObject(%obj) && %obj.isMethod("getDataBlock"))
       {
-         if(%obj.getDataBlock().getName() $= "ItemImpShieldShape")
+         %data = %obj.getDataBlock();
+         if(isObject(%data) && %data.getName() $= "ItemImpShieldShape")
             %impshield = %obj;
       }
    }
