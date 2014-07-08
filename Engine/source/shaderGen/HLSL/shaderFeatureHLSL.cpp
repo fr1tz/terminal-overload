@@ -1053,7 +1053,10 @@ void OverlayTexFeatHLSL::setTexData(   Material::StageData &stageDat,
 {
    GFXTextureObject *tex = stageDat.getTex( MFT_OverlayMap );
    if ( tex )
+   {
+      passData.mSamplerNames[texIndex] = "overlayMap";
       passData.mTexSlot[ texIndex++ ].texObject = tex;
+   }
 }
 
 

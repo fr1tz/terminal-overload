@@ -46,7 +46,7 @@ uniform float g_fOneOverGamma;
 
 void main()
 {
-   vec4 sample = hdrDecode( texture( sceneTex, IN_uv0 ) );
+   vec4 _sample = hdrDecode( texture( sceneTex, IN_uv0 ) );
    float adaptedLum = texture( luminanceTex, vec2( 0.5f, 0.5f ) ).r;
    vec4 bloom = texture( bloomTex, IN_uv0 );
 
@@ -63,8 +63,8 @@ void main()
       coef = saturate( coef * g_fEnableBlueShift );
 
       // Lerp between current color and blue, desaturated copy
-      vec3 rodColor = dot( sample.rgb, LUMINANCE_VECTOR ) * g_fBlueShiftColor;
-      sample.rgb = mix( sample.rgb, rodColor, coef );
+      vec3 rodColor = dot( _sample.rgb, LUMINANCE_VECTOR ) * g_fBlueShiftColor;
+      _sample.rgb = mix( _sample.rgb, rodColor, coef );
 	  
       rodColor = dot( bloom.rgb, LUMINANCE_VECTOR ) * g_fBlueShiftColor;
       bloom.rgb = mix( bloom.rgb, rodColor, coef );
@@ -75,22 +75,22 @@ void main()
    // white point, and selected value for for middle gray.
    if ( g_fEnableToneMapping > 0.0f )
    {
-      float Lp = (g_fMiddleGray / (adaptedLum + 0.0001)) * hdrLuminance( sample.rgb );
+      float Lp = (g_fMiddleGray / (adaptedLum + 0.0001)) * hdrLuminance( _sample.rgb );
       //float toneScalar = ( Lp * ( 1.0 + ( Lp / ( g_fWhiteCutoff ) ) ) ) / ( 1.0 + Lp );
 	  float toneScalar = Lp;
-      sample.rgb = mix( sample.rgb, sample.rgb * toneScalar, g_fEnableToneMapping );
+      _sample.rgb = mix( _sample.rgb, _sample.rgb * toneScalar, g_fEnableToneMapping );
    }
 
    // Add the bloom effect.
-   sample += g_fBloomScale * bloom;
+   _sample += g_fBloomScale * bloom;
 
    // Apply the color correction.
-   sample.r = texture( colorCorrectionTex, sample.r ).r;
-   sample.g = texture( colorCorrectionTex, sample.g ).g;
-   sample.b = texture( colorCorrectionTex, sample.b ).b;
+   _sample.r = texture( colorCorrectionTex, _sample.r ).r;
+   _sample.g = texture( colorCorrectionTex, _sample.g ).g;
+   _sample.b = texture( colorCorrectionTex, _sample.b ).b;
 
    // Apply gamma correction
-   sample.rgb = pow( abs(sample.rgb), vec3(g_fOneOverGamma) );
+   _sample.rgb = pow( abs(_sample.rgb), vec3(g_fOneOverGamma) );
 
-   OUT_FragColor0 = sample;
+   OUT_FragColor0 = _sample;
 }
