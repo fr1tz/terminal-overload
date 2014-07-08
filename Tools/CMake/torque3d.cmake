@@ -25,7 +25,7 @@ mark_as_advanced(TORQUE_BASIC_LIGHTING)
 option(TORQUE_THEORA "Theora Video Support" ON)
 mark_as_advanced(TORQUE_THEORA)
 if(WIN32)
-	option(TORQUE_SFX_DirectX "DirectX Sound" OFF)
+	option(TORQUE_SFX_DirectX "DirectX Sound" ON)
 	mark_as_advanced(TORQUE_SFX_DirectX)
 else()
 	set(TORQUE_SFX_DirectX OFF)
@@ -76,7 +76,7 @@ endif()
 # options
 ###############################################################################
 if(NOT MSVC) # handle single-configuration generator
-    set(TORQUE_BUILD_TYPE "Debug" CACHE STRING "Select one of Debug, Release and RelWithDebInfo")
+    set(TORQUE_BUILD_TYPE "Release" CACHE STRING "Select one of Debug, Release and RelWithDebInfo")
     set_property(CACHE TORQUE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "RelWithDebInfo")
     
     set(TORQUE_ADDITIONAL_LINKER_FLAGS "" CACHE STRING "Additional linker flags")
