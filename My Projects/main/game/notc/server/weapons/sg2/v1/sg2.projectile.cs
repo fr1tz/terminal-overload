@@ -113,13 +113,13 @@ datablock ProjectileData(WpnSG2Projectile)
 
 function WpnSG2Projectile::onCollision(%this,%obj,%col,%fade,%pos,%normal)
 {
+   %src = %obj.sourceObject;
+   if(isObject(%src))
+      %src.getDataBlock().addDiscTarget(%src, %col);
+
    Parent::onCollision(%this,%obj,%col,%fade,%pos,%normal);
    
    if( !(%col.getType() & $TypeMasks::ShapeBaseObjectType) )
       return;
-   
-   %src = %obj.sourceObject;
-   if(isObject(%src))
-      %src.getDataBlock().addDiscTarget(%src, %col);
 }
 
