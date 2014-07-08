@@ -2551,3 +2551,30 @@ DefineEngineFunction( isToolBuild, bool, (),,
    return false;
 #endif
 }
+
+//-----------------------------------------------------------------------------
+
+ConsoleFunctionGroupBegin( Cryptography, "Cryptographic functions" );
+
+#include "core/sha256.h"
+
+ConsoleFunction( sha256, const char*, 2, 2, "(data)" )
+{
+	U8 digest[32];
+
+	context_sha256_t ctx;
+	sha256_starts(&ctx);
+	sha256_update(&ctx, (const U8*)argv[1], dStrlen(argv[1]));
+	sha256_finish(&ctx, digest);
+
+	char* ret = Con::getReturnBuffer(65);
+	for(U32 i = 0; i < sizeof(digest); i++)
+		dSprintf(ret+i*2, 65, "%02X", digest[i]);
+	ret[64] = '\0';
+
+	return ret;
+}
+
+ConsoleFunctionGroupEnd( Cryptography );
+
+//-----------------------------------------------------------------------------
