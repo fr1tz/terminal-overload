@@ -61,15 +61,14 @@ function WpnSR1Projectile::onAdd(%this, %obj)
 
 function WpnSR1Projectile::onCollision(%this,%obj,%col,%fade,%pos,%normal)
 {
-   Parent::onCollision(%this,%obj,%col,%fade,%pos,%normal);
-   
-   if( !(%col.getType() & $TypeMasks::ShapeBaseObjectType) )
-      return;
-      
-   %col.activateStealth(4000);
+   if(%col.getType() & $TypeMasks::ShapeBaseObjectType)
+   {
+      %col.activateStealth(4000);
+      %src = %obj.sourceObject;
+      if(isObject(%src))
+         %src.getDataBlock().addDiscTarget(%src, %col);
+   }
 
-   %src = %obj.sourceObject;
-   if(isObject(%src))
-      %src.getDataBlock().addDiscTarget(%src, %col);
+   Parent::onCollision(%this,%obj,%col,%fade,%pos,%normal);
 }
 
