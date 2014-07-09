@@ -772,7 +772,7 @@ void GameConnection::onRemove()
    if(!isConnectionToServer())
    {
       onDrop_callback(mDisconnectReason);
-      if(getRemoteConnection()->isLocalConnection())
+      if(getRemoteConnection() && getRemoteConnection()->isLocalConnection())
          getRemoteConnection()->onDisconnect(mDisconnectReason);
    }
 
