@@ -133,7 +133,7 @@ function AIPlayer::spawnAtLocation(%name, %spawnPoint)
    %player.teamId = %player.getId();
    %player.setShapeName(%name);
    %player.setTransform(%spawnPoint);
-   %player.setTargetingMask($TargetingMask::Launcher);
+   //%player.setTargetingMask($TargetingMask::Launcher);
    $aiPlayer = %player;
    return %player;
 }
@@ -414,7 +414,7 @@ function AIPlayer::spawn(%loadout, %path)
       %player.setInventory(WpnSR1Ammo, 9999);
       
       %player.shootingDelay = 100;
-      //%player.followPath(%path, -1);
+      %player.followPath(%path, -1);
       %player.setMoveSpeed(1.0);
       %player.think();
       
