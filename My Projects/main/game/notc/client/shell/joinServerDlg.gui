@@ -551,11 +551,7 @@ function JoinServerDlg::join(%this)
       LoadingProgress.setValue(1);
       LoadingProgressTxt.setValue("WAITING FOR SERVER");
       Canvas.repaint();
-
-      %conn = new GameConnection(ServerConnection);
-      %conn.setConnectArgs($pref::Player::Name);
-      %conn.setJoinPassword($Client::Password);
-      %conn.connect($ServerInfo::Address);
+      connect($ServerInfo::Address);
    }
 }
 

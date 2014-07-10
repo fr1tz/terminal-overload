@@ -31,6 +31,6 @@ function OptionsDlg::onWake(%this)
    //echo("OptionsDlg::onWake()");
 
    if(%this-->ContentContainer.getCount() == 0)
-      %this-->GraphicsButton.performClick();
+      %this-->PlayerButton.performClick();
 }
 

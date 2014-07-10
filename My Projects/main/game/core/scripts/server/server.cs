@@ -4,6 +4,7 @@
 function initBaseServer()
 {
    // Base server functionality
+   exec("./auth.cs");
    exec("./audio.cs");
    exec("./message.cs");
    exec("./commands.cs");
@@ -42,7 +43,7 @@ function createAndConnectToLocalServer( %serverType, %level )
    %conn = new GameConnection( ServerConnection );
    RootGroup.add( ServerConnection );
 
-   %conn.setConnectArgs( $pref::Player::Name );
+   %conn.setConnectArgs(cGetPlayerName(), cGetAuthAlgs());
    %conn.setJoinPassword( $Client::Password );
    
    %result = %conn.connectLocal();
@@ -115,6 +116,9 @@ function createServer(%serverType, %level)
       if ($pref::Net::DisplayOnMaster !$= "Never" )
          schedule(0,0,startHeartbeat);
    }
+   
+   // Start player authentication facilities
+   schedule(0, 0, sAuthStart);
 
    // Create the ServerGroup that will persist for the lifetime of the server.
    new SimGroup(ServerGroup);
@@ -134,6 +138,7 @@ function destroyServer()
    $Server::ServerType = "";
    allowConnections(false);
    stopHeartbeat();
+   sAuthStop();
    $missionRunning = false;
    
    // End any running levels

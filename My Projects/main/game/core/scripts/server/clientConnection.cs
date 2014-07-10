@@ -8,9 +8,16 @@
 // anything else will be sent back as an error to the client.
 // All the connect args are passed also to onConnectRequest
 //
-function GameConnection::onConnectRequest( %client, %netAddress, %name )
+function GameConnection::onConnectRequest( %client, %netAddress,
+   %arg0, %arg1, %arg2, %arg3, %arg4, %arg5, %arg6, %arg7,
+   %arg8, %arg9, %arg10, %arg11, %arg12, %arg13, %arg14, %arg15 )
 {
-   echo("Connect request from: " @ %netAddress);
+	%args = "";
+   for(%i = 0; %i < 16; %i++)
+      %args = %args SPC %arg[%i];
+
+   echo("Connect request from: " @ %netAddress SPC "args:" SPC %args);
+   
    if($Server::PlayerCount >= $pref::Server::MaxPlayers)
       return "CR_SERVERFULL";
    return "";
@@ -19,12 +26,70 @@ function GameConnection::onConnectRequest( %client, %netAddress, %name )
 //-----------------------------------------------------------------------------
 // This script function is the first called on a client accept
 //
-function GameConnection::onConnect( %client, %name )
+function GameConnection::onConnect( %client,
+   %arg0, %arg1, %arg2, %arg3, %arg4, %arg5, %arg6, %arg7,
+   %arg8, %arg9, %arg10, %arg11, %arg12, %arg13, %arg14, %arg15 )
 {
+   %name = %arg0;
+   %authAlgs = %arg1;
+
    // Send down the connection error info, the client is
    // responsible for displaying this message if a connection
    // error occures.
    messageClient(%client,'MsgConnectionError',"",$Pref::Server::ConnectionError);
+
+   %client.authAlg = "";
+   %client.authStage = 0;
+   if(%authAlgs $= "")
+   {
+      %client.authAlg = "pseudo";
+   }
+   else
+   {
+      for(%i = 0; %i < getWordCount(%authAlgs); %i++)
+      {
+         %alg = getWord(%authAlgs, %i);
+         if(%alg $= "aims/playerdb/auth.1")
+         {
+            %client.authAlg = %alg;
+            break;
+         }
+      }
+   }
+
+   if(%client.authAlg $= "pseudo")
+   {
+      %client.playerName = "[P]" SPC %name;
+      %client.onAuthComplete();
+   }
+   else if(%client.authAlg $= "aims/playerdb/auth.1")
+   {
+      // Send authentication challenge
+      %client.authServerTime = getSimTime(); //getTime();
+      %client.authServerRand = getRandom(999999);
+      commandToClient(%client, 'AuthChallenge',
+         %client.authAlg,
+         $Pref::Server::Name,
+         %client.authServerTime,
+         %client.authServerRand
+      );
+      %client.authStage = 1;
+      %timeoutMsg = "Authentication time exceeded.";
+      %client.zAuthTimeoutThread = %client.schedule(10000, "delete", %timeoutMsg);
+   }
+   else
+   {
+      %client.schedule(0, "delete", "Unable to agree on authentication algorithm");
+   }
+}
+
+function GameConnection::onAuthComplete(%client)
+{
+   if(%client.zAuthTimeoutThread !$= "")
+   {
+      cancel(%client.zAuthTimeoutThread);
+      %client.zAuthTimeoutThread = "";
+   }
 
    // Send mission information to the client
    sendLoadInfoToClient( %client );
@@ -37,7 +102,7 @@ function GameConnection::onConnect( %client, %name )
    // %client.guid = getField( %authInfo, 3 );
    %client.guid = 0;
    addToServerGuidList( %client.guid );
-   
+
    // Set admin status
    if (%client.getAddress() $= "local") {
       %client.isAdmin = true;
@@ -53,11 +118,10 @@ function GameConnection::onConnect( %client, %name )
    %client.armor = "Light";
    %client.race = "Human";
    %client.skin = addTaggedString( "base" );
-   %client.setPlayerName(%name);
    %client.team = "";
    %client.score = 0;
 
-   // 
+   //
    echo("CADD: " @ %client @ " " @ %client.getAddress());
 
    // Inform the client of all the other clients
@@ -66,39 +130,39 @@ function GameConnection::onConnect( %client, %name )
       %other = ClientGroup.getObject(%cl);
       if ((%other != %client)) {
          // These should be "silent" versions of these messages...
-         messageClient(%client, 'MsgClientJoin', "", 
+         messageClient(%client, 'MsgClientJoin', "",
                %other.playerName,
                %other,
                %other.sendGuid,
                %other.team,
-               %other.score, 
+               %other.score,
                %other.isAIControlled(),
-               %other.isAdmin, 
+               %other.isAdmin,
                %other.isSuperAdmin);
       }
    }
 
    // Inform the client we've joined up
    messageClient(%client,
-      'MsgClientJoin', 'Welcome to a Torque application %1.', 
-      %client.playerName, 
+      'MsgClientJoin', 'Welcome to a Torque application %1.',
+      %client.playerName,
       %client,
       %client.sendGuid,
       %client.team,
       %client.score,
-      %client.isAiControlled(), 
-      %client.isAdmin, 
+      %client.isAiControlled(),
+      %client.isAdmin,
       %client.isSuperAdmin);
 
    // Inform all the other clients of the new guy
-   messageAllExcept(%client, -1, 'MsgClientJoin', '\c1%1 joined the game.', 
-      %client.playerName, 
+   messageAllExcept(%client, -1, 'MsgClientJoin', '\c1%1 joined the game.',
+      %client.playerName,
       %client,
       %client.sendGuid,
       %client.team,
       %client.score,
-      %client.isAiControlled(), 
-      %client.isAdmin, 
+      %client.isAiControlled(),
+      %client.isAdmin,
       %client.isSuperAdmin);
 
    // If the mission is running, go ahead download it to the client
@@ -110,6 +174,8 @@ function GameConnection::onConnect( %client, %name )
    {
       messageClient(%client, 'MsgLoadFailed', $Server::LoadFailMsg);
    }
+   
+   %client.countedAsPlayer = true;
    $Server::PlayerCount++;
 }
 
@@ -168,7 +234,9 @@ function GameConnection::onDrop(%client, %reason)
 
    removeTaggedString(%client.playerName);
    echo("CDROP: " @ %client @ " " @ %client.getAddress());
-   $Server::PlayerCount--;
+   
+	if(%client.countedAsPlayer)
+      $Server::PlayerCount--;
    
    // Reset the server if everyone has left the game
    if( $Server::PlayerCount == 0 && $Server::Dedicated)

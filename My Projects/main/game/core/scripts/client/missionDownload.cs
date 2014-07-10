@@ -104,11 +104,28 @@ function sceneLightingComplete()
 // Helper functions
 //----------------------------------------------------------------------------
 
+function cGetPlayerName()
+{
+   if($Pref::AIMS::Enabled)
+      return $Pref::AIMS::PlayerName;
+   else
+      return $Pref::Player::Name;
+}
+
+function cGetAuthAlgs()
+{
+   if($Pref::AIMS::Enabled)
+      return "aims/playerdb/auth.1";
+   else
+      return "";
+}
+
 function connect(%server)
 {
    %conn = new GameConnection(ServerConnection);
    RootGroup.add(ServerConnection);
-   %conn.setConnectArgs($pref::Player::Name);
+   %conn.setConnectArgs(cGetPlayerName(), cGetAuthAlgs());
    %conn.setJoinPassword($Client::Password);
    %conn.connect(%server);
 }
+

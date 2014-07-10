@@ -179,65 +179,6 @@ package GameCore
       Game.onMissionReset();
    }
 
-   // We also need to override function GameConnection::onConnect() from
-   // "core/scripts/server/clientConnection.cs" in order to initialize, reset,
-   // and pass some client scoring variables to playerList.gui -- the scoreHUD.
-
-   function GameConnection::onConnect(%client, %name)
-   {
-      // Send down the connection error info, the client is responsible for
-      // displaying this message if a connection error occurs.
-      messageClient(%client, 'MsgConnectionError',"",$Pref::Server::ConnectionError);
-
-      // Send mission information to the client
-      sendLoadInfoToClient(%client);
-
-      // Simulated client lag for testing...
-      // %client.setSimulatedNetParams(0.1, 30);
-
-      // Get the client's unique id:
-      // %authInfo = %client.getAuthInfo();
-      // %client.guid = getField(%authInfo, 3);
-      %client.guid = 0;
-      addToServerGuidList(%client.guid);
-
-      // Set admin status
-      if (%client.getAddress() $= "local")
-      {
-         %client.isAdmin = true;
-         %client.isSuperAdmin = true;
-      }
-      else
-      {
-         %client.isAdmin = false;
-         %client.isSuperAdmin = false;
-      }
-
-      // Save client preferences on the connection object for later use.
-      %client.gender = "Male";
-      %client.armor = "Light";
-      %client.race = "Human";
-      %client.setPlayerName(%name);
-      %client.team = "";
-      %client.score = 0;
-      %client.kills = 0;
-      %client.deaths = 0;
-
-      //
-      echo("CADD: "@ %client @" "@ %client.getAddress());
-
-      // If the mission is running, go ahead download it to the client
-      if ($missionRunning)
-      {
-         %client.loadMission();
-      }
-      else if ($Server::LoadFailMsg !$= "")
-      {
-         messageClient(%client, 'MsgLoadFailed', $Server::LoadFailMsg);
-      }
-      $Server::PlayerCount++;
-   }
-   
    function GameConnection::prepareMission(%this)
    {
       Game.prepareClient(%this);

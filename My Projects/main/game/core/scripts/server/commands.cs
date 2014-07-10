@@ -5,6 +5,27 @@
 // Misc. server commands avialable to clients
 //-----------------------------------------------------------------------------
 
+//-----------------------------------------------------------------------------
+// Authentication
+
+function serverCmdAuthResponse(%client, %arg1, %arg2, %arg3, %arg4, %arg5, %arg6)
+{
+   //error("serverCmdAuthResponse():" SPC %client SPC
+   // %arg1 SPC %arg2 SPC %arg3 SPC %arg4 SPC %arg5 SPC %arg6);
+
+   if(%client.authStage != 1)
+      return;
+
+   %client.authHash = %arg1;
+   %client.authPlayerId = %arg2;
+   %client.authServerName = %arg3;
+   %client.authClientTime = %arg4;
+   %client.authClientRand = %arg5;
+   %client.authStage = 2;
+
+   sAimsAuthConn.processAuth();
+}
+
 //----------------------------------------------------------------------------
 // Debug commands
 //----------------------------------------------------------------------------

@@ -70,6 +70,7 @@ function initClient()
    exec("notc/client/shell/chooseLevelDlg.gui");
    exec("notc/client/shell/loadingGui.gui");
    exec("notc/client/shell/optionsDlg.gui");
+   exec("notc/client/shell/optPlayer.gui");
    exec("notc/client/shell/optGraphics.gui");
    exec("notc/client/shell/optAudio.gui");
    exec("notc/client/shell/optGame.gui");
@@ -79,6 +80,7 @@ function initClient()
    exec("notc/client/shell/chooseLevelDlg.cs");
    exec("notc/client/shell/loadingGui.cs");
    exec("notc/client/shell/optionsDlg.cs");
+   exec("notc/client/shell/optPlayer.cs");
    exec("notc/client/shell/optGraphics.cs");
    exec("notc/client/shell/optAudio.cs");
    exec("notc/client/shell/optGame.cs");
