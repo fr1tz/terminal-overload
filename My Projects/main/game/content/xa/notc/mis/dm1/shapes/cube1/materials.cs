@@ -20,4 +20,5 @@ singleton Material(xa_notc_mis_dm1_shapes_cube1_mat1)
    footstepSoundId = "2";
    impactSoundId = "-1";
    materialTag0 = "Miscellaneous";
+   glow[0] = "0";
 };

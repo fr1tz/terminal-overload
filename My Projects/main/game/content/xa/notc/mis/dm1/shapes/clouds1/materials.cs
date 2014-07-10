@@ -2,7 +2,7 @@
 singleton Material(xa_notc_mis_dm1_shapes_clouds_mat1)
 {
    mapTo = "xa_notc_mis_dm1_shapes_clouds_mat1";
-   diffuseColor[0] = "0.0392157 0.996078 0.00392157 1";
+   diffuseColor[0] = "0.996078 0.992157 0.988235 1";
    doubleSided = "1";
    translucentBlendOp = "AddAlpha";
    diffuseMap[0] = "content/xa/rotc/p.5.4/textures/eth3/circuit_glow.png";

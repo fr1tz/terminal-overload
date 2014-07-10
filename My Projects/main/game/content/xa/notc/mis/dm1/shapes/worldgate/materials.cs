@@ -2,13 +2,16 @@
 singleton Material(xa_notc_mis_dm1_shapes_worldgate_mat1)
 {
    mapTo = "xa_notc_mis_dm1_shapes_worldgate_mat1";
-   diffuseColor[0] = "0.996078 0.854902 0.00784314 1";
+   diffuseColor[0] = "0.54902 0.54902 0.545098 1";
    doubleSided = "0";
    translucentBlendOp = "None";
-   diffuseMap[0] = "content/xa/notc/core/textures/grid.128.4.h1.png";
-   glow[0] = "1";
-   emissive[0] = "1";
+   glow[0] = "0";
+   emissive[0] = "0";
    castShadows = "0";
+   wireframe[0] = "0";
+   diffuseColor[1] = "0.00392157 0.156863 0.996078 1";
+   emissive[1] = "1";
+   wireframe[1] = "1";
 };
 
 singleton Material(xa_notc_mis_dm1_shapes_worldgate_mat2)

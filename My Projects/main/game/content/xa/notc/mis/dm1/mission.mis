@@ -425,11 +425,11 @@ new SimGroup(MissionGroup) {
          canSave = "1";
          canSaveDynamicFields = "1";
             lines = "SpawnLine";
-            zActivationTrigger = "4405";
+            zActivationTrigger = "4459";
             zLastUpdatePosition = "0 0.2174 9173.61";
-            zParticleEmitter = "4404";
-            zProximityTrigger = "4406";
-            zUpdateAssetsThread = "90113";
+            zParticleEmitter = "4458";
+            zProximityTrigger = "4460";
+            zUpdateAssetsThread = "213230";
       };
       new TSStatic() {
          shapeName = "content/xa/notc/mis/dm1/shapes/heap/shape.dae";
@@ -1077,6 +1077,38 @@ new SimGroup(MissionGroup) {
       canSave = "1";
       canSaveDynamicFields = "1";
    };
+   new TSStatic(Clouds) {
+      shapeName = "content/xa/notc/mis/dm1/shapes/clouds1/shape.dae";
+      playAmbient = "1";
+      meshCulling = "0";
+      originSort = "0";
+      collisionType = "Collision Mesh";
+      decalType = "Collision Mesh";
+      allowPlayerStep = "1";
+      renderNormals = "0";
+      forceDetail = "-1";
+      position = "0 0 8000";
+      rotation = "-0.0265405 -0.0142316 -0.999547 56.4241";
+      scale = "9000 9000 1";
+      paletteColors[0] = "13 240 173 186";
+      paletteColors[1] = "13 240 173 186";
+      paletteColors[2] = "13 240 173 186";
+      paletteColors[3] = "13 240 173 186";
+      paletteColors[4] = "13 240 173 186";
+      paletteColors[5] = "13 240 173 186";
+      paletteColors[6] = "13 240 173 186";
+      paletteColors[7] = "13 240 173 186";
+      paletteColors[8] = "13 240 173 186";
+      paletteColors[9] = "13 240 173 186";
+      paletteColors[10] = "13 240 173 186";
+      paletteColors[11] = "13 240 173 186";
+      paletteColors[12] = "13 240 173 186";
+      paletteColors[13] = "13 240 173 186";
+      paletteColors[14] = "13 240 173 186";
+      paletteColors[15] = "13 240 173 186";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+   };
    new Path(botpath) {
       isLooping = "1";
       canSave = "1";
@@ -1142,7 +1174,7 @@ new SimGroup(MissionGroup) {
          msToNext = "1000";
          smoothingType = "Spline";
          position = "37 116 201";
-         rotation = "0.0209759 0.0211819 -0.999556 90.5863";
+         rotation = "0.0209759 0.0211819 -0.999556 90.5871";
          scale = "1 1 1";
          paletteColors[0] = "227 209 124 255";
          paletteColors[1] = "227 209 124 255";
@@ -1261,7 +1293,7 @@ new SimGroup(MissionGroup) {
       paletteColors[3] = "0 0 0 0";
       paletteColors[4] = "0 0 0 0";
       paletteColors[5] = "0 0 0 0";
-      paletteColors[6] = "0 0 0 0";
+      paletteColors[6] = "InvisibleBlack";
       paletteColors[7] = "0 0 0 0";
       paletteColors[8] = "0 0 0 0";
       paletteColors[9] = "0 0 0 0";
@@ -2727,38 +2759,6 @@ new SimGroup(MissionGroup) {
          canSave = "1";
          canSaveDynamicFields = "1";
       };
-      new TSStatic() {
-         shapeName = "content/xa/notc/mis/dm1/shapes/cube1/shape.dae";
-         playAmbient = "1";
-         meshCulling = "0";
-         originSort = "0";
-         collisionType = "Visible Mesh";
-         decalType = "Visible Mesh";
-         allowPlayerStep = "1";
-         renderNormals = "0";
-         forceDetail = "-1";
-         position = "50 150 180";
-         rotation = "1 0 0 0";
-         scale = "10 10 20";
-         paletteColors[0] = "103 103 103 255";
-         paletteColors[1] = "252 254 252 255";
-         paletteColors[2] = "252 153 52 255";
-         paletteColors[3] = "252 153 52 255";
-         paletteColors[4] = "0 4 52 255";
-         paletteColors[5] = "2 153 52 255";
-         paletteColors[6] = "252 153 52 255";
-         paletteColors[7] = "2 153 52 255";
-         paletteColors[8] = "2 153 52 255";
-         paletteColors[9] = "2 153 52 255";
-         paletteColors[10] = "2 153 52 255";
-         paletteColors[11] = "0 4 52 255";
-         paletteColors[12] = "0 0 255 255";
-         paletteColors[13] = "255 153 52 255";
-         paletteColors[14] = "0 1 52 255";
-         paletteColors[15] = "2 153 52 255";
-         canSave = "1";
-         canSaveDynamicFields = "1";
-      };
    };
    new PointLight() {
       radius = "15";
@@ -2906,6 +2906,7 @@ new SimGroup(MissionGroup) {
       paletteColors[13] = "205 205 205 205";
       paletteColors[14] = "205 205 205 205";
       paletteColors[15] = "205 205 205 205";
+      hidden = "1";
       canSave = "1";
       canSaveDynamicFields = "1";
    };
@@ -2950,6 +2951,7 @@ new SimGroup(MissionGroup) {
       paletteColors[13] = "116 101 110 99";
       paletteColors[14] = "105 108 90 70";
       paletteColors[15] = "97 105 108 79";
+      hidden = "1";
       canSave = "1";
       canSaveDynamicFields = "1";
    };

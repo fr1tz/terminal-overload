@@ -45,16 +45,17 @@ singleton Material(xa_notc_mis_dm1_shapes_world_mat5)
    diffuseColor[0] = "0 0 0 1";
    doubleSided = "1";
    translucentBlendOp = "None";
-   glow[0] = "1";
+   glow[0] = "0";
    emissive[0] = "0";
    materialTag0 = "Miscellaneous";
    detailScale[0] = "96 96";
-   diffuseColor[1] = "0.490196 0.494118 0.494118 1";
-   diffuseMap[1] = "content/xa/notc/core/textures/tri.128.4.png";
+   diffuseColor[1] = "0.992157 0.992157 0.992157 1";
    glow[1] = "1";
    emissive[1] = "1";
    detailMap[0] = "content/xa/notc/core/textures/grid.128.4.png";
    wireframe[1] = "1";
+   diffuseColor[2] = "0 1 0.894118 0";
+   glow[2] = "1";
 };
 
 singleton Material(shape_xa_notc_mis_dm1_shapes_world_mat6)
