@@ -2850,8 +2850,13 @@ void Player::updateMove(const Move* move)
    }
 
 	// Does the player want to slide?
-	mWantsToSlide = move->trigger[sSlideTrigger];
-
+   bool wantsToSlide = move->trigger[sSlideTrigger];
+   if(mWantsToSlide != wantsToSlide)
+   {
+      mWantsToSlide = wantsToSlide;
+      this->setMaskBits(MoveMask);
+   }
+ 
    // Trigger images
    if (mDamageState == Enabled) 
    {
@@ -6791,6 +6796,7 @@ U32 Player::packUpdate(NetConnection *con, U32 mask, BitStream *stream)
 
    if (stream->writeFlag(mask & MoveMask))
    {
+      stream->writeFlag(mWantsToSlide);
       stream->writeFlag(mRunSurface);
       stream->writeFlag(mFalling);
 
@@ -6886,6 +6892,7 @@ void Player::unpackUpdate(NetConnection *con, BitStream *stream)
    // MoveMask
    if (stream->readFlag()) {
       mPredictionCount = sMaxPredictionTicks;
+      mWantsToSlide = stream->readFlag();
       mRunSurface = stream->readFlag();
       mFalling = stream->readFlag();
 
