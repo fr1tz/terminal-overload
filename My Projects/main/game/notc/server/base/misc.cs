@@ -52,7 +52,13 @@ function createExplosion(%data, %pos, %norm, %colorI)
 		// can the player potentially see it?
 		if(%dist <= %visibleDistance)
 		{
-         commandToClient(%client, 'CreateExplosion', %data, %pos, %norm, %colorI);
+         commandToClient(%client,
+            'CreateExplosion',
+            %data.getId(),
+            %pos,
+            %norm,
+            %colorI
+         );
 		}
 		else
 		{
