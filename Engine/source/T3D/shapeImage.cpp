@@ -4491,6 +4491,7 @@ void ShapeBase::clientFiredShotgun(
 	// Create the ghosting projectile.
 	ShotgunProjectile* prj = new ShotgunProjectile(false, false);
 	prj->setTeamId(this->getTeamId());
+   prj->setPalette(this->getPalette());
 	prj->mCurrPosition     = pos;
 	prj->mCurrVelocity     = vel;
 	prj->mSourceObject     = this;
