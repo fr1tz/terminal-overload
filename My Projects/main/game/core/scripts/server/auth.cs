@@ -78,7 +78,7 @@ function sAimsAuthConn::onLine(%this, %line)
       %client.playerName = getWords(%msg, 1);
       messageAll(
          'MsgClientAuth',
-         '\c2Server has authenticated %1 via the AIMS player database (aims.wasted.ch).',
+         '\c2The server has authenticated a new player as %1 via the AIMS player database (aims.wasted.ch).',
          %client.playerName
       );
       %client.onAuthComplete();
