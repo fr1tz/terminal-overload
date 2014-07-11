@@ -151,10 +151,12 @@ void _GFXGLTextureTargetFBOImpl::applyState()
       if(color)
       {
          hasColor = true;
-         if(color->getDepth() == 0)
-            glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0+i, color->getBinding(), color->getHandle(), color->getMipLevel());
-         else
-            glFramebufferTexture3D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0+i, color->getBinding(), color->getHandle(), color->getMipLevel(), color->getZOffset());
+         if( color->getBinding( ) == GL_TEXTURE_2D )
+            glFramebufferTexture2D( GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, color->getBinding( ), color->getHandle( ), color->getMipLevel( ) );
+         else if( color->getBinding( ) == GL_TEXTURE_1D )
+            glFramebufferTexture1D( GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, color->getBinding( ), color->getHandle( ), color->getMipLevel( ) );
+         else if( color->getBinding( ) == GL_TEXTURE_3D )
+            glFramebufferTexture3D( GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, color->getBinding( ), color->getHandle( ), color->getMipLevel( ), color->getZOffset( ) );
       }
       else
       {
