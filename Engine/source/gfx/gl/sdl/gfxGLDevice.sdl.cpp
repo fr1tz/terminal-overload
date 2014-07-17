@@ -108,6 +108,7 @@ void GFXGLDevice::enumerateAdapters( Vector<GFXAdapter*> &adapterList )
    glGetIntegerv(GL_MINOR_VERSION, &minor);
    if( major < 3 || ( major == 3 && minor < 2 ) )
    {
+      Con::errorf("GFXGLDevice: Error! Need OpenGL 3.2 at least, have %i.%i.", major, minor);
       return;
    }
 
