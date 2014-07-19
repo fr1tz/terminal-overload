@@ -249,6 +249,13 @@ datablock PlayerData(FrmStandardcat)
    maxInv[ItemLauncher] = 1;
    maxInv[ItemBounce] = 1;
 
+   maxInv[ItemG1Launcher] = 1;
+   maxInv[ItemG1LauncherAmmo] = 9999;
+   
+   maxInv[WpnRazorDiscAmmo] = 9999;
+   maxInv[WpnExplosiveDiscAmmo] = 9999;
+   maxInv[WpnRepelDiscAmmo] = 9999;
+
    maxInv[WpnSMG1] = 1;
    maxInv[WpnMGL1] = 1;
    maxInv[WpnSG1] = 1;
@@ -256,10 +263,6 @@ datablock PlayerData(FrmStandardcat)
    maxInv[WpnSR1] = 1;
    maxInv[WpnMG1] = 1;
    maxInv[WpnML1] = 1;
-   
-   maxInv[WpnRazorDiscAmmo] = 9999;
-   maxInv[WpnExplosiveDiscAmmo] = 9999;
-   maxInv[WpnRepelDiscAmmo] = 9999;
    
    maxInv[WpnMGL1Ammo] = 9999;
    maxInv[WpnSG1Ammo] = 9999;
@@ -429,6 +432,11 @@ function FrmStandardcat::onTrigger(%this, %obj, %triggerNum, %val)
          %obj.impulse(%pos, %impulseVec, %obj);
          %obj.setEnergyLevel(%obj.getEnergyLevel() - %this.reJumpEnergyDrain);
       }
+   }
+   
+   if(%triggerNum == 3)
+   {
+      %obj.setImageTrigger(2, %val);
    }
    
    // Distort player view

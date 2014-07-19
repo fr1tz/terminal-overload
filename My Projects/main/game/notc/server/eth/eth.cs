@@ -284,10 +284,13 @@ function ETH::loadoutPlayer(%player)
    %player.setInventory(ItemImpShield, 1);
    %player.setInventory(ItemLauncher, 1);
    %player.setInventory(ItemBounce, 1);
+
+   %player.setInventory(ItemG1Launcher, 1);
+   %player.setInventory(ItemG1LauncherAmmo, 9999);
    
    %player.setInventory(WpnRepelDiscAmmo, 9999);
    %player.setInventory(WpnExplosiveDiscAmmo, 9999);
-
+   
    %player.clearWeaponCycle();
    switch(%client.zActiveLoadout)
    {

@@ -19,6 +19,8 @@ function executeEthernetServerScripts()
    exec("notc/server/items/etherboard/exec.cs");
    exec("notc/server/items/launcher/exec.cs");
    exec("notc/server/items/bounce/exec.cs");
+   
+   exec("notc/server/items/g1launcher/v1/exec.cs");
 
    exec("notc/server/weapons/razordisc/v1/exec.cs");
    exec("notc/server/weapons/explosivedisc/v1/exec.cs");
