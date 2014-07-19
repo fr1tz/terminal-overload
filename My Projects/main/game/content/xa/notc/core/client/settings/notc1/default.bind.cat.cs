@@ -229,11 +229,6 @@ XaNotc1CatMoveMap.bindCmd(gamepad, dpadr, "toggleLightSpecularViz();", "");
 // Stance/pose
 // ----------------------------------------------------------------------------
 
-function XaNotc1CatMoveMap_doCrouch(%val)
-{
-   $mvTriggerCount3++;
-}
-
 function XaNotc1CatMoveMap_doSprint(%val)
 {
    $mvTriggerCount5++;
@@ -295,18 +290,24 @@ XaNotc1CatMoveMap.bind(keyboard, "x", XaNotc1CatMoveMap_fireBounce);
 // Mouse Trigger
 //------------------------------------------------------------------------------
 
-function XaNotc1CatMoveMap_mouseFire(%val)
+function XaNotc1CatMoveMap_trigger0(%val)
 {
    $mvTriggerCount0++;
 }
 
-function XaNotc1CatMoveMap_altTrigger(%val)
+function XaNotc1CatMoveMap_trigger1(%val)
 {
    $mvTriggerCount1++;
 }
 
-XaNotc1CatMoveMap.bind( mouse, button0, XaNotc1CatMoveMap_mouseFire );
-XaNotc1CatMoveMap.bind( mouse, button1, XaNotc1CatMoveMap_altTrigger );
+function XaNotc1CatMoveMap_trigger3(%val)
+{
+   $mvTriggerCount3++;
+}
+
+XaNotc1CatMoveMap.bind( mouse, button0, XaNotc1CatMoveMap_trigger0 );
+XaNotc1CatMoveMap.bind( mouse, button1, XaNotc1CatMoveMap_trigger1 );
+XaNotc1CatMoveMap.bind( mouse, button2, XaNotc1CatMoveMap_trigger3 );
 
 //------------------------------------------------------------------------------
 // Gamepad Trigger

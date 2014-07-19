@@ -85,6 +85,7 @@ XaNotc1EtherformMoveMap.bind(keyboard, lcontrol, XaNotc1CatMoveMap_doSlide);
 XaNotc1EtherformMoveMap.bind( mouse, xaxis, XaNotc1CatMoveMap_yaw );
 XaNotc1EtherformMoveMap.bind( mouse, yaxis, XaNotc1CatMoveMap_pitch );
 
-XaNotc1EtherformMoveMap.bind( mouse, button0, XaNotc1CatMoveMap_mouseFire );
-XaNotc1EtherformMoveMap.bind( mouse, button1, XaNotc1CatMoveMap_altTrigger );
+XaNotc1EtherformMoveMap.bind( mouse, button0, XaNotc1CatMoveMap_trigger0 );
+XaNotc1EtherformMoveMap.bind( mouse, button1, XaNotc1CatMoveMap_trigger1 );
+XaNotc1EtherformMoveMap.bind( mouse, button2, XaNotc1CatMoveMap_trigger3 );
 

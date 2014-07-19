@@ -21,7 +21,7 @@ $XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Fly D
 $XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "XaNotc1CatMoveMap_doSlide";
 $XaNotc1EtherformMoveMap_RemapCount++;
 $XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Manifest";
-$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "XaNotc1CatMoveMap_mouseFire";
+$XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "XaNotc1CatMoveMap_trigger0";
 $XaNotc1EtherformMoveMap_RemapCount++;
 $XaNotc1EtherformMoveMap_RemapName[$XaNotc1EtherformMoveMap_RemapCount] = "Select class #1";
 $XaNotc1EtherformMoveMap_RemapCmd[$XaNotc1EtherformMoveMap_RemapCount] = "XaNotc1EtherformMoveMap_selectLoadout0";
