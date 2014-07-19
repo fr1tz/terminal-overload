@@ -31,18 +31,20 @@ datablock ParticleEmitterData(WpnMG1ProjectileExplosion_SmokeEmitter)
 {
 	ejectionPeriodMS = 5;
 	periodVarianceMS = 0;
-	ejectionVelocity = 3;
-	velocityVariance = 0;
+	ejectionVelocity = "10";
+	velocityVariance = "3";
 	ejectionOffset	= 0.0;
-	thetaMin			= 80;
+	thetaMin			= "0";
 	thetaMax			= 80;
 	phiReferenceVel  = 0;
 	phiVariance		= 360;
-	overrideAdvances = false;
+	overrideAdvances = 0;
 	orientParticles  = false;
 	lifetimeMS		 = 50;
 	particles = "WpnMG1ProjectileExplosion_Smoke";
    paletteSlot = 0;
+   blendStyle = "ADDITIVE";
+   targetLockTimeMS = "480";
 };
 
 datablock ParticleData(WpnMG1ProjectileExplosion_DebrisParticles)
@@ -75,7 +77,7 @@ datablock ParticleEmitterData(WpnMG1ProjectileExplosion_DebrisEmitter)
 {
 	ejectionPeriodMS = 50;
 	periodVarianceMS = 0;
-	ejectionVelocity = 10.0;
+	ejectionVelocity = "20";
 	velocityVariance = 5.0;
 	ejectionOffset	= 0.0;
 	thetaMin			= 0;
@@ -84,9 +86,11 @@ datablock ParticleEmitterData(WpnMG1ProjectileExplosion_DebrisEmitter)
 	phiVariance		= 360;
 	lifetimeMS		 = 5;
 	lifetimeVarianceMS = 0;
-	overrideAdvances = false;
+	overrideAdvances = 0;
 	orientParticles  = true;
 	particles = "WpnMG1ProjectileExplosion_DebrisParticles";
+   blendStyle = "ADDITIVE";
+   targetLockTimeMS = "480";
 };
 
 datablock ExplosionData(WpnMG1ProjectileExplosion)
