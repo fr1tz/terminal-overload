@@ -39,23 +39,16 @@ datablock ProjectileData(ItemG1LauncherProjectile)
 
 function ItemG1LauncherProjectile::onExplode(%data, %proj, %pos, %mod)
 {
-   return;
+   Parent::onExplode(%data, %proj, %pos, %mod);
 
-	%radius = %this.splashDamageRadius;
-	%sourceObject = %obj.getSourceObject();
+	%src = %proj.sourceObject;
+	%radius = %data.splashDamageRadius;
+   %typeMask = $TypeMasks::PlayerObjectType;
+   %collisionMask = %data.collisionMask;
 
-	InitContainerRadiusSearch(%pos, %radius, $TypeMasks::ShapeBaseObjectType);
-	%halfRadius = %radius / 2;
+	InitContainerRadiusSearch2(%pos, %radius, %typeMask, %collisionMask);
 	while( (%targetObject = containerSearchNext()) != 0 )
 	{
-        // the observer cameras are ShapeBases; ignore them...
-        if(%targetObject.getType() & $TypeMasks::CameraObjectType)
-    	   continue;
-
-		// ignore shapes with a barrier...
-		if(%targetObject.hasBarrier())
-			continue;
-
 		%coverage = calcExplosionCoverage(%pos, %targetObject,
 			$TypeMasks::InteriorObjectType |  $TypeMasks::TerrainObjectType |
 			$TypeMasks::ForceFieldObjectType | $TypeMasks::VehicleObjectType |
@@ -64,9 +57,8 @@ function ItemG1LauncherProjectile::onExplode(%data, %proj, %pos, %mod)
 		if (%coverage == 0)
 			continue;
 
-        %sourceObject.setDiscTarget(%targetObject);
+      %src.getDataBlock().addDiscTarget(%src, %targetObject);
+      %targetObject.activateStealth(4000);
 	}
-
-    Parent::onExplode(%this,%obj,%pos,%normal,%fade,%dist,%expType);
 }
 
