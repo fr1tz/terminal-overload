@@ -879,7 +879,13 @@ function FrmStandardcat::activateStealth(%this, %obj, %time)
    %new[0] = "xa_notc_core_shapes_standardcat_stealthmat1";
    %new[1] = "xa_notc_core_shapes_standardcat_stealthmat2";
    %obj.setSkinName(%old[0] @ "=" @ %new[0] @ ";" @ %old[1] @ "=" @ %new[1]);
-
+   
+   // Start flickering
+   %n = %obj.getMountedObjectCount();
+   for(%i = 0; %i < %n; %i++)
+      %obj.getMountedObject(%i).setFlickerTime(32);
+   %obj.setFlickerTime(32);
+   
    %obj.zStealthThread = %obj.schedule(%time, "deactivateStealth");
 }
 
@@ -898,6 +904,12 @@ function FrmStandardcat::deactivateStealth(%this, %obj)
    %new[0] = "base";
    %new[1] = "armor_red0024";
    %obj.setSkinName(%old[0] @ "=" @ %new[0] @ ";" @ %old[1] @ "=" @ %new[1]);
+   
+   // Stop flickering
+   %n = %obj.getMountedObjectCount();
+   for(%i = 0; %i < %n; %i++)
+      %obj.getMountedObject(%i).setFlickerTime(0);
+   %obj.setFlickerTime(0);
 }
 
 // Called from script
