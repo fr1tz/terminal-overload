@@ -1506,7 +1506,7 @@ DefineEngineMethod( SceneObject, getMass, F32, (),,
 //-----------------------------------------------------------------------------
 
 DefineEngineMethod( SceneObject, setCollisionMask, void, (S8 mask),,
-   "Get the object's collision mask.\n")
+   "Set the object's collision mask.\n")
 {
    object->setCollisionMask(mask);
 }
