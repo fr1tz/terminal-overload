@@ -1392,6 +1392,8 @@ void Projectile::simulate( F32 dt )
 
       if ( mDataBlock->isBallistic )
       {
+         this->createBounceExplosion(rInfo);
+         
          // Otherwise, this represents a bounce.  First, reflect our velocity
          //  around the normal...
          Point3F bounceVel = mCurrVelocity - rInfo.normal * (mDot( mCurrVelocity, rInfo.normal ) * 2.0);
