@@ -115,12 +115,12 @@ singleton Material(xa_notc_core_shapes_standardcat_stealthmat1)
    emissive[0] = "1";
    glow[0] = "1";
    diffuseColor[0] = "1 1 1 1";
-   diffuseColorPaletteSlot[0] = "-1";
+   diffuseColorPaletteSlot[0] = "0";
    diffuseMap[0] = "content/xa/notc/core/shapes/standardcat/armor.png";
    pixelSpecular[0] = "0";
    diffuseColor[1] = "0.996078 0.996078 0.996078 1";
    diffuseMap[1] = "content/xa/notc/core/textures/grid128.12.png";
-   diffuseColorPaletteSlot[1] = "-1";
+   diffuseColorPaletteSlot[1] = "0";
    glow[1] = "1";
    emissive[1] = "1";
    wireframe[1] = "1";
