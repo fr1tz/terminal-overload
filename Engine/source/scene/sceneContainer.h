@@ -290,7 +290,8 @@ class SceneContainer
 
       void initRadiusSearch(const Point3F& searchPoint,
          const F32      searchRadius,
-         const U32      searchMask);
+         const U32      searchTypeMask,
+         const U8       searchCollisionMask = 0xFF);
       void initTypeSearch(const U32      searchMask);
       SceneObject* containerSearchNextObject();
       U32  containerSearchNext();

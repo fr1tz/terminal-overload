@@ -1447,7 +1447,8 @@ static S32 QSORT_CALLBACK cmpSearchPointers(const void* inP1, const void* inP2)
 
 void SceneContainer::initRadiusSearch(const Point3F& searchPoint,
                                  const F32      searchRadius,
-                                 const U32      searchMask)
+                                 const U32      searchTypeMask,
+                                 const U8       searchCollisionMask)
 {
    cleanupSearchVectors();
 
@@ -1458,7 +1459,7 @@ void SceneContainer::initRadiusSearch(const Point3F& searchPoint,
    queryBox.maxExtents += Point3F(searchRadius, searchRadius, searchRadius);
 
    SimpleQueryList queryList;
-   findObjects(queryBox, searchMask, SimpleQueryList::insertionCallback, &queryList);
+   findObjects(queryBox, searchTypeMask, searchCollisionMask, SimpleQueryList::insertionCallback, &queryList);
 
    F32 radiusSquared = searchRadius * searchRadius;
 
@@ -1719,6 +1720,24 @@ DefineEngineFunction( initContainerRadiusSearch, void, ( Point3F pos, F32 radius
    pContainer->initRadiusSearch( pos, radius, mask );
 }
 
+DefineEngineFunction( initContainerRadiusSearch2, void, ( Point3F pos, F32 radius, U32 typeMask, S8 collisionMask, bool useClientContainer ), ( false ),
+   "@brief Start a search for items at the given position and within the given radius, filtering by type mask and collision mask.\n\n"
+
+   "@param pos Center position for the search\n"
+   "@param radius Search radius\n"
+   "@param typeMask Bitmask of object types to include in the search\n"
+   "@param collisionMask Bitmask of collision types to include in the search\n"
+   "@param useClientContainer Optionally indicates the search should be within the "
+   "client container.\n"
+
+   "@see containerSearchNext\n" 
+   "@ingroup Game")
+{
+   SceneContainer* pContainer = useClientContainer ? &gClientContainer : &gServerContainer;
+
+   pContainer->initRadiusSearch( pos, radius, typeMask, collisionMask);
+}
+
 //-----------------------------------------------------------------------------
 
 DefineEngineFunction( initContainerTypeSearch, void, ( U32 mask, bool useClientContainer ), ( false ),
@@ -1838,6 +1857,59 @@ DefineEngineFunction( containerRayCast, const char*,
    RayInfo rinfo;
    S32 ret = 0;
    if (pContainer->castRay(start, end, mask, &rinfo) == true)
+      ret = rinfo.object->getId();
+
+   if (pExempt)
+      pExempt->enableCollision();
+
+   // add the hit position and normal?
+   char *returnBuffer = Con::getReturnBuffer(256);
+   if(ret)
+   {
+      dSprintf(returnBuffer, 256, "%d %g %g %g %g %g %g %g",
+               ret, rinfo.point.x, rinfo.point.y, rinfo.point.z,
+               rinfo.normal.x, rinfo.normal.y, rinfo.normal.z, rinfo.distance);
+   }
+   else
+   {
+      returnBuffer[0] = '0';
+      returnBuffer[1] = '\0';
+   }
+
+   return(returnBuffer);
+}
+
+DefineEngineFunction( containerRayCast2, const char*,
+   ( Point3F start, Point3F end, U32 typeMask, S8 collisionMask, SceneObject *pExempt, bool useClientContainer ), ( NULL, false ),
+   "@brief Cast a ray from start to end, checking for collision against items matching type & collision mask.\n\n"
+
+   "If pExempt is specified, then it is temporarily excluded from collision checks (For "
+   "instance, you might want to exclude the player if said player was firing a weapon.)\n"
+
+   "@param start An XYZ vector containing the tail position of the ray.\n"
+   "@param end An XYZ vector containing the head position of the ray\n"
+   "@param typeMask A bitmask corresponding to the type of objects to check for\n"
+   "@param collisionMask A bitmask corresponding to the type of collision to check for\n"
+   "@param pExempt An optional ID for a single object that ignored for this raycast\n"
+   "@param useClientContainer Optionally indicates the search should be within the "
+   "client container.\n"
+
+   "@returns A string containing either null, if nothing was struck, or these fields:\n"
+   "<ul><li>The ID of the object that was struck.</li>"
+   "<li>The x, y, z position that it was struck.</li>"
+   "<li>The x, y, z of the normal of the face that was struck.</li>"
+   "<li>The distance between the start point and the position we hit.</li></ul>" 
+
+   "@ingroup Game")
+{
+   if (pExempt)
+      pExempt->disableCollision();
+
+   SceneContainer* pContainer = useClientContainer ? &gClientContainer : &gServerContainer;
+
+   RayInfo rinfo;
+   S32 ret = 0;
+   if (pContainer->castRay(start, end, typeMask, collisionMask, &rinfo) == true)
       ret = rinfo.object->getId();
 
    if (pExempt)
