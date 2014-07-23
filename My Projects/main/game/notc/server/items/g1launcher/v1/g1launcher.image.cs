@@ -13,7 +13,7 @@ datablock ShapeBaseImageData(ItemG1LauncherImage)
 	mountPoint = 4;
 	offset = "0.20 0 0.05";
 	rotation = "1 0 0 -12";
-   eyeOffset = "0 0 -100";
+   //eyeOffset = "0 0 -100";
 
    // When firing from a point offset from the eye, muzzle correction
    // will adjust the muzzle vector to point to the eye LOS point.
@@ -31,6 +31,7 @@ datablock ShapeBaseImageData(ItemG1LauncherImage)
    maxConcurrentSounds = 1;
 
    // Script fields
+   projectile = ItemG1LauncherProjectile;
    //item = ItemG1;
    //ammo = ItemG1Ammo;
 
@@ -79,7 +80,40 @@ datablock ShapeBaseImageData(ItemG1LauncherImage)
 
 function ItemG1LauncherImage::onFire(%this, %obj, %slot)
 {
-   //echo("ItemG1Image::onFire()");
+   //echo("ItemG1LauncherImage::onFire()");
+   
+	%projectile = %this.projectile;
+   %ammo = %this.ammo;
+
+	%muzzlePoint = %obj.getMuzzlePoint(%slot);
+	%muzzleVector = %obj.getMuzzleVector(%slot);
+
+	%objectVelocity = %obj.getVelocity();
+	%muzzleVelocity = VectorAdd(
+		VectorScale(%muzzleVector, %projectile.muzzleVelocity),
+		VectorScale(%objectVelocity, %projectile.velInheritFactor));
+  
+	%throwCoefficient = %obj.getImageCharge(%slot);
+	if( %throwCoefficient > 1 )
+      %throwCoefficient = 1;
+      
+   %muzzleVelocity = VectorScale(%muzzleVelocity, %throwCoefficient);
+
+	%p = new Projectile() {
+		dataBlock       = %projectile;
+		teamId          = %obj.teamId;
+		initialVelocity = %muzzleVelocity;
+		initialPosition = %muzzlePoint;
+		sourceObject    = %obj;
+		sourceSlot      = %slot;
+		client	       = %obj.client;
+	};
+	MissionCleanup.add(%p);
+   copyPalette(%obj, %p);
+
+   //%obj.decInventory(%ammo, 1);
+
+	return %p;
 }
 
 
