@@ -812,6 +812,9 @@ function FrmStandardcat::addDiscTarget(%this, %obj, %target)
 {
 	if(!(%target.getType() & $TypeMasks::ShapeBaseObjectType))
 		return;
+  
+   if(%target == %obj)
+      return;
 
 	%count = %obj.zDiscTargetSet.getCount();
 	for(%idx= 0; %idx < %count; %idx++)
