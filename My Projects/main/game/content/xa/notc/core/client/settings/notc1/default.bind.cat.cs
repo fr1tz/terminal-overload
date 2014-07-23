@@ -351,74 +351,6 @@ XaNotc1CatMoveMap.bind(gamepad, triggerl, XaNotc1CatMoveMap_gamepadAltTrigger);
 if($Player::CurrentFOV $= "")
    $Player::CurrentFOV = $pref::Player::DefaultFOV / 2;
 
-// toggleZoomFOV() works by dividing the CurrentFOV by 2.  Each time that this
-// toggle is hit it simply divides the CurrentFOV by 2 once again.  If the
-// FOV is reduced below a certain threshold then it resets to equal half of the
-// DefaultFOV value.  This gives us 4 zoom levels to cycle through.
-
-function XaNotc1CatMoveMap_toggleZoomFOV()
-{
-    $Player::CurrentFOV = $Player::CurrentFOV / 2;
-
-    if($Player::CurrentFOV < 5)
-        resetCurrentFOV();
-
-    if(ServerConnection.zoomed)
-      setFOV($Player::CurrentFOV);
-    else
-    {
-      setFov(ServerConnection.getControlCameraDefaultFov());
-    }
-}
-
-function XaNotc1CatMoveMap_resetCurrentFOV()
-{
-   $Player::CurrentFOV = ServerConnection.getControlCameraDefaultFov() / 2;
-}
-
-function XaNotc1CatMoveMap_turnOffZoom()
-{
-   ServerConnection.zoomed = false;
-   setFov(ServerConnection.getControlCameraDefaultFov());
-   Reticle.setVisible(true);
-   zoomReticle.setVisible(false);
-
-   // Rather than just disable the DOF effect, we want to set it to the level's
-   // preset values.
-   //DOFPostEffect.disable();
-   ppOptionsUpdateDOFSettings();
-}
-
-function XaNotc1CatMoveMap_setZoomFOV(%val)
-{
-   if(%val)
-      XaNotc1CatMoveMap_toggleZoomFOV();
-}
-
-function XaNotc1CatMoveMap_toggleZoom(%val)
-{
-   if (%val)
-   {
-      ServerConnection.zoomed = true;
-      setFov($Player::CurrentFOV);
-      Reticle.setVisible(false);
-      zoomReticle.setVisible(true);
-
-      DOFPostEffect.setAutoFocus( true );
-      DOFPostEffect.setFocusParams( 0.5, 0.5, 50, 500, -5, 5 );
-      DOFPostEffect.enable();
-   }
-   else
-   {
-      turnOffZoom();
-   }
-}
-
-function XaNotc1CatMoveMap_mouseButtonZoom(%val)
-{
-   XaNotc1CatMoveMap_toggleZoom(%val);
-}
-
 function XaNotc1CatMoveMap_mouseZoom(%val)
 {
 	if(Canvas.isCursorOn())
@@ -443,9 +375,6 @@ function XaNotc1CatMoveMap_mouseZoom(%val)
 	setFov($MouseZoomValue);
 }
 
-//XaNotc1CatMoveMap.bind(keyboard, f, XaNotc1CatMoveMap_setZoomFOV); // f for field of view
-XaNotc1CatMoveMap.bind(keyboard, z, XaNotc1CatMoveMap_toggleZoom); // z for zoom
-//XaNotc1CatMoveMap.bind( mouse, button1, XaNotc1CatMoveMap_mouseButtonZoom );
 XaNotc1CatMoveMap.bind(mouse, "zaxis", XaNotc1CatMoveMap_mouseZoom);
 
 //------------------------------------------------------------------------------
