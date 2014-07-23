@@ -81,9 +81,14 @@ void SceneRenderState::renderObjects( SceneObject** objects, U32 numObjects )
    // Let the objects batch their stuff.
 
    PROFILE_START( SceneRenderState_prepRenderImages );
+   U32 time = Platform::getRealMilliseconds();
    for( U32 i = 0; i < numObjects; ++ i )
    {
       SceneObject* object = objects[ i ];
+      U32 flickerTime = object->getFlickerTime();
+      if(flickerTime != 0)
+         if((time/flickerTime) % 2 == 0)
+            continue;
       Palette::active = object->getPalette();
       object->prepRenderImage( this );
       Palette::active.reset();

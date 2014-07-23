@@ -121,6 +121,8 @@ SceneObject::SceneObject()
 
    mSceneObjectLinks = NULL;
 
+   mFlickerTime = 0;
+
    mObjectFlags.set( RenderEnabledFlag | SelectionEnabledFlag );
    mIsScopeAlways = false;
 }
@@ -795,6 +797,9 @@ U32 SceneObject::packUpdate( NetConnection* conn, U32 mask, BitStream* stream )
       }
 	}
 
+   if ( stream->writeFlag( mask & FlickerTimeMask ) )
+      stream->write(mFlickerTime);
+
    if ( mask & MountedMask ) 
    {                  
       if ( mMount.object ) 
@@ -845,6 +850,10 @@ void SceneObject::unpackUpdate( NetConnection* conn, BitStream* stream )
             mPalette.colors[i] = defaultColor;
 		}
 	}
+
+   // Flicker time
+   if ( stream->readFlag() )   
+      stream->read(&mFlickerTime);
 
    // MountedMask
    if ( stream->readFlag() ) 
@@ -1506,4 +1515,18 @@ DefineEngineMethod( SceneObject, getCollisionMask, S8, (),,
    "Get the object's collision mask.\n")
 {
    return object->getCollisionMask();
+}
+
+//-----------------------------------------------------------------------------
+
+DefineEngineMethod( SceneObject, setFlickerTime, void, (U32 time),,
+   "Set the object's flicker time.\n")
+{
+   object->setFlickerTime(time);
+}
+
+DefineEngineMethod( SceneObject, getFlickerTime, S32, (),,
+   "Get the object's flicker time.\n")
+{
+   return object->getFlickerTime();
 }

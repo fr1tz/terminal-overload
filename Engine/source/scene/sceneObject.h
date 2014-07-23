@@ -109,6 +109,7 @@ class SceneObject : public NetObject, private SceneContainer::Link, public Proce
          InitialUpdateMask = BIT( 0 ),
          GhostCleanupMask  = BIT( 1 ), // See explanation above.
          RareUpdatesMask   = BIT( 2 ),
+         FlickerTimeMask   = BIT( 3 ),
          MountedMask       = BIT( 4 ),
          NextFreeMask      = BIT( 5 )
       };
@@ -316,6 +317,7 @@ class SceneObject : public NetObject, private SceneContainer::Link, public Proce
       /// @{
 
       Palette mPalette;
+      U32 mFlickerTime;
 
       /// @}
 
@@ -710,6 +712,9 @@ class SceneObject : public NetObject, private SceneContainer::Link, public Proce
 
       /// Return a color from the object's palette.
       ColorI getPaletteColor(U32 slot);
+
+      void setFlickerTime(U32 time) { mFlickerTime = time; this->setMaskBits(FlickerTimeMask); }
+      U32 getFlickerTime() { return mFlickerTime; }
 
       /// Called when the SceneManager is ready for the registration of render instances.
       /// @param state Rendering state.
