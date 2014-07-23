@@ -48,6 +48,9 @@ function ProjectileData::onExplode(%data, %proj, %pos, %mod)
       return;
 
 	%radius = %data.splashDamageRadius;
+   %typeMask = $TypeMasks::ShapeBaseObjectType;
+   %collisionMask = %data.collisionMask;
+ 
 	%damage = %data.splashDamage;
 	%damageType = "Splash";
  
@@ -58,7 +61,7 @@ function ProjectileData::onExplode(%data, %proj, %pos, %mod)
 
 	%targets = new SimSet();
 
-	InitContainerRadiusSearch(%pos, %radius, $TypeMasks::ShapeBaseObjectType);
+	InitContainerRadiusSearch2(%pos, %radius, %typeMask, %collisionMask);
 	while( (%targetObject = containerSearchNext()) != 0 )
 		%targets.add(%targetObject);
 
@@ -85,7 +88,7 @@ function ProjectileData::onExplode(%data, %proj, %pos, %mod)
          // FIXME: can't call containerSearchCurrRadiusDist(); from here
 
       %center = %targetObject.getWorldBoxCenter();
-		%col = containerRayCast(%pos, %center, $TypeMasks::ShapeBaseObjectType, %obj);
+		%col = containerRayCast2(%pos, %center, %typeMask, %collisionMask, %obj);
 		%col = getWord(%col, 1) SPC getWord(%col, 2) SPC getWord(%col, 3);
 		%dist2 = VectorLen(VectorSub(%col, %pos));
 
