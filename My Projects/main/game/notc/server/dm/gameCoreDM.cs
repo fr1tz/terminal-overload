@@ -182,6 +182,9 @@ function GameCoreDM::loadOut(%game, %player)
    %player.setInventory(ItemImpShield, 1);
    %player.setInventory(ItemEtherboard, 1);
    %player.setInventory(ItemLauncher, 1);
+   %player.setInventory(ItemBounce, 1);
+   
+   %player.setInventory(ItemG1Launcher, 1);
    
    %player.setInventory(WpnSMG1, 1);
 
