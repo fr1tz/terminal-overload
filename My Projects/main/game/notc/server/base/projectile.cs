@@ -94,13 +94,13 @@ function ProjectileData::onExplode(%data, %proj, %pos, %mod)
 
 		%dist = %dist2;
 		%prox = %radius - %dist;
-		if(%this.splashDamageFalloff == $SplashDamageFalloff::Exponential)
+		if(%data.splashDamageFalloff == $SplashDamageFalloff::Exponential)
 			%distScale = (%prox*%prox) / (%radius*%radius);
-		else if(%this.splashDamageFalloff == $SplashDamageFalloff::None)
+		else if(%data.splashDamageFalloff == $SplashDamageFalloff::None)
 			%distScale = 1;
 		else
 			%distScale = %prox / %radius;
-
+   
 		// apply impulse...
 		if(%data.splashImpulse > 0)
 		{
