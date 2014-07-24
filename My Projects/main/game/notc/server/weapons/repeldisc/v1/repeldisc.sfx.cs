@@ -22,3 +22,10 @@ datablock SFXProfile(WpnRepelDiscBounceEffectSound)
    preload = true;
 };
 
+datablock SFXProfile(WpnRepelDiscHitSound)
+{
+   filename = "content/xa/rotc/p.5.4/sounds/rotc/explosion6";
+   description = AudioDefault3D;
+   preload = true;
+};
+

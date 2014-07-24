@@ -90,8 +90,9 @@ function WpnRepelDisc::onCollision(%this,%obj,%col,%fade,%pos,%normal,%dist)
 		%vec = VectorNormalize(%vec);
 		%vec = VectorScale(%vec, 45 + 45*(1-%col.zImpShield));
 		%col.setVelocity(%vec);
-
-		createExplosion(WpnRepelDiscBounceEffect, %pos, %normal);
+  
+      %n = VectorNormalize(%vec);
+		createExplosion(WpnRepelDiscHit, %pos, %n);
 	}
  
    %obj.zLastCollisionObject = %col;

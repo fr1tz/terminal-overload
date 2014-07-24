@@ -5,6 +5,7 @@ exec("./repeldisc.sfx.cs");
 exec("./repeldisc.gfx.misc.cs");
 //exec("./repeldisc.gfx.explosion.cs");
 exec("./repeldisc.gfx.bounce.cs");
+exec("./repeldisc.gfx.hit.cs");
 exec("./repeldisc.item.cs");
 exec("./repeldisc.cs");
 
