@@ -24,16 +24,15 @@ datablock ShapeBaseImageData(ItemG1LauncherImage)
    // provides some hooks into the inventory system.
    class = "WeaponImage";
 
-   ammoSource = "Energy";
-   minEnergy = 0;
+   ammoSource = "Magazine";
+   //minEnergy = 0;
 
    useRemainderDT = false;
    maxConcurrentSounds = 1;
 
-   // Script fields
    projectile = ItemG1LauncherProjectile;
+   ammo = ItemG1LauncherAmmo;
    //item = ItemG1;
-   //ammo = ItemG1Ammo;
 
 	//-------------------------------------------------
 	// Image states
@@ -83,7 +82,6 @@ function ItemG1LauncherImage::onFire(%this, %obj, %slot)
    //echo("ItemG1LauncherImage::onFire()");
    
 	%projectile = %this.projectile;
-   %ammo = %this.ammo;
 
 	%muzzlePoint = %obj.getMuzzlePoint(%slot);
 	%muzzleVector = %obj.getMuzzleVector(%slot);
@@ -111,7 +109,8 @@ function ItemG1LauncherImage::onFire(%this, %obj, %slot)
 	MissionCleanup.add(%p);
    copyPalette(%obj, %p);
 
-   //%obj.decInventory(%ammo, 1);
+   %obj.decInventory(%this.ammo, 1);
+   %obj.schedule(5000, "incInventory", %this.ammo, 1);
 
 	return %p;
 }

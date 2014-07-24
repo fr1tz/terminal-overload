@@ -47,6 +47,7 @@ function ItemG1Launcher::onInventory(%this, %obj, %amount)
    }
    else
    {
+      %obj.setInventory(ItemG1LauncherAmmo, 1);
       %obj.mountImage(ItemG1LauncherImage, 2, true);
    }
 }
