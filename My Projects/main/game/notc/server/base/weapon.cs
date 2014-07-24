@@ -15,6 +15,10 @@ $WeaponSlot = 0;
 
 $TargetingMask::Launcher = 1;
 
+$SplashDamageFalloff::Linear      = 0;
+$SplashDamageFalloff::Exponential = 1;
+$SplashDamageFalloff::None        = 2;
+
 //-----------------------------------------------------------------------------
 // Weapon Class
 //-----------------------------------------------------------------------------
