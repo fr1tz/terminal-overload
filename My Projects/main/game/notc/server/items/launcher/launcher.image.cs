@@ -34,7 +34,7 @@ function ItemLauncherPseudoProjectile::onAdd(%this, %obj)
    {
       %dist = VectorLen(VectorSub(%target.getPosition(), %muzzlePoint));
       //echo(%dist);
-      if(%dist < 100)
+      if(%dist < 10)
       {
          %target.setDeflected(VectorScale(%muzzleVec, WpnInterceptorDisc.maxVelocity));
          createExplosion(WpnInterceptorDiscExplosion, %target.getPosition(), %muzzleVec);
