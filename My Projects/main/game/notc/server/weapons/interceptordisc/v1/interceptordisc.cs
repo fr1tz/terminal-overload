@@ -83,7 +83,7 @@ function WpnInterceptorDisc::onHitTarget(%this, %obj)
    //echo("WpnInterceptorDisc::onHitTarget()");
    %vel = VectorScale(%obj.getForwardVector(), %this.maxVelocity);
    %obj.getTarget().setDeflected(%vel);
-   createExplosion(WpnInterceptorDiscExplosion, %obj.getPosition(), "0 0 1");
+   createExplosion(WpnInterceptorDiscExplosion, %obj.getPosition(), %obj.getForwardVector());
    %obj.schedule(0, "delete");
 }
 
