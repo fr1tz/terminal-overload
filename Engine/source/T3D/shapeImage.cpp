@@ -3181,6 +3181,16 @@ void ShapeBase::setImageState(U32 imageSlot, U32 newState,bool force)
    ShapeBaseImageData::StateData& stateData = *image.state;
    image.delayTime = stateData.timeoutValue;
 
+   // Stop any looping sounds used in the last state.
+	// Also stop any sound from last state if it was a charge state.
+   if((lastState->sound && lastState->sound->getDescription()->mIsLooping) || lastState->charge)  
+   {  
+      for(Vector<SFXSource*>::iterator i = image.mSoundSources.begin(); i != image.mSoundSources.end(); i++)      
+         SFX_DELETE((*i));    
+
+      image.mSoundSources.clear();  
+   }  
+
    // Mount pending images
    if (image.nextImage != InvalidImagePtr && stateData.allowImageChange) {
       setImage(imageSlot,image.nextImage,image.nextSkinNameHandle,image.nextLoaded);
@@ -3482,16 +3492,6 @@ void ShapeBase::setImageState(U32 imageSlot, U32 newState,bool force)
       onImageStateAnimation(imageSlot, stateData.shapeSequence, stateData.direction, stateData.shapeSequenceScale, stateData.timeoutValue);
    }
 
-   // Stop any looping sounds used in the last state.
-	// Also stop any sound from last state if it was a charge state.
-   if((lastState->sound && lastState->sound->getDescription()->mIsLooping)
-      || lastState->charge)  
-   {  
-      for(Vector<SFXSource*>::iterator i = image.mSoundSources.begin(); i != image.mSoundSources.end(); i++)      
-         SFX_DELETE((*i));    
-
-      image.mSoundSources.clear();  
-   }  
 
    // Reset charge if we're entering a charging state and
    // weren't charging before...
