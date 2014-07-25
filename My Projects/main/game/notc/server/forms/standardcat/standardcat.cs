@@ -883,7 +883,11 @@ function FrmStandardcat::activateStealth(%this, %obj, %time)
    // Start flickering
    %n = %obj.getMountedObjectCount();
    for(%i = 0; %i < %n; %i++)
-      %obj.getMountedObject(%i).setFlickerTime(32);
+   {
+      %m = %obj.getMountedObject(%i);
+      if(isObject(%m) && %m.getDataBlock().canStealth)
+         %m.setFlickerTime(32);
+   }
    %obj.setFlickerTime(32);
    
    %obj.zStealthThread = %obj.schedule(%time, "deactivateStealth");
@@ -908,7 +912,11 @@ function FrmStandardcat::deactivateStealth(%this, %obj)
    // Stop flickering
    %n = %obj.getMountedObjectCount();
    for(%i = 0; %i < %n; %i++)
-      %obj.getMountedObject(%i).setFlickerTime(0);
+   {
+      %m = %obj.getMountedObject(%i);
+      if(isObject(%m) && %m.getDataBlock().canStealth)
+         %m.setFlickerTime(0);
+   }
    %obj.setFlickerTime(0);
 }
 

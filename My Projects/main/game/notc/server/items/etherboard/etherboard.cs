@@ -5,6 +5,7 @@ datablock StaticShapeData(ItemStandardcatEtherboardShape)
 {
    ignoreDamage = true;
    shapeFile = "content/xa/notc/core/shapes/standardcat/etherboard/p1/shape.dae";
+   canStealth = true; // script field
 };
 
 function ItemStandardcatEtherboardShape::onMount(%this, %obj, %mountObj, %node)

@@ -6,6 +6,7 @@ datablock BallastShapeData(ItemImpShieldShape)
    ignoreDamage = true;
    shapeFile = "content/xa/notc/core/shapes/standardcat/impshield/p1/shape.dae";
    mass = 0;
+   canStealth = true; // script field
 };
 
 function ItemImpShieldShape::onMount(%this, %obj, %mountObj, %node)
