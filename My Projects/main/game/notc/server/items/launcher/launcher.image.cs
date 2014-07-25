@@ -16,18 +16,35 @@ datablock ShotgunProjectileData(ItemLauncherPseudoProjectile)
 
 function ItemLauncherPseudoProjectile::onAdd(%this, %obj)
 {
-   echo("ItemLauncherPseudoProjectile::onAdd()");
+   //echo("ItemLauncherPseudoProjectile::onAdd()");
+   
+	// No need to ghost pseudo projectile to clients.
+	%obj.schedule(0, "delete");
 
 	%source = %obj.sourceObject;
    if(!isObject(%source))
       return;
- 
-   %targetSet = new SimSet();
-
+      
  	%muzzlePoint = %source.getMuzzlePoint(1);
    %muzzleVec = %source.getMuzzleVector(1);
+ 
    %target = %source.getImageTarget(1);
-   echo(%target);
+   
+   if(%target.getClassName() $= "NortDisc")
+   {
+      %dist = VectorLen(VectorSub(%target.getPosition(), %muzzlePoint));
+      //echo(%dist);
+      if(%dist < 100)
+      {
+         %target.setDeflected(VectorScale(%muzzleVec, WpnInterceptorDisc.maxVelocity));
+         createExplosion(WpnInterceptorDiscExplosion, %target.getPosition(), %muzzleVec);
+         return;
+      }
+   }
+   
+   %targetSet = new SimSet();
+
+   //echo(%target);
    if(isObject(%target))
    {
       %hudInfo = new HudInfo();
@@ -40,8 +57,7 @@ function ItemLauncherPseudoProjectile::onAdd(%this, %obj)
    
    %targetSet.delete();
    
-	// No need to ghost pseudo projectile to clients.
-	%obj.schedule(0, "delete");
+
 }
 
 datablock ShapeBaseImageData(ItemLauncherImage)
