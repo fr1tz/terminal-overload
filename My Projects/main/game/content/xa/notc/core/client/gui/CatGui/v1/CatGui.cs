@@ -88,12 +88,8 @@ function CatGui::tickThread(%this)
    for(%i = 0; %i < %n; %i++)
    {
       %obj = %control.getMountedObject(%i);
-      if(isObject(%obj) && %obj.isMethod("getDataBlock"))
-      {
-         %data = %obj.getDataBlock();
-         if(isObject(%data) && %data.getName() $= "ItemImpShieldShape")
-            %impshield = %obj;
-      }
+      if(isObject(%obj) && %obj.getClassName() $= "BallastShape")
+         %impshield = %obj;
    }
 
    if(isObject(%impshield))
