@@ -42,3 +42,8 @@ $Pref::Server::KickBanTime = 300;            // specified in seconds
 $Pref::Server::BanTime = 1800;               // specified in seconds
 $Pref::Server::FloodProtectionEnabled = 1;
 $Pref::Server::MaxChatLen = 120;
+
+// Default networking settings
+$pref::Net::PacketRateToServer = 32;
+$pref::Net::PacketRateToClient = 32;
+$pref::Net::PacketSize = 450;
