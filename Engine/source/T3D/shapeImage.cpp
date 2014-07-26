@@ -3502,8 +3502,8 @@ void ShapeBase::setImageState(U32 imageSlot, U32 newState,bool force)
    // weren't targeting before...
    if(stateData.target == true && lastState->target == false)
    {
-      image.targetState = MountedImage::NoTarget;
       image.setCurrTarget(this, NULL);
+      image.targetState = MountedImage::NoTarget;
    }
 
    // Play sound
@@ -3874,6 +3874,7 @@ TICKAGAIN:
 				conn->postNetEvent(event);
 
 				image.setCurrTarget(this, NULL);
+            image.targetState = MountedImage::NoTarget;
 			}
 			else
 			{
@@ -3918,6 +3919,8 @@ TICKAGAIN:
 		}
 		else // !currTarget
 		{
+         image.targetState = MountedImage::NoTarget;
+
 			Point3F start = eyePoint;
 			Point3F end = eyePoint + eyeVec * imageData.targetingMaxDist;
 
@@ -3948,6 +3951,7 @@ TICKAGAIN:
 
 				// aquire new target...
 				image.setCurrTarget(this, target);
+            image.targetState = MountedImage::HaveTarget;
 			}
 		}
 	}
