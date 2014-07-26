@@ -587,7 +587,7 @@ void ExplosionData::packData(BitStream* stream)
    }
    U32 count;
    for(count = 0; count < EC_NUM_TIME_KEYS; count++)
-      if(times[i] >= 1)
+      if(times[count] >= 1)
          break;
    count++;
    if(count > EC_NUM_TIME_KEYS)
@@ -704,9 +704,12 @@ void ExplosionData::unpackData(BitStream* stream)
 
    for( i=0; i<count; i++ )
    {
-      sizes[i].x = stream->readRangedU32(0, 16000) / 100.0f;
-      sizes[i].y = stream->readRangedU32(0, 16000) / 100.0f;
-      sizes[i].z = stream->readRangedU32(0, 16000) / 100.0f;
+      U32 x = stream->readRangedU32(0, 16000);
+      U32 y = stream->readRangedU32(0, 16000);
+      U32 z = stream->readRangedU32(0, 16000);
+      sizes[i].x = x / 100.0f;
+      sizes[i].y = y / 100.0f;
+      sizes[i].z = z / 100.0f;
    }
 
    //
