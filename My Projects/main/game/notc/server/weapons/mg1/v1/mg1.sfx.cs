@@ -50,6 +50,13 @@ datablock SFXProfile(WpnMG1ProjectileExplosionSound)
    preload = true;
 };
 
+datablock SFXProfile(WpnMG1ProjectileProximityExplosionSound)
+{
+   filename = "content/xa/torque3d/3.0/sound/turret/wpn_turret_fire";
+   description = AudioClose3D;
+   preload = true;
+};
+
 datablock SFXProfile(WpnMG1ProjectileMissEnemySound1)
 {
    filename = "content/xa/rotc/p.5.4/sounds/rotc/ricochet1-1";

@@ -10,13 +10,14 @@ datablock ProjectileData(WpnMG1Projectile)
 	// script damage properties...
 	impactDamage       = 20;
 	impactImpulse      = 250;
-	splashDamage       = 0;
-	splashDamageRadius = 0;
+	splashDamage       = 5;
+	splashDamageRadius = 5;
 	splashImpulse      = 0;
  
-   explodesNearEnemies = false;
-   explodesNearEnemiesRadius = 10;
-   missEnemyEffect = WpnMG1ProjectileMissEnemyEffect;
+   explodesNearEnemies = true;
+   explodesNearEnemiesRadius = 5;
+   nearEnemyExplosion = "WpnMG1ProjectileProximityExplosion";
+   //missEnemyEffect = WpnMG1ProjectileMissEnemyEffect;
    
 	energyDrain = 2; // how much energy does firing this projectile drain?
 
@@ -40,6 +41,15 @@ datablock ProjectileData(WpnMG1Projectile)
 
 function WpnMG1Projectile::onCollision(%this,%obj,%col,%fade,%pos,%normal)
 {
+   //echo("WpnMG1Projectile::onCollision()");
    Parent::onCollision(%this,%obj,%col,%fade,%pos,%normal);
+   %obj.zNoSplashDamage = true;
+}
+
+function WpnMG1Projectile::onExplode(%this, %obj, %pos, %mod)
+{
+   //echo("WpnMG1Projectile::onExplode()");
+   if(!%obj.zNoSplashDamage)
+      Parent::onExplode(%this, %obj, %pos, %mod);
 }
 
