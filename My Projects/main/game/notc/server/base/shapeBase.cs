@@ -264,6 +264,8 @@ function ShapeBaseData::damage(%this, %obj, %source, %position, %amount, %damage
       %norm = VectorNormalize(VectorSub(%dpos, %obj.getWorldBoxCenter()));
       if(getWord(%norm, 2) < 0)
          %norm = VectorNormalize(VectorSub(%spos, %dpos));
+      if(%damageType $= "Splash")
+         %dpos = VectorAdd(%obj.getWorldBoxCenter(), %norm);
       %colorI = %obj.paletteColors[0];
       if(%healthDamageDealt == 0)
          %colorI = "";
