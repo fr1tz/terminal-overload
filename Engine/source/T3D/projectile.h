@@ -96,6 +96,8 @@ public:
    bool explodesNearEnemies;
    S32  explodesNearEnemiesRadius;
    U32  explodesNearEnemiesMask;
+   ExplosionData* nearEnemyExplosion;
+   S32 nearEnemyExplosionId;
 
 	/// Explosion when missing enemy (purely cosmetic)
    ExplosionData* missEnemyEffect;
@@ -257,6 +259,7 @@ public:
    Point3F  mCurrPosition;
    Point3F  mCurrVelocity;
    bool     mExplode;
+   bool     mExplodeNearEnemy;
 
    U32      mCurrTrackingAbility;
 

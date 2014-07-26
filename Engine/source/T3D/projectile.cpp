@@ -136,6 +136,8 @@ ProjectileData::ProjectileData()
    explodesNearEnemies = false;
    explodesNearEnemiesRadius = 10;
    explodesNearEnemiesMask = ShapeBaseObjectType;
+   nearEnemyExplosion = NULL;	
+   nearEnemyExplosionId = 0;
 
    missEnemyEffect = NULL;	
    missEnemyEffectId = 0;
@@ -240,6 +242,8 @@ void ProjectileData::initPersistFields()
       "@brief How close the projectile has to be to an enemy to explode.\n\n");
    addField("explodesNearEnemiesMask", TypeS32, Offset(explodesNearEnemiesMask, ProjectileData),
       "@brief Projectile will only explode near enemies with this typemask.\n\n");
+   addField("nearEnemyExplosion", TYPEID< ExplosionData >(), Offset(nearEnemyExplosion, ProjectileData),
+      "@brief Explosion datablock used when the projectile explodes near an enemy.\n\n");
 
    addField("missEnemyEffect", TYPEID< ExplosionData >(), Offset(missEnemyEffect, ProjectileData),
       "@brief Explosion datablock used when the projectile misses an enemy.\n\n");
@@ -346,6 +350,10 @@ bool ProjectileData::preload(bool server, String &errorStr)
          if (Sim::findObject(particleWaterEmitterId, particleWaterEmitter) == false)
             Con::errorf(ConsoleLogEntry::General, "ProjectileData::preload: Invalid packet, bad datablockId(particleWaterEmitter): %d", particleWaterEmitterId);
 
+      if (!nearEnemyExplosion && nearEnemyExplosionId != 0)
+         if (Sim::findObject(nearEnemyExplosionId, nearEnemyExplosion) == false)
+            Con::errorf(ConsoleLogEntry::General, "ProjectileData::preload: Invalid packet, bad datablockId(nearEnemyExplosion): %d", nearEnemyExplosionId);
+
       if (!missEnemyEffect && missEnemyEffectId != 0)
          if (Sim::findObject(missEnemyEffectId, missEnemyEffect) == false)
             Con::errorf(ConsoleLogEntry::General, "ProjectileData::preload: Invalid packet, bad datablockId(missEnemyEffect): %d", missEnemyEffectId);
@@ -441,6 +449,10 @@ void ProjectileData::packData(BitStream* stream)
 
    if (stream->writeFlag(particleWaterEmitter != NULL))
       stream->writeRangedU32(particleWaterEmitter->getId(), DataBlockObjectIdFirst,
+                                                   DataBlockObjectIdLast);
+
+   if (stream->writeFlag(nearEnemyExplosion != NULL))
+      stream->writeRangedU32(nearEnemyExplosion->getId(), DataBlockObjectIdFirst,
                                                    DataBlockObjectIdLast);
 
    if (stream->writeFlag(missEnemyEffect != NULL))
@@ -548,6 +560,9 @@ void ProjectileData::unpackData(BitStream* stream)
 
    if (stream->readFlag())
       particleWaterEmitterId = stream->readRangedU32(DataBlockObjectIdFirst, DataBlockObjectIdLast);
+
+   if (stream->readFlag())
+      nearEnemyExplosionId = stream->readRangedU32(DataBlockObjectIdFirst, DataBlockObjectIdLast);
 
    if(stream->readFlag())
    {
@@ -1183,8 +1198,13 @@ void Projectile::explode( const Point3F &p, const Point3F &n, const U32 collideT
          pExplosion->setPalette(this->getPalette());
          pExplosion->onNewDataBlock(mDataBlock->waterExplosion, false);
       }
-      else
-      if (mDataBlock->explosion)
+      else if(collideType == 0 && mDataBlock->nearEnemyExplosion)
+      {
+         pExplosion = new Explosion;
+         pExplosion->setPalette(this->getPalette());
+         pExplosion->onNewDataBlock(mDataBlock->nearEnemyExplosion, false);
+      }
+      else if (mDataBlock->explosion)
       {
          pExplosion = new Explosion;
          pExplosion->setPalette(this->getPalette());
