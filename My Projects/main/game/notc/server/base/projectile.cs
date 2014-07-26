@@ -71,6 +71,12 @@ function ProjectileData::onExplode(%data, %proj, %pos, %mod)
 
       if(%targetObject == %proj)
          continue;
+         
+      if(!%targetObject.isMethod("getDataBlock"))
+         continue;
+         
+      if(%targetObject.getDataBlock().ignoreDamage)
+         continue;
 
         // the observer cameras are ShapeBases; ignore them...
       if(%targetObject.getType() & $TypeMasks::CameraObjectType)
@@ -84,15 +90,11 @@ function ProjectileData::onExplode(%data, %proj, %pos, %mod)
 		if (%coverage == 0)
 			continue;
 
-		%dist1 = containerSearchCurrRadiusDist();
-         // FIXME: can't call containerSearchCurrRadiusDist(); from here
-
       %center = %targetObject.getWorldBoxCenter();
-		%col = containerRayCast2(%pos, %center, %typeMask, %collisionMask, %obj);
+		%col = containerRayCast2(%pos, %center, %typeMask, %collisionMask, %proj);
 		%col = getWord(%col, 1) SPC getWord(%col, 2) SPC getWord(%col, 3);
-		%dist2 = VectorLen(VectorSub(%col, %pos));
+		%dist = VectorLen(VectorSub(%col, %pos));
 
-		%dist = %dist2;
 		%prox = %radius - %dist;
 		if(%data.splashDamageFalloff == $SplashDamageFalloff::Exponential)
 			%distScale = (%prox*%prox) / (%radius*%radius);
@@ -100,7 +102,7 @@ function ProjectileData::onExplode(%data, %proj, %pos, %mod)
 			%distScale = 1;
 		else
 			%distScale = %prox / %radius;
-   
+
 		// apply impulse...
 		if(%data.splashImpulse > 0)
 		{
