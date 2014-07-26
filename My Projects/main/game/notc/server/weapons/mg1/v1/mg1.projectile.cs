@@ -16,6 +16,7 @@ datablock ProjectileData(WpnMG1Projectile)
  
    explodesNearEnemies = true;
    explodesNearEnemiesRadius = 5;
+   explodesNearEnemiesMask = $TypeMasks::PlayerObjectType;
    nearEnemyExplosion = "WpnMG1ProjectileProximityExplosion";
    //missEnemyEffect = WpnMG1ProjectileMissEnemyEffect;
    
