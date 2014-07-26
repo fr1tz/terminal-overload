@@ -26,6 +26,7 @@ singleton Material(xa_notc_core_shapes_territoryzone_terrainmat)
    emissive[1] = "0";
    wireframe[1] = "0";
    diffuseColor[1] = "0.996078 0.988235 0.988235 0";
+   diffuseMap[0] = "content/xa/notc/core/shapes/territoryzone/terrain.png";
 };
 
 singleton Material(xa_notc_core_shapes_territoryzone_bordermat)
