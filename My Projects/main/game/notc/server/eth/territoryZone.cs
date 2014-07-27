@@ -88,6 +88,35 @@ function TerritoryZones_disableRepair(%shape)
 
 //------------------------------------------------------------------------------
 
+function TerritoryZones_repair(%obj, %repair)
+{
+   %client = %obj.client;
+   %slot = %client.zActiveLoadout;
+   
+   if(%client.zLoadoutProgress[%slot] >= 1)
+   {
+      %n = 0;
+      for(%slot = 0; %slot < 6; %slot++)
+         if(%client.zLoadoutProgress[%slot] < 1)
+            %n++;
+
+      %repair = %repair / %n;
+
+      for(%slot = 0; %slot < 6; %slot++)
+         if(%client.zLoadoutProgress[%slot] < 1)
+            %client.zLoadoutProgress[%slot] += %repair;
+   }
+   else
+      %client.zLoadoutProgress[%slot] += %repair;
+   
+   // Update loadout HUD.
+   for(%slot = 0; %slot < 6; %slot++)
+   {
+      %progress = %client.zLoadoutProgress[%slot];
+      %client.LoadoutHud_UpdateSlot(%slot, "", "", %progress);
+   }
+}
+
 function TerritoryZones_repairTick()
 {
    //echo("TerritoryZones_repairTick()");
@@ -104,12 +133,7 @@ function TerritoryZones_repairTick()
 		for (%i = 0; %i < %count; %i++)
 		{
 			%obj = Game.team1.repairObjects.getObject(%i);
-         %client = %obj.client;
-         %slot = %client.zActiveLoadout;
-         %progress = %client.zLoadoutProgress[%slot] + %repair;
-         %client.zLoadoutProgress[%slot] = %progress;
-         %client.LoadoutHud_UpdateSlot(%slot, "", "", %progress);
-			//%obj.setRepairRate(%repair);
+         TerritoryZones_repair(%obj, %repair);
 		}
 	}
 
@@ -120,12 +144,7 @@ function TerritoryZones_repairTick()
 		for (%i = 0; %i < %count; %i++)
 		{
 			%obj = Game.team2.repairObjects.getObject(%i);
-         %client = %obj.client;
-         %slot = %client.zActiveLoadout;
-         %progress = %client.zLoadoutProgress[%slot] + %repair;
-         %client.zLoadoutProgress[%slot] = %progress;
-         %client.LoadoutHud_UpdateSlot(%slot, "", "", %progress);
-			//%obj.setRepairRate(%repair);
+         TerritoryZones_repair(%obj, %repair);
 		}
 	}
 
