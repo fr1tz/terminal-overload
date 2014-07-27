@@ -142,8 +142,6 @@ function GameConnection::setAmmoAmountHud(%client, %amount, %amountInClips )
 
 function GameConnection::control(%client, %obj)
 {
-   %obj.setWhiteOut(1);
-
    %client.setControlObject(%obj);
    
    if(%obj.fovDelta !$= "")

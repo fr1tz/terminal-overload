@@ -566,16 +566,6 @@ function GameCoreBase::spawnPlayer(%game, %client, %spawnPoint, %noControl)
    %player.hearingDeafnessDt = 0;
    %player.hearingTinnitusEnabled = false;
    
-   // Player view spawn effect
-   %max = "-1 0 1";
-   %mode = "0 0 0";
-   %dt = "0.02 0 0.02";
-   %rnd = "0 0 0";
-   commandToClient(%client, 'EnableChromaticLens', %max, %mode, %dt, %rnd);
-   
-   %player.setWhiteOut(1);
-   %player.playAudio(0, SoldierSpawnGaspSound);
-
    if (!isDefined("%client.skin"))
    {
       // Determine which character skins are not already in use
