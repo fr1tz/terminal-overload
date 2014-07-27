@@ -22,8 +22,7 @@ function ETH::createTeams(%game)
 		%game.team1 = new ScriptObject()
 		{
 			teamId = 1;
-			name = "Reds";
-         color = "1 0 0";
+         color = theLevelInfo.teamColors1;
 			score = 0;
 			numPlayers = 0;
 			numTerritoryZones = 0;
@@ -41,7 +40,6 @@ function ETH::createTeams(%game)
 		%game.team2 = new ScriptObject()
 		{
 			teamId = 2;
-			name = "0 0 1";
          color = theLevelInfo.teamColors2;
 			score = 0;
 			numPlayers = 0;
@@ -223,14 +221,14 @@ function ETH::checkRoundEnd()
 
    if(Game.team1.numTerritoryZones == 0 && Game.team1.numCATs == 0)
    {
-      centerPrintAll(Game.team2.name @ " have won!",3);
+      centerPrintAll("Team 2 has won this round!",3);
       serverPlay2D(BlueVictorySound);
       schedule(5000, MissionGroup, "ETH::startNewRound");
       Game.roundRestarting = true;
    }
    else if(Game.team2.numTerritoryZones == 0 && Game.team2.numCATs == 0)
    {
-      centerPrintAll(Game.team1.name @ " have won!",3);
+      centerPrintAll("Team 1 has won this round!",3);
       serverPlay2D(RedVictorySound);
       schedule(5000, MissionGroup, "ETH::startNewRound");
       Game.roundRestarting = true;
