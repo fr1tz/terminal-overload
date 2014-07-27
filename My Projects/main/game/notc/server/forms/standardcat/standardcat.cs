@@ -353,6 +353,17 @@ function FrmStandardcat::onAdd(%this, %obj)
    };
    MissionCleanup.add(%obj.zLight);
    %obj.mountObject(%obj.zLight, 3);
+   
+   // Player view spawn effect
+   if(isObject(%obj.client))
+   {
+      %max = "-0.5 0 0.5";
+      %mode = "0 0 0";
+      %dt = "0.02 0 0.02";
+      %rnd = "0.0 0.0 0.0";
+      commandToClient(%obj.client, 'EnableChromaticLens', %max, %mode, %dt, %rnd);
+      %obj.setDamageFlash(1);
+   }
 }
 
 // callback function: called by engine
