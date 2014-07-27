@@ -142,18 +142,6 @@ function GameConnection::onAuthComplete(%client)
       }
    }
 
-   // Inform the client we've joined up
-   messageClient(%client,
-      'MsgClientJoin', 'Welcome to a Torque application %1.',
-      %client.playerName,
-      %client,
-      %client.sendGuid,
-      %client.team,
-      %client.score,
-      %client.isAiControlled(),
-      %client.isAdmin,
-      %client.isSuperAdmin);
-
    // Inform all the other clients of the new guy
    messageAllExcept(%client, -1, 'MsgClientJoin', '\c1%1 joined the game.',
       %client.playerName,
