@@ -295,20 +295,19 @@ function TerritoryZones_objectUpdateZone(%obj, %enterZone, %leftZone)
 //-----------------------------------------------------------------------------
 // Territory Zone Sounds
 
-datablock AudioProfile(ZoneAquiredSound)
+datablock SFXProfile(ZoneAquiredSound)
 {
-	filename = "share/sounds/rotc/events/zone.aquired.wav";
-	description = AudioCritical2D;
-	preload = true;
+   filename = "content/xa/rotc/p.5.4/sounds/rotc/events/zone.aquired";
+   description = AudioGui;
+   preload = true;
 };
 
-datablock AudioProfile(ZoneAttackedSound)
+datablock SFXProfile(ZoneAttackedSound)
 {
-	filename = "share/sounds/rotc/events/zone.attacked.wav";
-	description = AudioCritical2D;
-	preload = true;
+   filename = "content/xa/rotc/p.5.4/sounds/rotc/events/zone.attacked";
+   description = AudioGui;
+   preload = true;
 };
-
 
 //-----------------------------------------------------------------------------
 // Territory Zone
