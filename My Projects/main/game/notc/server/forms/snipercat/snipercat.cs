@@ -5,7 +5,7 @@ datablock PlayerData(FrmSnipercat : FrmStandardcat)
 {
    className = "FrmStandardcat";
    maxDamage = 60;
-   damageBuffer = 0;
+   damageBuffer = 25;
 //	skidSpeed = 25;
 //	skidFactor = 0.8;
 };
