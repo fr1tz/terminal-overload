@@ -104,6 +104,18 @@ function FrmEtherform::onAdd(%this, %obj)
    MissionCleanup.add(%obj.light);
    %obj.mountObject(%obj.light, 0);
    
+   // Player view spawn effect
+   if(isObject(%obj.client))
+   {
+      //%max = "-0.02 0 0.02";
+      //%mode = "0 0 0";
+      //%dt = "0.02 0 0.02";
+      //%dt = "0 0 0";
+      //%rnd = "0.04 0.04 0.04";
+      //commandToClient(%obj.client, 'EnableChromaticLens', %max, %mode, %dt, %rnd);
+      %obj.setWhiteOut(1);
+   }
+   
    return;
    
    // Setup pointer.
