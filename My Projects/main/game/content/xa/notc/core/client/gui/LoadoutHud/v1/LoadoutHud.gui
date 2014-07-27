@@ -40,7 +40,7 @@
 
       new GuiControl(XaNotcLoadoutHudSlot0) {
          position = "0 0";
-         extent = "100 36";
+         extent = "150 36";
          minExtent = "8 2";
          horizSizing = "right";
          vertSizing = "bottom";
@@ -56,11 +56,11 @@
          new GuiBitmapCtrl() {
             wrap = "0";
             position = "0 0";
-            extent = "100 36";
+            extent = "150 36";
             minExtent = "8 2";
             horizSizing = "right";
             vertSizing = "bottom";
-            profile = "GuiDefaultProfile";
+            profile = "ChatHudEditProfile";
             visible = "1";
             active = "1";
             tooltipProfile = "GuiToolTipProfile";
@@ -72,7 +72,7 @@
          };
          new GuiBitmapCtrl() {
             wrap = "0";
-            position = "2 2";
+            position = "30 2";
             extent = "32 32";
             minExtent = "8 2";
             horizSizing = "right";
@@ -95,8 +95,8 @@
             anchorBottom = "0";
             anchorLeft = "1";
             anchorRight = "0";
-            position = "35 10";
-            extent = "62 16";
+            position = "65 10";
+            extent = "80 16";
             minExtent = "8 2";
             horizSizing = "right";
             vertSizing = "top";
@@ -107,13 +107,37 @@
             hovertime = "1000";
             isContainer = "1";
             internalName = "progress";
+            canSave = "1";
+            canSaveDynamicFields = "0";
+         };
+         new GuiTextCtrl() {
+            text = "1";
+            maxLength = "1024";
+            margin = "0 0 0 0";
+            padding = "0 0 0 0";
+            anchorTop = "1";
+            anchorBottom = "0";
+            anchorLeft = "1";
+            anchorRight = "0";
+            position = "5 0";
+            extent = "20 36";
+            minExtent = "8 2";
+            horizSizing = "right";
+            vertSizing = "bottom";
+            profile = "HudBigTextNormalProfile";
+            visible = "1";
+            active = "1";
+            tooltipProfile = "GuiToolTipProfile";
+            hovertime = "1000";
+            isContainer = "1";
+            internalName = "text";
             canSave = "1";
             canSaveDynamicFields = "0";
          };
       };
       new GuiControl(XaNotcLoadoutHudSlot1) {
          position = "0 40";
-         extent = "100 36";
+         extent = "150 36";
          minExtent = "8 2";
          horizSizing = "right";
          vertSizing = "bottom";
@@ -129,11 +153,11 @@
          new GuiBitmapCtrl() {
             wrap = "0";
             position = "0 0";
-            extent = "100 36";
+            extent = "150 36";
             minExtent = "8 2";
             horizSizing = "right";
             vertSizing = "bottom";
-            profile = "GuiDefaultProfile";
+            profile = "ChatHudEditProfile";
             visible = "1";
             active = "1";
             tooltipProfile = "GuiToolTipProfile";
@@ -145,7 +169,7 @@
          };
          new GuiBitmapCtrl() {
             wrap = "0";
-            position = "2 2";
+            position = "30 2";
             extent = "32 32";
             minExtent = "8 2";
             horizSizing = "right";
@@ -168,8 +192,8 @@
             anchorBottom = "0";
             anchorLeft = "1";
             anchorRight = "0";
-            position = "35 10";
-            extent = "62 16";
+            position = "65 10";
+            extent = "80 16";
             minExtent = "8 2";
             horizSizing = "right";
             vertSizing = "top";
@@ -180,13 +204,37 @@
             hovertime = "1000";
             isContainer = "1";
             internalName = "progress";
+            canSave = "1";
+            canSaveDynamicFields = "0";
+         };
+         new GuiTextCtrl() {
+            text = "2";
+            maxLength = "1024";
+            margin = "0 0 0 0";
+            padding = "0 0 0 0";
+            anchorTop = "1";
+            anchorBottom = "0";
+            anchorLeft = "1";
+            anchorRight = "0";
+            position = "5 0";
+            extent = "20 36";
+            minExtent = "8 2";
+            horizSizing = "right";
+            vertSizing = "bottom";
+            profile = "HudBigTextNormalProfile";
+            visible = "1";
+            active = "1";
+            tooltipProfile = "GuiToolTipProfile";
+            hovertime = "1000";
+            isContainer = "1";
+            internalName = "text";
             canSave = "1";
             canSaveDynamicFields = "0";
          };
       };
       new GuiControl(XaNotcLoadoutHudSlot2) {
          position = "0 80";
-         extent = "100 36";
+         extent = "150 36";
          minExtent = "8 2";
          horizSizing = "right";
          vertSizing = "bottom";
@@ -202,11 +250,11 @@
          new GuiBitmapCtrl() {
             wrap = "0";
             position = "0 0";
-            extent = "100 36";
+            extent = "150 36";
             minExtent = "8 2";
             horizSizing = "right";
             vertSizing = "bottom";
-            profile = "GuiDefaultProfile";
+            profile = "ChatHudEditProfile";
             visible = "1";
             active = "1";
             tooltipProfile = "GuiToolTipProfile";
@@ -218,7 +266,7 @@
          };
          new GuiBitmapCtrl() {
             wrap = "0";
-            position = "2 2";
+            position = "30 2";
             extent = "32 32";
             minExtent = "8 2";
             horizSizing = "right";
@@ -241,8 +289,8 @@
             anchorBottom = "0";
             anchorLeft = "1";
             anchorRight = "0";
-            position = "35 10";
-            extent = "62 16";
+            position = "65 10";
+            extent = "80 16";
             minExtent = "8 2";
             horizSizing = "right";
             vertSizing = "top";
@@ -253,13 +301,37 @@
             hovertime = "1000";
             isContainer = "1";
             internalName = "progress";
+            canSave = "1";
+            canSaveDynamicFields = "0";
+         };
+         new GuiTextCtrl() {
+            text = "3";
+            maxLength = "1024";
+            margin = "0 0 0 0";
+            padding = "0 0 0 0";
+            anchorTop = "1";
+            anchorBottom = "0";
+            anchorLeft = "1";
+            anchorRight = "0";
+            position = "5 0";
+            extent = "20 36";
+            minExtent = "8 2";
+            horizSizing = "right";
+            vertSizing = "bottom";
+            profile = "HudBigTextNormalProfile";
+            visible = "1";
+            active = "1";
+            tooltipProfile = "GuiToolTipProfile";
+            hovertime = "1000";
+            isContainer = "1";
+            internalName = "text";
             canSave = "1";
             canSaveDynamicFields = "0";
          };
       };
       new GuiControl(XaNotcLoadoutHudSlot3) {
          position = "0 120";
-         extent = "100 36";
+         extent = "150 36";
          minExtent = "8 2";
          horizSizing = "right";
          vertSizing = "bottom";
@@ -275,11 +347,11 @@
          new GuiBitmapCtrl() {
             wrap = "0";
             position = "0 0";
-            extent = "100 36";
+            extent = "150 36";
             minExtent = "8 2";
             horizSizing = "right";
             vertSizing = "bottom";
-            profile = "GuiDefaultProfile";
+            profile = "ChatHudEditProfile";
             visible = "1";
             active = "1";
             tooltipProfile = "GuiToolTipProfile";
@@ -291,7 +363,7 @@
          };
          new GuiBitmapCtrl() {
             wrap = "0";
-            position = "2 2";
+            position = "30 2";
             extent = "32 32";
             minExtent = "8 2";
             horizSizing = "right";
@@ -314,8 +386,8 @@
             anchorBottom = "0";
             anchorLeft = "1";
             anchorRight = "0";
-            position = "35 10";
-            extent = "62 16";
+            position = "65 10";
+            extent = "80 16";
             minExtent = "8 2";
             horizSizing = "right";
             vertSizing = "top";
@@ -326,13 +398,37 @@
             hovertime = "1000";
             isContainer = "1";
             internalName = "progress";
+            canSave = "1";
+            canSaveDynamicFields = "0";
+         };
+         new GuiTextCtrl() {
+            text = "4";
+            maxLength = "1024";
+            margin = "0 0 0 0";
+            padding = "0 0 0 0";
+            anchorTop = "1";
+            anchorBottom = "0";
+            anchorLeft = "1";
+            anchorRight = "0";
+            position = "5 0";
+            extent = "20 36";
+            minExtent = "8 2";
+            horizSizing = "right";
+            vertSizing = "bottom";
+            profile = "HudBigTextNormalProfile";
+            visible = "1";
+            active = "1";
+            tooltipProfile = "GuiToolTipProfile";
+            hovertime = "1000";
+            isContainer = "1";
+            internalName = "text";
             canSave = "1";
             canSaveDynamicFields = "0";
          };
       };
       new GuiControl(XaNotcLoadoutHudSlot4) {
          position = "0 160";
-         extent = "100 36";
+         extent = "150 36";
          minExtent = "8 2";
          horizSizing = "right";
          vertSizing = "bottom";
@@ -348,11 +444,11 @@
          new GuiBitmapCtrl() {
             wrap = "0";
             position = "0 0";
-            extent = "100 36";
+            extent = "150 36";
             minExtent = "8 2";
             horizSizing = "right";
             vertSizing = "bottom";
-            profile = "GuiDefaultProfile";
+            profile = "ChatHudEditProfile";
             visible = "1";
             active = "1";
             tooltipProfile = "GuiToolTipProfile";
@@ -364,7 +460,7 @@
          };
          new GuiBitmapCtrl() {
             wrap = "0";
-            position = "2 2";
+            position = "30 2";
             extent = "32 32";
             minExtent = "8 2";
             horizSizing = "right";
@@ -387,8 +483,8 @@
             anchorBottom = "0";
             anchorLeft = "1";
             anchorRight = "0";
-            position = "35 10";
-            extent = "62 16";
+            position = "65 10";
+            extent = "80 16";
             minExtent = "8 2";
             horizSizing = "right";
             vertSizing = "top";
@@ -399,13 +495,37 @@
             hovertime = "1000";
             isContainer = "1";
             internalName = "progress";
+            canSave = "1";
+            canSaveDynamicFields = "0";
+         };
+         new GuiTextCtrl() {
+            text = "5";
+            maxLength = "1024";
+            margin = "0 0 0 0";
+            padding = "0 0 0 0";
+            anchorTop = "1";
+            anchorBottom = "0";
+            anchorLeft = "1";
+            anchorRight = "0";
+            position = "5 0";
+            extent = "20 36";
+            minExtent = "8 2";
+            horizSizing = "right";
+            vertSizing = "bottom";
+            profile = "HudBigTextNormalProfile";
+            visible = "1";
+            active = "1";
+            tooltipProfile = "GuiToolTipProfile";
+            hovertime = "1000";
+            isContainer = "1";
+            internalName = "text";
             canSave = "1";
             canSaveDynamicFields = "0";
          };
       };
       new GuiControl(XaNotcLoadoutHudSlot5) {
          position = "0 200";
-         extent = "100 36";
+         extent = "150 36";
          minExtent = "8 2";
          horizSizing = "right";
          vertSizing = "bottom";
@@ -421,11 +541,11 @@
          new GuiBitmapCtrl() {
             wrap = "0";
             position = "0 0";
-            extent = "100 36";
+            extent = "150 36";
             minExtent = "8 2";
             horizSizing = "right";
             vertSizing = "bottom";
-            profile = "GuiDefaultProfile";
+            profile = "ChatHudEditProfile";
             visible = "1";
             active = "1";
             tooltipProfile = "GuiToolTipProfile";
@@ -437,7 +557,7 @@
          };
          new GuiBitmapCtrl() {
             wrap = "0";
-            position = "2 2";
+            position = "30 2";
             extent = "32 32";
             minExtent = "8 2";
             horizSizing = "right";
@@ -460,8 +580,8 @@
             anchorBottom = "0";
             anchorLeft = "1";
             anchorRight = "0";
-            position = "35 10";
-            extent = "62 16";
+            position = "65 10";
+            extent = "80 16";
             minExtent = "8 2";
             horizSizing = "right";
             vertSizing = "top";
@@ -472,6 +592,30 @@
             hovertime = "1000";
             isContainer = "1";
             internalName = "progress";
+            canSave = "1";
+            canSaveDynamicFields = "0";
+         };
+         new GuiTextCtrl() {
+            text = "6";
+            maxLength = "1024";
+            margin = "0 0 0 0";
+            padding = "0 0 0 0";
+            anchorTop = "1";
+            anchorBottom = "0";
+            anchorLeft = "1";
+            anchorRight = "0";
+            position = "5 0";
+            extent = "20 36";
+            minExtent = "8 2";
+            horizSizing = "right";
+            vertSizing = "bottom";
+            profile = "HudBigTextNormalProfile";
+            visible = "1";
+            active = "1";
+            tooltipProfile = "GuiToolTipProfile";
+            hovertime = "1000";
+            isContainer = "1";
+            internalName = "text";
             canSave = "1";
             canSaveDynamicFields = "0";
          };
