@@ -96,7 +96,7 @@ function ETH::joinTeam(%client, %teamId)
    
 	// Notify all clients of team change.
 	MessageAll('MsgClientJoinTeam', '\c2%1 joined team %2.',
-		%client.name,
+		%client.playerName,
 		%client.team.teamId,
 		%client.team.teamId,
 		%client,
