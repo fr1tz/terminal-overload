@@ -204,7 +204,6 @@ function FrmEtherform::impulse(%this, %obj, %position, %impulseVec, %src)
 
 function FrmEtherform::onTrigger(%this, %obj, %triggerNum, %val)
 {
-   if(%triggerNum == 0 && %val)
-      Game.etherformManifest(%obj);
+  
 }
 

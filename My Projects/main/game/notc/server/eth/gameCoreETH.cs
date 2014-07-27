@@ -254,6 +254,9 @@ function GameCoreETH::etherformManifest(%game, %obj)
    if(!isObject(%client))
       return;
       
+   if(%obj.getClassName() !$= "Etherform")
+      return;
+      
    %percent = %client.zLoadoutProgress[%client.zActiveLoadout];
 
    if(%percent < 0.5)

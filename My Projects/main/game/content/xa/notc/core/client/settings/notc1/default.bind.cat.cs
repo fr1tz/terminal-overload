@@ -423,7 +423,7 @@ function XaNotc1CatMoveMap_suicide(%val)
       commandToServer('suicide');
 }
 
-XaNotc1CatMoveMap.bind(keyboard, "lalt", "XaNotc1CatMoveMap_suicide");
+XaNotc1CatMoveMap.bind(mouse0, "alt button1", XaNotc1CatMoveMap_suicide);
 
 //------------------------------------------------------------------------------
 // Item manipulation

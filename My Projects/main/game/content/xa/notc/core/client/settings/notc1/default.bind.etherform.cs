@@ -12,6 +12,11 @@ function XaNotc1EtherformMoveMap_activate()
 
 //------------------------------------------------------------------------------
 
+function XaNotc1EtherformMoveMap_manifest(%val)
+{
+   if(%val) commandToServer('Manifest');
+}
+
 function XaNotc1EtherformMoveMap_selectLoadout0(%val)
 {
    if(%val) commandToServer('SelectLoadout', 0);
@@ -61,6 +66,8 @@ function XaNotc1EtherformMoveMap_selectLoadout9(%val)
 {
    if(%val) commandToServer('SelectLoadout', 9);
 }
+
+XaNotc1EtherformMoveMap.bind(mouse0, "alt button0", XaNotc1EtherformMoveMap_manifest);
 
 XaNotc1EtherformMoveMap.bind( keyboard, 1, XaNotc1EtherformMoveMap_selectLoadout0 );
 XaNotc1EtherformMoveMap.bind( keyboard, 2, XaNotc1EtherformMoveMap_selectLoadout1 );
