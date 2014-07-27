@@ -81,9 +81,10 @@ function WpnInterceptorDisc::onDeflected(%this, %obj)
 function WpnInterceptorDisc::onHitTarget(%this, %obj)
 {
    //echo("WpnInterceptorDisc::onHitTarget()");
+   %source = %obj;
+   %target = %obj.getTarget();
    %vel = VectorScale(%obj.getForwardVector(), %this.maxVelocity);
-   %obj.getTarget().setDeflected(%vel);
-   createExplosion(WpnInterceptorDiscExplosion, %obj.getPosition(), %obj.getForwardVector());
+   %this.deflectDisc(%target, %obj, %vel);
    %obj.schedule(0, "delete");
 }
 
@@ -94,8 +95,22 @@ function WpnInterceptorDisc::onMissedTarget(%this, %obj)
 
 function WpnInterceptorDisc::onLostTarget(%this, %obj)
 {
-   //echo("WpnInterceptorDisc::onLostTarget()");
+   echo("WpnInterceptorDisc::onLostTarget()");
    %obj.schedule(0, "delete");
+}
+
+// Called by script
+function WpnInterceptorDisc::deflectDisc(%this, %target, %source, %vel)
+{
+   createExplosion(WpnInterceptorDiscExplosion, %target.getPosition(), %target.getForwardVector());
+   if(%target.getDataBlock().isMethod("setDeflected"))
+   {
+      %target.getDataBlock().setDeflected(%target, %source, %vel);
+   }
+   else
+   {
+      %target.setDeflected(%vel);
+   }
 }
 
 // Called by script

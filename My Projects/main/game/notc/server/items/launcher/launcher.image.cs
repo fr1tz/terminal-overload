@@ -25,19 +25,21 @@ function ItemLauncherPseudoProjectile::onAdd(%this, %obj)
    if(!isObject(%source))
       return;
       
+   %target = %source.getImageTarget(1);
+   if(!isObject(%target))
+      return;
+      
  	%muzzlePoint = %source.getMuzzlePoint(1);
    %muzzleVec = %source.getMuzzleVector(1);
  
-   %target = %source.getImageTarget(1);
-   
    if(%target.getClassName() $= "NortDisc")
    {
       %dist = VectorLen(VectorSub(%target.getPosition(), %muzzlePoint));
       //echo(%dist);
       if(%dist < 10)
       {
-         %target.setDeflected(VectorScale(%muzzleVec, WpnInterceptorDisc.maxVelocity));
-         createExplosion(WpnInterceptorDiscExplosion, %target.getPosition(), %muzzleVec);
+         %vel = VectorScale(%muzzleVec, WpnInterceptorDisc.maxVelocity);
+         WpnInterceptorDisc.deflectDisc(%target, %source, %vel);
          return;
       }
    }
