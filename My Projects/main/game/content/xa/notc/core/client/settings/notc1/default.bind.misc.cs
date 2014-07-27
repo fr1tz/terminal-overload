@@ -57,7 +57,7 @@ XaNotc1MiscMoveMap.bind(keyboard, "alt c", XaNotc1MiscMoveMap_toggleCamera);
 function XaNotc1MiscMoveMap_toggleMessageHud( %val )
 {
    if ( %val )
-      toggleMessageHud();
+      toggleMessageHud(1);
 }
 
 function XaNotc1MiscMoveMap_pageMessageHudUp( %val )
