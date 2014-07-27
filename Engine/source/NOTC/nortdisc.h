@@ -103,6 +103,7 @@ class NortDisc : public Projectile
 
 	// GameBase...
 	void processTick(const Move*);
+   void interpolateTick(F32 delta);  
 	bool onNewDataBlock(GameBaseData*, bool reload);
 
 	// NortDisc...

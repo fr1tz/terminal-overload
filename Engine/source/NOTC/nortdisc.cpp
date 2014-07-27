@@ -665,6 +665,35 @@ void NortDisc::processTick(const Move* move)
 	}
 }
 
+void NortDisc::interpolateTick(F32 delta)
+{
+   if( mHasExploded )
+      return;
+
+   Point3F interpPos = mCurrDeltaBase + mCurrBackDelta * delta;
+   Point3F dir = mCurrVelocity;
+   if(dir.isZero())
+      dir.set(0,0,1);
+   else
+      dir.normalize();
+
+   MatrixF xform = this->getRenderTransform();
+   xform.setPosition(interpPos);
+   setRenderTransform(xform);
+
+   // fade out the projectile image
+   S32 time = (S32)(mCurrTick - delta);
+   if(time > mDataBlock->fadeDelay)
+   {
+      F32 fade = F32(time - mDataBlock->fadeDelay);
+      mFadeValue = 1.0 - (fade / F32(mDataBlock->lifetime));
+   }
+   else
+      mFadeValue = 1.0;
+
+   updateSound();
+}
+
 //--------------------------------------------------------------------------
 
 bool
