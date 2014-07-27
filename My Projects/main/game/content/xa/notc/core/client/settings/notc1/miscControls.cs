@@ -274,8 +274,3 @@ function XaNotcSettings1_MiscControls_restoreDefaultMappings()
    optionsDlg.fillRemapList();
 }
 
-function XaNotcSettings1_MiscControls_MouseSetSensitivity(%value)
-{
-   $pref::Input::LinkMouseSensitivity = %value;
-}
-

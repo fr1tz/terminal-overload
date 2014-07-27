@@ -298,8 +298,4 @@ function XaNotcSettings1_EtherformControls_restoreDefaultMappings()
    optionsDlg.fillRemapList();
 }
 
-function XaNotcSettings1_EtherformControls_MouseSetSensitivity(%value)
-{
-   $pref::Input::LinkMouseSensitivity = %value;
-}
 

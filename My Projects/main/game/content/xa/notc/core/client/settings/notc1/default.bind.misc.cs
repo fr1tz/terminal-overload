@@ -78,7 +78,7 @@ function XaNotc1MiscMoveMap_resizeMessageHud( %val )
       cycleMessageHudSize();
 }
 
-XaNotc1MiscMoveMap.bind(keyboard, u, XaNotc1MiscMoveMap_toggleMessageHud );
+XaNotc1MiscMoveMap.bind(keyboard, t, XaNotc1MiscMoveMap_toggleMessageHud );
 //XaNotc1MiscMoveMap.bind(keyboard, y, XaNotc1MiscMoveMap_teamMessageHud );
 XaNotc1MiscMoveMap.bind(keyboard, "pageUp", XaNotc1MiscMoveMap_pageMessageHudUp );
 XaNotc1MiscMoveMap.bind(keyboard, "pageDown", XaNotc1MiscMoveMap_pageMessageHudDown );
