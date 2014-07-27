@@ -5,7 +5,7 @@ new SimGroup(MissionGroup) {
       enabled = "1";
 
    new LevelInfo(theLevelInfo) {
-      nearClip = "0.1";
+      nearClip = "0.05";
       visibleDistance = "99999";
       decalBias = "0.0015";
       fogColor = "0.0313726 0.996078 0.00784314 1";
@@ -446,7 +446,7 @@ new SimGroup(MissionGroup) {
          paletteColors[11] = "255 0 0 255";
          paletteColors[12] = "255 0 0 255";
          paletteColors[13] = "255 0 0 255";
-         paletteColors[14] = "Red";
+         paletteColors[14] = "255 0 0 255";
          paletteColors[15] = "255 0 0 255";
          canSave = "1";
          canSaveDynamicFields = "1";
@@ -457,7 +457,7 @@ new SimGroup(MissionGroup) {
          msToNext = "1000";
          smoothingType = "Spline";
          position = "37 116 201";
-         rotation = "0.0209759 0.0211819 -0.999556 90.5902";
+         rotation = "0.0209759 0.0211819 -0.999556 90.5903";
          scale = "1 1 1";
          paletteColors[0] = "227 209 124 255";
          paletteColors[1] = "227 209 124 255";
@@ -1878,7 +1878,7 @@ new SimGroup(MissionGroup) {
          paletteColors[9] = "0 0 0 0";
          paletteColors[10] = "0 0 0 0";
          paletteColors[11] = "0 0 0 0";
-         paletteColors[12] = "0 0 0 0";
+         paletteColors[12] = "InvisibleBlack";
          paletteColors[13] = "0 0 0 0";
          paletteColors[14] = "0 0 0 0";
          paletteColors[15] = "0 0 0 0";
@@ -2414,8 +2414,8 @@ new SimGroup(MissionGroup) {
          position = "-218 -135 35";
          rotation = "1 0 0 0";
          scale = "80 60 25";
-         paletteColors[0] = "50 20 0 255";
-         paletteColors[1] = "100 40 0 255";
+         paletteColors[0] = "50 25 0 255";
+         paletteColors[1] = "100 50 0 255";
          paletteColors[2] = "205 205 205 205";
          paletteColors[3] = "205 205 205 205";
          paletteColors[4] = "205 205 205 205";
@@ -2445,7 +2445,7 @@ new SimGroup(MissionGroup) {
             initiallyProtected = "0";
             initialOwner = "1";
             zBlocked = "0";
-            zNeighbour1 = "29737";
+            zNeighbour1 = "9694";
             zNeighbour2 = "-1";
             zNeighbour3 = "-1";
             zNumBlues = "0";
@@ -2459,8 +2459,8 @@ new SimGroup(MissionGroup) {
          position = "-348.5 -161.5 35";
          rotation = "1 0 0 0";
          scale = "50.5 110 25";
-         paletteColors[0] = "50 20 0 255";
-         paletteColors[1] = "100 40 0 255";
+         paletteColors[0] = "50 25 0 255";
+         paletteColors[1] = "100 50 0 255";
          paletteColors[2] = "205 205 205 205";
          paletteColors[3] = "205 205 205 205";
          paletteColors[4] = "205 205 205 205";
@@ -2490,8 +2490,8 @@ new SimGroup(MissionGroup) {
             initiallyProtected = "0";
             initialOwner = "1";
             zBlocked = "0";
-            zNeighbour0 = "29736";
-            zNeighbour1 = "29738";
+            zNeighbour0 = "9693";
+            zNeighbour1 = "9695";
             zNeighbour2 = "-1";
             zNeighbour3 = "-1";
             zNumBlues = "0";
@@ -2505,8 +2505,8 @@ new SimGroup(MissionGroup) {
          position = "-347 -391.5 35";
          rotation = "1 0 0 0";
          scale = "120 120 25";
-         paletteColors[0] = "50 20 0 255";
-         paletteColors[1] = "100 40 0 255";
+         paletteColors[0] = "50 25 0 255";
+         paletteColors[1] = "100 50 0 255";
          paletteColors[2] = "205 205 205 205";
          paletteColors[3] = "205 205 205 205";
          paletteColors[4] = "205 205 205 205";
@@ -2536,8 +2536,8 @@ new SimGroup(MissionGroup) {
             initiallyProtected = "0";
             initialOwner = "1";
             zBlocked = "0";
-            zNeighbour0 = "29737";
-            zNeighbour1 = "29739";
+            zNeighbour0 = "9694";
+            zNeighbour1 = "9696";
             zNeighbour2 = "-1";
             zNeighbour3 = "-1";
             zNumBlues = "0";
@@ -2551,8 +2551,8 @@ new SimGroup(MissionGroup) {
          position = "-184.5 -450 35";
          rotation = "1 0 0 0";
          scale = "42.5 50 25";
-         paletteColors[0] = "50 20 0 255";
-         paletteColors[1] = "100 40 0 255";
+         paletteColors[0] = "50 25 0 255";
+         paletteColors[1] = "100 50 0 255";
          paletteColors[2] = "205 205 205 205";
          paletteColors[3] = "205 205 205 205";
          paletteColors[4] = "205 205 205 205";
@@ -2582,8 +2582,8 @@ new SimGroup(MissionGroup) {
             initiallyProtected = "0";
             initialOwner = "1";
             zBlocked = "0";
-            zNeighbour0 = "29738";
-            zNeighbour1 = "29740";
+            zNeighbour0 = "9695";
+            zNeighbour1 = "9697";
             zNeighbour2 = "-1";
             zNeighbour3 = "-1";
             zNumBlues = "0";
@@ -2597,8 +2597,8 @@ new SimGroup(MissionGroup) {
          position = "8 -410 35";
          rotation = "1 0 0 0";
          scale = "150 100 25";
-         paletteColors[0] = "50 20 0 255";
-         paletteColors[1] = "100 40 0 255";
+         paletteColors[0] = "50 25 0 255";
+         paletteColors[1] = "100 50 0 255";
          paletteColors[2] = "205 205 205 205";
          paletteColors[3] = "205 205 205 205";
          paletteColors[4] = "205 205 205 205";
@@ -2628,8 +2628,8 @@ new SimGroup(MissionGroup) {
             initiallyProtected = "0";
             initialOwner = "1";
             zBlocked = "0";
-            zNeighbour0 = "29739";
-            zNeighbour1 = "29741";
+            zNeighbour0 = "9696";
+            zNeighbour1 = "9698";
             zNeighbour2 = "-1";
             zNeighbour3 = "-1";
             zNumBlues = "0";
@@ -2674,8 +2674,8 @@ new SimGroup(MissionGroup) {
             initiallyProtected = "0";
             initialOwner = "0";
             zBlocked = "0";
-            zNeighbour0 = "29740";
-            zNeighbour1 = "29742";
+            zNeighbour0 = "9697";
+            zNeighbour1 = "9699";
             zNeighbour2 = "-1";
             zNeighbour3 = "-1";
             zNumBlues = "0";
@@ -2720,8 +2720,8 @@ new SimGroup(MissionGroup) {
             initiallyProtected = "0";
             initialOwner = "0";
             zBlocked = "0";
-            zNeighbour0 = "29741";
-            zNeighbour1 = "29743";
+            zNeighbour0 = "9698";
+            zNeighbour1 = "9700";
             zNeighbour2 = "-1";
             zNeighbour3 = "-1";
             zNumBlues = "0";
@@ -2766,8 +2766,8 @@ new SimGroup(MissionGroup) {
             initiallyProtected = "0";
             initialOwner = "0";
             zBlocked = "0";
-            zNeighbour0 = "29742";
-            zNeighbour1 = "29744";
+            zNeighbour0 = "9699";
+            zNeighbour1 = "9701";
             zNeighbour2 = "-1";
             zNeighbour3 = "-1";
             zNumBlues = "0";
@@ -2812,8 +2812,8 @@ new SimGroup(MissionGroup) {
             initiallyProtected = "0";
             initialOwner = "0";
             zBlocked = "0";
-            zNeighbour0 = "29743";
-            zNeighbour1 = "29745";
+            zNeighbour0 = "9700";
+            zNeighbour1 = "9702";
             zNeighbour2 = "-1";
             zNeighbour3 = "-1";
             zNumBlues = "0";
@@ -2858,8 +2858,8 @@ new SimGroup(MissionGroup) {
             initiallyProtected = "0";
             initialOwner = "0";
             zBlocked = "0";
-            zNeighbour0 = "29744";
-            zNeighbour1 = "29746";
+            zNeighbour0 = "9701";
+            zNeighbour1 = "9703";
             zNeighbour2 = "-1";
             zNeighbour3 = "-1";
             zNumBlues = "0";
@@ -2904,8 +2904,8 @@ new SimGroup(MissionGroup) {
             initiallyProtected = "0";
             initialOwner = "0";
             zBlocked = "0";
-            zNeighbour0 = "29745";
-            zNeighbour1 = "29747";
+            zNeighbour0 = "9702";
+            zNeighbour1 = "9704";
             zNeighbour2 = "-1";
             zNeighbour3 = "-1";
             zNumBlues = "0";
@@ -2950,8 +2950,8 @@ new SimGroup(MissionGroup) {
             initiallyProtected = "0";
             initialOwner = "0";
             zBlocked = "0";
-            zNeighbour0 = "29746";
-            zNeighbour1 = "29748";
+            zNeighbour0 = "9703";
+            zNeighbour1 = "9705";
             zNeighbour2 = "-1";
             zNeighbour3 = "-1";
             zNumBlues = "0";
@@ -2996,8 +2996,8 @@ new SimGroup(MissionGroup) {
             initiallyProtected = "0";
             initialOwner = "0";
             zBlocked = "0";
-            zNeighbour0 = "29747";
-            zNeighbour1 = "29749";
+            zNeighbour0 = "9704";
+            zNeighbour1 = "9706";
             zNeighbour2 = "-1";
             zNeighbour3 = "-1";
             zNumBlues = "0";
@@ -3042,8 +3042,8 @@ new SimGroup(MissionGroup) {
             initiallyProtected = "0";
             initialOwner = "0";
             zBlocked = "0";
-            zNeighbour0 = "29748";
-            zNeighbour1 = "29750";
+            zNeighbour0 = "9705";
+            zNeighbour1 = "9707";
             zNeighbour2 = "-1";
             zNeighbour3 = "-1";
             zNumBlues = "0";
@@ -3088,8 +3088,8 @@ new SimGroup(MissionGroup) {
             initiallyProtected = "0";
             initialOwner = "0";
             zBlocked = "0";
-            zNeighbour0 = "29749";
-            zNeighbour1 = "29751";
+            zNeighbour0 = "9706";
+            zNeighbour1 = "9708";
             zNeighbour2 = "-1";
             zNeighbour3 = "-1";
             zNumBlues = "0";
@@ -3134,8 +3134,8 @@ new SimGroup(MissionGroup) {
             initiallyProtected = "0";
             initialOwner = "0";
             zBlocked = "0";
-            zNeighbour0 = "29750";
-            zNeighbour1 = "29752";
+            zNeighbour0 = "9707";
+            zNeighbour1 = "9709";
             zNeighbour2 = "-1";
             zNeighbour3 = "-1";
             zNumBlues = "0";
@@ -3180,8 +3180,8 @@ new SimGroup(MissionGroup) {
             initiallyProtected = "0";
             initialOwner = "0";
             zBlocked = "0";
-            zNeighbour0 = "29751";
-            zNeighbour1 = "29753";
+            zNeighbour0 = "9708";
+            zNeighbour1 = "9710";
             zNeighbour2 = "-1";
             zNeighbour3 = "-1";
             zNumBlues = "0";
@@ -3195,8 +3195,8 @@ new SimGroup(MissionGroup) {
          position = "-14.2242 410.138 35";
          rotation = "0 0 1 180";
          scale = "150 100 25";
-         paletteColors[0] = "15 45 0 255";
-         paletteColors[1] = "30 90 0 255";
+         paletteColors[0] = "15 50 0 255";
+         paletteColors[1] = "30 100 0 255";
          paletteColors[2] = "205 205 205 205";
          paletteColors[3] = "205 205 205 205";
          paletteColors[4] = "205 205 205 205";
@@ -3226,8 +3226,8 @@ new SimGroup(MissionGroup) {
             initiallyProtected = "0";
             initialOwner = "2";
             zBlocked = "0";
-            zNeighbour0 = "29752";
-            zNeighbour1 = "29754";
+            zNeighbour0 = "9709";
+            zNeighbour1 = "9711";
             zNeighbour2 = "-1";
             zNeighbour3 = "-1";
             zNumBlues = "0";
@@ -3241,8 +3241,8 @@ new SimGroup(MissionGroup) {
          position = "178.276 450.138 35";
          rotation = "0 0 1 180";
          scale = "42.5 50 25";
-         paletteColors[0] = "15 45 0 255";
-         paletteColors[1] = "30 90 0 255";
+         paletteColors[0] = "15 50 0 255";
+         paletteColors[1] = "30 100 0 255";
          paletteColors[2] = "205 205 205 205";
          paletteColors[3] = "205 205 205 205";
          paletteColors[4] = "205 205 205 205";
@@ -3272,8 +3272,8 @@ new SimGroup(MissionGroup) {
             initiallyProtected = "0";
             initialOwner = "2";
             zBlocked = "0";
-            zNeighbour0 = "29753";
-            zNeighbour1 = "29755";
+            zNeighbour0 = "9710";
+            zNeighbour1 = "9712";
             zNeighbour2 = "-1";
             zNeighbour3 = "-1";
             zNumBlues = "0";
@@ -3287,8 +3287,8 @@ new SimGroup(MissionGroup) {
          position = "340.776 391.638 35";
          rotation = "0 0 1 180";
          scale = "120 120 25";
-         paletteColors[0] = "15 45 0 255";
-         paletteColors[1] = "30 90 0 255";
+         paletteColors[0] = "15 50 0 255";
+         paletteColors[1] = "30 100 0 255";
          paletteColors[2] = "205 205 205 205";
          paletteColors[3] = "205 205 205 205";
          paletteColors[4] = "205 205 205 205";
@@ -3318,8 +3318,8 @@ new SimGroup(MissionGroup) {
             initiallyProtected = "0";
             initialOwner = "2";
             zBlocked = "0";
-            zNeighbour0 = "29754";
-            zNeighbour1 = "29756";
+            zNeighbour0 = "9711";
+            zNeighbour1 = "9713";
             zNeighbour2 = "-1";
             zNeighbour3 = "-1";
             zNumBlues = "0";
@@ -3333,8 +3333,8 @@ new SimGroup(MissionGroup) {
          position = "342.276 161.638 35";
          rotation = "0 0 1 180";
          scale = "50.5 110 25";
-         paletteColors[0] = "15 45 0 255";
-         paletteColors[1] = "30 90 0 255";
+         paletteColors[0] = "15 50 0 255";
+         paletteColors[1] = "30 100 0 255";
          paletteColors[2] = "205 205 205 205";
          paletteColors[3] = "205 205 205 205";
          paletteColors[4] = "205 205 205 205";
@@ -3364,8 +3364,8 @@ new SimGroup(MissionGroup) {
             initiallyProtected = "0";
             initialOwner = "2";
             zBlocked = "0";
-            zNeighbour0 = "29755";
-            zNeighbour1 = "29757";
+            zNeighbour0 = "9712";
+            zNeighbour1 = "9714";
             zNeighbour2 = "-1";
             zNeighbour3 = "-1";
             zNumBlues = "0";
@@ -3379,8 +3379,8 @@ new SimGroup(MissionGroup) {
          position = "211.776 135.138 35";
          rotation = "0 0 1 180";
          scale = "80 60 25";
-         paletteColors[0] = "15 45 0 255";
-         paletteColors[1] = "30 90 0 255";
+         paletteColors[0] = "15 50 0 255";
+         paletteColors[1] = "30 100 0 255";
          paletteColors[2] = "205 205 205 205";
          paletteColors[3] = "205 205 205 205";
          paletteColors[4] = "205 205 205 205";
@@ -3410,7 +3410,7 @@ new SimGroup(MissionGroup) {
             initiallyProtected = "0";
             initialOwner = "2";
             zBlocked = "0";
-            zNeighbour0 = "29756";
+            zNeighbour0 = "9713";
             zNeighbour2 = "-1";
             zNeighbour3 = "-1";
             zNumBlues = "0";
