@@ -78,6 +78,10 @@ function FrmEtherform::onAdd(%this, %obj)
 	Parent::onAdd(%this,%obj);
  
    %obj.mode = "posess";
+   
+   // Play spawn sound and start singing
+   %obj.playAudio(0, FrmEtherformSpawnSound);
+   %obj.playAudio(1, FrmEtherformSingSound);
  
    // Setup view & hearing
    %obj.fovDelta = 0;
