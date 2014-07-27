@@ -14,7 +14,7 @@ function XaNotc1EtherformMoveMap_activate()
 
 function XaNotc1EtherformMoveMap_manifest(%val)
 {
-   if(%val) commandToServer('Manifest');
+   commandToServer('Manifest', %val);
 }
 
 function XaNotc1EtherformMoveMap_selectLoadout0(%val)
@@ -67,7 +67,7 @@ function XaNotc1EtherformMoveMap_selectLoadout9(%val)
    if(%val) commandToServer('SelectLoadout', 9);
 }
 
-XaNotc1EtherformMoveMap.bind(mouse0, "alt button0", XaNotc1EtherformMoveMap_manifest);
+XaNotc1EtherformMoveMap.bind(mouse0, "button0", XaNotc1EtherformMoveMap_manifest);
 
 XaNotc1EtherformMoveMap.bind( keyboard, 1, XaNotc1EtherformMoveMap_selectLoadout0 );
 XaNotc1EtherformMoveMap.bind( keyboard, 2, XaNotc1EtherformMoveMap_selectLoadout1 );
@@ -91,8 +91,4 @@ XaNotc1EtherformMoveMap.bind(keyboard, lcontrol, XaNotc1CatMoveMap_doSlide);
 
 XaNotc1EtherformMoveMap.bind( mouse, xaxis, XaNotc1CatMoveMap_yaw );
 XaNotc1EtherformMoveMap.bind( mouse, yaxis, XaNotc1CatMoveMap_pitch );
-
-XaNotc1EtherformMoveMap.bind( mouse, button0, XaNotc1CatMoveMap_trigger0 );
-XaNotc1EtherformMoveMap.bind( mouse, button1, XaNotc1CatMoveMap_trigger1 );
-XaNotc1EtherformMoveMap.bind( mouse, button2, XaNotc1CatMoveMap_trigger3 );
 

@@ -74,9 +74,10 @@ function serverCmdFireBounce(%client)
 // Misc server commands avialable to clients
 //-----------------------------------------------------------------------------
 
-function serverCmdManifest(%client)
+function serverCmdManifest(%client, %val)
 {
-   Game.etherformManifest(%client.player);
+   if(!%val)
+      Game.etherformManifest(%client.player);
 }
 
 function serverCmdSuicide(%client)
