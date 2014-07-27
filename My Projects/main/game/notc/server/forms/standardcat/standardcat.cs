@@ -337,7 +337,7 @@ function FrmStandardcat::onAdd(%this, %obj)
    %obj.allowProne(false);
    %obj.allowSwimming(false);
    %obj.allowSliding(false);
-   %obj.playAudio(0, SoldierSpawnGaspSound);
+   %obj.playAudio(0, FrmStandardcatSpawnSound);
    %obj.setEnergyLevel(%this.maxEnergy);
 	%obj.isCAT = true;
 	%obj.getTeamObject().numCATs++;
