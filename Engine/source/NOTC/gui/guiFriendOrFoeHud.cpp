@@ -170,6 +170,10 @@ void GuiFriendOrFoeHud::drawInfo(GameBase* control, HudInfo* hudInfo)
 
    SceneObject* obj = hudInfo->getObject();
 
+   // Ignore our control object.
+   if(obj == control)
+      return;
+
    Point3F targetPos = obj ? obj->getBoxCenter() : hudInfo->getPosition();
 
    Point3F shapePos = control->getBoxCenter();
