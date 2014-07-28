@@ -92,6 +92,8 @@ datablock ProjectileData(WpnSG2Projectile)
    explodesNearEnemies = false;
    explodesNearEnemiesRadius = 10;
    missEnemyEffect = WpnMG1ProjectileMissEnemyEffect;
+   
+   energyDrain = 16;
  
    explosion           = "WpnSG2ProjectileExplosion";
    decal               = "WpnSG2ProjectileDecal";
