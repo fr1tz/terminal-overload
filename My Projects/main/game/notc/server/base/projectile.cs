@@ -94,6 +94,9 @@ function ProjectileData::onExplode(%data, %proj, %pos, %mod)
 		%col = containerRayCast2(%pos, %center, %typeMask, %collisionMask, %proj);
 		%col = getWord(%col, 1) SPC getWord(%col, 2) SPC getWord(%col, 3);
 		%dist = VectorLen(VectorSub(%col, %pos));
+  
+      if(%dist > %radius)
+         %dist = %radius;
 
 		%prox = %radius - %dist;
 		if(%data.splashDamageFalloff == $SplashDamageFalloff::Exponential)
