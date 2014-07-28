@@ -204,12 +204,33 @@ function PlayerData::onDamage(%this, %obj, %delta)
 
    if (%delta > 0 && %obj.getState() !$= "Dead")
    {
-      // Apply a damage flash
-      %obj.setDamageFlash(%obj.getDamagePercent());
-
+      %dmg = %obj.getDamagePercent();
+      %obj.setDamageFlash(%dmg);
+      %obj.getDataBlock().updateDamageLevelEffects(%obj);
       // If the pain is excessive, let's hear about it.
       //if (%delta > 10)
       //   %obj.playPain();
+   }
+}
+
+function PlayerData::updateDamageLevelEffects(%this, %obj)
+{
+   %dmg = %obj.getDamagePercent();
+   if(isObject(%obj.client))
+   {
+      if(%dmg > 0.5)
+      {
+         %max = "-0.01 0 0.01";
+         %mode = "0 0 0";
+         %dt = "0 0 0";
+         %rnd = -0.1*%dmg SPC "0" SPC 0.1*%dmg;
+         commandToClient(%obj.client, 'EnableChromaticLens', %max, %mode, %dt, %rnd);
+         %obj.zChromaticLensActive = true;
+      }
+      else if(%obj.zChromaticLensActive)
+      {
+         commandToClient(%obj.client, 'EnableChromaticLens', "0 0 0");
+      }
    }
 }
 

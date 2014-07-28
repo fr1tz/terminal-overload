@@ -298,6 +298,7 @@ function ShapeBaseData::onHitEnemy(%this, %obj, %enemy, %healthDmg, %bufDmg)
       %healthTakeback = %healthDmg * %obj.zVAMP;
       %newSrcDamage = %obj.getDamageLevel() - %healthTakeback;
       %obj.setDamageLevel(%newSrcDamage);
+      %obj.getDataBlock().updateDamageLevelEffects(%obj);
       //if(%newSrcDamage < 0)
       //   %obj.setDamageBufferLevel(%obj.getDamageBufferLevel() - %newSrcDamage);
    }

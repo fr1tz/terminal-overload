@@ -117,6 +117,7 @@ function FrmEtherform::onAdd(%this, %obj)
       //%dt = "0 0 0";
       //%rnd = "0.04 0.04 0.04";
       //commandToClient(%obj.client, 'EnableChromaticLens', %max, %mode, %dt, %rnd);
+      commandToClient(%obj.client, 'EnableChromaticLens', "0 0 0");
       %obj.setWhiteOut(1);
    }
    
