@@ -6,5 +6,6 @@ exec("./standardcat.gfx.cs");
 exec("./standardcat.gfx.bleed.cs");
 exec("./standardcat.gfx.slide.cs");
 exec("./standardcat.gfx.skid.cs");
+exec("./standardcat.gfx.spawn.cs");
 exec("./standardcat.cs");
 
