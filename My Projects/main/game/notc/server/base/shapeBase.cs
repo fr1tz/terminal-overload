@@ -155,6 +155,14 @@ function ShapeBase::isStealthActive(%this)
    return false;
 }
 
+//------------------------------------------------------------------------------
+
+function ShapeBase::playSpawnEffects(%this)
+{
+   if(%this.getDataBlock().isMethod("playSpawnEffects"))
+      %this.getDataBlock().playSpawnEffects(%this);
+}
+
 //-----------------------------------------------------------------------------
 // ShapeBase datablock
 //-----------------------------------------------------------------------------

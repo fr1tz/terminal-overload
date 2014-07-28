@@ -374,8 +374,6 @@ function GameCoreETH::etherformManifest(%game, %obj)
 
    %client.player.schedule(9, "delete");
 	%client.player = %player;
- 
-   createExplosion(FrmStandardCatSpawnEffect, %player.getWorldBoxCenter(), "0 0 1");
 }
 
 function GameCoreETH::suicide(%game, %client)

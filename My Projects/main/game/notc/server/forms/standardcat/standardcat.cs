@@ -337,7 +337,6 @@ function FrmStandardcat::onAdd(%this, %obj)
    %obj.allowProne(false);
    %obj.allowSwimming(false);
    %obj.allowSliding(false);
-   %obj.playAudio(0, FrmStandardcatSpawnSound);
    %obj.setEnergyLevel(%this.maxEnergy);
 	%obj.isCAT = true;
 	%obj.getTeamObject().numCATs++;
@@ -364,6 +363,8 @@ function FrmStandardcat::onAdd(%this, %obj)
       commandToClient(%obj.client, 'EnableChromaticLens', %max, %mode, %dt, %rnd);
       %obj.setDamageFlash(1);
    }
+   
+   %obj.schedule(0, "playSpawnEffects");
 }
 
 // callback function: called by engine
@@ -534,6 +535,13 @@ function FrmStandardcat::onStopSliding(%this, %obj)
 function FrmStandardcat::onJump(%this, %obj)
 {
    //echo("FrmStandardcat::onJump()");
+}
+
+// Called by script
+function FrmStandardcat::playSpawnEffects(%this, %obj)
+{
+   %obj.playAudio(0, FrmStandardcatSpawnSound);
+   createExplosion(FrmStandardCatSpawnEffect, %obj.getWorldBoxCenter(), "0 0 1");
 }
 
 // Called by script
