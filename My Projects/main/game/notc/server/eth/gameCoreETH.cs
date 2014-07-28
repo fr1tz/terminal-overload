@@ -372,11 +372,10 @@ function GameCoreETH::etherformManifest(%game, %obj)
    %player.setEnergyLevel(%nrg);
    %player.setVelocity(VectorScale(%vel, 0.25));
 
-   //%player.startFade(1000,0,false);
-   %player.playAudio(0, CatSpawnSound);
-
    %client.player.schedule(9, "delete");
 	%client.player = %player;
+ 
+   createExplosion(FrmStandardCatSpawnEffect, %player.getWorldBoxCenter(), "0 0 1");
 }
 
 function GameCoreETH::suicide(%game, %client)
