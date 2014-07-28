@@ -7,7 +7,7 @@ $Pref::Server::RegionMask = 2;
 $pref::Master[0] = "2:master.garagegames.com:28002";
 
 // List of AIMS pubservers
-$Pref::AIMS::Server[0] = "192.168.1.107";
+$Pref::AIMS::Server[0] = "aims.ddns.net";
 
 // Information about the server
 $Pref::Server::Name = "Torque 3D Server";
