@@ -220,10 +220,11 @@ function PlayerData::updateDamageLevelEffects(%this, %obj)
    {
       if(%dmg > 0.5)
       {
+         %f = (%dmg-0.5)*2;
          %max = "-0.01 0 0.01";
          %mode = "0 0 0";
          %dt = "0 0 0";
-         %rnd = -0.1*%dmg SPC "0" SPC 0.1*%dmg;
+         %rnd = -0.1*%f SPC "0" SPC 0.1*%f;
          commandToClient(%obj.client, 'EnableChromaticLens', %max, %mode, %dt, %rnd);
          %obj.zChromaticLensActive = true;
       }
