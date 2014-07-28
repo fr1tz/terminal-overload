@@ -1,6 +1,18 @@
 What's new?
 ===========
 
+Version 0.1.0-testing2
+----------------------
+
+Released: Jul. 28, 2014
+
+- Add optional player authentication.
+- Add grenades.
+- ImpShield: Behave like the anchor in ROTC p.5.4.
+- Add 25 point damage buffer to Sniper CAT.
+- Various improvements and bugfixes
+
+
 Version 0.1.0-testing1
 ----------------------
 
