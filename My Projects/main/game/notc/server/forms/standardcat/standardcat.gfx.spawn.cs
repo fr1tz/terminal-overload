@@ -3,7 +3,7 @@
 
 datablock ParticleData(FrmStandardCatSpawnEffect_Particles1 : DefaultParticle)
 {
-   sizes[0] = "2";
+   sizes[0] = "1";
    sizes[1] = "0";
    sizes[2] = "0";
    sizes[3] = "0";
@@ -13,9 +13,9 @@ datablock ParticleData(FrmStandardCatSpawnEffect_Particles1 : DefaultParticle)
    lifetimeMS = "2000";
    lifetimeVarianceMS = "0";
    dragCoefficient = "0";
-   spinSpeed = "0";
-   textureName = "content/xa/rotc/p.5.4/textures/rotc/corona.png";
-   animTexName = "content/xa/rotc/p.5.4/textures/rotc/corona.png";
+   spinSpeed = "1";
+   textureName = "content/xa/rotc/p.5.4/shapes/rotc/misc/debris1.white.png";
+   animTexName = "content/xa/rotc/p.5.4/shapes/rotc/misc/debris1.white.png";
    colors[1] = "1 1 1 0";
    colors[2] = "1 1 1 0.330709";
    colors[3] = "1 1 1 0";
@@ -34,7 +34,7 @@ datablock ParticleEmitterData(FrmStandardCatSpawnEffect_ParticleEmitter1 : Defau
    periodVarianceMS = "0";
    softnessDistance = "1";
    ejectionVelocity = "10";
-   ejectionOffset = "1.4";
+   ejectionOffset = "1.3";
    thetaMin = "0";
    thetaMax = "180";
    orientParticles = "0";
