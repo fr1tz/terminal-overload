@@ -163,6 +163,28 @@ function ShapeBase::playSpawnEffects(%this)
       %this.getDataBlock().playSpawnEffects(%this);
 }
 
+//------------------------------------------------------------------------------
+
+function ShapeBase::changeSkin(%this, %skins)
+{
+   %skinString = "";
+   
+   %c = getWordCount(%skins);
+   for(%i = 0; %i < %c; %i++)
+   {
+      %newTarget = getWord(%skins, %i);
+      %oldTarget = %this.zSkin[%i];
+      if(%oldTarget $= "")
+         %oldTarget = %this.getTargetName(%i);
+         
+      %skinString = %skinString @ %oldTarget @ "=" @ %newTarget @ ";";
+
+      %this.zSkin[%i] = %newTarget;
+   }
+
+   %this.setSkinName(%skinString);
+}
+
 //-----------------------------------------------------------------------------
 // ShapeBase datablock
 //-----------------------------------------------------------------------------

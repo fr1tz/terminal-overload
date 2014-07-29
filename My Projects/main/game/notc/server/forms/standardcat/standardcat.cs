@@ -807,11 +807,8 @@ function FrmStandardcat::onDisabled(%this, %obj, %state)
    %obj.setInventory(ItemLauncher, 0);
    %obj.setInventory(ItemBounce, 0);
    
-   %old[0] = %obj.getTargetName(0);
-   %old[1] = %obj.getTargetName(1);
-   %new[0] = "xa_notc_core_shapes_standardcat_erasemat";
-   %new[1] = "xa_notc_core_shapes_standardcat_erasemat";
-   %obj.setSkinName(%old[0] @ "=" @ %new[0] @ ";" @ %old[1] @ "=" @ %new[1]);
+   %obj.changeSkin("xa_notc_core_shapes_standardcat_erasemat" SPC
+      "xa_notc_core_shapes_standardcat_erasemat");
 }
 
 // Called from script
@@ -889,22 +886,21 @@ function FrmStandardcat::fireBounce(%this, %obj)
 // Called from script
 function FrmStandardcat::activateStealth(%this, %obj, %time)
 {
+   //echo("FrmStandardcat::activateStealth()");
+
    %obj.setCollisionMask($CollisionMask::Stealth);
    %obj.zStealthActive = true;
    
    // Change skin
-   %old[0] = %obj.getTargetName(0);
-   %old[1] = %obj.getTargetName(1);
-   %new[0] = "xa_notc_core_shapes_standardcat_stealthmat1";
-   %new[1] = "xa_notc_core_shapes_standardcat_stealthmat2";
-   %obj.setSkinName(%old[0] @ "=" @ %new[0] @ ";" @ %old[1] @ "=" @ %new[1]);
+   %obj.changeSkin("xa_notc_core_shapes_standardcat_stealthmat1" SPC
+      "xa_notc_core_shapes_standardcat_stealthmat2");
    
    // Start flickering
    %n = %obj.getMountedObjectCount();
    for(%i = 0; %i < %n; %i++)
    {
       %m = %obj.getMountedObject(%i);
-      if(isObject(%m) && %m.getDataBlock().canStealth)
+      if(isObject(%m) && %m.isMethod("getDataBlock") && %m.getDataBlock().canStealth)
          %m.setFlickerTime(32);
    }
    %obj.setFlickerTime(32);
@@ -915,6 +911,8 @@ function FrmStandardcat::activateStealth(%this, %obj, %time)
 // Called from script
 function FrmStandardcat::deactivateStealth(%this, %obj)
 {
+   //echo("FrmStandardcat::deactivateStealth()");
+
    cancel(%obj.zStealthThread);
    %obj.zStealthThread = "";
 
@@ -922,18 +920,14 @@ function FrmStandardcat::deactivateStealth(%this, %obj)
    %obj.zStealthActive = false;
    
    // Change skin
-   %old[0] = %obj.getTargetName(0);
-   %old[1] = %obj.getTargetName(1);
-   %new[0] = "base";
-   %new[1] = "armor_red0024";
-   %obj.setSkinName(%old[0] @ "=" @ %new[0] @ ";" @ %old[1] @ "=" @ %new[1]);
+   %obj.changeSkin("base" SPC "armor_red0024");
    
    // Stop flickering
    %n = %obj.getMountedObjectCount();
    for(%i = 0; %i < %n; %i++)
    {
       %m = %obj.getMountedObject(%i);
-      if(isObject(%m) && %m.getDataBlock().canStealth)
+      if(isObject(%m) && %m.isMethod("getDataBlock") && %m.getDataBlock().canStealth)
          %m.setFlickerTime(0);
    }
    %obj.setFlickerTime(0);
