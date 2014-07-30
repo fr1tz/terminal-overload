@@ -59,7 +59,7 @@ function initClient()
    // Load up the Game GUIs
    exec("notc/client/shell/defaultGameProfiles.cs");
    exec("notc/client/shell/hudlessGui.gui");
-   $SB::WODec = 0.015; // HACK HACK HACK: server should decide how
+   $SB::WODec = 0.040; // HACK HACK HACK: server should decide how
                        // fast whiteout flash decays.
 
    // Load up the shell GUIs
