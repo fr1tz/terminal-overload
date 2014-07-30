@@ -8,7 +8,7 @@ new SimGroup(MissionGroup) {
       nearClip = "0.05";
       visibleDistance = "40000";
       decalBias = "0.0004";
-      fogColor = "0.00392157 0.00392157 0.00392157 1";
+      fogColor = "0.929412 0 1 1";
       fogDensity = "0.0001";
       fogDensityOffset = "10000";
       fogAtmosphereHeight = "2000";
