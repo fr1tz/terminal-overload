@@ -27,7 +27,11 @@ function ItemLauncherPseudoProjectile::onAdd(%this, %obj)
       
    %target = %source.getImageTarget(1);
    if(!isObject(%target))
+   {
+      if(isObject(%source.client))
+         %source.client.play2D(GenericNoDiscTargetSound);
       return;
+   }
       
  	%muzzlePoint = %source.getMuzzlePoint(1);
    %muzzleVec = %source.getMuzzleVector(1);
