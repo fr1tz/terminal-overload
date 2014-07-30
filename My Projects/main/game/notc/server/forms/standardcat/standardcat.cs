@@ -806,6 +806,7 @@ function FrmStandardcat::onDisabled(%this, %obj, %state)
    %obj.setInventory(ItemImpShield, 0);
    %obj.setInventory(ItemLauncher, 0);
    %obj.setInventory(ItemBounce, 0);
+   %obj.setInventory(ItemG1Launcher, 0);
    
    %obj.changeSkin("xa_notc_core_shapes_standardcat_erasemat" SPC
       "xa_notc_core_shapes_standardcat_erasemat");
