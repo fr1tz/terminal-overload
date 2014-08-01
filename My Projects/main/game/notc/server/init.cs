@@ -37,6 +37,8 @@
 function initServer()
 {
    echo("\n--------- Initializing " @ $appName @ ": Server Scripts ---------");
+   
+   $SB::WODec = 0.04; // FIXME: find better place for this
 
    // Server::Status is returned in the Game Info Query and represents the
    // current status of the server. This string sould be very short.
