@@ -2,6 +2,9 @@
 // located in the root directory of this distribution.
 
 $XaNotc1CatMoveMap_RemapCount = 0;
+$XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Dematerialize";
+$XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "XaNotc1CatMoveMap_suicide";
+$XaNotc1CatMoveMap_RemapCount++;
 $XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Forward";
 $XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "XaNotc1CatMoveMap_moveforward";
 $XaNotc1CatMoveMap_RemapCount++;
@@ -44,26 +47,26 @@ $XaNotc1CatMoveMap_RemapCount++;
 $XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Launch grenade";
 $XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "XaNotc1CatMoveMap_trigger3";
 $XaNotc1CatMoveMap_RemapCount++;
-$XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Free Look";
-$XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "XaNotc1CatMoveMap_toggleFreeLook";
-$XaNotc1CatMoveMap_RemapCount++;
-$XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Switch 1st/3rd";
-$XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "XaNotc1CatMoveMap_toggleFirstPerson";
-$XaNotc1CatMoveMap_RemapCount++;
-$XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Dematerialize";
-$XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "XaNotc1CatMoveMap_suicide";
-$XaNotc1CatMoveMap_RemapCount++;
-$XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Launch Explosive Disc";
-$XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "XaNotc1CatMoveMap_launchExplosiveDisc";
-$XaNotc1CatMoveMap_RemapCount++;
 $XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Launch Repel Disc";
 $XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "XaNotc1CatMoveMap_launchRepelDisc";
 $XaNotc1CatMoveMap_RemapCount++;
 $XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Launch Razor Disc";
 $XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "XaNotc1CatMoveMap_launchRazorDisc";
 $XaNotc1CatMoveMap_RemapCount++;
+$XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Launch Explosive Disc";
+$XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "XaNotc1CatMoveMap_launchExplosiveDisc";
+$XaNotc1CatMoveMap_RemapCount++;
 $XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Fire B.O.U.N.C.E.";
 $XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "XaNotc1CatMoveMap_fireBounce";
+$XaNotc1CatMoveMap_RemapCount++;
+$XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Switch weapon";
+$XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "XaNotc1CatMoveMap_cycleWeapons";
+$XaNotc1CatMoveMap_RemapCount++;
+$XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Free Look";
+$XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "XaNotc1CatMoveMap_toggleFreeLook";
+$XaNotc1CatMoveMap_RemapCount++;
+$XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Switch 1st/3rd";
+$XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "XaNotc1CatMoveMap_toggleFirstPerson";
 $XaNotc1CatMoveMap_RemapCount++;
 
 function XaNotcSettings1_CatControlsGui::onWake(%this)

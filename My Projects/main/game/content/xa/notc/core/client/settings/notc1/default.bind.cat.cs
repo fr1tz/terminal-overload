@@ -440,7 +440,6 @@ XaNotc1CatMoveMap.bindCmd(keyboard, "7", "commandToServer('action', 7);", "");
 XaNotc1CatMoveMap.bindCmd(keyboard, "8", "commandToServer('action', 8);", "");
 XaNotc1CatMoveMap.bindCmd(keyboard, "9", "commandToServer('action', 9);", "");
 XaNotc1CatMoveMap.bindCmd(keyboard, "0", "commandToServer('action', 10);", "");
-XaNotc1CatMoveMap.bindCmd(keyboard, "q", "commandToServer('action', 19);", "");
 
 function XaNotc1CatMoveMap_throwWeapon(%val)
 {
@@ -475,6 +474,13 @@ function XaNotc1CatMoveMap_mouseWheelWeaponCycle(%val)
    else if (%val > 0)
       commandToServer('cycleWeapon', "prev");
 }
+
+function XaNotc1CatMoveMap_cycleWeapons(%val)
+{
+   if(%val) commandToServer('action', 19);
+}
+
+XaNotc1CatMoveMap.bind(keyboard, "q", XaNotc1CatMoveMap_cycleWeapons);
 
 //XaNotc1CatMoveMap.bind(keyboard, q, XaNotc1CatMoveMap_nextWeapon);
 //XaNotc1CatMoveMap.bind(keyboard, "ctrl q", XaNotc1CatMoveMap_prevWeapon);
