@@ -18,8 +18,8 @@
    canSaveDynamicFields = "1";
       enabled = "1";
       isDecoy = "0";
-      zBitmapOffset = "333";
-      zTickThread = "333";
+      zBitmapOffset = "29818";
+      zTickThread = "29830";
 
    new GuiBitmapCtrl() {
       bitmap = "notc/client/graphics/grid1.png";
@@ -258,7 +258,7 @@
             isDecoy = "0";
       };
       new GuiTextCtrl(MainMenuVersionString) {
-         text = "0.0.0+dev";
+         text = "0.1.0+dev";
          maxLength = "1024";
          margin = "0 0 0 0";
          padding = "0 0 0 0";
@@ -277,6 +277,27 @@
          tooltipProfile = "GuiToolTipProfile";
          hovertime = "1000";
          isContainer = "1";
+         canSave = "1";
+         canSaveDynamicFields = "0";
+      };
+      new GuiButtonCtrl() {
+         text = "MOTD";
+         groupNum = "-1";
+         buttonType = "PushButton";
+         useMouseEvents = "0";
+         position = "286 175";
+         extent = "83 50";
+         minExtent = "8 8";
+         horizSizing = "center";
+         vertSizing = "bottom";
+         profile = "GuiMenuButtonProfile";
+         visible = "1";
+         active = "1";
+         command = "Canvas.pushDialog(MOTDDlg);";
+         tooltipProfile = "GuiToolTipProfile";
+         hovertime = "1000";
+         isContainer = "0";
+         internalName = "MotdButton";
          canSave = "1";
          canSaveDynamicFields = "0";
       };

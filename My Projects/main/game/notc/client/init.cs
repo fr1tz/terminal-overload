@@ -60,8 +60,20 @@ function initClient()
    exec("notc/client/shell/defaultGameProfiles.cs");
    exec("notc/client/shell/hudlessGui.gui");
 
-   // Load up the shell GUIs
+   // Gui scripts
+   exec("notc/client/shell/hilight.cs");
    exec("notc/client/shell/mainMenuGui.cs");
+   exec("notc/client/shell/startupGui.cs");
+   exec("notc/client/shell/chooseLevelDlg.cs");
+   exec("notc/client/shell/loadingGui.cs");
+   exec("notc/client/shell/optionsDlg.cs");
+   exec("notc/client/shell/optPlayer.cs");
+   exec("notc/client/shell/optGraphics.cs");
+   exec("notc/client/shell/optAudio.cs");
+   exec("notc/client/shell/optGame.cs");
+   exec("notc/client/shell/motdDlg.cs");
+
+   // Load up the shell GUIs
    exec("notc/client/shell/mainMenuGui.gui");
    exec("notc/client/shell/joinServerDlg.gui");
    exec("notc/client/shell/StartupGui.gui");
@@ -72,16 +84,7 @@ function initClient()
    exec("notc/client/shell/optGraphics.gui");
    exec("notc/client/shell/optAudio.gui");
    exec("notc/client/shell/optGame.gui");
-
-   // Gui scripts
-   exec("notc/client/shell/startupGui.cs");
-   exec("notc/client/shell/chooseLevelDlg.cs");
-   exec("notc/client/shell/loadingGui.cs");
-   exec("notc/client/shell/optionsDlg.cs");
-   exec("notc/client/shell/optPlayer.cs");
-   exec("notc/client/shell/optGraphics.cs");
-   exec("notc/client/shell/optAudio.cs");
-   exec("notc/client/shell/optGame.cs");
+   exec("notc/client/shell/motdDlg.gui");
 
    // Client scripts
    exec("./client.cs");

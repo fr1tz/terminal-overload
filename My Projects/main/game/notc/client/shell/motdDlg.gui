@@ -1,0 +1,126 @@
+// Copyright information can be found in the file named COPYING
+// located in the root directory of this distribution.
+
+//--- OBJECT WRITE BEGIN ---
+%guiContent = new GuiControl(MotdDlg) {
+   position = "0 0";
+   extent = "640 480";
+   minExtent = "8 8";
+   horizSizing = "width";
+   vertSizing = "height";
+   profile = "GuiOverlayProfile";
+   visible = "1";
+   active = "1";
+   tooltipProfile = "GuiToolTipProfile";
+   hovertime = "1000";
+   isContainer = "1";
+   canSave = "1";
+   canSaveDynamicFields = "1";
+      enabled = "1";
+
+   new GuiWindowCtrl() {
+      text = "Message Of The Day";
+      resizeWidth = "0";
+      resizeHeight = "0";
+      canMove = "1";
+      canClose = "1";
+      canMinimize = "0";
+      canMaximize = "0";
+      canCollapse = "0";
+      closeCommand = "Canvas.popDialog(MotdDlg);";
+      edgeSnap = "1";
+      margin = "0 0 0 0";
+      padding = "0 0 0 0";
+      anchorTop = "1";
+      anchorBottom = "0";
+      anchorLeft = "1";
+      anchorRight = "0";
+      position = "11 11";
+      extent = "618 457";
+      minExtent = "8 8";
+      horizSizing = "center";
+      vertSizing = "center";
+      profile = "GuiWindowProfile";
+      visible = "1";
+      active = "1";
+      tooltipProfile = "GuiToolTipProfile";
+      hovertime = "1000";
+      isContainer = "1";
+      canSave = "1";
+      canSaveDynamicFields = "0";
+
+      new GuiScrollCtrl() {
+         willFirstRespond = "1";
+         hScrollBar = "alwaysOff";
+         vScrollBar = "alwaysOn";
+         lockHorizScroll = "0";
+         lockVertScroll = "0";
+         constantThumbHeight = "0";
+         childMargin = "0 0";
+         mouseWheelScrollSpeed = "-1";
+         margin = "0 0 0 0";
+         padding = "0 0 0 0";
+         anchorTop = "1";
+         anchorBottom = "0";
+         anchorLeft = "1";
+         anchorRight = "0";
+         position = "13 32";
+         extent = "592 412";
+         minExtent = "8 8";
+         horizSizing = "width";
+         vertSizing = "height";
+         profile = "ConsoleScrollProfile";
+         visible = "1";
+         active = "1";
+         tooltipProfile = "GuiToolTipProfile";
+         hovertime = "1000";
+         isContainer = "1";
+         canSave = "1";
+         canSaveDynamicFields = "0";
+
+         new GuiMLTextCtrl() {
+            lineSpacing = "2";
+            allowColorChars = "0";
+            maxChars = "-1";
+            useURLMouseCursor = "0";
+            position = "1 1";
+            extent = "573 12";
+            minExtent = "8 8";
+            horizSizing = "right";
+            vertSizing = "bottom";
+            profile = "GuiConsoleProfile";
+            visible = "1";
+            active = "1";
+            tooltipProfile = "GuiToolTipProfile";
+            hovertime = "1000";
+            isContainer = "0";
+            internalName = "text";
+            canSave = "1";
+            canSaveDynamicFields = "0";
+         };
+      };
+      new GuiButtonCtrl() {
+         text = "Refresh";
+         groupNum = "-1";
+         buttonType = "PushButton";
+         useMouseEvents = "0";
+         position = "115 5";
+         extent = "55 12";
+         minExtent = "8 2";
+         horizSizing = "right";
+         vertSizing = "bottom";
+         profile = "GuiButtonProfile";
+         visible = "1";
+         active = "1";
+         command = "MotdDlg.refresh();";
+         tooltipProfile = "GuiToolTipProfile";
+         hovertime = "1000";
+         isContainer = "0";
+         canSave = "1";
+         canSaveDynamicFields = "0";
+      };
+   };
+};
+//--- OBJECT WRITE END ---
+
+
