@@ -17,7 +17,7 @@
 
    new GuiControl(XaNotcSettings1_CatControlsGui) {
       position = "9 55";
-      extent = "480 210";
+      extent = "424 297";
       minExtent = "8 8";
       horizSizing = "right";
       vertSizing = "bottom";
@@ -45,8 +45,8 @@
          anchorBottom = "0";
          anchorLeft = "1";
          anchorRight = "0";
-         position = "5 24";
-         extent = "347 152";
+         position = "5 26";
+         extent = "410 227";
          minExtent = "8 8";
          horizSizing = "right";
          vertSizing = "bottom";
@@ -60,11 +60,11 @@
          canSaveDynamicFields = "0";
 
          new GuiTextListCtrl() {
-            columns = "0 160";
+            columns = "0 210";
             fitParentWidth = "1";
             clipColumnText = "0";
             position = "1 1";
-            extent = "332 8";
+            extent = "395 8";
             minExtent = "8 8";
             horizSizing = "right";
             vertSizing = "bottom";
@@ -112,7 +112,7 @@
          anchorBottom = "0";
          anchorLeft = "1";
          anchorRight = "0";
-         position = "165 6";
+         position = "215 6";
          extent = "72 18";
          minExtent = "8 8";
          horizSizing = "right";
@@ -127,16 +127,16 @@
          canSaveDynamicFields = "0";
       };
       new GuiSliderCtrl(XaNotcSettings1_CatControls_MouseSensitivity) {
-         range = "0.02 2";
-         ticks = "10";
+         range = "0.1 2";
+         ticks = "24";
          snap = "0";
-         value = "1";
-         position = "105 182";
-         extent = "244 18";
+         value = "0.48";
+         position = "105 263";
+         extent = "312 35";
          minExtent = "8 2";
          horizSizing = "right";
          vertSizing = "bottom";
-         profile = "GuiSliderProfile";
+         profile = "GuiDefaultProfile";
          visible = "1";
          active = "1";
          command = "XaNotcSettings1_CatControls_MouseSetSensitivity(XaNotcSettings1_CatControls_MouseSensitivity.value);";
@@ -156,7 +156,7 @@
          anchorBottom = "0";
          anchorLeft = "1";
          anchorRight = "0";
-         position = "15 182";
+         position = "15 264";
          extent = "85 18";
          minExtent = "8 8";
          horizSizing = "right";

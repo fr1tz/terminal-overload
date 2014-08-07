@@ -17,7 +17,7 @@
 
    new GuiControl(XaNotcSettings1_MiscControlsGui) {
       position = "9 55";
-      extent = "480 210";
+      extent = "424 297";
       minExtent = "8 8";
       horizSizing = "right";
       vertSizing = "bottom";
@@ -46,7 +46,7 @@
          anchorLeft = "1";
          anchorRight = "0";
          position = "5 24";
-         extent = "347 152";
+         extent = "411 265";
          minExtent = "8 8";
          horizSizing = "right";
          vertSizing = "bottom";
@@ -60,11 +60,11 @@
          canSaveDynamicFields = "0";
 
          new GuiTextListCtrl() {
-            columns = "0 160";
+            columns = "0 210";
             fitParentWidth = "1";
             clipColumnText = "0";
             position = "1 1";
-            extent = "332 8";
+            extent = "396 8";
             minExtent = "8 8";
             horizSizing = "right";
             vertSizing = "bottom";
@@ -81,7 +81,7 @@
          };
       };
       new GuiTextCtrl() {
-         text = "Control Name";
+         text = "Action";
          maxLength = "255";
          margin = "0 0 0 0";
          padding = "0 0 0 0";
@@ -104,7 +104,7 @@
          canSaveDynamicFields = "0";
       };
       new GuiTextCtrl() {
-         text = "Control Binding";
+         text = "Binding";
          maxLength = "255";
          margin = "0 0 0 0";
          padding = "0 0 0 0";
@@ -112,7 +112,7 @@
          anchorBottom = "0";
          anchorLeft = "1";
          anchorRight = "0";
-         position = "165 6";
+         position = "215 6";
          extent = "72 18";
          minExtent = "8 8";
          horizSizing = "right";

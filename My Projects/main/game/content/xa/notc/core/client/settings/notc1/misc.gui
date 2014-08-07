@@ -17,7 +17,7 @@
 
    new GuiControl(XaNotcSettings1_MiscGui) {
       position = "66 38";
-      extent = "480 390";
+      extent = "424 297";
       minExtent = "8 8";
       horizSizing = "width";
       vertSizing = "height";
@@ -46,8 +46,8 @@
          anchorBottom = "0";
          anchorLeft = "1";
          anchorRight = "0";
-         position = "11 8";
-         extent = "364 72";
+         position = "8 7";
+         extent = "406 72";
          minExtent = "8 2";
          horizSizing = "right";
          vertSizing = "bottom";
@@ -62,11 +62,11 @@
 
          new GuiSliderCtrl(XaNotcSettings1_Misc_DefaultFov) {
             range = "20 180";
-            ticks = "50";
-            snap = "0";
-            value = "71.6129";
-            position = "16 32";
-            extent = "320 32";
+            ticks = "159";
+            snap = "1";
+            value = "80";
+            position = "37 32";
+            extent = "330 32";
             minExtent = "8 2";
             horizSizing = "right";
             vertSizing = "bottom";
@@ -98,8 +98,8 @@
          anchorBottom = "0";
          anchorLeft = "1";
          anchorRight = "0";
-         position = "11 92";
-         extent = "362 104";
+         position = "8 90";
+         extent = "406 104";
          minExtent = "8 2";
          horizSizing = "right";
          vertSizing = "bottom";
@@ -166,7 +166,7 @@
             actionOnMove = "1";
             showReticle = "1";
             position = "76 65";
-            extent = "264 24";
+            extent = "318 24";
             minExtent = "8 2";
             horizSizing = "right";
             vertSizing = "bottom";
@@ -187,7 +187,7 @@
             actionOnMove = "1";
             showReticle = "1";
             position = "76 30";
-            extent = "264 24";
+            extent = "318 24";
             minExtent = "8 2";
             horizSizing = "right";
             vertSizing = "bottom";

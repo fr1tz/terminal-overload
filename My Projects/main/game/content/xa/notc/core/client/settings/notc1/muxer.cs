@@ -18,9 +18,9 @@ function XaNotcSettings1_MuxerGui::setContent(%this, %ctrl)
    
    if(isObject(%content))
    {
+      %this-->ContentContainer.setExtent(%content.getExtent());
       %this-->ContentContainer.add(%content);
       %content.setPosition(0, 0);
-      %content.setExtent(%this-->ContentContainer.getExtent());
       %this.zContent = %content;
       %this.zContentOriginalParent = %contentOriginalParent;
    }

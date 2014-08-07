@@ -17,7 +17,7 @@
 
    new GuiControl(XaNotcSettings1_EtherformControlsGui) {
       position = "9 55";
-      extent = "480 210";
+      extent = "424 297";
       minExtent = "8 8";
       horizSizing = "right";
       vertSizing = "bottom";
@@ -46,7 +46,7 @@
          anchorLeft = "1";
          anchorRight = "0";
          position = "5 24";
-         extent = "347 152";
+         extent = "416 268";
          minExtent = "8 8";
          horizSizing = "right";
          vertSizing = "bottom";
@@ -60,11 +60,11 @@
          canSaveDynamicFields = "0";
 
          new GuiTextListCtrl() {
-            columns = "0 160";
+            columns = "0 210";
             fitParentWidth = "1";
             clipColumnText = "0";
             position = "1 1";
-            extent = "332 8";
+            extent = "401 8";
             minExtent = "8 8";
             horizSizing = "right";
             vertSizing = "bottom";
@@ -112,7 +112,7 @@
          anchorBottom = "0";
          anchorLeft = "1";
          anchorRight = "0";
-         position = "165 6";
+         position = "215 6";
          extent = "72 18";
          minExtent = "8 8";
          horizSizing = "right";
