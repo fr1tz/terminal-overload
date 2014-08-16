@@ -242,6 +242,13 @@ function ShapeBaseData::damage(%this, %obj, %source, %position, %amount, %damage
          %originalSource = %source.client.player;
    }
    
+	// Reduce damage based on energy level?
+   if(%obj.zDamper > 0)
+   {
+      %energyScale = %obj.getEnergyLevel() / %obj.getDataBlock().maxEnergy;
+      %amount -= %amount * %energyScale * %obj.zDamper;
+   }
+   
    %bypassDamageBuffer = false;
    if(isObject(%source) && %source.getDataBlock().bypassDamageBuffer)
       %bypassDamageBuffer = true;
