@@ -49,9 +49,9 @@ datablock PlayerData(FrmStandardcat)
    drag = 0.0;
    maxdrag = 0;
    density = 10;
-   maxDamage = 150;
+   maxDamage = 75;
    maxEnergy =  100;
-   damageBuffer = 50;
+   damageBuffer = 25;
    energyPerDamagePoint = 75;
 
 	repairRate = 0.8;
@@ -242,6 +242,7 @@ datablock PlayerData(FrmStandardcat)
    // Allowable Inventory Items
    mainWeapon = WpnSMG1;
 
+   maxInv[ItemDamper] = 1;
    maxInv[ItemVAMP] = 1;
    maxInv[ItemImpShield] = 1;
    maxInv[ItemBallast] = 1;
@@ -801,6 +802,7 @@ function FrmStandardcat::onDisabled(%this, %obj, %state)
    %obj.unmountImage(0); // Unmount weapon
    
    // Clear inventory
+   %obj.setInventory(ItemDamper, 0);
    %obj.setInventory(ItemVAMP, 0);
    %obj.setInventory(ItemEtherboard, 0);
    %obj.setInventory(ItemImpShield, 0);

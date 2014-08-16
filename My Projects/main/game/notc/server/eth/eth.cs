@@ -277,6 +277,7 @@ function ETH::loadoutPlayer(%player)
    %player.zShapeBaseHudInfo.setDatasetType(1, $HudInfoDatasetType::IconID);
    %player.zShapeBaseHudInfo.setDatasetIntField(1, %client.zActiveLoadout+1);
 
+   %player.setInventory(ItemDamper, 1);
    %player.setInventory(ItemVAMP, 1);
    %player.setInventory(ItemEtherboard, 1);
    %player.setInventory(ItemImpShield, 1);
