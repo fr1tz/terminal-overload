@@ -279,6 +279,7 @@ function ETH::loadoutPlayer(%player)
 
    %player.setInventory(ItemDamper, 1);
    %player.setInventory(ItemVAMP, 1);
+   %player.setInventory(ItemStealth, 1);
    %player.setInventory(ItemEtherboard, 1);
    %player.setInventory(ItemImpShield, 1);
    %player.setInventory(ItemLauncher, 1);

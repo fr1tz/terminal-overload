@@ -135,6 +135,8 @@ function ShapeBase::playHitSound(%this)
 
 function ShapeBase::activateStealth(%this, %time)
 {
+   if(!%this.zHasStealth)
+      return;
    %data = %this.getDataBlock();
    if(%data.isMethod("activateStealth"))
       %data.activateStealth(%this, %time);
@@ -142,6 +144,8 @@ function ShapeBase::activateStealth(%this, %time)
 
 function ShapeBase::deactivateStealth(%this)
 {
+   if(!%this.zHasStealth)
+      return;
    %data = %this.getDataBlock();
    if(%data.isMethod("deactivateStealth"))
       %data.deactivateStealth(%this);
@@ -149,6 +153,8 @@ function ShapeBase::deactivateStealth(%this)
 
 function ShapeBase::isStealthActive(%this)
 {
+   if(!%this.zHasStealth)
+      return false;
    %data = %this.getDataBlock();
    if(%data.isMethod("isStealthActive"))
       return %data.isStealthActive(%this);

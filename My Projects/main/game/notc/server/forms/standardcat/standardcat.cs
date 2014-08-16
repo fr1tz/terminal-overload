@@ -246,6 +246,7 @@ datablock PlayerData(FrmStandardcat)
    maxInv[ItemVAMP] = 1;
    maxInv[ItemImpShield] = 1;
    maxInv[ItemBallast] = 1;
+   maxInv[ItemStealth] = 1;
    maxInv[ItemEtherboard] = 1;
    maxInv[ItemLauncher] = 1;
    maxInv[ItemBounce] = 1;
@@ -804,6 +805,7 @@ function FrmStandardcat::onDisabled(%this, %obj, %state)
    // Clear inventory
    %obj.setInventory(ItemDamper, 0);
    %obj.setInventory(ItemVAMP, 0);
+   %obj.setInventory(ItemStealth, 0);
    %obj.setInventory(ItemEtherboard, 0);
    %obj.setInventory(ItemImpShield, 0);
    %obj.setInventory(ItemLauncher, 0);

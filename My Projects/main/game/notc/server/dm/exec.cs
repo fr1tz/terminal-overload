@@ -11,6 +11,7 @@ function executeDeathmatchServerScripts()
    exec("notc/server/items/vamp/exec.cs");
    exec("notc/server/items/impshield/exec.cs");
    exec("notc/server/items/ballast/exec.cs");
+   exec("notc/server/items/stealth/exec.cs");
    exec("notc/server/items/etherboard/exec.cs");
    exec("notc/server/items/launcher/exec.cs");
    exec("notc/server/items/bounce/exec.cs");
