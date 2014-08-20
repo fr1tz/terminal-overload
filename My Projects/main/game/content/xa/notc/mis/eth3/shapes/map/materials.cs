@@ -23,7 +23,7 @@ singleton Material(xa_notc_mis_eth3_shapes_map_mat1)
    specular[0] = "0.5 0.5 0.5 1";
    specularPower[0] = "50";
    translucentBlendOp = "None";
-   diffuseColor[1] = "0.00392157 0.631373 0.14902 1";
+   diffuseColor[1] = "0.00784314 0.337255 0.0823529 1";
    wireframe[1] = "1";
    emissive[1] = "1";
    detailScale[1] = "4 4";
@@ -35,7 +35,7 @@ singleton Material(xa_notc_mis_eth3_shapes_map_mat1)
    specularPower[1] = "2";
    effectColor[0] = "0 0 0 0";
    footstepSoundId = "0";
-   diffuseMap[1] = "content/xa/rotc/p.5.4/textures/rotc/heating.png";
+   diffuseMap[1] = "content/xa/notc/mis/eth3/shapes/map/gradient1.png";
    animFlags[1] = "0x00000001";
    scrollDir[1] = "1 0";
    scrollSpeed[1] = "0.471";
@@ -66,6 +66,8 @@ singleton Material(xa_notc_mis_eth3_shapes_map_mat3)
    animFlags[0] = "0x00000001";
    scrollDir[0] = "0.4 0.4";
    scrollSpeed[0] = "0.1";
+   castShadows = "0";
+   showFootprints = "0";
 };
 
 singleton Material(xa_notc_mis_eth3_shapes_map_mat2)
