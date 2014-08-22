@@ -48,7 +48,7 @@ singleton GuiControlProfile (ChatHudTextProfile)
 
 singleton GuiControlProfile ("ChatHudMessageProfile")
 {
-   fontType = "Arial";
+   fontType = "Quantico";
    fontSize = 16;
    fontColor = "150 150 150";      // default color (death msgs, scoring, inventory)
    fontColors[1] = "250 230 100";   // client join/drop, tournament mode
@@ -115,7 +115,7 @@ singleton GuiControlProfile ("CenterPrintProfile")
 singleton GuiControlProfile ("CenterPrintTextProfile")
 {
    opaque = false;
-   fontType = "Arial";
+   fontType = "Quantico";
    fontSize = 12;
    fontColor = "0 255 0";
 };
@@ -127,7 +127,7 @@ singleton GuiControlProfile ("CenterPrintTextProfile")
 singleton GuiControlProfile (HudTextNormalProfile)
 {
    opaque = false;
-   fontType = "Arial";
+   fontType = "Quantico";
    fontSize = 14;
    fontColor = "255 255 255";
 };
@@ -139,17 +139,17 @@ singleton GuiControlProfile(HudBigTextNormalProfile : HudTextNormalProfile)
 
 singleton GuiControlProfile (HudTextItalicProfile : HudTextNormalProfile)
 {
-   fontType = "ArialItalic";
+   fontType = "Quantico Italic";
 };
 
 singleton GuiControlProfile (HudTextBoldProfile : HudTextNormalProfile)
 {
-   fontType = "ArialBold";
+   fontType = "Quantico Bold";
 };
 
 singleton GuiControlProfile (HudTextCenterBoldProfile : HudTextNormalProfile)
 {
-   fontType = "ArialBold";
+   fontType = "Quantico Bold";
    justify = "Center";
 };
 
@@ -161,7 +161,7 @@ singleton GuiControlProfile (NumericHealthProfile)
 {
    opaque = true;
    justify = "center";
-   fontType = "ArialBold";
+   fontType = "Quantico";
    fontSize = 32;
    fontColor = "255 255 255";
 };

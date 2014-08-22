@@ -180,7 +180,7 @@ function handleLoadDescriptionMessage( %msgType, %msgString, %line )
 
    // Gather up all the previous lines, append the current one
    // and stuff it into the control
-	%text = "<spush><font:Arial:16>";
+	%text = "<spush><font:Quantico:16>";
 	
 	for( %line = 0; %line < LoadingGui.qLineCount - 1; %line++ )
 		%text = %text @ LoadingGui.qLine[%line] @ " ";

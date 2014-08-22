@@ -34,7 +34,7 @@ new GuiControlProfile (GuiDefaultProfile)
    borderColorNA = "75 75 75"; 
 
    // font
-   fontType = "Arial";
+   fontType = "Quantico";
    fontSize = 14;
    fontCharset = ANSI;
 
@@ -108,7 +108,7 @@ new GuiControlProfile (GuiToolTipProfile)
    borderColor   = "138 134 122";
 
    // font
-   fontType = "Arial";
+   fontType = "Quantico";
    fontSize = 14;
    fontColor = "0 0 0";
 
@@ -270,7 +270,7 @@ if( !isObject( GuiProgressTextProfile ) )
 new GuiControlProfile( GuiProgressTextProfile )
 {
    fontSize = "14";
-	fontType = "Arial";
+	fontType = "Quantico";
    fontColor = "0 0 0";
    justify = "center";
    category = "Core";   
@@ -300,7 +300,7 @@ new GuiControlProfile( GuiMenuButtonProfile )
    opaque = true;
    border = false;
    fontSize = 18;
-   fontType = "Arial Bold";
+   fontType = "Quantico";
    fontColor = "50 50 50";
    fontColorHL = "0 0 0";
    fontColorNA = "200 200 200";
@@ -445,7 +445,7 @@ new GuiControlProfile( GuiTabBookProfile )
    fontColor = "30 30 30";
    fontColorHL = "0 0 0";
    fontColorNA = "50 50 50";
-   fontType = "Arial";
+   fontType = "Quantico";
    fontSize = 14;
    justify = "center";
    bitmap = "./images/tab";
@@ -462,7 +462,6 @@ new GuiControlProfile( GuiTabBookProfile )
 if( !isObject( GuiTabPageProfile ) )
 new GuiControlProfile( GuiTabPageProfile : GuiDefaultProfile )
 {
-   fontType = "Arial";
    fontSize = 10;
    justify = "center";
    bitmap = "./images/tab";
@@ -474,8 +473,8 @@ new GuiControlProfile( GuiTabPageProfile : GuiDefaultProfile )
 if( !isObject( GuiConsoleProfile ) )
 new GuiControlProfile( GuiConsoleProfile )
 {
-   fontType = ($platform $= "macos") ? "Monaco" : "Lucida Console";
-   fontSize = ($platform $= "macos") ? 13 : 12;
+   fontType = "Quantico";
+   fontSize = 12;
    fontColor = "255 255 255";
    fontColorHL = "0 255 255";
    fontColorNA = "255 0 0";
@@ -541,7 +540,7 @@ if( !isObject( CenterPrintTextProfile ) )
 new GuiControlProfile ( CenterPrintTextProfile )
 {
    opaque = false;
-   fontType = "Arial";
+   fontType = "Quantico";
    fontSize = 12;
    fontColor = "0 255 0";
    category = "Core";
