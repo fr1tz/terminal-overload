@@ -462,7 +462,6 @@ new GuiControlProfile( GuiTabBookProfile )
 if( !isObject( GuiTabPageProfile ) )
 new GuiControlProfile( GuiTabPageProfile : GuiDefaultProfile )
 {
-   fontSize = 10;
    justify = "center";
    bitmap = "./images/tab";
    opaque = false;
@@ -474,7 +473,7 @@ if( !isObject( GuiConsoleProfile ) )
 new GuiControlProfile( GuiConsoleProfile )
 {
    fontType = "Quantico";
-   fontSize = 12;
+   fontSize = 14;
    fontColor = "255 255 255";
    fontColorHL = "0 255 255";
    fontColorNA = "255 0 0";
@@ -541,7 +540,7 @@ new GuiControlProfile ( CenterPrintTextProfile )
 {
    opaque = false;
    fontType = "Quantico";
-   fontSize = 12;
+   fontSize = 14;
    fontColor = "0 255 0";
    category = "Core";
 };

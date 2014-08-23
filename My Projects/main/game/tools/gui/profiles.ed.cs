@@ -564,7 +564,6 @@ if( !isObject( ToolsGuiTabPageProfile ) )
 new GuiControlProfile( ToolsGuiTabPageProfile : ToolsGuiDefaultProfile )
 {
    fontType = "Arial";
-   fontSize = 10;
    justify = "center";
    bitmap = "./images/tab";
    opaque = false;
@@ -647,7 +646,7 @@ singleton GuiControlProfile( GuiBackFillProfile )
    border = true;
    borderColor = "255 128 128";
    fontType = "Arial";
-   fontSize = 12;
+   fontSize = 14;
    fontColor = "0 0 0";
    fontColorHL = "50 50 50";
    fixedExtent = true;
