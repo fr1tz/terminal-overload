@@ -8,12 +8,20 @@ singleton Material(xa_notc_core_shapes_etherform_p2_mat1)
    specularPower[0] = "50";
    doubleSided = "0";
    translucentBlendOp = "Add";
-   diffuseMap[0] = "content/xa/notc/core/shapes/etherform/p2/core.png";
+   diffuseMap[0] = "content/xa/notc/core/shapes/etherform/p2/core2.png";
    glow[0] = "1";
    emissive[0] = "1";
    castShadows = "0";
    translucent = "1";
    showFootprints = "0";
+   diffuseColorPaletteSlot[1] = "-1";
+   diffuseMap[1] = "content/xa/notc/core/shapes/etherform/p2/core1.png";
+   diffuseColor[1] = "0.996078 0.996078 0.996078 1";
+   glow[1] = "1";
+   emissive[1] = "1";
+   materialTag0 = "Miscellaneous";
+   glowOnly[0] = "1";
+   diffuseColor[2] = "1 1 1 0";
 };
 
 singleton Material(xa_notc_core_shapes_etherform_p2_lasertrail0mat)
