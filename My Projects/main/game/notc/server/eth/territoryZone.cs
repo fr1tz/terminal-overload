@@ -481,8 +481,8 @@ function TerritoryZone::setZoneOwner(%this, %zone, %teamId)
    // Base color
    %colorF = Game.team[%teamId].color;
    
-   // Flash base color
-   %zone.flash(%colorF SPC "1");
+   // Flash white
+   %zone.flash("1 1 1 1");
    
    // First palette slot (area)
    %mod = 255;
@@ -491,7 +491,7 @@ function TerritoryZone::setZoneOwner(%this, %zone, %teamId)
    %colorI = mFloatLength(getWord(%colorF, 0)*%mod, 0) SPC
              mFloatLength(getWord(%colorF, 1)*%mod, 0) SPC
              mFloatLength(getWord(%colorF, 2)*%mod, 0) SPC
-             255;
+             254;
    %zone.paletteColors[0] = %colorI;
    //echo(%colorF SPC "->" SPC %colorI);
    
@@ -500,7 +500,7 @@ function TerritoryZone::setZoneOwner(%this, %zone, %teamId)
    %colorI = mFloatLength(getWord(%colorF, 0)*%mod, 0) SPC
              mFloatLength(getWord(%colorF, 1)*%mod, 0) SPC
              mFloatLength(getWord(%colorF, 2)*%mod, 0) SPC
-             255;
+             254;
    %zone.paletteColors[1] = %colorI;
    //echo(%colorF SPC "->" SPC %colorI);
 
