@@ -218,6 +218,9 @@ function ETH::checkRoundEnd()
 {
    if(Game.roundRestarting)
       return;
+      
+   if(Game.team0.numTerritoryZones > 0)
+      return;
 
    if(Game.team1.numTerritoryZones == 0 && Game.team1.numCATs == 0)
    {

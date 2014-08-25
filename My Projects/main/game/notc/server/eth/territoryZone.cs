@@ -157,6 +157,7 @@ function TerritoryZones_repairTick()
 // to reset all the territory zones...
 function TerritoryZones_reset()
 {
+   Game.team0.numTerritoryZones = 0;
    Game.team1.numTerritoryZones = 0;
    Game.team2.numTerritoryZones = 0;
 
@@ -474,11 +475,8 @@ function TerritoryZone::setZoneOwner(%this, %zone, %teamId)
 	
 	if(%teamId == %oldTeamId)
 		return;
-		
-	if(%oldTeamId == 1)
-		Game.team1.numTerritoryZones--;
-	else if(%oldTeamId == 2)
-		Game.team2.numTerritoryZones--;
+  
+   Game.team[%oldTeamId].numTerritoryZones--;
   
    // Base color
    %colorF = Game.team[%teamId].color;
@@ -509,10 +507,7 @@ function TerritoryZone::setZoneOwner(%this, %zone, %teamId)
    //echo(%colorF SPC "->" SPC %colorI);
 
 	%zone.setTeamId(%teamId);
-	if(%teamId == 1)
-		Game.team1.numTerritoryZones++;
-	else if(%teamId == 2)
-		Game.team2.numTerritoryZones++;
+   Game.team[%teamId].numTerritoryZones++;
 
 	for(%idx = 0; %idx < ClientGroup.getCount(); %idx++)
 	{
@@ -548,7 +543,8 @@ function TerritoryZone::setZoneOwner(%this, %zone, %teamId)
 		
 	echo("Number of zones:" SPC
 		Game.team1.numTerritoryZones SPC "red /" SPC
-		Game.team2.numTerritoryZones SPC "blue");
+		Game.team2.numTerritoryZones SPC "blue" SPC
+      Game.team0.numTerritoryZones SPC "white");
 		
 	ETH::checkRoundEnd();
 }
