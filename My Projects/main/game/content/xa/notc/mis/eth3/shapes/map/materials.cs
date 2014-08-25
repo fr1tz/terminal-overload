@@ -62,8 +62,7 @@ singleton Material(xa_notc_mis_eth3_shapes_map_mat3)
    glow[2] = "0";
    glowOnly[2] = "0";
    emissive[2] = "0";
-   diffuseMap[0] = "content/xa/notc/core/shapes/standardcat/stealth1.png";
-   animFlags[0] = "0x00000001";
+   animFlags[0] = "0x00000000";
    scrollDir[0] = "0.4 0.4";
    scrollSpeed[0] = "0.1";
    castShadows = "0";
@@ -84,6 +83,8 @@ singleton Material(xa_notc_mis_eth3_shapes_map_mat2)
    materialTag0 = "Miscellaneous";
    diffuseColorPaletteSlot[1] = "-1";
    specular[1] = "1 1 1 1";
+   diffuseColor[2] = "1 1 1 1";
+   footstepSoundId = "2";
 };
 
 
