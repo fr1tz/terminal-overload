@@ -10,7 +10,7 @@ singleton Material(xa_notc_core_shapes_territoryzone_terrainmat)
    translucent = "1";
    showFootprints = "0";
    glow[0] = "0";
-   emissive[0] = "1";
+   emissive[0] = "0";
    materialTag0 = "Miscellaneous";
    animFlags[0] = "0x00000000";
    scrollDir[0] = "0.3 1";
@@ -59,7 +59,8 @@ singleton Material(xa_notc_core_shapes_territoryzone_othermat)
    translucent = "1";
    showFootprints = "0";
    glow[0] = "0";
-   emissive[0] = "1";
+   emissive[0] = "0";
    materialTag0 = "Miscellaneous";
+   specular[2] = "1 1 1 1";
 };
 
