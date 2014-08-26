@@ -116,7 +116,7 @@ class TacticalZone : public GameBase
 	U32	mLastThink;
 	U32	mCurrTick;
 
-   ColorF mCurrColor;
+   ColorF mCurrColor[Palette::NumSlots];
    ColorF mFlashColor;
    U32 mFlickerTime;
 
@@ -221,7 +221,7 @@ class TacticalZone : public GameBase
 	bool renderInteriors() { return mRenderInteriors; }
 	bool renderTerrain() { return mRenderTerrain; }
 
-   ColorF getZoneColor() const;
+   ColorF getZoneColor(U32 slot = 0) const;
 
 	void flash(const ColorF& color);
    void setFlicker(U32 flickerTime);

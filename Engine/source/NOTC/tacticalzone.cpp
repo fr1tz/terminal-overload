@@ -282,7 +282,8 @@ TacticalZone::TacticalZone()
 	mRenderTerrain = true;
 	mRenderTerrainGrid = false;
 
-	mCurrColor.set(0, 0, 0, 0);
+   for(U32 i = 0; i < Palette::NumSlots; i++)
+	   mCurrColor[i].set(0, 0, 0, 0);
    mFlashColor.set(0, 0, 0, 0);
    mFlickerTime = 0;
 
@@ -992,14 +993,14 @@ void TacticalZone::setTransform(const MatrixF & mat)
 	}
 }
 
-ColorF TacticalZone::getZoneColor() const
+ColorF TacticalZone::getZoneColor(U32 slot) const
 {
    if(mFlickerTime == 0)
-      return mCurrColor;
+      return mCurrColor[slot];
 
    U32 time = Platform::getRealMilliseconds();
-   if((time/mFlickerTime) % 2 == 0)
-      return mCurrColor;
+   if(slot == 0 && (time/mFlickerTime) % 2 == 0)
+      return mCurrColor[slot];
    else
       return ColorF(0,0,0,0);
 }
@@ -1089,12 +1090,15 @@ void TacticalZone::advanceTime(F32 dt)
 {
 	Parent::advanceTime(dt);
 
-	ColorF targetColor = mPalette.colors[0];
-	if(mCurrColor != targetColor)
-	{
-		F32 delta = dt / (F32(mDataBlock->colorChangeTimeMS) / 1000.0f);
-		mCurrColor.interpolate(mCurrColor, targetColor, delta);
-	}
+   for(U32 i = 0; i < Palette::NumSlots; i++)
+   {
+	   ColorF targetColor = mPalette.colors[i];
+	   if(mCurrColor[i] != targetColor)
+	   {
+		   F32 delta = dt / (F32(mDataBlock->colorChangeTimeMS) / 1000.0f);
+		   mCurrColor[i].interpolate(mCurrColor[i], targetColor, delta);
+	   }
+   }
 }
 
 //--------------------------------------------------------------------------
@@ -1360,7 +1364,8 @@ void TacticalZone::prepRenderImage(SceneRenderState* state)
 
       // Set palette.
       ri->palette = this->getPalette();
-      ri->palette.colors[0] = this->getZoneColor();
+      for(U32 i = 0; i < Palette::NumSlots; i++)
+         ri->palette.colors[i] = this->getZoneColor(i);
 
       // Set our RenderInst as a standard mesh render
       ri->type = RenderPassManager::RIT_Mesh;
@@ -1386,23 +1391,22 @@ void TacticalZone::prepRenderImage(SceneRenderState* state)
       MatrixF objectToWorld = getRenderTransform();
       objectToWorld.scale( getScale() );
 
-      //ri->objectToWorld = renderPass->allocUniqueXform(objectToWorld);
       ri->objectToWorld = &MatrixF::Identity;
 
       ri->worldToCamera = renderPass->allocSharedXform(RenderPassManager::View);
 
-      //ri->projection = renderPass->allocSharedXform(RenderPassManager::Projection);
       MatrixF *tempMat = renderPass->allocUniqueXform( MatrixF( true ) );
       MathUtils::getZBiasProjectionMatrix( gDecalBias, frustum, tempMat );
       ri->projection = tempMat;
+      //ri->projection = renderPass->allocSharedXform(RenderPassManager::Projection);
 
 	   // If our material needs lights then fill the RIs
       // light vector with the best lights.
-      if(matInst->isForwardLit())
+      if(matInst->isForwardLit() && !ri->lights[0])
       {
-         LightQuery query;
+         LightQuery query(8);
          query.init( getWorldSphere() );
-		   query.getLights( ri->lights, 8 );
+		   query.getLights( ri->lights, 8);
       }
 
       // Make sure we have an up-to-date backbuffer in case
@@ -2152,7 +2156,8 @@ void TacticalZone::unpackUpdate(NetConnection* con, BitStream* stream)
 	if( stream->readFlag() )
 	{
       stream->read(&mFlashColor);
-      mCurrColor = mFlashColor;
+      for(U32 i = 0; i < Palette::NumSlots; i++)
+         mCurrColor[i] = mFlashColor;
 	}
 
 	if( stream->readFlag() )
