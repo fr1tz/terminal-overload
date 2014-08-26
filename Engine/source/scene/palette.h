@@ -20,6 +20,7 @@ struct Palette
 
 	void reset();
 
+	static ColorI defaultColor;
 	static Palette active;
 };
 

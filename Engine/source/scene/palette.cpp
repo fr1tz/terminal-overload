@@ -3,6 +3,7 @@
 
 #include "palette.h"
 
+ColorI Palette::defaultColor(255, 255, 255, 255);
 Palette Palette::active;
 
 void Palette::reset()
