@@ -1,11 +1,11 @@
 
 singleton Material(xa_notc_core_shapes_territoryzone_terrainmat)
 {
-   diffuseColor[0] = "0.992157 0.992157 0.992157 1";
+   diffuseColor[0] = "0.992157 0.992157 0.992157 0.498";
    diffuseColorPaletteSlot[0] = "0";
    doubleSided = "0";
-   translucentBlendOp = "AddAlpha";
-   parallaxScale[0] = "0.25";
+   translucentBlendOp = "LerpAlpha";
+   parallaxScale[0] = "0.138889";
    castShadows = "0";
    translucent = "1";
    showFootprints = "0";
@@ -27,6 +27,7 @@ singleton Material(xa_notc_core_shapes_territoryzone_terrainmat)
    wireframe[1] = "0";
    diffuseColor[1] = "0.996078 0.996078 0.996078 0";
    diffuseMap[0] = "content/xa/notc/core/shapes/territoryzone/terrain.png";
+   translucentZWrite = "1";
 };
 
 singleton Material(xa_notc_core_shapes_territoryzone_bordermat)
@@ -50,10 +51,10 @@ singleton Material(xa_notc_core_shapes_territoryzone_bordermat)
 
 singleton Material(xa_notc_core_shapes_territoryzone_othermat)
 {
-   diffuseColor[0] = "0.992157 0.992157 0.992157 1";
+   diffuseColor[0] = "0.992157 0.992157 0.992157 0.502";
    diffuseColorPaletteSlot[0] = "0";
    doubleSided = "0";
-   translucentBlendOp = "AddAlpha";
+   translucentBlendOp = "LerpAlpha";
    parallaxScale[0] = "0.25";
    castShadows = "0";
    translucent = "1";
@@ -62,5 +63,7 @@ singleton Material(xa_notc_core_shapes_territoryzone_othermat)
    emissive[0] = "0";
    materialTag0 = "Miscellaneous";
    specular[2] = "1 1 1 1";
+   diffuseColor[1] = "White";
+   translucentZWrite = "1";
 };
 
