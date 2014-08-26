@@ -121,6 +121,8 @@ SceneObject::SceneObject()
 
    mSceneObjectLinks = NULL;
 
+   for(U32 i = 0; i < Palette::NumSlots; i++)
+      mPalette.colors[i] = Palette::defaultColor;
    mFlickerTime = 0;
 
    mObjectFlags.set( RenderEnabledFlag | SelectionEnabledFlag );
@@ -789,10 +791,9 @@ U32 SceneObject::packUpdate( NetConnection* conn, U32 mask, BitStream* stream )
       stream->write(mCollisionMask);
       stream->writeRangedU32( (U32)mObjectFlags, 0, getObjectFlagMax() );
 
-      ColorI defaultColor;
       for(U32 i = 0; i < Palette::NumSlots; i++)
       {
-         if(stream->writeFlag(mPalette.colors[i] != defaultColor))
+         if(stream->writeFlag(mPalette.colors[i] != Palette::defaultColor))
             stream->write(mPalette.colors[i]);
       }
 	}
@@ -847,7 +848,7 @@ void SceneObject::unpackUpdate( NetConnection* conn, BitStream* stream )
          if(stream->readFlag())
             stream->read(&mPalette.colors[i]);
          else
-            mPalette.colors[i] = defaultColor;
+            mPalette.colors[i] = Palette::defaultColor;
 		}
 	}
 
