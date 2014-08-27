@@ -491,7 +491,7 @@ function TerritoryZone::setZoneOwner(%this, %zone, %teamId)
    %colorI = mFloatLength(getWord(%colorF, 0)*%mod, 0) SPC
              mFloatLength(getWord(%colorF, 1)*%mod, 0) SPC
              mFloatLength(getWord(%colorF, 2)*%mod, 0) SPC
-             254;
+             255;
    %zone.paletteColors[0] = %colorI;
    //echo(%colorF SPC "->" SPC %colorI);
    
@@ -500,7 +500,7 @@ function TerritoryZone::setZoneOwner(%this, %zone, %teamId)
    %colorI = mFloatLength(getWord(%colorF, 0)*%mod, 0) SPC
              mFloatLength(getWord(%colorF, 1)*%mod, 0) SPC
              mFloatLength(getWord(%colorF, 2)*%mod, 0) SPC
-             254;
+             255;
    %zone.paletteColors[1] = %colorI;
    //echo(%colorF SPC "->" SPC %colorI);
 
