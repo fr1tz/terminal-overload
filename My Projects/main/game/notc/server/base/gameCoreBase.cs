@@ -318,7 +318,13 @@ function GameCoreBase::preparePlayer(%game, %client)
    // core/scripts/spawn.cs. For custom spawn behaviors one can either
    // override the properties on the SpawnSphere's or directly override the
    // functions themselves.
-   %playerSpawnPoint = pickPlayerSpawnPoint($Game::DefaultPlayerSpawnGroups);
+   %spawnGroups = $Game::DefaultPlayerSpawnGroups;
+   if(isObject(%client.team))
+   {
+      %teamId = %client.team.teamId;
+      %spawnGroups = "Team"@%teamId@"SpawnPoints" SPC %spawnGroups;
+   }
+   %playerSpawnPoint = pickPlayerSpawnPoint(%spawnGroups);
    // Spawn a camera for this client using the found %spawnPoint
    //%client.spawnPlayer(%playerSpawnPoint);
    %game.spawnPlayer(%client, %playerSpawnPoint);
