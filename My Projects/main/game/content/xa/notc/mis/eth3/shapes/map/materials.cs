@@ -74,7 +74,7 @@ singleton Material(xa_notc_mis_eth3_shapes_map_mat3)
 singleton Material(xa_notc_mis_eth3_shapes_map_mat2)
 {
    mapTo = "xa_notc_mis_eth3_shapes_map_mat2";
-   diffuseColor[0] = "0.278431 0.278431 0.278431 1";
+   diffuseColor[0] = "0.443137 0.443137 0.443137 1";
    specular[0] = "0.5 0.5 0.5 1";
    specularPower[0] = "50";
    translucentBlendOp = "None";
@@ -85,6 +85,7 @@ singleton Material(xa_notc_mis_eth3_shapes_map_mat2)
    specular[1] = "1 1 1 1";
    diffuseColor[2] = "1 1 1 1";
    footstepSoundId = "2";
+   diffuseColor[3] = "1 1 1 1";
 };
 
 
