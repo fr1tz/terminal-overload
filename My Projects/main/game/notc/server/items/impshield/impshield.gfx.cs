@@ -1,6 +1,30 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
+datablock MultiNodeLaserBeamData(ItemImpShieldBeam)
+{
+	material = "xa_notc_core_shapes_standardcat_impshield_p1_beammat";
+	renderMode = $MultiNodeLaserBeamRenderMode::FaceViewer;
+   width = "0.2";
+	fadeTime = "128";
+	windCoefficient = 0.0;
+	//nodeDistance = 3;
+
+   // node x movement...
+   nodeMoveMode[0]     = $NodeMoveMode::None;
+   nodeMoveSpeed[0]    = -0.002;
+   nodeMoveSpeedAdd[0] =  0.004;
+   // node y movement...
+   nodeMoveMode[1]     = $NodeMoveMode::None;
+   nodeMoveSpeed[1]    = -0.002;
+   nodeMoveSpeedAdd[1] =  0.004;
+   // node z movement...
+   nodeMoveMode[2]     = $NodeMoveMode::None;
+   nodeMoveSpeed[2]    = 0.5;
+   nodeMoveSpeedAdd[2] = 1.0;
+   targetLockTimeMS = "480";
+};
+
 datablock ParticleData(ItemImpShieldDropExplosion_Cloud)
 {
 	dragCoeffiecient	  = 0.4;

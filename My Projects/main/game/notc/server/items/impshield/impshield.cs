@@ -3,10 +3,11 @@
 
 datablock BallastShapeData(ItemImpShieldShape)
 {
-   ignoreDamage = true;
+   ignoreDamage = 1;
    shapeFile = "content/xa/notc/core/shapes/standardcat/impshield/p1/shape.dae";
    mass = 0;
-   canStealth = true; // script field
+   groundConnectionBeamQuad = "ItemImpShieldBeam";
+   canStealth = 1; // script field
 };
 
 function ItemImpShieldShape::onMount(%this, %obj, %mountObj, %node)
