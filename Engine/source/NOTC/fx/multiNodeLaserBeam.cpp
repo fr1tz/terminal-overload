@@ -213,6 +213,11 @@ void MultiNodeLaserBeam::setRender(bool b)
    mRender = b;
 }
 
+void MultiNodeLaserBeam::clearNodes()
+{
+   mNodes.clear();
+}
+
 void MultiNodeLaserBeam::addNode(Point3F pos)
 {
 	LaserBeamNode newNode;
@@ -274,6 +279,20 @@ bool MultiNodeLaserBeam::addNodes(Point3F endpos)
 	this->setTransform(xform);
 
 	return true;
+}
+
+void MultiNodeLaserBeam::setFirstNodePos(Point3F pos)
+{
+	if( !mNodes.empty() )
+		mNodes[0].pos = pos;
+}
+
+Point3F MultiNodeLaserBeam::getFirstNodePos()
+{
+	if( !mNodes.empty() )
+		return mNodes[0].pos;
+
+	return Point3F(0,0,0);
 }
 
 void MultiNodeLaserBeam::setLastNodePos(Point3F pos)

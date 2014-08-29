@@ -127,8 +127,11 @@ class MultiNodeLaserBeam : public GameBase
    // MultiNodeLaserBeam...
    void updateRenderData(const Point3F& camPos);
    void setRender(bool b);
+   void clearNodes();
 	void addNode(Point3F pos);
 	bool addNodes(Point3F endpos);
+	void setFirstNodePos(Point3F pos);
+	Point3F getFirstNodePos();
 	void setLastNodePos(Point3F pos);
 	Point3F getLastNodePos();
 	bool deleteLastNode();
