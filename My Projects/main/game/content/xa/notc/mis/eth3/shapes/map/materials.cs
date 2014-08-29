@@ -76,7 +76,7 @@ singleton Material(xa_notc_mis_eth3_shapes_map_mat2)
    mapTo = "xa_notc_mis_eth3_shapes_map_mat2";
    diffuseColor[0] = "0.443137 0.443137 0.443137 1";
    specular[0] = "0.5 0.5 0.5 1";
-   specularPower[0] = "50";
+   specularPower[0] = "49";
    translucentBlendOp = "None";
    diffuseColor[1] = "0.619608 0.623529 0.623529 0";
    wireframe[1] = "0";
@@ -86,6 +86,10 @@ singleton Material(xa_notc_mis_eth3_shapes_map_mat2)
    diffuseColor[2] = "1 1 1 1";
    footstepSoundId = "2";
    diffuseColor[3] = "1 1 1 1";
+   detailScale[0] = "16 16";
+   detailNormalMapStrength[0] = "4";
+   specularStrength[0] = "1.07843";
+   pixelSpecular[0] = "0";
 };
 
 
