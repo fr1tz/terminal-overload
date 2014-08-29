@@ -8,6 +8,9 @@
 #include "T3D/shapeBase.h"
 #endif
 
+class MultiNodeLaserBeamData;
+class MultiNodeLaserBeam;
+
 //----------------------------------------------------------------------------
 
 struct BallastShapeData: public ShapeBaseData {
@@ -22,6 +25,11 @@ struct BallastShapeData: public ShapeBaseData {
    F32   energyPerDamagePoint;
 
    S32 levelSequence;
+
+   MultiNodeLaserBeamData* groundConnectionBeamOne;
+   S32                     groundConnectionBeamOneId;
+   MultiNodeLaserBeamData* groundConnectionBeamQuad;
+   S32                     groundConnectionBeamQuadId;
 
    //
    DECLARE_CONOBJECT(BallastShapeData);
@@ -45,6 +53,9 @@ class BallastShape: public ShapeBase
 
 	F32 mLevel;
 
+   MultiNodeLaserBeam* mGroundConnectionBeamOne;
+   MultiNodeLaserBeam* mGroundConnectionBeamQuad[4];
+
    void onUnmount(ShapeBase* obj,S32 node);
 
 protected:
@@ -53,6 +64,10 @@ protected:
 		LevelMask    = Parent::NextFreeMask << 1,
       NextFreeMask = Parent::NextFreeMask << 2
    };
+
+   void updateGroundConnectionBeams();
+   void updateGroundConnectionBeamOne();
+   void updateGroundConnectionBeamQuad();
 
 public:
    DECLARE_CONOBJECT(BallastShape);
