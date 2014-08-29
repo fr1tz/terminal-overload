@@ -1,4 +1,22 @@
 
+singleton Material(xa_notc_core_shapes_standardcat_impshield_p1_beammat)
+{
+   diffuseColor[0] = "0.996078 0.996078 0.996078 1";
+   doubleSided = "1";
+   translucentBlendOp = "AddAlpha";
+   castShadows = "0";
+   translucent = "1";
+   showFootprints = "0";
+   glow[0] = "1";
+   glowOnly[0] = "0";
+   emissive[0] = "1";
+   vertColor[0] = "1";
+   materialTag0 = "Miscellaneous";
+   diffuseColorPaletteSlot[0] = "0";
+   diffuseMap[0] = "content/xa/notc/core/shapes/mgl1/projectile/p1/trail.png";
+   mapTo = "trail.png";
+};
+
 singleton Material(xa_notc_core_shapes_standardcat_impshield_p1_mat1)
 {
    mapTo = "xa_notc_core_shapes_standardcat_impshield_p1_mat1";
@@ -42,3 +60,5 @@ singleton Material(shape_fr1tz_notc1_shapes_standardcat_mat2_001)
    specularPower[0] = "50";
    translucentBlendOp = "None";
 };
+
+
