@@ -141,6 +141,7 @@ class MultiNodeLaserBeam : public GameBase
 	void smoothDist(F32 dist);
 	void smoothReverse();
 	void smoothReverseDist(F32 dist);
+   void setFadeout(F32 alpha);
 
    DECLARE_CONOBJECT(MultiNodeLaserBeam);
 };

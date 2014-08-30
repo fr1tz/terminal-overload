@@ -773,3 +773,10 @@ void MultiNodeLaserBeam::smoothReverseDist(F32 dist)
 	mFadeMode = 1;
 }
 
+void MultiNodeLaserBeam::setFadeout(F32 alpha)
+{
+	int s = mNodes.size();
+	for(int i=0; i<s; i++ )
+		mNodes[i].alpha = alpha;
+}
+
