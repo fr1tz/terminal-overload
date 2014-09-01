@@ -3,17 +3,17 @@
 
 function clientCmd_XaNotcMaterials_Clear()
 {
-   echo("clientCmd_XaNotcMaterials_Clear()");
+   //echo("clientCmd_XaNotcMaterials_Clear()");
 
-   if(!isObject(XaNotcMaterialsGroup))
-      return;
-      
-   MaterialsGroup.clear();
+   if(isObject(XaNotcMaterialsGroup))
+      XaNotcMaterialsGroup.delete();
 }
 
 function clientCmd_XaNotcMaterials_Load(%pathMask)
 {
-   echo("clientCmd_XaNotcMaterials_Load():" SPC %pathMask);
+   //echo("clientCmd_XaNotcMaterials_Load():" SPC %pathMask);
+   
+   %instantGroupStor = $instantGroup;
 
    if(!isObject(XaNotcMaterialsGroup))
       $instantGroup = new SimGroup(XaNotcMaterialsGroup);
@@ -38,5 +38,7 @@ function clientCmd_XaNotcMaterials_Load(%pathMask)
    {
       exec( %file );
    }
+   
+   $instantGroup = %instantGroupStor;
 }
 
