@@ -15,6 +15,11 @@ singleton Material(xa_notc_core_shapes_standardcat_impshield_p1_beammat)
    diffuseColorPaletteSlot[0] = "0";
    mapTo = "trail.png";
    wireframe[0] = "1";
+   diffuseColor[1] = "0.992157 0.996078 0.996078 0";
+   emissive[1] = "0";
+   wireframe[1] = "0";
+   vertColor[1] = "1";
+   diffuseColorPaletteSlot[1] = "0";
 };
 
 singleton Material(xa_notc_core_shapes_standardcat_impshield_p1_mat1)
