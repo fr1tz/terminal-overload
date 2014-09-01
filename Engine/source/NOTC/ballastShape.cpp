@@ -215,7 +215,7 @@ bool BallastShape::onNewDataBlock(GameBaseData* dptr, bool reload)
    mLevelThread = 0;
    if(this->isGhost())
    {
-      if(mDataBlock->levelSequence != -1)
+      if(mShapeInstance && mDataBlock->levelSequence != -1)
       {
          mLevelThread = mShapeInstance->addThread();
          mShapeInstance->setSequence(mLevelThread, mDataBlock->levelSequence, 0);
@@ -325,7 +325,30 @@ void BallastShape::updateGroundConnectionBeams()
 
 void BallastShape::updateGroundConnectionBeamOne()
 {
+   if(mGroundConnectionBeamOne)
+   {
+      Point3F c = this->getRenderPosition();
 
+      RayInfo rInfo;
+      Point3F start = c; 
+      if(isMounted())
+         start.z = mMount.object->getWorldBox().maxExtents.z;
+      else
+         start.z = this->getWorldBox().maxExtents.z;
+      Point3F end = start; end.z = F32_MIN;
+      if(mLevel > 0 && gClientContainer.castRay(start, end, StaticObjectType, &rInfo))
+      {
+         mGroundConnectionBeamOne->clearNodes();
+         mGroundConnectionBeamOne->addNode(c);
+         mGroundConnectionBeamOne->addNodes(rInfo.point);
+         mGroundConnectionBeamOne->setFadeout(mLevel);
+         mGroundConnectionBeamOne->setRender(true);
+      }
+      else
+      {
+         mGroundConnectionBeamOne->setRender(false);
+      }
+   } 
 }
 
 void BallastShape::updateGroundConnectionBeamQuad()
@@ -387,13 +410,18 @@ void BallastShape::updateGroundConnectionBeamQuad()
       if(mGroundConnectionBeamQuad[i])
       {
          RayInfo rInfo;
-         Point3F start = gp[i]; start.z = mWorldBox.maxExtents.z;
+         Point3F start = gp[i]; 
+         if(isMounted())
+            start.z = mMount.object->getWorldBox().maxExtents.z;
+         else
+            start.z = this->getWorldBox().maxExtents.z;
          Point3F end = start; end.z = F32_MIN;
-         if(gClientContainer.castRay(start, end, StaticObjectType, &rInfo))
+         if(mLevel > 0 && gClientContainer.castRay(start, end, StaticObjectType, &rInfo))
          {
             mGroundConnectionBeamQuad[i]->clearNodes();
             mGroundConnectionBeamQuad[i]->addNode(c);
             mGroundConnectionBeamQuad[i]->addNodes(rInfo.point);
+            mGroundConnectionBeamQuad[i]->setFadeout(mLevel);
             mGroundConnectionBeamQuad[i]->setRender(true);
          }
          else
