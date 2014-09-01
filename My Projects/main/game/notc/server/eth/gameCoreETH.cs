@@ -192,6 +192,8 @@ function GameCoreETH::loadOut(%game, %player)
    // Setup ShapeBase HudInfo object team ID
    %player.zShapeBaseHudInfo.setDatasetType(0, $HudInfoDatasetType::TeamID);
    %player.zShapeBaseHudInfo.setDatasetIntField(0, %player.getTeamId());
+   %player.zShapeBaseHudInfo.setDatasetType(1, $HudInfoDatasetType::Name);
+   %player.zShapeBaseHudInfo.setDatasetStringField(1, %player.client.playerName);
 
    if(%player.getClassName() $= "Player" || %player.getClassName() $= "AiPlayer")
       ETH::loadoutPlayer(%player);

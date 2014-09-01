@@ -264,8 +264,8 @@ function ETH::resetLoadout(%client)
 function ETH::loadoutEtherform(%player)
 {
    // Setup ShapeBase HudInfo object icon
-   %player.zShapeBaseHudInfo.setDatasetType(1, $HudInfoDatasetType::IconID);
-   %player.zShapeBaseHudInfo.setDatasetIntField(1, 128);
+   %player.zShapeBaseHudInfo.setDatasetType(2, $HudInfoDatasetType::IconID);
+   %player.zShapeBaseHudInfo.setDatasetIntField(2, 128);
    
    copyPalette(%player, %player.zBallastShape1);
    copyPalette(%player, %player.zBallastShape2);
@@ -280,8 +280,8 @@ function ETH::loadoutPlayer(%player)
       return;
 
    // Setup ShapeBase HudInfo object icon
-   %player.zShapeBaseHudInfo.setDatasetType(1, $HudInfoDatasetType::IconID);
-   %player.zShapeBaseHudInfo.setDatasetIntField(1, %client.zActiveLoadout+1);
+   %player.zShapeBaseHudInfo.setDatasetType(2, $HudInfoDatasetType::IconID);
+   %player.zShapeBaseHudInfo.setDatasetIntField(2, %client.zActiveLoadout+1);
 
    %player.setInventory(ItemDamper, 1);
    %player.setInventory(ItemVAMP, 1);

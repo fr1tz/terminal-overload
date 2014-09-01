@@ -34,6 +34,12 @@ $HudInfoDatasetType::IconID = 3;
 //  float field: unused
 //   bool field: unused
 
+$HudInfoDatasetType::Name = 4;
+// string field: the name
+//    int field: unused
+//  float field: unused
+//   bool field: unused
+
 //-----------------------------------------------------------------------------
 
 function onGameDurationEnd()
