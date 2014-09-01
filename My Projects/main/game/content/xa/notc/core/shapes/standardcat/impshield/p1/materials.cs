@@ -13,8 +13,8 @@ singleton Material(xa_notc_core_shapes_standardcat_impshield_p1_beammat)
    vertColor[0] = "1";
    materialTag0 = "Miscellaneous";
    diffuseColorPaletteSlot[0] = "0";
-   diffuseMap[0] = "content/xa/notc/core/shapes/mgl1/projectile/p1/trail.png";
    mapTo = "trail.png";
+   wireframe[0] = "1";
 };
 
 singleton Material(xa_notc_core_shapes_standardcat_impshield_p1_mat1)
