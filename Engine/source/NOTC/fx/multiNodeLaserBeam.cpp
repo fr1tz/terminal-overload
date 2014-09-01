@@ -497,6 +497,8 @@ void MultiNodeLaserBeam::advanceTime(F32 dt)
 		}
 
 		// node movement
+      if(i == 0 || i == s-1) // (never move first/last node)
+         continue;
 		for(int j = 0; j < 3; j++) 
 		{
 			// update node velocity?...
