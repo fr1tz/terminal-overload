@@ -55,3 +55,13 @@ singleton Material(xa_notc_core_shapes_sg2_projectile_p1_lasertrail0mat)
    wireframe[0] = "1";
 };
 
+singleton Material(xa_notc_core_shapes_sg2_projectile_p1_decalmat)
+{
+   baseTex[0] = "content/xa/torque3d/3.0/decals/rBlast";
+
+   vertColor[0] = true;
+   translucent = true;
+   translucentBlendOp = LerpAlpha;
+   translucentZWrite = true;
+};
+

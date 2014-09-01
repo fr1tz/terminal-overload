@@ -10,7 +10,7 @@ datablock LightDescription(WpnMGL1ProjectileLightDesc : BulletProjectileLightDes
 
 datablock DecalData(WpnMGL1ProjectileDecal)
 {
-   Material = "DECAL_RocketEXP";
+   Material = "xa_notc_core_shapes_mgl1_projectile_p1_decalmat";
    size = "2";
    lifeSpan = "5000";
    randomize = "1";

@@ -3,7 +3,7 @@
 
 datablock DecalData(WpnSG2ProjectileDecal)
 {
-   Material = "DECAL_RocketEXP";
+   Material = "xa_notc_core_shapes_sg2_projectile_p1_decalmat";
    size = "1";
    lifeSpan = "5000";
    randomize = "1";
