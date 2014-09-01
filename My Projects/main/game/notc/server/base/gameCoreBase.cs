@@ -188,6 +188,34 @@ function GameCoreBase::prepareClient(%game, %client)
    %client.paletteColors[1] = "210 210 210 255";
    
    %game.queryClientSettings(%client, "prepareClient");
+   
+   %files = "xa/notc/core/client/audio/Descriptions/v1/exec.cs" TAB
+            "xa/notc/core/client/audio/Hearing/v1/exec.cs" TAB
+            "xa/notc/core/client/audio/HitSound/v1/exec.cs" TAB
+            "xa/notc/core/client/gui/CatGui/v1/exec.cs" TAB
+            "xa/notc/core/client/gui/EtherformGui/v1/exec.cs" TAB
+            "xa/notc/core/client/gui/ChatHud/v1/exec.cs" TAB
+            "xa/notc/core/client/gui/GuiChanger/v1/exec.cs" TAB
+            "xa/notc/core/client/gui/MinimapHud/v1/exec.cs" TAB
+            "xa/notc/core/client/gui/LoadoutHud/v1/exec.cs" TAB
+            "xa/notc/core/client/gui/MiscHud/v1/exec.cs" TAB
+            "xa/notc/core/client/misc/Commands/v1/exec.cs" TAB
+            "xa/notc/core/client/misc/Materials/v1/exec.cs" TAB
+            "xa/notc/core/client/postfx/ChromaticLens/v1/exec.cs" TAB
+            "xa/notc/deathmatch/client/gui/EndGameGui/v1/exec.cs" TAB
+            "xa/notc/deathmatch/client/gui/PlayerList/v1/exec.cs";
+
+   %fieldCount = getFieldCount(%files);
+   for(%i = 0; %i < %fieldCount; %i++)
+   {
+      %file = getField(%files, %i);
+      commandToClient(%client, 'ExecContentScript', %file);
+   }
+
+   %client.Materials_Clear();
+   %client.Materials_Load("content/xa/notc/core");
+   %client.Materials_Load("content/xa/rotc_hack");
+   %client.Materials_Load(filePath($Server::MissionFile));
 }
 
 function GameCoreBase::onClientEnterGame(%game, %client)
