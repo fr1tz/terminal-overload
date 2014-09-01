@@ -438,13 +438,13 @@ function FrmStandardcat::onTrigger(%this, %obj, %triggerNum, %val)
    
    if(%triggerNum == 2 && %val)
    {
-      if(%obj.getEnergyLevel() > %this.reJumpEnergyDrain)
+      if(%obj.zImpShield > %this.reJumpEnergyDrain/100)
       {
          %pos = %obj.getPosition();
          createExplosion(FrmStandardcatJumpExplosion, %pos, "0 0 1");
          %impulseVec = VectorScale("0 0 1", %this.reJumpForce);
          %obj.impulse(%pos, %impulseVec, %obj);
-         %obj.setEnergyLevel(%obj.getEnergyLevel() - %this.reJumpEnergyDrain);
+         %obj.zImpShield -= %this.reJumpEnergyDrain/100;
       }
    }
    
