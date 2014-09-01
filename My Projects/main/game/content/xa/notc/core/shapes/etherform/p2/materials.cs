@@ -1,4 +1,45 @@
 
+singleton Material(xa_notc_core_shapes_etherform_p2_beammat1)
+{
+   diffuseColor[0] = "0.996078 0.996078 0.996078 1";
+   doubleSided = "1";
+   translucentBlendOp = "AddAlpha";
+   castShadows = "0";
+   translucent = "1";
+   showFootprints = "0";
+   glow[0] = "1";
+   glowOnly[0] = "1";
+   emissive[0] = "1";
+   vertColor[0] = "1";
+   materialTag0 = "Miscellaneous";
+   diffuseColorPaletteSlot[0] = "0";
+   diffuseMap[0] = "content/xa/notc/core/shapes/mgl1/projectile/p1/trail.png";
+   mapTo = "trail.png";
+   wireframe[0] = "0";
+};
+
+singleton Material(xa_notc_core_shapes_etherform_p2_beammat2)
+{
+   diffuseColor[0] = "0.996078 0.996078 0.996078 1";
+   doubleSided = "1";
+   translucentBlendOp = "AddAlpha";
+   castShadows = "0";
+   translucent = "1";
+   showFootprints = "0";
+   glow[0] = "1";
+   glowOnly[0] = "0";
+   emissive[0] = "1";
+   vertColor[0] = "1";
+   materialTag0 = "Miscellaneous";
+   diffuseColorPaletteSlot[0] = "0";
+   diffuseMap[0] = "content/xa/notc/core/shapes/mgl1/projectile/p1/trail.png";
+   mapTo = "trail.png";
+   diffuseColor[2] = "White";
+   effectColor[1] = "InvisibleBlack";
+   diffuseColor[1] = "0.992157 0.996078 0.996078 0";
+   emissive[1] = "1";
+};
+
 singleton Material(xa_notc_core_shapes_etherform_p2_mat1)
 {
    mapTo = "xa_notc_core_shapes_etherform_p2_mat1";
