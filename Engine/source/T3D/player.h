@@ -516,6 +516,7 @@ protected:
 
 	bool  mAllowSliding;
 	bool  mWantsToSlide;
+   bool  mLastTickSlideState;
    
    S32 mContactTimer;               ///< Ticks since last contact
 

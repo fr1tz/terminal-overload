@@ -1808,6 +1808,7 @@ Player::Player()
    mSwimming = false;
    mInWater = false;
 	mWantsToSlide = false;
+   mLastTickSlideState = false;
    mPose = StandPose;
    mSlideContact = 0;
    mContactTimer = 0;
@@ -2428,8 +2429,6 @@ void Player::processTick(const Move* move)
       if (!isGhost())
          updateAnimation(TickSec);
 
-      bool wasSliding = this->isSliding();
-
       PROFILE_START(Player_PhysicsSection);
       if ( isServerObject() || didRenderLastRender() || getControllingClient() )
       {
@@ -2462,15 +2461,6 @@ void Player::processTick(const Move* move)
          updateActionThread();
          updateAnimationTree(true);
 
-         // Check if sliding has changed.
-         if(this->isSliding() != wasSliding)
-         {
-            if(this->isSliding())
-               mDataBlock->onStartSliding_callback(this);
-            else
-               mDataBlock->onStopSliding_callback(this);
-         }
-
          // Check for sprinting motion changes
          Pose currentPose = getPose();
          // Player has just switched into Sprint pose and is moving
@@ -2497,6 +2487,20 @@ void Player::processTick(const Move* move)
          }
       }
    }
+
+   if(this->isServerObject())
+   {
+      // Check if sliding has changed.
+      if(this->isSliding() != mLastTickSlideState)
+      {
+         if(this->isSliding())
+            mDataBlock->onStartSliding_callback(this);
+         else
+            mDataBlock->onStopSliding_callback(this);
+      }
+   }
+
+   mLastTickSlideState = this->isSliding();
 }
 
 void Player::interpolateTick(F32 dt)
