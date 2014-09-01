@@ -55,34 +55,45 @@ function ItemImpShieldShape::updateThread(%this, %obj)
    if(!isObject(%obj))
       return;
    
-   %dtTime = 64;
+   %dtTime = 64*4;
    %obj.zUpdateThread = %this.schedule(%dtTime, "updateThread", %obj);
    
    %mount = %obj.getObjectMount();
    if(!isObject(%mount))
       return;
    
-   %level = %obj.getLevel();
+   %level = %mount.zImpShield;
    
-   %contact = false;
-	if(!%mount.zIsSliding)
+   if(%mount.zIsSliding)
    {
-      %start = %mount.getWorldBoxCenter();
-      %end	= VectorAdd(%start, "0 0 -3");
-      %mask = $TypeMasks::StaticObjectType;
-      %contact = containerRayCast(%start, %end, %mask, %mount);
-   }
-
-   if(%contact)
-   {
-      %dt = 0.010;
+      %dt = -0.008*4;
    }
    else
    {
-      %dt = -0.008;
+      %dt = 0.010*4;
    }
    
    %level = mClamp(%level+%dt, 0, 0.75);
+   
+   if(%mount.getInventory(ItemEtherboard) > 0)
+   {
+      if(%level > 0)
+      {
+         %mount.allowSliding(true);
+      }
+      else
+      {
+         %mount.allowSliding(false);
+         //if(%mount.zIsSliding)
+         //   %mount.getDataBlock().onStopSliding(%mount);
+      }
+   }
+   else
+   {
+      %mount.allowSliding(false);
+      //if(%mount.zIsSliding)
+      //   %mount.getDataBlock().onStopSliding(%mount);
+   }
 
    %obj.setLevel(%level);
    %mount.zImpShield = %level;

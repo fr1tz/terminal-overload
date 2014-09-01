@@ -26,7 +26,6 @@ function ItemEtherboard::onInventory(%this, %obj, %amount)
    {
       if(isObject(%obj.etherboard))
          %obj.etherboard.delete();
-      %obj.allowSliding(false);
    }
    else
    {
@@ -37,6 +36,5 @@ function ItemEtherboard::onInventory(%this, %obj, %amount)
       %obj.mountObject(%obj.etherboard, 8);
       %obj.etherboard.startFade(0, 0, true);
       MissionCleanup.add(%obj.etherboard);
-      %obj.allowSliding(true);
    }
 }
