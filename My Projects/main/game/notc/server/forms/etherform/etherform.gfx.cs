@@ -1,6 +1,52 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
+datablock MultiNodeLaserBeamData(FrmEtherformGroundBeam1)
+{
+	material = "xa_notc_core_shapes_etherform_p2_beammat1";
+	renderMode = $MultiNodeLaserBeamRenderMode::FaceViewer;
+   width = "0.2";
+	windCoefficient = 0.0;
+
+   // node x movement...
+   nodeMoveMode[0]     = $NodeMoveMode::None;
+   nodeMoveSpeed[0]    = -0.002;
+   nodeMoveSpeedAdd[0] =  0.004;
+   // node y movement...
+   nodeMoveMode[1]     = $NodeMoveMode::None;
+   nodeMoveSpeed[1]    = -0.002;
+   nodeMoveSpeedAdd[1] =  0.004;
+   // node z movement...
+   nodeMoveMode[2]     = $NodeMoveMode::None;
+   nodeMoveSpeed[2]    = 0.5;
+   nodeMoveSpeedAdd[2] = 1.0;
+   
+   //nodeDistance = 4;
+};
+
+datablock MultiNodeLaserBeamData(FrmEtherformGroundBeam2)
+{
+	material = "xa_notc_core_shapes_etherform_p2_beammat2";
+	renderMode = $MultiNodeLaserBeamRenderMode::FaceViewer;
+   width = "0.2";
+	windCoefficient = 0.0;
+
+	// node x movement...
+	nodeMoveMode[0]     = $NodeMoveMode::DynamicSpeed;
+	nodeMoveSpeed[0]    = 10.0;
+	nodeMoveSpeedAdd[0] = -20.0;
+	// node y movement...
+	nodeMoveMode[1]     = $NodeMoveMode::DynamicSpeed;
+	nodeMoveSpeed[1]    = 10.0;
+	nodeMoveSpeedAdd[1] = -20.0;
+	// node z movement...
+	nodeMoveMode[2]     = $NodeMoveMode::DynamicSpeed;
+	nodeMoveSpeed[2]    = 10.0;
+	nodeMoveSpeedAdd[2] = -20.0;
+
+   nodeDistance = 1;
+};
+
 datablock LightFlareData(FrmEtherformLightFlare)
 {
    losMask = $TypeMasks::TerrainObjectType |

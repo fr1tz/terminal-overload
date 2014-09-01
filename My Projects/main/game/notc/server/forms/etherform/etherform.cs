@@ -1,6 +1,20 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
+datablock BallastShapeData(FrmEtherformBallastShape1)
+{
+   ignoreDamage = 1;
+   mass = 0;
+   groundConnectionBeamOne = "FrmEtherformGroundBeam1";
+};
+
+datablock BallastShapeData(FrmEtherformBallastShape2)
+{
+   ignoreDamage = 1;
+   mass = 0;
+   groundConnectionBeamOne = "FrmEtherformGroundBeam2";
+};
+
 //-----------------------------------------------------------------------------
 
 datablock EtherformData(FrmEtherform)
@@ -77,6 +91,20 @@ function FrmEtherform::onAdd(%this, %obj)
 {
 	Parent::onAdd(%this,%obj);
  
+   // Set up ballast shape 1
+   %obj.zBallastShape1 = new BallastShape() {
+      dataBlock = FrmEtherformBallastShape1;
+   };
+   %obj.mountObject(%obj.zBallastShape1, 3);
+   MissionCleanup.add(%obj.zBallastShape1);
+
+   // Set up ballast shape 2
+   %obj.zBallastShape2 = new BallastShape() {
+      dataBlock = FrmEtherformBallastShape2;
+   };
+   %obj.mountObject(%obj.zBallastShape2, 3);
+   MissionCleanup.add(%obj.zBallastShape2);
+
    %obj.mode = "posess";
    
    // Play spawn sound and start singing
@@ -191,7 +219,11 @@ function FrmEtherform::onAdd(%this, %obj)
 function FrmEtherform::onRemove(%this, %obj)
 {
    Parent::onRemove(%this, %obj);
-
+   
+   if(isObject(%obj.zBallastShape1))
+      %obj.zBallastShape1.delete();
+   if(isObject(%obj.zBallastShape2))
+      %obj.zBallastShape2.delete();
    if(isObject(%obj.pointer))
       %obj.pointer.delete();
    if(isObject(%obj.emitter))
@@ -222,5 +254,47 @@ function FrmEtherform::impulse(%this, %obj, %position, %impulseVec, %src)
 function FrmEtherform::onTrigger(%this, %obj, %triggerNum, %val)
 {
   
+}
+
+// Called by script
+function FrmEtherform::updateBeams(%this, %obj)
+{
+   if(%obj.zInOwnZone)
+   {
+      %obj.zBallastShape1.setLevel(1);
+      %obj.zBallastShape2.setLevel(0);
+   
+      %client = %obj.client;
+      if(!isObject(%client))
+         return;
+      
+      %repairBeam = false;
+      for(%slot = 0; %slot < 6; %slot++)
+         if(%client.zLoadoutProgress[%slot] < 1)
+            %repairBeam = true;
+            
+      //%repairBeam = true;
+      if(%repairBeam)
+         %obj.zBallastShape2.setLevel(1);
+      else
+         %obj.zBallastShape2.setLevel(0);
+   }
+   else
+   {
+      %obj.zBallastShape1.setLevel(0);
+      %obj.zBallastShape2.setLevel(0);
+   }
+}
+
+// Called by script
+function FrmEtherform::updateZone(%this, %obj)
+{
+   %this.updateBeams(%obj);
+}
+
+// Called by script
+function FrmEtherform::updateZoneRepair(%this, %obj)
+{
+   %this.updateBeams(%obj);
 }
 

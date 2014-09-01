@@ -115,6 +115,14 @@ function TerritoryZones_repair(%obj, %repair)
       %progress = %client.zLoadoutProgress[%slot];
       %client.LoadoutHud_UpdateSlot(%slot, "", "", %progress);
    }
+   
+   // Update object visuals
+   if(%obj.isMethod("getDataBlock"))
+   {
+      %data = %obj.getDataBlock();
+      if(%data.isMethod("updateZoneRepair"))
+         %data.updateZoneRepair(%obj);
+   }
 }
 
 function TerritoryZones_repairTick()
@@ -310,6 +318,14 @@ function TerritoryZones_objectUpdateZone(%obj, %enterZone, %leftZone)
    %obj.zInZone = %inZone;
    %obj.zInOwnZone = %inOwnZone;
    %obj.zInEnemyZone = %inEnemyZone;
+   
+   // Give object a chance to do something.
+   if(%obj.isMethod("getDataBlock"))
+   {
+      %data = %obj.getDataBlock();
+      if(%data.isMethod("updateZone"))
+         %data.updateZone(%obj);
+   }
 }
 
 //-----------------------------------------------------------------------------

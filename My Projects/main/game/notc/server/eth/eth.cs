@@ -266,6 +266,9 @@ function ETH::loadoutEtherform(%player)
    // Setup ShapeBase HudInfo object icon
    %player.zShapeBaseHudInfo.setDatasetType(1, $HudInfoDatasetType::IconID);
    %player.zShapeBaseHudInfo.setDatasetIntField(1, 128);
+   
+   copyPalette(%player, %player.zBallastShape1);
+   copyPalette(%player, %player.zBallastShape2);
 }
 
 function ETH::loadoutPlayer(%player)
