@@ -4,6 +4,12 @@
 function clientCmd_XaNotcMaterials_Clear()
 {
    echo("clientCmd_XaNotcMaterials_Clear()");
+   
+   if(isObject(ServerMaterialsGroup))
+   {
+      echo(" Have access to ServerMaterialsGroup, no need for action.");
+      return;
+   }
 
    if(isObject(XaNotcMaterialsGroup))
       XaNotcMaterialsGroup.delete();
@@ -12,6 +18,12 @@ function clientCmd_XaNotcMaterials_Clear()
 function clientCmd_XaNotcMaterials_Load(%pathMask)
 {
    echo("clientCmd_XaNotcMaterials_Load():" SPC %pathMask);
+   
+   if(isObject(ServerMaterialsGroup))
+   {
+      echo(" Have access to ServerMaterialsGroup, no need for action.");
+      return;
+   }
    
    %instantGroupStor = $instantGroup;
 
