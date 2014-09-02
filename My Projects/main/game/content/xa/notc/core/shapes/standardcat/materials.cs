@@ -97,7 +97,7 @@ singleton Material(xa_notc_core_shapes_standardcat_mat2)
    diffuseColor[1] = "0.996078 0.996078 0.996078 1";
    diffuseMap[1] = "content/xa/notc/core/textures/grid128.12.png";
    diffuseColorPaletteSlot[1] = "0";
-   glow[1] = "1";
+   glow[1] = "0";
    emissive[1] = "1";
    wireframe[1] = "1";
    materialTag0 = "Miscellaneous";
@@ -107,6 +107,7 @@ singleton Material(xa_notc_core_shapes_standardcat_mat2)
    translucentBlendOp = "None";
    alphaRef = "0";
    showFootprints = "0";
+   pixelSpecular[1] = "1";
 };
 
 singleton Material(xa_notc_core_shapes_standardcat_stealthmat1)
