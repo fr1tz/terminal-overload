@@ -309,7 +309,8 @@ function ShapeBaseData::damage(%this, %obj, %source, %position, %amount, %damage
          %norm = VectorNormalize(VectorSub(%spos, %dpos));
       if(%damageType $= "Splash")
          %dpos = VectorAdd(%obj.getWorldBoxCenter(), %norm);
-      %colorI = %obj.paletteColors[0];
+      //%colorI = %obj.paletteColors[0];
+      %colorI = "255 255 0 255";
       if(%healthDamageDealt == 0)
          %colorI = "";
       createExplosion(%bleed, %dpos, %norm, %colorI);

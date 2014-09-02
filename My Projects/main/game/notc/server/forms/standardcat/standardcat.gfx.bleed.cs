@@ -40,7 +40,7 @@ datablock DebrisData(FrmStandardCatBleedEffect_Debris)
 
 datablock ParticleData(FrmStandardCatBleedEffect_Particles : DefaultParticle)
 {
-   sizes[0] = "0.497467";
+   sizes[0] = "1";
    sizes[1] = "0";
    sizes[2] = "0";
    sizes[3] = "0";
@@ -51,8 +51,8 @@ datablock ParticleData(FrmStandardCatBleedEffect_Particles : DefaultParticle)
    lifetimeVarianceMS = "0";
    dragCoefficient = "0";
    spinSpeed = "0";
-   textureName = "content/xa/rotc/p.5.4/textures/rotc/corona.png";
-   animTexName = "content/xa/rotc/p.5.4/textures/rotc/corona.png";
+   textureName = "content/xa/rotc/p.5.4/textures/rotc/spark02.png";
+   animTexName = "content/xa/rotc/p.5.4/textures/rotc/spark02.png";
    colors[1] = "1 1 1 0";
    colors[2] = "1 1 1 0.330709";
    colors[3] = "1 1 1 0";
@@ -92,11 +92,11 @@ datablock ParticleEmitterData(FrmStandardCatBleedEffect10Emitter : DefaultEmitte
    ejectionPeriodMS = "1";
    periodVarianceMS = "0";
    softnessDistance = "1";
-   ejectionVelocity = "10";
+   ejectionVelocity = "15";
    ejectionOffset = "0";
    thetaMin = "0";
    thetaMax = "180";
-   orientParticles = "0";
+   orientParticles = "1";
    blendStyle = "ADDITIVE";
    soundProfile = "FrmStandardcatBleedEffectSound";
    particleDensity = "2";
@@ -108,14 +108,14 @@ datablock ParticleEmitterData(FrmStandardCatBleedEffect10Emitter : DefaultEmitte
    lightEndColor = "0.992126 0 0 1";
    lightStartBrightness = "0.784314";
    lightEndBrightness = "1.80392";
-   paletteSlot = 0;
+   paletteSlot = -1;
    emitter0 = "FrmStandardCatBleedEffect_Sting_Emitter";
 };
 
 datablock ExplosionData(FrmStandardCatBleedEffect10)
 {
    soundProfile = FrmStandardcatBleedEffectSound;
-   lifetimeMS = "32";
+   lifetimeMS = "64";
    lightStartRadius = "4.94118";
    lightStartColor = "1 0 0 1";
    lightEndColor = "0.992126 0 0 1";
@@ -134,55 +134,55 @@ datablock ExplosionData(FrmStandardCatBleedEffect10)
 
 datablock ExplosionData(FrmStandardCatBleedEffect20 : FrmStandardCatBleedEffect10)
 {
-   lifetimeMS = "64";
+   lifetimeMS = "96";
    debrisNum = "6";
 };
 
 datablock ExplosionData(FrmStandardCatBleedEffect30 : FrmStandardCatBleedEffect10)
 {
-   lifetimeMS = "96";
+   lifetimeMS = "128";
    debrisNum = "6";
 };
 
 datablock ExplosionData(FrmStandardCatBleedEffect40 : FrmStandardCatBleedEffect10)
 {
-   lifetimeMS = "128";
+   lifetimeMS = "160";
    debrisNum = "8";
 };
 
 datablock ExplosionData(FrmStandardCatBleedEffect50 : FrmStandardCatBleedEffect10)
 {
-   lifetimeMS = "160";
+   lifetimeMS = "192";
    debrisNum = "10";
 };
 
 datablock ExplosionData(FrmStandardCatBleedEffect60 : FrmStandardCatBleedEffect10)
 {
-   lifetimeMS = "192";
+   lifetimeMS = "224";
    debrisNum = "12";
 };
 
 datablock ExplosionData(FrmStandardCatBleedEffect70 : FrmStandardCatBleedEffect10)
 {
-   lifetimeMS = "224";
+   lifetimeMS = "256";
    debrisNum = "14";
 };
 
 datablock ExplosionData(FrmStandardCatBleedEffect80 : FrmStandardCatBleedEffect10)
 {
-   lifetimeMS = "256";
+   lifetimeMS = "288";
    debrisNum = "16";
 };
 
 datablock ExplosionData(FrmStandardCatBleedEffect90 : FrmStandardCatBleedEffect10)
 {
-   lifetimeMS = "288";
+   lifetimeMS = "320";
    debrisNum = "18";
 };
 
 datablock ExplosionData(FrmStandardCatBleedEffect100 : FrmStandardCatBleedEffect10)
 {
-   lifetimeMS = "320";
+   lifetimeMS = "352";
    debrisNum = "20";
 };
 
