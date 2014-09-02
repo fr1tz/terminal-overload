@@ -372,7 +372,10 @@ function AIPlayer::spawn(%teamId, %weapon)
    };
    MissionCleanup.add(%player);
    
-   %spawnPoint = pickPlayerSpawnPoint($Game::DefaultPlayerSpawnGroups);
+   %spawnGroups = $Game::DefaultPlayerSpawnGroups;
+   %spawnGroups = "Team"@%teamId@"SpawnPoints" SPC %spawnGroups;
+   
+   %spawnPoint = pickPlayerSpawnPoint(%spawnGroups);
    %player.setTransform(%spawnPoint.getPosition());
    //%player.setTargetingMask($TargetingMask::Launcher);
    $aiPlayer = %player;
