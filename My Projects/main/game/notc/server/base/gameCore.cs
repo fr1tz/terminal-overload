@@ -57,6 +57,13 @@ package GameCore
 
       // Create the mission group off the ServerGroup
       $instantGroup = ServerGroup;
+      
+      // Mission cleanup group.  This is where run time components will reside.  The MissionCleanup
+      // group will be added to the ServerGroup.
+      new SimGroup( MissionCleanup );
+
+      // Make the MissionCleanup group the place where all new objects will automatically be added.
+      $instantGroup = MissionCleanup;
 
       // Make sure the mission exists
       %file = $Server::MissionFile;
@@ -70,6 +77,12 @@ package GameCore
          // Calculate the mission CRC.  The CRC is used by the clients
          // to caching mission lighting.
          $missionCRC = getFileCRC( %file );
+         
+         // Create the Game object
+         gameCoreCreateGame();
+         
+         // Give the game a chance to prepare some stuff before the mission file is executed.
+         Game.prepareMissionLoad();
 
          // Exec the mission.  The MissionGroup (loaded components) is added to the ServerGroup
          exec(%file);
@@ -85,23 +98,13 @@ package GameCore
          // Inform clients that are already connected
          for (%clientIndex = 0; %clientIndex < ClientGroup.getCount(); %clientIndex++)
             messageClient(ClientGroup.getObject(%clientIndex), 'MsgLoadFailed', $Server::LoadFailMsg);
+         MissionCleanup.delete();
          return;
       }
 
       // Set mission name.
-
       if( isObject( theLevelInfo ) )
          $Server::MissionName = theLevelInfo.levelName;
-
-      // Mission cleanup group.  This is where run time components will reside.  The MissionCleanup
-      // group will be added to the ServerGroup.
-      new SimGroup(MissionCleanup);
-
-      // Make the MissionCleanup group the place where all new objects will automatically be added.
-      $instantGroup = MissionCleanup;
-
-      // Create the Game object
-      gameCoreCreateGame();
 
       // Construct MOD paths
       pathOnMissionLoadDone();

@@ -18,6 +18,53 @@ function GameCoreBase::onRemove(%game)
    //echo (%game @"\c4 -> onRemove");
 }
 
+function GameCoreBase::prepareMissionLoad(%game)
+{
+   //echo(%game @"\c4 -> "@ %game.class @" -> GameCoreBase::prepareMissionLoad");
+   
+   %game.zMaterialPaths = "content/xa/notc/core" SPC
+      "content/xa/rotc_hack" SPC
+      filePath($Server::MissionFile);
+
+   %instantGroupStor = $instantGroup;
+
+   if(!isObject(ServerMaterialsGroup))
+   {
+      $instantGroup = MissionCleanup;
+      new SimGroup(ServerMaterialsGroup);
+   }
+
+   $instantGroup = ServerMaterialsGroup;
+   
+   for(%i = 0; %i < getWordCount(%game.zMaterialPaths); %i++)
+   {
+      %pathMask = getWord(%game.zMaterialPaths, %i);
+      
+      echo("Searching for materials for ServerMaterialsGroup:" SPC %pathMask);
+
+      for( %file = findFirstFile( %pathMask @ "/*/materials.cs.dso" );
+           %file !$= "";
+           %file = findNextFile( %pathMask @ "/*/materials.cs.dso" ))
+      {
+         // Only execute, if we don't have the source file.
+         %csFileName = getSubStr( %file, 0, strlen( %file ) - 4 );
+         if( !isFile( %csFileName ) )
+            exec( %csFileName );
+      }
+
+      for( %file = findFirstFile( %pathMask @ "/*/materials.cs" );
+           %file !$= "";
+           %file = findNextFile( %pathMask @ "/*/materials.cs" ))
+      {
+         exec( %file );
+      }
+   }
+   
+   echo("ServerMaterialsGroup has" SPC ServerMaterialsGroup.getCount() SPC "materials.");
+
+   $instantGroup = %instantGroupStor;
+}
+
 function GameCoreBase::onMissionLoaded(%game)
 {
    //echo (%game @"\c4 -> "@ %game.class @" -> GameCoreBase::onMissionLoaded");
@@ -213,9 +260,11 @@ function GameCoreBase::prepareClient(%game, %client)
    }
 
    %client.Materials_Clear();
-   %client.Materials_Load("content/xa/notc/core");
-   %client.Materials_Load("content/xa/rotc_hack");
-   %client.Materials_Load(filePath($Server::MissionFile));
+   for(%i = 0; %i < getWordCount(%game.zMaterialPaths); %i++)
+   {
+      %pathMask = getWord(%game.zMaterialPaths, %i);
+      %client.Materials_Load(%pathMask);
+   }
 }
 
 function GameCoreBase::onClientEnterGame(%game, %client)
