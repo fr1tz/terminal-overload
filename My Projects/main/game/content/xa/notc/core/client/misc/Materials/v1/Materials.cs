@@ -3,7 +3,7 @@
 
 function clientCmd_XaNotcMaterials_Clear()
 {
-   //echo("clientCmd_XaNotcMaterials_Clear()");
+   echo("clientCmd_XaNotcMaterials_Clear()");
 
    if(isObject(XaNotcMaterialsGroup))
       XaNotcMaterialsGroup.delete();
@@ -11,14 +11,17 @@ function clientCmd_XaNotcMaterials_Clear()
 
 function clientCmd_XaNotcMaterials_Load(%pathMask)
 {
-   //echo("clientCmd_XaNotcMaterials_Load():" SPC %pathMask);
+   echo("clientCmd_XaNotcMaterials_Load():" SPC %pathMask);
    
    %instantGroupStor = $instantGroup;
 
    if(!isObject(XaNotcMaterialsGroup))
-      $instantGroup = new SimGroup(XaNotcMaterialsGroup);
-   else
-      $instantGroup = XaNotcMaterialsGroup;
+   {
+      $instantGroup = MissionCleanup;
+      new SimGroup(XaNotcMaterialsGroup);
+   }
+   
+   $instantGroup = XaNotcMaterialsGroup;
 
    for( %file = findFirstFile( %pathMask @ "/*/materials.cs.dso" );
         %file !$= "";
