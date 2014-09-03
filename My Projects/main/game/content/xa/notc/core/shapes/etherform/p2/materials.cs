@@ -36,8 +36,11 @@ singleton Material(xa_notc_core_shapes_etherform_p2_beammat2)
    mapTo = "trail.png";
    diffuseColor[2] = "White";
    effectColor[1] = "InvisibleBlack";
-   diffuseColor[1] = "0.992157 0.996078 0.996078 0";
+   diffuseColor[1] = "0.996078 0.996078 0.996078 0";
    emissive[1] = "1";
+   wireframe[0] = "1";
+   diffuseColorPaletteSlot[1] = "0";
+   wireframe[1] = "0";
 };
 
 singleton Material(xa_notc_core_shapes_etherform_p2_mat1)

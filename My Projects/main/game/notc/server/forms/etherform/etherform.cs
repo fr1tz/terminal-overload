@@ -261,9 +261,8 @@ function FrmEtherform::updateBeams(%this, %obj)
 {
    if(%obj.zInOwnZone)
    {
-      %obj.zBallastShape1.setLevel(1);
-      %obj.zBallastShape2.setLevel(0);
-   
+      %obj.zBallastShape1.setLevel(0);
+
       %client = %obj.client;
       if(!isObject(%client))
          return;
@@ -274,13 +273,35 @@ function FrmEtherform::updateBeams(%this, %obj)
             %repairBeam = true;
             
       //%repairBeam = true;
-      if(%repairBeam)
+      if(%repairBeam && !%obj.zRepairBeamActive)
+      {
+         %obj.zRepairBeamActive = true;
          %obj.zBallastShape2.setLevel(1);
-      else
+         return;
+      
+         %teamColorF = %obj.client.team.color;
+         %teamColorI = mFloatLength(getWord(%teamColorF, 0)*255, 0) SPC
+                       mFloatLength(getWord(%teamColorF, 1)*255, 0) SPC
+                       mFloatLength(getWord(%teamColorF, 2)*255, 0) SPC
+                       255;
+         %obj.zBallastShape1.paletteColors[0] = %teamColorI;
+         %obj.zBallastShape2.paletteColors[0] = %teamColorI;
+
+      }
+      else if(!%repairBeam && %obj.zRepairBeamActive)
+      {
+         %obj.zRepairBeamActive = false;
          %obj.zBallastShape2.setLevel(0);
+         return;
+      
+         %obj.zBallastShape1.paletteColors[0] = "255 255 255 255";
+         %obj.zBallastShape2.paletteColors[0] = "255 255 255 255";
+
+      }
    }
    else
    {
+      %obj.zRepairBeamActive = false;
       %obj.zBallastShape1.setLevel(0);
       %obj.zBallastShape2.setLevel(0);
    }
