@@ -836,6 +836,9 @@ function FrmStandardcat::addDiscTarget(%this, %obj, %target)
   
    if(%target == %obj)
       return;
+      
+   if(%target.getTeamId() == %obj.getTeamId())
+      return;
 
 	%count = %obj.zDiscTargetSet.getCount();
 	for(%idx= 0; %idx < %count; %idx++)
