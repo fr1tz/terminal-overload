@@ -28,11 +28,15 @@ check_lib()
 
 THIS="$0"
 GAME_ARGS="$*"
+PATHBAK="$PATH"
 
 echo "--------------------------------"
 echo "Terminal Overload Startup Script"
 echo "--------------------------------"
 echo
+
+# On some systems these are not part of the user's default $PATH
+PATH="/sbin:/usr/sbin:$PATH" 
 
 CMDS="dirname grep ldconfig objdump test"
 echo "Checking for commands required by this script..."
@@ -74,5 +78,7 @@ test "x$MISSING_LIBS" = "x" || {
 
 echo "Starting game..."
 
-cd "$(dirname "$THIS")" && ./engine $GAME_ARGS || help_reminder
+PATH="$PATHBAK"
+
+cd "$(dirname "$THIS")" && ./overload $GAME_ARGS || help_reminder
 
