@@ -87,8 +87,9 @@ function ItemStandardcatBounceShape::fire(%this, %obj)
       else
       {
          // bouncy bounce...
+         %factor = 1 + (1-%targetObject.zImpShield);
          %vec = %targetObject.getVelocity();
-         %vec = VectorScale(%vec, -1.5);
+         %vec = VectorScale(%vec, -%factor);
          %targetObject.setVelocity(%vec);
 
          if(%targetObject.getClassName() $= "NortDisc")
@@ -111,8 +112,6 @@ function ItemStandardcatBounceShape::fire(%this, %obj)
  
    if(!%hitEnemy)
       %mount.setEnergyLevel(%mount.getEnergyLevel() - 50);
- 
-   echo("wee");
  
    // Effect
    %obj.stopAudio(0);
