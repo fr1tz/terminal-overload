@@ -1194,7 +1194,7 @@ static void processMasterServerQuery( U32 session )
             out->write( sActiveFilter.minPlayers );
             out->write( sActiveFilter.maxPlayers );
             out->write( sActiveFilter.regionMask );
-            U32 version = ( sActiveFilter.filterFlags & ServerFilter::CurrentVersion ) ? getVersionNumber() : 0;
+            U32 version = ( sActiveFilter.filterFlags & ServerFilter::CurrentVersion ) ? getAppVersionNumber() : 0;
             out->write( version );
             out->write( sActiveFilter.filterFlags );
             out->write( sActiveFilter.maxBots );
@@ -1621,7 +1621,7 @@ static void handleGameMasterInfoRequest( const NetAddress* address, U32 key, U8 
       out->write( temp8 );
       temp32 = Con::getIntVariable( "pref::Server::RegionMask" );
       out->write( temp32 );
-      temp32 = getVersionNumber();
+      temp32 = getAppVersionNumber();
       out->write( temp32 );
       temp8 = 0;
 #if defined(TORQUE_OS_LINUX) || defined(TORQUE_OS_OPENBSD)
@@ -1692,7 +1692,7 @@ static void handleGamePingRequest( const NetAddress* address, U32 key, U8 flags 
          out->writeString( versionString );
       out->write( GameConnection::CurrentProtocolVersion );
       out->write( GameConnection::MinRequiredProtocolVersion );
-      out->write( getVersionNumber() );
+      out->write( getAppVersionNumber() );
 
       // Enforce a 24-character limit on the server name:
       char serverName[25];
@@ -1816,7 +1816,7 @@ static void handleGamePingResponse( const NetAddress* address, BitStream* stream
    stream->read( &temp32 );
    if ( applyFilter
      && ( sActiveFilter.filterFlags & ServerFilter::CurrentVersion )
-     && ( temp32 != getVersionNumber() ) )
+     && ( temp32 != getAppVersionNumber() ) )
    {
       Con::printf( "Server %s filtered out by version number.", addrString );
       gFinishedList.push_back( *address );
