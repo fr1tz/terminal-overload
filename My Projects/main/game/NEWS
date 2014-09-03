@@ -1,6 +1,23 @@
 What's new?
 ===========
 
+Version 0.2.0-testing1
+----------------------
+
+Released: Sep. 3, 2014
+
+- New maps: ETH3 and ETH4
+- Reduce CATs' health by half but equip them with damage damper module.
+- Link use of etherboard and jump boosters directly to impulse damper module.
+- Modify strength of B.O.U.N.C.E. based on level of enemy's impulse damper.
+- Remove stealth module from class 4 (Minigunner).
+- Implement Message Of The Day (MOTD) feature.
+- Add ground connection beams to impulse damper module. 
+- Show player names on HUD.
+- Various minor tweaks and improvements
+- Bugfixes
+
+
 Version 0.1.0
 -------------
 
