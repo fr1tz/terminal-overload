@@ -738,7 +738,7 @@ new SimGroup(MissionGroup) {
       canSaveDynamicFields = "1";
 
       new TSStatic() {
-         shapeName = "content/xa/notc/mis/dm1/shapes/cube1/shape.dae";
+         shapeName = "content/xa/notc/mis/eth1/shapes/cube1/shape.dae";
          playAmbient = "1";
          meshCulling = "0";
          originSort = "0";
@@ -770,7 +770,7 @@ new SimGroup(MissionGroup) {
          canSaveDynamicFields = "1";
       };
       new TSStatic() {
-         shapeName = "content/xa/notc/mis/dm1/shapes/cube1/shape.dae";
+         shapeName = "content/xa/notc/mis/eth1/shapes/cube1/shape.dae";
          playAmbient = "1";
          meshCulling = "0";
          originSort = "0";
@@ -802,7 +802,7 @@ new SimGroup(MissionGroup) {
          canSaveDynamicFields = "1";
       };
       new TSStatic() {
-         shapeName = "content/xa/notc/mis/dm1/shapes/cube1/shape.dae";
+         shapeName = "content/xa/notc/mis/eth1/shapes/cube1/shape.dae";
          playAmbient = "1";
          meshCulling = "0";
          originSort = "0";
@@ -834,7 +834,7 @@ new SimGroup(MissionGroup) {
          canSaveDynamicFields = "1";
       };
       new TSStatic() {
-         shapeName = "content/xa/notc/mis/dm1/shapes/cube1/shape.dae";
+         shapeName = "content/xa/notc/mis/eth1/shapes/cube1/shape.dae";
          playAmbient = "1";
          meshCulling = "0";
          originSort = "0";
@@ -866,7 +866,7 @@ new SimGroup(MissionGroup) {
          canSaveDynamicFields = "1";
       };
       new TSStatic() {
-         shapeName = "content/xa/notc/mis/dm1/shapes/cube1/shape.dae";
+         shapeName = "content/xa/notc/mis/eth1/shapes/cube1/shape.dae";
          playAmbient = "1";
          meshCulling = "0";
          originSort = "0";
@@ -1031,7 +1031,7 @@ new SimGroup(MissionGroup) {
          canSaveDynamicFields = "1";
       };
       new TSStatic() {
-         shapeName = "content/xa/notc/mis/dm1/shapes/cube1/shape.dae";
+         shapeName = "content/xa/notc/mis/eth1/shapes/cube1/shape.dae";
          playAmbient = "1";
          meshCulling = "0";
          originSort = "0";
@@ -1067,7 +1067,7 @@ new SimGroup(MissionGroup) {
          canSaveDynamicFields = "1";
 
          new TSStatic() {
-            shapeName = "content/xa/notc/mis/dm1/shapes/cube1/shape.dae";
+            shapeName = "content/xa/notc/mis/eth1/shapes/cube1/shape.dae";
             playAmbient = "1";
             meshCulling = "0";
             originSort = "0";
@@ -1099,7 +1099,7 @@ new SimGroup(MissionGroup) {
             canSaveDynamicFields = "1";
          };
          new TSStatic() {
-            shapeName = "content/xa/notc/mis/dm1/shapes/cube1/shape.dae";
+            shapeName = "content/xa/notc/mis/eth1/shapes/cube1/shape.dae";
             playAmbient = "1";
             meshCulling = "0";
             originSort = "0";
@@ -1131,7 +1131,7 @@ new SimGroup(MissionGroup) {
             canSaveDynamicFields = "1";
          };
          new TSStatic() {
-            shapeName = "content/xa/notc/mis/dm1/shapes/cube1/shape.dae";
+            shapeName = "content/xa/notc/mis/eth1/shapes/cube1/shape.dae";
             playAmbient = "1";
             meshCulling = "0";
             originSort = "0";
@@ -1163,7 +1163,7 @@ new SimGroup(MissionGroup) {
             canSaveDynamicFields = "1";
          };
          new TSStatic() {
-            shapeName = "content/xa/notc/mis/dm1/shapes/cube1/shape.dae";
+            shapeName = "content/xa/notc/mis/eth1/shapes/cube1/shape.dae";
             playAmbient = "1";
             meshCulling = "0";
             originSort = "0";
@@ -1196,7 +1196,7 @@ new SimGroup(MissionGroup) {
          };
       };
       new TSStatic() {
-         shapeName = "content/xa/notc/mis/dm1/shapes/cube1/shape.dae";
+         shapeName = "content/xa/notc/mis/eth1/shapes/cube1/shape.dae";
          playAmbient = "1";
          meshCulling = "0";
          originSort = "0";
@@ -1228,7 +1228,7 @@ new SimGroup(MissionGroup) {
          canSaveDynamicFields = "1";
       };
       new TSStatic() {
-         shapeName = "content/xa/notc/mis/dm1/shapes/cube1/shape.dae";
+         shapeName = "content/xa/notc/mis/eth1/shapes/cube1/shape.dae";
          playAmbient = "1";
          meshCulling = "0";
          originSort = "0";
@@ -1553,7 +1553,7 @@ new SimGroup(MissionGroup) {
          canSaveDynamicFields = "1";
       };
       new TSStatic() {
-         shapeName = "content/xa/notc/mis/dm1/shapes/cube1/shape.dae";
+         shapeName = "content/xa/notc/mis/eth1/shapes/cube1/shape.dae";
          playAmbient = "1";
          meshCulling = "0";
          originSort = "0";
@@ -1589,7 +1589,7 @@ new SimGroup(MissionGroup) {
          canSaveDynamicFields = "1";
 
          new TSStatic() {
-            shapeName = "content/xa/notc/mis/dm1/shapes/cube1/shape.dae";
+            shapeName = "content/xa/notc/mis/eth1/shapes/cube1/shape.dae";
             playAmbient = "1";
             meshCulling = "0";
             originSort = "0";
@@ -1621,7 +1621,7 @@ new SimGroup(MissionGroup) {
             canSaveDynamicFields = "1";
          };
          new TSStatic() {
-            shapeName = "content/xa/notc/mis/dm1/shapes/cube1/shape.dae";
+            shapeName = "content/xa/notc/mis/eth1/shapes/cube1/shape.dae";
             playAmbient = "1";
             meshCulling = "0";
             originSort = "0";
@@ -1653,7 +1653,7 @@ new SimGroup(MissionGroup) {
             canSaveDynamicFields = "1";
          };
          new TSStatic() {
-            shapeName = "content/xa/notc/mis/dm1/shapes/cube1/shape.dae";
+            shapeName = "content/xa/notc/mis/eth1/shapes/cube1/shape.dae";
             playAmbient = "1";
             meshCulling = "0";
             originSort = "0";
@@ -1685,7 +1685,7 @@ new SimGroup(MissionGroup) {
             canSaveDynamicFields = "1";
          };
          new TSStatic() {
-            shapeName = "content/xa/notc/mis/dm1/shapes/cube1/shape.dae";
+            shapeName = "content/xa/notc/mis/eth1/shapes/cube1/shape.dae";
             playAmbient = "1";
             meshCulling = "0";
             originSort = "0";
@@ -1718,7 +1718,7 @@ new SimGroup(MissionGroup) {
          };
       };
       new TSStatic() {
-         shapeName = "content/xa/notc/mis/dm1/shapes/cube1/shape.dae";
+         shapeName = "content/xa/notc/mis/eth1/shapes/cube1/shape.dae";
          playAmbient = "1";
          meshCulling = "0";
          originSort = "0";
@@ -1750,7 +1750,7 @@ new SimGroup(MissionGroup) {
          canSaveDynamicFields = "1";
       };
       new TSStatic() {
-         shapeName = "content/xa/notc/mis/dm1/shapes/cube1/shape.dae";
+         shapeName = "content/xa/notc/mis/eth1/shapes/cube1/shape.dae";
          playAmbient = "1";
          meshCulling = "0";
          originSort = "0";
@@ -2070,7 +2070,7 @@ new SimGroup(MissionGroup) {
          canSaveDynamicFields = "1";
       };
       new TSStatic() {
-         shapeName = "content/xa/notc/mis/dm1/shapes/cube1/shape.dae";
+         shapeName = "content/xa/notc/mis/eth1/shapes/cube1/shape.dae";
          playAmbient = "1";
          meshCulling = "0";
          originSort = "0";
@@ -2106,7 +2106,7 @@ new SimGroup(MissionGroup) {
          canSaveDynamicFields = "1";
 
          new TSStatic() {
-            shapeName = "content/xa/notc/mis/dm1/shapes/cube1/shape.dae";
+            shapeName = "content/xa/notc/mis/eth1/shapes/cube1/shape.dae";
             playAmbient = "1";
             meshCulling = "0";
             originSort = "0";
@@ -2138,7 +2138,7 @@ new SimGroup(MissionGroup) {
             canSaveDynamicFields = "1";
          };
          new TSStatic() {
-            shapeName = "content/xa/notc/mis/dm1/shapes/cube1/shape.dae";
+            shapeName = "content/xa/notc/mis/eth1/shapes/cube1/shape.dae";
             playAmbient = "1";
             meshCulling = "0";
             originSort = "0";
@@ -2170,7 +2170,7 @@ new SimGroup(MissionGroup) {
             canSaveDynamicFields = "1";
          };
          new TSStatic() {
-            shapeName = "content/xa/notc/mis/dm1/shapes/cube1/shape.dae";
+            shapeName = "content/xa/notc/mis/eth1/shapes/cube1/shape.dae";
             playAmbient = "1";
             meshCulling = "0";
             originSort = "0";
@@ -2202,7 +2202,7 @@ new SimGroup(MissionGroup) {
             canSaveDynamicFields = "1";
          };
          new TSStatic() {
-            shapeName = "content/xa/notc/mis/dm1/shapes/cube1/shape.dae";
+            shapeName = "content/xa/notc/mis/eth1/shapes/cube1/shape.dae";
             playAmbient = "1";
             meshCulling = "0";
             originSort = "0";
@@ -2235,7 +2235,7 @@ new SimGroup(MissionGroup) {
          };
       };
       new TSStatic() {
-         shapeName = "content/xa/notc/mis/dm1/shapes/cube1/shape.dae";
+         shapeName = "content/xa/notc/mis/eth1/shapes/cube1/shape.dae";
          playAmbient = "1";
          meshCulling = "0";
          originSort = "0";
@@ -2267,7 +2267,7 @@ new SimGroup(MissionGroup) {
          canSaveDynamicFields = "1";
       };
       new TSStatic() {
-         shapeName = "content/xa/notc/mis/dm1/shapes/cube1/shape.dae";
+         shapeName = "content/xa/notc/mis/eth1/shapes/cube1/shape.dae";
          playAmbient = "1";
          meshCulling = "0";
          originSort = "0";
