@@ -338,6 +338,7 @@ void BallastShape::updateGroundConnectionBeamOne()
       Point3F end = start; end.z = F32_MIN;
       if(mLevel > 0 && gClientContainer.castRay(start, end, StaticObjectType, &rInfo))
       {
+         mGroundConnectionBeamOne->setPalette(this->getPalette());
          mGroundConnectionBeamOne->clearNodes();
          mGroundConnectionBeamOne->addNode(c);
          mGroundConnectionBeamOne->addNodes(rInfo.point);
@@ -418,6 +419,7 @@ void BallastShape::updateGroundConnectionBeamQuad()
          Point3F end = start; end.z = F32_MIN;
          if(mLevel > 0 && gClientContainer.castRay(start, end, StaticObjectType, &rInfo))
          {
+            mGroundConnectionBeamQuad[i]->setPalette(this->getPalette());
             mGroundConnectionBeamQuad[i]->clearNodes();
             mGroundConnectionBeamQuad[i]->addNode(c);
             mGroundConnectionBeamQuad[i]->addNodes(rInfo.point);
