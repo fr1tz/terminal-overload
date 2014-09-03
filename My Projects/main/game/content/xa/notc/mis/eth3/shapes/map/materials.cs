@@ -74,11 +74,11 @@ singleton Material(xa_notc_mis_eth3_shapes_map_mat3)
 singleton Material(xa_notc_mis_eth3_shapes_map_mat2)
 {
    mapTo = "xa_notc_mis_eth3_shapes_map_mat2";
-   diffuseColor[0] = "0.443137 0.443137 0.443137 1";
+   diffuseColor[0] = "0.443137 0.443137 0.443137 0";
    specular[0] = "0.5 0.5 0.5 1";
    specularPower[0] = "49";
    translucentBlendOp = "None";
-   diffuseColor[1] = "0.619608 0.623529 0.623529 0";
+   diffuseColor[1] = "0.32549 0.32549 0.32549 1";
    wireframe[1] = "0";
    materialTag0 = "Miscellaneous";
    diffuseColorPaletteSlot[1] = "-1";
@@ -90,6 +90,8 @@ singleton Material(xa_notc_mis_eth3_shapes_map_mat2)
    detailNormalMapStrength[0] = "4";
    specularStrength[0] = "1.07843";
    pixelSpecular[0] = "0";
+   specularPower[1] = "29";
+   specularStrength[1] = "1.66667";
 };
 
 
