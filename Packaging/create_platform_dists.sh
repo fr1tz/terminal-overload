@@ -32,7 +32,7 @@ create_platform_dists()
 	cp ../bins/linux32/* linux32/ || abort
 	cp ../bins/win32/* win32/ || abort
 
-	chrpath -r '$ORIGIN/lib' linux32/engine
+	chrpath -r '$ORIGIN/lib' linux32/overload
 )
 
 create_platform_dists
