@@ -243,6 +243,7 @@ function GameCoreBase::prepareClient(%game, %client)
             "xa/notc/core/client/gui/EtherformGui/v1/exec.cs" TAB
             "xa/notc/core/client/gui/ChatHud/v1/exec.cs" TAB
             "xa/notc/core/client/gui/GuiChanger/v1/exec.cs" TAB
+            "xa/notc/core/client/gui/VitalsHud/v1/exec.cs" TAB
             "xa/notc/core/client/gui/MinimapHud/v1/exec.cs" TAB
             "xa/notc/core/client/gui/LoadoutHud/v1/exec.cs" TAB
             "xa/notc/core/client/gui/MiscHud/v1/exec.cs" TAB
