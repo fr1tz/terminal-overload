@@ -8,13 +8,14 @@ function CatGui::onWake(%this)
 
    $enableDirectInput = "1";
    activateDirectInput();
+   
+   Canvas.pushDialog(MiscHud);
+   Canvas.pushDialog(XaNotcMinimapHud);
+   Canvas.pushDialog(XaNotcCatHud);
 
    // Message hud dialog
    if ( isObject( MainChatHud ) )
    {
-      Canvas.pushDialog( XaNotcVitalsHud );
-      Canvas.pushDialog( XaNotcMinimapHud );
-      Canvas.pushDialog( MiscHud );
       Canvas.pushDialog( MainChatHud );
       chatHud.attach(HudMessageVector);
    }      
@@ -98,17 +99,29 @@ function CatGui::tickThread(%this)
    else
       CatGuiImpShield.setValue(0);
       
+   %data = %control.getDataBlock();
+   %impulseDamper = CatGuiImpShield.getValue();
+   %damageDamper = %control.getEnergyLevel() / %data.maxEnergy;
+   %damageBuffer = %control.getDamageBufferLevel() / %data.damageBuffer;
+   %health = 1 - %control.getDamageLevel() / %data.maxDamage;
+   
+   XaNotcCatHud-->impulseDamper.setValue(%impulseDamper);
+   XaNotcCatHud-->damageDamper.setValue(%damageDamper);
+      
+   if(isObject(MiscHud))
+   {
+      MiscHud-->ImpulseDamperGraph.addDatum(0, %impulseDamper);
+      MiscHud-->DamageDamperGraph.addDatum(0, %damageDamper);
+      MiscHud-->DamageBufferGraph.addDatum(0, %damageBuffer);
+      MiscHud-->HealthGraph.addDatum(0, %health);
+   }
+      
    if(isObject(XaNotcVitalsHud))
    {
-      %data = %control.getDataBlock();
-      %impulseDamper = CatGuiImpShield.getValue();
-      %damageDamper = %control.getEnergyLevel() / %data.maxEnergy;
-      %damageBuffer = %control.getDamageBufferLevel() / %data.damageBuffer;
-      %health = 1 - %control.getDamageLevel() / %data.maxDamage;
-      XaNotcVitalsHud-->impulseDamperGraph.addDatum(0, %impulseDamper);
-      XaNotcVitalsHud-->damageDamperGraph.addDatum(0, %damageDamper);
-      XaNotcVitalsHud-->damageBufferGraph.addDatum(0, %damageBuffer);
-      XaNotcVitalsHud-->healthGraph.addDatum(0, %health);
+      XaNotcVitalsHud-->ImpulseDamperGraph.addDatum(0, %impulseDamper);
+      XaNotcVitalsHud-->DamageDamperGraph.addDatum(0, %damageDamper);
+      XaNotcVitalsHud-->DamageBufferGraph.addDatum(0, %damageBuffer);
+      XaNotcVitalsHud-->HealthGraph.addDatum(0, %health);
    }
 }
 

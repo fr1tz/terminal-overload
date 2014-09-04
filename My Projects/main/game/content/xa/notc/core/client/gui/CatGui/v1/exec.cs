@@ -4,6 +4,7 @@
 function execXaNotcCatGui()
 {
    exec("./CatGui.cs");
+   exec("./CatHud.gui");
    exec("./CatGui.gui");
 }
 

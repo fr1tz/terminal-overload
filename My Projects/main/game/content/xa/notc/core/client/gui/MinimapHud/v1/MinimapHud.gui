@@ -30,11 +30,11 @@
       anchorBottom = "0";
       anchorLeft = "1";
       anchorRight = "0";
-      position = "245 320";
-      extent = "150 150";
+      position = "270 370";
+      extent = "100 100";
       minExtent = "8 2";
-      horizSizing = "center";
-      vertSizing = "top";
+      horizSizing = "relative";
+      vertSizing = "relative";
       profile = "ConsoleScrollProfile";
       visible = "1";
       active = "1";
@@ -46,14 +46,14 @@
    };
    new GuiMiniMapHud() {
       rotate = "1";
-      visRadius = "1200";
+      visRadius = "1000";
       hudInfoDatasetType_Color = "2";
       hudInfoDatasetType_Icon = "3";
-      position = "245 320";
-      extent = "150 150";
+      position = "270 370";
+      extent = "100 100";
       minExtent = "8 2";
-      horizSizing = "center";
-      vertSizing = "top";
+      horizSizing = "relative";
+      vertSizing = "relative";
       profile = "GuiDefaultProfile";
       visible = "1";
       active = "1";

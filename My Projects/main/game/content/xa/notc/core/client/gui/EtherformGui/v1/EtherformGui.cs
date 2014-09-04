@@ -12,7 +12,6 @@ function EtherformGui::onWake(%this)
    // Message hud dialog
    if ( isObject( MainChatHud ) )
    {
-      Canvas.pushDialog( XaNotcVitalsHud );
       Canvas.pushDialog( XaNotcLoadoutHud );
       Canvas.pushDialog( XaNotcMinimapHud );
       Canvas.pushDialog( MiscHud );

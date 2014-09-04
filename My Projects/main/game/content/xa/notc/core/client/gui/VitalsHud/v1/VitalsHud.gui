@@ -24,11 +24,11 @@
       padding = "0 0 0 0";
 
    new GuiControl() {
-      position = "10 285";
+      position = "220 160";
       extent = "200 185";
       minExtent = "8 2";
-      horizSizing = "right";
-      vertSizing = "top";
+      horizSizing = "center";
+      vertSizing = "center";
       profile = "GuiDefaultProfile";
       visible = "1";
       active = "1";
