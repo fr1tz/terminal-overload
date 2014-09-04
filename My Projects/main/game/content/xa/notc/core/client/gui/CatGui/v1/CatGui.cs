@@ -12,6 +12,7 @@ function CatGui::onWake(%this)
    // Message hud dialog
    if ( isObject( MainChatHud ) )
    {
+      Canvas.pushDialog( XaNotcVitalsHud );
       Canvas.pushDialog( XaNotcMinimapHud );
       Canvas.pushDialog( MiscHud );
       Canvas.pushDialog( MainChatHud );
@@ -58,7 +59,7 @@ function CatGui::tickThread(%this)
       cancel(%this.zTickThread);
       %this.zTickThread = "";
    }
-   %this.zTickThread = %this.schedule(128, "tickThread");
+   %this.zTickThread = %this.schedule(64, "tickThread");
 
    if(!isObject(ServerConnection))
       return;
@@ -96,6 +97,19 @@ function CatGui::tickThread(%this)
       CatGuiImpShield.setValue(%impshield.getLevel());
    else
       CatGuiImpShield.setValue(0);
+      
+   if(isObject(XaNotcVitalsHud))
+   {
+      %data = %control.getDataBlock();
+      %impulseDamper = CatGuiImpShield.getValue();
+      %damageDamper = %control.getEnergyLevel() / %data.maxEnergy;
+      %damageBuffer = %control.getDamageBufferLevel() / %data.damageBuffer;
+      %health = 1 - %control.getDamageLevel() / %data.maxDamage;
+      XaNotcVitalsHud-->impulseDamperGraph.addDatum(0, %impulseDamper);
+      XaNotcVitalsHud-->damageDamperGraph.addDatum(0, %damageDamper);
+      XaNotcVitalsHud-->damageBufferGraph.addDatum(0, %damageBuffer);
+      XaNotcVitalsHud-->healthGraph.addDatum(0, %health);
+   }
 }
 
 //-----------------------------------------------------------------------------
