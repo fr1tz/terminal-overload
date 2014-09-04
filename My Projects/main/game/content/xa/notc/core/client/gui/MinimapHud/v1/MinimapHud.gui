@@ -23,15 +23,36 @@
       noCursor = "1";
       padding = "0 0 0 0";
 
+   new GuiContainer() {
+      margin = "0 0 0 0";
+      padding = "0 0 0 0";
+      anchorTop = "1";
+      anchorBottom = "0";
+      anchorLeft = "1";
+      anchorRight = "0";
+      position = "245 320";
+      extent = "150 150";
+      minExtent = "8 2";
+      horizSizing = "center";
+      vertSizing = "top";
+      profile = "ConsoleScrollProfile";
+      visible = "1";
+      active = "1";
+      tooltipProfile = "GuiToolTipProfile";
+      hovertime = "1000";
+      isContainer = "1";
+      canSave = "1";
+      canSaveDynamicFields = "0";
+   };
    new GuiMiniMapHud() {
       rotate = "1";
-      visRadius = "2000";
+      visRadius = "1200";
       hudInfoDatasetType_Color = "2";
       hudInfoDatasetType_Icon = "3";
-      position = "16 264";
-      extent = "200 200";
+      position = "245 320";
+      extent = "150 150";
       minExtent = "8 2";
-      horizSizing = "right";
+      horizSizing = "center";
       vertSizing = "top";
       profile = "GuiDefaultProfile";
       visible = "1";
