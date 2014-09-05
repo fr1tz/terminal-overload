@@ -18,8 +18,8 @@
    canSaveDynamicFields = "1";
       enabled = "1";
       isDecoy = "0";
-      zBitmapOffset = "29818";
-      zTickThread = "29830";
+      zBitmapOffset = "4471";
+      zTickThread = "4480";
 
    new GuiBitmapCtrl() {
       bitmap = "notc/client/graphics/grid1.png";
@@ -222,10 +222,10 @@
          lineSpacing = "2";
          allowColorChars = "0";
          maxChars = "-1";
-         text = "Hi! Please keep in mind that this is alpha quality software at best.";
+         text = "Note: This is still a very early version of the game, so don\'t expect anything yet.\r\nBeware of bugs, incompleteness and general crappiness. ";
          useURLMouseCursor = "0";
-         position = "208 128";
-         extent = "238 24";
+         position = "135 128";
+         extent = "387 28";
          minExtent = "8 2";
          horizSizing = "center";
          vertSizing = "bottom";
@@ -258,7 +258,7 @@
             isDecoy = "0";
       };
       new GuiTextCtrl(MainMenuVersionString) {
-         text = "0.1.0+dev";
+         text = "0.2.0-testing1+dev";
          maxLength = "1024";
          margin = "0 0 0 0";
          padding = "0 0 0 0";
@@ -281,11 +281,11 @@
          canSaveDynamicFields = "0";
       };
       new GuiButtonCtrl() {
-         text = "MOTD";
+         text = "MOTD ";
          groupNum = "-1";
          buttonType = "PushButton";
          useMouseEvents = "0";
-         position = "286 175";
+         position = "279 175";
          extent = "83 50";
          minExtent = "8 8";
          horizSizing = "center";
