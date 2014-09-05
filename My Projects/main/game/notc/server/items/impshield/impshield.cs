@@ -13,6 +13,7 @@ datablock BallastShapeData(ItemImpShieldShape)
 function ItemImpShieldShape::onMount(%this, %obj, %mountObj, %node)
 {
    //echo("ItemImpShieldShape::onMount()");
+   %mountObj.zImpShield = 0.5;
    %this.updateThread(%obj);
 }
 
