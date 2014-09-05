@@ -5,6 +5,8 @@ function CatGui::onWake(%this)
 {
    // Turn off any shell sounds...
    // sfxStop( ... );
+   
+   setFov($Pref::NOTC1::DefaultFov);
 
    $enableDirectInput = "1";
    activateDirectInput();
