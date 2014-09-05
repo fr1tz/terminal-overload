@@ -172,12 +172,19 @@ function handleEscape()
       }
    }
 
-   if ($PlayGui.isAwake())
+   if($PlayGui.isAwake())
    {
-      if ( $Server::ServerType $= "SinglePlayer" )
-         MessageBoxYesNo( "Exit", "Exit from this Mission?", "disconnect();", "");
+      if(isFunction("toggleIngameMenu"))
+      {
+         toggleIngameMenu();
+      }
       else
-         MessageBoxYesNo( "Disconnect", "Disconnect from the server?", "disconnect();", "");
+      {
+         if ( $Server::ServerType $= "SinglePlayer" )
+            MessageBoxYesNo( "Exit", "Exit from this Mission?", "disconnect();", "");
+         else
+            MessageBoxYesNo( "Disconnect", "Disconnect from the server?", "disconnect();", "");
+      }
    }
 }
 

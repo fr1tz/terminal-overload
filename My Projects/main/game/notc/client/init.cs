@@ -72,6 +72,7 @@ function initClient()
    exec("notc/client/shell/optAudio.cs");
    exec("notc/client/shell/optGame.cs");
    exec("notc/client/shell/motdDlg.cs");
+   exec("notc/client/shell/ingameMenuDlg.cs");
 
    // Load up the shell GUIs
    exec("notc/client/shell/mainMenuGui.gui");
@@ -85,6 +86,7 @@ function initClient()
    exec("notc/client/shell/optAudio.gui");
    exec("notc/client/shell/optGame.gui");
    exec("notc/client/shell/motdDlg.gui");
+   exec("notc/client/shell/ingameMenuDlg.gui");
 
    // Client scripts
    exec("./client.cs");
