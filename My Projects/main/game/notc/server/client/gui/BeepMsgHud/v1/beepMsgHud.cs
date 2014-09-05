@@ -12,8 +12,8 @@ function GameConnection::BeepMsg(%client, %msg)
 {
    if(%client.zClearBeepMsgThread !$= "")
       cancel(%client.zClearBeepMsgThread);
-   %client.zClearBeepMsgThread = schedule(3000, MissionGroup, "clearBottomPrint", %client);
-   commandToClient(%client, 'BottomPrint', %msg, 3000, 1);
+   %client.zClearBeepMsgThread = schedule(3000, MissionGroup, "clearCenterPrint", %client);
+   commandToClient(%client, 'CenterPrint', %msg, 3000, 1);
 	%client.play2D(BeepMessageSound);
 }
 
