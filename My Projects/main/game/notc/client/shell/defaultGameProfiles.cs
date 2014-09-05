@@ -116,7 +116,7 @@ singleton GuiControlProfile ("CenterPrintTextProfile")
 {
    opaque = false;
    fontType = "Quantico";
-   fontSize = 12;
+   fontSize = 16;
    fontColor = "0 255 0";
 };
 
