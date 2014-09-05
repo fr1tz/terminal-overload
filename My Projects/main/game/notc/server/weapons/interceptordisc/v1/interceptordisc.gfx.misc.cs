@@ -8,6 +8,28 @@ datablock LightDescription(WpnInterceptorDiscLightDesc)
    brightness = "4";
 };
 
+datablock MultiNodeLaserBeamData(WpnInterceptorDiscLaserTrail0)
+{
+	material = "xa_notc_core_shapes_interceptordisc_projectile_p1_lasertrail0mat";
+	renderMode = $MultiNodeLaserBeamRenderMode::FaceViewer;
+   width = 0.1;
+	fadeTime = 1500;
+	windCoefficient = 0.0;
+
+	// node x movement...
+	nodeMoveMode[0]     = $NodeMoveMode::None;
+	nodeMoveSpeed[0]    = -0.002;
+	nodeMoveSpeedAdd[0] =  0.004;
+	// node y movement...
+	nodeMoveMode[1]     = $NodeMoveMode::None;
+	nodeMoveSpeed[1]    = -0.002;
+	nodeMoveSpeedAdd[1] =  0.004;
+	// node z movement...
+	nodeMoveMode[2]     = $NodeMoveMode::None;
+	nodeMoveSpeed[2]    = 0.5;
+	nodeMoveSpeedAdd[2] = 0.5;
+};
+
 datablock DecalData(WpnInterceptorDiscDecal)
 {
    Material = "xa_notc_core_shapes_interceptordisc_projectile_p1_decalmat";
@@ -40,20 +62,21 @@ datablock ParticleData(WpnInterceptorDiscEmitterParticle : DefaultParticle)
 {
    dragCoefficient = "0.99218";
    inheritedVelFactor = "0";
-   lifetimeMS = "2000";
+   lifetimeMS = "500";
    lifetimeVarianceMS = "0";
    spinSpeed = "0";
    useInvAlpha = "0";
-   textureName = "content/xa/notc/core/shapes/razordisc/projectile/p1/trail.png";
-   animTexName = "content/xa/notc/core/shapes/razordisc/projectile/p1/trail.png";
+   textureName = "content/xa/rotc/p.5.4/textures/rotc/zone.grid.png";
+   animTexName = "content/xa/rotc/p.5.4/textures/rotc/zone.grid.png";
    colors[0] = "1 1 1 0.5";
    colors[1] = "1 1 1 0";
    colors[3] = "0.732283 1 0 0";
-   sizes[0] = "3";
-   sizes[1] = "0";
+   sizes[0] = "1";
+   sizes[1] = "1";
    sizes[2] = "0.997986";
    times[1] = "1";
    times[2] = "1";
+   sizes[3] = "1";
 };
 
 datablock ParticleEmitterData(WpnInterceptorDiscEmitter : DefaultEmitter)
@@ -64,7 +87,7 @@ datablock ParticleEmitterData(WpnInterceptorDiscEmitter : DefaultEmitter)
    periodVarianceMS = "0";
    paletteSlot = 0;
    ejectionVelocity = "1";
-   orientParticles = "1";
+   orientParticles = "0";
    thetaMax = "0";
 };
 

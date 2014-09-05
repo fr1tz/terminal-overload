@@ -3,25 +3,21 @@
 
 datablock ParticleData(WpnInterceptorDiscExplosion_Particle1)
 {
-	dragCoeffiecient	  = 0.4;
-	gravityCoefficient	= -0.4;
-	inheritedVelFactor	= 0.025;
-
-	lifetimeMS			  = 500;
-	lifetimeVarianceMS	= 200;
-
-	useInvAlpha =  true;
-
-	textureName = "content/xa/rotc/p.5.4/textures/rotc/smoke_particle";
-
-	colors[0]	  = "1.0 1.0 1.0 0.5";
-	colors[1]	  = "1.0 1.0 1.0 0.0";
-	sizes[0]		= 1.0;
-	sizes[1]		= 1.0;
-	times[0]		= 0.0;
-	times[1]		= 1.0;
-
-	allowLighting = false;
+   gravityCoefficient = "1";
+   inheritedVelFactor = "0.025";
+   lifetimeMS = "500";
+   lifetimeVarianceMS = "200";
+   useInvAlpha = "1";
+   textureName = "content/xa/rotc/p.5.4/textures/rotc/spark02.png";
+   animTexName = "content/xa/rotc/p.5.4/textures/rotc/spark02.png";
+   colors[0] = "0.980392 0.980392 0.980392 1";
+   colors[1] = "1 1 1 0";
+   times[1] = "1";
+   times[2] = "1";
+   allowLighting = "0";
+   dragCoeffiecient = "0.4";
+   sizes[0] = "2";
+   sizes[1] = "2";
 };
 
 datablock ParticleEmitterData(WpnInterceptorDiscExplosion_ParticleEmitter1)
@@ -39,7 +35,7 @@ datablock ParticleEmitterData(WpnInterceptorDiscExplosion_ParticleEmitter1)
 
 	lifetimeMS		 = "100";
 
-	particles = "WpnInterceptorDiscExplosion_Smoke";
+	particles = "WpnInterceptorDiscExplosion_Particle1";
    blendStyle = "ADDITIVE";
    orientParticles = "1";
 };
@@ -80,23 +76,3 @@ datablock ExplosionData(WpnInterceptorDiscExplosion)
 	lightEndColor = "1.0 1.0 1.0 0.3";
 };
 
-
-
-datablock ParticleData(WpnInterceptorDiscExplosion_Smoke)
-{
-   gravityCoefficient = "1";
-   inheritedVelFactor = "0.025";
-   lifetimeMS = "500";
-   lifetimeVarianceMS = "200";
-   useInvAlpha = "1";
-   textureName = "content/xa/rotc/p.5.4/textures/rotc/spark02.png";
-   animTexName = "content/xa/rotc/p.5.4/textures/rotc/spark02.png";
-   colors[0] = "0.980392 0.980392 0.980392 1";
-   colors[1] = "1 1 1 0";
-   times[1] = "1";
-   times[2] = "1";
-   allowLighting = "0";
-   dragCoeffiecient = "0.4";
-   sizes[0] = "2";
-   sizes[1] = "2";
-};
