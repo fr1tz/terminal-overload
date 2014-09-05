@@ -1,10 +1,23 @@
 What's new?
 ===========
 
+Version 0.2.0-testing2
+----------------------
+
+Release Date: Sep. 5, 2014
+
+- CATs spawn with 50% impulse damper instead of 0%.
+- Slightly improved HUD
+- Very basic in-game menu
+- Tweaked interceptor disc visuals
+- Bugfixes 
+
+
+
 Version 0.2.0-testing1
 ----------------------
 
-Released: Sep. 3, 2014
+Release Date: Sep. 3, 2014
 
 - New maps: ETH3 and ETH4
 - Reduce CATs' health by half but equip them with damage damper module.
@@ -21,6 +34,6 @@ Released: Sep. 3, 2014
 Version 0.1.0
 -------------
 
-Released: Aug. 1, 2014
+Release Date: Aug. 1, 2014
 
 - First public release of Terminal Overload
