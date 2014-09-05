@@ -33,16 +33,16 @@ datablock MultiNodeLaserBeamData(FrmEtherformGroundBeam2)
 
 	// node x movement...
 	nodeMoveMode[0]     = $NodeMoveMode::DynamicSpeed;
-	nodeMoveSpeed[0]    = 10.0;
-	nodeMoveSpeedAdd[0] = -20.0;
+	nodeMoveSpeed[0]    = 20.0;
+	nodeMoveSpeedAdd[0] = -40.0;
 	// node y movement...
 	nodeMoveMode[1]     = $NodeMoveMode::DynamicSpeed;
-	nodeMoveSpeed[1]    = 10.0;
-	nodeMoveSpeedAdd[1] = -20.0;
+	nodeMoveSpeed[1]    = 20.0;
+	nodeMoveSpeedAdd[1] = -40.0;
 	// node z movement...
 	nodeMoveMode[2]     = $NodeMoveMode::DynamicSpeed;
-	nodeMoveSpeed[2]    = 10.0;
-	nodeMoveSpeedAdd[2] = -20.0;
+	nodeMoveSpeed[2]    = 20.0;
+	nodeMoveSpeedAdd[2] = -40.0;
 
    nodeDistance = 1;
 };

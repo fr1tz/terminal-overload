@@ -261,8 +261,6 @@ function FrmEtherform::updateBeams(%this, %obj)
 {
    if(%obj.zInOwnZone)
    {
-      %obj.zBallastShape1.setLevel(0);
-
       %client = %obj.client;
       if(!isObject(%client))
          return;
@@ -276,6 +274,7 @@ function FrmEtherform::updateBeams(%this, %obj)
       if(%repairBeam && !%obj.zRepairBeamActive)
       {
          %obj.zRepairBeamActive = true;
+         %obj.zBallastShape1.setLevel(1);
          %obj.zBallastShape2.setLevel(1);
          return;
       
@@ -291,6 +290,7 @@ function FrmEtherform::updateBeams(%this, %obj)
       else if(!%repairBeam && %obj.zRepairBeamActive)
       {
          %obj.zRepairBeamActive = false;
+         %obj.zBallastShape1.setLevel(0);
          %obj.zBallastShape2.setLevel(0);
          return;
       

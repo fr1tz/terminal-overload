@@ -26,7 +26,7 @@ singleton Material(xa_notc_core_shapes_etherform_p2_beammat2)
    castShadows = "0";
    translucent = "1";
    showFootprints = "0";
-   glow[0] = "1";
+   glow[0] = "0";
    glowOnly[0] = "0";
    emissive[0] = "1";
    vertColor[0] = "1";
@@ -38,7 +38,7 @@ singleton Material(xa_notc_core_shapes_etherform_p2_beammat2)
    effectColor[1] = "InvisibleBlack";
    diffuseColor[1] = "0.996078 0.996078 0.996078 0";
    emissive[1] = "1";
-   wireframe[0] = "1";
+   wireframe[0] = "0";
    diffuseColorPaletteSlot[1] = "0";
    wireframe[1] = "0";
 };
