@@ -50,7 +50,7 @@ datablock NortDiscData(WpnInterceptorDisc)
    
    lightDesc = WpnInterceptorDiscLightDesc;
 
-//	laserTrail[0]		= WpnInterceptorDiscInnerLaserTrail;
+//	laserTrail[0]		= WpnInterceptorDiscLaserTrail0;
 //	laserTrail[1]		= WpnInterceptorDiscOuterLaserTrail;
 
    startVertical = true;

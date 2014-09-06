@@ -12,22 +12,24 @@ datablock MultiNodeLaserBeamData(WpnInterceptorDiscLaserTrail0)
 {
 	material = "xa_notc_core_shapes_interceptordisc_projectile_p1_lasertrail0mat";
 	renderMode = $MultiNodeLaserBeamRenderMode::FaceViewer;
-   width = 0.1;
-	fadeTime = 1500;
+   width = 0.3;
+	fadeTime = 2000;
 	windCoefficient = 0.0;
 
 	// node x movement...
-	nodeMoveMode[0]     = $NodeMoveMode::None;
-	nodeMoveSpeed[0]    = -0.002;
-	nodeMoveSpeedAdd[0] =  0.004;
+	nodeMoveMode[0]     = $NodeMoveMode::DynamicSpeed;
+	nodeMoveSpeed[0]    = 10.0;
+	nodeMoveSpeedAdd[0] = -20.0;
 	// node y movement...
-	nodeMoveMode[1]     = $NodeMoveMode::None;
-	nodeMoveSpeed[1]    = -0.002;
-	nodeMoveSpeedAdd[1] =  0.004;
+	nodeMoveMode[1]     = $NodeMoveMode::DynamicSpeed;
+	nodeMoveSpeed[1]    = 10.0;
+	nodeMoveSpeedAdd[1] = -20.0;
 	// node z movement...
-	nodeMoveMode[2]     = $NodeMoveMode::None;
-	nodeMoveSpeed[2]    = 0.5;
-	nodeMoveSpeedAdd[2] = 0.5;
+	nodeMoveMode[2]     = $NodeMoveMode::DynamicSpeed;
+	nodeMoveSpeed[2]    = 10.0;
+	nodeMoveSpeedAdd[2] = -20.0;
+
+   nodeDistance = 4;
 };
 
 datablock DecalData(WpnInterceptorDiscDecal)
