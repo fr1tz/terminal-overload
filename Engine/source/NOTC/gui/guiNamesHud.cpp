@@ -220,6 +220,7 @@ void GuiNamesHud::showShapeName(GuiTSCtrl* mParent, GameBase* control, HudInfo* 
 	if (dot < camFov)
 		return;
 
+#if 0
 	// Test to see if it's behind something, and we want to
 	// ignore anything it's mounted on when we run the LOS.
 	if(obj)
@@ -229,10 +230,8 @@ void GuiNamesHud::showShapeName(GuiTSCtrl* mParent, GameBase* control, HudInfo* 
 		if(mount)
 			mount->disableCollision();
    }
-
 	RayInfo info;
    bool los = !gClientContainer.castRay(camPos, pos ,losMask, &info);
-
 	if(obj)
    {
 		obj->enableCollision();
@@ -240,9 +239,9 @@ void GuiNamesHud::showShapeName(GuiTSCtrl* mParent, GameBase* control, HudInfo* 
 		if(mount)
 			mount->enableCollision();
    }
-
    if(!los)
 			return;
+#endif
 
 	// Project the shape pos into screen space and calculate
 	// the distance opacity used to fade the labels into the
