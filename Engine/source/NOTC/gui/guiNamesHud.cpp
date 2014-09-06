@@ -232,8 +232,6 @@ void GuiNamesHud::showShapeName(GuiTSCtrl* mParent, GameBase* control, HudInfo* 
 
 	RayInfo info;
    bool los = !gClientContainer.castRay(camPos, pos ,losMask, &info);
-   if(!los)
-			return;
 
 	if(obj)
    {
@@ -242,6 +240,9 @@ void GuiNamesHud::showShapeName(GuiTSCtrl* mParent, GameBase* control, HudInfo* 
 		if(mount)
 			mount->enableCollision();
    }
+
+   if(!los)
+			return;
 
 	// Project the shape pos into screen space and calculate
 	// the distance opacity used to fade the labels into the
