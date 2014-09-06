@@ -544,35 +544,15 @@ void NortDisc::processTick(const Move* move)
 
    if(isClientObject())
    {
-	   // if this is the first particle emission, start the particles \
-      // at the creation point to make sure the player sees the particles beginning at the \
-      // gun's muzzle point... -mg
-#if 0
-		if( mEmissionCount == 0 )
-			emitParticles(mInitialPosition, newPosition, mCurrVelocity, TickMs);
-		else
-#endif
-			emitParticles(mCurrPosition, newPosition, mCurrVelocity, TickMs);
-
-#if 0
-		// update laser trail...
-		if( mEmissionCount == 0 )
-		{
-			addLaserTrailNode(mInitialPosition,false);
-
-			for( U8 i = 0; i < mNumBouncePoints; i++ )
-			{
-				//Con::printf("processTick(): (client) adding bouncePoint %u: %f %f %f",i,mBouncePoint[i].x,mBouncePoint[i].y,mBouncePoint[i].z);
-				addLaserTrailNode(mBouncePoint[i].pos, false);
-				createBounceExplosion(mBouncePoint[i].pos, mBouncePoint[i].norm, mBouncePoint[i].decal);
-			}
-		}
-		addLaserTrailNode(newPosition,false);
-#endif
-
-#if 0
-		mEmissionCount++;     
-#endif
+      if(mEmissionCount == 0)
+      {
+         emitParticles(mInitialPosition, newPosition, mCurrVelocity, TickMs);
+         this->addLaserTrailNode(mInitialPosition);
+      }
+      else
+         emitParticles(mCurrPosition, newPosition, mCurrVelocity, TickMs);
+      this->addLaserTrailNode(newPosition);
+      mEmissionCount++;
    }
 
    mCurrPosition = newPosition;
@@ -805,9 +785,9 @@ NortDisc::bounce(const RayInfo& rInfo, const Point3F& vec, bool bounceExp)
       if(bounceExp)
          this->createBounceExplosion(rInfo);
 
-#if 0
-		addLaserTrailNode(rInfo.point, false);
+		this->addLaserTrailNode(rInfo.point, false);
 
+#if 0
 		// NortDiscs create oriented decals when bouncing...
 		if(mDataBlock->decalCount > 0
 		&& !(rInfo.object->getType() & Projectile::csmDynamicCollisionMask)
