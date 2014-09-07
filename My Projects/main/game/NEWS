@@ -1,36 +1,19 @@
 What's new?
 ===========
 
-Version 0.2.0-testing3
-----------------------
+Version 0.2.0
+-------------
 
-Release Date: Sep. 6, 2014
-
-- Bugfixes 
-
-
-Version 0.2.0-testing2
-----------------------
-
-Release Date: Sep. 5, 2014
-
-- CATs spawn with 50% impulse damper instead of 0%.
-- Slightly improved HUD
-- Very basic in-game menu
-- Tweaked interceptor disc visuals
-- Bugfixes 
-
-
-Version 0.2.0-testing1
-----------------------
-
-Release Date: Sep. 3, 2014
+Release Date: Sep. 7, 2014
 
 - New maps: ETH3 and ETH4
 - Reduce CATs' health by half but equip them with damage damper module.
 - Link use of etherboard and jump boosters directly to impulse damper module.
 - Modify strength of B.O.U.N.C.E. based on level of enemy's impulse damper.
 - Remove stealth module from class 4 (Minigunner).
+- CATs spawn with 50% impulse damper instead of 0%.
+- Slightly improved HUD
+- Very basic in-game menu
 - Implement Message Of The Day (MOTD) feature.
 - Add ground connection beams to impulse damper module. 
 - Show player names on HUD.
