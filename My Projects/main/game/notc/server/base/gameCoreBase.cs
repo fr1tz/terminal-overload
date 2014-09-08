@@ -48,15 +48,19 @@ function GameCoreBase::prepareMissionLoad(%game)
       {
          // Only execute, if we don't have the source file.
          %csFileName = getSubStr( %file, 0, strlen( %file ) - 4 );
-         if( !isFile( %csFileName ) )
-            exec( %csFileName );
+         if(!isFile(%csFileName))
+         {
+            echo(" Found" SPC %file);
+            exec(%file);
+         }
       }
 
       for( %file = findFirstFile( %pathMask @ "/*/materials.cs" );
            %file !$= "";
            %file = findNextFile( %pathMask @ "/*/materials.cs" ))
       {
-         exec( %file );
+         echo(" Found" SPC %file);
+         exec(%file);
       }
    }
    
