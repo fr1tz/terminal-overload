@@ -41,8 +41,11 @@ function clientCmd_XaNotcMaterials_Load(%pathMask)
    {
       // Only execute, if we don't have the source file.
       %csFileName = getSubStr( %file, 0, strlen( %file ) - 4 );
-      if( !isFile( %csFileName ) )
-         exec( %csFileName );
+      if(!isFile(%csFileName))
+      {
+         echo(" Found" SPC %file);
+         exec(%file);
+      }
    }
 
    // Load all source material files.
@@ -51,7 +54,8 @@ function clientCmd_XaNotcMaterials_Load(%pathMask)
         %file !$= "";
         %file = findNextFile( %pathMask @ "/*/materials.cs" ))
    {
-      exec( %file );
+      echo(" Found" SPC %file);
+      exec(%file);
    }
    
    $instantGroup = %instantGroupStor;

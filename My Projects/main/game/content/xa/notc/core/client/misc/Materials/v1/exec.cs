@@ -1,10 +1,10 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
-function execXaNotcMaterialsV1()
+function execXaNotcMaterialsModule()
 {
-   exec("./Materials.cs");
+   exec("./cmds.cs");
 }
 
-execXaNotcMaterialsV1();
+execXaNotcMaterialsModule();
 
