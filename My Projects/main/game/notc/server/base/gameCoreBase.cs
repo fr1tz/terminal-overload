@@ -547,6 +547,7 @@ function GameCoreBase::spawnPlayer(%game, %client, %spawnPoint, %noControl)
       }
 
       %spawnProperties = %spawnPoint.spawnProperties;
+      %spawnProperties = %spawnProperties SPC "client="@%client@";";
       %spawnScript     = %spawnPoint.spawnScript;
 
       // Spawn with the engine's Sim::spawnObject() function
