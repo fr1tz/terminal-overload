@@ -93,7 +93,7 @@ datablock PlayerData(FrmStandardcat)
    maxUnderwaterBackwardSpeed = 7.8;
    maxUnderwaterSideSpeed = 4.0;
 
-   jumpForce = 0;
+   jumpForce = 750;
    jumpEnergyDrain = 0;
    minJumpEnergy = 0;
    jumpDelay = 0;
@@ -175,10 +175,10 @@ datablock PlayerData(FrmStandardcat)
 
    // Controls over slope of runnable/jumpable surfaces
    runSurfaceAngle  = 40;
-   jumpSurfaceAngle = 30;
+   jumpSurfaceAngle = 40;
    maxStepHeight = 1.0;  //two meters
-   minJumpSpeed = 20;
-   maxJumpSpeed = 30;
+   minJumpSpeed = 0;
+   maxJumpSpeed = 9999;
 
    horizMaxSpeed = 200;
    horizResistSpeed = 30;
@@ -250,6 +250,7 @@ datablock PlayerData(FrmStandardcat)
    maxInv[ItemEtherboard] = 1;
    maxInv[ItemLauncher] = 1;
    maxInv[ItemBounce] = 1;
+   maxInv[ItemXJump] = 1;
 
    maxInv[ItemG1Launcher] = 1;
    maxInv[ItemG1LauncherAmmo] = 9999;
@@ -334,6 +335,7 @@ function FrmStandardcat::onAdd(%this, %obj)
    
    %obj.zDiscTargetSet = new SimSet();
 
+   %obj.allowJumping(true);
    %obj.allowJetJumping(false);
    %obj.allowCrouching(false);
    %obj.allowProne(false);
@@ -436,16 +438,10 @@ function FrmStandardcat::onTrigger(%this, %obj, %triggerNum, %val)
  
    Parent::onTrigger(%this, %obj, %triggerNum, %val);
    
-   if(%triggerNum == 2 && %val)
+   if(%triggerNum == 2)
    {
-      if(%obj.zImpShield > %this.reJumpEnergyDrain/100)
-      {
-         %pos = %obj.getPosition();
-         createExplosion(FrmStandardcatJumpExplosion, %pos, "0 0 1");
-         %impulseVec = VectorScale("0 0 1", %this.reJumpForce);
-         %obj.impulse(%pos, %impulseVec, %obj);
-         %obj.zImpShield -= %this.reJumpEnergyDrain/100;
-      }
+      if(%obj.hasInventory(ItemXJump))
+         ItemXJump.activate(%obj, %val);
    }
    
    if(%triggerNum == 3)

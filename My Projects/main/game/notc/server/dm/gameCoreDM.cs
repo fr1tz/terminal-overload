@@ -164,6 +164,7 @@ function GameCoreDM::loadOut(%game, %player)
    %player.setInventory(ItemEtherboard, 1);
    %player.setInventory(ItemLauncher, 1);
    %player.setInventory(ItemBounce, 1);
+   %player.setInventory(ItemXJump, 1);
    
    %player.setInventory(ItemG1Launcher, 1);
    

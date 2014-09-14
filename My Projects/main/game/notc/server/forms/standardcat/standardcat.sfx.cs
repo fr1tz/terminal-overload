@@ -36,20 +36,6 @@ datablock SFXProfile(FrmStandardcatSkidSound)
 	preload = true;
 };
 
-datablock SFXProfile(FrmStandardcatJumpExplosionSound)
-{
-	filename = "content/xa/rotc/p.5.4/sounds/rotc/explosion3.wav";
-	description = AudioDefault3D;
-	preload = true;
-};
-
-datablock SFXProfile(FrmStandardcatSpawnGaspSound)
-{
-   fileName = "content/xa/alux1/sounds/gasp1";
-   description = AudioClose3d;
-   preload = true;
-};
-
 datablock SFXProfile(FrmStandardcatSpawnExplosionSound)
 {
 	filename	 = "content/xa/rotc/p.5.4/sounds/rotc/deploy1.wav";
