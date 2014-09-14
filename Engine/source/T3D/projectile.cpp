@@ -1167,8 +1167,6 @@ void Projectile::explode( const Point3F &p, const Point3F &n, const U32 collideT
    if ( mHasExploded )
       return;
 
-   mHasExploded = true;
-
    // Move the explosion point slightly off the surface to avoid problems with radius damage
    Point3F explodePos = p + n * 0.001f;
 
@@ -1242,6 +1240,8 @@ void Projectile::explode( const Point3F &p, const Point3F &n, const U32 collideT
       // Client object
       updateSound();
    }
+
+   mHasExploded = true;
 
    /*
    // Client and Server both should apply forces to PhysicsWorld objects
