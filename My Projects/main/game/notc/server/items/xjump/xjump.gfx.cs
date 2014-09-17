@@ -72,66 +72,68 @@ datablock ParticleEmitterData(ItemXJumpProjectileExplosion_CloudEmitter)
 	particles = "ItemXJumpProjectileExplosion_Cloud";
 };
 
-datablock ParticleData(ItemXJumpProjectileExplosion_Dust)
+datablock ParticleData(ItemXJumpProjectileExplosion_Particle0)
 {
-	dragCoefficient		= 1.0;
-	gravityCoefficient	= -0.01;
+	dragCoefficient		= "0.997067";
+	gravityCoefficient	= "-0.01221";
 	inheritedVelFactor	= 0.0;
 	constantAcceleration = 0.0;
-	lifetimeMS			  = 1000;
+	lifetimeMS			  = "500";
 	lifetimeVarianceMS	= 100;
 	useInvAlpha			 = true;
 	spinRandomMin		  = -90.0;
 	spinRandomMax		  = 500.0;
-	textureName			 = "content/xa/rotc/p.5.4/textures/rotc/smoke_particle.png";
-	colors[0]	  = "0.9 0.9 0.9 0.5";
-	colors[1]	  = "0.9 0.9 0.9 0.5";
-	colors[2]	  = "0.9 0.9 0.9 0.0";
-	sizes[0]		= 0.9;
-	sizes[1]		= 1.5;
-	sizes[2]		= 1.6;
+	textureName			 = "content/xa/rotc/p.5.4/textures/rotc/corona.png";
+	colors[0]	  = "0.996078 0.996078 0.996078 1";
+	colors[1]	  = "0.996078 0.996078 0.996078 0";
+	colors[2]	  = "0.897638 0.897638 0.897638 0";
+	sizes[0]		= "5";
+	sizes[1]		= "5";
+	sizes[2]		= "2";
 	times[0]		= 0.0;
-	times[1]		= 0.7;
+	times[1]		= "1";
 	times[2]		= 1.0;
-	allowLighting = true;
+	allowLighting = 1;
+   animTexName = "content/xa/rotc/p.5.4/textures/rotc/corona.png";
 };
 
-datablock ParticleEmitterData(ItemXJumpProjectileExplosion_DustEmitter)
+datablock ParticleEmitterData(ItemXJumpProjectileExplosion_Emitter0)
 {
-	ejectionPeriodMS = 10;
+	ejectionPeriodMS = "1";
 	periodVarianceMS = 0;
-	ejectionVelocity = 2.0;
+	ejectionVelocity = "20";
 	velocityVariance = 0.0;
 	ejectionOffset	= 0.0;
-	thetaMin			= 0;
-	thetaMax			= 180;
+	thetaMin			= "80";
+	thetaMax			= "80";
 	phiReferenceVel  = 0;
 	phiVariance		= 360;
-	overrideAdvances = false;
+	overrideAdvances = 0;
 	lifetimeMS		 = 50;
-	particles = "ItemXJumpProjectileExplosion_Dust";
+	particles = "ItemXJumpProjectileExplosion_Particle0";
+   orientParticles = "1";
+   blendStyle = "ADDITIVE";
+   targetLockTimeMS = "480";
+   paletteSlot = "0";
 };
 
 datablock ExplosionData(ItemXJumpProjectileExplosion)
 {
 	soundProfile = ItemXJumpActivateSound;
 
-	lifetimeMS = 200;
+	lifetimeMS = "192";
 
-	debris = 0; //ItemXJumpProjectileExplosion_Debris;
 	debrisThetaMin = 0;
 	debrisThetaMax = 180;
 	debrisNum = 3;
 	debrisVelocity = 50.0;
 	debrisVelocityVariance = 10.0;
 
-	particleEmitter = ItemXJumpProjectileExplosion_CloudEmitter;
+	//particleEmitter = ItemXJumpProjectileExplosion_CloudEmitter;
 	particleDensity = 50;
 	particleRadius = 1;
 
-	emitter[0] = ItemXJumpProjectileExplosion_DustEmitter;
-	emitter[1] = 0; // ItemXJumpProjectileExplosion_SmokeEmitter;
-	emitter[2] = 0; // ItemXJumpProjectileExplosion_SparksEmitter;
+	emitter[0] = ItemXJumpProjectileExplosion_Emitter0;
 
 	// Camera shake
 	shakeCamera = true;
@@ -141,10 +143,13 @@ datablock ExplosionData(ItemXJumpProjectileExplosion)
 	camShakeRadius = 1.0;
 
 	// Dynamic light
-	lightStartRadius = 15;
+	lightStartRadius = "14.9804";
 	lightEndRadius = 0;
-	lightStartColor = "1.0 0.8 0.2 1.0";
-	lightEndColor = "1.0 0.8 0.2 0.3";
+	lightStartColor = "1 0.795276 0.19685 1";
+	lightEndColor = "1 0.795276 0.19685 0.3";
+   lightStartBrightness = "0.941176";
+   lightEndBrightness = "0.941176";
+   targetLockTimeMS = "480";
 };
 
 datablock MultiNodeLaserBeamData(ItemXJumpProjectileLaserTrail0)

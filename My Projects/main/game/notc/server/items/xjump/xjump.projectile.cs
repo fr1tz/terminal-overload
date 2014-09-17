@@ -9,7 +9,7 @@ datablock ProjectileData(ItemXJumpProjectile)
    laserTrailFlags[0]  = 0;
    laserTrail[1]       = ItemXJumpProjectileLaserTrail1;
    laserTrailFlags[1]  = 0;
-   laserTrail[2]       = ItemXJumpProjectileLaserTrail2;
-   laserTrailFlags[2]  = 0;
+   //laserTrail[2]       = ItemXJumpProjectileLaserTrail2;
+   //laserTrailFlags[2]  = 0;
 };
 
