@@ -18,7 +18,7 @@
 /// What version of the application specific source code is this?
 ///
 /// Version number is major * 1000 + minor * 100 + revision * 10.
-#define TORQUE_APP_VERSION         200
+#define TORQUE_APP_VERSION         300
 
 /// Human readable application version string.
 #define TORQUE_APP_VERSION_STRING  "0.2.0"
