@@ -1,6 +1,16 @@
 What's new?
 ===========
 
+Version 0.3.0-testing1
+----------------------
+
+Release Date: Sep. 18, 2014
+
+- Replace re-jumping with XJump module.
+- Various minor tweaks and improvements
+- Bugfixes
+
+
 Version 0.2.0
 -------------
 
