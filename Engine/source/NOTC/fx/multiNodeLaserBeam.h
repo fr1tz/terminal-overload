@@ -19,6 +19,10 @@ class MultiNodeLaserBeamData : public GameBaseData
    typedef GameBaseData Parent;
 
   public:
+   enum Constants {
+      NumLanes = 3
+   };
+
 	enum RenderMode {
 		FaceViewer,
 		Horizontal,
@@ -31,12 +35,11 @@ class MultiNodeLaserBeamData : public GameBaseData
 		DynamicSpeed
 	};
 
-   String materialString;
-   BaseMatInstance*  materialInst;
+   String materialString[NumLanes];
+   BaseMatInstance*  materialInst[NumLanes];
+   F32 width[NumLanes];
 
 	S32	renderMode;
-
-   F32 width;
 
 	F32 windCoefficient;
 
@@ -101,7 +104,7 @@ class MultiNodeLaserBeam : public GameBase
       GFXPrimitiveType primType;
    };
 
-   RenderData mRenderData; 
+   RenderData mRenderData[MultiNodeLaserBeamData::NumLanes]; 
 
   public:
    MultiNodeLaserBeam();
@@ -125,7 +128,7 @@ class MultiNodeLaserBeam : public GameBase
    bool onNewDataBlock(GameBaseData* dptr, bool reload);
 
    // MultiNodeLaserBeam...
-   void updateRenderData(const Point3F& camPos);
+   void updateRenderData(const Point3F& camPos, U32 lane);
    void setRender(bool b);
    void clearNodes();
 	void addNode(Point3F pos);

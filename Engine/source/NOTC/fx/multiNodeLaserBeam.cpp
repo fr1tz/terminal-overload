@@ -29,9 +29,11 @@ IMPLEMENT_CO_DATABLOCK_V1(MultiNodeLaserBeamData);
 
 MultiNodeLaserBeamData::MultiNodeLaserBeamData()
 {
-   materialInst = NULL;
-
-	width = 0.2;
+   for(U32 i = 0; i < NumLanes; i++)
+   {
+      materialInst[i] = NULL;
+	   width[i] = 0.2;
+   }
 
 	renderMode = FaceViewer;
 
@@ -48,8 +50,11 @@ MultiNodeLaserBeamData::MultiNodeLaserBeamData()
 
 MultiNodeLaserBeamData::~MultiNodeLaserBeamData()
 {
-   if(materialInst)
-      SAFE_DELETE(materialInst);
+   for(U32 i = 0; i < NumLanes; i++)
+   {
+      if(materialInst[i])
+         SAFE_DELETE(materialInst[i]);
+   }
 }
 
 //--------------------------------------------------------------------------
@@ -57,10 +62,10 @@ void MultiNodeLaserBeamData::initPersistFields()
 {
 	Parent::initPersistFields();
 
-   addField( "material",    TypeMaterialName, Offset(materialString, MultiNodeLaserBeamData),
-      "The name of the material used to render the beam." );
-
-	addField("width",  TypeF32,      Offset(width, MultiNodeLaserBeamData));
+   addField( "material",    TypeMaterialName, Offset(materialString, MultiNodeLaserBeamData), NumLanes,
+      "The name of the material used to render the specific lane of the beam." );
+	addField("width",  TypeF32,      Offset(width, MultiNodeLaserBeamData), NumLanes,
+      "The width of the specified lane of the beam.");
 
 	addField("renderMode",  TypeS32,      Offset(renderMode,MultiNodeLaserBeamData));
 
@@ -107,12 +112,15 @@ bool MultiNodeLaserBeamData::preload(bool server, String &errorStr)
    if(server)
       return true;
 
-   if(!materialString.isEmpty())
+   for(U32 i = 0; i < NumLanes; i++)
    {
-      SAFE_DELETE(materialInst);
-      materialInst = MATMGR->createMatInstance(materialString, getGFXVertexFormat<MultiNodeLaserBeam::VertexType>());
-      if(!materialInst)
-         Con::errorf( "MultiNodeLaserBeamData::preload - no Material called '%s'", materialString.c_str() );
+      if(!materialString[i].isEmpty())
+      {
+         SAFE_DELETE(materialInst[i]);
+         materialInst[i] = MATMGR->createMatInstance(materialString[i], getGFXVertexFormat<MultiNodeLaserBeam::VertexType>());
+         if(!materialInst[i])
+            Con::errorf( "MultiNodeLaserBeamData::preload - no Material called '%s'", materialString[i].c_str() );
+      }
    }
 
    return true;
@@ -125,9 +133,11 @@ void MultiNodeLaserBeamData::packData(BitStream* stream)
 {
 	Parent::packData(stream);
 
-   stream->write(materialString);
-
-	stream->write(width);
+   for(U32 i = 0; i < NumLanes; i++)
+   {
+      stream->write(materialString[i]);
+      stream->write(width[i]);
+   }
 
 	stream->writeInt(renderMode,8);
 
@@ -154,9 +164,11 @@ void MultiNodeLaserBeamData::unpackData(BitStream* stream)
 {
 	Parent::unpackData(stream);
 
-   stream->read(&materialString);
-
-	stream->read(&width);
+   for(U32 i = 0; i < NumLanes; i++)
+   {
+      stream->read(&materialString[i]);
+	   stream->read(&width[i]);
+   }
 
 	renderMode = stream->readInt(8);
 
@@ -518,32 +530,35 @@ void MultiNodeLaserBeam::advanceTime(F32 dt)
 
 void MultiNodeLaserBeam::prepRenderImage(SceneRenderState* state)
 {
+   if(!state->isDiffusePass())
+      return;
+
    // Get a handy pointer to our RenderPassmanager
    RenderPassManager* renderPass = state->getRenderPass();
 
-   this->updateRenderData(state->getCameraPosition());
-
    const Frustum &frustum = state->getCameraFrustum();
 
-   //for(U32 i = 0; i < NumRenderParts; i++)
+   for(U32 lane = 0; lane < MultiNodeLaserBeamData::NumLanes; lane++)
    {
-      RenderData* renderData = &mRenderData;
-
-      if(renderData->numVerts == 0)
-         return;
-
       BaseMatInstance* matInst;
 
-      matInst = mDataBlock->materialInst;
+      matInst = mDataBlock->materialInst[lane];
 
       if(!matInst)
-         return;
+         continue;
 
       // If we don't have a material instance after the override then
       // we can skip rendering all together.
       matInst = state->getOverrideMaterial(matInst);
       if(!matInst)
-         return;
+         continue;
+
+      this->updateRenderData(state->getCameraPosition(), lane);
+
+      RenderData* renderData = &mRenderData[lane];
+
+      if(renderData->numVerts == 0)
+         continue;
 
       // Allocate an MeshRenderInst so that we can submit it to the RenderPassManager
       MeshRenderInst* ri = renderPass->allocInst<MeshRenderInst>();
@@ -617,9 +632,9 @@ void MultiNodeLaserBeam::prepRenderImage(SceneRenderState* state)
    }
 }
 
-void MultiNodeLaserBeam::updateRenderData(const Point3F& camPos)
+void MultiNodeLaserBeam::updateRenderData(const Point3F& camPos, U32 lane)
 {
-   RenderData* dst = &mRenderData;
+   RenderData* dst = &mRenderData[lane];
 
    dst->primType = GFXTriangleList;
 
@@ -673,7 +688,7 @@ void MultiNodeLaserBeam::updateRenderData(const Point3F& camPos)
    VertexType* pVert = dst->vertBuf.lock();
    U16* pIdx = NULL; dst->primBuf.lock(&pIdx);
 
-   Point3F vec = mCrossVec * mDataBlock->width * 0.5;
+   Point3F vec = mCrossVec * mDataBlock->width[lane] * 0.5;
    for(int i=0; i<mNodes.size()-1; i++ )
    {
 	   LaserBeamNode node = mNodes[i];
