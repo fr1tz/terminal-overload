@@ -1307,6 +1307,9 @@ void TacticalZone::createRenderDataLines(TexturedPolyList* src, RenderData* dst)
 
 void TacticalZone::prepRenderImage(SceneRenderState* state)
 {
+   if(!state->isDiffusePass())
+      return;
+
 	if(sRenderMode == None && sRenderTerrainDebug == false)
 		return;
 
@@ -1377,15 +1380,10 @@ void TacticalZone::prepRenderImage(SceneRenderState* state)
          ri->translucentSort = true;
       }
 
-      // Calculate our sorting point
-      if ( state )
-      {
-         // Calculate our sort point manually.
-         const Box3F& rBox = getRenderWorldBox();
-         ri->sortDistSq = rBox.getSqDistanceToPoint( state->getCameraPosition() );
-      }
-      else
-         ri->sortDistSq = 0.0f;
+      // Make it the sort distance the max distance so that 
+      // it renders after all the other opaque geometry in 
+      // the prepass bin.
+      ri->sortDistSq = F32_MAX;
 
       // Set up our transforms
       MatrixF objectToWorld = getRenderTransform();
@@ -1396,7 +1394,7 @@ void TacticalZone::prepRenderImage(SceneRenderState* state)
       ri->worldToCamera = renderPass->allocSharedXform(RenderPassManager::View);
 
       MatrixF *tempMat = renderPass->allocUniqueXform( MatrixF( true ) );
-      MathUtils::getZBiasProjectionMatrix( gDecalBias, frustum, tempMat );
+      MathUtils::getZBiasProjectionMatrix( gDecalBias/2, frustum, tempMat );
       ri->projection = tempMat;
       //ri->projection = renderPass->allocSharedXform(RenderPassManager::Projection);
 
