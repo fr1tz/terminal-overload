@@ -102,13 +102,12 @@ function ChromaticLens::updateThread(%this)
       }
    }
    
-
-//   if(%this.factor[0] + %this.factor[1] + %this.factor[2] == 0)
-//   {
-     // if(ChromaticLensPostFX.isEnabled())
-     //    ChromaticLensPostFX.disable();
-     //return;
-//   }
+   if(%this.value[0] == 0 && %this.value[1] == 0 && %this.value[2] == 0)
+   {
+     if(ChromaticLensPostFX.isEnabled())
+        ChromaticLensPostFX.disable();
+     return;
+   }
       
    if(!ChromaticLensPostFX.isEnabled())
       ChromaticLensPostFX.enable();
