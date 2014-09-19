@@ -1,16 +1,16 @@
 
 singleton Material(xa_notc_core_shapes_territoryzone_terrainmat)
 {
-   diffuseColor[0] = "0.992157 0.992157 0.992157 0.498";
+   diffuseColor[0] = "0.309804 0.309804 0.309804 1";
    diffuseColorPaletteSlot[0] = "0";
    doubleSided = "0";
-   translucentBlendOp = "LerpAlpha";
+   translucentBlendOp = "AddAlpha";
    parallaxScale[0] = "0.138889";
    castShadows = "0";
    translucent = "1";
    showFootprints = "0";
    glow[0] = "0";
-   emissive[0] = "0";
+   emissive[0] = "1";
    materialTag0 = "Miscellaneous";
    animFlags[0] = "0x00000000";
    scrollDir[0] = "0.3 1";
@@ -27,7 +27,8 @@ singleton Material(xa_notc_core_shapes_territoryzone_terrainmat)
    wireframe[1] = "0";
    diffuseColor[1] = "0.996078 0.996078 0.996078 0";
    diffuseMap[0] = "content/xa/notc/core/shapes/territoryzone/terrain.png";
-   translucentZWrite = "1";
+   translucentZWrite = "0";
+   specular[3] = "1 1 1 1";
 };
 
 singleton Material(xa_notc_core_shapes_territoryzone_bordermat)
@@ -45,25 +46,25 @@ singleton Material(xa_notc_core_shapes_territoryzone_bordermat)
    materialTag0 = "Miscellaneous";
    wireframe[0] = "0";
    diffuseColorPaletteSlot[1] = "1";
-   glow[1] = "1";
+   glow[1] = "0";
    wireframe[1] = "1";
 };
 
 singleton Material(xa_notc_core_shapes_territoryzone_othermat)
 {
-   diffuseColor[0] = "0.992157 0.992157 0.992157 0.502";
+   diffuseColor[0] = "0.0980392 0.0980392 0.0980392 1";
    diffuseColorPaletteSlot[0] = "0";
    doubleSided = "0";
-   translucentBlendOp = "LerpAlpha";
+   translucentBlendOp = "AddAlpha";
    parallaxScale[0] = "0.25";
    castShadows = "0";
    translucent = "1";
    showFootprints = "0";
    glow[0] = "0";
-   emissive[0] = "0";
+   emissive[0] = "1";
    materialTag0 = "Miscellaneous";
    specular[2] = "1 1 1 1";
    diffuseColor[1] = "White";
-   translucentZWrite = "1";
+   translucentZWrite = "0";
 };
 
