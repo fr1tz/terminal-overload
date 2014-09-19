@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   width="512"
+   height="512"
+   sodipodi:docname="home.svg"
+   inkscape:export-filename="/home/mray/Projects/TOL/terminal-overload/My Projects/main/game/content/xa/notc/mis/eth5/textures/home.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <metadata
+     id="metadata8">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs6">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient2991">
+      <stop
+         style="stop-color:#808080;stop-opacity:1"
+         offset="0"
+         id="stop2993" />
+      <stop
+         style="stop-color:#43877c;stop-opacity:1"
+         offset="1"
+         id="stop2995" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3787">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1"
+         offset="0"
+         id="stop3789" />
+      <stop
+         style="stop-color:#ff00e7;stop-opacity:1"
+         offset="1"
+         id="stop3791" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient2991"
+       id="linearGradient2997"
+       x1="384"
+       y1="1536"
+       x2="128"
+       y2="2048"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1630"
+     inkscape:window-height="988"
+     id="namedview4"
+     showgrid="true"
+     inkscape:zoom="0.32593204"
+     inkscape:cx="-511.66496"
+     inkscape:cy="631.22982"
+     inkscape:window-x="50"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g3016">
+    <inkscape:grid
+       type="xygrid"
+       id="grid3066"
+       empspacing="128"
+       visible="true"
+       enabled="true"
+       snapvisiblegridlinesonly="true" />
+  </sodipodi:namedview>
+  <g
+     inkscape:groupmode="layer"
+     id="layer6"
+     inkscape:label="background"
+     sodipodi:insensitive="true"
+     style="display:none"
+     transform="translate(0,-1536)">
+    <rect
+       style="color:#000000;fill:#0d1a17;fill-opacity:1;stroke:none;stroke-width:20;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect3036"
+       width="2466.772"
+       height="2509.7258"
+       x="-202.4962"
+       y="-222.412" />
+  </g>
+  <g
+     style="display:inline"
+     inkscape:label="grid.png"
+     id="g3016"
+     inkscape:groupmode="layer"
+     transform="translate(0,-1536)">
+    <rect
+       y="1536"
+       x="0"
+       height="512"
+       width="512"
+       id="rect3018"
+       style="color:#000000;fill:url(#linearGradient2997);fill-opacity:1;stroke:none;stroke-width:5;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer5"
+     inkscape:label="Palette"
+     style="display:inline"
+     transform="translate(0,-1536)"
+     sodipodi:insensitive="true">
+    <image
+       y="1328"
+       x="-968"
+       id="image3845"
+       xlink:href="file:///home/mray/Projects/TOL/TO%20style/palette.png"
+       height="720"
+       width="840" />
+  </g>
+</svg>
