@@ -46,25 +46,30 @@ singleton Material(xa_rotc_hack_shapes_mat3)
 singleton Material(xa_rotc_hack_shapes_mat4)
 {
    mapTo = "image";
-   diffuseMap[0] = "content/xa/notc/core/textures/grid.128.4.h1.png";
-   diffuseColor[0] = "0.992157 0.996078 0.996078 1";
-   diffuseColorPaletteSlot[0] = "1";
-   specular[0] = "0.5 0.5 0.5 1";
-   specularPower[0] = "50";
+   diffuseColor[0] = "0.235294 0.235294 0.235294 1";
+   diffuseColorPaletteSlot[0] = "-1";
+   specular[0] = "0.682353 0.686275 0.686275 1";
+   specularPower[0] = "46";
    glow[0] = "0";
-   emissive[0] = "1";
-   diffuseMap[1] = "content/xa/notc/core/textures/grid128.12.png";
-   diffuseColor[1] = "0.996078 0.996078 0.996078 1";
-   diffuseColorPaletteSlot[1] = "1";
+   emissive[0] = "0";
+   diffuseColor[1] = "0.458824 0.458824 0.458824 1";
+   diffuseColorPaletteSlot[1] = "-1";
    wireframe[1] = "1";
    emissive[1] = "1";
    glow[1] = "0";
    doubleSided = "0";
-   translucentBlendOp = "LerpAlpha";
+   translucentBlendOp = "AddAlpha";
    castShadows = "0";
    translucent = "0";
    showFootprints = "0";
    materialTag0 = "Miscellaneous";
+   specularStrength[0] = "0.0980392";
+   glowOnly[1] = "0";
+   diffuseMap[1] = "content/xa/notc/core/textures/grid.128.4.png";
+   diffuseColor[2] = "1 1 1 0";
+   pixelSpecular[0] = "0";
+   emissive[2] = "1";
+   wireframe[2] = "1";
 };
 
 singleton Material(xa_rotc_hack_shapes_mat5)
