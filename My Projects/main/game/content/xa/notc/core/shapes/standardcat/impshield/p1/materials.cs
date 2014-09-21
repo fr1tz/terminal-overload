@@ -2,12 +2,12 @@
 singleton Material(xa_notc_core_shapes_standardcat_impshield_p1_beammat0)
 {
    diffuseColor[0] = "0.996078 0.996078 0.996078 1";
-   doubleSided = "1";
-   translucentBlendOp = "AddAlpha";
+   doubleSided = "0";
+   translucentBlendOp = "LerpAlpha";
    castShadows = "0";
    translucent = "1";
    showFootprints = "0";
-   glow[0] = "0";
+   glow[0] = "1";
    glowOnly[0] = "0";
    emissive[0] = "1";
    vertColor[0] = "1";
@@ -20,17 +20,20 @@ singleton Material(xa_notc_core_shapes_standardcat_impshield_p1_beammat0)
    wireframe[1] = "1";
    vertColor[1] = "0";
    diffuseColorPaletteSlot[1] = "0";
-   diffuseMap[0] = "content/xa/rotc/p.5.4/textures/rotc/groundconnection.png";
-   animFlags[0] = "0x00000001";
+   animFlags[0] = "0x00000008";
    scrollDir[0] = "1 0";
    scrollSpeed[0] = "3.647";
+   translucentZWrite = "1";
+   rotSpeed[0] = "4.353";
+   waveFreq[0] = "0.625";
+   waveAmp[0] = "1";
 };
 
 singleton Material(xa_notc_core_shapes_standardcat_impshield_p1_beammat1)
 {
-   diffuseColor[0] = "0.113725 0.113725 0.113725 1";
+   diffuseColor[0] = "0.992157 0.992157 0.992157 1";
    doubleSided = "0";
-   translucentBlendOp = "AddAlpha";
+   translucentBlendOp = "LerpAlpha";
    castShadows = "0";
    translucent = "1";
    showFootprints = "0";
@@ -41,13 +44,14 @@ singleton Material(xa_notc_core_shapes_standardcat_impshield_p1_beammat1)
    materialTag0 = "Miscellaneous";
    diffuseColorPaletteSlot[0] = "0";
    mapTo = "trail.png";
-   wireframe[0] = "0";
+   wireframe[0] = "1";
    diffuseColor[1] = "0.996078 0.996078 0.996078 0";
    emissive[1] = "0";
    wireframe[1] = "1";
    vertColor[1] = "0";
    diffuseColorPaletteSlot[1] = "0";
    alphaRef = "0";
+   specular[1] = "White";
 };
 
 singleton Material(xa_notc_core_shapes_standardcat_impshield_p1_mat1)

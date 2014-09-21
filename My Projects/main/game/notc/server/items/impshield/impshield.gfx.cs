@@ -4,9 +4,9 @@
 datablock MultiNodeLaserBeamData(ItemImpShieldBeam)
 {
 	material[0] = "xa_notc_core_shapes_standardcat_impshield_p1_beammat0";
-   width[0] = "1.0";
+   width[0] = "0.04";
 	material[1] = "xa_notc_core_shapes_standardcat_impshield_p1_beammat1";
-   width[1] = "0.005";
+   width[1] = "0.04";
  
 	renderMode = $MultiNodeLaserBeamRenderMode::FaceViewer;
 	fadeTime = "128";
@@ -24,7 +24,8 @@ datablock MultiNodeLaserBeamData(ItemImpShieldBeam)
    nodeMoveMode[2]     = $NodeMoveMode::None;
    nodeMoveSpeed[2]    = 0.5;
    nodeMoveSpeedAdd[2] = 1.0;
-   targetLockTimeMS = "480";
+
+   //nodeDistance = 0.5;
 };
 
 datablock ParticleData(ItemImpShieldDropExplosion_Cloud)
