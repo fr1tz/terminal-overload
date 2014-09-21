@@ -56,6 +56,16 @@ public:
    // Shape related
    const char* projectileShapeName;
 
+   enum EmitterNodes {
+      // These enums index into a static name list.
+      LaserTrailNode0,
+      LaserTrailNode1,
+      LaserTrailNode2,
+      MaxEmitterNodes
+   };
+   static const char *sEmitterNode[MaxEmitterNodes];
+   S32 emitterNode[MaxEmitterNodes];
+
    /// Set to true if it is a billboard and want it to always face the viewer, false otherwise
    bool faceViewer;
    Point3F scale;
@@ -252,7 +262,8 @@ public:
    void missedEnemiesCheck(const Point3F& start, const Point3F& end);
    bool missedObject(const SceneObject* obj, const Point3F& oldPos, const Point3F& newPos);
    void createBounceExplosion(const RayInfo& rInfo, bool decal = true);
-   void addLaserTrailNode(const Point3F& pos, bool minorNode = false);
+   void addLaserTrailNode(const Point3F& pos, bool useEmitterNode);
+   void interpolateLaserTrails(const Point3F& interpPos);
    bool isAlive() { return !mHasExploded; }
 
 public:

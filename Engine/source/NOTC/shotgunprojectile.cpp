@@ -199,8 +199,8 @@ void ShotgunProjectileTracer::processTick(const Move* move)
 	if(mDataBlock->muzzleVelocity > 9000)
 	{
       this->missedEnemiesCheck(mInitialPosition, mImpactPos);
-		this->addLaserTrailNode(mInitialPosition);
-		this->addLaserTrailNode(mImpactPos);
+		this->addLaserTrailNode(mInitialPosition, false);
+		this->addLaserTrailNode(mImpactPos, false);
 
 #if 0
 		for(S32 i = 0; i < NUM_LASERTRAILS; i++)
@@ -340,7 +340,7 @@ void ShotgunProjectileTracer::simulate(F32 dt)
 	oldPosition = mCurrPosition;
 
    if(oldPosition == mInitialPosition)
-      this->addLaserTrailNode(mInitialPosition);
+      this->addLaserTrailNode(mInitialPosition, false);
 
 	newPosition = oldPosition + mCurrVelocity * dt;
 
@@ -356,11 +356,11 @@ void ShotgunProjectileTracer::simulate(F32 dt)
 	mCurrBackDelta = mCurrPosition - newPosition;
 
    if(mEmissionCount == 0)
-      this->addLaserTrailNode(mInitialPosition);
+      this->addLaserTrailNode(mInitialPosition, false);
 
 	this->emitParticles(oldPosition, newPosition, mCurrVelocity, dt*1000);
    this->missedEnemiesCheck(oldPosition, newPosition);
-   this->addLaserTrailNode(newPosition);
+   this->addLaserTrailNode(newPosition, true);
 
    mEmissionCount++;
 

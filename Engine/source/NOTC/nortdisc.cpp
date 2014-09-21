@@ -547,11 +547,11 @@ void NortDisc::processTick(const Move* move)
       if(mEmissionCount == 0)
       {
          emitParticles(mInitialPosition, newPosition, mCurrVelocity, TickMs);
-         this->addLaserTrailNode(mInitialPosition);
+         this->addLaserTrailNode(mInitialPosition, false);
       }
       else
          emitParticles(mCurrPosition, newPosition, mCurrVelocity, TickMs);
-      this->addLaserTrailNode(newPosition);
+      this->addLaserTrailNode(newPosition, true);
       mEmissionCount++;
    }
 
@@ -671,6 +671,8 @@ void NortDisc::interpolateTick(F32 delta)
    else
       mFadeValue = 1.0;
 
+   this->interpolateLaserTrails(interpPos);
+
    updateSound();
 }
 
@@ -785,7 +787,7 @@ NortDisc::bounce(const RayInfo& rInfo, const Point3F& vec, bool bounceExp)
       if(bounceExp)
          this->createBounceExplosion(rInfo);
 
-		this->addLaserTrailNode(rInfo.point, false);
+		this->addLaserTrailNode(rInfo.point, true);
 
 #if 0
 		// NortDiscs create oriented decals when bouncing...

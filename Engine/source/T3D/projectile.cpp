@@ -34,6 +34,15 @@
 #include "console/engineAPI.h"
 #include "NOTC/fx/multiNodeLaserBeam.h"
 
+const char* ProjectileData::sEmitterNode[ProjectileData::MaxEmitterNodes] =
+{
+   "LaserTrail0Node",
+   "LaserTrail1Node",
+   "LaserTrail2Node",
+};
+
+//----------------------------------------------------------------------------
+
 
 IMPLEMENT_CO_DATABLOCK_V1(ProjectileData);
 
@@ -130,6 +139,9 @@ U32 Projectile::smProjectileWarpTicks = 5;
 ProjectileData::ProjectileData()
 {
    projectileShapeName = NULL;
+
+   for(S32 i=0; i < MaxEmitterNodes; i++)
+      emitterNode[i] = -1;
 
    sound = NULL;
 
@@ -407,6 +419,10 @@ bool ProjectileData::preload(bool server, String &errorStr)
       }
       activateSeq = projectileShape->findSequence("activate");
       maintainSeq = projectileShape->findSequence("maintain");
+
+      // Resolve emitter nodes
+      for(S32 i=0; i<MaxEmitterNodes; i++)
+         emitterNode[i] = projectileShape->findNode(sEmitterNode[i]);
    }
 
    if (bool(projectileShape)) // create an instance to preload shape data
@@ -1236,8 +1252,8 @@ void Projectile::explode( const Point3F &p, const Point3F &n, const U32 collideT
       }
 
       if(mEmissionCount == 0)
-         this->addLaserTrailNode(mInitialPosition);
-      this->addLaserTrailNode(p);
+         this->addLaserTrailNode(mInitialPosition, false);
+      this->addLaserTrailNode(p, false);
 
       // Client object
       updateSound();
@@ -1453,11 +1469,11 @@ void Projectile::simulate( F32 dt )
       if(mEmissionCount == 0)
       {
          emitParticles(mInitialPosition, newPosition, mCurrVelocity, U32( dt * 1000.0f ) );
-         this->addLaserTrailNode(mInitialPosition);
+         this->addLaserTrailNode(mInitialPosition, false);
       }
       else
          emitParticles(mCurrPosition, newPosition, mCurrVelocity, U32( dt * 1000.0f ) );
-      this->addLaserTrailNode(newPosition);
+      this->addLaserTrailNode(newPosition, true);
       mEmissionCount++;
       updateSound();
    }
@@ -1518,16 +1534,24 @@ void Projectile::updateTargetTracking()
 	mCurrVelocity *= speed; 
 }
 
-void Projectile::addLaserTrailNode(const Point3F& pos, bool minorNode)
+void Projectile::addLaserTrailNode(const Point3F& pos, bool useEmitterNode)
 {
    if(this->isServerObject())
       return;
 
-   if(mHasExploded && mEmissionCount != 0)
-      return;
-
    for(S32 i = 0; i < ProjectileData::NumLaserTrails; i++)
    {
+      Point3F p = pos;
+      if(useEmitterNode && mProjectileShape && mDataBlock->emitterNode[i] != -1)
+      {
+         MatrixF xform = this->getRenderTransform();
+         xform.setPosition(pos);
+
+         MatrixF mat;
+         mat.mul(xform, mProjectileShape->mNodeTransforms[mDataBlock->emitterNode[i]]);
+         mat.getColumn(3,&p);
+      }
+
       if( mLaserTrailList[i] == NULL )
       {
          if( mDataBlock->laserTrail[i] )
@@ -1543,7 +1567,7 @@ void Projectile::addLaserTrailNode(const Point3F& pos, bool minorNode)
             }
             else
             {
-               mLaserTrailList[i]->addNodes(pos);
+               mLaserTrailList[i]->addNodes(p);
                mLaserTrailList[i]->setRender(true);
                mLaserTrailList[i]->fade();
             }
@@ -1551,8 +1575,30 @@ void Projectile::addLaserTrailNode(const Point3F& pos, bool minorNode)
       }
       else
       {
-         mLaserTrailList[i]->addNodes(pos);
+         mLaserTrailList[i]->addNodes(p);
       }
+   }
+}
+
+void Projectile::interpolateLaserTrails(const Point3F& interpPos)
+{
+   for(S32 i = 0; i < ProjectileData::NumLaserTrails; i++)
+   {
+      if(!mLaserTrailList[i])
+         continue;
+
+      Point3F p = interpPos;
+      if(mProjectileShape && mDataBlock->emitterNode[i] != -1)
+      {
+         MatrixF xform = this->getRenderTransform();
+         xform.setPosition(interpPos);
+
+         MatrixF mat;
+         mat.mul(xform, mProjectileShape->mNodeTransforms[mDataBlock->emitterNode[i]]);
+         mat.getColumn(3,&p);
+      }
+
+      mLaserTrailList[i]->setLastNodePos(p);
    }
 }
 
@@ -1613,6 +1659,8 @@ void Projectile::interpolateTick(F32 delta)
    }
    else
       mFadeValue = 1.0;
+
+   this->interpolateLaserTrails(interpPos);
 
    updateSound();
 }
