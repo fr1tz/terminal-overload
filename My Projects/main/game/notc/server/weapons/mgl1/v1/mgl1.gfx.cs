@@ -53,10 +53,12 @@ datablock ParticleEmitterData(WpnMGL1ProjectileParticleEmitter)
 
 datablock MultiNodeLaserBeamData(WpnMGL1ProjectileLaserTrail0)
 {
-	material = "xa_notc_core_shapes_mgl1_projectile_p1_lasertrail0mat";
+	material[0] = "xa_notc_core_shapes_mgl1_projectile_p1_lasertrail0mat0";
+   width[0] = 0.5;
+ 
 	renderMode = $MultiNodeLaserBeamRenderMode::FaceViewer;
-   width = 0.1;
-	fadeTime = 100;
+
+	fadeTime = 300;
 	windCoefficient = 0.0;
 
 	// node x movement...
@@ -75,10 +77,10 @@ datablock MultiNodeLaserBeamData(WpnMGL1ProjectileLaserTrail0)
 
 datablock MultiNodeLaserBeamData(WpnMGL1ProjectileLaserTrail1)
 {
-	material = "xa_notc_core_shapes_mgl1_projectile_p1_lasertrail1mat";
+	material = "xa_notc_core_shapes_mgl1_projectile_p1_lasertrail1mat0";
 	renderMode = $MultiNodeLaserBeamRenderMode::FaceViewer;
-   width = 0.1;
-	fadeTime = 100;
+   width = 0.001;
+	fadeTime = 300;
 	windCoefficient = 0.0;
 
 	// node x movement...
@@ -98,7 +100,7 @@ datablock MultiNodeLaserBeamData(WpnMGL1ProjectileLaserTrail1)
 
 datablock MultiNodeLaserBeamData(WpnMGL1ProjectileLaserTrail2)
 {
-	material = "xa_notc_core_shapes_mgl1_projectile_p1_lasertrail2mat";
+	material = "xa_notc_core_shapes_mgl1_projectile_p1_lasertrail2mat0";
 	renderMode = $MultiNodeLaserBeamRenderMode::FaceViewer;
    width = 0.1;
 	fadeTime = 1000;

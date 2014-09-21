@@ -98,7 +98,7 @@ function WpnMGL1PseudoProjectile::onAdd(%this, %obj)
 
 datablock ProjectileData(WpnMGL1Projectile)
 {
-   projectileShapeName = "content/xa/notc/core/shapes/mgl1/projectile/p1/shape.dae";
+   projectileShapeName = "content/xa/notc/core/shapes/mgl1/projectile/p2/shape.dae";
    
    sound = WpnMGL1ProjectileSound;
 
@@ -121,7 +121,7 @@ datablock ProjectileData(WpnMGL1Projectile)
    explosion           = "WpnMGL1ProjectileExplosion";
    decal               = "WpnMGL1ProjectileDecal";
    laserTrail[0]       = "WpnMGL1ProjectileLaserTrail0";
-   laserTrail[1]       = "WpnMGL1ProjectileLaserTrail1";
+   //laserTrail[1]       = "WpnMGL1ProjectileLaserTrail1";
    laserTrail[2]       = "WpnMGL1ProjectileLaserTrail2";
    //particleEmitter     = "WpnMGL1ProjectileParticleEmitter";
 
