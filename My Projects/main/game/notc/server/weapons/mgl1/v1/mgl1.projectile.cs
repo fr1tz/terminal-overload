@@ -118,12 +118,15 @@ datablock ProjectileData(WpnMGL1Projectile)
  
    energyDrain = 8;
 
-   explosion           = "WpnMGL1ProjectileExplosion";
-   decal               = "WpnMGL1ProjectileDecal";
-   laserTrail[0]       = "WpnMGL1ProjectileLaserTrail0";
-   //laserTrail[1]       = "WpnMGL1ProjectileLaserTrail1";
-   laserTrail[2]       = "WpnMGL1ProjectileLaserTrail2";
-   //particleEmitter     = "WpnMGL1ProjectileParticleEmitter";
+   explosion                  = "WpnMGL1ProjectileExplosion";
+   nearEnemyExplosion         = "WpnMGL1ProjectileSplashDmgExplosion";
+   impactExplosion[0]         = "WpnMGL1ProjectileImpactDmgExplosion";
+   impactExplosionTypeMask[0] = $TypeMasks::ShapeBaseObjectType;
+   decal                      = "WpnMGL1ProjectileDecal";
+   laserTrail[0]              = "WpnMGL1ProjectileLaserTrail0";
+   //laserTrail[1]            = "WpnMGL1ProjectileLaserTrail1";
+   laserTrail[2]              = "WpnMGL1ProjectileLaserTrail2";
+   //particleEmitter          = "WpnMGL1ProjectileParticleEmitter";
 
    muzzleVelocity      = 300;
    velInheritFactor    = 0.75;

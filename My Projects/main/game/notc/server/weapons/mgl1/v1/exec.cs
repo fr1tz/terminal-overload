@@ -3,6 +3,9 @@
 
 exec("./mgl1.sfx.cs");
 exec("./mgl1.gfx.cs");
+exec("./mgl1.gfx.explosion.cs");
+exec("./mgl1.gfx.splashdmg.cs");
+exec("./mgl1.gfx.impactdmg.cs");
 exec("./mgl1.item.cs");
 exec("./mgl1.projectile.cs");
 exec("./mgl1.image.cs");
