@@ -155,6 +155,13 @@ ProjectileData::ProjectileData()
    missEnemyEffectId = 0;
    missEnemyEffectRadius = 0;
 
+   for(U32 i = 0; i < NumImpactExplosions; i++)
+   {
+      impactExplosion[i] = NULL;
+      impactExplosionId[i] = 0;
+      impactExplosionTypeMask[i] = 0xFFFFFFFF;
+   }
+
    for(U32 i = 0; i < NumBounceEffects; i++)
    {
       bounceEffect[i] = NULL;
@@ -261,6 +268,11 @@ void ProjectileData::initPersistFields()
       "@brief Explosion datablock used when the projectile misses an enemy.\n\n");
    addField("missEnemyEffectRadius", TypeS32, Offset(missEnemyEffectRadius, ProjectileData),
       "@brief How close the projectile has to be to an enemy to trigger the missedEnemyEffect.\n\n");
+
+   addField("impactExplosion", TYPEID< ExplosionData >(), Offset(impactExplosion, ProjectileData), NumImpactExplosions,
+      "@brief Explosion datablock used when the projectile impacts.\n\n");
+   addField("impactExplosionTypeMask", TypeS32, Offset(impactExplosionTypeMask, ProjectileData), NumImpactExplosions,
+      "@brief Use corresponding impact explosion when colliding with objects of this type.\n\n");
 
    addField("bounceEffect", TYPEID< ExplosionData >(), Offset(bounceEffect, ProjectileData), NumBounceEffects,
       "@brief Explosion datablock used when the projectile bounces.\n\n");
@@ -370,6 +382,13 @@ bool ProjectileData::preload(bool server, String &errorStr)
          if (Sim::findObject(missEnemyEffectId, missEnemyEffect) == false)
             Con::errorf(ConsoleLogEntry::General, "ProjectileData::preload: Invalid packet, bad datablockId(missEnemyEffect): %d", missEnemyEffectId);
 
+      for(U32 i = 0; i < NumImpactExplosions; i++)
+      {
+         if (!impactExplosion[i] && impactExplosionId[i] != 0)
+            if (Sim::findObject(impactExplosionId[i], impactExplosion[i]) == false)
+               Con::errorf(ConsoleLogEntry::General, "ProjectileData::preload: Invalid packet, bad datablockId(impactExplosion[%i]): %d", i, impactExplosionId[i]);
+      }
+
       for(U32 i = 0; i < NumBounceEffects; i++)
       {
          if (!bounceEffect[i] && bounceEffectId[i] != 0)
@@ -478,6 +497,16 @@ void ProjectileData::packData(BitStream* stream)
                                                  DataBlockObjectIdLast);
    }
 
+   for(U32 i = 0; i < NumImpactExplosions; i++)
+   {
+      if(stream->writeFlag(impactExplosion[i] != NULL))
+      {
+         stream->writeRangedU32(impactExplosion[i]->getId(), DataBlockObjectIdFirst,
+                                                    DataBlockObjectIdLast);
+         stream->write(impactExplosionTypeMask[i]);
+      }
+   }
+
    for(U32 i = 0; i < NumBounceEffects; i++)
    {
       if(stream->writeFlag(bounceEffect[i] != NULL))
@@ -584,6 +613,15 @@ void ProjectileData::unpackData(BitStream* stream)
    {
       missEnemyEffectRadius = stream->readInt(10); 
       missEnemyEffectId = stream->readRangedU32(DataBlockObjectIdFirst, DataBlockObjectIdLast);
+   }
+
+   for(U32 i = 0; i < NumImpactExplosions; i++)
+   {
+      if(stream->readFlag())
+      {
+         impactExplosionId[i] = stream->readRangedU32(DataBlockObjectIdFirst, DataBlockObjectIdLast);
+         stream->read(&impactExplosionTypeMask[i]);
+      }
    }
 
    for(U32 i = 0; i < NumBounceEffects; i++)
@@ -1206,28 +1244,38 @@ void Projectile::explode( const Point3F &p, const Point3F &n, const U32 collideT
    {
       // Client just plays the explosion at the right place...
       //       
+      ExplosionData* pData = mDataBlock->explosion;
       Explosion* pExplosion = NULL;
 
-      if (mDataBlock->waterExplosion && pointInWater(p))
+      if(mDataBlock->waterExplosion && pointInWater(p))
       {
-         pExplosion = new Explosion;
-         pExplosion->setPalette(this->getPalette());
-         pExplosion->onNewDataBlock(mDataBlock->waterExplosion, false);
+         pData = mDataBlock->waterExplosion;
       }
       else if(collideType == 0 && mDataBlock->nearEnemyExplosion)
       {
-         pExplosion = new Explosion;
-         pExplosion->setPalette(this->getPalette());
-         pExplosion->onNewDataBlock(mDataBlock->nearEnemyExplosion, false);
+         pData = mDataBlock->nearEnemyExplosion;
       }
-      else if (mDataBlock->explosion)
+      else
+      {
+         for(U32 i = 0; i < ProjectileData::NumImpactExplosions; i++)
+         {
+            if(mDataBlock->impactExplosion[i] != NULL
+            && (mDataBlock->impactExplosionTypeMask[i] & collideType))
+            {
+               pData = mDataBlock->impactExplosion[i];
+               break;
+            }
+         }
+      }
+    
+      if(pData)
       {
          pExplosion = new Explosion;
          pExplosion->setPalette(this->getPalette());
-         pExplosion->onNewDataBlock(mDataBlock->explosion, false);
+         pExplosion->onNewDataBlock(pData, false);
       }
 
-      if( pExplosion )
+      if(pExplosion)
       {
          MatrixF xform(true);
          xform.setPosition(explodePos);

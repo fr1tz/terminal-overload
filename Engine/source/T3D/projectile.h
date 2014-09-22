@@ -48,6 +48,7 @@ protected:
 
 public:
    enum {
+      NumImpactExplosions = 4,
       NumBounceEffects = 4,
       NumLaserTrails = 3
    };
@@ -113,6 +114,11 @@ public:
    ExplosionData* missEnemyEffect;
    S32 missEnemyEffectId;
    S32 missEnemyEffectRadius;
+
+	/// Explosion when hitting something (purely cosmetic)
+   ExplosionData* impactExplosion[NumImpactExplosions];
+   S32 impactExplosionId[NumImpactExplosions];
+   U32 impactExplosionTypeMask[NumImpactExplosions];
 
 	/// Explosion when bouncing (purely cosmetic)
    ExplosionData* bounceEffect[NumBounceEffects];
