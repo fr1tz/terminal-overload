@@ -17,17 +17,3 @@ singleton Material(xa_notc_core_shapes_mgl1_impactdmg_p1_mat1)
    wireframe[1] = "1";
 };
 
-
-singleton Material(shape_xa_notc_core_shapes_mgl1_impactdmg_p1_mat1)
-{
-   mapTo = "xa_notc_core_shapes_mgl1_impactdmg_p1_mat1";
-   diffuseColor[0] = "0.0223268 0.64 0.016611 1";
-   translucentBlendOp = "None";
-};
-
-singleton Material(shape_xa_notc_core_shapes_mgl1_impactdmg_p1_mat1)
-{
-   mapTo = "xa_notc_core_shapes_mgl1_impactdmg_p1_mat1";
-   diffuseColor[0] = "0.0223268 0.64 0.016611 1";
-   translucentBlendOp = "None";
-};
