@@ -139,6 +139,7 @@ U32 Projectile::smProjectileWarpTicks = 5;
 ProjectileData::ProjectileData()
 {
    projectileShapeName = NULL;
+   hideShapeWhileOverlappingMuzzlePoint = false;
 
    for(S32 i=0; i < MaxEmitterNodes; i++)
       emitterNode[i] = -1;
@@ -245,6 +246,9 @@ void ProjectileData::initPersistFields()
 
    addField("projectileShapeName", TypeShapeFilename, Offset(projectileShapeName, ProjectileData),
       "@brief File path to the model of the projectile.\n\n");
+   addField("hideShapeWhileOverlappingMuzzlePoint", TypeBool, Offset(hideShapeWhileOverlappingMuzzlePoint, ProjectileData),
+      "@brief Don't render projectile shape while its muzzle point is still within its bounding box.\n\n");
+
    addField("scale", TypePoint3F, Offset(scale, ProjectileData),
       "@brief Scale to apply to the projectile's size.\n\n"
       "@note This is applied after SceneObject::scale\n");
@@ -462,6 +466,7 @@ void ProjectileData::packData(BitStream* stream)
 	stream->writeInt(trackingAgility,32);
 
    stream->writeString(projectileShapeName);
+   stream->writeFlag(hideShapeWhileOverlappingMuzzlePoint);
    stream->writeFlag(faceViewer);
    if(stream->writeFlag(scale.x != 1 || scale.y != 1 || scale.z != 1))
    {
@@ -580,6 +585,8 @@ void ProjectileData::unpackData(BitStream* stream)
 	trackingAgility = stream->readInt(32);
 
    projectileShapeName = stream->readSTString();
+   hideShapeWhileOverlappingMuzzlePoint = stream->readFlag();
+
 
    faceViewer = stream->readFlag();
    if(stream->readFlag())
@@ -1960,7 +1967,8 @@ void Projectile::prepBatchRender( SceneRenderState *state )
    if ( !mProjectileShape )
       return;
 
-	if(this->getRenderWorldBox().isContained(mInitialPosition))
+	if(mDataBlock->hideShapeWhileOverlappingMuzzlePoint
+   && this->getRenderWorldBox().isContained(mInitialPosition))
 		return;
 
    GFXTransformSaver saver;

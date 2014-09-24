@@ -56,6 +56,7 @@ public:
    // variables set in datablock definition:
    // Shape related
    const char* projectileShapeName;
+   bool hideShapeWhileOverlappingMuzzlePoint;
 
    enum EmitterNodes {
       // These enums index into a static name list.
