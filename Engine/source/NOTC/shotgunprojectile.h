@@ -36,6 +36,9 @@ public:
 	F32 referenceSpreadRadius;
 	F32 referenceSpreadDistance;
 
+   ShotgunProjectileData* tracer;
+   S32 tracerId;
+
 	ShotgunProjectileData();
 
 	void packData(BitStream*);

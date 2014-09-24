@@ -56,6 +56,9 @@ ShotgunProjectileData::ShotgunProjectileData()
 	muzzleSpreadRadius = 0.0f;
 	referenceSpreadRadius = 0.0f;
 	referenceSpreadDistance = 0.0f;
+
+   tracer = NULL;
+   tracerId = 0;
 }
 
 //--------------------------------------------------------------------------
@@ -72,6 +75,7 @@ void ShotgunProjectileData::initPersistFields()
 	addField("muzzleSpreadRadius",	   TypeF32,  Offset(muzzleSpreadRadius, ShotgunProjectileData));
 	addField("referenceSpreadRadius",	TypeF32,  Offset(referenceSpreadRadius, ShotgunProjectileData));
 	addField("referenceSpreadDistance", TypeF32,  Offset(referenceSpreadDistance, ShotgunProjectileData));
+   addField("tracer",                  TYPEID<ShotgunProjectileData>(), Offset(tracer, ShotgunProjectileData));
 }
 
 //--------------------------------------------------------------------------
@@ -89,6 +93,13 @@ bool ShotgunProjectileData::preload(bool server, String &errorStr)
 {
    if (Parent::preload(server, errorStr) == false)
       return false;
+
+   if(!server)
+   {
+      if(!tracer && tracerId != 0)
+         if(Sim::findObject(tracerId, tracer) == false)
+            Con::errorf(ConsoleLogEntry::General, "ShotgunProjectileData::preload: Invalid packet, bad datablockId(tracer): %d", tracerId);
+   }
 
    return true;
 }
@@ -111,6 +122,9 @@ void ShotgunProjectileData::packData(BitStream* stream)
    stream->write(muzzleSpreadRadius);
 	stream->write(referenceSpreadRadius);
 	stream->write(referenceSpreadDistance);
+
+   if(stream->writeFlag(tracer != NULL))
+      stream->writeRangedU32(tracer->getId(), DataBlockObjectIdFirst, DataBlockObjectIdLast);
 }
 
 void ShotgunProjectileData::unpackData(BitStream* stream)
@@ -129,6 +143,9 @@ void ShotgunProjectileData::unpackData(BitStream* stream)
    stream->read(&muzzleSpreadRadius);
 	stream->read(&referenceSpreadRadius);
 	stream->read(&referenceSpreadDistance);
+
+   if(stream->readFlag())
+      tracerId = stream->readRangedU32(DataBlockObjectIdFirst, DataBlockObjectIdLast);
 }
 
 //--------------------------------------------------------------------------
@@ -933,7 +950,7 @@ void ShotgunProjectile::clientProcessHits()
 
          this->missedEnemiesCheck(muzzlePoint, impactPos);
 
-         if(false /*mDataBlock->muzzleVelocity > 0*/)
+         if(mDataBlock->tracer)
          {
 			   Point3F velocity = impactPos - muzzlePoint;
 			   F32 dist = velocity.len();
@@ -941,7 +958,7 @@ void ShotgunProjectile::clientProcessHits()
 			   //if(mDataBlock->spread == 0.0 && !hit->object.isNull())
 			   //	velocity *= dist / (mDataBlock->lifetime * (F32(TickMs) / 1000.0f));
 			   //else
-				   velocity *= mDataBlock->muzzleVelocity;
+				   velocity *= mDataBlock->tracer->muzzleVelocity;
 
 			   ShotgunProjectileTracer* prj = new ShotgunProjectileTracer(&impactPos);
 			   prj->mCurrPosition     = muzzlePoint;
@@ -951,20 +968,12 @@ void ShotgunProjectile::clientProcessHits()
 
 			   prj->setTeamId(this->getTeamId());
             prj->setPalette(this->getPalette());
-			   prj->onNewDataBlock(mDataBlock, false);
+			   prj->onNewDataBlock(mDataBlock->tracer, false);
 			   if(!prj->registerObject())
 			   {
 				   Con::warnf(ConsoleLogEntry::General, "Could not register shotgun tracer projectile for image: %s", mDataBlock->getName());
 				   delete prj;
 				   prj = NULL;
-			   }
-
-			   if(hit->object.isNull())
-			   {
-   #if 0
-				   prj->disableLaserTrail(1);
-   #endif
-				   continue;
 			   }
          }
 
@@ -997,36 +1006,24 @@ void ShotgunProjectile::clientProcessHits()
             }
          }
 
-			SceneObject* sObj = hit->object.operator->();
-#if 0
-			if( sObj->getType() & Projectile::csmDynamicCollisionMask )
-			{
-				if( ((ShapeBase*)sObj)->getTeamId() == mTeamId )
-				{
-					mExplosionType = Projectile::HitTeammateExplosion;
-					prj->disableLaserTrail(1);
-				}
-				else
-				{
-					mExplosionType = Projectile::HitEnemyExplosion;
-					prj->disableLaserTrail(0);
-				}
-			}
-			else
-			{
-				mExplosionType = Projectile::StandardExplosion;
-				prj->disableLaserTrail(1);
-			}
-#endif
-			
 			ExplosionData* datablock = mDataBlock->explosion;
 
-#if 0
-			if( mExplosionType == HitEnemyExplosion && mDataBlock->hitEnemyExplosion != NULL )
-				datablock = mDataBlock->hitEnemyExplosion;
-			else if( mExplosionType == HitTeammateExplosion && mDataBlock->hitTeammateExplosion != NULL )
-				datablock = mDataBlock->hitTeammateExplosion;
-#endif
+         if(mDataBlock->waterExplosion && pointInWater(impactPos))
+         {
+            datablock = mDataBlock->waterExplosion;
+         }
+         else if(!hit->object.isNull())
+         {
+            for(U32 i = 0; i < ProjectileData::NumImpactExplosions; i++)
+            {
+               if(mDataBlock->impactExplosion[i] != NULL
+               && (mDataBlock->impactExplosionTypeMask[i] & hit->object->getTypeMask()))
+               {
+                  datablock = mDataBlock->impactExplosion[i];
+                  break;
+               }
+            }
+         }
 
 			if(datablock != NULL)
 			{
