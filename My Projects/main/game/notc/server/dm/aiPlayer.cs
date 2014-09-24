@@ -402,6 +402,7 @@ function AIPlayer::spawn(%loadout, %path)
    {
       Game.loadOut(%player);
       
+      %player.setInventory(WpnSMG2, 1);
       %player.setInventory(WpnSG1, 1);
       %player.setInventory(WpnSG1Ammo, 9999);
       %player.setInventory(WpnSG2, 1);
@@ -419,7 +420,7 @@ function AIPlayer::spawn(%loadout, %path)
       
       if(%loadout == 1)
       {
-         %player.mountImage(WpnSMG1Image, 0);
+         %player.mountImage(WpnSMG2Image, 0);
          %player.singleShot();
       }
       else if(%loadout == 2)
