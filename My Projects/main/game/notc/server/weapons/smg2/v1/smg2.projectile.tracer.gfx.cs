@@ -5,7 +5,7 @@ datablock MultiNodeLaserBeamData(WpnSMG2ProjectileTracerLaserTrail0)
 {
 	material = "xa_notc_core_shapes_smg2_tracer_p1_lasertrail0mat";
 	renderMode = $MultiNodeLaserBeamRenderMode::FaceViewer;
-   width = 0.10;
+   width = 0.05;
 	fadeTime = 100;
 	windCoefficient = 0.0;
 	//nodeDistance = 3;

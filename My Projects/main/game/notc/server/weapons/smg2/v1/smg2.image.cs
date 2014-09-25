@@ -41,7 +41,7 @@ datablock ShapeBaseImageData(WpnSMG2Image)
 
    // Weapon lights up while firing
    lightType = "WeaponFireLight";
-   lightColor = "0.992126 0.874016 0 1";
+   lightColor = "1 1 1 1";
    lightRadius = "10";
    lightDuration = "100";
    lightBrightness = 2;
@@ -88,7 +88,7 @@ datablock ShapeBaseImageData(WpnSMG2Image)
       stateTransitionOnTriggerUp[5]    = "KeepAiming";
       stateTransitionOnNoAmmo[5]       = "NoAmmo";
       stateTransitionOnTimeout[5]      = "Fire";
-      stateTimeoutValue[5]             = 0.096;
+      stateTimeoutValue[5]             = 0.064;
       stateFire[5]                     = true;
       stateFireProjectile[5]           = WpnSMG2Projectile;
       stateRecoil[5]                   = "LightRecoil";

@@ -61,7 +61,7 @@ datablock ExplosionData(WpnSMG2ProjectileImpact)
 	times[1] = 1.0;
 
 	emitter[0] = WpnSMG2ProjectileImpact_DebrisEmitter;
-	//emitter[1] = WpnSMG2ProjectileImpactExplosion_SmokeEmitter;
+	emitter[1] = WpnSMG2ProjectileExplosion_SmokeEmitter;
    emitter[2] = WpnSMG2ProjectileExplosion_CloudEmitter;
 
 	//debris = WpnSMG2ProjectileImpactExplosion_Debris;

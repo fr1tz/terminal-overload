@@ -5,8 +5,8 @@
       <author>Blender User</author>
       <authoring_tool>Blender 2.71.0 commit date:2014-06-25, commit time:18:36, hash:9337574</authoring_tool>
     </contributor>
-    <created>2014-09-24T10:36:15</created>
-    <modified>2014-09-24T10:36:15</modified>
+    <created>2014-09-24T17:34:47</created>
+    <modified>2014-09-24T17:34:47</modified>
     <unit name="meter" meter="1"/>
     <up_axis>Z_UP</up_axis>
   </asset>
@@ -105,6 +105,39 @@
         </polylist>
       </mesh>
     </geometry>
+    <geometry id="Cylinder_001-mesh" name="Cylinder.001">
+      <mesh>
+        <source id="Cylinder_001-mesh-positions">
+          <float_array id="Cylinder_001-mesh-positions-array" count="18">0 0.9998988 -1341.697 5.80152e-7 16.20001 96.60742 0.8660254 -0.5001013 -1341.697 14.02961 -8.099995 96.60742 -0.8660255 -0.5001011 -1341.697 -14.02961 -8.099992 96.60742</float_array>
+          <technique_common>
+            <accessor source="#Cylinder_001-mesh-positions-array" count="6" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Cylinder_001-mesh-normals">
+          <float_array id="Cylinder_001-mesh-normals-array" count="24">0.8660133 0.4999929 -0.005283951 -0.8660134 0.4999931 -0.005283951 0 -0.9999861 -0.005283832 0 0 1 0 0 -1 0.8660133 0.499993 -0.005283951 -0.8660133 0.499993 -0.005283951 0 -0.999986 -0.005283832</float_array>
+          <technique_common>
+            <accessor source="#Cylinder_001-mesh-normals-array" count="8" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Cylinder_001-mesh-vertices">
+          <input semantic="POSITION" source="#Cylinder_001-mesh-positions"/>
+        </vertices>
+        <polylist material="xa_notc_core_shapes_smg2_tracer_p1_mat1-material" count="8">
+          <input semantic="VERTEX" source="#Cylinder_001-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Cylinder_001-mesh-normals" offset="1"/>
+          <vcount>3 3 3 3 3 3 3 3 </vcount>
+          <p>0 0 1 0 3 0 4 1 5 1 1 1 2 2 3 2 5 2 3 3 1 3 5 3 0 4 2 4 4 4 2 5 0 5 3 5 0 6 4 6 1 6 4 7 2 7 5 7</p>
+        </polylist>
+      </mesh>
+    </geometry>
   </library_geometries>
   <library_controllers/>
   <library_visual_scenes>
@@ -116,6 +149,16 @@
       <node id="b100" name="b100" type="NODE">
         <matrix sid="transform">0.006000001 0 0 -5.07567e-9 0 4.52988e-10 0.006000001 0 0 -0.006000001 4.52988e-10 0 0 0 0 1</matrix>
         <instance_geometry url="#Cylinder-mesh">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="xa_notc_core_shapes_smg2_tracer_p1_mat1-material" target="#xa_notc_core_shapes_smg2_tracer_p1_mat1-material"/>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+      <node id="C100" name="C100" type="NODE">
+        <matrix sid="transform">0.006000001 0 0 -5.07567e-9 0 4.52988e-10 0.006000001 0 0 -0.006000001 4.52988e-10 0 0 0 0 1</matrix>
+        <instance_geometry url="#Cylinder_001-mesh">
           <bind_material>
             <technique_common>
               <instance_material symbol="xa_notc_core_shapes_smg2_tracer_p1_mat1-material" target="#xa_notc_core_shapes_smg2_tracer_p1_mat1-material"/>

@@ -15,7 +15,7 @@ datablock ParticleData(WpnSMG2ProjectileExplosion_Smoke)
 	textureName = "content/xa/notc/core/textures/circle.512.500.png";
 
 	colors[0]	  = "1.0 1.0 1.0 1.0";
-	colors[1]	  = "1.0 1.0 1.0 0.0";
+	colors[1]	  = "1 1 1 1";
 	sizes[0]		= "0.997986";
 	sizes[1]		= 0.0;
 	times[0]		= 0.0;
@@ -29,7 +29,7 @@ datablock ParticleData(WpnSMG2ProjectileExplosion_Smoke)
 
 datablock ParticleEmitterData(WpnSMG2ProjectileExplosion_SmokeEmitter)
 {
-	ejectionPeriodMS = "50";
+	ejectionPeriodMS = "1";
 	periodVarianceMS = 0;
 	ejectionVelocity = "0";
 	velocityVariance = 0;
@@ -40,10 +40,10 @@ datablock ParticleEmitterData(WpnSMG2ProjectileExplosion_SmokeEmitter)
 	phiVariance		= 360;
 	overrideAdvances = 0;
 	orientParticles  = false;
-	lifetimeMS		 = 50;
+	lifetimeMS		 = "1";
 	particles = "WpnSMG2ProjectileExplosion_Smoke";
    paletteSlot = 0;
-   blendStyle = "NORMAL";
+   blendStyle = "PREMULTALPHA";
    targetLockTimeMS = "480";
 };
 
