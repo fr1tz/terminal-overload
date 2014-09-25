@@ -311,15 +311,14 @@ function ETH::loadoutPlayer(%player)
          %player.setInventory(WpnMGL2, 1);
          %player.setInventory(WpnSG2, 1);
          %player.setInventory(WpnSG2Ammo, 9999);
-         %player.addToWeaponCycle(WpnMGL1);
+         %player.addToWeaponCycle(WpnMGL2);
          %player.addToWeaponCycle(WpnSG2);
-         %player.mountImage(WpnMGL1Image, 0);
+         %player.mountImage(WpnMGL2Image, 0);
       case 2:
          %player.setInventory(ItemStealth, 1);
-         %player.setInventory(WpnSR1, 1);
-         %player.setInventory(WpnSR1Ammo, 9999);
-         %player.addToWeaponCycle(WpnSR1);
-         %player.mountImage(WpnSR1Image, 0);
+         %player.setInventory(WpnSR2, 1);
+         %player.addToWeaponCycle(WpnSR2);
+         %player.mountImage(WpnSR2Image, 0);
       case 3:
          %player.setInventory(WpnMG2, 1);
          %player.addToWeaponCycle(WpnMG2);

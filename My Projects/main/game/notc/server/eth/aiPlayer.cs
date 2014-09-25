@@ -390,8 +390,7 @@ function AIPlayer::spawn(%teamId, %weapon)
       %player.setInventory(WpnSG2Ammo, 9999);
       %player.setInventory(WpnMG2, 1);
       %player.setInventory(WpnMGL2, 1);
-      %player.setInventory(WpnSR1, 1);
-      %player.setInventory(WpnSR1Ammo, 9999);
+      %player.setInventory(WpnSR2, 1);
       
       %player.shootingDelay = 100;
       //%player.followPath(%path, -1);
@@ -420,7 +419,7 @@ function AIPlayer::spawn(%teamId, %weapon)
       }
       else if(%weapon == 5)
       {
-         %player.mountImage(WpnSR1Image, 0);
+         %player.mountImage(WpnSR2Image, 0);
          %player.singleShot();
       }
       else if(%weapon == 6)
