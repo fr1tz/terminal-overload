@@ -157,7 +157,7 @@ function GameCoreDM::loadOut(%game, %player)
    %player.addToWeaponCycle(WpnSMG2);
    %player.addToWeaponCycle(WpnSG1);
    %player.addToWeaponCycle(WpnSR1);
-   %player.addToWeaponCycle(WpnMG1);
+   %player.addToWeaponCycle(WpnMG2);
    //%player.addToWeaponCycle(WpnML1);
 
    %player.setInventory(ItemImpShield, 1);
