@@ -403,8 +403,7 @@ function AIPlayer::spawn(%loadout, %path)
       Game.loadOut(%player);
       
       %player.setInventory(WpnSMG2, 1);
-      %player.setInventory(WpnSG1, 1);
-      %player.setInventory(WpnSG1Ammo, 9999);
+      %player.setInventory(WpnSG3, 1);
       %player.setInventory(WpnSG2, 1);
       %player.setInventory(WpnSG2Ammo, 9999);
       %player.setInventory(WpnMG1, 1);
