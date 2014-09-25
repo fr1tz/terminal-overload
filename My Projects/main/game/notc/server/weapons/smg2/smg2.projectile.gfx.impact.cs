@@ -47,7 +47,7 @@ datablock ParticleEmitterData(WpnSMG2ProjectileImpact_DebrisEmitter)
 
 datablock ExplosionData(WpnSMG2ProjectileImpact)
 {
-	soundProfile = WpnSMG2ProjectileExplosionSound;
+	soundProfile = WpnSMG2ProjectileImpactSound;
 
 	lifetimeMS = "192";
 

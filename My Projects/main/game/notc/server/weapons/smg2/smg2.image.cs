@@ -98,7 +98,7 @@ datablock ShapeBaseImageData(WpnSMG2Image)
       stateSequenceNeverTransition[5]  = true;
       stateSequenceRandomFlash[5]      = false;        // use muzzle flash sequence
       stateSound[5]                    = WpnSMG2FireSound;
-      stateSoundFlags[5]               = 1;
+      stateSoundFlags[5]               = 0;
       //stateScript[5]                 = "onFire";
       //stateEmitter[5]                = WpnSMG2FireSmokeEmitter;
       //stateEmitterTime[5]            = 0.025;

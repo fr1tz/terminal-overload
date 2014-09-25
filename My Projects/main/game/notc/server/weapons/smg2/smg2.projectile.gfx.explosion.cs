@@ -87,8 +87,6 @@ datablock ParticleEmitterData(WpnSMG2ProjectileExplosion_CloudEmitter : DefaultE
 
 datablock ExplosionData(WpnSMG2ProjectileExplosion)
 {
-	soundProfile = WpnSMG2ProjectileExplosionSound;
-
 	lifetimeMS = "192";
 
 	// shape...
