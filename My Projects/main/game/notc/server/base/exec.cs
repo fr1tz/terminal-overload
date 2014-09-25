@@ -64,6 +64,7 @@ function executeBaseServerScripts()
    exec("notc/server/weapons/sg2/exec.cs");
    exec("notc/server/weapons/sg3/exec.cs");
    exec("notc/server/weapons/sr1/exec.cs");
+   exec("notc/server/weapons/sr2/exec.cs");
    exec("notc/server/weapons/mg1/exec.cs");
    exec("notc/server/weapons/mg2/exec.cs");
    exec("notc/server/weapons/ml1/exec.cs");
