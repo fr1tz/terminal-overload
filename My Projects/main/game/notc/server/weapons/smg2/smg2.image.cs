@@ -134,8 +134,8 @@ function WpnSMG2Image::onMount(%this, %obj, %slot)
    Parent::onMount(%this, %obj, %slot);
 
    // Set up inaccuracy.
-   %obj.setImageInaccuracy(%slot, "radiusmin", 1.5);
-   %obj.setImageInaccuracy(%slot, "radiusmax", 10.0);
+   %obj.setImageInaccuracy(%slot, "radiusmin", 5.0);
+   %obj.setImageInaccuracy(%slot, "radiusmax", 5.0);
    %obj.setImageInaccuracy(%slot, "a1", 0.0);
    %obj.setImageInaccuracy(%slot, "a2", 0.0);
    %obj.setImageInaccuracy(%slot, "b1", 0.90);
