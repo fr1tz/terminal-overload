@@ -1634,8 +1634,8 @@ U32 Vehicle::packUpdate(NetConnection *con, U32 mask, BitStream *stream)
       stream->writeFlag(mRigid.atRest);
    }
 
-   
-   stream->writeFloat(mClampF(getEnergyValue(), 0.f, 1.f), 8);
+   for(U32 i = 0; i < ShapeBaseData::MaxEnergySlots; i++)
+      stream->writeFloat(mClampF(getEnergyValue(i), 0.f, 1.f), 8);
 
    return retMask;
 }
@@ -1722,7 +1722,8 @@ void Vehicle::unpackUpdate(NetConnection *con, BitStream *stream)
       mRigid.updateCenterOfMass();
    }
 
-   setEnergyLevel(stream->readFloat(8) * mDataBlock->maxEnergy);
+   for(U32 i = 0; i < ShapeBaseData::MaxEnergySlots; i++)
+      setEnergyLevel(stream->readFloat(8) * mDataBlock->maxEnergy[i], i);
 }
 
 
@@ -1883,9 +1884,9 @@ bool Vehicle::collidingWithWater( Point3F &waterHeight )
    return false;
 }
 
-void Vehicle::setEnergyLevel(F32 energy)
+void Vehicle::setEnergyLevel(F32 energy, U32 slot)
 {
-   Parent::setEnergyLevel(energy);
+   Parent::setEnergyLevel(energy, slot);
    setMaskBits(EnergyMask);
 }
 

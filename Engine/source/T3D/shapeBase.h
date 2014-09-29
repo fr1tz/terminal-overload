@@ -539,6 +539,7 @@ public:
    /// Various constants relating to the ShapeBaseData
    enum Constants {
       MaxCollisionShapes = 8,
+      MaxEnergySlots = 3,
       AIRepairNode = 31
    };
 
@@ -593,7 +594,7 @@ public:
    F32 mass;
    F32 drag;
    F32 density;
-   F32 maxEnergy;
+   F32 maxEnergy[MaxEnergySlots];
    F32 maxDamage;
    F32 damageBuffer;
    F32 repairRate;                  ///< Rate per tick.
@@ -978,8 +979,9 @@ protected:
    /// @name Physical Properties
    /// @{
 
-   F32 mEnergy;                     ///< Current enery level.
-   F32 mRechargeRate;               ///< Energy recharge rate (in units/tick).
+   F32 mEnergy[ShapeBaseData::MaxEnergySlots];       ///< Current enery level.
+   F32 mRechargeRate[ShapeBaseData::MaxEnergySlots]; ///< Energy recharge rate (in units/tick).
+
 	F32 mDamageBuffer;               ///< Current damage buffer level
 	F32 mDamageBufferRechargeRate;   ///< Damage buffer recharge rate (in units/tick)
 	F32 mDamageBufferDischargeRate;  ///< Damage buffer discharge rate (in units/tick)
@@ -1417,20 +1419,20 @@ public:
 
    /// Sets the level of energy for this object
    /// @param   energy   Level of energy to assign to this object
-   virtual void setEnergyLevel(F32 energy);
+   virtual void setEnergyLevel(F32 energy, U32 slot = 0);
 
    /// Sets the rate at which the energy replentishes itself
    /// @param   rate   Rate at which energy restores
-   void setRechargeRate(F32 rate) { mRechargeRate = rate; }
+   void setRechargeRate(F32 rate, U32 slot) { mRechargeRate[slot] = rate; }
 
    /// Returns the amount of energy in the object
-   F32  getEnergyLevel();
+   F32  getEnergyLevel(U32 slot = 0);
 
    /// Returns the percentage of energy, 0.0 - 1.0
-   F32  getEnergyValue();
+   F32  getEnergyValue(U32 slot = 0);
 
    /// Returns the recharge rate
-   F32  getRechargeRate() { return mRechargeRate; }
+   F32  getRechargeRate(U32 slot = 0) { return mRechargeRate[slot]; }
 
    /// Sets the rate at which the damage buffer replentishes itself
    /// @param   rate   Rate at which energy restores

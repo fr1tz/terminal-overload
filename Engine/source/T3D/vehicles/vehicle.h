@@ -257,7 +257,7 @@ public:
    /// Returns the velocity of the vehicle
    Point3F getVelocity() const;
 
-   void setEnergyLevel(F32 energy);
+   void setEnergyLevel(F32 energy, U32 slot = 0);
 
    void prepBatchRender( SceneRenderState *state, S32 mountedImageIndex );
 

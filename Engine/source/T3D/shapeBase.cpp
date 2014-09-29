@@ -143,7 +143,6 @@ ShapeBaseData::ShapeBaseData()
    mass( 1.0f ),
    drag( 0.0f ),
    density( 1.0f ),
-   maxEnergy( 0.0f ),
    maxDamage( 1.0f ),
 	damageBuffer( 0.0f ),
    disabledLevel( 1.0f ),
@@ -187,6 +186,8 @@ ShapeBaseData::ShapeBaseData()
    mCRC( 0 ),
    debrisDetail( -1 )
 {      
+   for(U32 i = 0; i < MaxEnergySlots; i++)
+      maxEnergy[i] = 0;
    dMemset( mountPointNode, -1, sizeof( S32 ) * SceneObject::NumMountPoints );
 }
 
@@ -195,7 +196,7 @@ struct ShapeBaseDataProto
    F32 mass;
    F32 drag;
    F32 density;
-   F32 maxEnergy;
+   F32 maxEnergy[ShapeBaseData::MaxEnergySlots];
 	F32 damageBuffer;
    F32 cameraMaxDist;
    F32 cameraMinDist;
@@ -209,7 +210,8 @@ struct ShapeBaseDataProto
       mass = 1;
       drag = 0;
       density = 1;
-      maxEnergy = 0;
+      for(U32 i = 0; i < ShapeBaseData::MaxEnergySlots; i++)
+         maxEnergy[i] = 0;
 		damageBuffer = 0;
       cameraMaxDist = 0;
       cameraMinDist = 0.2f;
@@ -543,7 +545,7 @@ void ShapeBaseData::initPersistFields()
 
    addGroup( "Damage/Energy" );
 
-      addField( "maxEnergy", TypeF32, Offset(maxEnergy, ShapeBaseData),
+      addField( "maxEnergy", TypeF32, Offset(maxEnergy, ShapeBaseData), MaxEnergySlots,
          "Maximum energy level for this object." );
       addField( "maxDamage", TypeF32, Offset(maxDamage, ShapeBaseData),
          "Maximum damage level for this object." );
@@ -723,8 +725,11 @@ void ShapeBaseData::packData(BitStream* stream)
       stream->write(drag);
    if(stream->writeFlag(density != gShapeBaseDataProto.density))
       stream->write(density);
-   if(stream->writeFlag(maxEnergy != gShapeBaseDataProto.maxEnergy))
-      stream->write(maxEnergy);
+   for(U32 i = 0; i < ShapeBaseData::MaxEnergySlots; i++)
+   {
+      if(stream->writeFlag(maxEnergy[i] != gShapeBaseDataProto.maxEnergy[i]))
+         stream->write(maxEnergy[i]);
+   }
    if(stream->writeFlag(damageBuffer != gShapeBaseDataProto.damageBuffer))
       stream->write(damageBuffer);
    if(stream->writeFlag(cameraMaxDist != gShapeBaseDataProto.cameraMaxDist))
@@ -818,10 +823,13 @@ void ShapeBaseData::unpackData(BitStream* stream)
    else
       density = gShapeBaseDataProto.density;
 
-   if(stream->readFlag())
-      stream->read(&maxEnergy);
-   else
-      maxEnergy = gShapeBaseDataProto.maxEnergy;
+   for(U32 i = 0; i < ShapeBaseData::MaxEnergySlots; i++)
+   {
+      if(stream->readFlag())
+         stream->read(&maxEnergy[i]);
+      else
+         maxEnergy[i] = gShapeBaseDataProto.maxEnergy[i];
+   }
 
    if(stream->readFlag())
       stream->read(&damageBuffer);
@@ -950,8 +958,6 @@ ShapeBase::ShapeBase()
    mTimeoutList( NULL ),
    mDataBlock( NULL ),
    mShapeInstance( NULL ),
-   mEnergy( 0.0f ),
-   mRechargeRate( 0.0f ),
 	mDamageBuffer( 0.0f),
 	mDamageBufferRechargeRate( 0.0f ),
 	mDamageBufferDischargeRate( 0.0f ),
@@ -992,6 +998,12 @@ ShapeBase::ShapeBase()
    mTypeMask |= ShapeBaseObjectType | LightObjectType;   
 
    S32 i;
+
+   for(U32 i = 0; i < ShapeBaseData::MaxEnergySlots; i++)
+   {
+      mEnergy[i] = 0.0;
+      mRechargeRate[i] = 0.0;
+   }
 
    for (i = 0; i < MaxSoundThreads; i++) {
       mSoundThread[i].play = false;
@@ -1272,7 +1284,8 @@ bool ShapeBase::onNewDataBlock( GameBaseData *dptr, bool reload )
    }
 
    //
-   mEnergy = 0;
+   for(U32 i = 0; i < ShapeBaseData::MaxEnergySlots; i++)
+      mEnergy[i] = 0;
    mDamage = 0;
    mDamageState = Enabled;
    mRepairReserve = 0;
@@ -1353,19 +1366,23 @@ void ShapeBase::processTick(const Move* move)
 	}
 
    // Energy management
-   if (mDamageState == Enabled && mDataBlock->inheritEnergyFromMount == false) {
-      F32 store = mEnergy;
-      mEnergy += mRechargeRate;
-      if (mEnergy > mDataBlock->maxEnergy)
-         mEnergy = mDataBlock->maxEnergy;
-      else
-         if (mEnergy < 0)
-            mEnergy = 0;
+   if(mDamageState == Enabled && mDataBlock->inheritEnergyFromMount == false)
+   {
+      for(U32 i = 0; i < ShapeBaseData::MaxEnergySlots; i++)
+      {
+         F32 store = mEnergy[i];
+         mEnergy[i] += mRechargeRate[i];
+         if(mEnergy[i] > mDataBlock->maxEnergy[i])
+            mEnergy[i] = mDataBlock->maxEnergy[i];
+         else
+            if(mEnergy[i] < 0)
+               mEnergy[i] = 0;
 
-      // Virtual setEnergyLevel is used here by some derived classes to
-      // decide whether they really want to set the energy mask bit.
-      if (mEnergy != store)
-         setEnergyLevel(mEnergy);
+         // Virtual setEnergyLevel is used here by some derived classes to
+         // decide whether they really want to set the energy mask bit.
+         if(mEnergy[i] != store)
+            setEnergyLevel(mEnergy[i], i);
+      }
    }
 
 	// Damage buffer management
@@ -1706,43 +1723,52 @@ void ShapeBase::onCameraScopeQuery(NetConnection *cr, CameraScopeQuery * query)
 
 
 //----------------------------------------------------------------------------
-F32 ShapeBase::getEnergyLevel()
+F32 ShapeBase::getEnergyLevel(U32 slot)
 {
+   if(slot >= ShapeBaseData::MaxEnergySlots)
+      return 0.0;
+
    if ( mDataBlock->inheritEnergyFromMount && mShapeBaseMount )
-      return mShapeBaseMount->getEnergyLevel();
-   return mEnergy; 
+      return mShapeBaseMount->getEnergyLevel(slot);
+   return mEnergy[slot]; 
 }
 
-F32 ShapeBase::getEnergyValue()
+F32 ShapeBase::getEnergyValue(U32 slot)
 {
-   if ( mDataBlock->inheritEnergyFromMount && mShapeBaseMount )
+   if(slot >= ShapeBaseData::MaxEnergySlots)
+      return 0.0;
+
+   if(mDataBlock->inheritEnergyFromMount && mShapeBaseMount )
    {
-      F32 maxEnergy = mShapeBaseMount->mDataBlock->maxEnergy;
+      F32 maxEnergy = mShapeBaseMount->mDataBlock->maxEnergy[slot];
       if ( maxEnergy > 0.f )
-         return (mShapeBaseMount->getEnergyLevel() / maxEnergy);
+         return (mShapeBaseMount->getEnergyLevel(slot) / maxEnergy);
    }
    else
    {
-      F32 maxEnergy = mDataBlock->maxEnergy;
+      F32 maxEnergy = mDataBlock->maxEnergy[slot];
       if ( maxEnergy > 0.f )
-         return (mEnergy / mDataBlock->maxEnergy);   
+         return (mEnergy[slot] / mDataBlock->maxEnergy[slot]);   
    }
 
    return 0.0f;
 }
 
-void ShapeBase::setEnergyLevel(F32 energy)
+void ShapeBase::setEnergyLevel(F32 energy, U32 slot)
 {
+   if(slot >= ShapeBaseData::MaxEnergySlots)
+      return;
+
    if (mDataBlock->inheritEnergyFromMount == false || !mShapeBaseMount) {
       if (mDamageState == Enabled) {
-         mEnergy = (energy > mDataBlock->maxEnergy)?
-            mDataBlock->maxEnergy: (energy < 0)? 0: energy;
+         mEnergy[slot] = (energy > mDataBlock->maxEnergy[slot])?
+            mDataBlock->maxEnergy[0]: (energy < 0)? 0: energy;
       }
    } else {
       // Pass the set onto whatever we're mounted to...
       if ( mShapeBaseMount )
       {
-         mShapeBaseMount->setEnergyLevel(energy);
+         mShapeBaseMount->setEnergyLevel(energy, slot);
       }
    }
 }
@@ -1944,7 +1970,8 @@ void ShapeBase::setDamageState(DamageState state)
    mDamageState = state;
    if (mDamageState != Enabled) {
       mRepairReserve = 0;
-      mEnergy = 0;
+      for(U32 i = 0; i < ShapeBaseData::MaxEnergySlots; i++)
+         mEnergy[i] = 0;
    }
    if (invokeCallback) {
       // Like to call the scripts after the state has been intialize.
@@ -3281,8 +3308,11 @@ void ShapeBase::writePacketData(GameConnection *connection, BitStream *stream)
 {
    Parent::writePacketData(connection, stream);
 
-   stream->write(getEnergyLevel());
-   stream->write(mRechargeRate);
+   for(U32 i = 0; i < ShapeBaseData::MaxEnergySlots; i++)
+   {
+      stream->write(getEnergyLevel(i));
+      stream->write(mRechargeRate[i]);
+   }
 
 	stream->write(mDamageBuffer);
 }
@@ -3291,10 +3321,13 @@ void ShapeBase::readPacketData(GameConnection *connection, BitStream *stream)
 {
    Parent::readPacketData(connection, stream);
 
-   F32 energy;
-   stream->read(&energy);
-   setEnergyLevel(energy);
-   stream->read(&mRechargeRate);
+   for(U32 i = 0; i < ShapeBaseData::MaxEnergySlots; i++)
+   {
+      F32 energy;
+      stream->read(&energy);
+      setEnergyLevel(energy, i);
+      stream->read(&mRechargeRate[i]);
+   }
 
 	stream->read(&mDamageBuffer);
 }
@@ -5039,29 +5072,35 @@ DefineEngineMethod( ShapeBase, getLookAtPoint, const char*, ( F32 distance, S32 
    return buffer;
 }
 
-DefineEngineMethod( ShapeBase, setEnergyLevel, void, ( F32 level ),,
+DefineEngineMethod( ShapeBase, setEnergyLevel, void, ( F32 level, U32 slot ), ( 0 ),
    "@brief Set this object's current energy level.\n\n"
 
    "@param level new energy level\n"
+   "@param slot energy slot\n"
    
    "@see getEnergyLevel()\n"
    "@see getEnergyPercent()\n")
 {
-   object->setEnergyLevel( level );
+   object->setEnergyLevel( level, slot );
 }
 
-DefineEngineMethod( ShapeBase, getEnergyLevel, F32, (),,
+DefineEngineMethod( ShapeBase, getEnergyLevel, F32, ( U32 slot ), ( 0 ),
    "@brief Get the object's current energy level.\n\n"
+
+   "@param slot energy slot\n"
 
    "@return energy level\n"
    
    "@see setEnergyLevel()\n")
 {
-   return object->getEnergyLevel();
+   return object->getEnergyLevel(slot);
 }
 
-DefineEngineMethod( ShapeBase, getEnergyPercent, F32, (),,
+DefineEngineMethod( ShapeBase, getEnergyPercent, F32, ( U32 slot ), ( 0 ),
    "@brief Get the object's current energy level as a percentage of maxEnergy.\n\n"
+
+   "@param slot energy slot\n"
+
    "@return energyLevel / datablock.maxEnergy\n"
 
    "@see setEnergyLevel()\n")
@@ -5233,27 +5272,30 @@ DefineEngineMethod( ShapeBase, getRepairRate, F32, (),,
    return object->getRepairRate();
 }
 
-DefineEngineMethod( ShapeBase, setRechargeRate, void, ( F32 rate ),,
+DefineEngineMethod( ShapeBase, setRechargeRate, void, ( F32 rate, U32 slot ), ( 0 ),
    "@brief Set the recharge rate.\n\n"
 
    "The recharge rate is added to the object's current energy level each tick, "
    "up to the maxEnergy level set in the ShapeBaseData datablock.\n"
    
    "@param rate the recharge rate (per tick)\n"
+   "@param slot the energy slot\n"
    
    "@see getRechargeRate()\n")
 {
-   object->setRechargeRate( rate );
+   object->setRechargeRate( rate, slot );
 }
 
-DefineEngineMethod( ShapeBase, getRechargeRate, F32, (),,
+DefineEngineMethod( ShapeBase, getRechargeRate, F32, ( U32 slot ), ( 0 ),
    "@brief Get the current recharge rate.\n\n"
+
+   "@param slot the energy slot\n"
 
    "@return the recharge rate (per tick)\n"
    
    "@see setRechargeRate()\n")
 {
-   return object->getRechargeRate();
+   return object->getRechargeRate(slot);
 }
 
 DefineEngineMethod( ShapeBase, setDamageBufferRechargeRate, void, ( F32 rate ),,

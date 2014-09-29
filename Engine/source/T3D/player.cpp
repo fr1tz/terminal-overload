@@ -269,7 +269,8 @@ PlayerData::PlayerData()
    maxTimeScale = 1.5f;
 
    mass = 9.0f;         // from ShapeBase
-   maxEnergy = 60.0f;   // from ShapeBase
+   for(U32 i = 0; i < ShapeBaseData::MaxEnergySlots; i++)
+      maxEnergy[i] = 60.0f;   // from ShapeBase
    drag = 0.3f;         // from ShapeBase
    density = 1.1f;      // from ShapeBase
 
@@ -1323,7 +1324,8 @@ void PlayerData::packData(BitStream* stream)
    stream->write(maxTimeScale);
 
    stream->write(mass);
-   stream->write(maxEnergy);
+   for(U32 i = 0; i < ShapeBaseData::MaxEnergySlots; i++)
+      stream->write(maxEnergy[i]);
    stream->write(drag);
    stream->write(density);
 
@@ -1537,7 +1539,8 @@ void PlayerData::unpackData(BitStream* stream)
    stream->read(&maxTimeScale);
 
    stream->read(&mass);
-   stream->read(&maxEnergy);
+   for(U32 i = 0; i < ShapeBaseData::MaxEnergySlots; i++)
+      stream->read(&maxEnergy[i]);
    stream->read(&drag);
    stream->read(&density);
 
@@ -3152,14 +3155,14 @@ void Player::updateMove(const Move* move)
       // Force a 0 move if there is no energy, and only drain
       // move energy if we're moving.
       VectorF pv;
-      if (mPose == SprintPose && mEnergy >= mDataBlock->minSprintEnergy) {
+      if (mPose == SprintPose && mEnergy[0] >= mDataBlock->minSprintEnergy) {
          if (moveSpeed)
-            mEnergy -= mDataBlock->sprintEnergyDrain;
+            mEnergy[0] -= mDataBlock->sprintEnergyDrain;
          pv = moveVec;
       }
-      else if (mEnergy >= mDataBlock->minRunEnergy) {
+      else if (mEnergy[0] >= mDataBlock->minRunEnergy) {
          if (moveSpeed)
-            mEnergy -= mDataBlock->runEnergyDrain;
+            mEnergy[0] -= mDataBlock->runEnergyDrain;
          pv = moveVec;
       }
       else
@@ -3247,7 +3250,7 @@ void Player::updateMove(const Move* move)
 
       F32 maxAcc;
       maxAcc = (mDataBlock->slideForce / this->getMass()) * TickSec;
-      this->setEnergyLevel(mEnergy - mDataBlock->slideEnergyDrain);
+      this->setEnergyLevel(mEnergy[0] - mDataBlock->slideEnergyDrain);
 
       if(acSpeed > maxAcc)
          acVec *= maxAcc / acSpeed;
@@ -3334,9 +3337,9 @@ void Player::updateMove(const Move* move)
       // Force a 0 move if there is no energy, and only drain
       // move energy if we're moving.
       VectorF swimVec;
-      if (mEnergy >= mDataBlock->minRunEnergy) {
+      if (mEnergy[0] >= mDataBlock->minRunEnergy) {
          if (moveSpeed)         
-            mEnergy -= mDataBlock->runEnergyDrain;
+            mEnergy[0] -= mDataBlock->runEnergyDrain;
          swimVec = moveVec;
       }
       else
@@ -3427,7 +3430,7 @@ void Player::updateMove(const Move* move)
             acc.z += scaleZ * impulse * zSpeedScale;
 
          mJumpDelay = mDataBlock->jumpDelay;
-         mEnergy -= mDataBlock->jumpEnergyDrain;
+         mEnergy[0] -= mDataBlock->jumpEnergyDrain;
 
          // If we don't have a StandJumpAnim, just play the JumpAnim...
          if(!this->isSliding())
@@ -3489,7 +3492,7 @@ void Player::updateMove(const Move* move)
             acc.z += mJumpSurfaceNormal.z * impulse * zSpeedScale;
          }
 
-         mEnergy -= mDataBlock->jetJumpEnergyDrain;
+         mEnergy[0] -= mDataBlock->jetJumpEnergyDrain;
       }
    }
    else
@@ -3670,7 +3673,7 @@ bool Player::canSlide()
 		  && mState == MoveState
 		  && mDamageState == Enabled
 		  && !isMounted() 
-		  && mEnergy >= mDataBlock->minSlideEnergy 
+		  && mEnergy[0] >= mDataBlock->minSlideEnergy 
 		  && mDataBlock->slideForce != 0.0f);
 }
 
@@ -3690,18 +3693,18 @@ bool Player::isSkidding()
 
 bool Player::canJump()
 {
-   return mAllowJumping && mState == MoveState && mDamageState == Enabled && !isMounted() && !mJumpDelay && mEnergy >= mDataBlock->minJumpEnergy && mJumpSurfaceLastContact < JumpSkipContactsMax && !mSwimming && (mPose != SprintPose || mDataBlock->sprintCanJump);
+   return mAllowJumping && mState == MoveState && mDamageState == Enabled && !isMounted() && !mJumpDelay && mEnergy[0] >= mDataBlock->minJumpEnergy && mJumpSurfaceLastContact < JumpSkipContactsMax && !mSwimming && (mPose != SprintPose || mDataBlock->sprintCanJump);
 }
 
 bool Player::canJetJump()
 {
-   return mAllowJetJumping && mState == MoveState && mDamageState == Enabled && !isMounted() && mEnergy >= mDataBlock->jetMinJumpEnergy && mDataBlock->jetJumpForce != 0.0f;
+   return mAllowJetJumping && mState == MoveState && mDamageState == Enabled && !isMounted() && mEnergy[0] >= mDataBlock->jetMinJumpEnergy && mDataBlock->jetJumpForce != 0.0f;
 }
 
 bool Player::canSwim()
 {  
    // Not used!
-   //return mState == MoveState && mDamageState == Enabled && !isMounted() && mEnergy >= mDataBlock->minSwimEnergy && mWaterCoverage >= 0.8f;
+   //return mState == MoveState && mDamageState == Enabled && !isMounted() && mEnergy[0] >= mDataBlock->minSwimEnergy[0] && mWaterCoverage >= 0.8f;
    return mAllowSwimming;
 }
 
@@ -3846,7 +3849,7 @@ bool Player::canProne()
 
 bool Player::canSprint()
 {
-   return mAllowSprinting && mState == MoveState && mDamageState == Enabled && !isMounted() && mEnergy >= mDataBlock->minSprintEnergy && !mSwimming;
+   return mAllowSprinting && mState == MoveState && mDamageState == Enabled && !isMounted() && mEnergy[0] >= mDataBlock->minSprintEnergy && !mSwimming;
 }
 
 //----------------------------------------------------------------------------
@@ -6829,7 +6832,8 @@ U32 Player::packUpdate(NetConnection *con, U32 mask, BitStream *stream)
       stream->writeFlag(!(mask & NoWarpMask));
    }
    // Ghost need energy to predict reliably
-   stream->writeFloat(getEnergyLevel() / mDataBlock->maxEnergy,EnergyLevelBits);
+   for(U32 i = 0; i < ShapeBaseData::MaxEnergySlots; i++)
+      stream->writeFloat(getEnergyLevel(i) / mDataBlock->maxEnergy[i], EnergyLevelBits);
    return retMask;
 }
 
@@ -7001,8 +7005,11 @@ void Player::unpackUpdate(NetConnection *con, BitStream *stream)
          setPosition(pos,rot);
       }
    }
-   F32 energy = stream->readFloat(EnergyLevelBits) * mDataBlock->maxEnergy;
-   setEnergyLevel(energy);
+   for(U32 i = 0; i < ShapeBaseData::MaxEnergySlots; i++)
+   {
+      F32 energy = stream->readFloat(EnergyLevelBits) * mDataBlock->maxEnergy[i];
+      setEnergyLevel(energy, i);
+   }
 }
 
 

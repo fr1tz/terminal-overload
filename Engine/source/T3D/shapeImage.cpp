@@ -3328,6 +3328,8 @@ void ShapeBase::setImageState(U32 imageSlot, U32 newState,bool force)
          || imageData.ammoSource == ShapeBaseImageData::Hybrid)
 				image.magazineRounds--;
 
+			mShapeInstance->animate();
+
 			Point3F muzzlePoint, muzzleVector;
 			this->getRenderMuzzlePoint(imageSlot,&muzzlePoint);
 			this->getRenderMuzzleVector(imageSlot,&muzzleVector);
@@ -3368,10 +3370,8 @@ void ShapeBase::setImageState(U32 imageSlot, U32 newState,bool force)
 
 					ShotgunProjectileData* shotgunData = dynamic_cast<ShotgunProjectileData*>(stateData.fireProjectile);
 
-					mShapeInstance->animate();
-
 					Point3F pos = muzzlePoint;
-					pos += this->getVelocity() * TickSec;
+					//pos += this->getVelocity() * TickSec;
 
 					Point3F vel = muzzleVector;
 					vel.normalize();
