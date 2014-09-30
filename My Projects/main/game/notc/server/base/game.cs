@@ -199,5 +199,8 @@ function GameConnection::control(%client, %obj)
          %obj.hearingTinnitusVolumeDt
       );
    }
+   
+   if(%obj.getDataBlock().isMethod("onControl"))
+      %obj.getDataBlock().onControl(%obj, %client);
 }
 
