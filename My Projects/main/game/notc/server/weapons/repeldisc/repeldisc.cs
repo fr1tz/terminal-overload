@@ -88,7 +88,7 @@ function WpnRepelDisc::onCollision(%this,%obj,%col,%fade,%pos,%normal,%dist)
 		// Push enemy away from player.
 		%vec = VectorSub(%col.getPosition(), %source.getPosition());
 		%vec = VectorNormalize(%vec);
-		%vec = VectorScale(%vec, 45 + 45*(1-%col.zImpShield));
+		%vec = VectorScale(%vec, 45 + 45*(1-%col.getImpulseDamperStrength()));
 		%col.setVelocity(%vec);
   
       %n = VectorNormalize(%vec);

@@ -102,8 +102,8 @@ function CatGui::tickThread(%this)
       CatGuiImpShield.setValue(0);
       
    %data = %control.getDataBlock();
-   %impulseDamper = CatGuiImpShield.getValue();
-   %damageDamper = %control.getEnergyLevel() / %data.maxEnergy;
+   %damageDamper = %control.getEnergyLevel(0) / %data.maxEnergy[0];
+   %impulseDamper = %control.getEnergyLevel(1) / %data.maxEnergy[1];
    %damageBuffer = %control.getDamageBufferLevel() / %data.damageBuffer;
    %health = 1 - %control.getDamageLevel() / %data.maxDamage;
    

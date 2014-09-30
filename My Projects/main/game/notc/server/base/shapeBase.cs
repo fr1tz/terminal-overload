@@ -191,6 +191,14 @@ function ShapeBase::changeSkin(%this, %skins)
    %this.setSkinName(%skinString);
 }
 
+//------------------------------------------------------------------------------
+
+function ShapeBase::getImpulseDamperStrength(%this)
+{
+   %energy = %this.getEnergyLevel(1)/%this.getDataBlock().maxEnergy[1];
+   return %this.zImpulseDamper*%energy;
+}
+
 //-----------------------------------------------------------------------------
 // ShapeBase datablock
 //-----------------------------------------------------------------------------
@@ -325,8 +333,8 @@ function ShapeBaseData::damage(%this, %obj, %source, %position, %amount, %damage
 // Called by ShapeBase::impulse()
 function ShapeBaseData::impulse(%this, %obj, %position, %impulseVec, %src)
 {
-   if(%obj != %src && %obj.zImpShield !$= "")
-      %impulseVec = VectorScale(%impulseVec, 1-%obj.zImpShield);
+   if(%obj != %src)
+      %impulseVec = VectorScale(%impulseVec, 1-%obj.getImpulseDamperStrength());
    %obj.applyImpulse(%position, %impulseVec);
 }
 

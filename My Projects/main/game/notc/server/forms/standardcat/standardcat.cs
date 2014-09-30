@@ -51,7 +51,7 @@ datablock PlayerData(FrmStandardcat)
    density = 10;
    maxDamage = 75;
    maxEnergy[0] = 100; // damage damper
-   maxEnergy[1] = 0.75; // impulse damper
+   maxEnergy[1] = 100; // impulse damper
    damageBuffer = 25;
    energyPerDamagePoint = 75;
 
@@ -59,7 +59,6 @@ datablock PlayerData(FrmStandardcat)
 	damageBufferRechargeRate = 0.15;
 	damageBufferDischargeRate = 0.15;
 	rechargeRate = 0.4;
-	rechargeRate[1] = 0.004;
 
    runForce = 100 * 90;
    runEnergyDrain = 0;
@@ -69,8 +68,9 @@ datablock PlayerData(FrmStandardcat)
    maxSideSpeed = 5;
    
 	slideForce = 20 * 90;
-	slideEnergyDrain = 0;
-	minSlideEnergy = 0;
+	slideEnergyDrain = 0.7;
+   slideEnergySlot = 1;
+	minSlideEnergy = 0.05;
 	maxSlideForwardSpeed = 30;
 	maxSlideBackwardSpeed = 25;
 	maxSlideSideSpeed = 12;
@@ -101,11 +101,11 @@ datablock PlayerData(FrmStandardcat)
    jumpDelay = 0;
    
    xJumpEnergySlot = 1;
-   xJumpChargeRate = 0.004;
+   xJumpChargeRate = 0.4;
    xJumpSpeedFactorD = 25;
    xJumpPowerBaseConst = 1000;
    xJumpPowerMultConst = 0;
-   xJumpInstantEnergy = 0.15;
+   xJumpInstantEnergy = 15;
 
 	skidSpeed = 20;
 	skidFactor = 0.4;
@@ -462,21 +462,6 @@ function FrmStandardcat::onTrigger(%this, %obj, %triggerNum, %val)
    %dt = "0.0 0.1 0.1";
    %rnd = "0.05 0.05 0.05";
    //commandToClient(%obj.client, 'EnableChromaticLens', %max, %mode, %dt, %rnd);
-   
-   
-   if(%triggerNum == 5)
-   {
-      if(%val)
-      {
-         %obj.zBalastLimit = 0.02;
-         %obj.zImpShieldLimit = 0.75;
-      }
-      else
-      {
-         %obj.zBalastLimit = 1.0;
-         %obj.zImpShieldLimit = 1.0;
-      }
-   }
  
    if(!%val || %triggerNum != 2)
       return;

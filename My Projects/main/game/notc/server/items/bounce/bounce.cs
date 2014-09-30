@@ -87,7 +87,7 @@ function ItemStandardcatBounceShape::fire(%this, %obj)
       else
       {
          // bouncy bounce...
-         %factor = 1 + (1-%targetObject.zImpShield);
+         %factor = 1 + (1-%targetObject.getImpulseDamperStrength());
          %vec = %targetObject.getVelocity();
          %vec = VectorScale(%vec, -%factor);
          %targetObject.setVelocity(%vec);
