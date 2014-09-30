@@ -101,10 +101,10 @@ datablock PlayerData(FrmStandardcat)
    jumpDelay = 0;
    
    xJumpEnergySlot = 1;
-   xJumpChargeRate = 0.4;
+   xJumpChargeRate = 1.0;
    xJumpSpeedFactorD = 25;
    xJumpPowerBaseConst = 1000;
-   xJumpPowerMultConst = 0;
+   xJumpPowerMultConst = 20;
    xJumpInstantEnergy = 15;
 
 	skidSpeed = 20;
