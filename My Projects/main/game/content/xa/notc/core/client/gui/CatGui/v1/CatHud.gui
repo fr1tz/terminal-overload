@@ -236,6 +236,29 @@
          canSave = "1";
          canSaveDynamicFields = "0";
       };
+      new GuiProgressCtrl() {
+         maxLength = "1024";
+         margin = "0 0 0 0";
+         padding = "0 0 0 0";
+         anchorTop = "1";
+         anchorBottom = "0";
+         anchorLeft = "1";
+         anchorRight = "0";
+         position = "5 5";
+         extent = "170 15";
+         minExtent = "8 2";
+         horizSizing = "width";
+         vertSizing = "height";
+         profile = "XaNotcCatHudXJumpChargeProfile";
+         visible = "1";
+         active = "1";
+         tooltipProfile = "GuiToolTipProfile";
+         hovertime = "1000";
+         isContainer = "1";
+         internalName = "xJumpCharge";
+         canSave = "1";
+         canSaveDynamicFields = "0";
+      };
    };
    new GuiContainer() {
       margin = "0 0 0 0";

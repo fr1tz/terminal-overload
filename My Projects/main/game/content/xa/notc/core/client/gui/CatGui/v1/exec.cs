@@ -3,6 +3,7 @@
 
 function execXaNotcCatGui()
 {
+   exec("./profiles.cs");
    exec("./CatGui.cs");
    exec("./CatHud.gui");
    exec("./CatGui.gui");

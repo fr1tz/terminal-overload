@@ -104,10 +104,12 @@ function CatGui::tickThread(%this)
    %data = %control.getDataBlock();
    %damageDamper = %control.getEnergyLevel(0) / %data.maxEnergy[0];
    %impulseDamper = %control.getEnergyLevel(1) / %data.maxEnergy[1];
+   %xJumpCharge = %control.getXJumpCharge() / %data.maxEnergy[1];
    %damageBuffer = %control.getDamageBufferLevel() / %data.damageBuffer;
    %health = 1 - %control.getDamageLevel() / %data.maxDamage;
    
    XaNotcCatHud-->impulseDamper.setValue(%impulseDamper);
+   XaNotcCatHud-->xJumpCharge.setValue(%xJumpCharge);
    XaNotcCatHud-->damageDamper.setValue(%damageDamper);
       
    if(isObject(MiscHud))
