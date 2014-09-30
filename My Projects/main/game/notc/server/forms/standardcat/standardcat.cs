@@ -50,7 +50,8 @@ datablock PlayerData(FrmStandardcat)
    maxdrag = 0;
    density = 10;
    maxDamage = 75;
-   maxEnergy =  100;
+   maxEnergy[0] = 100; // damage damper
+   maxEnergy[1] = 0.75; // impulse damper
    damageBuffer = 25;
    energyPerDamagePoint = 75;
 
@@ -58,6 +59,7 @@ datablock PlayerData(FrmStandardcat)
 	damageBufferRechargeRate = 0.15;
 	damageBufferDischargeRate = 0.15;
 	rechargeRate = 0.4;
+	rechargeRate[1] = 0.004;
 
    runForce = 100 * 90;
    runEnergyDrain = 0;
@@ -98,8 +100,12 @@ datablock PlayerData(FrmStandardcat)
    minJumpEnergy = 0;
    jumpDelay = 0;
    
-   reJumpForce = 10 * 90; // script field
-   reJumpEnergyDrain = 20; // script field
+   xJumpEnergySlot = 1;
+   xJumpChargeRate = 0.004;
+   xJumpSpeedFactorD = 25;
+   xJumpPowerBaseConst = 1000;
+   xJumpPowerMultConst = 0;
+   xJumpInstantEnergy = 0.15;
 
 	skidSpeed = 20;
 	skidFactor = 0.4;
@@ -340,12 +346,14 @@ function FrmStandardcat::onAdd(%this, %obj)
    
    %obj.zDiscTargetSet = new SimSet();
 
-   %obj.allowJumping(true);
+   %obj.allowJumping(false);
    %obj.allowJetJumping(false);
    %obj.allowCrouching(false);
    %obj.allowProne(false);
    %obj.allowSwimming(false);
    %obj.allowSliding(false);
+   %obj.allowChargedXJump(false);
+   %obj.allowInstantXJump(false);
    %obj.setEnergyLevel(%this.maxEnergy);
 	%obj.isCAT = true;
 	%obj.getTeamObject().numCATs++;
@@ -443,12 +451,6 @@ function FrmStandardcat::onTrigger(%this, %obj, %triggerNum, %val)
  
    Parent::onTrigger(%this, %obj, %triggerNum, %val);
    
-   if(%triggerNum == 2)
-   {
-      if(%obj.hasInventory(ItemXJump))
-         ItemXJump.activate(%obj, %val);
-   }
-   
    if(%triggerNum == 3)
    {
       %obj.setImageTrigger(2, %val);
@@ -538,6 +540,13 @@ function FrmStandardcat::onStopSliding(%this, %obj)
 function FrmStandardcat::onJump(%this, %obj)
 {
    //echo("FrmStandardcat::onJump()");
+}
+
+// Called by engine
+function FrmStandardcat::onXJump(%this, %obj)
+{
+   //echo("FrmStandardcat::onXJump()");
+   //echo(%obj.getXJumpCharge());
 }
 
 // Called by script

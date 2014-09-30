@@ -215,6 +215,11 @@ function ShapeBaseData::onAdd(%this, %obj)
    %obj.setDamageBufferRechargeRate(%this.damageBufferRechargeRate);
    %obj.setDamageBufferDischargeRate(%this.damageBufferDischargeRate);
    %obj.setRechargeRate(%this.rechargeRate);
+   for(%i = 0; %i < 3; %i++)
+   {
+      if(%this.rechargeRate[%i] !$= "")
+         %obj.setRechargeRate(%this.rechargeRate[%i], %i);
+   }
    %obj.setRepairRate(0);
 }
 

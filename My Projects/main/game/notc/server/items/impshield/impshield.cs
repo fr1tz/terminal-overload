@@ -77,18 +77,7 @@ function ItemImpShieldShape::updateThread(%this, %obj)
    
    %level = mClamp(%level+%dt, 0, 0.75);
    
-   if(%mount.getInventory(ItemXJump) > 0)
-   {
-      if(%level > ItemXJump.useCostImpulseDamper)
-         %mount.allowJumping(true);
-      else
-         %mount.allowJumping(false);
-   }
-   else
-   {
-      %mount.allowJumping(true);
-   }
-   
+
    if(%mount.getInventory(ItemEtherboard) > 0)
    {
       if(%level > 0)

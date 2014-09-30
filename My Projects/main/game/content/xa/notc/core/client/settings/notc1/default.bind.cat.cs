@@ -123,6 +123,16 @@ function XaNotc1CatMoveMap_jump(%val)
    $mvTriggerCount2++;
 }
 
+function XaNotc1CatMoveMap_instantXJump(%val)
+{
+   $mvTriggerCount2++;
+}
+
+function XaNotc1CatMoveMap_chargedXJump(%val)
+{
+   $mvTriggerCount7 = %val;
+}
+
 function XaNotc1CatMoveMap_gamePadMoveX( %val )
 {
    if(%val > 0)
@@ -208,7 +218,8 @@ XaNotc1CatMoveMap.bind( keyboard, down, XaNotc1CatMoveMap_movebackward );
 //XaNotc1CatMoveMap.bind( keyboard, e, XaNotc1CatMoveMap_moveup );
 //XaNotc1CatMoveMap.bind( keyboard, c, XaNotc1CatMoveMap_movedown );
 
-XaNotc1CatMoveMap.bind( keyboard, space, XaNotc1CatMoveMap_jump );
+XaNotc1CatMoveMap.bind( keyboard, space, XaNotc1CatMoveMap_instantXJump );
+XaNotc1CatMoveMap.bind( keyboard, lalt, XaNotc1CatMoveMap_chargedXJump );
 XaNotc1CatMoveMap.bind( mouse, xaxis, XaNotc1CatMoveMap_yaw );
 XaNotc1CatMoveMap.bind( mouse, yaxis, XaNotc1CatMoveMap_pitch );
 
@@ -452,8 +463,8 @@ function XaNotc1CatMoveMap_tossAmmo(%val)
       commandToServer('Throw', "Ammo");
 }
 
-XaNotc1CatMoveMap.bind(keyboard, "alt w", XaNotc1CatMoveMap_throwWeapon);
-XaNotc1CatMoveMap.bind(keyboard, "alt a", XaNotc1CatMoveMap_tossAmmo);
+//XaNotc1CatMoveMap.bind(keyboard, "alt w", XaNotc1CatMoveMap_throwWeapon);
+//XaNotc1CatMoveMap.bind(keyboard, "alt a", XaNotc1CatMoveMap_tossAmmo);
 
 function XaNotc1CatMoveMap_nextWeapon(%val)
 {
