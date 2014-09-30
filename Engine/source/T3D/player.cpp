@@ -3818,11 +3818,12 @@ bool Player::checkDismountPosition(const MatrixF& oldMat, const MatrixF& mat)
 
 bool Player::canSlide()
 {
+   F32 energyAvailable = this->getEnergyLevel(mDataBlock->slideEnergySlot);
    return (mAllowSliding 
 		  && mState == MoveState
 		  && mDamageState == Enabled
 		  && !isMounted() 
-		  && mEnergy[0] >= mDataBlock->minSlideEnergy 
+		  && energyAvailable >= mDataBlock->minSlideEnergy 
 		  && mDataBlock->slideForce != 0.0f);
 }
 
