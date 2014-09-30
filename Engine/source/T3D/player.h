@@ -101,6 +101,7 @@ struct PlayerData: public ShapeBaseData {
 	// Sliding
    F32 slideForce;            ///< Force used to accel player while sliding
    F32 slideEnergyDrain;      ///< Energy drain/tick
+   S32 slideEnergySlot;       ///< Energy slot used for sliding
    F32 minSlideEnergy;        ///< Minimum energy required to slide
    F32 maxSlideForwardSpeed;  ///< Maximum forward speed when sliding
    F32 maxSlideBackwardSpeed; ///< Maximum backward speed when sliding

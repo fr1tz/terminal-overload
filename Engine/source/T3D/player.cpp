@@ -304,6 +304,7 @@ PlayerData::PlayerData()
 	// Sliding
    slideForce = 20.0f * 9.0f;
    slideEnergyDrain = 0.0f;
+   slideEnergySlot = -1;
    minSlideEnergy = 0.0f;
    maxSlideForwardSpeed = 15.0f;  
    maxSlideBackwardSpeed = 10.0f; 
@@ -840,6 +841,8 @@ void PlayerData::initPersistFields()
          "minSlideEnergy.\n"
          "@note Setting this to zero will disable any energy drain.\n"
          "@see minSlideEnergy\n");
+      addField( "slideEnergySlot", TypeS32, Offset(slideEnergySlot, PlayerData),
+         "@brief Energy slot used by slideEnergyDrain.\n\n" );
       addField( "minSlideEnergy", TypeF32, Offset(minSlideEnergy, PlayerData),
          "@brief Minimum energy level required to slide.\n\n"
          "@see slideEnergyDrain\n");
@@ -1383,6 +1386,7 @@ void PlayerData::packData(BitStream* stream)
 	// Sliding
    stream->write(slideForce);
    stream->write(slideEnergyDrain);
+   stream->write(slideEnergySlot);
    stream->write(minSlideEnergy);
 	stream->write(maxSlideForwardSpeed);
 	stream->write(maxSlideBackwardSpeed);
@@ -1605,6 +1609,7 @@ void PlayerData::unpackData(BitStream* stream)
 	// Sliding
    stream->read(&slideForce);
    stream->read(&slideEnergyDrain);
+   stream->read(&slideEnergySlot);
    stream->read(&minSlideEnergy);
    stream->read(&maxSlideForwardSpeed);
    stream->read(&maxSlideBackwardSpeed);
@@ -3300,7 +3305,8 @@ void Player::updateMove(const Move* move)
 
       F32 maxAcc;
       maxAcc = (mDataBlock->slideForce / this->getMass()) * TickSec;
-      this->setEnergyLevel(mEnergy[0] - mDataBlock->slideEnergyDrain);
+      F32 oldEnergy = this->getEnergyLevel(mDataBlock->slideEnergySlot);
+      this->setEnergyLevel(oldEnergy-mDataBlock->slideEnergyDrain, mDataBlock->slideEnergySlot);
 
       if(acSpeed > maxAcc)
          acVec *= maxAcc / acSpeed;
