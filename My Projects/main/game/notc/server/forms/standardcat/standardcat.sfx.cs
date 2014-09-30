@@ -175,8 +175,17 @@ datablock SFXProfile(FrmStandardcatImpactSnowSound)
 	effect = ImpactSnowEffect;
 };
 
+datablock SFXProfile(FrmStandardcatXJumpSound)
+{
+   filename = "content/xa/rotc/p.5.4/sounds/rotc/fire6";
+	description = AudioDefault3D;
+	preload = true;
+};
 
-
-
-
+datablock SFXProfile(FrmStandardcatXJumpChargeSound)
+{
+   filename = "content/xa/cat5/p.1/sounds/cat5/drill_loop_1";
+	description = AudioCloseLoop3D;
+	preload = true;
+};
 

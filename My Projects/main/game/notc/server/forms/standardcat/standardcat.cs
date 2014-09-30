@@ -70,7 +70,7 @@ datablock PlayerData(FrmStandardcat)
 	slideForce = 20 * 90;
 	slideEnergyDrain = 0.7;
    slideEnergySlot = 1;
-	minSlideEnergy = 0.05;
+	minSlideEnergy = 1;
 	maxSlideForwardSpeed = 30;
 	maxSlideBackwardSpeed = 25;
 	maxSlideSideSpeed = 12;
@@ -101,10 +101,10 @@ datablock PlayerData(FrmStandardcat)
    jumpDelay = 0;
    
    xJumpEnergySlot = 1;
-   xJumpChargeRate = 1.0;
-   xJumpSpeedFactorD = 25;
+   xJumpChargeRate = 2.0;
+   xJumpSpeedFactorD = 50;
    xJumpPowerBaseConst = 1000;
-   xJumpPowerMultConst = 20;
+   xJumpPowerMultConst = 40;
    xJumpInstantEnergy = 15;
 
 	skidSpeed = 20;
@@ -228,6 +228,9 @@ datablock PlayerData(FrmStandardcat)
 	//slideContactSound = FrmStandardcatSlideContactSound;
  
 	skidSound         = FrmStandardcatSkidSound;
+ 
+	xJumpSound          = FrmStandardcatXJumpSound;
+	xJumpChargeSound    = FrmStandardcatXJumpChargeSound;
 
    //impactWaterEasy      = ImpactLightWaterEasySound;
    //impactWaterMedium    = ImpactLightWaterMediumSound;
