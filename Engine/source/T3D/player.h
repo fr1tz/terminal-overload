@@ -115,6 +115,14 @@ struct PlayerData: public ShapeBaseData {
    F32 jumpSurfaceAngle;      ///< Angle from vertical in degrees where the player can jump
    S32 jumpDelay;             ///< Delay time in ticks between jumps
 
+   // XJump
+   S32 xJumpEnergySlot;       ///< Energy slot used to power xJump
+   F32 xJumpChargeRate;       ///< How fast xJump charges
+   F32 xJumpSpeedFactorD;     ///< xJump speed factor divisor
+   F32 xJumpPowerBaseConst;   ///< xJump power base constant
+   F32 xJumpPowerMultConst;   ///< xJump power multiplier constant
+   F32 xJumpInstantEnergy;    ///< Energy required for instant xJump
+
    // Sprinting
    F32 sprintForce;                 ///< Force used to accelerate player
    F32 sprintEnergyDrain;           ///< Energy drain/tick
@@ -405,6 +413,7 @@ struct PlayerData: public ShapeBaseData {
    DECLARE_CALLBACK( void, onStartSliding, ( Player* obj ) );
    DECLARE_CALLBACK( void, onStopSliding, ( Player* obj ) );
    DECLARE_CALLBACK( void, onJump, ( Player* obj ) );
+   DECLARE_CALLBACK( void, onXJump, ( Player* obj ) );
    DECLARE_CALLBACK( void, doDismount, ( Player* obj ) );
    DECLARE_CALLBACK( void, onEnterLiquid, ( Player* obj, F32 coverage, const char* type ) );
    DECLARE_CALLBACK( void, onLeaveLiquid, ( Player* obj, const char* type ) );
@@ -505,6 +514,7 @@ protected:
    bool mFalling;                   ///< Falling in mid-air?
    F32 mSlideContact;               ///< FIXME insert desc
    S32 mJumpDelay;                  ///< Delay till next jump   
+   F32 mXJumpCharge;                ///< Current XJump charge
    
    Pose  mPose;
    bool  mAllowJumping;
@@ -517,6 +527,9 @@ protected:
 	bool  mAllowSliding;
 	bool  mWantsToSlide;
    bool  mLastTickSlideState;
+
+   bool  mAllowChargedXJump;
+   bool  mAllowInstantXJump;
    
    S32 mContactTimer;               ///< Ticks since last contact
 
@@ -789,6 +802,8 @@ public:
    void allowProne(bool state) { mAllowProne = state; }
    void allowSwimming(bool state) { mAllowSwimming = state; }
 	void allowSliding(bool state) { mAllowSliding = state; }
+	void allowChargedXJump(bool state) { mAllowChargedXJump = state; }
+	void allowInstantXJump(bool state) { mAllowInstantXJump = state; }
 
 	bool canSlide();
 	bool isSliding();
@@ -797,6 +812,8 @@ public:
 
    bool canJump();                                         ///< Can the player jump?
    bool canJetJump();                                      ///< Can the player jet?
+   bool canChargeXJump(); 
+   bool canInstantXJump();
    bool canSwim();                                         ///< Can the player swim?
    bool canCrouch();
    bool canStand();
@@ -805,6 +822,8 @@ public:
    bool haveContact() const { return !mContactTimer; }         ///< Is it in contact with something
    void getMuzzlePointAI( U32 imageSlot, Point3F *point );
    F32 getMaxForwardVelocity() const { return (mDataBlock != NULL ? mDataBlock->maxForwardSpeed : 0); }
+   F32 getXJumpCharge() { return mXJumpCharge; }
+   void performXJump(Point3F* acc);
 
    virtual bool    isDisplacable() const;
    virtual Point3F getMomentum() const;

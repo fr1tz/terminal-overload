@@ -77,6 +77,8 @@ static S32 sImageTrigger0 = 0;
 static S32 sImageTrigger1 = 1;
 static S32 sJumpJetTrigger = 1;
 static S32 sVehicleDismountTrigger = 2;
+static S32 sChargedXJumpTrigger = 7;
+static S32 sInstantXJumpTrigger = 2;
 
 // Client prediction
 static F32 sMinWarpTicks = 0.5f;       // Fraction of tick at which instant warp occurs
@@ -206,6 +208,10 @@ IMPLEMENT_CALLBACK( PlayerData, onJump, void, ( Player* obj ), ( obj ),
    "@brief Called when the player jumps.\n\n"
    "@param obj The Player object\n" );
 
+IMPLEMENT_CALLBACK( PlayerData, onXJump, void, ( Player* obj ), ( obj ),
+   "@brief Called when the player x-jumps.\n\n"
+   "@param obj The Player object\n" );
+
 IMPLEMENT_CALLBACK( PlayerData, doDismount, void, ( Player* obj ), ( obj ),
    "@brief Called when attempting to dismount the player from a vehicle.\n\n"
    "It is up to the doDismount() method to actually perform the dismount.  Often "
@@ -311,6 +317,14 @@ PlayerData::PlayerData()
    jumpDelay = 30;
    minJumpSpeed = 500.0f;
    maxJumpSpeed = 2.0f * minJumpSpeed;
+
+   // xJump
+   xJumpEnergySlot = 1;
+   xJumpChargeRate = 0.004;
+   xJumpSpeedFactorD = 25;
+   xJumpPowerBaseConst = 1000;
+   xJumpPowerMultConst = 2000;
+   xJumpInstantEnergy = 0.15;
 
    // Sprinting
    sprintForce = 50.0f * 9.0f;
@@ -876,6 +890,23 @@ void PlayerData::initPersistFields()
          "they will jump straight up.\n" );
    
    endGroup( "Movement: Jumping" );
+
+   addGroup( "Movement: xJump" );
+
+      addField( "xJumpEnergySlot", TypeS32, Offset(xJumpEnergySlot, PlayerData),
+         "@brief Energy slot used to power xJump.\n\n" );
+      addField( "xJumpChargeRate", TypeF32, Offset(xJumpChargeRate, PlayerData),
+         "@brief How fast xJump charges.\n\n" );
+      addField( "xJumpSpeedFactorD", TypeF32, Offset(xJumpSpeedFactorD, PlayerData),
+         "@brief xJump speed factor divisor.\n\n" );
+      addField( "xJumpPowerBaseConst", TypeF32, Offset(xJumpPowerBaseConst, PlayerData),
+         "@brief xJump power base constant.\n\n" );
+      addField( "xJumpPowerMultConst", TypeF32, Offset(xJumpPowerMultConst, PlayerData),
+         "@brief xJump power multiplier constant.\n\n" );
+      addField( "xJumpInstantEnergy", TypeF32, Offset(xJumpInstantEnergy, PlayerData),
+         "@brief Energy required for instant xJump.\n\n" );
+
+   endGroup( "Movement: xJump" );
    
    addGroup( "Movement: Sprinting" );
 
@@ -1366,6 +1397,14 @@ void PlayerData::packData(BitStream* stream)
    stream->write(jumpSurfaceAngle);
    stream->writeInt(jumpDelay,JumpDelayBits);
 
+   // xJump
+   stream->write(xJumpEnergySlot);
+   stream->write(xJumpChargeRate);
+   stream->write(xJumpSpeedFactorD);
+   stream->write(xJumpPowerBaseConst);
+   stream->write(xJumpPowerMultConst);
+   stream->write(xJumpInstantEnergy);
+
    // Sprinting
    stream->write(sprintForce);
    stream->write(sprintEnergyDrain);
@@ -1579,6 +1618,14 @@ void PlayerData::unpackData(BitStream* stream)
    stream->read(&maxJumpSpeed);
    stream->read(&jumpSurfaceAngle);
    jumpDelay = stream->readInt(JumpDelayBits);
+
+   // xJump
+   stream->read(&xJumpEnergySlot);
+   stream->read(&xJumpChargeRate);
+   stream->read(&xJumpSpeedFactorD);
+   stream->read(&xJumpPowerBaseConst);
+   stream->read(&xJumpPowerMultConst);
+   stream->read(&xJumpInstantEnergy);
 
    // Sprinting
    stream->read(&sprintForce);
@@ -1818,6 +1865,7 @@ Player::Player()
    mJumpDelay = 0;
    mJumpSurfaceLastContact = 0;
    mJumpSurfaceNormal.set(0.0f, 0.0f, 1.0f);
+   mXJumpCharge = 0.0f;
    mControlObject = 0;
    dMemset( mSplashEmitter, 0, sizeof( mSplashEmitter ) );
    dMemset( mSlideEmitter, 0, sizeof( mSlideEmitter ) );
@@ -2832,6 +2880,8 @@ void Player::allowAllPoses()
    mAllowProne = true;
    mAllowSwimming = true;
 	mAllowSliding = true;
+   mAllowChargedXJump = true;
+   mAllowInstantXJump = true;
 }
 
 void Player::updateMove(const Move* move)
@@ -3500,6 +3550,29 @@ void Player::updateMove(const Move* move)
       mJetting = false;
    }
 
+   // XJump
+   bool performXJump = false;
+   if(this->canChargeXJump())
+   {
+      if(move->trigger[sChargedXJumpTrigger])
+      {
+         mXJumpCharge += mDataBlock->xJumpChargeRate;
+         F32 availableEnergy = this->getEnergyLevel(mDataBlock->xJumpEnergySlot);
+         mXJumpCharge = mClampF(mXJumpCharge, 0, availableEnergy);
+      }
+      else if(mXJumpCharge > 0)
+      {
+         performXJump = true;
+      }
+   }
+   if(this->canInstantXJump() && mXJumpCharge == 0 && move->trigger[sInstantXJumpTrigger])
+   {
+      mXJumpCharge = mDataBlock->xJumpInstantEnergy;
+      performXJump = true;
+   }
+   if(performXJump)
+      this->performXJump(&acc);
+
    // Add in force from physical zones...
    acc += (mAppliedForce / getMass()) * TickSec;
 
@@ -3616,6 +3689,76 @@ void Player::updateMove(const Move* move)
    setPose( desiredPose );
 }
 
+void Player::performXJump(Point3F* acc)
+{
+   F32 availableEnergy = this->getEnergyLevel(mDataBlock->xJumpEnergySlot);
+   if(mXJumpCharge > availableEnergy)
+      goto done;
+
+   bool canJump = false;
+   U32 typeMask = ShapeBaseObjectType | StaticObjectType;
+   Point3F vec(0,0,0);
+   Point3F start = this->getWorldBox().getCenter();
+
+   this->disableCollision();
+   for(F32 x = -0.3; x <= 0.3; x += 0.1)
+   {
+      for(F32 y = -0.3; y <= 0.3; y += 0.1)
+      {
+         for(F32 z = -0.3; z <= 0.3; z += 0.1)
+         {
+            Point3F v(x,y,z);
+            v.normalize();
+            v *= 5;
+            Point3F end = start + v;
+            RayInfo rInfo;
+            if(this->getContainer()->castRay(start, end, typeMask, &rInfo))
+            {
+               canJump = true;
+               vec += v;
+            }
+         }
+      }
+   }
+   this->enableCollision();
+
+   if(!canJump)
+      goto done;
+
+   F32 speedfactor = this->getVelocity().len() / mDataBlock->xJumpSpeedFactorD;
+   if(speedfactor < 1)
+      speedfactor = 1;
+
+   F32 power = mDataBlock->xJumpPowerBaseConst + mDataBlock->xJumpPowerMultConst * mXJumpCharge * speedfactor;
+
+   Point3F dirVec = vec;
+   dirVec.normalize();
+   dirVec *= -power;
+
+   acc->x = dirVec.x / getMass();
+   acc->y = dirVec.y / getMass();
+   acc->z = dirVec.z / getMass();
+
+   //this->applyImpulse(this->getPosition(), dirVec);
+   this->setEnergyLevel(availableEnergy-mXJumpCharge, mDataBlock->xJumpEnergySlot);
+
+   // If we don't have a StandJumpAnim, just play the JumpAnim...
+   if(!this->isSliding())
+   {
+      S32 seq = (mVelocity.len() < 0.5) ? PlayerData::StandJumpAnim: PlayerData::JumpAnim; 
+      if ( mDataBlock->actionList[seq].sequence == -1 )
+         seq = PlayerData::JumpAnim;         
+      setActionThread( seq, true, false, true );
+	}
+
+   mJumpSurfaceLastContact = JumpSkipContactsMax;
+
+   if(!isGhost())
+      mDataBlock->onXJump_callback(this);
+
+done:
+   mXJumpCharge = 0.0;   
+}
 
 //----------------------------------------------------------------------------
 
@@ -3699,6 +3842,16 @@ bool Player::canJump()
 bool Player::canJetJump()
 {
    return mAllowJetJumping && mState == MoveState && mDamageState == Enabled && !isMounted() && mEnergy[0] >= mDataBlock->jetMinJumpEnergy && mDataBlock->jetJumpForce != 0.0f;
+}
+
+bool Player::canChargeXJump()
+{
+   return mAllowChargedXJump && mState == MoveState && mDamageState == Enabled && !isMounted();
+}
+
+bool Player::canInstantXJump()
+{
+   return mAllowInstantXJump && mState == MoveState && mDamageState == Enabled && !isMounted() && mEnergy[mDataBlock->xJumpEnergySlot] >= mDataBlock->xJumpInstantEnergy;
 }
 
 bool Player::canSwim()
@@ -6662,7 +6815,7 @@ void Player::writePacketData(GameConnection *connection, BitStream *stream)
       stream->write(mVelocity.z);
       stream->writeInt(mJumpSurfaceLastContact > 15 ? 15 : mJumpSurfaceLastContact, 4);
 
-      if (stream->writeFlag(!mAllowSprinting || !mAllowCrouching || !mAllowProne || !mAllowJumping || !mAllowJetJumping || !mAllowSwimming || !mAllowSliding))
+      if (stream->writeFlag(!mAllowSprinting || !mAllowCrouching || !mAllowProne || !mAllowJumping || !mAllowJetJumping || !mAllowSwimming || !mAllowSliding || !mAllowChargedXJump || !mAllowInstantXJump))
       {
          stream->writeFlag(mAllowJumping);
          stream->writeFlag(mAllowJetJumping);
@@ -6671,6 +6824,8 @@ void Player::writePacketData(GameConnection *connection, BitStream *stream)
          stream->writeFlag(mAllowProne);
          stream->writeFlag(mAllowSwimming);
 			stream->writeFlag(mAllowSliding);
+         stream->writeFlag(mAllowChargedXJump);
+         stream->writeFlag(mAllowInstantXJump);
       }
    }
    stream->write(mHead.x);
@@ -6728,6 +6883,8 @@ void Player::readPacketData(GameConnection *connection, BitStream *stream)
          mAllowProne = stream->readFlag();
          mAllowSwimming = stream->readFlag();
 			mAllowSliding = stream->readFlag();
+         mAllowChargedXJump = stream->readFlag();
+         mAllowInstantXJump = stream->readFlag();
       }
       else
       {
@@ -6738,6 +6895,8 @@ void Player::readPacketData(GameConnection *connection, BitStream *stream)
          mAllowProne = true;
          mAllowSwimming = true;
 			mAllowSliding = true;
+         mAllowChargedXJump = true;
+         mAllowInstantXJump = true;
       }
    }
    else
@@ -7039,6 +7198,8 @@ DefineEngineMethod( Player, allowAllPoses, void, (),,
 	"@see allowSliding()\n"
    "@see allowJumping()\n"
    "@see allowJetJumping()\n"
+   "@see allowChargedXJump()\n"
+   "@see allowInstantXJump()\n"
    "@see allowSprinting()\n"
    "@see allowCrouching()\n"
    "@see allowProne()\n"
@@ -7078,6 +7239,28 @@ DefineEngineMethod( Player, allowJetJumping, void, (bool state),,
    "@see allowAllPoses()\n" )
 {
    object->allowJetJumping(state);
+}
+
+DefineEngineMethod( Player, allowChargedXJump, void, (bool state),,
+   "@brief Set if the Player is allowed to use charged x-jumps.\n\n"
+   "The default is to allow charged x-jumps.\n"
+   "This method is mainly used to disallow charged x-jumps "
+   "at any time.\n"
+   "@param state Set to true to allow charged x-jumping, false to disable it.\n"
+   "@see allowAllPoses()\n" )
+{
+   object->allowChargedXJump(state);
+}
+
+DefineEngineMethod( Player, allowInstantXJump, void, (bool state),,
+   "@brief Set if the Player is allowed to use instant x-jumps.\n\n"
+   "The default is to allow instant x-jumps.\n"
+   "This method is mainly used to disallow instant x-jumps "
+   "at any time.\n"
+   "@param state Set to true to allow instant x-jumping, false to disable it.\n"
+   "@see allowAllPoses()\n" )
+{
+   object->allowInstantXJump(state);
 }
 
 DefineEngineMethod( Player, allowSprinting, void, (bool state),,
@@ -7368,6 +7551,13 @@ DefineEngineMethod( Player, getNumDeathAnimations, S32, ( ),,
    return count;
 }
 
+DefineEngineMethod( Player, getXJumpCharge, F32, (),,
+   "@brief Get the object's current xJump charge.\n\n"
+   "@return x-jump charge\n")
+{
+   return object->getXJumpCharge();
+}
+
 //----------------------------------------------------------------------------
 void Player::consoleInit()
 {
@@ -7402,6 +7592,12 @@ void Player::consoleInit()
 	   "@ingroup GameObjects\n");
 
    // Move triggers
+   Con::addVariable("$player::instantXJumpTrigger", TypeS32, &sInstantXJumpTrigger, 
+      "@brief The move trigger index used for player instant x-jumping.\n\n"
+	   "@ingroup GameObjects\n");
+   Con::addVariable("$player::chargedXJumpTrigger", TypeS32, &sChargedXJumpTrigger, 
+      "@brief The move trigger index used for player charged x-jumping.\n\n"
+	   "@ingroup GameObjects\n");
    Con::addVariable("$player::slideTrigger", TypeS32, &sSlideTrigger, 
       "@brief The move trigger index used for player sliding.\n\n"
 	   "@ingroup GameObjects\n");
