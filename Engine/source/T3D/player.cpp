@@ -1201,6 +1201,11 @@ void PlayerData::initPersistFields()
       addField( "skidSound", TypeSFXTrackName, Offset(sound[Skid], PlayerData),
          "@brief Sound to play while skidding.\n\n" );
 
+      addField( "xJumpSound", TypeSFXTrackName, Offset(sound[XJump], PlayerData),
+         "@brief Sound to play when performing an x-jump.\n\n" );
+      addField( "xJumpChargeSound", TypeSFXTrackName, Offset(sound[XJumpCharge], PlayerData),
+         "@brief Sound to play while charging an x-jump.\n\n" );
+
    endGroup( "Interaction: Sounds" );
 
    addGroup( "Interaction: Splashes" );
@@ -1891,6 +1896,7 @@ Player::Player()
    mSlideSound = 0;
    mSlideContactSound = 0;
 	mSkidSound = 0;
+   mXJumpChargeSound = 0;
 
    mConvex.init(this);
    mWorkingQueryBox.minExtents.set(-1e9f, -1e9f, -1e9f);
@@ -2041,6 +2047,7 @@ void Player::onRemove()
       SFX_DELETE( mSlideSound );
       SFX_DELETE( mSlideContactSound );
 		SFX_DELETE( mSkidSound );
+		SFX_DELETE( mXJumpChargeSound );
    }
 
    U32 i;
@@ -2220,6 +2227,7 @@ bool Player::onNewDataBlock( GameBaseData *dptr, bool reload )
 		SFX_DELETE( mSlideSound );
 		SFX_DELETE( mSlideContactSound );
 		SFX_DELETE( mSkidSound );
+		SFX_DELETE( mXJumpChargeSound );
 
       if ( mDataBlock->sound[PlayerData::MoveBubbles] )
          mMoveBubbleSound = SFX->createSource( mDataBlock->sound[PlayerData::MoveBubbles] );
@@ -2235,6 +2243,9 @@ bool Player::onNewDataBlock( GameBaseData *dptr, bool reload )
 
       if ( mDataBlock->sound[PlayerData::Skid] )
          mSkidSound = SFX->createSource( mDataBlock->sound[PlayerData::Skid] );
+
+      if ( mDataBlock->sound[PlayerData::XJumpCharge] )
+         mXJumpChargeSound = SFX->createSource( mDataBlock->sound[PlayerData::XJumpCharge] );
    }
 
    if(this->isGhost())
@@ -3565,6 +3576,13 @@ void Player::updateMove(const Move* move)
          mXJumpCharge += mDataBlock->xJumpChargeRate;
          F32 availableEnergy = this->getEnergyLevel(mDataBlock->xJumpEnergySlot);
          mXJumpCharge = mClampF(mXJumpCharge, 0, availableEnergy);
+         if(mXJumpChargeSound && mXJumpCharge > 0)
+         {
+            if(!mXJumpChargeSound->isPlaying())
+               mXJumpChargeSound->play();
+            mXJumpChargeSound->setTransform(this->getTransform());
+            mXJumpChargeSound->setPitch(1+mXJumpCharge/mDataBlock->maxEnergy[mDataBlock->xJumpEnergySlot]);
+         }
       }
       else if(mXJumpCharge > 0)
       {
@@ -3578,6 +3596,8 @@ void Player::updateMove(const Move* move)
    }
    if(performXJump)
       this->performXJump(&acc);
+   if(mXJumpChargeSound && mXJumpChargeSound->isPlaying() && mXJumpCharge == 0)
+      mXJumpChargeSound->stop();
 
    // Add in force from physical zones...
    acc += (mAppliedForce / getMass()) * TickSec;
@@ -3759,7 +3779,12 @@ void Player::performXJump(Point3F* acc)
 
    mJumpSurfaceLastContact = JumpSkipContactsMax;
 
-   if(!isGhost())
+   if(this->isGhost())
+   {
+      MatrixF footMat = this->getTransform();
+		SFX->playOnce(mDataBlock->sound[PlayerData::XJump], &footMat);
+   }
+   else
       mDataBlock->onXJump_callback(this);
 
 done:

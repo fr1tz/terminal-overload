@@ -217,6 +217,8 @@ struct PlayerData: public ShapeBaseData {
       Slide,
       SlideContact,
 		Skid,
+      XJump,
+      XJumpCharge,
       MaxSounds
    };
    SFXTrack* sound[MaxSounds];
@@ -558,6 +560,7 @@ protected:
 	SFXSource* mSlideSound;        ///< Slide sound
 	SFXSource* mSlideContactSound; ///< Slide contact sound
 	SFXSource* mSkidSound;         ///< Sound when skidding
+	SFXSource* mXJumpChargeSound;  ///< Sound when charging x-jump
 
    SimObjectPtr<ShapeBase> mControlObject; ///< Controlling object
 
@@ -823,6 +826,7 @@ public:
    bool haveContact() const { return !mContactTimer; }         ///< Is it in contact with something
    void getMuzzlePointAI( U32 imageSlot, Point3F *point );
    F32 getMaxForwardVelocity() const { return (mDataBlock != NULL ? mDataBlock->maxForwardSpeed : 0); }
+
    F32 getXJumpCharge() { return mXJumpCharge; }
    void performXJump(Point3F* acc);
 
