@@ -54,13 +54,13 @@ singleton Material(xa_notc_mis_eth3_territoryzone_othermat)
    translucentBlendOp = "LerpAlpha";
    parallaxScale[0] = "0";
    castShadows = "0";
-   translucent = "1";
+   translucent = "0";
    showFootprints = "0";
    glow[0] = "0";
    emissive[0] = "0";
    materialTag0 = "Miscellaneous";
    specular[2] = "1 1 1 1";
-   diffuseColor[1] = "White";
-   translucentZWrite = "1";
+   diffuseColor[1] = "1 1 1 1";
+   translucentZWrite = "0";
 };
 

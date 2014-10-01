@@ -74,11 +74,11 @@ singleton Material(xa_notc_mis_eth3_shapes_map_mat3)
 singleton Material(xa_notc_mis_eth3_shapes_map_mat2)
 {
    mapTo = "xa_notc_mis_eth3_shapes_map_mat2";
-   diffuseColor[0] = "0.00392157 0.00392157 0.00392157 1";
+   diffuseColor[0] = "0.00392157 0.00392157 0.00392157 0";
    specular[0] = "0.5 0.5 0.5 1";
    specularPower[0] = "49";
    translucentBlendOp = "None";
-   diffuseColor[1] = "0.32549 0.32549 0.32549 0";
+   diffuseColor[1] = "0 0 0 1";
    wireframe[1] = "0";
    materialTag0 = "Miscellaneous";
    diffuseColorPaletteSlot[1] = "-1";
