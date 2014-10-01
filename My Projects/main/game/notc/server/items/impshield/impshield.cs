@@ -7,6 +7,8 @@ datablock BallastShapeData(ItemImpShieldShape)
    shapeFile = "content/xa/rotc/p.5.4/shapes/rotc/misc/nothing.dts";
    //shapeFile = "content/xa/notc/core/shapes/standardcat/impshield/p1/shape.dae";
    mass = 0;
+   inheritEnergyFromMount = true;
+   levelEnergySlot = 1;
    groundConnectionBeamQuad = "ItemImpShieldBeam";
    canStealth = 1; // script field
 };
