@@ -60,7 +60,7 @@ datablock PlayerData(FrmStandardcat)
 	damageBufferDischargeRate = 0.15;
 	rechargeRate = 0.4;
 
-   runForce = 100 * 90;
+   runForce = 150 * 90;
    runEnergyDrain = 0;
    minRunEnergy = 0;
    maxForwardSpeed = 8;
@@ -75,7 +75,7 @@ datablock PlayerData(FrmStandardcat)
 	maxSlideBackwardSpeed = 25;
 	maxSlideSideSpeed = 12;
 
-   sprintForce = 100 * 90;
+   sprintForce = 150 * 90;
    sprintEnergyDrain = 0;
    minSprintEnergy = 0;
    maxSprintForwardSpeed = 15;
@@ -102,10 +102,12 @@ datablock PlayerData(FrmStandardcat)
    
    xJumpEnergySlot = 1;
    xJumpChargeRate = 2.0;
-   xJumpSpeedFactorD = 50;
-   xJumpPowerBaseConst = 1000;
-   xJumpPowerMultConst = 40;
-   xJumpInstantEnergy = 15;
+   xJumpSpeedFactorD = 25;
+   xJumpPowerBaseConst = 0;
+   xJumpPowerMultConst = 60;
+   xJumpInstantEnergy = 20;
+   
+   gravityMod = 2.0;
 
 	skidSpeed = 20;
 	skidFactor = 0.4;
@@ -120,8 +122,8 @@ datablock PlayerData(FrmStandardcat)
    recoverDelay = 9;
    recoverRunForceScale = 1.2;
 
-   minImpactSpeed = 30;
-   minLateralImpactSpeed = 30;
+   minImpactSpeed = 60;
+   minLateralImpactSpeed = 60;
    speedDamageScale = 1;
 
    boundingBox = "1.0 0.75 2.6";
@@ -186,12 +188,12 @@ datablock PlayerData(FrmStandardcat)
    minJumpSpeed = 0;
    maxJumpSpeed = 9999;
 
-   horizMaxSpeed = 200;
-   horizResistSpeed = 30;
+   horizMaxSpeed = 9999;
+   horizResistSpeed = 9999;
    horizResistFactor = 0.35;
 
-   upMaxSpeed = 200;
-   upResistSpeed = 25;
+   upMaxSpeed = 9999;
+   upResistSpeed = 9999;
    upResistFactor = 0.3;
 
    footstepSplashHeight = 0.35;
