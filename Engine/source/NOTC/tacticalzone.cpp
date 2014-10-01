@@ -1000,9 +1000,9 @@ ColorF TacticalZone::getZoneColor(U32 slot) const
 
    U32 time = Platform::getRealMilliseconds();
    if(slot == 0 && (time/mFlickerTime) % 2 == 0)
-      return mCurrColor[slot];
-   else
       return ColorF(0,0,0,0);
+   else
+      return mCurrColor[slot];
 }
 
 void TacticalZone::flash(const ColorF& color)
@@ -1318,9 +1318,6 @@ void TacticalZone::prepRenderImage(SceneRenderState* state)
 		computePolys();
 		mClientComputePolys = false;
 	}
-
-   if(this->getZoneColor() == ColorF(0,0,0,0))
-      return;
 
    if(false)
    {
