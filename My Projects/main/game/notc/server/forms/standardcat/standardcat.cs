@@ -60,27 +60,19 @@ datablock PlayerData(FrmStandardcat)
 	damageBufferDischargeRate = 0.15;
 	rechargeRate = 0.4;
 
-   runForce = 150 * 90;
+   runForce = 200 * 90;
    runEnergyDrain = 0;
    minRunEnergy = 0;
-   maxForwardSpeed = 8;
-   maxBackwardSpeed = 8;
-   maxSideSpeed = 5;
+   maxForwardSpeed = 15;
+   maxBackwardSpeed = 15;
+   maxSideSpeed = 12;
    
-	slideForce = 20 * 90;
-	slideEnergyDrain = 0.7;
-   slideEnergySlot = 1;
-	minSlideEnergy = 1;
-	maxSlideForwardSpeed = 30;
-	maxSlideBackwardSpeed = 25;
-	maxSlideSideSpeed = 12;
-
-   sprintForce = 150 * 90;
+   sprintForce = 200 * 90;
    sprintEnergyDrain = 0;
    minSprintEnergy = 0;
-   maxSprintForwardSpeed = 15;
-   maxSprintBackwardSpeed = 12;
-   maxSprintSideSpeed = 12;
+   maxSprintForwardSpeed = 25;
+   maxSprintBackwardSpeed = 20;
+   maxSprintSideSpeed = 20;
    sprintStrafeScale = 1.0;
    sprintYawScale = "1.0";
    sprintPitchScale = "1.0";
@@ -90,6 +82,14 @@ datablock PlayerData(FrmStandardcat)
    maxCrouchForwardSpeed = 3.0;
    maxCrouchBackwardSpeed = 1.0;
    maxCrouchSideSpeed = 1.0;
+   
+	slideForce = 40 * 90;
+	slideEnergyDrain = 0.7;
+   slideEnergySlot = 1;
+	minSlideEnergy = 1;
+	maxSlideForwardSpeed = 30;
+	maxSlideBackwardSpeed = 25;
+	maxSlideSideSpeed = 12;
 
    maxUnderwaterForwardSpeed = 8.4;
    maxUnderwaterBackwardSpeed = 7.8;
@@ -109,7 +109,7 @@ datablock PlayerData(FrmStandardcat)
    
    gravityMod = 2.0;
 
-	skidSpeed = 20;
+	skidSpeed = 28;
 	skidFactor = 0.4;
    
    glideForce = 10 * 90;
