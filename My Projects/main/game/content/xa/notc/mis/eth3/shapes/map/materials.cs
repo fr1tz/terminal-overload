@@ -19,11 +19,11 @@ singleton Material(xa_notc_mis_eth3_shapes_map_gridmat)
 singleton Material(xa_notc_mis_eth3_shapes_map_mat1)
 {
    mapTo = "xa_notc_mis_eth3_shapes_map_mat1";
-   diffuseColor[0] = "0.00392157 0.376471 0.0705882 1";
+   diffuseColor[0] = "0 0.0941177 1 1";
    specular[0] = "0.5 0.5 0.5 1";
    specularPower[0] = "50";
    translucentBlendOp = "None";
-   diffuseColor[1] = "0.00784314 0.337255 0.0823529 1";
+   diffuseColor[1] = "0.00784314 0.996078 0.878431 1";
    wireframe[1] = "1";
    emissive[1] = "1";
    detailScale[1] = "4 4";
@@ -45,7 +45,7 @@ singleton Material(xa_notc_mis_eth3_shapes_map_mat1)
 singleton Material(xa_notc_mis_eth3_shapes_map_mat3)
 {
    mapTo = "xa_notc_mis_eth3_shapes_map_mat3";
-   diffuseColor[0] = "0.992157 0.992157 0.992157 1";
+   diffuseColor[0] = "0.00392157 0.00392157 0.478431 1";
    specular[0] = "0.5 0.5 0.5 1";
    specularPower[0] = "50";
    translucentBlendOp = "AddAlpha";
@@ -55,7 +55,7 @@ singleton Material(xa_notc_mis_eth3_shapes_map_mat3)
    diffuseColorPaletteSlot[1] = "0";
    wireframe[1] = "0";
    materialTag0 = "Miscellaneous";
-   diffuseColorPaletteSlot[0] = "0";
+   diffuseColorPaletteSlot[0] = "-1";
    emissive[0] = "1";
    diffuseColor[2] = "0.239216 0.239216 0.239216 0";
    diffuseColorPaletteSlot[2] = "0";
@@ -68,17 +68,17 @@ singleton Material(xa_notc_mis_eth3_shapes_map_mat3)
    castShadows = "0";
    showFootprints = "0";
    doubleSided = "1";
-   translucent = "1";
+   translucent = "0";
 };
 
 singleton Material(xa_notc_mis_eth3_shapes_map_mat2)
 {
    mapTo = "xa_notc_mis_eth3_shapes_map_mat2";
-   diffuseColor[0] = "0.443137 0.443137 0.443137 0";
+   diffuseColor[0] = "0.00392157 0.00392157 0.00392157 1";
    specular[0] = "0.5 0.5 0.5 1";
    specularPower[0] = "49";
    translucentBlendOp = "None";
-   diffuseColor[1] = "0.32549 0.32549 0.32549 1";
+   diffuseColor[1] = "0.32549 0.32549 0.32549 0";
    wireframe[1] = "0";
    materialTag0 = "Miscellaneous";
    diffuseColorPaletteSlot[1] = "-1";
