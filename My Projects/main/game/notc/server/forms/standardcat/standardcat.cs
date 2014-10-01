@@ -531,10 +531,17 @@ function FrmStandardcat::onJump(%this, %obj)
 }
 
 // Called by engine
-function FrmStandardcat::onXJump(%this, %obj)
+function FrmStandardcat::onXJumpChargeStart(%this, %obj)
+{
+   //echo("FrmStandardcat::onXJumpChargeStart()");
+}
+
+// Called by engine
+function FrmStandardcat::onXJump(%this, %obj, %dir)
 {
    //echo("FrmStandardcat::onXJump()");
-   //echo(%obj.getXJumpCharge());
+   if(%obj.hasInventory(ItemXJump))
+      ItemXJump.onXJump(%obj, %dir);
 }
 
 // Called by script

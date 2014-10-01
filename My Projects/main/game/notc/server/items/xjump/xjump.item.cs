@@ -33,3 +33,24 @@ function ItemXJump::onInventory(%this, %obj, %amount)
    }
 }
 
+function ItemXJump::onXJump(%this, %obj, %dir)
+{
+   //echo("ItemXJump::onXJump()");
+   
+   %pos = %obj.getWorldBoxCenter();
+   %vel = VectorScale(VectorNormalize(%dir), -9999);
+   
+     // create the projectile object...
+   %p = new Projectile() {
+      dataBlock       = ItemXJumpProjectile;
+      teamId          = %obj.teamId;
+      initialVelocity = %vel;
+      initialPosition = %pos;
+      sourceObject    = %obj;
+      sourceSlot      = -1;
+      client          = %obj.client;
+   };
+   copyPalette(%obj, %p);
+   MissionCleanup.add(%p);
+}
+
