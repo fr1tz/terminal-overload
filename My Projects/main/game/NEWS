@@ -1,6 +1,25 @@
 What's new?
 ===========
 
+Version 0.3.0-testing2
+----------------------
+
+Release Date: Oct. 1, 2014
+
+- New map: ETH5
+- Tweaked instant XJump
+- New charged XJump
+- Tweaked CAT movement
+- Replaced MGL1 with MGL2
+- Replaced SMG1 with SMG2
+- Replaced SG1 with SG3
+- Replaced SR1 with SR2
+- Removed SG2 from Class #2 loadout
+- Overhauled projectile visuals (except discs & grenade)
+- Various minor tweaks and improvements
+- Bugfixes
+
+
 Version 0.3.0-testing1
 ----------------------
 
