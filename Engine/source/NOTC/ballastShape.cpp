@@ -53,11 +53,10 @@ ConsoleDocClass( BallastShapeData,
 
 BallastShapeData::BallastShapeData()
 {
-   dynamicTypeField     = 0;
+   dynamicTypeField = 0;
+   levelEnergySlot  = -1;
 
    shadowEnable = true;
-
-   noIndividualDamage = false;
 
    groundConnectionBeamOne   = NULL;
    groundConnectionBeamOneId = 0;
@@ -101,6 +100,9 @@ void BallastShapeData::initPersistFields()
       "@brief An integer value which, if speficied, is added to the value retured by getType().\n\n"
       "This allows you to extend the type mask for a BallastShape that uses this datablock.  Type masks "
       "are used for container queries, etc.");
+
+   addField("levelEnergySlot",          TypeS32,  Offset(levelEnergySlot,     BallastShapeData), 
+      "@brief If >= 0, take ballast level from energy slot.\n\n");
 
    Parent::initPersistFields();
 }
@@ -272,6 +274,11 @@ bool BallastShape::onNewDataBlock(GameBaseData* dptr, bool reload)
 void BallastShape::processTick(const Move* move)
 {
    Parent::processTick(move);
+
+   if(mDataBlock->levelEnergySlot >= 0)
+   {
+      mLevel = this->getEnergyValue(mDataBlock->levelEnergySlot);
+   }
 
    // Image Triggers
    if (move && mDamageState == Enabled) {
@@ -449,9 +456,6 @@ U32 BallastShape::packUpdate(NetConnection *connection, U32 mask, BitStream *bst
       mathWrite(*bstream, mObjScale);
    }
 
-   // powered?
-   bstream->writeFlag(mPowered);
-
    if(bstream->writeFlag(mask & LevelMask))
    {
 		bstream->write(mLevel);
@@ -479,9 +483,6 @@ void BallastShape::unpackUpdate(NetConnection *connection, BitStream *bstream)
       mathRead(*bstream, &scale);
       setScale(scale);
    }
-
-   // powered?
-   mPowered = bstream->readFlag();
 
 	// Level
 	if(bstream->readFlag())

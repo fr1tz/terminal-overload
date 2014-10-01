@@ -21,8 +21,7 @@ struct BallastShapeData: public ShapeBaseData {
 
    bool  noIndividualDamage;
    S32   dynamicTypeField;
-   bool  isShielded;
-   F32   energyPerDamagePoint;
+   S32   levelEnergySlot;
 
    S32 levelSequence;
 
