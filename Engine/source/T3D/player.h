@@ -66,6 +66,8 @@ struct PlayerData: public ShapeBaseData {
    /// @name Physics constants
    /// @{
 
+   F32 gravityMod;            ///< Gravity modifier
+
    F32 skidSpeed;             ///< Velocity at which player starts skidding
    F32 skidFactor;            ///< FIXME: add description
 

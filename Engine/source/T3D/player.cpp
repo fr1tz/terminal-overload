@@ -280,6 +280,8 @@ PlayerData::PlayerData()
    drag = 0.3f;         // from ShapeBase
    density = 1.1f;      // from ShapeBase
 
+   gravityMod = 1.0;
+
    skidSpeed = 9999;
    skidFactor = 1.0;
 
@@ -752,6 +754,9 @@ void PlayerData::initPersistFields()
    endGroup( "Camera" );
 
    addGroup( "Movement" );
+
+      addField( "gravityMod", TypeF32, Offset(gravityMod, PlayerData),
+         "@brief Gravity modifier.\n\n" );
 
       addField( "skidSpeed", TypeF32, Offset(skidSpeed, PlayerData),
          "@brief Velocity at which player starts skidding.\n\n" );
@@ -1368,6 +1373,8 @@ void PlayerData::packData(BitStream* stream)
    stream->write(drag);
    stream->write(density);
 
+   stream->write(gravityMod);
+
    stream->write(skidSpeed);
    stream->write(skidFactor);
 
@@ -1591,6 +1598,8 @@ void PlayerData::unpackData(BitStream* stream)
       stream->read(&maxEnergy[i]);
    stream->read(&drag);
    stream->read(&density);
+
+   stream->read(&gravityMod);
 
    stream->read(&skidSpeed);
    stream->read(&skidFactor);
@@ -3164,7 +3173,7 @@ void Player::updateMove(const Move* move)
    }
 
    // Acceleration due to gravity
-   VectorF acc(0.0f, 0.0f, mGravity * mGravityMod * TickSec);
+   VectorF acc(0.0f, 0.0f, mGravity * mDataBlock->gravityMod * mGravityMod * TickSec);
 
    // Determine ground contact normal. Only look for contacts if
    // we can move and aren't mounted.
