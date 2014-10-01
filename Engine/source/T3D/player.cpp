@@ -3599,9 +3599,11 @@ void Player::updateMove(const Move* move)
          F32 availableEnergy = this->getEnergyLevel(mDataBlock->xJumpEnergySlot);
          mXJumpCharge = mClampF(mXJumpCharge, 0, availableEnergy);
       }
-      else if(mXJumpCharge > 0)
+      else 
       {
-         performXJump = true;
+         mXJumpChargeInProgress = false;
+         if(mXJumpCharge > 0)
+            performXJump = true;
       }
    }
    if(this->canInstantXJump() && mXJumpCharge == 0 && move->trigger[sInstantXJumpTrigger] && mInstantXJumpReady)
