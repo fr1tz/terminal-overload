@@ -418,7 +418,8 @@ struct PlayerData: public ShapeBaseData {
    DECLARE_CALLBACK( void, onStartSliding, ( Player* obj ) );
    DECLARE_CALLBACK( void, onStopSliding, ( Player* obj ) );
    DECLARE_CALLBACK( void, onJump, ( Player* obj ) );
-   DECLARE_CALLBACK( void, onXJump, ( Player* obj ) );
+   DECLARE_CALLBACK( void, onXJumpChargeStart, ( Player* obj ) );
+   DECLARE_CALLBACK( void, onXJump, ( Player* obj, Point3F dir ) );
    DECLARE_CALLBACK( void, doDismount, ( Player* obj ) );
    DECLARE_CALLBACK( void, onEnterLiquid, ( Player* obj, F32 coverage, const char* type ) );
    DECLARE_CALLBACK( void, onLeaveLiquid, ( Player* obj, const char* type ) );
@@ -519,7 +520,9 @@ protected:
    bool mFalling;                   ///< Falling in mid-air?
    F32 mSlideContact;               ///< FIXME insert desc
    S32 mJumpDelay;                  ///< Delay till next jump   
+   bool mXJumpChargeInProgress;     ///< Currently charging an x-jump?
    F32 mXJumpCharge;                ///< Current XJump charge
+   bool mInstantXJumpReady;         ///< To avoid multiple instant x-jumps if trigger is held down
    
    Pose  mPose;
    bool  mAllowJumping;
@@ -763,6 +766,7 @@ protected:
 
    void updateSkidParticles( F32 dt);              ///< Update skid particles
    void updateSkidSound( F32 dt );                 ///< Update skid sound
+   void updateXJumpChargeSound( F32 dt );          ///< Update x-jump charge sound
 
    void disableHeadZCalc() { mUseHeadZCalc = false; }
    void enableHeadZCalc() { mUseHeadZCalc = true; }

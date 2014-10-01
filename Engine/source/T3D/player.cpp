@@ -208,7 +208,11 @@ IMPLEMENT_CALLBACK( PlayerData, onJump, void, ( Player* obj ), ( obj ),
    "@brief Called when the player jumps.\n\n"
    "@param obj The Player object\n" );
 
-IMPLEMENT_CALLBACK( PlayerData, onXJump, void, ( Player* obj ), ( obj ),
+IMPLEMENT_CALLBACK( PlayerData, onXJumpChargeStart, void, ( Player* obj ), ( obj ),
+   "@brief Called when the player starts charching an x-jump.\n\n"
+   "@param obj The Player object\n" );
+
+IMPLEMENT_CALLBACK( PlayerData, onXJump, void, ( Player* obj, Point3F dir ), ( obj, dir ),
    "@brief Called when the player x-jumps.\n\n"
    "@param obj The Player object\n" );
 
@@ -1884,7 +1888,9 @@ Player::Player()
    mJumpDelay = 0;
    mJumpSurfaceLastContact = 0;
    mJumpSurfaceNormal.set(0.0f, 0.0f, 1.0f);
+   mXJumpChargeInProgress = false;
    mXJumpCharge = 0.0f;
+   mInstantXJumpReady = true;
    mControlObject = 0;
    dMemset( mSplashEmitter, 0, sizeof( mSplashEmitter ) );
    dMemset( mSlideEmitter, 0, sizeof( mSlideEmitter ) );
@@ -2624,6 +2630,7 @@ void Player::advanceTime(F32 dt)
    updateSlideSound(dt);
    updateSkidParticles(dt);
    updateSkidSound(dt);
+   updateXJumpChargeSound(dt);
 	updateFirstPersonWeaponBob(dt);
 
    mLastPos = getPosition();
@@ -3582,31 +3589,30 @@ void Player::updateMove(const Move* move)
    {
       if(move->trigger[sChargedXJumpTrigger])
       {
+         if(!mXJumpChargeInProgress)
+         {
+            mXJumpChargeInProgress = true;
+            if(this->isServerObject())
+               mDataBlock->onXJumpChargeStart_callback(this);
+         }
          mXJumpCharge += mDataBlock->xJumpChargeRate;
          F32 availableEnergy = this->getEnergyLevel(mDataBlock->xJumpEnergySlot);
          mXJumpCharge = mClampF(mXJumpCharge, 0, availableEnergy);
-         if(mXJumpChargeSound && mXJumpCharge > 0)
-         {
-            if(!mXJumpChargeSound->isPlaying())
-               mXJumpChargeSound->play();
-            mXJumpChargeSound->setTransform(this->getTransform());
-            mXJumpChargeSound->setPitch(1+mXJumpCharge/mDataBlock->maxEnergy[mDataBlock->xJumpEnergySlot]);
-         }
       }
       else if(mXJumpCharge > 0)
       {
          performXJump = true;
       }
    }
-   if(this->canInstantXJump() && mXJumpCharge == 0 && move->trigger[sInstantXJumpTrigger])
+   if(this->canInstantXJump() && mXJumpCharge == 0 && move->trigger[sInstantXJumpTrigger] && mInstantXJumpReady)
    {
       mXJumpCharge = mDataBlock->xJumpInstantEnergy;
       performXJump = true;
    }
+   if(!move->trigger[sInstantXJumpTrigger])
+      mInstantXJumpReady = true;
    if(performXJump)
       this->performXJump(&acc);
-   if(mXJumpChargeSound && mXJumpChargeSound->isPlaying() && mXJumpCharge == 0)
-      mXJumpChargeSound->stop();
 
    // Add in force from physical zones...
    acc += (mAppliedForce / getMass()) * TickSec;
@@ -3787,6 +3793,8 @@ void Player::performXJump(Point3F* acc)
 	}
 
    mJumpSurfaceLastContact = JumpSkipContactsMax;
+   mInstantXJumpReady = false;
+   mXJumpChargeInProgress = false;
 
    if(this->isGhost())
    {
@@ -3794,7 +3802,7 @@ void Player::performXJump(Point3F* acc)
 		SFX->playOnce(mDataBlock->sound[PlayerData::XJump], &footMat);
    }
    else
-      mDataBlock->onXJump_callback(this);
+      mDataBlock->onXJump_callback(this, dirVec);
 
 done:
    mXJumpCharge = 0.0;   
@@ -3887,12 +3895,12 @@ bool Player::canJetJump()
 
 bool Player::canChargeXJump()
 {
-   return mAllowChargedXJump && mState == MoveState && mDamageState == Enabled && !isMounted();
+   return mAllowChargedXJump && mDamageState == Enabled && !isMounted();
 }
 
 bool Player::canInstantXJump()
 {
-   return mAllowInstantXJump && mState == MoveState && mDamageState == Enabled && !isMounted() && mEnergy[mDataBlock->xJumpEnergySlot] >= mDataBlock->xJumpInstantEnergy;
+   return mAllowInstantXJump && mDamageState == Enabled && !isMounted() && mEnergy[mDataBlock->xJumpEnergySlot] >= mDataBlock->xJumpInstantEnergy;
 }
 
 bool Player::canSwim()
@@ -8140,6 +8148,25 @@ void Player::updateSkidSound(F32 dt)
          mSkidSound->stop();
       }
  	}
+}
+
+void Player::updateXJumpChargeSound(F32 dt)
+{
+	if(!mXJumpChargeSound)
+		return;
+
+   if(mXJumpChargeInProgress && mDamageState == Enabled)
+   {
+      if(!mXJumpChargeSound->isPlaying())
+         mXJumpChargeSound->play();
+      mXJumpChargeSound->setTransform(this->getTransform());
+      mXJumpChargeSound->setPitch(1+mXJumpCharge/mDataBlock->maxEnergy[mDataBlock->xJumpEnergySlot]);
+   }
+   else
+   {
+      if(mXJumpChargeSound->isPlaying())
+         mXJumpChargeSound->stop();
+   }
 }
 
 void Player::updateFirstPersonWeaponBob(F32 dt)
