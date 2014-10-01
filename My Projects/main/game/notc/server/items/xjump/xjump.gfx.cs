@@ -4,28 +4,19 @@
 datablock DecalData(ItemXJumpProjectileDecal)
 {
    Material = "xa_notc_core_shapes_standardcat_xjump_decal_p1_mat";
-   size = "3";
-   lifeSpan = "0";
-   randomize = "0";
-   texRows = "1";
-   texCols = "1";
+   size = "4";
+   lifeSpan = "5000";
+   randomize = "1";
+   texRows = "2";
+   texCols = "2";
    screenStartRadius = "20";
    screenEndRadius = "5";
    clippingAngle = "180";
-   textureCoordCount = "0";
-   textureCoords[0] = "0 0 1 1";
-   textureCoords[1] = "0 0 1 1";
-   textureCoords[2] = "0 0 1 1";
-   textureCoords[3] = "0 0 1 1";
-   textureCoords[4] = "0 0 1 1";
-   textureCoords[5] = "0 0 1 1";
-   textureCoords[6] = "0 0 1 1";
-   textureCoords[7] = "0 0 1 1";
-   textureCoords[8] = "0 0 1 1";
-   textureCoords[9] = "0 0 1 1";
-   textureCoords[10] = "0 0 1 1";
-   fadeTime = "6000";
-   paletteSlot = "0";
+   textureCoordCount = "3";
+   textureCoords[0] = "0 0 0.5 0.5";
+   textureCoords[1] = "0.5 0 0.5 0.5";
+   textureCoords[2] = "0 0.5 0.5 0.5";
+   textureCoords[3] = "0.5 0.5 0.5 0.5";
 };
 
 datablock ParticleData(ItemXJumpProjectileExplosion_Cloud)
@@ -119,7 +110,7 @@ datablock ParticleEmitterData(ItemXJumpProjectileExplosion_Emitter0)
 
 datablock ExplosionData(ItemXJumpProjectileExplosion)
 {
-	soundProfile = ItemXJumpActivateSound;
+	//soundProfile = ItemXJumpActivateSound;
 
 	lifetimeMS = "192";
 
