@@ -66,7 +66,7 @@ singleton Material(xa_notc_core_shapes_standardcat_trailsmat)
 singleton Material(xa_notc_core_shapes_standardcat_mat1)
 {
    mapTo = "base";
-   diffuseColor[0] = "0.415686 0.415686 0.415686 1";
+   diffuseColor[0] = "0.415686 0.415686 0.415686 0";
    diffuseColorPaletteSlot[0] = "-1";
    showFootprints = "0";
    materialTag0 = "Miscellaneous";
@@ -76,7 +76,7 @@ singleton Material(xa_notc_core_shapes_standardcat_mat1)
    translucentBlendOp = "None";
    emissive[0] = "0";
    glow[0] = "0";
-   diffuseColor[1] = "0.988235 0.996078 0.996078 0";
+   diffuseColor[1] = "0.403922 0.403922 0.403922 1";
    diffuseColorPaletteSlot[1] = "-1";
    glow[1] = "0";
    wireframe[1] = "1";
