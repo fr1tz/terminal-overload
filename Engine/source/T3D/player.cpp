@@ -3736,7 +3736,10 @@ void Player::performXJump(Point3F* acc)
 {
    F32 availableEnergy = this->getEnergyLevel(mDataBlock->xJumpEnergySlot);
    if(mXJumpCharge > availableEnergy)
-      goto done;
+   {
+      mXJumpCharge = 0.0;
+      return;
+   }
 
    bool canJump = false;
    U32 typeMask = ShapeBaseObjectType | StaticObjectType;
@@ -3766,7 +3769,10 @@ void Player::performXJump(Point3F* acc)
    this->enableCollision();
 
    if(!canJump)
-      goto done;
+   {
+      mXJumpCharge = 0.0;
+      return;
+   }
 
    F32 speedfactor = this->getVelocity().len() / mDataBlock->xJumpSpeedFactorD;
    if(speedfactor < 1)
@@ -3806,7 +3812,6 @@ void Player::performXJump(Point3F* acc)
    else
       mDataBlock->onXJump_callback(this, dirVec);
 
-done:
    mXJumpCharge = 0.0;   
 }
 
