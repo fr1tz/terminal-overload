@@ -4,9 +4,9 @@
 datablock MultiNodeLaserBeamData(ItemImpShieldBeam)
 {
 	material[0] = "xa_notc_core_shapes_standardcat_impshield_p1_beammat0";
-   width[0] = "0.04";
+   width[0] = "1.5";
 	material[1] = "xa_notc_core_shapes_standardcat_impshield_p1_beammat1";
-   width[1] = "0.04";
+   width[1] = "0.001";
  
 	renderMode = $MultiNodeLaserBeamRenderMode::FaceViewer;
 	fadeTime = "128";

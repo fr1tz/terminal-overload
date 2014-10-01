@@ -3,11 +3,11 @@ singleton Material(xa_notc_core_shapes_standardcat_impshield_p1_beammat0)
 {
    diffuseColor[0] = "0.996078 0.996078 0.996078 1";
    doubleSided = "0";
-   translucentBlendOp = "LerpAlpha";
+   translucentBlendOp = "AddAlpha";
    castShadows = "0";
    translucent = "1";
    showFootprints = "0";
-   glow[0] = "1";
+   glow[0] = "0";
    glowOnly[0] = "0";
    emissive[0] = "1";
    vertColor[0] = "1";
@@ -16,17 +16,19 @@ singleton Material(xa_notc_core_shapes_standardcat_impshield_p1_beammat0)
    mapTo = "trail.png";
    wireframe[0] = "0";
    diffuseColor[1] = "0.996078 0.996078 0.996078 0";
-   emissive[1] = "0";
-   wireframe[1] = "1";
+   emissive[1] = "1";
+   wireframe[1] = "0";
    vertColor[1] = "0";
    diffuseColorPaletteSlot[1] = "0";
-   animFlags[0] = "0x00000008";
+   animFlags[0] = "0x00000009";
    scrollDir[0] = "1 0";
    scrollSpeed[0] = "3.647";
-   translucentZWrite = "1";
+   translucentZWrite = "0";
    rotSpeed[0] = "4.353";
    waveFreq[0] = "0.625";
    waveAmp[0] = "1";
+   diffuseMap[0] = "content/xa/rotc/p.5.4/textures/rotc/groundconnection.png";
+   effectColor[1] = "InvisibleBlack";
 };
 
 singleton Material(xa_notc_core_shapes_standardcat_impshield_p1_beammat1)
