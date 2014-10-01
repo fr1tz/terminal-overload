@@ -18,7 +18,7 @@ singleton Material(xa_notc_mis_eth5_territoryzone_terrainmat)
    translucentBlendOp = "LerpAlpha";
    parallaxScale[0] = "0";
    castShadows = "0";
-   translucent = "1";
+   translucent = "0";
    showFootprints = "0";
    glow[0] = "0";
    emissive[0] = "0";
@@ -33,6 +33,7 @@ singleton Material(xa_notc_mis_eth5_territoryzone_terrainmat)
    diffuseColor[1] = "1 1 1 0.25";
    diffuseMap[0] = "content/xa/notc/mis/eth5/textures/territory";
    translucentZWrite = "1";
+   effectColor[0] = "InvisibleBlack";
 };
 singleton Material(xa_notc_mis_eth5_territoryzone_terrainmat)
 {
