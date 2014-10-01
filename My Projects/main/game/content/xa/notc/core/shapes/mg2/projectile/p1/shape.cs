@@ -8,7 +8,7 @@ singleton TSShapeConstructor(ShapeDae3)
 
 function ShapeDae3::onLoad(%this)
 {
-   %this.renameSequence("ambient", "timeline");
-   %this.addSequence("timeline", "activate", "0", "12", "1", "0");
-   %this.addSequence("activate", "maintain", "0", "12", "1", "0");
+   //%this.renameSequence("ambient", "timeline");
+   //%this.addSequence("timeline", "activate", "0", "12", "1", "0");
+   //%this.addSequence("activate", "maintain", "0", "12", "1", "0");
 }
