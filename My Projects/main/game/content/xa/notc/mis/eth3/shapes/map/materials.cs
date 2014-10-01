@@ -45,7 +45,7 @@ singleton Material(xa_notc_mis_eth3_shapes_map_mat1)
 singleton Material(xa_notc_mis_eth3_shapes_map_mat3)
 {
    mapTo = "xa_notc_mis_eth3_shapes_map_mat3";
-   diffuseColor[0] = "0.00392157 0.00392157 0.478431 1";
+   diffuseColor[0] = "1 0.905882 0 1";
    specular[0] = "0.5 0.5 0.5 1";
    specularPower[0] = "50";
    translucentBlendOp = "AddAlpha";
