@@ -94,6 +94,8 @@ function XaNotc1CatMoveMap_getGamepadAdjustAmount(%val)
 
 function XaNotc1CatMoveMap_yaw(%val)
 {
+   MouseInputGraph_input(0, %val);
+
    %yawAdj = XaNotc1CatMoveMap_getMouseAdjustAmount(%val);
    if(ServerConnection.isControlObjectRotDampedCamera())
    {
@@ -107,6 +109,8 @@ function XaNotc1CatMoveMap_yaw(%val)
 
 function XaNotc1CatMoveMap_pitch(%val)
 {
+   MouseInputGraph_input(1, %val);
+
    %pitchAdj = XaNotc1CatMoveMap_getMouseAdjustAmount(%val);
    if(ServerConnection.isControlObjectRotDampedCamera())
    {

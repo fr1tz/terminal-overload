@@ -153,4 +153,5 @@ GlobalActionMap.bind(keyboard, "ctrl F3", XaNotc1MiscMoveMap_doProfile);
 //------------------------------------------------------------------------------
 
 XaNotc1MiscMoveMap.bindCmd(keyboard, "n", "toggleNetGraph();", "");
+XaNotc1MiscMoveMap.bindCmd(keyboard, "m", "toggleMouseInputGraph();", "");
 

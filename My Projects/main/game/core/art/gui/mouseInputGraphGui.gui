@@ -1,0 +1,115 @@
+
+//--- OBJECT WRITE BEGIN ---
+%guiContent = new GuiControl(MouseInputGraphGui) {
+   position = "0 0";
+   extent = "640 480";
+   minExtent = "8 2";
+   horizSizing = "left";
+   vertSizing = "bottom";
+   profile = "GuiDefaultProfile";
+   visible = "1";
+   active = "1";
+   tooltipProfile = "GuiToolTipProfile";
+   hovertime = "1000";
+   isContainer = "1";
+   canSave = "1";
+   canSaveDynamicFields = "1";
+      noCursor = "1";
+
+   new GuiGraphCtrl(MouseInputGraphY) {
+      centerY = "1";
+      plotColor[0] = "0 0 0 1";
+      plotColor[1] = "1 0 0 1";
+      plotColor[2] = "0 1 0 1";
+      plotColor[3] = "0 0 1 1";
+      plotColor[4] = "0 1 1 1";
+      plotColor[5] = "0 0 0 1";
+      plotType[0] = "Point";
+      plotType[1] = "PolyLine";
+      plotType[2] = "PolyLine";
+      plotType[3] = "PolyLine";
+      plotType[4] = "PolyLine";
+      plotType[5] = "PolyLine";
+      plotInterval[0] = "0";
+      plotInterval[1] = "0";
+      plotInterval[2] = "0";
+      plotInterval[3] = "0";
+      plotInterval[4] = "0";
+      plotInterval[5] = "0";
+      position = "8 269";
+      extent = "200 200";
+      minExtent = "8 2";
+      horizSizing = "right";
+      vertSizing = "top";
+      profile = "GuiDefaultProfile";
+      visible = "1";
+      active = "1";
+      tooltipProfile = "GuiToolTipProfile";
+      hovertime = "1000";
+      isContainer = "0";
+      canSave = "1";
+      canSaveDynamicFields = "0";
+   };
+   new GuiGraphCtrl(MouseInputGraphX) {
+      centerY = "1";
+      plotColor[0] = "0 0 0 1";
+      plotColor[1] = "1 0 0 1";
+      plotColor[2] = "0 1 0 1";
+      plotColor[3] = "0 0 1 1";
+      plotColor[4] = "0 1 1 1";
+      plotColor[5] = "0 0 0 1";
+      plotType[0] = "Point";
+      plotType[1] = "PolyLine";
+      plotType[2] = "PolyLine";
+      plotType[3] = "PolyLine";
+      plotType[4] = "PolyLine";
+      plotType[5] = "PolyLine";
+      plotInterval[0] = "0";
+      plotInterval[1] = "0";
+      plotInterval[2] = "0";
+      plotInterval[3] = "0";
+      plotInterval[4] = "0";
+      plotInterval[5] = "0";
+      position = "8 61";
+      extent = "200 200";
+      minExtent = "8 2";
+      horizSizing = "right";
+      vertSizing = "top";
+      profile = "GuiDefaultProfile";
+      visible = "1";
+      active = "1";
+      tooltipProfile = "GuiToolTipProfile";
+      hovertime = "1000";
+      isContainer = "0";
+      canSave = "1";
+      canSaveDynamicFields = "0";
+   };
+};
+//--- OBJECT WRITE END ---
+
+// Functions
+function toggleMouseInputGraph()
+{
+    if(!Canvas.isMember(MouseInputGraphGui))
+    {
+        Canvas.add(MouseInputGraphGui);
+    }
+    else
+      Canvas.remove(MouseInputGraphGui);
+}
+
+function MouseInputGraph_input(%axis, %val)
+{
+   %ctrl = MouseInputGraphX;
+   if(%axis == 1)
+   {
+      %ctrl = MouseInputGraphY;
+      %val = -%val;
+   }
+
+   %ctrl.value += %val;
+   %v = (%ctrl.value % %ctrl.extent.y)/%ctrl.extent.y;
+
+   %ctrl.addDatum(0, %v);
+}
+
