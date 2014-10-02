@@ -108,7 +108,7 @@ function MouseInputGraph_input(%axis, %val)
    }
 
    %ctrl.value += %val;
-   %v = (%ctrl.value % %ctrl.extent.y)/%ctrl.extent.y;
+   %v = (%ctrl.value % 1000)/1000;
 
    %ctrl.addDatum(0, %v);
 }
