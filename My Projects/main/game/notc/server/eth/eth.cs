@@ -285,7 +285,6 @@ function ETH::loadoutPlayer(%player)
 
    %player.setInventory(ItemDamper, 1);
    %player.setInventory(ItemVAMP, 1);
-   %player.setInventory(ItemEtherboard, 1);
    %player.setInventory(ItemImpShield, 1);
    %player.setInventory(ItemLauncher, 1);
    %player.setInventory(ItemBounce, 1);
@@ -300,6 +299,7 @@ function ETH::loadoutPlayer(%player)
    switch(%client.zActiveLoadout)
    {
       case 0:
+         %player.setInventory(ItemEtherboard, 1);
          %player.setInventory(ItemStealth, 1);
          %player.setInventory(WpnSMG2, 1);
          %player.setInventory(WpnSG3, 1);
@@ -307,11 +307,13 @@ function ETH::loadoutPlayer(%player)
          %player.addToWeaponCycle(WpnSG3);
          %player.mountImage(WpnSMG2Image, 0);
       case 1:
+         %player.setInventory(ItemEtherboard, 1);
          %player.setInventory(ItemStealth, 1);
          %player.setInventory(WpnMGL2, 1);
          %player.addToWeaponCycle(WpnMGL2);
          %player.mountImage(WpnMGL2Image, 0);
       case 2:
+         %player.setInventory(ItemEtherboard, 1);
          %player.setInventory(ItemStealth, 1);
          %player.setInventory(WpnSR2, 1);
          %player.addToWeaponCycle(WpnSR2);
