@@ -1968,7 +1968,6 @@ public:
    virtual bool isValidCameraFov(F32 fov);
    /// @}
 
-
    void processTick(const Move *move);
    void advanceTime(F32 dt);
 

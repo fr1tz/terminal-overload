@@ -193,6 +193,8 @@ public:
   
 protected:
 
+   bool mUseInstantInput;
+
    F32 mCameraFov;
 
    /// The WaterObject we are currently within.
@@ -400,6 +402,13 @@ public:
 	void setTeamId(S32 id) { mTeamId = id; this->onNewTeamId(); }
 	S32 getTeamId() { return mTeamId; };
 	virtual void onNewTeamId() { this->setMaskBits(RareUpdatesMask); };
+   /// @}
+
+   /// @name Client-side instant input (added for NOTC)
+   /// @{
+   virtual void instantInput_init(bool useInstantInput) { mUseInstantInput = useInstantInput; };
+   virtual void instantInput_yaw(F32 yaw) {};
+   virtual void instantInput_pitch(F32 pitch) {};
    /// @}
 
 	/// @name targeting

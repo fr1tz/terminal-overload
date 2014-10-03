@@ -2428,6 +2428,69 @@ ShapeBase* Player::getControlObject()
    return mControlObject;
 }
 
+bool Player::useInstantInput()
+{
+   if(this->isGhost() && mUseInstantInput)
+   {
+      GameConnection* con = this->getControllingClient();
+      if(con && con->getControlObject() == this)
+         return true;
+   }
+   return false;
+}
+
+void Player::instantInput_init(bool useInstantInput)
+{
+   Parent::instantInput_init(useInstantInput);
+
+   if(useInstantInput)
+   {
+      mInstantInput.head = mHead;
+      mInstantInput.rot = mRot;
+   }
+}
+
+void Player::instantInput_yaw(F32 yaw)
+{
+   F32 y = yaw * (mPose == SprintPose ? mDataBlock->sprintYawScale : 1.0f);
+   if (y > M_PI_F)
+      y -= M_2PI_F;
+
+   if(false) // (move->freeLook && ((isMounted() && getMountNode() == 0) || (con && !con->isFirstPerson())))
+   {
+      mInstantInput.head.z = mClampF(mInstantInput.head.z + y,
+                        -mDataBlock->maxFreelookAngle,
+                        mDataBlock->maxFreelookAngle);
+   }
+   else
+   {
+      mInstantInput.rot.z += y;
+      // Rotate the head back to the front, center horizontal
+      // as well if we're controlling another object.
+      mInstantInput.head.z *= 0.5f;
+      if (mControlObject)
+         mInstantInput.head.z *= 0.5f;
+   }
+
+   // constrain the range of mInstantInput.rot.z
+   while (mInstantInput.rot.z < 0.0f)
+      mInstantInput.rot.z += M_2PI_F;
+   while (mInstantInput.rot.z > M_2PI_F)
+      mInstantInput.rot.z -= M_2PI_F;
+
+   this->setRenderPosition(this->getRenderPosition(), mInstantInput.rot);
+}
+
+void Player::instantInput_pitch(F32 pitch)
+{
+   F32 p = pitch * (mPose == SprintPose ? mDataBlock->sprintPitchScale : 1.0f);
+   if (p > M_PI_F) 
+      p -= M_2PI_F;
+   mInstantInput.head.x = mClampF(mInstantInput.head.x + p,mDataBlock->minLookAngle,
+                     mDataBlock->maxLookAngle);
+}
+
+
 void Player::processTick(const Move* move)
 {
    PROFILE_SCOPE(Player_ProcessTick);
@@ -6184,16 +6247,21 @@ bool Player::displaceObject(const Point3F& displacement)
 
 void Player::setPosition(const Point3F& pos,const Point3F& rot)
 {
+   F32 rotZ = rot.z;
+
+   if(this->useInstantInput())
+      rotZ = mInstantInput.rot.z;
+
    MatrixF mat;
    if (isMounted()) {
       // Use transform from mounted object
       MatrixF nmat,zrot;
       mMount.object->getMountTransform( mMount.node, mMount.xfm, &nmat );
-      zrot.set(EulerF(0.0f, 0.0f, rot.z));
+      zrot.set(EulerF(0.0f, 0.0f, rotZ));
       mat.mul(nmat,zrot);
    }
    else {
-      mat.set(EulerF(0.0f, 0.0f, rot.z));
+      mat.set(EulerF(0.0f, 0.0f, rotZ));
       mat.setColumn(3,pos);
    }
    Parent::setTransform(mat);
@@ -6206,16 +6274,21 @@ void Player::setPosition(const Point3F& pos,const Point3F& rot)
 
 void Player::setRenderPosition(const Point3F& pos, const Point3F& rot, F32 dt)
 {
+   F32 rotZ = rot.z;
+
+   if(this->useInstantInput())
+      rotZ = mInstantInput.rot.z;
+
    MatrixF mat;
    if (isMounted()) {
       // Use transform from mounted object
       MatrixF nmat,zrot;
       mMount.object->getRenderMountTransform( dt, mMount.node, mMount.xfm, &nmat );
-      zrot.set(EulerF(0.0f, 0.0f, rot.z));
+      zrot.set(EulerF(0.0f, 0.0f, rotZ));
       mat.mul(nmat,zrot);
    }
    else {
-      EulerF   orient(0.0f, 0.0f, rot.z);
+      EulerF   orient(0.0f, 0.0f, rotZ);
 
       mat.set(orient);
       mat.setColumn(3, pos);
@@ -6296,10 +6369,15 @@ void Player::getEyeBaseTransform(MatrixF* mat, bool includeBank)
    if(!isGhost()) 
       mShapeInstance->animate();
 
-   xmat.set(EulerF(mHead.x, 0.0f, 0.0f));
+   Point3F head = mHead;
+
+   if(this->useInstantInput())
+      head = mInstantInput.head;
+
+   xmat.set(EulerF(head.x, 0.0f, 0.0f));
 
    if (mUseHeadZCalc)
-      zmat.set(EulerF(0.0f, 0.0f, mHead.z));
+      zmat.set(EulerF(0.0f, 0.0f, head.z));
    else
       zmat.identity();
 
@@ -6309,7 +6387,7 @@ void Player::getEyeBaseTransform(MatrixF* mat, bool includeBank)
       MatrixF imat;
       imat.mul(zmat, xmat);
       MatrixF ymat;
-      ymat.set(EulerF(0.0f, mHead.y, 0.0f));
+      ymat.set(EulerF(0.0f, head.y, 0.0f));
       pmat.mul(imat, ymat);
    }
    else
@@ -6376,10 +6454,21 @@ void Player::getRenderEyeBaseTransform(MatrixF* mat, bool includeBank)
    // Eye transform in world space.  We only use the eye position
    // from the animation and supply our own rotation.
    MatrixF pmat,xmat,zmat;
-   xmat.set(EulerF(delta.head.x + delta.headVec.x * delta.dt, 0.0f, 0.0f));
+
+   F32 headX = delta.head.x + delta.headVec.x * delta.dt;
+   F32 headY = delta.head.y + delta.headVec.y * delta.dt;
+   F32 headZ = delta.head.z + delta.headVec.z * delta.dt;
+   if(this->useInstantInput())
+   {
+      headX = mInstantInput.head.x;
+      headY = mInstantInput.head.y;
+      headZ = mInstantInput.head.z;
+   }
+
+   xmat.set(EulerF(headX, 0.0f, 0.0f));
 
    if (mUseHeadZCalc)
-      zmat.set(EulerF(0.0f, 0.0f, delta.head.z + delta.headVec.z * delta.dt));
+      zmat.set(EulerF(0.0f, 0.0f, headZ));
    else
       zmat.identity();
 
@@ -6389,7 +6478,7 @@ void Player::getRenderEyeBaseTransform(MatrixF* mat, bool includeBank)
       MatrixF imat;
       imat.mul(zmat, xmat);
       MatrixF ymat;
-      ymat.set(EulerF(0.0f, delta.head.y + delta.headVec.y * delta.dt, 0.0f));
+      ymat.set(EulerF(0.0f, headY, 0.0f));
       pmat.mul(imat, ymat);
    }
    else

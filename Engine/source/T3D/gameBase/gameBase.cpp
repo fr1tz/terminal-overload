@@ -235,6 +235,7 @@ GameBase::GameBase()
    mClient = -1;
    mTeamId = 0;
    mTargetingMask = 0;
+   mUseInstantInput = false;
    
 #ifdef TORQUE_DEBUG_NET_MOVES
    mLastMoveId = 0;
@@ -754,4 +755,28 @@ DefineEngineMethod( GameBase, getTargetingMask, S32, ( ),,
    "@brief Returns bitmask used for mounted image targeting.\n\n")
 {
    return object->getTargetingMask();
+}
+
+DefineEngineMethod( GameBase, instantInput_init, void, ( bool useInstantInput ),,
+   "@brief Set wether object should use instant input (if available for object).\n\n"
+   "Meant to be used on client to immediately process input"
+   "@param useInstantInput true or false.\n")
+{
+   return object->instantInput_init(useInstantInput);
+}
+
+DefineEngineMethod( GameBase, instantInput_yaw, void, ( F32 yaw ),,
+   "@brief Instantly adjust yaw.\n\n"
+   "Meant to be used on client to immediately process input"
+   "@param yaw Yaw adjustment.\n")
+{
+   return object->instantInput_yaw(yaw);
+}
+
+DefineEngineMethod( GameBase, instantInput_pitch, void, ( F32 pitch ),,
+   "@brief Instantly adjust pitch.\n\n"
+   "Meant to be used on client to immediately process input"
+   "@param yaw Yaw adjustment.\n")
+{
+   return object->instantInput_pitch(pitch);
 }

@@ -3464,6 +3464,9 @@ void ShapeBase::setImageState(U32 imageSlot, U32 newState,bool force)
 					MoveManager::mPitch -= vRand;
 					MoveManager::mYaw += hRand;
 
+               this->instantInput_yaw(hRand);
+               this->instantInput_pitch(-vRand);
+
 #if 0
 					// shake cam...
 					Point3F freq(10,6,9);

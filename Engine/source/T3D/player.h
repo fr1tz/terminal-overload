@@ -492,6 +492,13 @@ protected:
    StateDelta delta;                ///< Used for interpolation on the client.  @see StateDelta
    S32 mPredictionCount;            ///< Number of ticks to predict
 
+   /// Client-side instant input
+   struct InstantInput
+   {
+      Point3F head;
+      Point3F rot;
+   } mInstantInput;
+
    // Current pos, vel etc.
    Point3F mHead;                   ///< Head rotation, uses only x & z
    Point3F mRot;                    ///< Body rotation, uses only z
@@ -863,6 +870,10 @@ public:
    
    //
    void updateWorkingCollisionSet();
+   bool useInstantInput();
+   virtual void instantInput_init(bool useInstantInput);
+   virtual void instantInput_yaw(F32 yaw);
+   virtual void instantInput_pitch(F32 pitch);
    virtual void processTick(const Move *move);
    void interpolateTick(F32 delta);
    void advanceTime(F32 dt);
