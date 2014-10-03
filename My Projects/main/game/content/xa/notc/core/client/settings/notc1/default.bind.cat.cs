@@ -103,8 +103,16 @@ function XaNotc1CatMoveMap_yaw(%val)
       %yawAdj = mClamp(%yawAdj, -m2Pi()+0.01, m2Pi()-0.01);
       %yawAdj *= 0.5;
    }
-
+   
    $mvYaw += %yawAdj;
+   
+   // Instant input
+   if(isObject(ServerConnection))
+   {
+      %control = ServerConnection.getControlObject();
+      if(isObject(%control) && %control.isMethod("instantInput_yaw"))
+         %control.instantInput_yaw(%yawAdj);
+   }
 }
 
 function XaNotc1CatMoveMap_pitch(%val)
@@ -120,6 +128,14 @@ function XaNotc1CatMoveMap_pitch(%val)
    }
 
    $mvPitch += %pitchAdj;
+   
+   // Instant input
+   if(isObject(ServerConnection))
+   {
+      %control = ServerConnection.getControlObject();
+      if(isObject(%control) && %control.isMethod("instantInput_pitch"))
+         %control.instantInput_pitch(%pitchAdj);
+   }
 }
 
 function XaNotc1CatMoveMap_jump(%val)

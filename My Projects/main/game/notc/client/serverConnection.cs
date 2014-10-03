@@ -49,6 +49,11 @@ function GameConnection::onControlObjectChange(%this)
    // and turn off any current zoom.
    resetCurrentFOV();
    turnOffZoom();
+   
+   // Use instant input
+   %control = %this.getControlObject();
+   if(isObject(%control))
+      %control.instantInput_init(true);
 }
 
 function GameConnection::setLagIcon(%this, %state)
