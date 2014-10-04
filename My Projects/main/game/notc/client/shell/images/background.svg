@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="260"
+   height="80"
+   id="svg6651"
+   version="1.1"
+   inkscape:version="0.91pre2 r"
+   viewBox="0 0 260 80.000002"
+   sodipodi:docname="background.svg"
+   inkscape:export-filename="/home/mray/Projects/TOL/terminal-overload/My Projects/main/game/notc/client/shell/images/background.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <defs
+     id="defs6653" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.7103516"
+     inkscape:cx="137.47946"
+     inkscape:cy="-47.743781"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-paths="true"
+     inkscape:bbox-nodes="true"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="2494"
+     inkscape:window-height="1378"
+     inkscape:window-x="66"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid7256"
+       originx="1.0586179e-13px"
+       originy="0px" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata6656">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-972.3622)">
+    <rect
+       ry="0"
+       rx="0"
+       y="972.36218"
+       x="-7.3563765e-06"
+       height="80"
+       width="250"
+       id="rect6966"
+       style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:1;fill:#43877c;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0;marker:none;enable-background:accumulate;stroke-miterlimit:4;stroke-dasharray:none"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path5287"
+       d="m 250,1052.3622 0,-80 10,0 0,80 -10,0 z"
+       style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:1;fill:#000000;fill-opacity:0.03921569;fill-rule:evenodd;stroke:none;stroke-width:0;marker:none;enable-background:accumulate;stroke-miterlimit:4;stroke-dasharray:none"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+  </g>
+</svg>

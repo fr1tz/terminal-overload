@@ -1,0 +1,17 @@
+//--- OBJECT WRITE BEGIN ---
+%guiContent = new GuiControl(MenuTabPlay) {
+   position = "0 0";
+   extent = "1024 768";
+   minExtent = "8 2";
+   horizSizing = "right";
+   vertSizing = "bottom";
+   profile = "GuiDefaultProfile";
+   visible = "1";
+   active = "1";
+   tooltipProfile = "GuiToolTipProfile";
+   hovertime = "1000";
+   isContainer = "1";
+   canSave = "1";
+   canSaveDynamicFields = "1";
+};
+//--- OBJECT WRITE END ---

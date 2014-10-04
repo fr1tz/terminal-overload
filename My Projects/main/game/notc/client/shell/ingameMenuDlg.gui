@@ -4,11 +4,11 @@
 //--- OBJECT WRITE BEGIN ---
 %guiContent = new GuiControl(IngameMenuDlg) {
    position = "0 0";
-   extent = "640 480";
+   extent = "800 600";
    minExtent = "8 8";
    horizSizing = "width";
    vertSizing = "height";
-   profile = "GuiOverlayProfile";
+   profile = "TolGuiOverlayProfile";
    visible = "1";
    active = "1";
    tooltipProfile = "GuiToolTipProfile";
@@ -18,29 +18,64 @@
    canSaveDynamicFields = "1";
       enabled = "1";
 
-   new GuiWindowCtrl() {
-      text = "Play Menu";
-      resizeWidth = "0";
-      resizeHeight = "0";
-      canMove = "1";
-      canClose = "1";
-      canMinimize = "0";
-      canMaximize = "0";
-      canCollapse = "0";
-      closeCommand = "Canvas.popDialog(IngameMenuDlg);";
-      edgeSnap = "1";
+   new GuiContainer() {
       margin = "0 0 0 0";
       padding = "0 0 0 0";
       anchorTop = "1";
       anchorBottom = "0";
       anchorLeft = "1";
       anchorRight = "0";
-      position = "170 170";
-      extent = "300 140";
-      minExtent = "8 8";
+      position = "275 -3700";
+      extent = "250 8000";
+      minExtent = "8 2";
       horizSizing = "center";
       vertSizing = "center";
-      profile = "GuiWindowProfile";
+      profile = "GuiDefaultProfile";
+      visible = "1";
+      active = "1";
+      tooltipProfile = "GuiToolTipProfile";
+      hovertime = "1000";
+      isContainer = "1";
+      canSave = "1";
+      canSaveDynamicFields = "0";
+
+      new GuiPanel() {
+         docking = "None";
+         margin = "0 0 0 200";
+         padding = "0 0 0 0";
+         anchorTop = "0";
+         anchorBottom = "0";
+         anchorLeft = "0";
+         anchorRight = "0";
+         position = "0 0";
+         extent = "250 5000";
+         minExtent = "250 5000";
+         horizSizing = "center";
+         vertSizing = "center";
+         profile = "TolGuiMenuBackgroundProfile";
+         visible = "1";
+         active = "1";
+         tooltipProfile = "GuiToolTipProfile";
+         hovertime = "1000";
+         isContainer = "1";
+         canSave = "1";
+         canSaveDynamicFields = "0";
+      };
+   };
+   new GuiContainer() {
+      docking = "None";
+      margin = "0 0 0 0";
+      padding = "0 0 0 0";
+      anchorTop = "1";
+      anchorBottom = "0";
+      anchorLeft = "1";
+      anchorRight = "0";
+      position = "275 200";
+      extent = "250 200";
+      minExtent = "8 2";
+      horizSizing = "center";
+      vertSizing = "center";
+      profile = "GuiDefaultProfile";
       visible = "1";
       active = "1";
       tooltipProfile = "GuiToolTipProfile";
@@ -50,16 +85,37 @@
       canSaveDynamicFields = "0";
 
       new GuiButtonCtrl() {
-         text = "Options";
+         text = "RETURN";
          groupNum = "-1";
          buttonType = "PushButton";
          useMouseEvents = "0";
-         position = "1 53";
-         extent = "298 50";
+         position = "0 0";
+         extent = "250 50";
          minExtent = "8 2";
          horizSizing = "center";
          vertSizing = "bottom";
-         profile = "GuiMenuButtonProfile";
+         profile = "TolGuiMenuButtonProfile";
+         visible = "1";
+         active = "1";
+         command = "Canvas.popDialog(IngameMenuDlg);";
+         tooltipProfile = "GuiToolTipProfile";
+         hovertime = "1000";
+         isContainer = "0";
+         internalName = "ReturnButton";
+         canSave = "1";
+         canSaveDynamicFields = "0";
+      };
+      new GuiButtonCtrl() {
+         text = "OPTIONS";
+         groupNum = "-1";
+         buttonType = "PushButton";
+         useMouseEvents = "0";
+         position = "0 50";
+         extent = "250 50";
+         minExtent = "8 2";
+         horizSizing = "center";
+         vertSizing = "bottom";
+         profile = "TolGuiMenuButtonProfile";
          visible = "1";
          active = "1";
          command = "Canvas.pushDialog(optionsDlg);";
@@ -71,16 +127,16 @@
          canSaveDynamicFields = "0";
       };
       new GuiButtonCtrl() {
-         text = "---";
+         text = "Disconnect From Server";
          groupNum = "-1";
          buttonType = "PushButton";
          useMouseEvents = "0";
-         position = "1 85";
-         extent = "298 50";
+         position = "0 100";
+         extent = "250 50";
          minExtent = "8 2";
          horizSizing = "center";
          vertSizing = "bottom";
-         profile = "GuiMenuButtonProfile";
+         profile = "TolGuiMenuButtonProfile";
          visible = "1";
          active = "1";
          command = "disconnect();";
@@ -88,27 +144,6 @@
          hovertime = "1000";
          isContainer = "0";
          internalName = "ExitButton";
-         canSave = "1";
-         canSaveDynamicFields = "0";
-      };
-      new GuiButtonCtrl() {
-         text = "Return To Game";
-         groupNum = "-1";
-         buttonType = "PushButton";
-         useMouseEvents = "0";
-         position = "1 21";
-         extent = "298 50";
-         minExtent = "8 2";
-         horizSizing = "center";
-         vertSizing = "bottom";
-         profile = "GuiMenuButtonProfile";
-         visible = "1";
-         active = "1";
-         command = "Canvas.popDialog(IngameMenuDlg);";
-         tooltipProfile = "GuiToolTipProfile";
-         hovertime = "1000";
-         isContainer = "0";
-         internalName = "ReturnButton";
          canSave = "1";
          canSaveDynamicFields = "0";
       };
