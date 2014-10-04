@@ -497,6 +497,7 @@ protected:
    {
       Point3F head;
       Point3F rot;
+      bool freeLookActive;
    } mInstantInput;
 
    // Current pos, vel etc.

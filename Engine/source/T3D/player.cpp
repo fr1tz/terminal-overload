@@ -2430,7 +2430,7 @@ ShapeBase* Player::getControlObject()
 
 bool Player::useInstantInput()
 {
-   if(this->isGhost() && mUseInstantInput)
+   if(this->isGhost() && mUseInstantInput && !mInstantInput.freeLookActive)
    {
       GameConnection* con = this->getControllingClient();
       if(con && con->getControlObject() == this)
@@ -2456,21 +2456,9 @@ void Player::instantInput_yaw(F32 yaw)
    if (y > M_PI_F)
       y -= M_2PI_F;
 
-   if(false) // (move->freeLook && ((isMounted() && getMountNode() == 0) || (con && !con->isFirstPerson())))
-   {
-      mInstantInput.head.z = mClampF(mInstantInput.head.z + y,
-                        -mDataBlock->maxFreelookAngle,
-                        mDataBlock->maxFreelookAngle);
-   }
-   else
-   {
+   GameConnection* con = getControllingClient();
+   if(!mInstantInput.freeLookActive)
       mInstantInput.rot.z += y;
-      // Rotate the head back to the front, center horizontal
-      // as well if we're controlling another object.
-      mInstantInput.head.z *= 0.5f;
-      if (mControlObject)
-         mInstantInput.head.z *= 0.5f;
-   }
 
    // constrain the range of mInstantInput.rot.z
    while (mInstantInput.rot.z < 0.0f)
@@ -3132,6 +3120,7 @@ void Player::updateMove(const Move* move)
 
          if (move->freeLook && ((isMounted() && getMountNode() == 0) || (con && !con->isFirstPerson())))
          {
+            mInstantInput.freeLookActive = true;
             mHead.z = mClampF(mHead.z + y,
                               -mDataBlock->maxFreelookAngle,
                               mDataBlock->maxFreelookAngle);
@@ -3144,6 +3133,12 @@ void Player::updateMove(const Move* move)
             mHead.z *= 0.5f;
             if (mControlObject)
                mHead.x *= 0.5f;
+
+            if(mInstantInput.freeLookActive)
+            {
+               mInstantInput.rot = mRot;
+               mInstantInput.freeLookActive = false;
+            }
          }
 
          // constrain the range of mRot.z
