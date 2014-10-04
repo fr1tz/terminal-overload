@@ -1856,6 +1856,7 @@ Player::Player()
    delta.dt = 1.0f;
    delta.move = NullMove;
    mPredictionCount = sMaxPredictionTicks;
+   mInstantInput.freeLookActive = false;
    mObjToWorld.setColumn(3,delta.pos);
    mRot = delta.rot;
    mHead = delta.head;
@@ -2452,6 +2453,8 @@ void Player::instantInput_init(bool useInstantInput)
 
 void Player::instantInput_yaw(F32 yaw)
 {
+   //Con::printf("Player::instantInput_yaw(): %f", yaw);
+
    F32 y = yaw * (mPose == SprintPose ? mDataBlock->sprintYawScale : 1.0f);
    if (y > M_PI_F)
       y -= M_2PI_F;
@@ -2471,6 +2474,8 @@ void Player::instantInput_yaw(F32 yaw)
 
 void Player::instantInput_pitch(F32 pitch)
 {
+   //Con::printf("Player::instantInput_pitch(): %f", pitch);
+
    F32 p = pitch * (mPose == SprintPose ? mDataBlock->sprintPitchScale : 1.0f);
    if (p > M_PI_F) 
       p -= M_2PI_F;
@@ -3168,6 +3173,13 @@ void Player::updateMove(const Move* move)
    }
    MatrixF zRot;
    zRot.set(EulerF(0.0f, 0.0f, mRot.z));
+
+   // Sync instant input
+   if(this->useInstantInput())
+   {
+      mInstantInput.rot.z = mRot.z;
+      mInstantInput.head.x = mHead.x;
+   }
 
    // Desired move direction & speed
    VectorF moveVec;

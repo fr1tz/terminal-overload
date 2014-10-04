@@ -765,18 +765,3 @@ DefineEngineMethod( GameBase, instantInput_init, void, ( bool useInstantInput ),
    return object->instantInput_init(useInstantInput);
 }
 
-DefineEngineMethod( GameBase, instantInput_yaw, void, ( F32 yaw ),,
-   "@brief Instantly adjust yaw.\n\n"
-   "Meant to be used on client to immediately process input"
-   "@param yaw Yaw adjustment.\n")
-{
-   return object->instantInput_yaw(yaw);
-}
-
-DefineEngineMethod( GameBase, instantInput_pitch, void, ( F32 pitch ),,
-   "@brief Instantly adjust pitch.\n\n"
-   "Meant to be used on client to immediately process input"
-   "@param yaw Yaw adjustment.\n")
-{
-   return object->instantInput_pitch(pitch);
-}

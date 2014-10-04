@@ -2,12 +2,13 @@
 // located in the root directory of this distribution.
 
 #include "T3D/gameBase/moveManager.h"
+#include "T3D/gameBase/gameConnection.h"
 #include "core/stream/bitStream.h"
 #include "core/module.h"
 #include "console/consoleTypes.h"
+#include "console/engineAPI.h"
 #include "core/strings/stringFunctions.h"
 #include "math/mConstants.h"
-
 
 MODULE_BEGIN( MoveManager )
 
@@ -307,4 +308,48 @@ bool Move::unpackMove(BitStream *stream, const Move* basemove, bool alwaysReadAl
    }
 
    return readMove;
+}
+
+DefineEngineFunction(MoveManager_addYaw, void, ( F32 yaw ),,"")
+{
+   // Pre-clamp value to make sure that the yaw value of
+   // the actual move will be as close as possible to the 
+   // sum of the yaw values passed to instantInput_yaw().
+   Move move;
+   move.yaw = yaw;
+   move.clamp();
+   yaw = move.yaw;
+
+   MoveManager::mYaw += yaw;
+
+   // Client-side instant input
+   GameConnection* conn = GameConnection::getConnectionToServer();
+   if(conn)
+   {
+      GameBase* control = conn->getControlObject();
+      if(control)
+         control->instantInput_yaw(yaw);
+   }
+}
+
+DefineEngineFunction(MoveManager_addPitch, void, ( F32 pitch ),,"")
+{
+   // Pre-clamp value to make sure that the pitch value of
+   // the actual move will be as close as possible to the 
+   // sum of the pitch values passed to instantInput_pitch().
+   Move move;
+   move.pitch = pitch;
+   move.clamp();
+   pitch = move.pitch;
+
+   MoveManager::mPitch += pitch;
+
+   // Client-side instant input
+   GameConnection* conn = GameConnection::getConnectionToServer();
+   if(conn)
+   {
+      GameBase* control = conn->getControlObject();
+      if(control)
+         control->instantInput_pitch(pitch);
+   }
 }
