@@ -118,6 +118,9 @@ function XaNotc1CatMoveMap_pitch(%val)
       %pitchAdj = mClamp(%pitchAdj, -m2Pi()+0.01, m2Pi()-0.01);
       %pitchAdj *= 0.5;
    }
+   
+   if($Pref::NOTC1::MouseInvertY)
+      %pitchAdj = -%pitchAdj;
 
    MoveManager_addPitch(%pitchAdj);
 }
