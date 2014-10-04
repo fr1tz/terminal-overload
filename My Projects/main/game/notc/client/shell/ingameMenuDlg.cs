@@ -10,9 +10,9 @@ function toggleIngameMenu()
    else
    {
       if($Server::ServerType $= "SinglePlayer")
-         IngameMenuDlg-->ExitButton.setText("Exit From Mission");
+         IngameMenuDlg-->ExitButton.setText("EXIT");
       else
-         IngameMenuDlg-->ExitButton.setText("Disconnect From Server");
+         IngameMenuDlg-->ExitButton.setText("DISCONNECT");
       Canvas.pushDialog(IngameMenuDlg);
    }
 }

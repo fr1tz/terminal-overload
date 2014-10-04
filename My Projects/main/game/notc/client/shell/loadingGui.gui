@@ -4,7 +4,7 @@
    useVariable = "0";
    tile = "0";
    position = "0 0";
-   extent = "640 480";
+   extent = "1280 1024";
    minExtent = "8 8";
    horizSizing = "width";
    vertSizing = "height";
@@ -19,9 +19,56 @@
       enabled = "1";
       qLineCount = "0";
 
+   new GuiPanel() {
+      docking = "None";
+      margin = "0 0 0 200";
+      padding = "0 0 0 0";
+      anchorTop = "0";
+      anchorBottom = "0";
+      anchorLeft = "0";
+      anchorRight = "0";
+      position = "-1860 -1988";
+      extent = "5000 5000";
+      minExtent = "250 5000";
+      horizSizing = "center";
+      vertSizing = "center";
+      profile = "TolGuiMenuBackgroundProfile";
+      visible = "1";
+      active = "1";
+      tooltipProfile = "GuiToolTipProfile";
+      hovertime = "1000";
+      isContainer = "1";
+      canSave = "1";
+      canSaveDynamicFields = "0";
+
+      new GuiTextCtrl(LoadingProgressTxt) {
+         text = "WAITING FOR SERVER";
+         maxLength = "255";
+         docking = "None";
+         margin = "0 0 0 0";
+         padding = "0 0 0 0";
+         anchorTop = "0";
+         anchorBottom = "1";
+         anchorLeft = "0";
+         anchorRight = "1";
+         position = "2876 2922";
+         extent = "342 20";
+         minExtent = "8 8";
+         horizSizing = "width";
+         vertSizing = "height";
+         profile = "TolMenuTextProfile";
+         visible = "1";
+         active = "1";
+         tooltipProfile = "GuiToolTipProfile";
+         hovertime = "1000";
+         isContainer = "0";
+         canSave = "1";
+         canSaveDynamicFields = "0";
+      };
+   };
    new GuiControl() {
-      position = "71 157";
-      extent = "497 166";
+      position = "240 400";
+      extent = "800 223";
       minExtent = "8 8";
       horizSizing = "center";
       vertSizing = "center";
@@ -35,10 +82,10 @@
       canSaveDynamicFields = "0";
 
       new GuiBitmapCtrl(LoadingLogo) {
-         bitmap = "notc/client/graphics/logo.png";
+         bitmap = "notc/client/shell/images/big_logo_and_glow.png";
          wrap = "0";
-         position = "60 30";
-         extent = "394 87";
+         position = "-3 7";
+         extent = "792 129";
          minExtent = "8 2";
          horizSizing = "right";
          vertSizing = "bottom";
@@ -53,41 +100,19 @@
       };
       new GuiProgressBitmapCtrl(LoadingProgress) {
          maxLength = "1024";
+         docking = "Client";
          margin = "0 0 0 0";
          padding = "0 0 0 0";
          anchorTop = "1";
-         anchorBottom = "0";
+         anchorBottom = "1";
          anchorLeft = "1";
-         anchorRight = "0";
-         position = "17 126";
-         extent = "464 24";
+         anchorRight = "1";
+         position = "38 152";
+         extent = "706 6";
          minExtent = "8 2";
-         horizSizing = "center";
-         vertSizing = "bottom";
-         profile = "GuiProgressBitmapProfile";
-         visible = "1";
-         active = "1";
-         tooltipProfile = "GuiToolTipProfile";
-         hovertime = "1000";
-         isContainer = "0";
-         canSave = "1";
-         canSaveDynamicFields = "0";
-      };
-      new GuiTextCtrl(LoadingProgressTxt) {
-         text = "WAITING FOR SERVER";
-         maxLength = "255";
-         margin = "0 0 0 0";
-         padding = "0 0 0 0";
-         anchorTop = "1";
-         anchorBottom = "0";
-         anchorLeft = "1";
-         anchorRight = "0";
-         position = "28 144";
-         extent = "440 20";
-         minExtent = "8 8";
-         horizSizing = "center";
-         vertSizing = "bottom";
-         profile = "GuiProgressTextProfile";
+         horizSizing = "width";
+         vertSizing = "height";
+         profile = "TolGuiProgressBitmapProfile";
          visible = "1";
          active = "1";
          tooltipProfile = "GuiToolTipProfile";
