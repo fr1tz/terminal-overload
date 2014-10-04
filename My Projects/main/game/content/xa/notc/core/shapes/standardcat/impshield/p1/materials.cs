@@ -33,7 +33,7 @@ singleton Material(xa_notc_core_shapes_standardcat_impshield_p1_beammat0)
 
 singleton Material(xa_notc_core_shapes_standardcat_impshield_p1_beammat1)
 {
-   diffuseColor[0] = "0.992157 0.992157 0.992157 1";
+   diffuseColor[0] = "0.992157 0.992157 0.992157 0.5";
    doubleSided = "0";
    translucentBlendOp = "LerpAlpha";
    castShadows = "0";
