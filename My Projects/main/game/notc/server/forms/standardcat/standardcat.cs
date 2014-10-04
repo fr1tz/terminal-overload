@@ -60,19 +60,19 @@ datablock PlayerData(FrmStandardcat)
 	damageBufferDischargeRate = 0.15;
 	rechargeRate = 0.4;
 
-   runForce = 100 * 90;
+   runForce = 150 * 90;
    runEnergyDrain = 0;
    minRunEnergy = 0;
-   maxForwardSpeed = 8;
-   maxBackwardSpeed = 8;
-   maxSideSpeed = 5;
+   maxForwardSpeed = 15;
+   maxBackwardSpeed = 15;
+   maxSideSpeed = 12;
    
-   sprintForce = 100 * 90;
+   sprintForce = 150 * 90;
    sprintEnergyDrain = 0;
    minSprintEnergy = 0;
-   maxSprintForwardSpeed = 15;
-   maxSprintBackwardSpeed = 12;
-   maxSprintSideSpeed = 12;
+   maxSprintForwardSpeed = 20;
+   maxSprintBackwardSpeed = 15;
+   maxSprintSideSpeed = 15;
    sprintStrafeScale = 1.0;
    sprintYawScale = "1.0";
    sprintPitchScale = "1.0";
@@ -109,7 +109,7 @@ datablock PlayerData(FrmStandardcat)
    
    gravityMod = 2.0;
 
-	skidSpeed = 20;
+	skidSpeed = 25;
 	skidFactor = 0.4;
    
    glideForce = 10 * 90;
@@ -122,8 +122,8 @@ datablock PlayerData(FrmStandardcat)
    recoverDelay = 9;
    recoverRunForceScale = 1.2;
 
-   minImpactSpeed = 30;
-   minLateralImpactSpeed = 30;
+   minImpactSpeed = 60;
+   minLateralImpactSpeed = 60;
    speedDamageScale = 1;
 
    boundingBox = "1.0 0.75 2.6";
