@@ -21,7 +21,11 @@
 #define TORQUE_APP_VERSION         300
 
 /// Human readable application version string.
-#define TORQUE_APP_VERSION_STRING  "0.2.0"
+#define TORQUE_APP_VERSION_STRING  "0.3.0"
+
+/// Game protocol version
+#define TORQUE_APP_PROTOCOL_VERSION_CUR 3
+#define TORQUE_APP_PROTOCOL_VERSION_MIN 3
 
 /// Define me if you want to enable multithreading support.
 #ifndef TORQUE_MULTITHREAD

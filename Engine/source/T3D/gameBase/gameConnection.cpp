@@ -33,8 +33,8 @@
 
 #define ControlRequestTime 5000
 
-const U32 GameConnection::CurrentProtocolVersion = 2;
-const U32 GameConnection::MinRequiredProtocolVersion = 2;
+const U32 GameConnection::CurrentProtocolVersion = TORQUE_APP_PROTOCOL_VERSION_CUR;
+const U32 GameConnection::MinRequiredProtocolVersion = TORQUE_APP_PROTOCOL_VERSION_MIN;
 
 //----------------------------------------------------------------------------
 
