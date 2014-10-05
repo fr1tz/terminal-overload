@@ -1341,6 +1341,12 @@ void TacticalZone::prepRenderImage(SceneRenderState* state)
       if(renderData->numVerts == 0)
          continue;
 
+      if(i == Terrain || i == Other)
+      {
+         if(this->getZoneColor().alpha == 0)
+            continue;
+      }
+
       BaseMatInstance* matInst;
 
       if(i == Other)
@@ -1364,8 +1370,8 @@ void TacticalZone::prepRenderImage(SceneRenderState* state)
 
       // Set palette.
       ri->palette = this->getPalette();
-      for(U32 i = 0; i < Palette::NumSlots; i++)
-         ri->palette.colors[i] = this->getZoneColor(i);
+      for(U32 s = 0; s < Palette::NumSlots; s++)
+         ri->palette.colors[s] = this->getZoneColor(s);
 
       // Set our RenderInst as a standard mesh render
       ri->type = RenderPassManager::RIT_Mesh;
