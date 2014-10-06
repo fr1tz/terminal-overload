@@ -60,14 +60,14 @@ datablock PlayerData(FrmStandardcat)
 	damageBufferDischargeRate = 0.15;
 	rechargeRate = 0.4;
 
-   runForce = 150 * 90;
+   runForce = 100 * 90;
    runEnergyDrain = 0;
    minRunEnergy = 0;
    maxForwardSpeed = 15;
    maxBackwardSpeed = 15;
    maxSideSpeed = 12;
    
-   sprintForce = 150 * 90;
+   sprintForce = 100 * 90;
    sprintEnergyDrain = 0;
    minSprintEnergy = 0;
    maxSprintForwardSpeed = 20;
