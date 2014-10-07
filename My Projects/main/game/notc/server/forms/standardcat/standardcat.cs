@@ -875,12 +875,12 @@ function FrmStandardcat::addDiscTarget(%this, %obj, %target)
 }
 
 // Called from script
-function FrmStandardcat::launchDisc(%this, %obj, %disc)
+function FrmStandardcat::launchOffensiveDisc(%this, %obj)
 {
-   //echo("FrmStandardcat::launchDisc():" SPC %disc);
-
    %muzzlePoint = %obj.getMuzzlePoint(%slot);
    %muzzleVec = %obj.getMuzzleVector(%slot);
+   
+   %disc = "repel";
 
    if(%disc $= "explosive")
       WpnExplosiveDisc.launch(%obj, %muzzlePoint, %muzzleVec, %obj.zDiscTargetSet);
@@ -888,6 +888,12 @@ function FrmStandardcat::launchDisc(%this, %obj, %disc)
       WpnRepelDisc.launch(%obj, %muzzlePoint, %muzzleVec, %obj.zDiscTargetSet);
    else if(%disc $= "razor")
       WpnRazorDisc.launch(%obj, %muzzlePoint, %muzzleVec, %obj.zDiscTargetSet);
+}
+
+// Called from script
+function FrmStandardcat::selectDiscSlot(%this, %obj, %slot)
+{
+   echo("FrmStandardcat::selectDiscSlot():" SPC %slot);
 }
 
 // Called from script

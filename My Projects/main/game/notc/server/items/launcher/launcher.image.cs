@@ -28,8 +28,8 @@ function ItemLauncherPseudoProjectile::onAdd(%this, %obj)
    %target = %source.getImageTarget(1);
    if(!isObject(%target))
    {
-      if(isObject(%source.client))
-         %source.client.play2D(GenericNoDiscTargetSound);
+      if(%source.getDataBlock().isMethod("launchOffensiveDisc"))
+         %source.getDataBlock().launchOffensiveDisc(%source);
       return;
    }
       
@@ -155,7 +155,7 @@ datablock ShapeBaseImageData(ItemLauncherImage)
     	stateName[6]                    = "NoTargetAction";
     	stateTransitionOnTimeout[6]     = "Release";
 		stateFireProjectile[6]          = ItemLauncherPseudoProjectile;
-    	stateTimeoutValue[6]            = 0.25;
+    	stateTimeoutValue[6]            = 0.0;
 
 		// release...
     	stateName[7]                    = "Release";

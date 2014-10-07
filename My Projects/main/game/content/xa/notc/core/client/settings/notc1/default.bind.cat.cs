@@ -270,27 +270,27 @@ XaNotc1CatMoveMap.bind(gamepad, btn_b, XaNotc1CatMoveMap_doSlide);
 // Discs
 //------------------------------------------------------------------------------
 
-function XaNotc1CatMoveMap_launchExplosiveDisc(%val)
+function XaNotc1CatMoveMap_selectDiscSlot1(%val)
 {
    if(%val)
-      commandToServer('launchExplosiveDisc');
+      commandToServer('selectDiscSlot', 1);
 }
 
-function XaNotc1CatMoveMap_launchRepelDisc(%val)
+function XaNotc1CatMoveMap_selectDiscSlot2(%val)
 {
    if(%val)
-      commandToServer('launchRepelDisc');
+      commandToServer('selectDiscSlot', 2);
 }
 
-function XaNotc1CatMoveMap_launchRazorDisc(%val)
+function XaNotc1CatMoveMap_selectDiscSlot3(%val)
 {
    if(%val)
-      commandToServer('launchRazorDisc');
+      commandToServer('selectDiscSlot', 3);
 }
 
-XaNotc1CatMoveMap.bind(keyboard, "e", XaNotc1CatMoveMap_launchExplosiveDisc);
-XaNotc1CatMoveMap.bind(keyboard, "r", XaNotc1CatMoveMap_launchRepelDisc);
-XaNotc1CatMoveMap.bind(keyboard, "f", XaNotc1CatMoveMap_launchRazorDisc);
+XaNotc1CatMoveMap.bind(keyboard, "e", XaNotc1CatMoveMap_selectDiscSlot1);
+XaNotc1CatMoveMap.bind(keyboard, "r", XaNotc1CatMoveMap_selectDiscSlot2);
+XaNotc1CatMoveMap.bind(keyboard, "f", XaNotc1CatMoveMap_selectDiscSlot3);
 
 //------------------------------------------------------------------------------
 // B.O.U.N.C.E.
