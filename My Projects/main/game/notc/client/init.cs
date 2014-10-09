@@ -76,6 +76,7 @@ function initClient()
 
    // Load up the shell GUIs
    exec("notc/client/shell/mainMenuGui.gui");
+   exec("notc/client/shell/recordingsDlg.gui");
    exec("notc/client/shell/joinServerDlg.gui");
    exec("notc/client/shell/StartupGui.gui");
    exec("notc/client/shell/chooseLevelDlg.gui");
