@@ -1,6 +1,20 @@
 What's new?
 ===========
 
+Version 0.3.0-testing4
+----------------------
+
+Release Date: Oct. 9, 2014
+
+- Prettier GUI
+- Removed recoil from MGL2 but decreased firing rate.
+- ETH mode: Each class only has one type of offensive disc.
+- Tweaked CAT movement
+- Simplified disc controls
+- Various minor tweaks and improvements
+- Bugfixes
+
+
 Version 0.3.0-testing3
 ----------------------
 
