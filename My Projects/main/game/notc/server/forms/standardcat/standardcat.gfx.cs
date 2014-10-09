@@ -559,20 +559,20 @@ datablock ParticleData(FrmStandardcatRepairEmitter_Particle)
 	constantAcceleration = 0.0;
 	lifetimeMS			  = 220;
 	lifetimeVarianceMS	= 0;
-	colors[0]	  = "1 1 1 0";
-	colors[1]	  = "1 1 1 1";
+	colors[0]	  = "0.996078 0.996078 0.996078 1";
+	colors[1]	  = "1 1 1 0";
 	colors[2]	  = "1 1 1 1";
-	sizes[0]		= "2.99701";
-	sizes[1]		= "1.99902";
+	sizes[0]		= "4";
+	sizes[1]		= "3";
 	sizes[2]		= 0.0;
 	times[0]		= 0.0;
-	times[1]		= "0.498039";
+	times[1]		= "1";
 	times[2]		= 1.0;
 	spinRandomMin = 0.0;
 	spinRandomMax = 0.0;
-	textureName	= "content/xa/rotc/p.5.4/textures/rotc/cross1";
+	textureName	= "content/xa/notc/core/textures/health.png";
 	allowLighting = 0;
-   animTexName = "content/xa/rotc/p.5.4/textures/rotc/cross1";
+   animTexName = "content/xa/notc/core/textures/health.png";
 };
 
 datablock ParticleEmitterData(FrmStandardcatRepairEmitter)
@@ -591,7 +591,7 @@ datablock ParticleEmitterData(FrmStandardcatRepairEmitter)
 	lifetimeMS		 = 0; // forever
 	particles = FrmStandardcatRepairEmitter_Particle;
    ejectionOffsetVariance = "2";
-   blendStyle = "ADDITIVE";
+   blendStyle = "NORMAL";
    targetLockTimeMS = "480";
    paletteSlot = 0;
 };
