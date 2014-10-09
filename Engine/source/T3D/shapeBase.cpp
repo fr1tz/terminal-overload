@@ -331,6 +331,9 @@ bool ShapeBaseData::preload(bool server, String &errorStr)
       {
          SAFE_DELETE(shapeTrailsMatInst);
          shapeTrailsMatInst = MATMGR->createMatInstance(shapeTrailsMaterialName);
+         if(!shapeTrailsMatInst)
+            shapeTrailsMatInst = MATMGR->createMatInstance("WarningMaterial");
+  
          shapeTrailsMatInst->init(MATMGR->getDefaultFeatures(), mShape->getVertexFormat());
          if(!shapeTrailsMatInst->isValid() )
          {
@@ -339,6 +342,7 @@ bool ShapeBaseData::preload(bool server, String &errorStr)
             shapeTrailsMatInst = MATMGR->createMatInstance("WarningMaterial");
             shapeTrailsMatInst->init(MATMGR->getDefaultFeatures(), mShape->getVertexFormat());
          }
+
       }
 
       // Resolve details and camera node indexes.
