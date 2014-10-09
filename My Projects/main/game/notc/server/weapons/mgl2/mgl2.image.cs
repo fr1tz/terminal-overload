@@ -63,8 +63,8 @@ datablock ShapeBaseImageData(WpnMGL2Image)
 		// preactivation...
 		stateName[0]                     = "Preactivate";
 		stateTransitionOnAmmo[0]         = "Activate";
-		stateTransitionOnNoAmmo[0]		 = "NoAmmo";
-		stateTimeoutValue[0]             = 0.25;
+		stateTransitionOnNoAmmo[0]		   = "NoAmmo";
+		stateTimeoutValue[0]             = 0.0;
 		stateSequence[0]                 = "idle";
 
 		// when mounted...
@@ -99,7 +99,7 @@ datablock ShapeBaseImageData(WpnMGL2Image)
 		// after fire...
 		stateName[8]                     = "AfterFire";
 		stateTransitionOnTriggerUp[8]    = "KeepAiming";
-		stateTimeoutValue[8]             = 0.16;
+		stateTimeoutValue[8]             = 0.4;
 		stateWaitForTimeout[8]           = true;
 
 		stateName[4]                     = "KeepAiming";
@@ -135,7 +135,7 @@ function WpnMGL2Image::onMount(%this, %obj, %slot)
    Parent::onMount(%this, %obj, %slot);
    
    // Set up recoil
-   %obj.setImageRecoilEnabled(%slot, true);
+   %obj.setImageRecoilEnabled(%slot, false);
    %obj.setImageCurrentRecoil(%slot, 80);
    %obj.setImageMaxRecoil(%slot, 80);
    %obj.setImageRecoilAdd(%slot, 0);
