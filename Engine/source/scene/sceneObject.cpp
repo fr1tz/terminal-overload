@@ -854,7 +854,11 @@ void SceneObject::unpackUpdate( NetConnection* conn, BitStream* stream )
 
    // Flicker time
    if ( stream->readFlag() )   
-      stream->read(&mFlickerTime);
+   {
+      F32 flickerTime;
+      stream->read(&flickerTime);
+      this->setFlickerTime(flickerTime);
+   }
 
    // MountedMask
    if ( stream->readFlag() ) 
@@ -1232,6 +1236,17 @@ ColorI SceneObject::getPaletteColor(U32 slot)
       return ColorI(255, 255, 255, 255);
    else
       return mPalette.colors[slot];
+}
+
+//-----------------------------------------------------------------------------
+
+void SceneObject::setFlickerTime(U32 time)
+{
+   if(mFlickerTime == time)
+      return;
+
+   mFlickerTime = time; 
+   this->setMaskBits(FlickerTimeMask); 
 }
 
 //=============================================================================

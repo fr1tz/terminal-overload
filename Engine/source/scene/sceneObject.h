@@ -713,7 +713,7 @@ class SceneObject : public NetObject, private SceneContainer::Link, public Proce
       /// Return a color from the object's palette.
       ColorI getPaletteColor(U32 slot);
 
-      void setFlickerTime(U32 time) { mFlickerTime = time; this->setMaskBits(FlickerTimeMask); }
+      virtual void setFlickerTime(U32 time); 
       U32 getFlickerTime() { return mFlickerTime; }
 
       /// Called when the SceneManager is ready for the registration of render instances.
