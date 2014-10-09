@@ -100,7 +100,7 @@
             fitParentWidth = "1";
             clipColumnText = "0";
             position = "1 1";
-            extent = "482 8";
+            extent = "580 8";
             minExtent = "8 8";
             horizSizing = "right";
             vertSizing = "bottom";
@@ -246,7 +246,7 @@
          anchorBottom = "0";
          anchorLeft = "1";
          anchorRight = "0";
-         position = "105 135";
+         position = "153 255";
          extent = "310 50";
          minExtent = "8 8";
          horizSizing = "center";
@@ -328,7 +328,6 @@
          };
       };
       new GuiTextCtrl(JS_status) {
-         text = "No servers found.";
          maxLength = "255";
          margin = "0 0 0 0";
          padding = "0 0 0 0";
@@ -337,7 +336,7 @@
          anchorLeft = "1";
          anchorRight = "0";
          position = "269 107";
-         extent = "86 18";
+         extent = "8 18";
          minExtent = "8 8";
          horizSizing = "right";
          vertSizing = "bottom";
