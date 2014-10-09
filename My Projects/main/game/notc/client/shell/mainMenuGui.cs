@@ -44,6 +44,6 @@ function MainMenuGui::tickThread(%this)
 
    %this.zBitmapOffset++;
 
-   %this-->bg.setValue(%this.zBitmapOffset, %this.zBitmapOffset);
+   //%this-->bg.setValue(%this.zBitmapOffset, %this.zBitmapOffset);
 }
 
