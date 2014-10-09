@@ -60,6 +60,8 @@ BallastShapeData::BallastShapeData()
 
    groundConnectionBeamOne   = NULL;
    groundConnectionBeamOneId = 0;
+   ceilingConnectionBeamOne   = NULL;
+   ceilingConnectionBeamOneId = 0;
    groundConnectionBeamQuad   = NULL;
    groundConnectionBeamQuadId = 0;
 }
@@ -79,6 +81,9 @@ bool BallastShapeData::preload(bool server, String &errorStr)
       if(!groundConnectionBeamOne && groundConnectionBeamOneId != 0)
          if(Sim::findObject(groundConnectionBeamOneId, groundConnectionBeamOne) == false)
             Con::errorf(ConsoleLogEntry::General, "BallastShapeData::preload: Invalid packet, bad datablockId(groundConnectionBeamOne): %d", groundConnectionBeamOneId);
+      if(!ceilingConnectionBeamOne && ceilingConnectionBeamOneId != 0)
+         if(Sim::findObject(ceilingConnectionBeamOneId, ceilingConnectionBeamOne) == false)
+            Con::errorf(ConsoleLogEntry::General, "BallastShapeData::preload: Invalid packet, bad datablockId(ceilingConnectionBeamOne): %d", ceilingConnectionBeamOneId);
       if(!groundConnectionBeamQuad && groundConnectionBeamQuadId != 0)
          if(Sim::findObject(groundConnectionBeamQuadId, groundConnectionBeamQuad) == false)
             Con::errorf(ConsoleLogEntry::General, "BallastShapeData::preload: Invalid packet, bad datablockId(groundConnectionBeamQuad): %d", groundConnectionBeamQuadId);
@@ -93,6 +98,8 @@ void BallastShapeData::initPersistFields()
 
    addField("groundConnectionBeamOne", TYPEID< MultiNodeLaserBeamData >(), Offset(groundConnectionBeamOne, BallastShapeData),
       "@brief MultiNodeLaserBeam datablock used for straight-down ground connection beam.\n\n");
+   addField("ceilingConnectionBeamOne", TYPEID< MultiNodeLaserBeamData >(), Offset(ceilingConnectionBeamOne, BallastShapeData),
+      "@brief MultiNodeLaserBeam datablock used for straight-up beam.\n\n");
    addField("groundConnectionBeamQuad", TYPEID< MultiNodeLaserBeamData >(), Offset(groundConnectionBeamQuad, BallastShapeData),
       "@brief MultiNodeLaserBeam datablock used for ground connection beam quad.\n\n");
 
@@ -114,6 +121,8 @@ void BallastShapeData::packData(BitStream* stream)
 
    if(stream->writeFlag(groundConnectionBeamOne != NULL))
       stream->writeRangedU32(groundConnectionBeamOne->getId(), DataBlockObjectIdFirst, DataBlockObjectIdLast);
+   if(stream->writeFlag(ceilingConnectionBeamOne != NULL))
+      stream->writeRangedU32(ceilingConnectionBeamOne->getId(), DataBlockObjectIdFirst, DataBlockObjectIdLast);
    if(stream->writeFlag(groundConnectionBeamQuad != NULL))
       stream->writeRangedU32(groundConnectionBeamQuad->getId(), DataBlockObjectIdFirst, DataBlockObjectIdLast);
 
@@ -127,6 +136,8 @@ void BallastShapeData::unpackData(BitStream* stream)
 
    if(stream->readFlag())
       groundConnectionBeamOneId = stream->readRangedU32(DataBlockObjectIdFirst, DataBlockObjectIdLast);
+   if(stream->readFlag())
+      ceilingConnectionBeamOneId = stream->readRangedU32(DataBlockObjectIdFirst, DataBlockObjectIdLast);
    if(stream->readFlag())
       groundConnectionBeamQuadId = stream->readRangedU32(DataBlockObjectIdFirst, DataBlockObjectIdLast);
 
@@ -153,6 +164,7 @@ BallastShape::BallastShape()
 	mLevelThread = 0;
 
    mGroundConnectionBeamOne = NULL;
+   mCeilingConnectionBeamOne = NULL;
    for(U32 i = 0; i < 4; i++)
       mGroundConnectionBeamQuad[i] = NULL;
 }
@@ -193,6 +205,12 @@ void BallastShape::onRemove()
    {
       mGroundConnectionBeamOne->deleteObject();
       mGroundConnectionBeamOne = NULL;
+   }
+
+   if(mCeilingConnectionBeamOne)
+   {
+      mCeilingConnectionBeamOne->deleteObject();
+      mCeilingConnectionBeamOne = NULL;
    }
 
    for(U32 i = 0; i < 4; i++)
@@ -242,6 +260,25 @@ bool BallastShape::onNewDataBlock(GameBaseData* dptr, bool reload)
          }
       }
 
+      if(mDataBlock->ceilingConnectionBeamOne)
+      {
+         if(mCeilingConnectionBeamOne != NULL)
+            mCeilingConnectionBeamOne->deleteObject();
+         mCeilingConnectionBeamOne = new MultiNodeLaserBeam;
+         mCeilingConnectionBeamOne->setPalette(this->getPalette());
+         mCeilingConnectionBeamOne->onNewDataBlock(mDataBlock->ceilingConnectionBeamOne, false);
+         if(!mCeilingConnectionBeamOne->registerObject())
+         {
+            Con::warnf(ConsoleLogEntry::General, "Could not register mCeilingConnectionBeamOne for class: %s", mDataBlock->getName());
+            delete mCeilingConnectionBeamOne;
+            mCeilingConnectionBeamOne = NULL;
+         }
+         else
+         {
+            mCeilingConnectionBeamOne->setRender(false);
+         }
+      }
+
       if(mDataBlock->groundConnectionBeamQuad)
       {
          for(U32 i = 0; i < 4; i++)
@@ -267,6 +304,23 @@ bool BallastShape::onNewDataBlock(GameBaseData* dptr, bool reload)
 
    scriptOnNewDataBlock();
    return true;
+}
+
+//----------------------------------------------------------------------------
+
+void BallastShape::setFlickerTime(U32 time)
+{
+   Parent::setFlickerTime(time);
+
+   if(mGroundConnectionBeamOne)
+      mGroundConnectionBeamOne->setFlickerTime(time);
+
+   if(mCeilingConnectionBeamOne)
+      mCeilingConnectionBeamOne->setFlickerTime(time);
+
+   for(int i = 0; i < 4; i++)
+      if(mGroundConnectionBeamQuad[i])
+         mGroundConnectionBeamQuad[i]->setFlickerTime(time);
 }
 
 //----------------------------------------------------------------------------
@@ -301,7 +355,7 @@ void BallastShape::interpolateTick(F32 delta)
       mMount.object->getRenderMountTransform( delta, mMount.node, mMount.xfm, &mat );
       Parent::setRenderTransform(mat);
    }
-   this->updateGroundConnectionBeams();
+   this->updateBeams();
 }
 
 void BallastShape::setTransform(const MatrixF& mat)
@@ -316,13 +370,14 @@ void BallastShape::onUnmount(ShapeBase*,S32)
    setMaskBits(PositionMask);
 }
 
-void BallastShape::updateGroundConnectionBeams()
+void BallastShape::updateBeams()
 {
    this->disableCollision();
    if(this->isMounted())
       mMount.object->disableCollision();
 
    this->updateGroundConnectionBeamOne();
+   this->updateCeilingConnectionBeamOne();
    this->updateGroundConnectionBeamQuad();
 
    this->enableCollision();
@@ -338,10 +393,6 @@ void BallastShape::updateGroundConnectionBeamOne()
 
       RayInfo rInfo;
       Point3F start = c; 
-      if(isMounted())
-         start.z = mMount.object->getWorldBox().maxExtents.z;
-      else
-         start.z = this->getWorldBox().maxExtents.z;
       Point3F end = start; end.z = F32_MIN;
       if(mLevel > 0 && gClientContainer.castRay(start, end, StaticObjectType, &rInfo))
       {
@@ -358,6 +409,32 @@ void BallastShape::updateGroundConnectionBeamOne()
       }
    } 
 }
+
+void BallastShape::updateCeilingConnectionBeamOne()
+{
+   if(mCeilingConnectionBeamOne)
+   {
+      Point3F c = this->getRenderPosition();
+
+      RayInfo rInfo;
+      Point3F start = c; 
+      Point3F end = start; end.z = F32_MAX;
+      if(mLevel > 0 && gClientContainer.castRay(start, end, StaticObjectType, &rInfo))
+      {
+         mCeilingConnectionBeamOne->setPalette(this->getPalette());
+         mCeilingConnectionBeamOne->clearNodes();
+         mCeilingConnectionBeamOne->addNode(c);
+         mCeilingConnectionBeamOne->addNodes(rInfo.point);
+         mCeilingConnectionBeamOne->setFadeout(mLevel);
+         mCeilingConnectionBeamOne->setRender(true);
+      }
+      else
+      {
+         mCeilingConnectionBeamOne->setRender(false);
+      }
+   } 
+}
+
 
 void BallastShape::updateGroundConnectionBeamQuad()
 {

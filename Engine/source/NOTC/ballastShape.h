@@ -27,6 +27,8 @@ struct BallastShapeData: public ShapeBaseData {
 
    MultiNodeLaserBeamData* groundConnectionBeamOne;
    S32                     groundConnectionBeamOneId;
+   MultiNodeLaserBeamData* ceilingConnectionBeamOne;
+   S32                     ceilingConnectionBeamOneId;
    MultiNodeLaserBeamData* groundConnectionBeamQuad;
    S32                     groundConnectionBeamQuadId;
 
@@ -53,6 +55,7 @@ class BallastShape: public ShapeBase
 	F32 mLevel;
 
    MultiNodeLaserBeam* mGroundConnectionBeamOne;
+   MultiNodeLaserBeam* mCeilingConnectionBeamOne;
    MultiNodeLaserBeam* mGroundConnectionBeamQuad[4];
 
    void onUnmount(ShapeBase* obj,S32 node);
@@ -64,8 +67,9 @@ protected:
       NextFreeMask = Parent::NextFreeMask << 2
    };
 
-   void updateGroundConnectionBeams();
+   void updateBeams();
    void updateGroundConnectionBeamOne();
+   void updateCeilingConnectionBeamOne();
    void updateGroundConnectionBeamQuad();
 
 public:
@@ -77,6 +81,8 @@ public:
    bool onAdd();
    void onRemove();
    bool onNewDataBlock(GameBaseData *dptr, bool reload);
+
+   void setFlickerTime(U32 time);
 
    void processTick(const Move *move);
    void interpolateTick(F32 delta);
