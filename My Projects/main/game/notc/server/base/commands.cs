@@ -33,28 +33,13 @@ function serverCmdXaNotcSettings1_Reply(%client, %setting, %value)
 // Discs
 //-----------------------------------------------------------------------------
 
-function serverCmdLaunchDisc(%client, %disc)
+function serverCmdSelectDiscSlot(%client, %slot)
 {
-   //echo("serverCmdLaunchDisc():" SPC %disc);
+   echo("serverCmdLaunchDisc():" SPC %disc);
    %player = %client.player;
    if(isObject(%player))
-      if(%player.getDataBlock().isMethod("launchDisc"))
-         %player.getDataBlock().launchDisc(%player, %disc);
-}
-
-function serverCmdLaunchExplosiveDisc(%client)
-{
-   serverCmdLaunchDisc(%client, "explosive");
-}
-
-function serverCmdLaunchRepelDisc(%client)
-{
-   serverCmdLaunchDisc(%client, "repel");
-}
-
-function serverCmdLaunchRazorDisc(%client)
-{
-   serverCmdLaunchDisc(%client, "razor");
+      if(%player.getDataBlock().isMethod("selectDiscSlot"))
+         %player.getDataBlock().selectDiscSlot(%player, %slot);
 }
 
 //-----------------------------------------------------------------------------
