@@ -855,7 +855,7 @@ void SceneObject::unpackUpdate( NetConnection* conn, BitStream* stream )
    // Flicker time
    if ( stream->readFlag() )   
    {
-      F32 flickerTime;
+      U32 flickerTime;
       stream->read(&flickerTime);
       this->setFlickerTime(flickerTime);
    }
