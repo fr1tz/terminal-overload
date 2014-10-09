@@ -50,7 +50,7 @@ function WpnMGL2PseudoProjectile::onAdd(%this, %obj)
 	%player = %obj.sourceObject;
 	%slot = %obj.sourceSlot;
  
-   %muzzleVector = %player.getMuzzleVector(0);
+   %muzzleVector = %obj.initialVelocity; //%player.getMuzzleVector(0);
 	%muzzlePoint = %player.getMuzzlePoint(0);
  
    // Velocity inherited from player
