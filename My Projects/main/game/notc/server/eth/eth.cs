@@ -308,21 +308,18 @@ function ETH::loadoutPlayer(%player)
          %player.setInventory(ItemEtherboard, 1);
          %player.setInventory(ItemStealth, 1);
          %player.setInventory(WpnRepelDiscAmmo, 9999);
-         %player.setInventory(WpnExplosiveDiscAmmo, 9999);
          %player.setInventory(WpnMGL2, 1);
          %player.addToWeaponCycle(WpnMGL2);
          %player.mountImage(WpnMGL2Image, 0);
       case 2:
          %player.setInventory(ItemEtherboard, 1);
          %player.setInventory(ItemStealth, 1);
-         %player.setInventory(WpnRepelDiscAmmo, 9999);
          %player.setInventory(WpnExplosiveDiscAmmo, 9999);
          %player.setInventory(WpnSR2, 1);
          %player.addToWeaponCycle(WpnSR2);
          %player.mountImage(WpnSR2Image, 0);
       case 3:
          %player.setInventory(WpnRepelDiscAmmo, 9999);
-         %player.setInventory(WpnExplosiveDiscAmmo, 9999);
          %player.setInventory(WpnMG2, 1);
          %player.addToWeaponCycle(WpnMG2);
          %player.mountImage(WpnMG2Image, 0);

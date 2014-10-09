@@ -880,14 +880,12 @@ function FrmStandardcat::launchOffensiveDisc(%this, %obj)
    %muzzlePoint = %obj.getMuzzlePoint(%slot);
    %muzzleVec = %obj.getMuzzleVector(%slot);
    
-   %disc = "repel";
-
-   if(%disc $= "explosive")
-      WpnExplosiveDisc.launch(%obj, %muzzlePoint, %muzzleVec, %obj.zDiscTargetSet);
-   else if(%disc $= "repel")
+   if(%obj.hasInventory(WpnRepelDiscAmmo))
       WpnRepelDisc.launch(%obj, %muzzlePoint, %muzzleVec, %obj.zDiscTargetSet);
-   else if(%disc $= "razor")
+   else if(%obj.hasInventory(WpnRazorDiscAmmo))
       WpnRazorDisc.launch(%obj, %muzzlePoint, %muzzleVec, %obj.zDiscTargetSet);
+   else if(%obj.hasInventory(WpnExplosiveDiscAmmo))
+      WpnExplosiveDisc.launch(%obj, %muzzlePoint, %muzzleVec, %obj.zDiscTargetSet);
 }
 
 // Called from script
