@@ -4,7 +4,7 @@
    useVariable = "0";
    tile = "0";
    position = "0 0";
-   extent = "800 600";
+   extent = "640 480";
    minExtent = "8 8";
    horizSizing = "width";
    vertSizing = "height";
@@ -18,8 +18,8 @@
    canSaveDynamicFields = "1";
       enabled = "1";
       isDecoy = "0";
-      zBitmapOffset = "83595";
-      zTickThread = "533671";
+      zBitmapOffset = "44588";
+      zTickThread = "45042";
 
    new GuiFadeinBitmapCtrl() {
       fadeColor = "0.262745 0.529412 0.486275 1";
@@ -32,7 +32,7 @@
       bitmap = "notc/client/shell/images/screenshot.png";
       wrap = "0";
       position = "0 0";
-      extent = "799 601";
+      extent = "639 481";
       minExtent = "8 2";
       horizSizing = "width";
       vertSizing = "height";
@@ -53,7 +53,7 @@
       anchorLeft = "1";
       anchorRight = "0";
       position = "0 0";
-      extent = "800 8000";
+      extent = "640 8000";
       minExtent = "8 2";
       horizSizing = "center";
       vertSizing = "windowRelative";
@@ -99,8 +99,8 @@
       anchorBottom = "1";
       anchorLeft = "0";
       anchorRight = "1";
-      position = "680 570";
-      extent = "110 34";
+      position = "544 456";
+      extent = "88 28";
       minExtent = "8 2";
       horizSizing = "relative";
       vertSizing = "relative";
@@ -122,7 +122,7 @@
       anchorLeft = "1";
       anchorRight = "0";
       position = "0 0";
-      extent = "800 600";
+      extent = "640 480";
       minExtent = "8 2";
       horizSizing = "center";
       vertSizing = "center";
@@ -161,7 +161,7 @@
       };
       new GuiControl() {
          position = "0 140";
-         extent = "250 186";
+         extent = "250 150";
          minExtent = "8 2";
          horizSizing = "center";
          vertSizing = "center";
@@ -177,7 +177,7 @@
          new GuiButtonCtrl() {
             text = "PLAY";
             groupNum = "1";
-            buttonType = "RadioButton";
+            buttonType = "PushButton";
             useMouseEvents = "1";
             position = "0 0";
             extent = "250 50";
@@ -197,7 +197,7 @@
          new GuiButtonCtrl() {
             text = "OPTIONS";
             groupNum = "1";
-            buttonType = "RadioButton";
+            buttonType = "PushButton";
             useMouseEvents = "0";
             position = "0 50";
             extent = "250 50";
@@ -217,7 +217,7 @@
          new GuiButtonCtrl() {
             text = "EXIT";
             groupNum = "1";
-            buttonType = "RadioButton";
+            buttonType = "PushButton";
             useMouseEvents = "0";
             position = "0 100";
             extent = "250 50";
@@ -261,10 +261,10 @@
          canSaveDynamicFields = "0";
       };
       new GuiBitmapCtrl(MainMenuAppLogo) {
-         bitmap = "notc/client/shell/images/logo_and_glow.png";
+         bitmap = "notc/client/graphics/logo2.png";
          wrap = "0";
-         position = "47 4";
-         extent = "157 112";
+         position = "70 20";
+         extent = "110 110";
          minExtent = "8 2";
          horizSizing = "center";
          vertSizing = "bottom";
@@ -283,7 +283,7 @@
          maxChars = "-1";
          text = "Note: This is still a very early version of the game, so don\'t expect anything yet.\r\nBeware of bugs, incompleteness and general crappiness. ";
          useURLMouseCursor = "0";
-         position = "24 440";
+         position = "24 408";
          extent = "201 56";
          minExtent = "8 2";
          horizSizing = "center";
@@ -302,7 +302,7 @@
          groupNum = "-1";
          buttonType = "PushButton";
          useMouseEvents = "0";
-         position = "9 388";
+         position = "9 356";
          extent = "79 50";
          minExtent = "8 8";
          horizSizing = "center";
@@ -321,4 +321,3 @@
    };
 };
 //--- OBJECT WRITE END ---
-

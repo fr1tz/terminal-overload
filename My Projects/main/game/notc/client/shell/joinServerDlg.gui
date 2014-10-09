@@ -1,11 +1,11 @@
 //--- OBJECT WRITE BEGIN ---
 %guiContent = new GuiControl(JoinServerDlg) {
    position = "0 0";
-   extent = "800 600";
+   extent = "640 480";
    minExtent = "8 8";
    horizSizing = "width";
    vertSizing = "height";
-   profile = "GuiDefaultProfile";
+   profile = "GuiOverlayProfile";
    visible = "1";
    active = "1";
    tooltipProfile = "GuiToolTipProfile";
@@ -32,8 +32,8 @@
       anchorBottom = "0";
       anchorLeft = "1";
       anchorRight = "0";
-      position = "140 140";
-      extent = "520 320";
+      position = "10 10";
+      extent = "620 460";
       minExtent = "8 8";
       horizSizing = "center";
       vertSizing = "center";
@@ -51,7 +51,7 @@
          groupNum = "-1";
          buttonType = "PushButton";
          useMouseEvents = "0";
-         position = "188 272";
+         position = "236 413";
          extent = "162 35";
          minExtent = "8 8";
          horizSizing = "right";
@@ -81,8 +81,8 @@
          anchorBottom = "0";
          anchorLeft = "1";
          anchorRight = "0";
-         position = "10 149";
-         extent = "500 112";
+         position = "10 150";
+         extent = "595 252";
          minExtent = "8 8";
          horizSizing = "right";
          vertSizing = "bottom";
@@ -100,7 +100,7 @@
             fitParentWidth = "1";
             clipColumnText = "0";
             position = "1 1";
-            extent = "485 8";
+            extent = "482 8";
             minExtent = "8 8";
             horizSizing = "right";
             vertSizing = "bottom";
@@ -124,7 +124,7 @@
          anchorBottom = "0";
          anchorLeft = "1";
          anchorRight = "0";
-         position = "269 120";
+         position = "269 128";
          extent = "34 18";
          minExtent = "8 8";
          horizSizing = "right";
@@ -147,7 +147,7 @@
          anchorBottom = "0";
          anchorLeft = "1";
          anchorRight = "0";
-         position = "335 120";
+         position = "335 128";
          extent = "37 18";
          minExtent = "8 8";
          horizSizing = "right";
@@ -170,7 +170,7 @@
          anchorBottom = "0";
          anchorLeft = "1";
          anchorRight = "0";
-         position = "412 120";
+         position = "412 128";
          extent = "26 18";
          minExtent = "8 8";
          horizSizing = "right";
@@ -193,7 +193,7 @@
          anchorBottom = "0";
          anchorLeft = "1";
          anchorRight = "0";
-         position = "212 120";
+         position = "212 128";
          extent = "21 18";
          minExtent = "8 8";
          horizSizing = "right";
@@ -216,7 +216,7 @@
          anchorBottom = "0";
          anchorLeft = "1";
          anchorRight = "0";
-         position = "12 120";
+         position = "12 128";
          extent = "60 18";
          minExtent = "8 8";
          horizSizing = "right";
@@ -336,7 +336,7 @@
          anchorBottom = "0";
          anchorLeft = "1";
          anchorRight = "0";
-         position = "217 106";
+         position = "269 107";
          extent = "86 18";
          minExtent = "8 8";
          horizSizing = "right";
@@ -355,11 +355,11 @@
          groupNum = "-1";
          buttonType = "PushButton";
          useMouseEvents = "0";
-         position = "101 64";
+         position = "155 64";
          extent = "115 35";
          minExtent = "8 8";
          horizSizing = "right";
-         vertSizing = "top";
+         vertSizing = "bottom";
          profile = "TolGuiButtonProfile";
          visible = "1";
          active = "1";
@@ -375,7 +375,7 @@
          groupNum = "-1";
          buttonType = "PushButton";
          useMouseEvents = "1";
-         position = "301 64";
+         position = "355 64";
          extent = "89 35";
          minExtent = "8 8";
          horizSizing = "relative";
@@ -395,11 +395,11 @@
          groupNum = "-1";
          buttonType = "PushButton";
          useMouseEvents = "0";
-         position = "227 64";
+         position = "281 64";
          extent = "63 35";
          minExtent = "8 8";
          horizSizing = "right";
-         vertSizing = "top";
+         vertSizing = "bottom";
          profile = "TolGuiButtonProfile";
          visible = "1";
          active = "1";
@@ -415,11 +415,11 @@
          groupNum = "-1";
          buttonType = "PushButton";
          useMouseEvents = "0";
-         position = "469 79";
+         position = "497 79";
          extent = "41 20";
          minExtent = "8 8";
          horizSizing = "right";
-         vertSizing = "top";
+         vertSizing = "bottom";
          profile = "GuiButtonProfile";
          visible = "1";
          active = "1";

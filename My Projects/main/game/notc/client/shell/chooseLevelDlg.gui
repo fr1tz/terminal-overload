@@ -1,11 +1,11 @@
 //--- OBJECT WRITE BEGIN ---
 %guiContent = new GuiControl(ChooseLevelDlg) {
    position = "0 0";
-   extent = "1280 1024";
+   extent = "640 480";
    minExtent = "8 8";
    horizSizing = "width";
    vertSizing = "height";
-   profile = "GuiWindowProfile";
+   profile = "GuiOverlayProfile";
    visible = "1";
    active = "1";
    tooltipProfile = "GuiToolTipProfile";
@@ -33,7 +33,7 @@
       anchorBottom = "0";
       anchorLeft = "1";
       anchorRight = "0";
-      position = "340 295";
+      position = "20 23";
       extent = "600 434";
       minExtent = "8 8";
       horizSizing = "center";
