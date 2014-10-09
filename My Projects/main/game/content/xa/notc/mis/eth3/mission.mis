@@ -1000,7 +1000,7 @@ new SimGroup(MissionGroup) {
       canSaveDynamicFields = "1";
 
       new TacticalZone() {
-         dataBlock = "XaNotcEth3TerritoryZone";
+         dataBlock = "TerritoryZone";
          client = "-1";
          teamId = "1";
          position = "-217 -224 408";
@@ -1045,7 +1045,7 @@ new SimGroup(MissionGroup) {
             zProtected = "0";
       };
       new TacticalZone() {
-         dataBlock = "XaNotcEth3TerritoryZone";
+         dataBlock = "TerritoryZone";
          client = "-1";
          teamId = "1";
          position = "-159.5 -224 367";
@@ -1091,7 +1091,7 @@ new SimGroup(MissionGroup) {
             zProtected = "0";
       };
       new TacticalZone() {
-         dataBlock = "XaNotcEth3TerritoryZone";
+         dataBlock = "TerritoryZone";
          client = "-1";
          teamId = "1";
          position = "-99 -224 408";
@@ -1137,7 +1137,7 @@ new SimGroup(MissionGroup) {
             zProtected = "0";
       };
       new TacticalZone() {
-         dataBlock = "XaNotcEth3TerritoryZone";
+         dataBlock = "TerritoryZone";
          client = "-1";
          teamId = "1";
          position = "32 -195 384";
@@ -1183,7 +1183,7 @@ new SimGroup(MissionGroup) {
             zProtected = "0";
       };
       new TacticalZone() {
-         dataBlock = "XaNotcEth3TerritoryZone";
+         dataBlock = "TerritoryZone";
          client = "-1";
          teamId = "1";
          position = "224 -160 364";
@@ -1229,7 +1229,7 @@ new SimGroup(MissionGroup) {
             zProtected = "0";
       };
       new TacticalZone() {
-         dataBlock = "XaNotcEth3TerritoryZone";
+         dataBlock = "TerritoryZone";
          client = "-1";
          teamId = "1";
          position = "224 -76 364";
@@ -1275,7 +1275,7 @@ new SimGroup(MissionGroup) {
             zProtected = "0";
       };
       new TacticalZone() {
-         dataBlock = "XaNotcEth3TerritoryZone";
+         dataBlock = "TerritoryZone";
          client = "-1";
          teamId = "1";
          position = "224 0 364";
@@ -1321,7 +1321,7 @@ new SimGroup(MissionGroup) {
             zProtected = "0";
       };
       new TacticalZone() {
-         dataBlock = "XaNotcEth3TerritoryZone";
+         dataBlock = "TerritoryZone";
          client = "-1";
          teamId = "1";
          position = "129.5 0 375";
@@ -1367,7 +1367,7 @@ new SimGroup(MissionGroup) {
             zProtected = "0";
       };
       new TacticalZone() {
-         dataBlock = "XaNotcEth3TerritoryZone";
+         dataBlock = "TerritoryZone";
          client = "-1";
          teamId = "1";
          position = "31 0 364";
@@ -1413,7 +1413,7 @@ new SimGroup(MissionGroup) {
             zProtected = "0";
       };
       new TacticalZone() {
-         dataBlock = "XaNotcEth3TerritoryZone";
+         dataBlock = "TerritoryZone";
          client = "-1";
          teamId = "1";
          position = "-31 0 364";
@@ -1459,7 +1459,7 @@ new SimGroup(MissionGroup) {
             zProtected = "0";
       };
       new TacticalZone() {
-         dataBlock = "XaNotcEth3TerritoryZone";
+         dataBlock = "TerritoryZone";
          client = "-1";
          teamId = "1";
          position = "-129.5 0 375";
@@ -1505,7 +1505,7 @@ new SimGroup(MissionGroup) {
             zProtected = "0";
       };
       new TacticalZone() {
-         dataBlock = "XaNotcEth3TerritoryZone";
+         dataBlock = "TerritoryZone";
          client = "-1";
          teamId = "2";
          position = "-223.938 0.125137 364";
@@ -1551,7 +1551,7 @@ new SimGroup(MissionGroup) {
             zProtected = "0";
       };
       new TacticalZone() {
-         dataBlock = "XaNotcEth3TerritoryZone";
+         dataBlock = "TerritoryZone";
          client = "-1";
          teamId = "2";
          position = "-223.938 76.1251 364";
@@ -1597,7 +1597,7 @@ new SimGroup(MissionGroup) {
             zProtected = "0";
       };
       new TacticalZone() {
-         dataBlock = "XaNotcEth3TerritoryZone";
+         dataBlock = "TerritoryZone";
          client = "-1";
          teamId = "2";
          position = "-223.938 160.125 364";
@@ -1643,7 +1643,7 @@ new SimGroup(MissionGroup) {
             zProtected = "0";
       };
       new TacticalZone() {
-         dataBlock = "XaNotcEth3TerritoryZone";
+         dataBlock = "TerritoryZone";
          client = "-1";
          teamId = "2";
          position = "-31.9375 195.125 384";
@@ -1689,7 +1689,7 @@ new SimGroup(MissionGroup) {
             zProtected = "0";
       };
       new TacticalZone() {
-         dataBlock = "XaNotcEth3TerritoryZone";
+         dataBlock = "TerritoryZone";
          client = "-1";
          teamId = "2";
          position = "99.0625 224.125 408";
@@ -1735,7 +1735,7 @@ new SimGroup(MissionGroup) {
             zProtected = "0";
       };
       new TacticalZone() {
-         dataBlock = "XaNotcEth3TerritoryZone";
+         dataBlock = "TerritoryZone";
          client = "-1";
          teamId = "2";
          position = "159.563 224.125 367";
@@ -1781,7 +1781,7 @@ new SimGroup(MissionGroup) {
             zProtected = "0";
       };
       new TacticalZone() {
-         dataBlock = "XaNotcEth3TerritoryZone";
+         dataBlock = "TerritoryZone";
          client = "-1";
          teamId = "2";
          position = "217.063 224.125 408";
