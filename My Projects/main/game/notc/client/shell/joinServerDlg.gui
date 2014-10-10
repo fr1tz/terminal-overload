@@ -16,7 +16,7 @@
       enabled = "1";
 
    new GuiWindowCtrl() {
-      text = "Join Server";
+      text = "Play";
       resizeWidth = "0";
       resizeHeight = "0";
       canMove = "1";
@@ -47,7 +47,7 @@
       canSaveDynamicFields = "0";
 
       new GuiButtonCtrl(JS_joinServer) {
-         text = "START GAME";
+         text = "Join Server";
          groupNum = "-1";
          buttonType = "PushButton";
          useMouseEvents = "0";
@@ -100,7 +100,7 @@
             fitParentWidth = "1";
             clipColumnText = "0";
             position = "1 1";
-            extent = "580 8";
+            extent = "577 8";
             minExtent = "8 8";
             horizSizing = "right";
             vertSizing = "bottom";
