@@ -42,8 +42,8 @@ function MainMenuGui::tickThread(%this)
    }
    %this.zTickThread = %this.schedule(32, "tickThread");
 
-   %this.zBitmapOffset++;
-
-   //%this-->bg.setValue(%this.zBitmapOffset, %this.zBitmapOffset);
+   %this.zBitmapOffset--;
+   %this-->Scanlines.setValue(%this.zBitmapOffset, %this.zBitmapOffset);
+   %this-->Noise.setValue(getRandom(0, 100), getRandom(0, 100));
 }
 

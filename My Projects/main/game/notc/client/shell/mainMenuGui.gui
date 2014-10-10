@@ -18,8 +18,8 @@
    canSaveDynamicFields = "1";
       enabled = "1";
       isDecoy = "0";
-      zBitmapOffset = "3108";
-      zTickThread = "3109";
+      zBitmapOffset = "-487";
+      zTickThread = "487";
 
    new GuiFadeinBitmapCtrl() {
       fadeColor = "0.262745 0.529412 0.486275 1";
@@ -42,6 +42,42 @@
       tooltipProfile = "GuiToolTipProfile";
       hovertime = "1000";
       isContainer = "0";
+      canSave = "1";
+      canSaveDynamicFields = "0";
+   };
+   new GuiBitmapCtrl() {
+      bitmap = "notc/client/graphics/scanlines1.png";
+      wrap = "1";
+      position = "0 0";
+      extent = "640 480";
+      minExtent = "8 2";
+      horizSizing = "width";
+      vertSizing = "height";
+      profile = "GuiDefaultProfile";
+      visible = "1";
+      active = "1";
+      tooltipProfile = "GuiToolTipProfile";
+      hovertime = "1000";
+      isContainer = "0";
+      internalName = "Scanlines";
+      canSave = "1";
+      canSaveDynamicFields = "0";
+   };
+   new GuiBitmapCtrl() {
+      bitmap = "notc/client/graphics/noise1.png";
+      wrap = "1";
+      position = "0 0";
+      extent = "640 480";
+      minExtent = "8 2";
+      horizSizing = "width";
+      vertSizing = "height";
+      profile = "GuiDefaultProfile";
+      visible = "1";
+      active = "1";
+      tooltipProfile = "GuiToolTipProfile";
+      hovertime = "1000";
+      isContainer = "0";
+      internalName = "Noise";
       canSave = "1";
       canSaveDynamicFields = "0";
    };
@@ -90,7 +126,7 @@
       };
    };
    new GuiTextCtrl(MainMenuVersionString) {
-      text = "0.3.0-testing4";
+      text = "0.3.0-testing4+dev";
       maxLength = "1024";
       docking = "None";
       margin = "0 0 0 0";
@@ -145,7 +181,7 @@
          anchorBottom = "1";
          anchorLeft = "1";
          anchorRight = "0";
-         position = "0 560";
+         position = "0 332";
          extent = "250 25";
          minExtent = "8 2";
          horizSizing = "center";
