@@ -63,16 +63,16 @@ datablock PlayerData(FrmStandardcat)
    runForce = 100 * 90;
    runEnergyDrain = 0;
    minRunEnergy = 0;
-   maxForwardSpeed = 15;
-   maxBackwardSpeed = 15;
-   maxSideSpeed = 12;
+   maxForwardSpeed = 10;
+   maxBackwardSpeed = 10;
+   maxSideSpeed = 10;
    
    sprintForce = 100 * 90;
    sprintEnergyDrain = 0;
    minSprintEnergy = 0;
    maxSprintForwardSpeed = 20;
-   maxSprintBackwardSpeed = 15;
-   maxSprintSideSpeed = 15;
+   maxSprintBackwardSpeed = 12;
+   maxSprintSideSpeed = 12;
    sprintStrafeScale = 1.0;
    sprintYawScale = "1.0";
    sprintPitchScale = "1.0";
