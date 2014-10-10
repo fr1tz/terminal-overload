@@ -1,58 +1,24 @@
 What's new?
 ===========
 
-Version 0.3.0-testing4
-----------------------
+Version 0.3.0
+-------------
 
-Release Date: Oct. 9, 2014
-
-- Prettier GUI
-- Removed recoil from MGL2 but decreased firing rate.
-- ETH mode: Each class only has one type of offensive disc.
-- Tweaked CAT movement
-- Simplified disc controls
-- Various minor tweaks and improvements
-- Bugfixes
-
-
-Version 0.3.0-testing3
-----------------------
-
-Release Date: Oct. 5, 2014
-
-- Improved responsiveness of mouse look while in CAT form.
-- Tweaked CAT movement.
-- Loadout class #1 with razor discs instead of repel and explosive discs.
-- Removed Etherboard from class #4 (Minigunner) loadout.
-- Various minor tweaks and improvements
-- Bugfixes
-
-
-Version 0.3.0-testing2
-----------------------
-
-Release Date: Oct. 1, 2014
+Release Date: Oct. 10, 2014
 
 - New map: ETH5
-- Tweaked instant XJump
-- New charged XJump
-- Tweaked CAT movement
-- Replaced MGL1 with MGL2
-- Replaced SMG1 with SMG2
-- Replaced SG1 with SG3
-- Replaced SR1 with SR2
-- Removed SG2 from Class #2 loadout
-- Overhauled projectile visuals (except discs & grenade)
-- Various minor tweaks and improvements
-- Bugfixes
-
-
-Version 0.3.0-testing1
-----------------------
-
-Release Date: Sep. 18, 2014
-
-- Replace re-jumping with XJump module.
+- Prettier GUI
+- Replace re-jumping with instant & charged x-jump.
+- Tweak CAT movement speeds.
+- Simplify disc controls.
+- ETH mode: Each class only has one type of offensive disc.
+- SMG changes: Increase firing rate, decrease damage, shorter range.
+- MGL changes: Remove recoil, decrease firing rate, fire only one projectile.
+- MG changes: Projectiles are affected by gravity.
+- Remove etherboard from class #4 (Minigunner) loadout.
+- Remove SG2 from class #2 loadout.
+- Improve responsiveness of mouse look while in CAT form.
+- New projectile visuals (except discs & grenade).
 - Various minor tweaks and improvements
 - Bugfixes
 
