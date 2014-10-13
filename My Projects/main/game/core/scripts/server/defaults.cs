@@ -3,13 +3,17 @@
 
 // List of master servers to query, each one is tried in order
 // until one responds
-$Pref::Server::RegionMask = 2;
-$pref::Master[0] = "2:master.garagegames.com:28002";
+$pref::Master[0] = "1:master1.terminal-overload.org:28010";
+$pref::Master[1] = "1:master2.terminal-overload.org:28010";
+$pref::Master[2] = "1:master3.terminal-overload.org:28010";
+// The following server will only be tried if all the above fail.
+$pref::Master[3] = "2:master.garagegames.com:28002";
 
 // List of AIMS pubservers
 $Pref::AIMS::Server[0] = "aims.ddns.net";
 
 // Information about the server
+$Pref::Server::RegionMask = 1;
 $Pref::Server::Name = "Terminal Overload Server";
 $Pref::Server::Info = "This is a Terminal Overload server.";
 
@@ -44,6 +48,7 @@ $Pref::Server::FloodProtectionEnabled = 1;
 $Pref::Server::MaxChatLen = 120;
 
 // Default networking settings
+$pref::Net::RegionMask = 1;
 $pref::Net::PacketRateToServer = 32;
 $pref::Net::PacketRateToClient = 32;
 $pref::Net::PacketSize = 450;
