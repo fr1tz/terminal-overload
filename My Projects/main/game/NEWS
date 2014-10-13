@@ -1,6 +1,14 @@
 What's new?
 ===========
 
+Version 0.3.1
+-------------
+
+Release Date: Oct. 12, 2014
+
+- Use own master server(s). Only fall back on GG master server if they all fail.
+
+
 Version 0.3.0
 -------------
 
