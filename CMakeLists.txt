@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 2.8.3)
+cmake_minimum_required (VERSION 2.8.12)
 
 set(TORQUE_APP_NAME "main" CACHE STRING "the app name")
 

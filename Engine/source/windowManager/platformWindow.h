@@ -70,6 +70,10 @@ protected:
    /// Offscreen Render
    bool mOffscreenRender;
 
+   /// This is set as part of the canvas being shown, and flags that the windows should render as normal from now on.
+   // Basically a flag that lets the window manager know that we've handled the splash screen, and to operate as normal.
+   bool mDisplayWindow;
+
    /// Generic handle for the portable menu bar
    void* mPortableMenuHandle;
 
@@ -88,6 +92,7 @@ protected:
       mSuppressReset = false;
 
       mOffscreenRender = false;
+      mDisplayWindow = false;
       mPortableMenuHandle = NULL;
    }
 
@@ -174,6 +179,8 @@ public:
    /// This is called to poll the window as to it's idle state.  
    virtual bool getOffscreenRender() { return mOffscreenRender; };
 
+   /// Set whether this window is should display as normal
+   virtual void setDisplayWindow(bool val ) { mDisplayWindow = val; };
 
    /// Set Focused State (Foreground)
    ///

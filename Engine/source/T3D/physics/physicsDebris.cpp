@@ -292,7 +292,8 @@ PhysicsDebris* PhysicsDebris::create(  PhysicsDebrisData *datablock,
 }
 
 PhysicsDebris::PhysicsDebris()
-   :  mLifetime( 0.0f ),
+   :  mDataBlock( NULL ),
+      mLifetime( 0.0f ),
       mShapeInstance( NULL ),
       mWorld( NULL ),
       mInitialLinVel( Point3F::Zero )
@@ -322,6 +323,12 @@ bool PhysicsDebris::onAdd()
 
    if ( !Parent::onAdd() )  
       return false;  
+
+   if( !mDataBlock )
+   {
+      Con::errorf("PhysicsDebris::onAdd - Fail - No datablock");
+      return false;
+   }
 
    // If it has a fixed lifetime then calculate it.
    if ( mDataBlock->lifetime > 0.0f )

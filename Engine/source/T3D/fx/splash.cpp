@@ -284,6 +284,7 @@ bool SplashData::preload(bool server, String &errorStr)
 // Splash
 //--------------------------------------------------------------------------
 Splash::Splash()
+   : mDataBlock( NULL )
 {
    dMemset( mEmitterList, 0, sizeof( mEmitterList ) );
 
@@ -333,6 +334,12 @@ bool Splash::onAdd()
    NetConnection* conn = NetConnection::getConnectionToServer();
    if(!conn || !Parent::onAdd())
       return false;
+
+   if( !mDataBlock )
+   {
+      Con::errorf("Splash::onAdd - Fail - No datablock");
+      return false;
+   }
 
    mDelayMS = mDataBlock->delayMS + sgRandom.randI( -mDataBlock->delayVariance, mDataBlock->delayVariance );
    mEndingMS = mDataBlock->lifetimeMS + sgRandom.randI( -mDataBlock->lifetimeVariance, mDataBlock->lifetimeVariance );
@@ -389,8 +396,11 @@ void Splash::onRemove()
 
    ringList.clear();
 
-   getSceneManager()->removeObjectFromScene(this);
-   getContainer()->removeObject(this);
+   if( getSceneManager() )
+      getSceneManager()->removeObjectFromScene(this);
+
+   if( getContainer() )
+      getContainer()->removeObject(this);
 
    Parent::onRemove();
 }

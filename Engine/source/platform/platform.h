@@ -330,7 +330,9 @@ namespace Platform
 
    // display Splash Window
    bool displaySplashWindow( String path );
-   void closeSplashWindow();
+
+   // close Splash Window
+   bool closeSplashWindow();
 
    void openFolder( const char* path );
 

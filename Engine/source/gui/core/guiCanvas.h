@@ -89,6 +89,8 @@ protected:
    bool        mClampTorqueCursor;
    bool        mAlwaysHandleMouseButtons;
 
+   bool        mDisplayWindow;
+
    /// @}
 
    /// @name Mouse Input

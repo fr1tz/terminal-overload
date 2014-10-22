@@ -457,8 +457,8 @@ void Profiler::hashPop(ProfilerRootData *expected)
          else
          {
             Con::warnf("Warning: the Torque profiler thread may now run on any cpu.");
-            DWORD procMask;
-            DWORD sysMask;
+            DWORD_PTR procMask;
+            DWORD_PTR sysMask;
             GetProcessAffinityMask( GetCurrentProcess(), &procMask, &sysMask);
             SetThreadAffinityMask( GetCurrentThread(), procMask);
          }

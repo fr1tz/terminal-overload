@@ -123,6 +123,13 @@ void CloseSplashWindow(HINSTANCE hinst)
 
 #ifndef TORQUE_SDL
 
+bool Platform::closeSplashWindow()
+{
+   CloseSplashWindow(GetModuleHandle(NULL));
+
+   return true;
+}
+
 bool Platform::displaySplashWindow( String path )
 {
    if(path.isEmpty())

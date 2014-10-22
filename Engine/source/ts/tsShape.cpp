@@ -1151,7 +1151,10 @@ void TSShape::assembleShape()
          skip = true;
       TSMesh * mesh = TSMesh::assembleMesh(meshType,skip);
       if (ptr32)
+      {
          ptr32[i] = skip ?  0 : (S32)mesh;
+         meshes.push_back(skip ?  0 : mesh);
+      }
 
       // fill in location of verts, tverts, and normals for detail levels
       if (mesh && meshType!=TSMesh::DecalMeshType)
@@ -1179,7 +1182,6 @@ void TSShape::assembleShape()
          }
       }
    }
-   meshes.set(ptr32,numMeshes);
 
    tsalloc.checkGuard();
 

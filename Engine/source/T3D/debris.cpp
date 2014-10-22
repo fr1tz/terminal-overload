@@ -520,6 +520,12 @@ bool Debris::onAdd()
       return false;
    }
 
+   if( !mDataBlock )
+   {
+      Con::errorf("Debris::onAdd - Fail - No datablock");
+      return false;
+   }
+
    // create emitters
    for( S32 i=0; i<DebrisData::DDC_NUM_EMITTERS; i++ )
    {
@@ -662,8 +668,11 @@ void Debris::onRemove()
       }
    }
 
-   getSceneManager()->removeObjectFromScene(this);
-   getContainer()->removeObject(this);
+   if( getSceneManager() )
+      getSceneManager()->removeObjectFromScene(this);
+
+   if( getContainer() )
+      getContainer()->removeObject(this);
 
    Parent::onRemove();
 }

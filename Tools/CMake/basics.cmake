@@ -1,20 +1,48 @@
+# -----------------------------------------------------------------------------
+# Copyright (c) 2014 GarageGames, LLC
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to
+# deal in the Software without restriction, including without limitation the
+# rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+# sell copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+# FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+# IN THE SOFTWARE.
+# -----------------------------------------------------------------------------
+
 project("Torque3DEngine")
 
-set(TORQUE_TEMPLATE "Full" CACHE STRING "the template to use")
+if( CMAKE_CXX_SIZEOF_DATA_PTR EQUAL 8 )
+    set( TORQUE_CPU_X64 ON )
+elseif( CMAKE_CXX_SIZEOF_DATA_PTR EQUAL 4 )
+    set( TORQUE_CPU_X32 ON )
+endif()
 
-if(NOT projectDir)
-    set(projectDir    "${CMAKE_SOURCE_DIR}/My Projects/${TORQUE_APP_NAME}")
+if(NOT TORQUE_TEMPLATE)
+    set(TORQUE_TEMPLATE "Full" CACHE STRING "the template to use")
+endif()
+if(NOT TORQUE_APP_DIR)
+    set(TORQUE_APP_DIR "${CMAKE_SOURCE_DIR}/My Projects/${TORQUE_APP_NAME}")
 endif()
 if(NOT projectOutDir)
-    set(projectOutDir "${projectDir}/game")
+    set(projectOutDir "${TORQUE_APP_DIR}/game")
 endif()
 if(NOT projectSrcDir)
-    set(projectSrcDir "${projectDir}/source")
+    set(projectSrcDir "${TORQUE_APP_DIR}/source")
 endif()
 set(libDir        "${CMAKE_SOURCE_DIR}/Engine/lib")
 set(srcDir        "${CMAKE_SOURCE_DIR}/Engine/source")
 set(cmakeDir      "${CMAKE_SOURCE_DIR}/Tools/CMake")
-
 
 # hide some things
 mark_as_advanced(CMAKE_INSTALL_PREFIX)
@@ -25,19 +53,26 @@ mark_as_advanced(CMAKE_CONFIGURATION_TYPES)
 #set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${projectOutDir}/game)
 #set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${projectOutDir}/game)
 
+###############################################################################
+### Source File Handling
+###############################################################################
+
 # finds and adds sources files in a folder
 macro(addPath dir)
-    set(tmpa "")
-    file(GLOB tmpa
+    set(tmp_files "")
+    set(glob_config GLOB)
+    if(${ARGC} GREATER 1 AND "${ARGV1}" STREQUAL "REC")
+        set(glob_config GLOB_RECURSE)
+    endif()
+    file(${glob_config} tmp_files
              ${dir}/*.cpp
              ${dir}/*.c
              ${dir}/*.cc
              ${dir}/*.h
              ${dir}/*.asm)
-    LIST(APPEND ${PROJECT_NAME}_files "${tmpa}")
+    LIST(APPEND ${PROJECT_NAME}_files "${tmp_files}")
     LIST(APPEND ${PROJECT_NAME}_paths "${dir}")
-    #message(STATUS "addPath ${PROJECT_NAME} : ${tmpa}")
-    #set(t "${${t}};${tmpa}")
+    #message(STATUS "addPath ${PROJECT_NAME} : ${tmp_files}")
 endmacro()
 
 # adds a file to the sources
@@ -60,99 +95,111 @@ macro(addPathRec dir)
     #message(STATUS "addPathRec ${PROJECT_NAME} : ${tmpa}")
 endmacro()
 
-# adds a definition
+###############################################################################
+### Definition Handling
+###############################################################################
+macro(__addDef def config)
+    # two possibilities: a) target already known, so add it directly, or b) target not yet known, so add it to its cache
+    if(TARGET ${PROJECT_NAME})
+        #message(STATUS "directly applying defs: ${PROJECT_NAME} with config ${config}: ${def}")
+        if("${config}" STREQUAL "")
+            set_property(TARGET ${PROJECT_NAME} APPEND PROPERTY COMPILE_DEFINITIONS "${def}")
+        else()
+            set_property(TARGET ${PROJECT_NAME} APPEND PROPERTY COMPILE_DEFINITIONS_${config} "${def}")
+        endif()
+    else()
+        list(APPEND ${PROJECT_NAME}_defs_${config} ${def})
+        #message(STATUS "added definition to cache: ${PROJECT_NAME}_defs_${config}: ${${PROJECT_NAME}_defs_${config}}")
+    endif()
+endmacro()
+
+# adds a definition: argument 1: Nothing(for all), _DEBUG, _RELEASE, <more build configurations>
 macro(addDef def)
-    set_property(TARGET ${PROJECT_NAME} APPEND PROPERTY COMPILE_DEFINITIONS "${def}")
-endmacro()
-# adds a definition
-macro(addDebugDef def)
-    set_property(TARGET ${PROJECT_NAME} APPEND PROPERTY COMPILE_DEFINITIONS_DEBUG "${def}")
-endmacro()
-
-# adds a required definition. Are processed on addExecutable or addStaticLib
-macro(addRequiredDefinition def)
-    #message(STATUS "${PROJECT_NAME} : add def : ${def}")
-    LIST( APPEND ${PROJECT_NAME}_required_definition ${def} )    
-endmacro()
-# adds a required debug definition. Are processed on addExecutable or addStaticLib
-macro(addRequiredDebugDefinition def)
-    #message(STATUS "${PROJECT_NAME} : add def : ${def}")
-    LIST( APPEND ${PROJECT_NAME}_required_debug_definition ${def} )    
+    set(def_configs "")
+    if(${ARGC} GREATER 1)
+        foreach(config "${ARGV1}")
+            __addDef(${def} ${config})
+        endforeach()
+    else()
+        __addDef(${def} "")
+    endif()
 endmacro()
 
-# add definitions to project
-macro( _processProjectDefinition )
-   foreach( def ${${PROJECT_NAME}_required_definition} )
-       addDef( ${def} )
-   endforeach()   
-   
-   foreach( def ${${PROJECT_NAME}_required_debug_definition} )
-       addDebugDef( ${def} )
+# this applies cached definitions onto the target
+macro(_process_defs)
+    if(DEFINED ${PROJECT_NAME}_defs_)
+        set_property(TARGET ${PROJECT_NAME} APPEND PROPERTY COMPILE_DEFINITIONS "${${PROJECT_NAME}_defs_}")
+        #message(STATUS "applying defs to project ${PROJECT_NAME} on all configs: ${${PROJECT_NAME}_defs_}")
+    endif()
+    foreach(def_config ${CMAKE_CONFIGURATION_TYPES})
+        string(TOUPPER "${def_config}" def_config)
+        if(DEFINED ${PROJECT_NAME}_defs_${def_config})
+            set_property(TARGET ${PROJECT_NAME} APPEND PROPERTY COMPILE_DEFINITIONS_${def_config} "${${PROJECT_NAME}_defs_${def_config}}")
+            #message(STATUS "applying defs to project ${PROJECT_NAME} on config ${def_config}: ${${PROJECT_NAME}_defs_${def_config}}")
+        endif()
+    endforeach()
+endmacro()
+
+###############################################################################
+###  Source Library Handling
+###############################################################################
+macro(addLibSrc libPath)
+    set(cached_project_name ${PROJECT_NAME})
+    include(${libPath})
+    project(${cached_project_name})
+endmacro()
+
+###############################################################################
+### Linked Library Handling
+###############################################################################
+macro(addLib libs)
+   foreach(lib ${libs})
+        # check if we can build it ourselfs
+        if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/libraries/${lib}.cmake")
+            addLibSrc("${CMAKE_CURRENT_SOURCE_DIR}/libraries/${lib}.cmake")
+        endif()
+        # then link against it
+        # two possibilities: a) target already known, so add it directly, or b) target not yet known, so add it to its cache
+        if(TARGET ${PROJECT_NAME})
+            target_link_libraries(${PROJECT_NAME} "${lib}")
+        else()
+            list(APPEND ${PROJECT_NAME}_libs ${lib})
+        endif()
    endforeach()
-   
-   #clear required defs
-   set( ${PROJECT_NAME}_required_definition )
-   set( ${PROJECT_NAME}_required_debug_definition )
 endmacro()
 
-# adds an include path
+# this applies cached definitions onto the target
+macro(_process_libs)
+    if(DEFINED ${PROJECT_NAME}_libs)
+        target_link_libraries(${PROJECT_NAME} "${${PROJECT_NAME}_libs}")
+    endif()
+endmacro()
+
+###############################################################################
+### Include Handling
+###############################################################################
 macro(addInclude incPath)
-    #message(STATUS "${PROJECT_NAME} : add include path : ${incPath}")
-    set_property(TARGET ${PROJECT_NAME} APPEND PROPERTY INCLUDE_DIRECTORIES "${incPath}")
+    if(TARGET ${PROJECT_NAME})
+        set_property(TARGET ${PROJECT_NAME} APPEND PROPERTY INCLUDE_DIRECTORIES "${incPath}")
+    else()
+        list(APPEND ${PROJECT_NAME}_includes ${incPath})
+    endif()
 endmacro()
 
-# adds a library to link against
-macro(addLib lib)
-    #message(STATUS "${PROJECT_NAME} : add lib : ${lib}")
-    target_link_libraries(${PROJECT_NAME} "${lib}")
+# this applies cached definitions onto the target
+macro(_process_includes)
+    if(DEFINED ${PROJECT_NAME}_includes)
+        set_property(TARGET ${PROJECT_NAME} APPEND PROPERTY INCLUDE_DIRECTORIES "${${PROJECT_NAME}_includes}")
+    endif()
 endmacro()
 
-# adds a library dependency. Are processed on addExecutable or addStaticLib
-macro(addRequiredLibrary lib)
-    #message(STATUS "${PROJECT_NAME} : add lib : ${lib}")
-    LIST( APPEND ${PROJECT_NAME}_required_library ${lib} )    
-endmacro()
+###############################################################################
 
-# adds a link dependency. Are processed on addExecutable or addStaticLib
-macro(addRequiredLink lib)
-    #message(STATUS "${PROJECT_NAME} : add lib : ${lib}")
-    LIST( APPEND ${PROJECT_NAME}_required_link ${lib} )    
+macro(_postTargetProcess)
+    _process_includes()
+    _process_defs()
+    _process_libs()
 endmacro()
-
-macro( _processProjectLibrary )
-   # Append currect project to PROJECT_STACK
-   LIST( APPEND PROJECT_STACK "${PROJECT_NAME}" )
-   
-   foreach( lib ${${PROJECT_NAME}_required_library} )
-       #message( "adding library dependency: ${lib}" )
-       include( ${lib} )
-   endforeach()
-   
-   #clear required libraries
-   set( ${PROJECT_NAME}_required_library )
-   
-   # pop currect project form PROJECT_STACK
-   LIST(REMOVE_AT PROJECT_STACK -1)
-   
-   # get currect project form stack
-   if( PROJECT_STACK )      
-      LIST(GET PROJECT_STACK -1 TEMP_PROJECT)
-      project( ${TEMP_PROJECT} )
-   endif()
-   
-   
-endmacro()
-
-macro( _processProjectLinks )
-   #message( "_processProjectLinks: ${PROJECT_NAME}" )
-   foreach( lib ${${PROJECT_NAME}_required_link} )
-       addLib( ${lib} )
-   endforeach()
-   
-   #clear required libraries
-   set( ${PROJECT_NAME}_required_link )
-endmacro()
-
 
 # adds a path to search for libs
 macro(addLibPath dir)
@@ -165,7 +212,7 @@ macro(generateFilters relDir)
         # Get the path of the file relative to ${DIRECTORY},
         # then alter it (not compulsory)
         file(RELATIVE_PATH SRCGR ${relDir} ${f})
-        set(SRCGR "${PROJECT_NAME}/${SRCGR}")            
+        set(SRCGR "${PROJECT_NAME}/${SRCGR}")
         # Extract the folder, ie remove the filename part
         string(REGEX REPLACE "(.*)(/[^/]*)$" "\\1" SRCGR ${SRCGR})
         # do not have any ../ dirs
@@ -184,7 +231,7 @@ macro(generateFiltersSpecial relDir)
         # Get the path of the file relative to ${DIRECTORY},
         # then alter it (not compulsory)
         file(RELATIVE_PATH SRCGR ${relDir} ${f})
-        set(SRCGR "torque3d/${SRCGR}")            
+        set(SRCGR "torque3d/${SRCGR}")
         # Extract the folder, ie remove the filename part
         string(REGEX REPLACE "(.*)(/[^/]*)$" "\\1" SRCGR ${SRCGR})
         # do not have any ../ dirs
@@ -202,8 +249,9 @@ macro(generateFiltersSpecial relDir)
         endif()
     endforeach()
 endmacro()
+
 # macro to add a static library
-macro(addStaticLib)
+macro(finishLibrary)
     # more paths?
     if(${ARGC} GREATER 0)
         foreach(dir ${ARGV0})
@@ -218,23 +266,30 @@ macro(addStaticLib)
         endif()
     endforeach()
     generateFilters("${firstDir}")
+
+    # set per target compile flags
+    if(TORQUE_CXX_FLAGS_${PROJECT_NAME})
+        set_source_files_properties(${${PROJECT_NAME}_files} PROPERTIES COMPILE_FLAGS "${TORQUE_CXX_FLAGS_${PROJECT_NAME}}")
+    else()
+        set_source_files_properties(${${PROJECT_NAME}_files} PROPERTIES COMPILE_FLAGS "${TORQUE_CXX_FLAGS_LIBS}")
+    endif()
+
     if(TORQUE_STATIC)
         add_library("${PROJECT_NAME}" STATIC ${${PROJECT_NAME}_files})
     else()
         add_library("${PROJECT_NAME}" SHARED ${${PROJECT_NAME}_files})
     endif()
-    # omg - only use the first folder ... otehrwise we get lots of header name collisions
+
+    # omg - only use the first folder ... otherwise we get lots of header name collisions
     #foreach(dir ${${PROJECT_NAME}_paths})
     addInclude("${firstDir}")
     #endforeach()
-    
-    _processProjectLinks()
-    _processProjectLibrary()
-    _processProjectDefinition()
+
+    _postTargetProcess()
 endmacro()
 
 # macro to add an executable
-macro(addExecutable)
+macro(finishExecutable)
     # now inspect the paths we got
     set(firstDir "")
     foreach(dir ${${PROJECT_NAME}_paths})
@@ -243,13 +298,18 @@ macro(addExecutable)
         endif()
     endforeach()
     generateFiltersSpecial("${firstDir}")
+
+    # set per target compile flags
+    if(TORQUE_CXX_FLAGS_${PROJECT_NAME})
+        set_source_files_properties(${${PROJECT_NAME}_files} PROPERTIES COMPILE_FLAGS "${TORQUE_CXX_FLAGS_${PROJECT_NAME}}")
+    else()
+        set_source_files_properties(${${PROJECT_NAME}_files} PROPERTIES COMPILE_FLAGS "${TORQUE_CXX_FLAGS_EXECUTABLES}")
+    endif()
+
     add_executable("${PROJECT_NAME}" WIN32 ${${PROJECT_NAME}_files})
-    # omg - only use the first folder ... otehrwise we get lots of header name collisions
     addInclude("${firstDir}")
-    
-    _processProjectLinks()
-    _processProjectLibrary()
-    _processProjectDefinition()
+
+    _postTargetProcess()
 endmacro()
 
 macro(setupVersionNumbers)
@@ -273,7 +333,7 @@ macro(setupPackaging)
     SET(CPACK_PACKAGE_VENDOR "${PROJECT_NAME}")
     SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY "${PROJECT_NAME}")
     SET(CPACK_INCLUDE_TOPLEVEL_DIRECTORY 1)
-    SET(CPACK_OUTPUT_FILE_PREFIX "${projectDir}/packages/${PROJECT_NAME}")
+    SET(CPACK_OUTPUT_FILE_PREFIX "${TORQUE_APP_DIR}/packages/${PROJECT_NAME}")
     SET(CPACK_PACKAGE_INSTALL_DIRECTORY "")
     #SET(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/ReadMe.txt")
     #SET(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/Copyright.txt")
@@ -289,13 +349,25 @@ set(TORQUE_STATIC ON)
 #option(TORQUE_STATIC "enables or disable static" OFF)
 
 if(WIN32)
-    set(TORQUE_CXX_FLAGS "/MP /O2 /Ob2 /Oi /Ot /Oy /GT /Zi /W4 /nologo /GF /EHsc /GS- /Gy- /Qpar- /arch:SSE2 /fp:fast /fp:except- /GR /Zc:wchar_t- /wd4018 /wd4100 /wd4121 /wd4127 /wd4130 /wd4244 /wd4245 /wd4389 /wd4511 /wd4512 /wd4800 /wd4995 /D_CRT_SECURE_NO_WARNINGS " CACHE TYPE STRING)
-    mark_as_advanced(TORQUE_CXX_FLAGS)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${TORQUE_CXX_FLAGS}")
+    set(TORQUE_CXX_FLAGS_EXECUTABLES "/wd4018 /wd4100 /wd4121 /wd4127 /wd4130 /wd4244 /wd4245 /wd4389 /wd4511 /wd4512 /wd4800 /wd4995 " CACHE TYPE STRING)
+    mark_as_advanced(TORQUE_CXX_FLAGS_EXECUTABLES)
+
+    set(TORQUE_CXX_FLAGS_LIBS "/W0" CACHE TYPE STRING)
+    mark_as_advanced(TORQUE_CXX_FLAGS_LIBS)
+
+    set(TORQUE_CXX_FLAGS_COMMON_DEFAULT "-DUNICODE -D_UNICODE /MP /O2 /Ob2 /Oi /Ot /Oy /GT /Zi /W4 /nologo /GF /EHsc /GS- /Gy- /Qpar- /fp:fast /fp:except- /GR /Zc:wchar_t- /D_CRT_SECURE_NO_WARNINGS" )
+    if( TORQUE_CPU_X32 )
+       set(TORQUE_CXX_FLAGS_COMMON_DEFAULT ${TORQUE_CXX_FLAGS_COMMON_DEFAULT}" /arch:SSE2")
+    endif()
+    set(TORQUE_CXX_FLAGS_COMMON ${TORQUE_CXX_FLAGS_COMMON_DEFAULT} CACHE TYPE STRING)
+    
+    mark_as_advanced(TORQUE_CXX_FLAGS_COMMON)
+
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${TORQUE_CXX_FLAGS_COMMON}")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${CMAKE_CXX_FLAGS}")
     set(CMAKE_EXE_LINKER_FLAGS "/LARGEADDRESSAWARE")
     #set(STATIC_LIBRARY_FLAGS "/OPT:NOREF")
-    
+
     # Force static runtime libraries
     if(TORQUE_STATIC)
         FOREACH(flag
@@ -311,6 +383,16 @@ if(WIN32)
             SET("${flag}" "${${flag}} /EHsc")
         ENDFOREACH()
     endif()
+else()
+    # TODO: improve default settings on other platforms
+    set(TORQUE_CXX_FLAGS_EXECUTABLES "" CACHE TYPE STRING)
+    mark_as_advanced(TORQUE_CXX_FLAGS_EXECUTABLES)
+    set(TORQUE_CXX_FLAGS_LIBS "" CACHE TYPE STRING)
+    mark_as_advanced(TORQUE_CXX_FLAGS_LIBS)
+    set(TORQUE_CXX_FLAGS_COMMON "" CACHE TYPE STRING)
+    mark_as_advanced(TORQUE_CXX_FLAGS)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${TORQUE_CXX_FLAGS}")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${CMAKE_CXX_FLAGS}")
 endif()
 
 if(UNIX)

@@ -764,6 +764,7 @@ S32 ProjectileData::scaleValue( S32 value, bool down )
 //
 Projectile::Projectile()
  : mPhysicsWorld( NULL ),
+   mDataBlock( NULL ),
    mCurrPosition( 0, 0, 0 ),
    mCurrVelocity( 0, 0, 1 ),
    mExplode(false),
@@ -920,6 +921,12 @@ bool Projectile::onAdd()
 {
    if(!Parent::onAdd())
       return false;
+
+   if( !mDataBlock )
+   {
+      Con::errorf("Projectile::onAdd - Fail - Not datablock");
+      return false;
+   }
 
    if (isServerObject())
    {

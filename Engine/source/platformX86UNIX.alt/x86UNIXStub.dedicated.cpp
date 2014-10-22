@@ -1,5 +1,24 @@
-// Copyright information can be found in the file named COPYING
-// located in the root directory of this distribution.
+//-----------------------------------------------------------------------------
+// Copyright (c) 2012 GarageGames, LLC
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to
+// deal in the Software without restriction, including without limitation the
+// rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+// sell copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+// IN THE SOFTWARE.
+//-----------------------------------------------------------------------------
 
 #include "platform/platformInput.h"
 #include "platformX86UNIX/x86UNIXFont.h"
@@ -61,7 +80,6 @@ void OpenALDLLShutdown() {}
 #endif
 
 // Platform Stubs
-#ifdef TORQUE_DEDICATED
 
 bool Platform::excludeOtherInstances(const char*) { return true; }
 
@@ -75,8 +93,7 @@ void Platform::openFile(const char *path) { }
 
 // window
 bool Platform::displaySplashWindow(String path) { return false; }
-void Platform::closeSplashWindow() { }
-
+bool Platform::closeSplashWindow() { return false; }
 
 // font
 PlatformFont *createPlatformFont(const char *name, U32 size, U32 charset) { return NULL; }
@@ -90,24 +107,6 @@ void Platform::AlertOK(const char *, const char *) {}
 bool Platform::AlertOKCancel(const char *, const char *) { return false; }
 S32  Platform::messageBox(char const*, char const*, MBButtons, MBIcons) { return 0; }
 bool Platform::AlertRetry(char const*, char const*) { return false ; }
-Platform::ALERT_ASSERT_RESULT Platform::AlertAssert(const char *windowTitle, const char *message)
-{
-    {
-        if (Con::isActive() /*&& StdConsole::isEnabled()*/)
-            Con::printf("AlertAssert: %s %s", windowTitle, message);
-        else
-            dPrintf("AlertAssert: %s %s\n", windowTitle, message);
-
-        return ALERT_ASSERT_DEBUG;
-   }
-}
-class PlatformWindowManager;
-PlatformWindowManager * CreatePlatformWindowManager()
-{
-   AssertFatal(0, "");
-   return NULL;
-}
-
 
 // file dialog
 IMPLEMENT_CONOBJECT(FileDialog);
@@ -143,5 +142,3 @@ InputEvent Input::smInputEvent;
 U8 Input::smModifierKeys;
 
 bool OpenGLInit() { return false; }
-
-#endif // TORQUE_DEDICATED

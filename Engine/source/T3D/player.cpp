@@ -538,10 +538,6 @@ bool PlayerData::preload(bool server, String &errorStr)
          dp->death         = false;
          if (dp->sequence != -1)
             getGroundInfo(si,thread,dp);
-
-         // No real reason to spam the console about a missing jet animation
-         if (dStricmp(sp->name, "jet") != 0)
-            AssertWarn(dp->sequence != -1, avar("PlayerData::preload - Unable to find named animation sequence '%s'!", sp->name));
       }
       for (S32 b = 0; b < mShape->sequences.size(); b++)
       {
@@ -3530,7 +3526,7 @@ void Player::updateMove(const Move* move)
 
       // Clamp acceleration.
       F32 maxAcc = (mDataBlock->swimForce / getMass()) * TickSec;
-      if ( false && swimSpeed > maxAcc )
+      if ( swimSpeed > maxAcc )
          swimAcc *= maxAcc / swimSpeed;      
 
       acc += swimAcc;
@@ -7534,8 +7530,9 @@ DefineEngineMethod( Player, getDamageLocation, const char*, ( Point3F pos ),,
 
    object->getDamageLocation(pos, buffer1, buffer2);
 
-   char *buff = Con::getReturnBuffer(128);
-   dSprintf(buff, 128, "%s %s", buffer1, buffer2);
+   static const U32 bufSize = 128;
+   char *buff = Con::getReturnBuffer(bufSize);
+   dSprintf(buff, bufSize, "%s %s", buffer1, buffer2);
    return buff;
 }
 

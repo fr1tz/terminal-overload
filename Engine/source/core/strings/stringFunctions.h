@@ -198,6 +198,9 @@ bool dStrEndsWith(const char* str1, const char* str2);
 
 char* dStripPath(const char* filename);
 
+int dStrrev(char* str);
+int dItoa(int n, char s[]);
+
 //------------------------------------------------------------------------------
 // standard I/O functions [defined in platformString.cpp]
 

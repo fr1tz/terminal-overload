@@ -161,7 +161,7 @@ GFXDevice::GFXDevice()
 
    // Initialize our drawing utility.
    mDrawer = NULL;
-
+   mFrameTime = PlatformTimer::create();
    // Add a few system wide shader macros.
    GFXShader::addGlobalMacro( "TORQUE", "1" );
    GFXShader::addGlobalMacro( "TORQUE_VERSION", String::ToString(getVersionNumber()) );
@@ -787,7 +787,7 @@ inline bool GFXDevice::beginScene()
 
    // Send the start of frame signal.
    getDeviceEventSignal().trigger( GFXDevice::deStartOfFrame );
-
+   mFrameTime->reset();
    return beginSceneInternal();
 }
 
