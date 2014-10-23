@@ -198,6 +198,7 @@ struct ShapeBaseDataProto
    F32 drag;
    F32 density;
    F32 maxEnergy[ShapeBaseData::MaxEnergySlots];
+   F32 maxDamage;
 	F32 damageBuffer;
    F32 cameraMaxDist;
    F32 cameraMinDist;
@@ -213,6 +214,7 @@ struct ShapeBaseDataProto
       density = 1;
       for(U32 i = 0; i < ShapeBaseData::MaxEnergySlots; i++)
          maxEnergy[i] = 0;
+      maxDamage = 1.0f;
 		damageBuffer = 0;
       cameraMaxDist = 0;
       cameraMinDist = 0.2f;
@@ -735,6 +737,8 @@ void ShapeBaseData::packData(BitStream* stream)
       if(stream->writeFlag(maxEnergy[i] != gShapeBaseDataProto.maxEnergy[i]))
          stream->write(maxEnergy[i]);
    }
+   if(stream->writeFlag(maxDamage != gShapeBaseDataProto.maxDamage))
+      stream->write(maxDamage);
    if(stream->writeFlag(damageBuffer != gShapeBaseDataProto.damageBuffer))
       stream->write(damageBuffer);
    if(stream->writeFlag(cameraMaxDist != gShapeBaseDataProto.cameraMaxDist))
@@ -835,6 +839,11 @@ void ShapeBaseData::unpackData(BitStream* stream)
       else
          maxEnergy[i] = gShapeBaseDataProto.maxEnergy[i];
    }
+
+   if(stream->readFlag())
+      stream->read(&maxDamage);
+   else
+      damageBuffer = gShapeBaseDataProto.maxDamage;
 
    if(stream->readFlag())
       stream->read(&damageBuffer);
