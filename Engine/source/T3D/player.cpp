@@ -3662,8 +3662,6 @@ void Player::updateMove(const Move* move)
                mDataBlock->onXJumpChargeStart_callback(this);
          }
          mXJumpCharge += mDataBlock->xJumpChargeRate;
-         F32 availableEnergy = this->getEnergyLevel(mDataBlock->xJumpEnergySlot);
-         mXJumpCharge = mClampF(mXJumpCharge, 0, availableEnergy);
       }
       else 
       {
@@ -3671,6 +3669,8 @@ void Player::updateMove(const Move* move)
          if(mXJumpCharge > 0)
             performXJump = true;
       }
+      F32 availableEnergy = this->getEnergyLevel(mDataBlock->xJumpEnergySlot);
+      mXJumpCharge = mClampF(mXJumpCharge, 0, availableEnergy);
    }
    if(this->canInstantXJump() && mXJumpCharge == 0 && move->trigger[sInstantXJumpTrigger] && mInstantXJumpReady)
    {
