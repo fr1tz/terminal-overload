@@ -82,8 +82,7 @@ function GameCoreETH::onClientEnterGame(%game, %client)
    // Setup loadouts
    %client.zActiveLoadout = 0;
    ETH::resetLoadout(%client);
-   %client.LoadoutHud_SelectSlot(0);
-   
+
    ETH::setupHud(%client);
 
 	// Join team with less players.
@@ -157,8 +156,10 @@ function GameCoreETH::clientRecordingDemo(%game, %client, %isRecording)
    if(!%isRecording)
       return;
       
+   %client.zDemoRecordingSetupInProgress = true;
    ETH::setupHud(%client);
    %client.control(%client.player);
+   %client.zDemoRecordingSetupInProgress = false;
 }
 
 function GameCoreETH::loadOut(%game, %player)

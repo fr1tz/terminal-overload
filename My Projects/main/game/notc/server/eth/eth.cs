@@ -253,7 +253,8 @@ function ETH::setupHud(%client)
    %icon[2] = "content/xa/notc/core/icons/p1/sr1.32x32.png";
    %icon[3] = "content/xa/notc/core/icons/p1/mg1.32x32.png";
    for(%i = 0; %i < 6; %i++)
-      %client.LoadoutHud_UpdateSlot(%i, %active[%i], %icon[%i], 1.0);
+      %client.LoadoutHud_UpdateSlot(%i, %active[%i], %icon[%i], %client.zLoadoutProgress[%i]);
+   %client.LoadoutHud_SelectSlot(%client.zActiveLoadout);
       
    // MinimapHUD
    %client.MinimapHud_SetHudInfoDatasetType_Color(2);

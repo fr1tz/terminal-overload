@@ -9,9 +9,11 @@ function GameConnection::LoadoutHud_SelectSlot(%client, %slot)
 function GameConnection::LoadoutHud_UpdateSlot(%client, %slot, %vis, %icon,
    %progress, %progressDt)
 {
+   %setup = %client.zDemoRecordingSetupInProgress;
+
    if(%vis !$= "")
    {
-      if(%client.zLoadoutHudVis[%slot] $= %vis)
+      if(!%setup && %client.zLoadoutHudVis[%slot] $= %vis)
          %vis = "";
       else
          %client.zLoadoutHudVis[%slot] = %vis;
@@ -19,7 +21,7 @@ function GameConnection::LoadoutHud_UpdateSlot(%client, %slot, %vis, %icon,
    
    if(%icon !$= "")
    {
-      if(%client.zLoadoutHudIcon[%slot] $= %icon)
+      if(!%setup && %client.zLoadoutHudIcon[%slot] $= %icon)
          %icon = "";
       else
          %client.zLoadoutHudIcon[%slot] = %icon;
@@ -27,7 +29,7 @@ function GameConnection::LoadoutHud_UpdateSlot(%client, %slot, %vis, %icon,
    
    if(%progress !$= "")
    {
-      if(%client.zLoadoutHudProgress[%slot] $= %progress)
+      if(!%setup && %client.zLoadoutHudProgress[%slot] $= %progress)
          %progress = "";
       else
          %client.zLoadoutHudProgress[%slot] = %progress;
@@ -35,7 +37,7 @@ function GameConnection::LoadoutHud_UpdateSlot(%client, %slot, %vis, %icon,
    
    if(%progressDt !$= "")
    {
-      if(%client.zLoadoutHudProgressDt[%slot] $= %progressDt)
+      if(!%setup && %client.zLoadoutHudProgressDt[%slot] $= %progressDt)
          %progressDt = "";
       else
          %client.zLoadoutHudProgressDt[%slot] = %progressDt;
