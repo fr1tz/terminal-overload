@@ -17,7 +17,7 @@
 
    new GuiControl(OptPlayerGui) {
       position = "9 55";
-      extent = "358 210";
+      extent = "446 300";
       minExtent = "8 8";
       horizSizing = "right";
       vertSizing = "bottom";
@@ -47,7 +47,7 @@
          anchorLeft = "1";
          anchorRight = "0";
          position = "38 24";
-         extent = "283 162";
+         extent = "283 188";
          minExtent = "8 2";
          horizSizing = "right";
          vertSizing = "bottom";
@@ -105,7 +105,7 @@
             canSaveDynamicFields = "0";
          };
          new GuiRadioCtrl() {
-            text = "AIMS.WASTED.CH Player Database";
+            text = "AIMS Player Database";
             groupNum = "-1";
             buttonType = "RadioButton";
             useMouseEvents = "0";
@@ -252,6 +252,26 @@
             tooltipProfile = "GuiToolTipProfile";
             hovertime = "1000";
             isContainer = "1";
+            canSave = "1";
+            canSaveDynamicFields = "0";
+         };
+         new GuiMLTextCtrl() {
+            lineSpacing = "2";
+            allowColorChars = "0";
+            maxChars = "-1";
+            text = "<just:center>Register a player name:<br> <a:terminal-overload.org/register>http://terminal-overload.org/register</a>";
+            useURLMouseCursor = "1";
+            position = "60 153";
+            extent = "208 28";
+            minExtent = "8 2";
+            horizSizing = "right";
+            vertSizing = "bottom";
+            profile = "GuiMLTextProfile";
+            visible = "1";
+            active = "1";
+            tooltipProfile = "GuiToolTipProfile";
+            hovertime = "1000";
+            isContainer = "0";
             canSave = "1";
             canSaveDynamicFields = "0";
          };
