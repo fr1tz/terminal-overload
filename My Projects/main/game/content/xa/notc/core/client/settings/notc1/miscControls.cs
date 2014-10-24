@@ -29,6 +29,9 @@ $XaNotc1MiscMoveMap_RemapCount++;
 $XaNotc1MiscMoveMap_RemapName[$XaNotc1MiscMoveMap_RemapCount] = "Bring up Options Dialog";
 $XaNotc1MiscMoveMap_RemapCmd[$XaNotc1MiscMoveMap_RemapCount] = "XaNotc1MiscMoveMap_bringUpOptions";
 $XaNotc1MiscMoveMap_RemapCount++;
+$XaNotc1MiscMoveMap_RemapName[$XaNotc1MiscMoveMap_RemapCount] = "Toggle Recording Demo";
+$XaNotc1MiscMoveMap_RemapCmd[$XaNotc1MiscMoveMap_RemapCount] = "XaNotc1MiscMoveMap_toggleRecordingDemo";
+$XaNotc1MiscMoveMap_RemapCount++;
 
 function XaNotcSettings1_MiscControlsGui::onWake(%this)
 {

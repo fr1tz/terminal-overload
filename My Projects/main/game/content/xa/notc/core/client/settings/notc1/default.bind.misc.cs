@@ -88,21 +88,13 @@ XaNotc1MiscMoveMap.bind(keyboard, "pageDown", XaNotc1MiscMoveMap_pageMessageHudD
 // Demo recording functions
 //------------------------------------------------------------------------------
 
-function XaNotc1MiscMoveMap_startRecordingDemo( %val )
+function XaNotc1MiscMoveMap_toggleRecordingDemo(%val)
 {
-   if ( %val )
-      startDemoRecord();
+   if(%val)
+      toggleDemoRecord();
 }
 
-function XaNotc1MiscMoveMap_stopRecordingDemo( %val )
-{
-   if ( %val )
-      stopDemoRecord();
-}
-
-//XaNotc1MiscMoveMap.bind( keyboard, F3, XaNotc1MiscMoveMap_startRecordingDemo );
-//XaNotc1MiscMoveMap.bind( keyboard, F4, XaNotc1MiscMoveMap_stopRecordingDemo );
-
+XaNotc1MiscMoveMap.bind( keyboard, "alt r", XaNotc1MiscMoveMap_toggleRecordingDemo );
 
 //------------------------------------------------------------------------------
 // Helper Functions
