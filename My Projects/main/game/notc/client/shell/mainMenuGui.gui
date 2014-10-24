@@ -18,8 +18,8 @@
    canSaveDynamicFields = "1";
       enabled = "1";
       isDecoy = "0";
-      zBitmapOffset = "-2458";
-      zTickThread = "2459";
+      zBitmapOffset = "-10725";
+      zTickThread = "10725";
 
    new GuiFadeinBitmapCtrl() {
       fadeColor = "0.262745 0.529412 0.486275 1";
@@ -181,7 +181,7 @@
          anchorBottom = "1";
          anchorLeft = "1";
          anchorRight = "0";
-         position = "0 315";
+         position = "0 363";
          extent = "250 25";
          minExtent = "8 2";
          horizSizing = "center";
@@ -196,7 +196,7 @@
          canSaveDynamicFields = "0";
       };
       new GuiControl() {
-         position = "0 140";
+         position = "0 200";
          extent = "250 160";
          minExtent = "8 2";
          horizSizing = "center";
@@ -358,8 +358,8 @@
          groupNum = "-1";
          buttonType = "PushButton";
          useMouseEvents = "0";
-         position = "9 367";
-         extent = "79 34";
+         position = "85 139";
+         extent = "80 35";
          minExtent = "8 8";
          horizSizing = "center";
          vertSizing = "bottom";
