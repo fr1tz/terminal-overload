@@ -389,6 +389,11 @@ function GameCoreBase::processClientSettingsReply(%game, %client, %setting, %val
    //echo (%game @"\c4 -> "@ %game.class @" -> GameCoreBase::processClientSettingsReply");
 }
 
+function GameCoreBase::clientRecordingDemo(%game, %client, %isRecording)
+{
+   //echo (%game @"\c4 -> "@ %game.class @" -> GameCoreBase::clientRecordingDemo");
+}
+
 // Added this stage to creating a player so game types can override it easily.
 // This is a good place to initiate team selection.
 function GameCoreBase::preparePlayer(%game, %client)

@@ -238,8 +238,9 @@ function ETH::checkRoundEnd()
    }
 }
 
-function ETH::resetLoadout(%client)
+function ETH::setupHud(%client)
 {
+   // LoadoutHud
    %active[0] = true;
    %active[1] = true;
    %active[2] = true;
@@ -247,17 +248,33 @@ function ETH::resetLoadout(%client)
    %active[4] = false;
    %active[5] = false;
    %active[6] = false;
-
    %icon[0] = "content/xa/notc/core/icons/p1/smg1.32x32.png";
    %icon[1] = "content/xa/notc/core/icons/p1/mgl1.32x32.png";
    %icon[2] = "content/xa/notc/core/icons/p1/sr1.32x32.png";
    %icon[3] = "content/xa/notc/core/icons/p1/mg1.32x32.png";
+   for(%i = 0; %i < 6; %i++)
+      %client.LoadoutHud_UpdateSlot(%i, %active[%i], %icon[%i], 1.0);
+      
+   // MinimapHUD
+   %client.MinimapHud_SetHudInfoDatasetType_Color(2);
+   %client.MinimapHud_SetHudInfoDatasetType_Icon(3);
+   %client.MinimapHud_ClearColors();
+   %client.MinimapHud_AddColor(1, Game.team1.color);
+   %client.MinimapHud_AddColor(2, Game.team2.color);
+   %client.MinimapHud_ClearIcons();
+   %client.MinimapHud_AddIcon(1, "content/xa/notc/core/icons/p1/class0.8x8.png", 8);
+   %client.MinimapHud_AddIcon(2, "content/xa/notc/core/icons/p1/class1.8x8.png", 8);
+   %client.MinimapHud_AddIcon(3, "content/xa/notc/core/icons/p1/class2.8x8.png", 8);
+   %client.MinimapHud_AddIcon(4, "content/xa/notc/core/icons/p1/class3.8x8.png", 8);
+   %client.MinimapHud_AddIcon(128, "content/xa/notc/core/icons/p1/etherform.8x8.png", 8);
+}
 
+function ETH::resetLoadout(%client)
+{
    for(%i = 0; %i < 6; %i++)
    {
       %client.zLoadoutProgress[%i] = 1.0;
       %client.zLoadoutProgressDt[%i] = 0.0;
-      %client.LoadoutHud_UpdateSlot(%i, %active[%i], %icon[%i], 1.0);
    }
 }
 

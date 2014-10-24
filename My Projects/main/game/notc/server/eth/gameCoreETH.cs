@@ -83,20 +83,9 @@ function GameCoreETH::onClientEnterGame(%game, %client)
    %client.zActiveLoadout = 0;
    ETH::resetLoadout(%client);
    %client.LoadoutHud_SelectSlot(0);
-
-   // Setup minimap HUD
-   %client.MinimapHud_SetHudInfoDatasetType_Color(2);
-   %client.MinimapHud_SetHudInfoDatasetType_Icon(3);
-   %client.MinimapHud_ClearColors();
-   %client.MinimapHud_AddColor(1, Game.team1.color);
-   %client.MinimapHud_AddColor(2, Game.team2.color);
-   %client.MinimapHud_ClearIcons();
-   %client.MinimapHud_AddIcon(1, "content/xa/notc/core/icons/p1/class0.8x8.png", 8);
-   %client.MinimapHud_AddIcon(2, "content/xa/notc/core/icons/p1/class1.8x8.png", 8);
-   %client.MinimapHud_AddIcon(3, "content/xa/notc/core/icons/p1/class2.8x8.png", 8);
-   %client.MinimapHud_AddIcon(4, "content/xa/notc/core/icons/p1/class3.8x8.png", 8);
-   %client.MinimapHud_AddIcon(128, "content/xa/notc/core/icons/p1/etherform.8x8.png", 8);
    
+   ETH::setupHud(%client);
+
 	// Join team with less players.
 	if(Game.team1.numPlayers > Game.team2.numPlayers)
    	ETH::joinTeam(%client, 2);
@@ -159,6 +148,17 @@ function GameCoreETH::processClientSettingsReply(%game, %client, %setting, %valu
    }
 
    commandToClient(%client, 'XaNotcSettings1_Confirmation', %setting, %status);
+}
+
+function GameCoreETH::clientRecordingDemo(%game, %client, %isRecording)
+{
+   //echo (%game @"\c4 -> "@ %game.class @" -> GameCoreETH::clientRecordingDemo");
+   
+   if(!%isRecording)
+      return;
+      
+   ETH::setupHud(%client);
+   %client.control(%client.player);
 }
 
 function GameCoreETH::loadOut(%game, %player)

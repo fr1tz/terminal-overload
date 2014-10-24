@@ -29,6 +29,15 @@ function serverCmdXaNotcSettings1_Reply(%client, %setting, %value)
    Game.processClientSettingsReply(%client, %setting, %value);
 }
 
+// ----------------------------------------------------------------------------
+// Demo Recording
+// ----------------------------------------------------------------------------
+
+function serverCmdRecordingDemo(%client, %isRecording)
+{
+   Game.clientRecordingDemo(%client, %isRecording);
+}
+
 //-----------------------------------------------------------------------------
 // Discs
 //-----------------------------------------------------------------------------
