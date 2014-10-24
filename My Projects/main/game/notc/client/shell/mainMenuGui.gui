@@ -18,8 +18,8 @@
    canSaveDynamicFields = "1";
       enabled = "1";
       isDecoy = "0";
-      zBitmapOffset = "-3000";
-      zTickThread = "5678";
+      zBitmapOffset = "-2458";
+      zTickThread = "2459";
 
    new GuiFadeinBitmapCtrl() {
       fadeColor = "0.262745 0.529412 0.486275 1";
@@ -181,7 +181,7 @@
          anchorBottom = "1";
          anchorLeft = "1";
          anchorRight = "0";
-         position = "0 338";
+         position = "0 315";
          extent = "250 25";
          minExtent = "8 2";
          horizSizing = "center";
@@ -197,7 +197,7 @@
       };
       new GuiControl() {
          position = "0 140";
-         extent = "250 200";
+         extent = "250 160";
          minExtent = "8 2";
          horizSizing = "center";
          vertSizing = "center";
@@ -216,7 +216,7 @@
             buttonType = "PushButton";
             useMouseEvents = "1";
             position = "0 0";
-            extent = "250 50";
+            extent = "250 40";
             minExtent = "8 8";
             horizSizing = "relative";
             vertSizing = "bottom";
@@ -235,8 +235,8 @@
             groupNum = "1";
             buttonType = "PushButton";
             useMouseEvents = "0";
-            position = "0 50";
-            extent = "250 50";
+            position = "0 40";
+            extent = "250 40";
             minExtent = "8 8";
             horizSizing = "relative";
             vertSizing = "bottom";
@@ -255,8 +255,8 @@
             groupNum = "1";
             buttonType = "PushButton";
             useMouseEvents = "0";
-            position = "0 100";
-            extent = "250 50";
+            position = "0 80";
+            extent = "250 40";
             minExtent = "8 8";
             horizSizing = "relative";
             vertSizing = "bottom";
@@ -275,8 +275,8 @@
             groupNum = "1";
             buttonType = "PushButton";
             useMouseEvents = "0";
-            position = "0 150";
-            extent = "250 50";
+            position = "0 120";
+            extent = "250 40";
             minExtent = "8 8";
             horizSizing = "relative";
             vertSizing = "bottom";
@@ -358,12 +358,12 @@
          groupNum = "-1";
          buttonType = "PushButton";
          useMouseEvents = "0";
-         position = "9 356";
-         extent = "79 50";
+         position = "9 367";
+         extent = "79 34";
          minExtent = "8 8";
          horizSizing = "center";
          vertSizing = "bottom";
-         profile = "GuiMenuButtonProfile";
+         profile = "TolGuiButtonProfile";
          visible = "1";
          active = "1";
          command = "Canvas.pushDialog(MOTDDlg);";
