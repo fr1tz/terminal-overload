@@ -50,9 +50,9 @@ function GameConnection::onControlObjectChange(%this)
    resetCurrentFOV();
    turnOffZoom();
    
-   // Use instant input
+   // Use instant input unless we're playing back a recording
    %control = %this.getControlObject();
-   if(isObject(%control))
+   if(isObject(%control) && !%this.isDemoPlaying())
       %control.instantInput_init(true);
 }
 
