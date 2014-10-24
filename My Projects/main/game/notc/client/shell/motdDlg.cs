@@ -32,8 +32,17 @@ function MotdDlg::setMotd(%this)
 
    if($MOTD::Text $= "")
       return;
+      
+   %mtext = $MOTD::Text;
+   %wc = getWordCount(%mtext);
+   for(%i = 0; %i < %wc; %i++)
+   {
+      %word = getWord(%mtext, %i);
+      if(getSubStr(%word, 0, 4) $= "http")
+         %mtext = setWord(%mtext, %i, "<a:"@%word@">"@%word@"</a>");
+   }
 
-   MotdDlg-->text.setText($MOTD::Text);
+   MotdDlg-->text.setText(%mtext);
 
    if(MotdDlg.isAwake())
    {

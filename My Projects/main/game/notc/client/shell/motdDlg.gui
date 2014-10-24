@@ -40,7 +40,7 @@
       minExtent = "8 8";
       horizSizing = "center";
       vertSizing = "center";
-      profile = "GuiWindowProfile";
+      profile = "TolGuiWindowProfile";
       visible = "1";
       active = "1";
       tooltipProfile = "GuiToolTipProfile";
@@ -64,8 +64,8 @@
          anchorBottom = "0";
          anchorLeft = "1";
          anchorRight = "0";
-         position = "13 32";
-         extent = "592 412";
+         position = "13 41";
+         extent = "592 403";
          minExtent = "8 8";
          horizSizing = "width";
          vertSizing = "height";
@@ -80,11 +80,11 @@
 
          new GuiMLTextCtrl() {
             lineSpacing = "2";
-            allowColorChars = "0";
+            allowColorChars = "1";
             maxChars = "-1";
-            useURLMouseCursor = "0";
+            useURLMouseCursor = "1";
             position = "1 1";
-            extent = "573 12";
+            extent = "573 14";
             minExtent = "8 8";
             horizSizing = "right";
             vertSizing = "bottom";
@@ -104,12 +104,12 @@
          groupNum = "-1";
          buttonType = "PushButton";
          useMouseEvents = "0";
-         position = "115 5";
-         extent = "55 12";
+         position = "523 5";
+         extent = "80 30";
          minExtent = "8 2";
          horizSizing = "right";
          vertSizing = "bottom";
-         profile = "GuiButtonProfile";
+         profile = "TolGuiButtonProfile";
          visible = "1";
          active = "1";
          command = "MotdDlg.refresh();";
