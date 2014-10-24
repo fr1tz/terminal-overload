@@ -18,8 +18,8 @@
    canSaveDynamicFields = "1";
       enabled = "1";
       isDecoy = "0";
-      zBitmapOffset = "-10725";
-      zTickThread = "10725";
+      zBitmapOffset = "-919";
+      zTickThread = "919";
 
    new GuiFadeinBitmapCtrl() {
       fadeColor = "0.262745 0.529412 0.486275 1";
@@ -46,7 +46,7 @@
       canSaveDynamicFields = "0";
    };
    new GuiBitmapCtrl() {
-      bitmap = "notc/client/graphics/scanlines1.png";
+      bitmap = "notc/client/graphics/scanlines2.png";
       wrap = "1";
       position = "0 0";
       extent = "640 480";
@@ -64,7 +64,7 @@
       canSaveDynamicFields = "0";
    };
    new GuiBitmapCtrl() {
-      bitmap = "notc/client/graphics/noise1.png";
+      bitmap = "notc/client/graphics/noise2.png";
       wrap = "1";
       position = "0 0";
       extent = "640 480";
