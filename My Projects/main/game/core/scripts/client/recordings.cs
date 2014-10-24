@@ -8,15 +8,37 @@
 
 function recordingsDlg::onWake()
 {
-   RecordingsDlgList.clear();
-   %i = 0;
-   %filespec = $currentMod @ "/recordings/*.rec";
-   echo(%filespec);
-   for(%file = findFirstFile(%filespec); %file !$= ""; %file = findNextFile(%filespec)) 
-      RecordingsDlgList.addRow(%i++, fileBase(%file));
-   RecordingsDlgList.sort(0);
-   RecordingsDlgList.setSelectedRow(0);
-   RecordingsDlgList.scrollVisible(0);
+	RecordingsDlgList.clear();
+	%i = 0;
+	%filespec = "recordings/*.rec";
+	//echo(%filespec);
+	for(%file = findFirstFile(%filespec); %file !$= ""; %file = findNextFile(%filespec))
+	{
+		%fileName = %file;
+
+      %display = "";
+      %str = strreplace(%fileName, "__", " ");
+      for(%j = 0; %j < getWordCount(%str); %j++)
+      {
+         %seg = getWord(%str, %j);
+         if(getSubStr(%seg,0,5) $= "DATE_")
+         {
+            %seg = strreplace(%seg, "DATE_", "");
+            %seg = strreplace(%seg, "_", ".");
+         }
+         else if(getSubStr(%seg,0,5) $= "TIME_")
+         {
+            %seg = strreplace(%seg, "TIME_", "");
+            %seg = strreplace(%seg, "_", ":");
+         }
+         %display = %display SPC %seg;
+      }
+      //echo("filename: '" @ %filename @ "'");
+		RecordingsDlgList.addRow(%i++, %display TAB %filename);
+	}
+	RecordingsDlgList.sort(0);
+	RecordingsDlgList.setSelectedRow(0);
+	RecordingsDlgList.scrollVisible(0);
 }
 
 function StartSelectedDemo()
@@ -25,7 +47,7 @@ function StartSelectedDemo()
    %sel = RecordingsDlgList.getSelectedId();
    %rowText = RecordingsDlgList.getRowTextById(%sel);
 
-   %demoFile = $currentMod @ "/recordings/" @ getField(%rowText, 0) @ ".rec";
+   %demoFile = getField(%rowText, 1);
 
    new GameConnection(ServerConnection);
    RootGroup.add(ServerConnection);
@@ -91,21 +113,21 @@ function startDemoRecord()
    // make sure we aren't playing a demo
    if(ServerConnection.isDemoPlaying())
       return;
-   
-   for(%i = 0; %i < 1000; %i++)
-   {
-      %num = %i;
-      if(%num < 10)
-         %num = "0" @ %num;
-      if(%num < 100)
-         %num = "0" @ %num;
+      
+   %player = strreplace(cGetPlayerName(), "/", "");
+   %player = strreplace(%player, " ", "");
 
-      %file = $currentMod @ "/recordings/demo" @ %num @ ".rec";
-      if(!isfile(%file))
-         break;
-   }
-   if(%i == 1000)
-      return;
+   %time = "DATE_" @ getDateAndTime();
+   %time = strreplace(%time, ".", "_");
+   %time = strreplace(%time, "-", "__TIME_");
+   %time = strreplace(%time, ".", "_");
+   %time = strreplace(%time, ":", "_");
+   
+   %file = "recordings/"
+			@ %player @ "__"
+         @ $GameVersionString @ "__"
+         @ %time
+         @ ".rec";
 
    $DemoFileName = %file;
 
