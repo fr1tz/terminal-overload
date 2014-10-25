@@ -1,1 +1,1 @@
-$GameVersionString = "0.3.1+dev";
+$GameVersionString = "0.4.0-testing1";
