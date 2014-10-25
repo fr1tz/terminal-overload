@@ -268,6 +268,19 @@ function ETH::setupHud(%client)
    %client.MinimapHud_AddIcon(3, "content/xa/notc/core/icons/p1/class2.8x8.png", 8);
    %client.MinimapHud_AddIcon(4, "content/xa/notc/core/icons/p1/class3.8x8.png", 8);
    %client.MinimapHud_AddIcon(128, "content/xa/notc/core/icons/p1/etherform.8x8.png", 8);
+   
+   // HudIcons
+   %client.HudIcons_SetHudInfoDatasetType_Color(2);
+   %client.HudIcons_SetHudInfoDatasetType_Icon(3);
+   %client.HudIcons_ClearColors();
+   //%client.HudIcons_AddColor(1, Game.team1.color);
+   //%client.HudIcons_AddColor(2, Game.team2.color);
+   %client.HudIcons_ClearIcons();
+   //%client.MinimapHud_AddIcon(1, "content/xa/notc/core/icons/p1/class0.8x8.png", 8);
+   //%client.MinimapHud_AddIcon(2, "content/xa/notc/core/icons/p1/class1.8x8.png", 8);
+   //%client.MinimapHud_AddIcon(3, "content/xa/notc/core/icons/p1/class2.8x8.png", 8);
+   //%client.MinimapHud_AddIcon(4, "content/xa/notc/core/icons/p1/class3.8x8.png", 8);
+   %client.HudIcons_AddIcon(128, "content/xa/notc/core/icons/p1/etherform.256x256.png", 0);
 }
 
 function ETH::resetLoadout(%client)
