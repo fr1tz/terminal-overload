@@ -220,6 +220,15 @@ void GuiFriendOrFoeHud::drawInfo(GameBase* control, HudInfo* hudInfo)
 
       //GFX->getDrawUtil()->drawRect(rect, ColorI(0, 255, 0, 255));
 
+	   ColorI color = mProfile->mFontColor;
+      color.alpha = 255;
+      if(obj && obj->getTypeMask() & ShapeBaseObjectType)
+      {
+         ShapeBase* shape = static_cast<ShapeBase*>(obj);
+         color.alpha -= shape->getDamageValue() * 230.0f;
+      }
+      GFX->getDrawUtil()->setBitmapModulation(color);
+
       if(teamID == control->getTeamId() && mFriendTex)
       {
          GFX->getDrawUtil()->drawBitmapStretch(mFriendTex, rect,
@@ -230,6 +239,7 @@ void GuiFriendOrFoeHud::drawInfo(GameBase* control, HudInfo* hudInfo)
          GFX->getDrawUtil()->drawBitmapStretch(mFoeTex, rect,
             GFXBitmapFlip_None, GFXTextureFilterLinear, false);
       }
+      GFX->getDrawUtil()->clearBitmapModulation();
    }
 }
 
