@@ -87,9 +87,10 @@ function ItemStandardcatBounceShape::fire(%this, %obj)
       else
       {
          // bouncy bounce...
-         %factor = 1 + (1-%targetObject.getImpulseDamperStrength());
-         %vec = %targetObject.getVelocity();
-         %vec = VectorScale(%vec, -%factor);
+         %speed = VectorLen(%targetObject.getVelocity());
+         %speed += 75 * (%targetObject.zImpulseDamper-%targetObject.getImpulseDamperStrength());
+         %vec = VectorNormalize(%targetObject.getVelocity());
+         %vec = VectorScale(%vec, -%speed);
          %targetObject.setVelocity(%vec);
 
          if(%targetObject.getClassName() $= "NortDisc")
