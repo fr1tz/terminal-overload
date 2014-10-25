@@ -251,6 +251,7 @@ function GameCoreBase::prepareClient(%game, %client)
             "xa/notc/core/client/gui/MinimapHud/v1/exec.cs" TAB
             "xa/notc/core/client/gui/LoadoutHud/v1/exec.cs" TAB
             "xa/notc/core/client/gui/MiscHud/v1/exec.cs" TAB
+            "xa/notc/core/client/gui/HudIcons/v1/exec.cs" TAB
             "xa/notc/core/client/misc/Commands/v1/exec.cs" TAB
             "xa/notc/core/client/misc/Materials/v1/exec.cs" TAB
             "xa/notc/core/client/postfx/ChromaticLens/v1/exec.cs" TAB
