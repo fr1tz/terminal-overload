@@ -31,4 +31,9 @@ bool Platform::displaySplashWindow( String path )
 	return true;
 }
 
+bool Platform::closeSplashWindow()
+{
+   return false;
+}
+
 

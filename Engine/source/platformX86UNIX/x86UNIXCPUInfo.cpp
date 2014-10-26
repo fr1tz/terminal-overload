@@ -140,6 +140,7 @@ void Processor::init()
 #include <unistd.h>
 
 // TODO LINUX CPUInfo::CPUCount better support
+#if 0
 namespace CPUInfo
 {
     EConfig CPUCount(U32& TotAvailLogical, U32& TotAvailCore, U32& PhysicalNum)
@@ -150,3 +151,4 @@ namespace CPUInfo
        return CONFIG_SingleCoreHTDisabled;
     }
 }; // namespace CPUInfo
+#endif

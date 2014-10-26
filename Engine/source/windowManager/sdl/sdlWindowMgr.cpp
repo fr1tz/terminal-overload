@@ -334,11 +334,6 @@ void PlatformWindowManagerSDL::raiseCurtain()
    // TODO SDL
 }
 
-void Platform::closeSplashWindow()
-{
-
-}
-
 void Platform::openFolder(const char* path )
 {
     AssertFatal(0, "Not Implemented");
