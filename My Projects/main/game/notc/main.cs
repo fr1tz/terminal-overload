@@ -3,6 +3,8 @@
 
 exec("../version.cs");
 
+$SettingsDir = "settings/"@$GameVersionString@"/";
+
 // Load up core script base
 loadDir("core"); // Should be loaded at a higher level, but for now leave -- SRZ 11/29/07
 
@@ -110,7 +112,7 @@ function onExit()
    physicsDestroy();
       
    echo("Exporting client prefs");
-   export("$pref::*", "./client/prefs.cs", False);
+   export("$pref::*", $SettingsDir@"/prefs.cs", False);
 
    echo("Exporting server prefs");
    export("$Pref::Server::*", "./server/prefs.cs", False);

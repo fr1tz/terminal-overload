@@ -19,14 +19,14 @@ exec("./miscControls.gui");
 exec("./muxer.cs");
 exec("./muxer.gui");
 
-if(isFile("notc/client/settings/XaNotc1CatMoveMap.cs"))
-   exec("notc/client/settings/XaNotc1CatMoveMap.cs");
+if(isFile($SettingsDir@"/XaNotc1CatMoveMap.cs"))
+   exec($SettingsDir@"/XaNotc1CatMoveMap.cs");
    
-if(isFile("notc/client/settings/XaNotc1EtherformMoveMap.cs"))
-   exec("notc/client/settings/XaNotc1EtherformMoveMap.cs");
+if(isFile($SettingsDir@"/XaNotc1EtherformMoveMap.cs"))
+   exec($SettingsDir@"/XaNotc1EtherformMoveMap.cs");
    
-if(isFile("notc/client/settings/XaNotc1MiscMoveMap.cs"))
-   exec("notc/client/settings/XaNotc1MiscMoveMap.cs");
+if(isFile($SettingsDir@"/XaNotc1MiscMoveMap.cs"))
+   exec($SettingsDir@"/XaNotc1MiscMoveMap.cs");
 
 gameSettingsAddEditor(XaNotcSettings1_MuxerGui);
 

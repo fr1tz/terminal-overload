@@ -49,7 +49,7 @@ function XaNotcSettings1_MiscControlsGui::onSleep(%this)
    //echo("XaNotcSettings1_MiscControlsGui::onSleep");
 
    // write out the control config into the rw config file
-   XaNotc1MiscMoveMap.save("notc/client/settings/XaNotc1MiscMoveMap.cs");
+   XaNotc1MiscMoveMap.save($SettingsDir@"/XaNotc1MiscMoveMap.cs");
 }
 
 function XaNotcSettings1_MiscControlsGui::fillRemapList( %this )
@@ -273,7 +273,7 @@ function XaNotcSettings1_MiscControls_unbindExtraActions( %command, %count )
 function XaNotcSettings1_MiscControls_restoreDefaultMappings()
 {
    XaNotc1MiscMoveMap.delete();
-   exec("notc/client/settings/XaNotc1MiscMoveMap.cs");
+   exec($SettingsDir@"/XaNotc1MiscMoveMap.cs");
    optionsDlg.fillRemapList();
 }
 

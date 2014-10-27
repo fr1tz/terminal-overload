@@ -70,7 +70,7 @@ function XaNotcSettings1_EtherformControlsGui::onSleep(%this)
    //echo("XaNotcSettings1_EtherformControlsGui::onSleep");
 
    // write out the control config into the rw config file
-   XaNotc1EtherformMoveMap.save("notc/client/settings/XaNotc1EtherformMoveMap.cs");
+   XaNotc1EtherformMoveMap.save($SettingsDir@"/XaNotc1EtherformMoveMap.cs");
 }
 
 function XaNotcSettings1_EtherformControlsGui::fillRemapList( %this )
@@ -294,7 +294,7 @@ function XaNotcSettings1_EtherformControls_unbindExtraActions( %command, %count 
 function XaNotcSettings1_EtherformControls_restoreDefaultMappings()
 {
    XaNotc1EtherformMoveMap.delete();
-   exec("notc/client/settings/XaNotc1EtherformMoveMap.cs");
+   exec($SettingsDir@"/XaNotc1EtherformMoveMap.cs");
    optionsDlg.fillRemapList();
 }
 

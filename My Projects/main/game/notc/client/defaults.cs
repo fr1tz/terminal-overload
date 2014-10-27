@@ -15,8 +15,8 @@ $PhysXLogWarnings = false;
 // game execution if they exist.
 if ( $platform !$= "xenon" )
 {
-   if ( isFile( "./prefs.cs" ) )
-      exec( "./prefs.cs" );
+   if (isFile($SettingsDir@"/prefs.cs"))
+      exec($SettingsDir@"/prefs.cs");
 }
 else
 {

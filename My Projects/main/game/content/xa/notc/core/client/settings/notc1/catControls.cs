@@ -88,7 +88,7 @@ function XaNotcSettings1_CatControlsGui::onSleep(%this)
    //echo("XaNotcSettings1_CatControlsGui::onSleep");
 
    // write out the control config into the rw config file
-   XaNotc1CatMoveMap.save("notc/client/settings/XaNotc1CatMoveMap.cs");
+   XaNotc1CatMoveMap.save($SettingsDir@"/XaNotc1CatMoveMap.cs");
 }
 
 function XaNotcSettings1_CatControlsGui::fillRemapList( %this )
@@ -312,7 +312,7 @@ function XaNotcSettings1_CatControls_unbindExtraActions( %command, %count )
 function XaNotcSettings1_CatControls_restoreDefaultMappings()
 {
    XaNotc1CatMoveMap.delete();
-   exec("notc/client/settings/XaNotc1CatMoveMap.cs");
+   exec($SettingsDir@"/XaNotc1CatMoveMap.cs");
    optionsDlg.fillRemapList();
 }
 
