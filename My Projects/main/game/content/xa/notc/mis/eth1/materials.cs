@@ -43,3 +43,18 @@ new TerrainMaterial()
    macroSize = "4";
    macroDistance = "9999";
 };
+
+new TerrainMaterial()
+{
+   diffuseMap = "content/xa/notc/mis/eth1/textures/xa_notc_mis_eth1_termat1";
+   detailMap = "content/xa/notc/core/textures/grid.128.4";
+   internalName = "xa_notc_mis_eth1_termat2";
+   diffuseSize = "256";
+   detailSize = "0.5";
+   detailDistance = "9999";
+   macroMap = "content/xa/notc/core/textures/grid.128.4";
+   macroStrength = "0.1";
+   detailStrength = "0.1";
+   macroSize = "4";
+   macroDistance = "9999";
+};
