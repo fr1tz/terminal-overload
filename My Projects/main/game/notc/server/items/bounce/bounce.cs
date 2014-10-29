@@ -86,12 +86,15 @@ function ItemStandardcatBounceShape::fire(%this, %obj)
       }
       else
       {
-         // bouncy bounce...
-         %speed = VectorLen(%targetObject.getVelocity());
-         %speed += 75 * (%targetObject.zImpulseDamper-%targetObject.getImpulseDamperStrength());
-         %vec = VectorNormalize(%targetObject.getVelocity());
-         %vec = VectorScale(%vec, -%speed);
-         %targetObject.setVelocity(%vec);
+         // Reverse momentum
+         %targetObject.setVelocity(VectorScale(%targetObject.getVelocity(),-1));
+
+         // Apply impulse
+         %targetPos = %targetObject.getWorldBoxCenter();
+         %impulseVec = VectorSub(%targetPos, %pos);
+         %impulseVec = VectorNormalize(%impulseVec);
+         %impulseVec = VectorScale(%impulseVec, 6000);
+         %targetObject.impulse(%targetPos, %impulseVec, %mount);
 
          if(%targetObject.getClassName() $= "NortDisc")
          {
