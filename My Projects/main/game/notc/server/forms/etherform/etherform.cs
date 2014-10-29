@@ -44,7 +44,7 @@ datablock EtherformData(FrmEtherform)
 	drag = 0.99;
 	density = 10;
 
-	maxDamage = 0;
+	maxDamage = 1;
 	damageBuffer = 0;
 	maxEnergy = 100;
 
