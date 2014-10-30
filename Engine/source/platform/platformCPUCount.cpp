@@ -152,6 +152,8 @@ namespace CPUInfo {
       // maximum value.
       //
 
+#pragma GCC push_options
+#pragma GCC optimize ("O0")
       static U32 MaxCorePerPhysicalProc(void)
       {
 
@@ -184,7 +186,7 @@ namespace CPUInfo {
                ".single_core:\n\t"
                "xor %eax, %eax\n"
                ".multi_core:"
-               );		
+               );	
          }
 #elif defined( TORQUE_COMPILER_VISUALC )
          __asm
@@ -211,7 +213,7 @@ multi_core:
          return (U32)((Regeax & NUM_CORE_BITS) >> 26)+1;
 
       }
-
+#pragma GCC pop_options
 
 
       //
@@ -323,6 +325,8 @@ multi_core:
       //
       // Determine the width of the bit field that can represent the value count_item. 
       //
+#pragma GCC push_options
+#pragma GCC optimize ("O0")
       U32 find_maskwidth(U32 CountItem)
       {
          U32 MaskWidth,
@@ -366,7 +370,6 @@ multi_core:
             "popl %ecx"		
 #endif
             );
-
 #elif defined( TORQUE_COMPILER_VISUALC )
          __asm
          {
@@ -386,7 +389,7 @@ next:
 #endif
          return MaskWidth;
       }
-
+#pragma GCC pop_options
 
       //
       // Extract the subset of bit field from the 8-bit value FullID.  It returns the 8-bit sub ID value
