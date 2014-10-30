@@ -2,6 +2,8 @@
 #include "windowManager/sdl/sdlWindow.h"
 #include "console/console.h"
 
+extern bool OpenGLCompat;
+
 namespace PlatformGL
 {
 
@@ -20,9 +22,14 @@ namespace PlatformGL
        debugFlag |= SDL_GL_CONTEXT_DEBUG_FLAG;
 #endif
 
-       SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, majorOGL);
-       SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, minorOGL);
-       SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+       // Request core profile unless -OpenGLCompat command line arg has been used
+       if(!OpenGLCompat)
+       {
+          Con::printf("Will request OpenGL 3.2 core profile.");
+          SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, majorOGL);
+          SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, minorOGL);
+          SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+       }
        SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, debugFlag);
 
        SDL_ClearError();

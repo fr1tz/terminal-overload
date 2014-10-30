@@ -262,6 +262,9 @@ int main(int argc, const char **argv)
 #include "platform/platform.h"
 #include "app/mainLoop.h"
 #include "T3D/gameFunctions.h"
+#include "core/strings/stringFunctions.h"
+
+bool OpenGLCompat = false;
 
 // Entry point for your game.
 //
@@ -279,6 +282,18 @@ S32 TorqueMain(S32 argc, const char **argv)
 
    //   Memory::enableLogging("testMem.log");
    //   Memory::setBreakAlloc(104717);
+
+   // hack hack hack:
+   // -OpenGLCompat arg must be processed
+   // before OpenGL subsystem init.
+   for(U32 i = 0; i < argc; i++)
+   {
+      if(dStricmp(argv[i], "-OpenGLCompat") == 0)
+      {
+         OpenGLCompat = true;
+         break;
+      }
+   }
 
    // Initialize the subsystems.
    StandardMainLoop::init();
