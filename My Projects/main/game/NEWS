@@ -1,14 +1,14 @@
 What's new?
 ===========
 
-Version 0.4.0-testing1
-----------------------
+Version 0.4.0
+-------------
 
-Release Date: Oct. 25, 2014
+Release Date: Oct. 30, 2014
 
 - Update to Torque3D 3.6.1
 - Primitive demo recording playback
-- Strenghten role of impulse damper in B.O.U.N.C.E. effectiveness.
+- Tweak B.O.U.N.C.E.: Revert momentum and apply strong impulse.
 - Various tweaks and improvements
 - Bugfixes
 
