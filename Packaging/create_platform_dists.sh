@@ -28,9 +28,8 @@ create_platform_dists()
 
 	rm linux32/*.dll || abort
 	rm win32/*.sh || abort	
-	rm -r win32/lib || abort
-	cp ../bins/linux32/* linux32/ || abort
-	cp ../bins/win32/* win32/ || abort
+	cp -r ../bins/linux32/* linux32/ || abort
+	cp -r ../bins/win32/* win32/ || abort
 
 	chrpath -r '$ORIGIN/lib' linux32/overload
 )
