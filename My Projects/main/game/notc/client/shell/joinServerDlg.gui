@@ -537,8 +537,11 @@ function JoinServerDlg::update(%this)
    %sc = getServerCount();
    for( %i = 0; %i < %sc; %i ++ ) {
       setServerInfo(%i);
+      %name = $ServerInfo::Name;
+      if(!$ServerInfo::Compatible)
+         %name = "[INCOMPATIBLE]" SPC %name;
       JS_serverList.addRow( %i,
-         $ServerInfo::Name TAB
+         %name TAB
          $ServerInfo::Ping TAB
          $ServerInfo::PlayerCount @ "/" @ $ServerInfo::MaxPlayers TAB
          $ServerInfo::Version TAB
