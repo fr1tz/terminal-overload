@@ -741,6 +741,7 @@ ConsoleFunction( setServerInfo, bool, 2, 2, "setServerInfo(index);" )
       Con::setBoolVariable("ServerInfo::Favorite",info.isFavorite);
       Con::setBoolVariable("ServerInfo::Dedicated",info.isDedicated());
       Con::setBoolVariable("ServerInfo::Password",info.isPassworded());
+      Con::setBoolVariable("ServerInfo::Compatible",info.compatible);
       return true;
    }
    return false;
@@ -1759,11 +1760,15 @@ static void handleGamePingResponse( const NetAddress* address, BitStream* stream
       return;
    }
 
+   bool compatible = true;
+
    // See if the server meets our minimum protocol:
    U32 temp32;
    stream->read( &temp32 );
    if ( temp32 < GameConnection::MinRequiredProtocolVersion )
    {
+      compatible = false;
+      /*
       Con::printf( "Protocol for server %s does not meet minimum protocol.", addrString );
       gFinishedList.push_back( *address );
       gPingList.erase( index );
@@ -1775,12 +1780,15 @@ static void handleGamePingResponse( const NetAddress* address, BitStream* stream
       if ( !waitingForMaster )
          updatePingProgress();
       return;
+      */
    }
 
    // See if we meet the server's minimum protocol:
    stream->read( &temp32 );
    if ( GameConnection::CurrentProtocolVersion < temp32 )
    {
+      compatible = false;
+      /*
       Con::printf( "You do not meet the minimum protocol for server %s.", addrString );
       gFinishedList.push_back( *address );
       gPingList.erase( index );
@@ -1792,6 +1800,7 @@ static void handleGamePingResponse( const NetAddress* address, BitStream* stream
       if ( !waitingForMaster )
          updatePingProgress();
       return;
+      */
    }
 
    // Calculate the ping:
@@ -1833,6 +1842,7 @@ static void handleGamePingResponse( const NetAddress* address, BitStream* stream
       si = findOrCreateServerInfo( address );
    si->ping = ping;
    si->version = temp32;
+   si->compatible = compatible;
 
    // Get the server name:
    stream->readString( buf );

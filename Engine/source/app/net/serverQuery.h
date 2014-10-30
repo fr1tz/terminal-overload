@@ -49,6 +49,7 @@ struct ServerInfo
    U32         cpuSpeed;
    bool        isFavorite;
    BitSet32    status;
+   bool        compatible;
 
    ServerInfo()
    {
@@ -66,6 +67,7 @@ struct ServerInfo
       cpuSpeed = 0;
       isFavorite = false;
       status = Status_New;
+      compatible = false;
    }
    ~ServerInfo();
 
