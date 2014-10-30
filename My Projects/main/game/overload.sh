@@ -54,7 +54,7 @@ do
 	}
 done
 
-LIBS="libdl.so.2 libX11.so.6 libXft.so.2 libstdc++.so.6 libpthread.so.0 libGL.so.1 libm.so.6 libgcc_s.so.1 libc.so.6 librt.so.1"
+LIBS="libGL.so.1"
 MISSING_LIBS=""
 echo
 echo "Checking for libraries required to run Terminal Overload..."
@@ -80,5 +80,6 @@ echo "Starting game..."
 
 PATH="$PATHBAK"
 
-cd "$(dirname "$THIS")" && ./overload $GAME_ARGS || help_reminder
-
+cd "$(dirname "$THIS")" && 
+export LD_LIBRARY_PATH="$(pwd)/lib:$LD_LIBRARY_PATH" &&
+./lib/ld-linux.so.2 ./overload $GAME_ARGS || help_reminder
