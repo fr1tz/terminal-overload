@@ -10,6 +10,7 @@ function executeEthernetServerScripts()
    exec("./eth.cs");
    exec("./gameCoreETH.cs");
    exec("./territoryZone.cs");
+   exec("./ethPlayerList.cs");
 }
 
 executeEthernetServerScripts();

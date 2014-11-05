@@ -252,6 +252,7 @@ function GameCoreBase::prepareClient(%game, %client)
             "xa/notc/core/client/gui/LoadoutHud/v1/exec.cs" TAB
             "xa/notc/core/client/gui/MiscHud/v1/exec.cs" TAB
             "xa/notc/core/client/gui/HudIcons/v1/exec.cs" TAB
+            "xa/notc/core/client/gui/PlayerList/v1/exec.cs" TAB
             "xa/notc/core/client/misc/Commands/v1/exec.cs" TAB
             "xa/notc/core/client/misc/Materials/v1/exec.cs" TAB
             "xa/notc/core/client/postfx/ChromaticLens/v1/exec.cs" TAB
@@ -393,6 +394,11 @@ function GameCoreBase::processClientSettingsReply(%game, %client, %setting, %val
 function GameCoreBase::clientRecordingDemo(%game, %client, %isRecording)
 {
    //echo (%game @"\c4 -> "@ %game.class @" -> GameCoreBase::clientRecordingDemo");
+}
+
+function GameCoreBase::updateClientPlayerList(%game, %client)
+{
+   //echo (%game @"\c4 -> "@ %game.class @" -> GameCoreBase::updateClientPlayerList");
 }
 
 // Added this stage to creating a player so game types can override it easily.

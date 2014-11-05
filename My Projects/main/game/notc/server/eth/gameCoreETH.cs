@@ -162,6 +162,13 @@ function GameCoreETH::clientRecordingDemo(%game, %client, %isRecording)
    %client.zDemoRecordingSetupInProgress = false;
 }
 
+function GameCoreETH::updateClientPlayerList(%game, %client)
+{
+   //echo (%game @"\c4 -> "@ %game.class @" -> GameCoreETH::updateClientPlayerList");
+   Parent::updateClientPlayerList(%game, %client);
+   ETH::updatePlayerList(%client);
+}
+
 function GameCoreETH::loadOut(%game, %player)
 {
    //echo (%game @"\c4 -> "@ %game.class @" -> GameCoreETH::loadOut");

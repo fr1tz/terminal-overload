@@ -38,6 +38,26 @@ function serverCmdRecordingDemo(%client, %isRecording)
    Game.clientRecordingDemo(%client, %isRecording);
 }
 
+// ----------------------------------------------------------------------------
+// Player List
+// ----------------------------------------------------------------------------
+
+function serverCmdShowingPlayerList(%client, %showing)
+{
+   //echo("serverCmdShowingPlayerList():" SPC %client SPC %showing);
+   %client.zShowingPlayerList = %showing;
+   if(%showing)
+   {
+      // Start updating client's player list.
+      %client.updatePlayerListThread();
+   }
+   else
+   {
+      // Stop updating client's player list.
+      cancel(%client.zUpdatePlayerListThread);
+   }
+}
+
 //-----------------------------------------------------------------------------
 // Discs
 //-----------------------------------------------------------------------------

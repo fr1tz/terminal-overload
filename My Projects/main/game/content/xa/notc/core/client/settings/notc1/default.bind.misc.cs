@@ -14,8 +14,9 @@ function XaNotc1MiscMoveMap_activate()
 
 function XaNotc1MiscMoveMap_showPlayerList(%val)
 {
-   if (%val)
-      PlayerListGui.toggle();
+   // Actual function must be implemented by a client module.
+   if(isFunction("showPlayerList"))
+      showPlayerList(%val);
 }
 
 XaNotc1MiscMoveMap.bind( keyboard, Tab, XaNotc1MiscMoveMap_showPlayerList );

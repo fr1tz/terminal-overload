@@ -204,3 +204,17 @@ function GameConnection::control(%client, %obj)
       %obj.getDataBlock().onControl(%obj, %client);
 }
 
+// ----------------------------------------------------------------------------
+// Player List
+// ----------------------------------------------------------------------------
+
+function GameConnection::updatePlayerListThread(%client)
+{
+   if(%client.zUpdatePlayerListThread !$= "")
+      cancel(%client.zUpdatePlayerListThread);
+      
+   // Actual update is handled by current game.
+   Game.updateClientPlayerList(%client);
+
+   %client.zUpdatePlayerListThread = %client.schedule(1000, "updatePlayerListThread");
+}

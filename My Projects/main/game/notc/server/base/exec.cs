@@ -35,6 +35,7 @@ function executeBaseServerScripts()
    exec("notc/server/client/gui/MinimapHud/v1/exec.cs");
    exec("notc/server/client/gui/LoadoutHud/v1/exec.cs");
    exec("notc/server/client/gui/HudIcons/v1/exec.cs");
+   exec("notc/server/client/gui/PlayerList/v1/exec.cs");
 
    exec("notc/server/forms/etherform/exec.cs");
    exec("notc/server/forms/standardcat/exec.cs");
