@@ -59,7 +59,7 @@ function GameConnection::onConnect( %client,
 
    if(%client.authAlg $= "pseudo")
    {
-      %client.playerName = "[P]" SPC %name;
+      %client.playerName = "/tmp/" @ %name;
       %client.onAuthComplete();
    }
    else if(%client.authAlg $= "aims/playerdb/auth.1")
