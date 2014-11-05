@@ -177,7 +177,7 @@ datablock SFXProfile(FrmStandardcatImpactSnowSound)
 
 datablock SFXProfile(FrmStandardcatXJumpSound)
 {
-   filename = "content/xa/rotc/p.5.4/sounds/rotc/fire6";
+   filename = "content/xa/notc/core/sounds/jump1";
 	description = AudioDefault3D;
 	preload = true;
 };
