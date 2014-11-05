@@ -417,7 +417,6 @@ function XaNotc1CatMoveMap_toggleFirstPerson(%val)
 
 
 XaNotc1CatMoveMap.bind( keyboard, v, XaNotc1CatMoveMap_toggleFreeLook ); // v for vanity
-XaNotc1CatMoveMap.bind(keyboard, tab, XaNotc1CatMoveMap_toggleFirstPerson );
 
 XaNotc1CatMoveMap.bind( gamepad, btn_x, XaNotc1CatMoveMap_toggleFirstPerson );
 
@@ -447,7 +446,6 @@ XaNotc1CatMoveMap.bind(mouse0, "alt button1", XaNotc1CatMoveMap_suicide);
 // Item manipulation
 //------------------------------------------------------------------------------
 
-XaNotc1CatMoveMap.bindCmd(keyboard, "tab", "commandToServer('action', 0);", "");
 XaNotc1CatMoveMap.bindCmd(keyboard, "1", "commandToServer('action', 1);", "");
 XaNotc1CatMoveMap.bindCmd(keyboard, "2", "commandToServer('action', 2);", "");
 XaNotc1CatMoveMap.bindCmd(keyboard, "3", "commandToServer('action', 3);", "");

@@ -75,6 +75,7 @@ function sAimsAuthConn::onLine(%this, %line)
    %msg = getWords(%line, 1);
    if(getWord(%msg, 0) $= "player:")
    {
+      %client.authenticated = true;
       %client.playerName = getWords(%msg, 1);
       messageAll(
          'MsgClientAuth',

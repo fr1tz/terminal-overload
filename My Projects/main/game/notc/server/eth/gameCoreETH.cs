@@ -114,6 +114,9 @@ function GameCoreETH::queryClientSettings(%game, %client, %settings)
 
    Parent::queryClientSettings(%game, %client, %settings);
    
+   %client.paletteColors[0] = "255 255 255 255";
+   %client.paletteColors[1] = "255 255 255 255";
+   
    commandToClient(%client, 'XaNotcSettings1_Query', "PlayerColor0");
    commandToClient(%client, 'XaNotcSettings1_Query', "PlayerColor1");
 }
@@ -123,10 +126,16 @@ function GameCoreETH::processClientSettingsReply(%game, %client, %setting, %valu
    //echo (%game @"\c4 -> "@ %game.class @" -> GameCoreETH::processClientSettingsReply");
    
    %status = "Ignored";
+   
+   echo(%client.authenticated);
 
    if(%setting $= "PlayerColor0")
    {
-      if(isValidPlayerColor(%value))
+      if(!%client.authenticated)
+      {
+         %status = "Ignored for unauthenticated players";
+      }
+      else if(isValidPlayerColor(%value))
       {
          %client.paletteColors[0] = %value SPC "255";
          %status = "Ok";
@@ -137,7 +146,11 @@ function GameCoreETH::processClientSettingsReply(%game, %client, %setting, %valu
    }
    else if(%setting $= "PlayerColor1")
    {
-      if(isValidPlayerColor(%value))
+      if(!%client.authenticated)
+      {
+         %status = "Ignored for unauthenticated players";
+      }
+      else if(isValidPlayerColor(%value))
       {
          %client.paletteColors[1] = %value SPC "255";
          %status = "Ok";

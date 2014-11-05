@@ -12,8 +12,12 @@ function ETH::updatePlayerList(%client)
    {
       %c = ClientGroup.getObject(%i);
       %teamId = %c.team.teamId;
-      %name = %client.playerName;
-      %ping = %client.getPing();
+      %name = %c.playerName;
+      %ping = %c.getPing();
+      %color = "";
+      for(%j = 0; %j < 3; %j++)
+         %color = %color @ byteToHex(getWord(%c.paletteColors[0], %j));
+      %name = "<spush><color:"@%color@">"@%name@"<spop>";
       %team[%teamId] = %team[%teamId] TAB %name TAB %ping @ "\n";
    }
    

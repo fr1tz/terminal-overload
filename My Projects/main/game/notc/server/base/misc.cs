@@ -36,6 +36,17 @@ function isValidPlayerColor(%colori)
    return true;
 }
 
+function byteToHex(%byte)
+{
+   %chars = "0123456789ABCDEF";
+   %digit[0] = "0";
+   %digit[1] = "0";
+   if(%byte > 15)
+      %digit[0] = getSubStr(%chars, %byte / 16, 1);
+   %digit[1] = getSubStr(%chars, %byte % 16, 1);
+   return %digit[0] @ %digit[1];
+}
+
 function createExplosion(%data, %pos, %norm, %colorI)
 {
 	%visibleDistance = theLevelInfo.visibleDistance;
