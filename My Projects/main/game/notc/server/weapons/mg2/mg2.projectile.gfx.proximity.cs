@@ -176,6 +176,4 @@ datablock ExplosionData(WpnMG2ProjectileProximityExplosion)
 	lightEndRadius = 0;
 	lightStartColor = "0.984252 0.992126 0.992126 1";
 	lightEndColor = "0.984252 0.984252 0.984252 1";
-   lightStartBrightness = "16.0784";
-   lightEndBrightness = "16.1569";
 };
