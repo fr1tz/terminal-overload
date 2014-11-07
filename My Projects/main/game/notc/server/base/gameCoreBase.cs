@@ -471,6 +471,7 @@ function sendMsgClientKilled_Default( %msgType, %client, %sourceClient, %damLoc 
 function GameCoreBase::onUnitDestroyed(%game, %obj)
 {
    //echo(%game @"\c4 -> "@ %game.class @" -> GameCoreBase::onUnitDestroyed");
+   %obj.zCalledOnUnitDestroyed = true;
 }
 
 // ----------------------------------------------------------------------------
