@@ -81,3 +81,47 @@ function createExplosion(%data, %pos, %norm, %colorI)
 		}
 	}
 }
+
+function getLevelInfo(%missionFile)
+{
+   %file = new FileObject();
+
+   %LevelInfoObject = "";
+
+   if ( %file.openForRead( %missionFile ) ) {
+		%inInfoBlock = false;
+
+		while ( !%file.isEOF() ) {
+			%line = %file.readLine();
+			%line = trim( %line );
+
+			if( %line $= "new ScriptObject(LevelInfo) {" )
+				%inInfoBlock = true;
+         else if( %line $= "new LevelInfo(theLevelInfo) {" )
+				%inInfoBlock = true;
+			else if( %inInfoBlock && %line $= "};" ) {
+				%inInfoBlock = false;
+				%LevelInfoObject = %LevelInfoObject @ %line;
+				break;
+			}
+
+			if( %inInfoBlock )
+			   %LevelInfoObject = %LevelInfoObject @ %line @ " ";
+		}
+
+		%file.close();
+	}
+   %file.delete();
+
+	if( %LevelInfoObject !$= "" )
+	{
+	   %LevelInfoObject = "%LevelInfoObject = " @ %LevelInfoObject;
+	   eval( %LevelInfoObject );
+
+      return %LevelInfoObject;
+	}
+
+	// Didn't find our LevelInfo
+   return 0;
+}
+

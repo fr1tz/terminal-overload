@@ -25,6 +25,18 @@ function GameCoreBase::prepareMissionLoad(%game)
    %game.zMaterialPaths = "content/xa/notc/core" SPC
       "content/xa/rotc_hack" SPC
       filePath($Server::MissionFile);
+      
+   %levelInfo = getLevelInfo($Server::MissionFile);
+   if(%levelInfo != 0)
+   {
+      for(%i = 0; %i < 99; %i++)
+      {
+         if(%levelInfo.dep[%i] !$= "")
+            %game.zMaterialPaths = %game.zMaterialPaths SPC %levelInfo.dep[%i];
+         else
+            break;
+      }
+   }
 
    %instantGroupStor = $instantGroup;
 
