@@ -36,6 +36,7 @@ function GameCoreBase::prepareMissionLoad(%game)
          else
             break;
       }
+      %levelInfo.delete();
    }
 
    %instantGroupStor = $instantGroup;
