@@ -270,7 +270,19 @@ bool TerrainBlock::import( const GBitmap &heightMap,
       String fileName( getName() );
       if ( fileName.isEmpty() )
          fileName = "terrain";
-      mTerrFileName = FS::MakeUniquePath( "levels", fileName, "ter" );
+      const char* missionFile = Con::getVariable("Server::MissionFile");
+      if(missionFile && dStrlen(missionFile) < 1024 && dStrrchr(missionFile, '/') >= 0)
+      {
+         char buf[1024];
+         dStrcpy(buf, missionFile);
+         char* lastSlash = dStrrchr(buf, '/');
+         *(lastSlash++) = '\0';
+         mTerrFileName = FS::MakeUniquePath( buf, fileName, "ter" );
+      }
+      else
+      {
+         mTerrFileName = FS::MakeUniquePath( "levels", fileName, "ter" );
+      }
 
       // TODO: We have to save and reload the file to get
       // it into the resource system.  This creates lots
