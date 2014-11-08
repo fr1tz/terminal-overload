@@ -18,14 +18,14 @@
 /// What version of the application specific source code is this?
 ///
 /// Version number is major * 1000 + minor * 100 + revision * 10.
-#define TORQUE_APP_VERSION         400
+#define TORQUE_APP_VERSION         500
 
 /// Human readable application version string.
-#define TORQUE_APP_VERSION_STRING  "0.4.0"
+#define TORQUE_APP_VERSION_STRING  "0.5.0"
 
 /// Game protocol version
-#define TORQUE_APP_PROTOCOL_VERSION_CUR 4
-#define TORQUE_APP_PROTOCOL_VERSION_MIN 4
+#define TORQUE_APP_PROTOCOL_VERSION_CUR 5
+#define TORQUE_APP_PROTOCOL_VERSION_MIN 5
 
 /// Define me if you want to enable multithreading support.
 #ifndef TORQUE_MULTITHREAD
