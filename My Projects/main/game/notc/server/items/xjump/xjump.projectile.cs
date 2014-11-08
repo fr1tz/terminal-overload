@@ -4,7 +4,7 @@
 datablock ProjectileData(ItemXJumpProjectile)
 {
    explosion           = ItemXJumpProjectileExplosion;
-   decal               = ItemXJumpProjectileDecal;
+   //decal               = ItemXJumpProjectileDecal;
    laserTrail[0]       = ItemXJumpProjectileLaserTrail0;
    laserTrailFlags[0]  = 0;
    laserTrail[1]       = ItemXJumpProjectileLaserTrail1;

@@ -65,34 +65,34 @@ datablock ParticleEmitterData(ItemXJumpProjectileExplosion_CloudEmitter)
 
 datablock ParticleData(ItemXJumpProjectileExplosion_Particle0)
 {
-	dragCoefficient		= "0.997067";
-	gravityCoefficient	= "-0.01221";
+	dragCoefficient		= "0";
+	gravityCoefficient	= "0";
 	inheritedVelFactor	= 0.0;
 	constantAcceleration = 0.0;
 	lifetimeMS			  = "500";
 	lifetimeVarianceMS	= 100;
 	useInvAlpha			 = true;
-	spinRandomMin		  = -90.0;
-	spinRandomMax		  = 500.0;
-	textureName			 = "content/xa/rotc/p.5.4/textures/rotc/corona.png";
+	spinRandomMin		  = "0";
+	spinRandomMax		  = "1";
+	textureName			 = "content/xa/rotc/p.5.4/textures/rotc/zone.grid.png";
 	colors[0]	  = "0.996078 0.996078 0.996078 1";
 	colors[1]	  = "0.996078 0.996078 0.996078 0";
 	colors[2]	  = "0.897638 0.897638 0.897638 0";
-	sizes[0]		= "5";
-	sizes[1]		= "5";
-	sizes[2]		= "2";
+	sizes[0]		= "2";
+	sizes[1]		= "2";
+	sizes[2]		= "0";
 	times[0]		= 0.0;
 	times[1]		= "1";
 	times[2]		= 1.0;
 	allowLighting = 1;
-   animTexName = "content/xa/rotc/p.5.4/textures/rotc/corona.png";
+   animTexName = "content/xa/rotc/p.5.4/textures/rotc/zone.grid.png";
 };
 
 datablock ParticleEmitterData(ItemXJumpProjectileExplosion_Emitter0)
 {
 	ejectionPeriodMS = "1";
 	periodVarianceMS = 0;
-	ejectionVelocity = "20";
+	ejectionVelocity = "30";
 	velocityVariance = 0.0;
 	ejectionOffset	= 0.0;
 	thetaMin			= "80";
@@ -100,7 +100,7 @@ datablock ParticleEmitterData(ItemXJumpProjectileExplosion_Emitter0)
 	phiReferenceVel  = 0;
 	phiVariance		= 360;
 	overrideAdvances = 0;
-	lifetimeMS		 = 50;
+	lifetimeMS		 = "75";
 	particles = "ItemXJumpProjectileExplosion_Particle0";
    orientParticles = "1";
    blendStyle = "ADDITIVE";
