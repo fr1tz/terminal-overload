@@ -23,7 +23,7 @@ new SimGroup(MissionGroup) {
          dep0 = "content/xa/notc/mis/dm1";
          desc0 = "TODO";
          levelName = "TE1";
-         missionScript = "notc/server/init_te.cs";
+         missionScript = "notc/server/init_TE.cs";
    };
    new SimGroup(CameraBookmarks) {
       canSave = "1";

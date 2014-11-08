@@ -30,7 +30,7 @@ function onServerCreated()
    %datablockFiles.add( "content/cleanup/managedItemData.cs" );
    loadDatablockFiles( %datablockFiles, true );
 
-   exec("./te/exec.cs");
+   exec("./TE/exec.cs");
 }
 
 function onServerDestroyed()
