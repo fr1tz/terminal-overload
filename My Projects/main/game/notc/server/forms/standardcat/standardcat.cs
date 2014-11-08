@@ -546,6 +546,13 @@ function FrmStandardcat::onXJump(%this, %obj, %dir)
       ItemXJump.onXJump(%obj, %dir);
 }
 
+// Called by engine
+function FrmStandardcat::onEnterLiquid(%this, %obj, %coverage, %type)
+{
+   // CATs hate water ;)
+   %obj.kill("water");
+}
+
 // Called by script
 function FrmStandardcat::playSpawnEffects(%this, %obj)
 {
