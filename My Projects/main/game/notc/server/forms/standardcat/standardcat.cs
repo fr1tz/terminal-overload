@@ -361,7 +361,7 @@ function FrmStandardcat::onAdd(%this, %obj)
    %obj.allowInstantXJump(false);
    %obj.setEnergyLevel(%this.maxEnergy);
 	%obj.isCAT = true;
-	%obj.getTeamObject().numCATs++;
+	%obj.client.team.numCATs++;
  
    // Setup light
    %obj.zLight = new PointLight() {
