@@ -7,6 +7,10 @@ function TE::joinTeam(%client, %teamId)
    if(ETH::joinTeam(%client, %teamId))
    {
       TE::setupHud(%client);
+      if($Server::PlayerCount == 1)
+         TE::startNewRound();
+      else
+         Game.preparePlayer(%client);
       return true;
    }
    
@@ -15,14 +19,13 @@ function TE::joinTeam(%client, %teamId)
 
 function TE::startNewRound()
 {
+   echo("TE::startNewRound()");
+
    if(Game.zRestartRoundThread !$= "")
       cancel(Game.zRestartRoundThread);
    Game.zRestartRoundThread = "";
    
-   if(Game.roundRestarting)
-      return;
-
-   Game.roundRestarting = true;
+   Game.roundSetup = true;
    
    // Update team colors here so mappers don't have to restart the
    // server when experimenting with team colors.
@@ -47,9 +50,13 @@ function TE::startNewRound()
 
    Game.team1.numPlayersOnRoundStart = 0;
    Game.team2.numPlayersOnRoundStart = 0;
+   Game.team1.numCATs = 0;
+   Game.team2.numCATs = 0;
    
    $Game::defaultPlayerClass = "Player";
    $Game::defaultPlayerDataBlock = "FrmStandardCat";
+   
+   echo("Respawning players...");
 
    for( %clientIndex = 0; %clientIndex < ClientGroup.getCount(); %clientIndex++ )
    {
@@ -68,26 +75,36 @@ function TE::startNewRound()
    //serverUpdateMusic();
    //serverUpdateGameStatus();
 
-   Game.roundRestarting = false;
+   Game.roundSetup = false;
+   echo("New round setup complete");
 }
 
 function TE::checkRoundEnd()
 {
    echo("TE::checkRoundEnd()");
-echo(Game.roundRestarting);
+   //echo(Game.roundSetup);
+   //echo(Game.zRestartRoundThread);
 
-   if(Game.roundRestarting || Game.zRestartRoundThread !$= "")
+   if(Game.roundSetup || Game.zRestartRoundThread !$= "")
       return;
+
+   error("Round ended");
       
-   if(Game.team1.numCATs == 0)
+   if(Game.team1.numCATs == 0 && Game.team2.numCATs > 0)
    {
       centerPrintAll("Team 2 has won this round!",3);
       serverPlay2D(BlueVictorySound);
       Game.zRestartRoundThread = schedule(5000, MissionGroup, "TE::startNewRound");
    }
-   else if(Game.team2.numCATs == 0)
+   else if(Game.team2.numCATs == 0 && Game.team1.numCATs > 0)
    {
       centerPrintAll("Team 1 has won this round!",3);
+      serverPlay2D(RedVictorySound);
+      Game.zRestartRoundThread = schedule(5000, MissionGroup, "TE::startNewRound");
+   }
+   else if(Game.team2.numCATs == 0 && Game.team1.numCATs == 0)
+   {
+      centerPrintAll("It's a draw!",3);
       serverPlay2D(RedVictorySound);
       Game.zRestartRoundThread = schedule(5000, MissionGroup, "TE::startNewRound");
    }

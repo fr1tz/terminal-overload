@@ -212,12 +212,19 @@ function GameCoreTE::loadOut(%game, %player)
 
 function GameCoreTE::onUnitDestroyed(%game, %obj)
 {
-   //echo(%game @"\c4 -> "@ %game.class @" -> GameCoreTE::onUnitDestroyed");
+   echo(%game @"\c4 -> "@ %game.class @" -> GameCoreTE::onUnitDestroyed");
    
    if(%obj.zCalledOnUnitDestroyed)
       return;
-
+      
+   //echo(Game.roundSetup);
+   if(Game.roundSetup || Game.roundSetup $= "")
+      return;
+      
    Parent::onUnitDestroyed(%game, %obj);
+   
+   if(%obj.isCAT)
+      %obj.client.team.numCATs--;
    
    %client = %obj.client;
    if(isObject(%client) && %client.player == %obj)
@@ -266,8 +273,7 @@ function GameCoreTE::F(%game, %client, %nr)
    //echo (%game @"\c4 -> "@ %game.class @" -> GameCoreTE::F");
    if(%nr >= 1 && %nr <= 2)
    {
-      if(TE::joinTeam(%client, %nr))
-         Game.preparePlayer(%client);
+      TE::joinTeam(%client, %nr);
    }
 }
 
