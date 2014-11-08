@@ -222,14 +222,14 @@ function ETH::checkRoundEnd()
    if(Game.team0.numTerritoryZones > 0)
       return;
 
-   if(Game.team1.numTerritoryZones == 0 && Game.team1.numCATs == 0)
+   if(Game.team1.numTerritoryZones == 0)
    {
       centerPrintAll("Team 2 has won this round!",3);
       serverPlay2D(BlueVictorySound);
       schedule(5000, MissionGroup, "ETH::startNewRound");
       Game.roundRestarting = true;
    }
-   else if(Game.team2.numTerritoryZones == 0 && Game.team2.numCATs == 0)
+   else if(Game.team2.numTerritoryZones == 0)
    {
       centerPrintAll("Team 1 has won this round!",3);
       serverPlay2D(RedVictorySound);
