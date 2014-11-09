@@ -79,6 +79,8 @@ function GameCoreETH::onClientEnterGame(%game, %client)
 {
    //echo (%game @"\c4 -> "@ %game.class @" -> GameCoreETH::onClientEnterGame");
    
+   Parent::onClientEnterGame(%game, %client);
+   
    // Setup loadouts
    %client.zActiveLoadout = 0;
    ETH::resetLoadout(%client);
@@ -90,12 +92,10 @@ function GameCoreETH::onClientEnterGame(%game, %client)
    
    // Join team with less players.
    if(%team1playerCount > %team2playerCount)
-      TE::joinTeam(%client, 2);
+      ETH::joinTeam(%client, 2);
    else
-      TE::joinTeam(%client, 1);
+      ETH::joinTeam(%client, 1);
 
-   Parent::onClientEnterGame(%game, %client);
-   
    if($Game::Duration)
    {
       %timeLeft = ($Game::StartTime + $Game::Duration) - $Sim::Time;
