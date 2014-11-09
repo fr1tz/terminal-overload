@@ -85,11 +85,14 @@ function GameCoreETH::onClientEnterGame(%game, %client)
 
    ETH::setupHud(%client);
 
-	// Join team with less players.
-	if(Game.team1.numPlayers > Game.team2.numPlayers)
-   	ETH::joinTeam(%client, 2);
+   %team1playerCount = ETH::getTeamPlayerCount(1);
+   %team2playerCount = ETH::getTeamPlayerCount(2);
+   
+   // Join team with less players.
+   if(%team1playerCount > %team2playerCount)
+      TE::joinTeam(%client, 2);
    else
-      ETH::joinTeam(%client, 1);
+      TE::joinTeam(%client, 1);
 
    Parent::onClientEnterGame(%game, %client);
    
