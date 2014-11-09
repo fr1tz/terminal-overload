@@ -104,7 +104,9 @@ function ETH::joinTeam(%client, %teamId)
 		%client.isAdmin,
 		%client.isSuperAdmin);
 
-	return true;
+   Game.preparePlayer(%client);
+
+   return true;
 }
 
 function ETH::onDeath(%client)

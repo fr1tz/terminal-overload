@@ -325,9 +325,6 @@ function GameCoreBase::onClientEnterGame(%game, %client)
    %client.kills = 0;
    %client.deaths = 0;
 
-   // Prepare the player object.
-   %game.preparePlayer(%client);
-
    // Inform the client of all the other clients
    %count = ClientGroup.getCount();
    for (%cl = 0; %cl < %count; %cl++)
