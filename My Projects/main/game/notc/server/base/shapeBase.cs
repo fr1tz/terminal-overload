@@ -205,7 +205,7 @@ function ShapeBase::getImpulseDamperStrength(%this)
 
 function ShapeBaseData::onAdd(%this, %obj)
 {
-   Parent::onAdd(%this, %obj);
+   //Parent::onAdd(%this, %obj);
    
    // SimSet to keep track of HudInfo objects linked to this shape
    %obj.zHudInfoSet = new SimSet();
