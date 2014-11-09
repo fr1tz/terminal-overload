@@ -244,8 +244,6 @@ function ShapeBaseData::onRemove(%this, %obj)
 
    if(isObject(%obj.zShapeBaseHudInfo))
       %obj.zShapeBaseHudInfo.delete();
-      
-   Game.onUnitDestroyed(%obj);
 }
 
 function ShapeBaseData::damage(%this, %obj, %source, %position, %amount, %damageType)
