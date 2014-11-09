@@ -1695,16 +1695,16 @@ new SimGroup(MissionGroup) {
          position = "316.181793 101.961342 0.000000";
    };
    new WaterPlane() {
-      gridSize = "100";
+      gridSize = "101";
       gridElementSize = "1";
       density = "1";
       viscosity = "1";
       liquidType = "Water";
-      baseColor = "254 254 254 255";
+      baseColor = "254 253 254 255";
       fresnelBias = "0.3";
       fresnelPower = "10";
       specularPower = "0";
-      specularColor = "0.992157 0.992157 0.996078 1";
+      specularColor = "0.34902 0 1 1";
       emissive = "0";
       waveDir[0] = "0 1";
       waveDir[1] = "0.707 0.707";
@@ -1743,9 +1743,9 @@ new SimGroup(MissionGroup) {
       foamMaxDepth = "2";
       foamAmbientLerp = "0.1";
       foamRippleInfluence = "0.05";
-      cubemap = "BlackSkyCubemap";
+      cubemap = "xa_notc_core_cubemaps_black";
       fullReflect = "0";
-      reflectivity = "0";
+      reflectivity = "10";
       reflectPriority = "1";
       reflectMaxRateMs = "15";
       reflectDetailAdjust = "1";
@@ -1763,7 +1763,7 @@ new SimGroup(MissionGroup) {
       distortFullDepth = "3.5";
       clarity = "0.5";
       underwaterColor = "42 251 2 240";
-      position = "0 0 20.0109";
+      position = "0 0 10.2969";
       paletteColors[0] = "205 205 205 205";
       paletteColors[1] = "205 205 205 205";
       paletteColors[2] = "205 205 205 205";
