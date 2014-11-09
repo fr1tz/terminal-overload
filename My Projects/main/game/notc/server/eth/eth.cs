@@ -104,6 +104,32 @@ function ETH::joinTeam(%client, %teamId)
    return true;
 }
 
+function ETH::getTeamPlayerCount(%teamId)
+{
+   %count = 0;
+   %s = ClientGroup.getCount();
+   for(%i = 0; %i < %s; %i++)
+   {
+      %c = ClientGroup.getObject(%i);
+      if(%c.team.teamId == %teamId)
+         %count++;
+   }
+   return %count;
+}
+
+function ETH::getTeamCATCount(%teamId)
+{
+   %count = 0;
+   %s = ClientGroup.getCount();
+   for(%i = 0; %i < %s; %i++)
+   {
+      %c = ClientGroup.getObject(%i);
+      if(%c.team.teamId == %teamId && %c.player.isCAT)
+         %count++;
+   }
+   return %count;
+}
+
 function ETH::onDeath(%client)
 {
    echo("ETH::onDeath()");
