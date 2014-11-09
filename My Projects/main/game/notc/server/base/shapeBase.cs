@@ -233,7 +233,7 @@ function ShapeBaseData::onAdd(%this, %obj)
 
 function ShapeBaseData::onRemove(%this, %obj)
 {
-   Parent::onRemove(%this, %obj);
+   //Parent::onRemove(%this, %obj);
 
    if(isObject(%obj.zHudInfoSet))
    {
