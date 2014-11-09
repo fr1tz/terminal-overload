@@ -12,7 +12,6 @@ function ETH::createTeams(%game)
 			teamId = 0;
 			name = "Observers";
          color = "1 1 1";
-			numPlayers = 0;
 		};
 		MissionCleanup.add(%game.team0);
 	}
@@ -24,9 +23,7 @@ function ETH::createTeams(%game)
 			teamId = 1;
          color = theLevelInfo.teamColors1;
 			score = 0;
-			numPlayers = 0;
 			numTerritoryZones = 0;
-			numCATs = 0;
          repairSpeed = 0.05;
 		};
 		MissionCleanup.add(%game.team1);
@@ -42,9 +39,7 @@ function ETH::createTeams(%game)
 			teamId = 2;
          color = theLevelInfo.teamColors2;
 			score = 0;
-			numPlayers = 0;
 			numTerritoryZones = 0;
-			numCATs = 0;
          repairSpeed = 0.05;
 		};
 		MissionCleanup.add(%game.team2);
