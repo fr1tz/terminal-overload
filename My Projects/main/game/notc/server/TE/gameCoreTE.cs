@@ -76,15 +76,18 @@ function GameCoreTE::prepareClient(%game, %client)
 function GameCoreTE::onClientEnterGame(%game, %client)
 {
    //echo (%game @"\c4 -> "@ %game.class @" -> GameCoreTE::onClientEnterGame");
-   
-	// Join team with less players.
-	if(Game.team1.numPlayers > Game.team2.numPlayers)
-   	TE::joinTeam(%client, 2);
-   else
-      TE::joinTeam(%client, 1);
 
    Parent::onClientEnterGame(%game, %client);
+
+   %team1playerCount = ETH::getTeamPlayerCount(1);
+   %team2playerCount = ETH::getTeamPlayerCount(2);
    
+   // Join team with less players.
+   if(%team1playerCount > %team2playerCount)
+      TE::joinTeam(%client, 2);
+   else
+      TE::joinTeam(%client, 1);
+ 
    if($Game::Duration)
    {
       %timeLeft = ($Game::StartTime + $Game::Duration) - $Sim::Time;
@@ -98,6 +101,7 @@ function GameCoreTE::onClientLeaveGame(%game, %client)
 
    parent::onClientLeaveGame(%game, %client);
 
+   TE::checkRoundEnd();
 }
 
 function GameCoreTE::queryClientSettings(%game, %client, %settings)
@@ -222,10 +226,7 @@ function GameCoreTE::onUnitDestroyed(%game, %obj)
       return;
       
    Parent::onUnitDestroyed(%game, %obj);
-   
-   if(%obj.isCAT)
-      %obj.client.team.numCATs--;
-   
+     
    %client = %obj.client;
    if(isObject(%client) && %client.player == %obj)
    {
@@ -266,6 +267,7 @@ function GameCoreTE::suicide(%game, %client)
 {
    //echo (%game @"\c4 -> "@ %game.class @" -> GameCoreTE::suicide");
    ETH::switchToEtherform(%client);
+   TE::checkRoundEnd();
 }
 
 function GameCoreTE::F(%game, %client, %nr)

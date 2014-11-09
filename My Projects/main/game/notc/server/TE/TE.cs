@@ -9,8 +9,7 @@ function TE::joinTeam(%client, %teamId)
       TE::setupHud(%client);
       if($Server::PlayerCount == 1)
          TE::startNewRound();
-      else
-         Game.preparePlayer(%client);
+
       return true;
    }
    
@@ -89,20 +88,23 @@ function TE::checkRoundEnd()
       return;
 
    error("Round ended");
+
+   %team1numCATs = ETH::getTeamCATCount(1);
+   %team2numCATs = ETH::getTeamCATCount(2);
       
-   if(Game.team1.numCATs == 0 && Game.team2.numCATs > 0)
+   if(%team1numCATs == 0 && %team2numCATs > 0)
    {
       centerPrintAll("Team 2 has won this round!",3);
       serverPlay2D(BlueVictorySound);
       Game.zRestartRoundThread = schedule(5000, MissionGroup, "TE::startNewRound");
    }
-   else if(Game.team2.numCATs == 0 && Game.team1.numCATs > 0)
+   else if(%team2numCATs == 0 && %team1numCATs > 0)
    {
       centerPrintAll("Team 1 has won this round!",3);
       serverPlay2D(RedVictorySound);
       Game.zRestartRoundThread = schedule(5000, MissionGroup, "TE::startNewRound");
    }
-   else if(Game.team2.numCATs == 0 && Game.team1.numCATs == 0)
+   else if(%team2numCATs == 0 && %team1numCATs == 0)
    {
       centerPrintAll("It's a draw!",3);
       serverPlay2D(RedVictorySound);
@@ -124,23 +126,7 @@ function TE::setupHud(%client)
    //%client.MinimapHud_AddIcon(3, "content/xa/notc/core/icons/p1/class2.8x8.png", 8);
    //%client.MinimapHud_AddIcon(4, "content/xa/notc/core/icons/p1/class3.8x8.png", 8);
    %client.HudIcons_AddIcon(128, "content/xa/notc/core/icons/p1/etherform.256x256.png", 0);
-   
-   // LoadoutHud
-   %active[0] = false;
-   %active[1] = false;
-   %active[2] = false;
-   %active[3] = false;
-   %active[4] = false;
-   %active[5] = false;
-   %active[6] = false;
-   %icon[0] = "content/xa/notc/core/icons/p1/smg1.32x32.png";
-   %icon[1] = "content/xa/notc/core/icons/p1/mgl1.32x32.png";
-   %icon[2] = "content/xa/notc/core/icons/p1/sr1.32x32.png";
-   %icon[3] = "content/xa/notc/core/icons/p1/mg1.32x32.png";
-   for(%i = 0; %i < 6; %i++)
-      %client.LoadoutHud_UpdateSlot(%i, %active[%i], %icon[%i], %client.zLoadoutProgress[%i]);
-   %client.LoadoutHud_SelectSlot(%client.zActiveLoadout);
-      
+
    // MinimapHUD
    %client.MinimapHud_SetHudInfoDatasetType_Color(2);
    %client.MinimapHud_SetHudInfoDatasetType_Icon(3);
@@ -166,6 +152,27 @@ function TE::setupHud(%client)
    %client.MinimapHud_AddIcon(3, "content/xa/notc/core/icons/p1/class2.8x8.png", 8);
    %client.MinimapHud_AddIcon(4, "content/xa/notc/core/icons/p1/class3.8x8.png", 8);
    %client.MinimapHud_AddIcon(128, "content/xa/notc/core/icons/p1/etherform.8x8.png", 8);
+
+   if(%client.zInitialHudSetupDone && !%client.zDemoRecordingSetupInProgress)
+      return;
+
+   // LoadoutHud
+   %active[0] = false;
+   %active[1] = false;
+   %active[2] = false;
+   %active[3] = false;
+   %active[4] = false;
+   %active[5] = false;
+   %active[6] = false;
+   %icon[0] = "content/xa/notc/core/icons/p1/smg1.32x32.png";
+   %icon[1] = "content/xa/notc/core/icons/p1/mgl1.32x32.png";
+   %icon[2] = "content/xa/notc/core/icons/p1/sr1.32x32.png";
+   %icon[3] = "content/xa/notc/core/icons/p1/mg1.32x32.png";
+   for(%i = 0; %i < 6; %i++)
+      %client.LoadoutHud_UpdateSlot(%i, %active[%i], %icon[%i], %client.zLoadoutProgress[%i]);
+   %client.LoadoutHud_SelectSlot(%client.zActiveLoadout);
+
+   %client.zInitialHudSetupDone = true;
 }
 
 function TE::resetLoadout(%client)
