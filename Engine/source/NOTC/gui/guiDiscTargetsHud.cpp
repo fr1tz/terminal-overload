@@ -24,6 +24,8 @@ class GuiDiscTargetsHud : public GuiControl, public virtual ITickable
    // Field data
    S32 mHudInfoDataSetType;
    ColorF   mFrameColor;
+   StringTableEntry mText;
+   Point2I mTextOffset;
 
    U32 mCurrTick;
 
@@ -87,6 +89,7 @@ GuiDiscTargetsHud::GuiDiscTargetsHud()
    mParent = NULL;
    mHudInfoDataSetType = 1;
    mFrameColor.set( 1, 1, 1, 1 );
+   mText = StringTable->insert("");
    mCurrTick = 0;
 }
 
@@ -99,6 +102,8 @@ void GuiDiscTargetsHud::initPersistFields()
    addGroup("Misc");       
    addField( "discTargetHudInfoDataSetType",   TypeS32, Offset( mHudInfoDataSetType, GuiDiscTargetsHud ),
       "The type of HudInfo data set that identifies a disc target." );
+   addField( "text", TypeString, Offset( mText, GuiDiscTargetsHud ), "Text to display per target."  );
+   addField( "textOffset", TypePoint2I, Offset( mTextOffset, GuiDiscTargetsHud ), "Offset to render text at."  );
    endGroup("Misc");
 
    Parent::initPersistFields();
@@ -193,6 +198,16 @@ void GuiDiscTargetsHud::drawTarget(GameBase* control, HudInfo* hudInfo)
          return;
 
       GFX->getDrawUtil()->drawRect(rect, mFrameColor);
+
+      Point2I textPos = upperLeft;
+      if(mTextOffset.y > 0)
+         textPos.y += extent.y;
+      textPos.x += extent.x/2;
+      textPos += mTextOffset;
+      ColorF color = mProfile->mFontColor;
+      GFX->getDrawUtil()->setBitmapModulation(color);
+      GFX->getDrawUtil()->drawText(mProfile->mFont, textPos, mText);
+      GFX->getDrawUtil()->clearBitmapModulation();
    }
 }
 
