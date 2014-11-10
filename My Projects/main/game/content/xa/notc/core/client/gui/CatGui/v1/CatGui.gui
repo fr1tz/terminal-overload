@@ -27,17 +27,19 @@
       helpTag = "0";
       noCursor = "1";
       zTeamId = "0";
-      zTickThread = "363235";
+      zTickThread = "11990";
 
    new GuiDiscTargetsHud() {
       frameColor = "1 1 1 1";
       discTargetHudInfoDataSetType = "1";
+      text = "DISC TARGET AQUIRED";
+      textOffset = "-55 10";
       position = "0 0";
       extent = "640 480";
       minExtent = "8 2";
       horizSizing = "width";
       vertSizing = "height";
-      profile = "GuiDefaultProfile";
+      profile = "HudTextBoldProfile";
       visible = "1";
       active = "1";
       tooltipProfile = "GuiToolTipProfile";
