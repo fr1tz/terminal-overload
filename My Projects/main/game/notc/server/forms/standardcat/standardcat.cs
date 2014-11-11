@@ -917,8 +917,8 @@ function FrmStandardcat::activateStealth(%this, %obj, %time)
    %obj.zStealthActive = true;
    
    // Change skin
-   %obj.changeSkin("xa_notc_core_shapes_standardcat_stealthmat1" SPC
-      "xa_notc_core_shapes_standardcat_stealthmat2");
+   // %obj.changeSkin("xa_notc_core_shapes_standardcat_stealthmat1" SPC
+   //    "xa_notc_core_shapes_standardcat_stealthmat2");
    
    // Start flickering
    %n = %obj.getMountedObjectCount();
@@ -945,7 +945,7 @@ function FrmStandardcat::deactivateStealth(%this, %obj)
    %obj.zStealthActive = false;
    
    // Change skin
-   %obj.changeSkin("base" SPC "armor_red0024");
+   // %obj.changeSkin("base" SPC "armor_red0024");
    
    // Stop flickering
    %n = %obj.getMountedObjectCount();
