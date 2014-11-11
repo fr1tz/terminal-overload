@@ -4,8 +4,7 @@
 function GameCoreETH::onMissionLoaded(%game)
 {
    //echo (%game @"\c4 -> "@ %game.class @" -> GameCoreETH::onMissionLoaded");
-
-   $Server::MissionType = "ETH";
+   $Server::MissionType = "Tactical Ethernet";
    ETH::createTeams(%game);
    Parent::onMissionLoaded(%game);
 }
