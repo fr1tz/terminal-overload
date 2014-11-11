@@ -177,14 +177,13 @@ singleton Material(xa_notc_core_shapes_standardcat_erasemat)
    glow[0] = "1";
    diffuseColor[0] = "1 1 1 1";
    diffuseColorPaletteSlot[0] = "0";
-   diffuseMap[0] = "content/xa/notc/core/shapes/standardcat/armor.png";
+   diffuseMap[0] = "content/xa/notc/core/textures/grid.128.4.h1.png";
    pixelSpecular[0] = "0";
-   diffuseColor[1] = "0.996078 0.996078 0.996078 1";
-   diffuseMap[1] = "content/xa/notc/core/textures/grid128.12.png";
+   diffuseColor[1] = "0.996078 0.996078 0.996078 0";
    diffuseColorPaletteSlot[1] = "-1";
-   glow[1] = "1";
-   emissive[1] = "1";
-   wireframe[1] = "1";
+   glow[1] = "0";
+   emissive[1] = "0";
+   wireframe[1] = "0";
    materialTag0 = "Miscellaneous";
    doubleSided = "0";
    translucent = "1";
@@ -192,11 +191,11 @@ singleton Material(xa_notc_core_shapes_standardcat_erasemat)
    translucentBlendOp = "AddAlpha";
    alphaRef = "1";
    showFootprints = "0";
-   wireframe[0] = "0";
-   glowOnly[0] = "1";
+   wireframe[0] = "1";
+   glowOnly[0] = "0";
    animFlags[0] = "0x00000009";
    scrollDir[0] = "1 1";
-   scrollSpeed[0] = "1";
+   scrollSpeed[0] = "10";
    animFlags[1] = "0x00000005";
    scrollDir[1] = "1 1";
    scrollSpeed[1] = "2";
@@ -206,5 +205,6 @@ singleton Material(xa_notc_core_shapes_standardcat_erasemat)
    waveAmp[0] = "1";
    waveAmp[1] = "0.547";
    diffuseColor[3] = "1 1 1 1";
+   castShadows = "0";
 };
 
