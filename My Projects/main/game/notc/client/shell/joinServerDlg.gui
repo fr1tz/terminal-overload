@@ -1,3 +1,39 @@
+
+if(!isObject(GuiServerListTextProfile))
+new GuiControlProfile(GuiServerListTextProfile)
+{
+   fontType = "Quantico";
+   fontSize = 14;
+   fontColor = "1 1 1 255";
+   fontColorHL = "2 254 2 255";
+   fontColorNA = "255 0 0";
+   fontColors[6] = "100 100 100";
+   fontColors[7] = "100 100 0";
+   fontColors[8] = "0 0 100";
+   fontColors[9] = "0 100 0";
+   category = "Core";
+   fillColor = "253 253 253 255";
+   fillColorHL = "126 181 154 255";
+   fillColorNA = "128 128 128 255";
+   fontColors[0] = "1 1 1 255";
+   fontColors[1] = "2 254 2 255";
+   fontColors[2] = "255 0 0 255";
+};
+
+if(!isObject(GuiServerListScrollProfile))
+new GuiControlProfile(GuiServerListScrollProfile)
+{
+   opaque = true;
+   fillcolor = "255 255 255";
+   fontColor = "0 0 0";
+   fontColorHL = "150 150 150";
+   //borderColor = GuiDefaultProfile.borderColor;
+   border = true;
+   bitmap = "./images/scrollBar";
+   hasBitmapArray = true;
+   category = "Core";
+};
+
 //--- OBJECT WRITE BEGIN ---
 %guiContent = new GuiControl(JoinServerDlg) {
    position = "0 0";
@@ -58,7 +94,7 @@
          vertSizing = "top";
          profile = "TolGuiButtonProfile";
          visible = "1";
-         active = "0";
+         active = "1";
          command = "JoinServerDlg.join();";
          tooltipProfile = "GuiToolTipProfile";
          hovertime = "1000";
@@ -86,7 +122,7 @@
          minExtent = "8 8";
          horizSizing = "right";
          vertSizing = "bottom";
-         profile = "GuiScrollProfile";
+         profile = "GuiServerListScrollProfile";
          visible = "1";
          active = "1";
          tooltipProfile = "GuiToolTipProfile";
@@ -96,15 +132,15 @@
          canSaveDynamicFields = "0";
 
          new GuiTextListCtrl(JS_serverList) {
-            columns = "0 200 246 300 450 500";
+            columns = "0 140 180 240 365 490";
             fitParentWidth = "1";
-            clipColumnText = "0";
+            clipColumnText = "1";
             position = "1 1";
             extent = "605 8";
             minExtent = "8 8";
             horizSizing = "right";
             vertSizing = "bottom";
-            profile = "GuiTextArrayProfile";
+            profile = "GuiServerListTextProfile";
             visible = "1";
             active = "1";
             altCommand = "JoinServerDlg.join();";
@@ -124,7 +160,7 @@
          anchorBottom = "0";
          anchorLeft = "1";
          anchorRight = "0";
-         position = "258 128";
+         position = "190 128";
          extent = "34 18";
          minExtent = "8 8";
          horizSizing = "right";
@@ -147,7 +183,7 @@
          anchorBottom = "0";
          anchorLeft = "1";
          anchorRight = "0";
-         position = "312 128";
+         position = "250 128";
          extent = "26 18";
          minExtent = "8 8";
          horizSizing = "right";
@@ -170,7 +206,7 @@
          anchorBottom = "0";
          anchorLeft = "1";
          anchorRight = "0";
-         position = "462 128";
+         position = "375 128";
          extent = "27 18";
          minExtent = "8 8";
          horizSizing = "right";
@@ -193,7 +229,7 @@
          anchorBottom = "0";
          anchorLeft = "1";
          anchorRight = "0";
-         position = "212 128";
+         position = "150 128";
          extent = "21 18";
          minExtent = "8 8";
          horizSizing = "right";
@@ -239,7 +275,7 @@
          anchorBottom = "0";
          anchorLeft = "1";
          anchorRight = "0";
-         position = "512 128";
+         position = "500 128";
          extent = "20 18";
          minExtent = "8 8";
          horizSizing = "right";
@@ -351,6 +387,7 @@
          };
       };
       new GuiTextCtrl(JS_status) {
+         text = "";
          maxLength = "255";
          margin = "0 0 0 0";
          padding = "0 0 0 0";
@@ -359,9 +396,9 @@
          anchorLeft = "1";
          anchorRight = "0";
          position = "269 107";
-         extent = "8 18";
+         extent = "79 18";
          minExtent = "8 8";
-         horizSizing = "right";
+         horizSizing = "center";
          vertSizing = "bottom";
          profile = "GuiAutoSizeTextProfile";
          visible = "1";
@@ -458,9 +495,7 @@
 
 function JoinServerDlg::onWake()
 {
-   // Double check the status. Tried setting this the control
-   // inactive to start with, but that didn't seem to work.
-   JS_joinServer.setActive(JS_serverList.rowCount() > 0);
+
 }   
 
 //----------------------------------------
@@ -554,6 +589,8 @@ function JoinServerDlg::exit(%this)
 //----------------------------------------
 function JoinServerDlg::update(%this)
 {
+   JS_status.setText(JS_status.zMsg);
+   
    // Copy the servers into the server list.
    JS_queryStatus.setVisible(false);
    JS_serverList.clear();
@@ -562,7 +599,9 @@ function JoinServerDlg::update(%this)
       setServerInfo(%i);
       %name = $ServerInfo::Name;
       if(!$ServerInfo::Compatible)
-         %name = "[INCOMPATIBLE]" SPC %name;
+         %name = "\c6" SPC %name;
+      else
+         %name = "\c0" SPC %name;
       JS_serverList.addRow( %i,
          %name TAB
          $ServerInfo::Ping TAB
@@ -575,9 +614,30 @@ function JoinServerDlg::update(%this)
    JS_serverList.sort(0);
    JS_serverList.setSelectedRow(0);
    JS_serverList.scrollVisible(0);
-
-   JS_joinServer.setActive(JS_serverList.rowCount() > 0);
 } 
+
+function JS_serverList::onSelect(%this, %id, %text)
+{
+   %index = JS_serverList.getSelectedId();
+   setServerInfo(%index);
+   if($ServerInfo::Compatible)
+   {
+      hilightControl(JS_status, false);
+      JS_status.setText(JS_status.zMsg);
+      JS_joinServer.setActive(true);
+   }
+   else
+   {
+      JS_status.setText("Selected server not compatible with this version!");
+      hilightControl(JS_status, true);
+      JS_joinServer.setActive(false);
+   }
+   
+   // Re-center status message
+   %cw = getWord(JS_status.getExtent(), 0);
+   %pw = getWord(JS_status.getParent().getExtent(), 0);
+   JS_status.setPosition(%pw/2-%cw/2, getWord(JS_status.getPosition(),1));
+}
 
 //----------------------------------------
 function onServerQueryStatus(%status, %msg, %value)
@@ -591,6 +651,7 @@ function onServerQueryStatus(%status, %msg, %value)
 
    switch$ (%status) {
       case "start":
+         JS_status.setText("");
          JS_joinServer.setActive(false);
          JS_queryMaster.setActive(false);
          JS_statusText.setText(%msg);
@@ -608,7 +669,7 @@ function onServerQueryStatus(%status, %msg, %value)
       case "done":
          JS_queryMaster.setActive(true);
          JS_queryStatus.setVisible(false);
-         JS_status.setText(%msg);
+         JS_status.zMsg = %msg;
          JoinServerDlg.update();
    }
 }
