@@ -47,8 +47,8 @@ function initClient()
 
    // These should be game specific GuiProfiles.  Custom profiles are saved out
    // from the Gui Editor.  Either of these may override any that already exist.
-   exec("notc/client/shell/defaultGameProfiles.cs");
-   exec("notc/client/shell/customProfiles.cs");
+   exec("./gui/defaultGameProfiles.cs");
+   exec("./gui/customProfiles.cs");
    
    // The common module provides basic client functionality
    initBaseClient();
@@ -57,37 +57,36 @@ function initClient()
    configureCanvas();
 
    // Load up the Game GUIs
-   exec("notc/client/shell/defaultGameProfiles.cs");
-   exec("notc/client/shell/hudlessGui.gui");
+   exec("./gui/hudlessGui.gui");
 
    // Gui scripts
-   exec("notc/client/shell/hilight.cs");
-   exec("notc/client/shell/mainMenuGui.cs");
-   exec("notc/client/shell/startupGui.cs");
-   exec("notc/client/shell/chooseLevelDlg.cs");
-   exec("notc/client/shell/loadingGui.cs");
-   exec("notc/client/shell/optionsDlg.cs");
-   exec("notc/client/shell/optPlayer.cs");
-   exec("notc/client/shell/optGraphics.cs");
-   exec("notc/client/shell/optAudio.cs");
-   exec("notc/client/shell/optGame.cs");
-   exec("notc/client/shell/motdDlg.cs");
-   exec("notc/client/shell/ingameMenuDlg.cs");
+   exec("./gui/hilight.cs");
+   exec("./gui/mainMenuGui.cs");
+   exec("./gui/startupGui.cs");
+   exec("./gui/chooseLevelDlg.cs");
+   exec("./gui/loadingGui.cs");
+   exec("./gui/optionsDlg.cs");
+   exec("./gui/optPlayer.cs");
+   exec("./gui/optGraphics.cs");
+   exec("./gui/optAudio.cs");
+   exec("./gui/optGame.cs");
+   exec("./gui/motdDlg.cs");
+   exec("./gui/ingameMenuDlg.cs");
 
    // Load up the shell GUIs
-   exec("notc/client/shell/mainMenuGui.gui");
-   exec("notc/client/shell/recordingsDlg.gui");
-   exec("notc/client/shell/joinServerDlg.gui");
-   exec("notc/client/shell/StartupGui.gui");
-   exec("notc/client/shell/chooseLevelDlg.gui");
-   exec("notc/client/shell/loadingGui.gui");
-   exec("notc/client/shell/optionsDlg.gui");
-   exec("notc/client/shell/optPlayer.gui");
-   exec("notc/client/shell/optGraphics.gui");
-   exec("notc/client/shell/optAudio.gui");
-   exec("notc/client/shell/optGame.gui");
-   exec("notc/client/shell/motdDlg.gui");
-   exec("notc/client/shell/ingameMenuDlg.gui");
+   exec("./gui/mainMenuGui.gui");
+   exec("./gui/recordingsDlg.gui");
+   exec("./gui/joinServerDlg.gui");
+   exec("./gui/StartupGui.gui");
+   exec("./gui/chooseLevelDlg.gui");
+   exec("./gui/loadingGui.gui");
+   exec("./gui/optionsDlg.gui");
+   exec("./gui/optPlayer.gui");
+   exec("./gui/optGraphics.gui");
+   exec("./gui/optAudio.gui");
+   exec("./gui/optGame.gui");
+   exec("./gui/motdDlg.gui");
+   exec("./gui/ingameMenuDlg.gui");
 
    // Client scripts
    exec("./client.cs");
@@ -180,3 +179,4 @@ function loadLoadingGui(%displayText)
 
    Canvas.repaint();
 }
+

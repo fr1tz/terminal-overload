@@ -1,21 +1,17 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
-exec("../version.cs");
-
-$SettingsDir = "settings/"@$GameVersionString@"/";
-
 // Load up core script base
 loadDir("core"); // Should be loaded at a higher level, but for now leave -- SRZ 11/29/07
 
 //-----------------------------------------------------------------------------
 // Package overrides to initialize the mod.
-package fps {
+package Shell {
 
 function displayHelp() {
    Parent::displayHelp();
    error(
-      "Fps Mod options:\n"@
+      "Shell options:\n"@
       "  -dedicated             Start as dedicated server\n"@
       "  -connect <address>     For non-dedicated: Connect to a game at <address>\n" @
       "  -mission <filename>    For dedicated: Load the mission\n"
@@ -71,16 +67,16 @@ function onStart()
 {
    // The core does initialization which requires some of
    // the preferences to loaded... so do that first.  
-   exec( "./client/defaults.cs" );
-   exec( "./server/defaults.cs" );
-             
+   exec( "./defaults.cs" );
+   exec( "notc/defaults.cs" );
+
    Parent::onStart();
    echo("\n--------- Initializing Directory: scripts ---------");
 
    // Load the scripts that start it all...
-   exec("./client/init.cs");
-   exec("./server/init.cs");
-   
+   exec("./init.cs");
+   exec("notc/init.cs");
+
    // Init the physics plugin.
    physicsInit();
       
@@ -115,13 +111,13 @@ function onExit()
    export("$pref::*", $SettingsDir@"/prefs.cs", False);
 
    echo("Exporting server prefs");
-   export("$Pref::Server::*", "./server/prefs.cs", False);
-   BanList::Export("./server/banlist.cs");
+   export("$Pref::Server::*", "notc/prefs.cs", False);
+   BanList::Export("notc/banlist.cs");
 
    Parent::onExit();
 }
 
-}; // package fps
+}; // package Shell
 
 // Activate the game package.
-activatePackage(fps);
+activatePackage(Shell);

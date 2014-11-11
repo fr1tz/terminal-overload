@@ -82,7 +82,7 @@
       canSaveDynamicFields = "0";
 
       new GuiBitmapCtrl(LoadingLogo) {
-         bitmap = "notc/client/shell/images/big_logo_and_glow.png";
+         bitmap = "shell/gui/images/big_logo_and_glow.png";
          wrap = "0";
          position = "-3 7";
          extent = "792 129";

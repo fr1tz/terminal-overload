@@ -1,14 +1,19 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
+exec("version.cs");
+
 // Set the name of our application
 $appName = "Terminal Overload";
 
 // The directory it is run from
-$defaultGame = "notc";
+$defaultGame = "shell";
 
 // Set profile directory
 $Pref::Video::ProfilePath = "core/profile";
+
+// Set settings directory
+$SettingsDir = "settings/"@$GameVersionString@"/";
 
 function createCanvas(%windowTitle)
 {

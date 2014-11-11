@@ -1,6 +1,6 @@
 //--- OBJECT WRITE BEGIN ---
 %guiContent = new GuiChunkedBitmapCtrl(MainMenuGui) {
-   bitmap = "notc/client/graphics/background.png";
+   bitmap = "shell/graphics/background.png";
    useVariable = "0";
    tile = "0";
    position = "0 0";
@@ -29,7 +29,7 @@
       fadeInEase = "0 1 -1 -1";
       fadeOutEase = "0 0 -1 -1";
       done = "1";
-      bitmap = "notc/client/shell/images/screenshot.png";
+      bitmap = "shell/gui/images/screenshot.png";
       wrap = "0";
       position = "0 0";
       extent = "639 481";
@@ -46,7 +46,7 @@
       canSaveDynamicFields = "0";
    };
    new GuiBitmapCtrl() {
-      bitmap = "notc/client/graphics/scanlines2.png";
+      bitmap = "shell/graphics/scanlines2.png";
       wrap = "1";
       position = "0 0";
       extent = "640 480";
@@ -64,7 +64,7 @@
       canSaveDynamicFields = "0";
    };
    new GuiBitmapCtrl() {
-      bitmap = "notc/client/graphics/noise2.png";
+      bitmap = "shell/graphics/noise2.png";
       wrap = "1";
       position = "0 0";
       extent = "640 480";
@@ -300,7 +300,7 @@
          fadeInEase = "0 1 -1 -1";
          fadeOutEase = "0 1 -1 -1";
          done = "1";
-         bitmap = "notc/client/shell/images/glow.png";
+         bitmap = "shell/gui/images/glow.png";
          wrap = "0";
          position = "48 8";
          extent = "157 112";
@@ -317,7 +317,7 @@
          canSaveDynamicFields = "0";
       };
       new GuiBitmapCtrl(MainMenuAppLogo) {
-         bitmap = "notc/client/shell/images/logo_and_glow.png";
+         bitmap = "shell/gui/images/logo_and_glow.png";
          wrap = "0";
          position = "46 20";
          extent = "157 112";

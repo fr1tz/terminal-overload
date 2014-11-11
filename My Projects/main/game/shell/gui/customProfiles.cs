@@ -19,7 +19,7 @@ new GuiControlProfile (TolGuiWindowProfile)
    bevelColorHL = "255 255 255 255";
    bevelColorLL = "0 0 0 255";
    text = "untitled";
-   bitmap = "notc/client/shell/images/window";
+   bitmap = "shell/gui/images/window";
    textOffset = "8 4";
    hasBitmapArray = true;
    justify = "center";
@@ -100,7 +100,7 @@ new GuiControlProfile( TolGuiMenuButtonProfile )
    fixedExtent = 0;
    justify = "center";
    canKeyFocus = "1";
-	bitmap = "notc/client/shell/images/selector-button";
+	bitmap = "shell/gui/images/selector-button";
    hasBitmapArray = false;
    category = "TOL";
    fontColors[0] = "255 255 255 200";
@@ -133,7 +133,7 @@ new GuiControlProfile( TolGuiMenuButtonItalicProfile )
    fixedExtent = 0;
    justify = "center";
    canKeyFocus = false;
-	bitmap = "notc/client/shell/images/selector-button";
+	bitmap = "shell/gui/images/selector-button";
    hasBitmapArray = false;
    category = "TOL";
    fontColors[0] = "255 255 255 200";
@@ -173,7 +173,7 @@ new GuiControlProfile( TolGuiProgressBitmapProfile )
 {
    border = "0";
    hasBitmapArray = true;
-   bitmap = "notc/client/shell/images/loadingbar.png";
+   bitmap = "shell/gui/images/loadingbar.png";
    category = "TOL";
 };
 
@@ -190,7 +190,7 @@ new GuiControlProfile( TolGuiButtonProfile )
    fixedExtent = 0;
    justify = "center";
    canKeyFocus = false;
-	bitmap = "notc/client/shell/images/button";
+	bitmap = "shell/gui/images/button";
    hasBitmapArray = false;
    category = "TOL";
    borderThickness = "0";

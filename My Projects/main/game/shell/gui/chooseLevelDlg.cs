@@ -76,7 +76,7 @@ function ChooseLevelDlg::onWake( %this )
       %preview = new GuiBitmapButtonCtrl() {
          internalName = "SmallPreview" @ %i;
          Extent = "108 81";
-         bitmap = "notc/client/graphics/no-preview";
+         bitmap = "shell/graphics/no-preview";
          command = "ChooseLevelWindow.previewSelected(ChooseLevelWindow->SmallPreviews->SmallPreview" @ %i @ ");";
       };
 
