@@ -552,6 +552,9 @@ function JoinServerDlg::join(%this)
 
    if( setServerInfo( %index ) )
    {
+      if(!$ServerInfo::Compatible)
+         return;
+   
       Canvas.setContent("LoadingGui");
       LoadingProgress.setValue(1);
       LoadingProgressTxt.setValue("WAITING FOR SERVER");
@@ -564,18 +567,13 @@ function JoinServerDlg::join(%this)
 function JoinServerDlg::refresh(%this)
 {
    cancelServerQuery();
-   %index= JS_serverList.getSelectedId();
 
    // The server info index is stored in the row along with the
    // rest of displayed info.
+   %index = JS_serverList.getSelectedId();
+   JS_serverList.zLastSelectedId = %index;
    if( setServerInfo( %index ) )
       querySingleServer( $ServerInfo::Address, 0 );
-}
-
-//----------------------------------------
-function JoinServerDlg::refreshSelectedServer( %this )
-{
-   querySingleServer( $JoinGameAddress, 0 );
 }
 
 //----------------------------------------
@@ -605,15 +603,25 @@ function JoinServerDlg::update(%this)
       JS_serverList.addRow( %i,
          %name TAB
          $ServerInfo::Ping TAB
-         $ServerInfo::PlayerCount @ "/" @ $ServerInfo::MaxPlayers TAB
+         $ServerInfo::PlayerCount SPC "/" SPC $ServerInfo::MaxPlayers TAB
          $ServerInfo::GameType TAB
          $ServerInfo::MissionType TAB
          $ServerInfo::MissionName
       );
    }
-   JS_serverList.sort(0);
-   JS_serverList.setSelectedRow(0);
-   JS_serverList.scrollVisible(0);
+   
+   // Sort by number of players
+   JS_serverList.sortNumerical(2, false);
+   
+   if(JS_serverList.zLastSelectedId !$= "")
+   {
+      JS_serverList.setSelectedById(JS_serverList.zLastSelectedId);
+   }
+   else
+   {
+      JS_serverList.scrollVisible(0);
+      JS_serverList.setSelectedRow(0);
+   }
 } 
 
 function JS_serverList::onSelect(%this, %id, %text)
@@ -651,6 +659,7 @@ function onServerQueryStatus(%status, %msg, %value)
 
    switch$ (%status) {
       case "start":
+         hilightControl(JS_status, false);
          JS_status.setText("");
          JS_joinServer.setActive(false);
          JS_queryMaster.setActive(false);
