@@ -94,6 +94,8 @@ function GameCoreDM::onClientEnterGame(%game, %client)
       %timeLeft = ($Game::StartTime + $Game::Duration) - $Sim::Time;
       commandToClient(%client, 'GameTimer', %timeLeft);
    }
+   
+   Game.preparePlayer(%client);
 }
 
 function GameCoreDM::onClientLeaveGame(%game, %client)
