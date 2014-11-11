@@ -43,7 +43,10 @@ function updateHilightedGuiControlsThread()
       }
 		else
       {
-         %control.zText = %control.getText();
+         if(%control.isMethod("getText"))
+            %control.zText = %control.getText();
+         else
+            %control.zText = %control.text;
 			%control.setText("");
       }
 
