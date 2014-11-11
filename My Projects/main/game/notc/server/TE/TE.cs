@@ -9,6 +9,8 @@ function TE::joinTeam(%client, %teamId)
       TE::setupHud(%client);
       if($Server::PlayerCount == 1)
          TE::startNewRound();
+      else
+         TE::checkRoundEnd();
 
       return true;
    }
