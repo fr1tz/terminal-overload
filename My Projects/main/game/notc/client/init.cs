@@ -42,7 +42,7 @@ function initClient()
    $Server::Dedicated = false;
 
    // Game information used to query the master server
-   $Client::GameTypeQuery = $appName;
+   $Client::GameTypeQuery = "Any";
    $Client::MissionTypeQuery = "Any";
 
    // These should be game specific GuiProfiles.  Custom profiles are saved out
