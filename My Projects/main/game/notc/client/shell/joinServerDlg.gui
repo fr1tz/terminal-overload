@@ -32,8 +32,8 @@
       anchorBottom = "0";
       anchorLeft = "1";
       anchorRight = "0";
-      position = "10 10";
-      extent = "620 460";
+      position = "0 0";
+      extent = "640 480";
       minExtent = "8 8";
       horizSizing = "center";
       vertSizing = "center";
@@ -51,7 +51,7 @@
          groupNum = "-1";
          buttonType = "PushButton";
          useMouseEvents = "0";
-         position = "236 413";
+         position = "236 437";
          extent = "162 35";
          minExtent = "8 8";
          horizSizing = "right";
@@ -82,7 +82,7 @@
          anchorLeft = "1";
          anchorRight = "0";
          position = "10 150";
-         extent = "595 252";
+         extent = "620 278";
          minExtent = "8 8";
          horizSizing = "right";
          vertSizing = "bottom";
@@ -96,11 +96,11 @@
          canSaveDynamicFields = "0";
 
          new GuiTextListCtrl(JS_serverList) {
-            columns = "0 200 270 335 400";
+            columns = "0 200 246 300 450 500";
             fitParentWidth = "1";
             clipColumnText = "0";
             position = "1 1";
-            extent = "577 8";
+            extent = "605 8";
             minExtent = "8 8";
             horizSizing = "right";
             vertSizing = "bottom";
@@ -124,31 +124,8 @@
          anchorBottom = "0";
          anchorLeft = "1";
          anchorRight = "0";
-         position = "269 128";
+         position = "258 128";
          extent = "34 18";
-         minExtent = "8 8";
-         horizSizing = "right";
-         vertSizing = "bottom";
-         profile = "GuiAutoSizeTextProfile";
-         visible = "1";
-         active = "1";
-         tooltipProfile = "GuiToolTipProfile";
-         hovertime = "1000";
-         isContainer = "0";
-         canSave = "1";
-         canSaveDynamicFields = "0";
-      };
-      new GuiTextCtrl() {
-         text = "Version";
-         maxLength = "255";
-         margin = "0 0 0 0";
-         padding = "0 0 0 0";
-         anchorTop = "1";
-         anchorBottom = "0";
-         anchorLeft = "1";
-         anchorRight = "0";
-         position = "335 128";
-         extent = "37 18";
          minExtent = "8 8";
          horizSizing = "right";
          vertSizing = "bottom";
@@ -170,8 +147,31 @@
          anchorBottom = "0";
          anchorLeft = "1";
          anchorRight = "0";
-         position = "412 128";
+         position = "312 128";
          extent = "26 18";
+         minExtent = "8 8";
+         horizSizing = "right";
+         vertSizing = "bottom";
+         profile = "GuiAutoSizeTextProfile";
+         visible = "1";
+         active = "1";
+         tooltipProfile = "GuiToolTipProfile";
+         hovertime = "1000";
+         isContainer = "0";
+         canSave = "1";
+         canSaveDynamicFields = "0";
+      };
+      new GuiTextCtrl() {
+         text = "Mode";
+         maxLength = "255";
+         margin = "0 0 0 0";
+         padding = "0 0 0 0";
+         anchorTop = "1";
+         anchorBottom = "0";
+         anchorLeft = "1";
+         anchorRight = "0";
+         position = "462 128";
+         extent = "27 18";
          minExtent = "8 8";
          horizSizing = "right";
          vertSizing = "bottom";
@@ -218,6 +218,29 @@
          anchorRight = "0";
          position = "12 128";
          extent = "60 18";
+         minExtent = "8 8";
+         horizSizing = "right";
+         vertSizing = "bottom";
+         profile = "GuiAutoSizeTextProfile";
+         visible = "1";
+         active = "1";
+         tooltipProfile = "GuiToolTipProfile";
+         hovertime = "1000";
+         isContainer = "0";
+         canSave = "1";
+         canSaveDynamicFields = "0";
+      };
+      new GuiTextCtrl() {
+         text = "Map";
+         maxLength = "255";
+         margin = "0 0 0 0";
+         padding = "0 0 0 0";
+         anchorTop = "1";
+         anchorBottom = "0";
+         anchorLeft = "1";
+         anchorRight = "0";
+         position = "512 128";
+         extent = "20 18";
          minExtent = "8 8";
          horizSizing = "right";
          vertSizing = "bottom";
@@ -544,7 +567,8 @@ function JoinServerDlg::update(%this)
          %name TAB
          $ServerInfo::Ping TAB
          $ServerInfo::PlayerCount @ "/" @ $ServerInfo::MaxPlayers TAB
-         $ServerInfo::Version TAB
+         $ServerInfo::GameType TAB
+         $ServerInfo::MissionType TAB
          $ServerInfo::MissionName
       );
    }
