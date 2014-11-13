@@ -16,20 +16,21 @@
       enabled = "1";
 
    new GuiControl(StartServerGui_NOTC) {
-      position = "9 55";
-      extent = "490 400";
+      position = "0 0";
+      extent = "630 395";
       minExtent = "8 8";
       horizSizing = "width";
       vertSizing = "height";
       profile = "GuiDefaultProfile";
       visible = "1";
       active = "1";
-      tooltipProfile = "DefaultGuiProfile";
+      tooltipProfile = "GuiToolTipProfile";
       hovertime = "1000";
       isContainer = "1";
       canSave = "1";
       canSaveDynamicFields = "1";
-         gameType = "TOL" SPC $GameVersionString;
+         gameType = "TOL 0.5.0-testing1+dev";
+         launchInEditor = "0";
 
       new GuiBitmapCtrl() {
          bitmap = "notc/shell/no-preview";
@@ -59,7 +60,7 @@
          anchorBottom = "0";
          anchorLeft = "1";
          anchorRight = "0";
-         position = "236 47";
+         position = "12 47";
          extent = "165 18";
          minExtent = "8 8";
          horizSizing = "right";
@@ -70,7 +71,7 @@
          tooltipProfile = "GuiToolTipProfile";
          hovertime = "1000";
          isContainer = "0";
-         internalName = "levelName";
+         internalName = "LevelName";
          canSave = "1";
          canSaveDynamicFields = "0";
       };
@@ -83,7 +84,7 @@
          anchorBottom = "0";
          anchorLeft = "1";
          anchorRight = "0";
-         position = "236 66";
+         position = "12 66";
          extent = "72 18";
          minExtent = "8 8";
          horizSizing = "right";
@@ -102,7 +103,7 @@
          allowColorChars = "0";
          maxChars = "-1";
          useURLMouseCursor = "0";
-         position = "236 92";
+         position = "12 92";
          extent = "165 14";
          minExtent = "8 8";
          horizSizing = "right";
@@ -131,6 +132,7 @@
          visible = "1";
          active = "1";
          variable = "pref::HostMultiPlayer";
+         command = "StartServerGui_NOTC.updateArgs();";
          tooltipProfile = "GuiToolTipProfile";
          hovertime = "1000";
          isContainer = "0";
@@ -219,24 +221,23 @@
             wrap = "0";
       };
       new GuiTextListCtrl(StartServerGui_NOTC_levelList) {
-         canSaveDynamicFields = "0";
-         Enabled = "1";
-         isContainer = "1";
-         Profile = "GuiTextArrayProfile";
-         HorizSizing = "right";
-         VertSizing = "bottom";
-         position = "1 1";
-         Extent = "421 144";
-         MinExtent = "8 8";
-         canSave = "1";
-         Visible = "0";
-         tooltipprofile = "GuiToolTipProfile";
-         hovertime = "1000";
-         enumerate = "0";
-         resizeCell = "1";
          columns = "0";
          fitParentWidth = "1";
          clipColumnText = "0";
+         position = "1 1";
+         extent = "421 144";
+         minExtent = "8 8";
+         horizSizing = "right";
+         vertSizing = "bottom";
+         profile = "GuiTextArrayProfile";
+         visible = "0";
+         active = "1";
+         tooltipProfile = "GuiToolTipProfile";
+         hovertime = "1000";
+         isContainer = "1";
+         hidden = "1";
+         canSave = "1";
+         canSaveDynamicFields = "0";
       };
    };
 };

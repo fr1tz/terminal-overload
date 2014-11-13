@@ -27,6 +27,9 @@ function StartServerGui_NOTC::updateArgs(%this)
 //----------------------------------------
 function StartServerGui_NOTC::onWake( %this )
 {
+   if($InGuiEditor)
+      return;
+
    StartServerGui_NOTC_levelList.clear();
    StartServerGui_NOTC->SmallPreviews.clear();
    
