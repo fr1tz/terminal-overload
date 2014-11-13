@@ -161,7 +161,7 @@ function displayHelp() {
       // the logfile when the application shuts down.  (default)
 
    error(
-      "Torque Demo command line options:\n"@
+      "Terminal Overload command line options:\n"@
       "  -log <logmode>         Logging behavior; see main.cs comments for details\n"@
       "  -game <game_name>      Reset list of mods to only contain <game_name>\n"@
       "  <game_name>            Works like the -game argument\n"@
