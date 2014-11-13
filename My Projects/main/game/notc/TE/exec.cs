@@ -3,10 +3,10 @@
 
 function executeTEServerScripts()
 {
-   exec("notc/server/base/exec.cs");
-   exec("notc/server/eth/aiPlayer.cs");
-   exec("notc/server/eth/eth.cs");
-   exec("notc/server/eth/ethPlayerList.cs");
+   exec("notc/base/exec.cs");
+   exec("notc/eth/aiPlayer.cs");
+   exec("notc/eth/eth.cs");
+   exec("notc/eth/ethPlayerList.cs");
    exec("./TE.cs");
    exec("./gameCoreTE.cs");
 }

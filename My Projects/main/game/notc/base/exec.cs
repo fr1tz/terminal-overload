@@ -30,46 +30,46 @@ function executeBaseServerScripts()
    exec("./weapon.gfx.cs");
    exec("./weapon.cs");
    
-   exec("notc/server/client/misc/Materials/v1/exec.cs");
-   exec("notc/server/client/gui/BeepMsgHud/v1/exec.cs");
-   exec("notc/server/client/gui/MinimapHud/v1/exec.cs");
-   exec("notc/server/client/gui/LoadoutHud/v1/exec.cs");
-   exec("notc/server/client/gui/HudIcons/v1/exec.cs");
-   exec("notc/server/client/gui/PlayerList/v1/exec.cs");
+   exec("notc/client/misc/Materials/v1/exec.cs");
+   exec("notc/client/gui/BeepMsgHud/v1/exec.cs");
+   exec("notc/client/gui/MinimapHud/v1/exec.cs");
+   exec("notc/client/gui/LoadoutHud/v1/exec.cs");
+   exec("notc/client/gui/HudIcons/v1/exec.cs");
+   exec("notc/client/gui/PlayerList/v1/exec.cs");
 
-   exec("notc/server/forms/etherform/exec.cs");
-   exec("notc/server/forms/standardcat/exec.cs");
-   exec("notc/server/forms/snipercat/exec.cs");
+   exec("notc/forms/etherform/exec.cs");
+   exec("notc/forms/standardcat/exec.cs");
+   exec("notc/forms/snipercat/exec.cs");
 
-   exec("notc/server/items/damper/exec.cs");
-   exec("notc/server/items/vamp/exec.cs");
-   exec("notc/server/items/impshield/exec.cs");
-   exec("notc/server/items/ballast/exec.cs");
-   exec("notc/server/items/stealth/exec.cs");
-   exec("notc/server/items/etherboard/exec.cs");
-   exec("notc/server/items/launcher/exec.cs");
-   exec("notc/server/items/bounce/exec.cs");
-   exec("notc/server/items/xjump/exec.cs");
+   exec("notc/items/damper/exec.cs");
+   exec("notc/items/vamp/exec.cs");
+   exec("notc/items/impshield/exec.cs");
+   exec("notc/items/ballast/exec.cs");
+   exec("notc/items/stealth/exec.cs");
+   exec("notc/items/etherboard/exec.cs");
+   exec("notc/items/launcher/exec.cs");
+   exec("notc/items/bounce/exec.cs");
+   exec("notc/items/xjump/exec.cs");
 
-   exec("notc/server/items/g1launcher/exec.cs");
+   exec("notc/items/g1launcher/exec.cs");
 
-   exec("notc/server/weapons/razordisc/exec.cs");
-   exec("notc/server/weapons/explosivedisc/exec.cs");
-   exec("notc/server/weapons/repeldisc/exec.cs");
-   exec("notc/server/weapons/interceptordisc/exec.cs");
+   exec("notc/weapons/razordisc/exec.cs");
+   exec("notc/weapons/explosivedisc/exec.cs");
+   exec("notc/weapons/repeldisc/exec.cs");
+   exec("notc/weapons/interceptordisc/exec.cs");
 
-   exec("notc/server/weapons/smg1/exec.cs");
-   exec("notc/server/weapons/smg2/exec.cs");
-   exec("notc/server/weapons/mgl1/exec.cs");
-   exec("notc/server/weapons/mgl2/exec.cs");
-   exec("notc/server/weapons/sg1/exec.cs");
-   exec("notc/server/weapons/sg2/exec.cs");
-   exec("notc/server/weapons/sg3/exec.cs");
-   exec("notc/server/weapons/sr1/exec.cs");
-   exec("notc/server/weapons/sr2/exec.cs");
-   exec("notc/server/weapons/mg1/exec.cs");
-   exec("notc/server/weapons/mg2/exec.cs");
-   exec("notc/server/weapons/ml1/exec.cs");
+   exec("notc/weapons/smg1/exec.cs");
+   exec("notc/weapons/smg2/exec.cs");
+   exec("notc/weapons/mgl1/exec.cs");
+   exec("notc/weapons/mgl2/exec.cs");
+   exec("notc/weapons/sg1/exec.cs");
+   exec("notc/weapons/sg2/exec.cs");
+   exec("notc/weapons/sg3/exec.cs");
+   exec("notc/weapons/sr1/exec.cs");
+   exec("notc/weapons/sr2/exec.cs");
+   exec("notc/weapons/mg1/exec.cs");
+   exec("notc/weapons/mg2/exec.cs");
+   exec("notc/weapons/ml1/exec.cs");
 }
 
 executeBaseServerScripts();

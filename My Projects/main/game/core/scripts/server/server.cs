@@ -31,13 +31,58 @@ function portInit(%port)
    }
 }
 
-/// Create a server of the given type, load the given level, and then
-/// create a local client connection to the server.
-//
-/// @return true if successful.
-function createAndConnectToLocalServer( %serverType, %level )
+function startServer(%gameType, %args)
 {
-   if( !createServer( %serverType, %level ) )
+   %serverScriptFileName = %gameType @ ".srv.cs";
+   %serverScriptFilePath = findFirstFile("*/" @ %serverScriptFileName);
+
+   if(%serverScriptFilePath $= "")
+   {
+      error("Unable to find server script file '" @ %serverScriptFileName @
+         "' for game type '" @ %gameType @ "'!");
+      return false;
+   }
+   
+   // Shut down existing server.
+   if(isFunction("destroyServer"))
+      destroyServer();
+   
+   echo("Executing server script file:" SPC %serverScriptFilePath);
+   exec(%serverScriptFilePath);
+   
+   echo("Checking if required basic server functions exist...");
+   %createServer = true;
+   %serverfuncs = "createServer destroyServer resetServerDefaults";
+   for(%i = 0; %i < getWordCount(%serverfuncs); %i++)
+   {
+      %funcName = getWord(%serverfuncs, %i);
+      if(!isFunction(%funcName))
+      {
+         error(" function" SPC %funcName SPC "is missing!");
+         %createServer = false;
+      }
+      else
+         echo(" function" SPC %funcName SPC "exists.");
+   }
+   
+   if(!%createServer)
+   {
+      error("Unable to create server!");
+      return false;
+   }
+   
+   // Increase the server session number.  This is used to make sure we're
+   // working with the server session we think we are.
+   $Server::Session++;
+   
+   return createServer(%gameType, %args);
+}
+
+/// Run a server and create a local client connection to the server.
+/// @return true if successful.
+function startAndConnectToLocalServer(%gameType, %args)
+{
+   if(!startServer(%gameType, %args))
       return false;
    
    %conn = new GameConnection( ServerConnection );
@@ -58,129 +103,7 @@ function createAndConnectToLocalServer( %serverType, %level )
    return true;
 }
 
-/// Create a server with either a "SinglePlayer" or "MultiPlayer" type
-/// Specify the level to load on the server
-function createServer(%serverType, %level)
-{
-   // Increase the server session number.  This is used to make sure we're
-   // working with the server session we think we are.
-   $Server::Session++;
-   
-   if (%level $= "")
-   {
-      error("createServer(): level name unspecified");
-      return false;
-   }
-   
-   // Make sure our level name is relative so that it can send
-   // across the network correctly
-   %level = makeRelativePath(%level, getWorkingDirectory());
-   
-   // Extract mission info from the mission file,
-   // including the display name and stuff to send
-   // to the client.
-   buildLoadInfo(%level);
-   
-   if(!isObject(theLevelInfo))
-   {
-      error("createServer(): no level info");
-      return false;
-   }
 
-   if(!exec(theLevelInfo.missionScript))
-   {
-      error("createServer(): could not execute mission script");
-      return false;
-   }
-   
-   destroyServer();
-
-   $missionSequence = 0;
-   $Server::PlayerCount = 0;
-   $Server::ServerType = %serverType;
-   $Server::LoadFailMsg = "";
-   $Physics::isSinglePlayer = true;
-   
-   // Setup for multi-player, the network must have been
-   // initialized before now.
-   if (%serverType $= "MultiPlayer")
-   {
-      $Physics::isSinglePlayer = false;
-            
-      echo("Starting multiplayer mode");
-
-      // Make sure the network port is set to the correct pref.
-      portInit($Pref::Server::Port);
-      allowConnections(true);
-
-      if ($pref::Net::DisplayOnMaster !$= "Never" )
-         schedule(0,0,startHeartbeat);
-   }
-   
-   // Start player authentication facilities
-   schedule(0, 0, sAuthStart);
-
-   // Create the ServerGroup that will persist for the lifetime of the server.
-   new SimGroup(ServerGroup);
-   
-   // Let the game initialize some things now that the
-   // the server has been created
-   onServerCreated();
-
-   loadMission(%level, true);
-   
-   return true;
-}
-
-/// Shut down the server
-function destroyServer()
-{
-   $Server::ServerType = "";
-   allowConnections(false);
-   stopHeartbeat();
-   sAuthStop();
-   $missionRunning = false;
-   
-   // End any running levels
-   endMission();
-   onServerDestroyed();
-
-   // Delete all the server objects
-   if (isObject(ServerGroup))
-      ServerGroup.delete();
-
-   // Delete all the connections:
-   while (ClientGroup.getCount())
-   {
-      %client = ClientGroup.getObject(0);
-      %client.delete();
-   }
-
-   $Server::GuidList = "";
-
-   // Delete all the data blocks...
-   deleteDataBlocks();
-   
-   // Save any server settings
-   echo( "Exporting server prefs..." );
-   export( "$Pref::Server::*", "~/prefs.cs", false );
-
-   // Increase the server session number.  This is used to make sure we're
-   // working with the server session we think we are.
-   $Server::Session++;
-}
-
-/// Reset the server's default prefs
-function resetServerDefaults()
-{
-   echo( "Resetting server defaults..." );
-   
-   exec( "~/defaults.cs" );
-   exec( "~/prefs.cs" );
-
-   // Reload the current level
-   loadMission( $Server::MissionFile );
-}
 
 /// Guid list maintenance functions
 function addToServerGuidList( %guid )

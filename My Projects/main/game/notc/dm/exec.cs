@@ -3,8 +3,7 @@
 
 function executeDeathmatchServerScripts()
 {
-   exec("notc/server/base/exec.cs");
-
+   exec("notc/base/exec.cs");
    exec("./aiPlayer.cs");
    exec("./dm.cs");
    exec("./gameCoreDM.cs");

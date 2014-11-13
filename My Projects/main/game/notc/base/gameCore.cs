@@ -184,6 +184,7 @@ package GameCore
 
    function GameConnection::prepareMission(%this)
    {
+      error("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww");
       Game.prepareClient(%this);
    }
    

@@ -3,8 +3,7 @@
 
 function executeEthernetServerScripts()
 {
-   exec("notc/server/base/exec.cs");
-
+   exec("notc/base/exec.cs");
    exec("./aiPlayer.cs");
    exec("./commands.cs");
    exec("./eth.cs");

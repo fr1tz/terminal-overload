@@ -12,9 +12,8 @@ function displayHelp() {
    Parent::displayHelp();
    error(
       "Shell options:\n"@
-      "  -dedicated             Start as dedicated server\n"@
-      "  -connect <address>     For non-dedicated: Connect to a game at <address>\n" @
-      "  -mission <filename>    For dedicated: Load the mission\n"
+      "  -dedicated <game>      Start a dedicated server for game <game>\n"@
+      "  -connect <address>     For non-dedicated: Connect to a game at <address>\n"
    );
 }
 
@@ -34,20 +33,14 @@ function parseArgs()
       {
          //--------------------
          case "-dedicated":
+            $argUsed[%i]++;
             $Server::Dedicated = true;
             enableWinConsole(true);
-            $argUsed[%i]++;
-
-         //--------------------
-         case "-mission":
-            $argUsed[%i]++;
             if (%hasNextArg) {
-               $missionArg = %nextArg;
+               $dedicatedArg = %nextArg;
                $argUsed[%i+1]++;
                %i++;
             }
-            else
-               error("Error: Missing Command Line argument. Usage: -mission <filename>");
 
          //--------------------
          case "-connect":
@@ -68,14 +61,12 @@ function onStart()
    // The core does initialization which requires some of
    // the preferences to loaded... so do that first.  
    exec( "./defaults.cs" );
-   exec( "notc/defaults.cs" );
 
    Parent::onStart();
    echo("\n--------- Initializing Directory: scripts ---------");
 
-   // Load the scripts that start it all...
+   // Load the script that starts it all...
    exec("./init.cs");
-   exec("notc/init.cs");
 
    // Init the physics plugin.
    physicsInit();
@@ -83,13 +74,23 @@ function onStart()
    // Start up the audio system.
    sfxStartup();
 
-   // Server gets loaded for all sessions, since clients
-   // can host in-game servers.
-   initServer();
+   $SB::WODec = 0.04; // FIXME: find better place for this
 
    // Start up in either client, or dedicated server mode
    if($Server::Dedicated)
-      initDedicated();
+   {
+      if($dedicatedArg $= "")
+      {
+         error("Error: Missing Command Line argument. Usage: -dedicated <game>");
+         quit();
+      }
+      echo("\n--------- Starting Dedicated Server ---------");
+      // Pass global arguments to server...
+      %args = "";
+      for (%i = 1; %i < $Game::argc ; %i++)
+         %args = %args SPC $Game::argv[%i];
+      startServer($dedicatedArg, %args);
+   }
    else
       initClient();
 }
