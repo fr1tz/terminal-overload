@@ -150,7 +150,7 @@
          canSaveDynamicFields = "0";
       };
       new GuiSliderCtrl(XaNotcSettings1_CatControls_MouseSensitivity) {
-         range = "0.1 2";
+         range = "0.01 2";
          ticks = "24";
          snap = "0";
          value = "0.48";
