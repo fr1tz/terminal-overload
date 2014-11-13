@@ -29,8 +29,24 @@
 // can be overriden by mods:
 //-----------------------------------------------------------------------------
 
+function initDedicated()
+{
+   if($dedicatedArg $= "")
+   {
+      error("Error: Missing Command Line argument. Usage: -dedicated <game>");
+      quit();
+   }
+   echo("\n--------- Starting Dedicated Server ---------");
+   // Pass global arguments to server...
+   %args = "";
+   for (%i = 1; %i < $Game::argc ; %i++)
+      %args = %args SPC $Game::argv[%i];
+   startServer($dedicatedArg, %args);
+}
+
 //-----------------------------------------------------------------------------
-function initClient()
+
+function initGUI()
 {
    echo("\n--------- Initializing " @ $appName @ ": Client Scripts ---------");
    

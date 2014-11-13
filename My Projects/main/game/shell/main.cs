@@ -78,21 +78,9 @@ function onStart()
 
    // Start up in either client, or dedicated server mode
    if($Server::Dedicated)
-   {
-      if($dedicatedArg $= "")
-      {
-         error("Error: Missing Command Line argument. Usage: -dedicated <game>");
-         quit();
-      }
-      echo("\n--------- Starting Dedicated Server ---------");
-      // Pass global arguments to server...
-      %args = "";
-      for (%i = 1; %i < $Game::argc ; %i++)
-         %args = %args SPC $Game::argv[%i];
-      startServer($dedicatedArg, %args);
-   }
+      initDedicated();
    else
-      initClient();
+      initGUI();
 }
 
 function onExit()
