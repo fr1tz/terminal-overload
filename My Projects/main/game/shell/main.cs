@@ -96,8 +96,7 @@ function onExit()
    // Destroy the physics plugin.
    physicsDestroy();
       
-   echo("Exporting client prefs");
-   export("$pref::*", $SettingsDir@"/prefs.cs", False);
+   savePrefs();
 
    echo("Exporting server prefs");
    export("$Pref::Server::*", "notc/prefs.cs", False);

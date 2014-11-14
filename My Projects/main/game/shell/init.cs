@@ -196,3 +196,10 @@ function loadLoadingGui(%displayText)
    Canvas.repaint();
 }
 
+function savePrefs()
+{
+   %file = $SettingsDir@"/prefs.cs";
+   echo("Saving prefs to" SPC %file);
+   export("$pref::*", %file, False);
+}
+
