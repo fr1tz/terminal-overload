@@ -34,3 +34,10 @@ function OptionsDlg::onWake(%this)
       %this-->PlayerButton.performClick();
 }
 
+function OptionsDlg::onSleep(%this)
+{
+   //echo("OptionsDlg::onSleep()");
+
+   savePrefs();
+}
+
