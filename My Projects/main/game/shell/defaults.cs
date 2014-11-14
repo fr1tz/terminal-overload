@@ -3,6 +3,7 @@
 
 // First we execute the core default preferences.
 exec( "core/scripts/client/defaults.cs" );
+exec( "core/scripts/server/defaults.cs" );
 
 
 // Now add your own game specific client preferences as
