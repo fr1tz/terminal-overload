@@ -6,6 +6,7 @@
 #include "platformX86UNIX/x86UNIXStdConsole.h"
 #include "platform/platformInput.h"
 #include "console/console.h"
+#include "core/util/journal/process.h"
 
 #include <stdlib.h>
 #include <unistd.h>
@@ -125,18 +126,8 @@ void ProcessControlInit()
 //-----------------------------------------------------------------------------
 void Platform::postQuitMessage(const U32 in_quitVal)
 {
-   // if we have a window send a quit event, otherwise just force shutdown
-#if 0
-   if (x86UNIXState->windowCreated())
-   {
-      CheckExitCode(in_quitVal);
-      SendQuitEvent();
-   }
-   else
-#endif
-   {
-      forceShutdown(in_quitVal);
-   }
+   if(!Platform::getWebDeployment())
+      Process::requestShutdown();
 }
 
 //-----------------------------------------------------------------------------
