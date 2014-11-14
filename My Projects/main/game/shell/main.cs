@@ -98,10 +98,6 @@ function onExit()
       
    savePrefs();
 
-   echo("Exporting server prefs");
-   export("$Pref::Server::*", "notc/prefs.cs", False);
-   BanList::Export("notc/banlist.cs");
-
    Parent::onExit();
 }
 
