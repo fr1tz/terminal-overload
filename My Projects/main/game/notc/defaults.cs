@@ -4,19 +4,16 @@
 // First we execute the core default preferences.
 exec( "core/scripts/server/defaults.cs" );
 
-
 // Now add your own game specific server preferences as
 // well as any overloaded core defaults here.
-
-
 
 
 // Finally load the preferences saved from the last
 // game execution if they exist.
 if ( $platform !$= "xenon" )
 {
-   if ( isFile( "./prefs.cs" ) )
-      exec( "./prefs.cs" );
+   if ( isFile( $SettingsDir@"/tol.srv.prefs.cs" ) )
+      exec( $SettingsDir@"/tol.srv.prefs.cs" );
 }
 else
 {

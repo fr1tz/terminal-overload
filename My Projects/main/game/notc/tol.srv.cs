@@ -68,8 +68,9 @@ function destroyServer()
    deleteDataBlocks();
 
    // Save any server settings
-   echo( "Exporting server prefs..." );
-   export( "$Pref::Server::*", "~/prefs.cs", false );
+   echo( "Exporting server prefs and banlist..." );
+   export( "$Pref::Server::*", $SettingsDir@"/tol.srv.prefs.cs", false );
+   BanList::Export($SettingsDir@"/tol.srv.banlist.cs");
 
    // Increase the server session number.  This is used to make sure we're
    // working with the server session we think we are.
@@ -216,9 +217,7 @@ function createServer(%gameType, %args)
 function resetServerDefaults()
 {
    echo( "Resetting server defaults..." );
-
-   exec( "~/defaults.cs" );
-   exec( "~/prefs.cs" );
+   exec( "./defaults.cs" );
 
    // Reload the current level
    loadMission( $Server::MissionFile );
