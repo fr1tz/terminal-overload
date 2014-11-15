@@ -1,6 +1,19 @@
 What's new?
 ===========
 
+Version 0.5.0-testing2
+----------------------
+
+Release Date: Nov. 14, 2014
+
+- Slightly improved server browser.
+- Display "DISC TARGET AQUIRED" below disc targets.
+- Lower minimum mouse sensitivity.
+- Try to fix issue #30 (Settings don't get saved under linux)
+- Various tweaks and improvements
+- Bugfixes
+
+
 Version 0.5.0-testing1
 ----------------------
 
