@@ -4,7 +4,6 @@
 function GameCoreTE::onMissionLoaded(%game)
 {
    //echo (%game @"\c4 -> "@ %game.class @" -> GameCoreTE::onMissionLoaded");
-   $Server::MissionType = "Team Elimination";
    ETH::createTeams(%game);
    Parent::onMissionLoaded(%game);
 }

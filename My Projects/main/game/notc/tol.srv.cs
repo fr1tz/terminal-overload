@@ -130,10 +130,6 @@ function createServer(%gameType, %args)
    // This variable should uniquely identify your game and/or mod.
    $Server::GameType = "TOL" SPC $GameVersionString;
 
-   // Server::MissionType sent to the master server.  Clients can
-   // filter servers based on mission type.
-   $Server::MissionType = %mode;
-
    // GameStartTime is the sim time the game started. Used to calculated
    // game elapsed time.
    $Game::StartTime = 0;
@@ -153,14 +149,19 @@ function createServer(%gameType, %args)
    %datablockFiles.add( "content/cleanup/managedItemData.cs" );
    loadDatablockFiles( %datablockFiles, true );
 
+   $Server::NOTC::Mode = %mode;
+
    // Load up game mode scripts
    switch$(%mode)
    {
       case "DM":
+         $Server::MissionType = "Deathmatch";
          exec("./dm/exec.cs");
       case "ETH":
+         $Server::MissionType = "Tactical Ethernet";
          exec("./eth/exec.cs");
       case "TE":
+         $Server::MissionType = "Team Elimination";
          exec("./TE/exec.cs");
    }
    

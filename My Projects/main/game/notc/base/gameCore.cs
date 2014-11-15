@@ -6,14 +6,14 @@
 // Returns: The Game object
 function gameCoreCreateGame()
 {
-   if($Server::MissionType $= "")
-      $Server::MissionType = "DM"; //Default gametype, just in case
+   if($Server::NOTC::Mode $= "")
+      $Server::NOTC::Mode = "DM"; //Default gametype, just in case
 
    // Note: The Game object will be cleaned up by MissionCleanup.  Therefore its lifetime is
    // limited to that of the mission.
    new ScriptObject(Game)
    {
-      class = "GameCore" @ $Server::MissionType;
+      class = "GameCore" @ $Server::NOTC::Mode;
       superClass = GameCoreBase;
    };
 
@@ -184,7 +184,6 @@ package GameCore
 
    function GameConnection::prepareMission(%this)
    {
-      error("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww");
       Game.prepareClient(%this);
    }
    

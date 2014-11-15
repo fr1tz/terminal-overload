@@ -15,7 +15,6 @@
 function GameCoreDM::onMissionLoaded(%game)
 {
    //echo (%game @"\c4 -> "@ %game.class @" -> GameCoreDM::onMissionLoaded");
-   $Server::MissionType = "Deathmatch";
    parent::onMissionLoaded(%game);
 }
 
