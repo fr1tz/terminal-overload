@@ -2479,7 +2479,6 @@ void Player::instantInput_pitch(F32 pitch)
                      mDataBlock->maxLookAngle);
 }
 
-
 void Player::processTick(const Move* move)
 {
    PROFILE_SCOPE(Player_ProcessTick);
@@ -2555,6 +2554,7 @@ void Player::processTick(const Move* move)
             if (mPredictionCount-- <= 0)
                return;
 
+            //Con::printf("Player: Using delta move");
             move = &delta.move;
          }
          else
@@ -3649,9 +3649,9 @@ void Player::updateMove(const Move* move)
       mJetting = false;
    }
 
-   // XJump
+   // X-Jump
    bool performXJump = false;
-   if(this->canChargeXJump())
+   if(this->canChargeXJump() && move->sendCount == 0)
    {
       if(move->trigger[sChargedXJumpTrigger])
       {
@@ -3663,7 +3663,7 @@ void Player::updateMove(const Move* move)
          }
          mXJumpCharge += mDataBlock->xJumpChargeRate;
       }
-      else 
+      else if(mXJumpChargeInProgress)
       {
          mXJumpChargeInProgress = false;
          if(mXJumpCharge > 0)
@@ -3672,12 +3672,12 @@ void Player::updateMove(const Move* move)
       F32 availableEnergy = this->getEnergyLevel(mDataBlock->xJumpEnergySlot);
       mXJumpCharge = mClampF(mXJumpCharge, 0, availableEnergy);
    }
-   if(this->canInstantXJump() && mXJumpCharge == 0 && move->trigger[sInstantXJumpTrigger] && mInstantXJumpReady)
+   if(this->canInstantXJump() && mXJumpCharge == 0 && move->trigger[sInstantXJumpTrigger] && mInstantXJumpReady && move->sendCount == 0)
    {
       mXJumpCharge = mDataBlock->xJumpInstantEnergy;
       performXJump = true;
    }
-   if(!move->trigger[sInstantXJumpTrigger])
+   if(!move->trigger[sInstantXJumpTrigger] && !mInstantXJumpReady)
       mInstantXJumpReady = true;
    if(performXJump)
       this->performXJump(&acc);
