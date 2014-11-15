@@ -127,6 +127,7 @@ void BallastShapeData::packData(BitStream* stream)
       stream->writeRangedU32(groundConnectionBeamQuad->getId(), DataBlockObjectIdFirst, DataBlockObjectIdLast);
 
    stream->write(dynamicTypeField);
+   stream->write(levelEnergySlot);
 }
 
 void BallastShapeData::unpackData(BitStream* stream)
@@ -142,6 +143,7 @@ void BallastShapeData::unpackData(BitStream* stream)
       groundConnectionBeamQuadId = stream->readRangedU32(DataBlockObjectIdFirst, DataBlockObjectIdLast);
 
    stream->read(&dynamicTypeField);
+   stream->read(&levelEnergySlot);
 }
 
 
