@@ -29,8 +29,6 @@
       isContainer = "1";
       canSave = "1";
       canSaveDynamicFields = "1";
-         gameType = "TOL 0.5.0-testing1+dev";
-         launchInEditor = "0";
 
       new GuiBitmapCtrl() {
          bitmap = "notc/shell/no-preview";

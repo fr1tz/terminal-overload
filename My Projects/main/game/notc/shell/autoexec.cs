@@ -5,6 +5,7 @@ if($AUTOEXEC_CONTEXT $= "ClientInit")
 {
    exec("./startServer.cs");
    exec("./startServer.gui");
+   StartServerGui_NOTC.gameType = "TOL" @ $GameVersionString;
    shellAddStartServerGui(StartServerGui_NOTC);
 }
 
