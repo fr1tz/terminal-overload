@@ -6,7 +6,7 @@
 // is not loaded on a client, then the master must be defined. 
 // $pref::Master[0] = "2:master.garagegames.com:28002";
 
-$pref::Player::Name = "Visitor";
+$pref::Player::Name = "user";
 $pref::Player::defaultFov = 65;
 $pref::Player::zoomSpeed = 0;
 
