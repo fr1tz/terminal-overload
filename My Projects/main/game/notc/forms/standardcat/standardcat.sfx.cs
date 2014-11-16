@@ -161,7 +161,7 @@ datablock SFXProfile(FrmStandardcatImpactHardSound)
 
 datablock SFXProfile(FrmStandardcatImpactMetalSound)
 {
-	filename	 = "content/xa/rotc/p.5.4/sounds/rotc/footsteps2/land.metal.wav";
+	filename	 = "content/xa/rotc/p.5.4/sounds/rotc/footsteps1/land.metal.wav";
 	description = AudioClose3d;
 	preload = true;
 	effect = ImpactMetalEffect;
