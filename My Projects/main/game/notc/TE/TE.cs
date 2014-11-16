@@ -133,21 +133,8 @@ function TE::setupHud(%client)
    %client.MinimapHud_SetHudInfoDatasetType_Color(2);
    %client.MinimapHud_SetHudInfoDatasetType_Icon(3);
    %client.MinimapHud_ClearColors();
-   if(%client.team.teamId == 1)
-   {
-      %client.MinimapHud_AddColor(1, "0 1 0");
-      %client.MinimapHud_AddColor(2, "1 0 0");
-   }
-   else if(%client.team.teamId == 2)
-   {
-      %client.MinimapHud_AddColor(1, "1 0 0");
-      %client.MinimapHud_AddColor(2, "0 1 0");
-   }
-   else
-   {
-      %client.MinimapHud_AddColor(1, "1 0 1");
-      %client.MinimapHud_AddColor(2, "0 1 1");
-   }
+   %client.MinimapHud_AddColor(1, Game.team1.color);
+   %client.MinimapHud_AddColor(2, Game.team2.color);
    %client.MinimapHud_ClearIcons();
    %client.MinimapHud_AddIcon(1, "content/xa/notc/core/icons/p1/class0.8x8.png", 8);
    %client.MinimapHud_AddIcon(2, "content/xa/notc/core/icons/p1/class1.8x8.png", 8);

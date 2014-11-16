@@ -186,11 +186,15 @@ function GameCoreTE::loadOut(%game, %player)
    
    %team = %player.client.team;
    %player.setTeamId(%team.teamId);
-   %colorI = %player.client.paletteColors[0];
-   echo(%colorI);
+   %teamColorF = %team.color;
+   %teamColorI = mFloatLength(getWord(%teamColorF, 0)*255, 0) SPC
+                 mFloatLength(getWord(%teamColorF, 1)*255, 0) SPC
+                 mFloatLength(getWord(%teamColorF, 2)*255, 0) SPC
+                 255;
+   echo(%teamColorF SPC "->" SPC %teamColorI);
 
-   %player.paletteColors[0] = %colorI;
-   %player.paletteColors[1] = %colorI;
+   %player.paletteColors[0] = %teamColorI;
+   %player.paletteColors[1] = %teamColorI;
 
    if(isObject(%player.light))
    {
