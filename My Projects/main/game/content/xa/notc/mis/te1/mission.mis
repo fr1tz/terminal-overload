@@ -23,7 +23,9 @@ new SimGroup(MissionGroup) {
          dep0 = "content/xa/notc/mis/dm1";
          desc0 = "TODO";
          levelName = "TE1";
-         missionScript = "notc/server/init_TE.cs";
+         teamColors0 = "1 1 1";
+         teamColors1 = "0.666 0 0.666";
+         teamColors2 = "0 0.666 0.666";
    };
    new SimGroup(CameraBookmarks) {
       canSave = "1";
