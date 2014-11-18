@@ -120,6 +120,7 @@ datablock ShapeBaseImageData(WpnSR2Image)
 		stateArmThread[5]                = "aimrifle";
 		stateSequence[5]                 = "fire";
       stateSound[5]                    = WpnSR2FireSound;
+      stateSoundFlags[5]               = 1;
 		stateScript[5]                   = "onFire";
 
 		// after fire...
