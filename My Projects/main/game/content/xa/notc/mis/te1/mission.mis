@@ -22,7 +22,7 @@ new SimGroup(MissionGroup) {
       canSaveDynamicFields = "1";
          dep0 = "content/xa/notc/mis/dm1";
          desc0 = "TODO";
-         levelName = "TE1";
+         LevelName = "TE1";
          teamColors0 = "1 1 1";
          teamColors1 = "0.666 0 0.666";
          teamColors2 = "0 0.666 0.666";
@@ -1798,7 +1798,7 @@ new SimGroup(MissionGroup) {
       position = "0 0 -191.028";
       rotation = "1 0 0 0";
       scale = "9000 9000 9000";
-      paletteColors[0] = "252 153 52 255";
+      paletteColors[0] = "1 1 1 255";
       paletteColors[1] = "252 153 52 255";
       paletteColors[2] = "252 153 52 255";
       paletteColors[3] = "252 153 52 255";
@@ -1882,7 +1882,7 @@ new SimGroup(MissionGroup) {
          msToNext = "1000";
          smoothingType = "Spline";
          position = "37 116 201";
-         rotation = "0.0209759 0.0211819 -0.999556 90.5876";
+         rotation = "0.0209759 0.0211819 -0.999556 90.5878";
          scale = "1 1 1";
          paletteColors[0] = "227 209 124 255";
          paletteColors[1] = "227 209 124 255";
@@ -1953,7 +1953,7 @@ new SimGroup(MissionGroup) {
          paletteColors[12] = "132 244 30 10";
          paletteColors[13] = "64 60 135 4";
          paletteColors[14] = "128 60 135 4";
-         paletteColors[15] = "InvisibleBlack";
+         paletteColors[15] = "0 0 0 0";
          canSave = "1";
          canSaveDynamicFields = "1";
       };
@@ -1996,7 +1996,7 @@ new SimGroup(MissionGroup) {
       baseTexSize = "1024";
       lightMapSize = "256";
       screenError = "16";
-      position = "-512 -512 -5";
+      position = "-512 -512 -0.02211";
       rotation = "1 0 0 0";
       paletteColors[0] = "255 255 255 255";
       paletteColors[1] = "255 255 255 255";
