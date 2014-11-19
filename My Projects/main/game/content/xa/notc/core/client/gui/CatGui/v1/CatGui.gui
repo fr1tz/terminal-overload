@@ -32,7 +32,7 @@
    new GuiDiscTargetsHud() {
       frameColor = "1 1 1 1";
       discTargetHudInfoDataSetType = "1";
-      text = "DISC TARGET AQUIRED";
+      text = "DISC TARGET ACQUIRED";
       textOffset = "-55 10";
       position = "0 0";
       extent = "640 480";
