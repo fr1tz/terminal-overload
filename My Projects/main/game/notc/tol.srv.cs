@@ -96,6 +96,7 @@ function createServer(%gameType, %args)
    %serverType = "MultiPlayer";
    %mode = "ETH";
    %map = "eth1";
+   %prefs = "";
 
    // Parse arguments.
    for(%i = 0; %i < getWordCount(%args); %i++)
@@ -118,6 +119,11 @@ function createServer(%gameType, %args)
             %nextarg = getWord(%args, %i+1);
             if(%nextarg !$= "")
                %map = %nextarg;
+               
+         case "-srvprefs":
+            %nextarg = getWord(%args, %i+1);
+            if(%nextarg !$= "")
+               %prefs = %nextarg;
       }
    }
 
@@ -125,6 +131,8 @@ function createServer(%gameType, %args)
    initBaseServer();
    
    exec("./defaults.cs");
+   if(isFile(%prefs))
+      exec(%prefs);
 
    // Server::GameType is sent to the master server.
    // This variable should uniquely identify your game and/or mod.
@@ -150,6 +158,7 @@ function createServer(%gameType, %args)
    loadDatablockFiles( %datablockFiles, true );
 
    $Server::NOTC::Mode = %mode;
+   $Server::NOTC::Prefs = %prefs;
 
    // Load up game mode scripts
    switch$(%mode)
@@ -218,7 +227,10 @@ function createServer(%gameType, %args)
 function resetServerDefaults()
 {
    echo( "Resetting server defaults..." );
+   
    exec( "./defaults.cs" );
+   if(isFile($Server::NOTC::Prefs))
+      exec($Server::NOTC::Prefs);
 
    // Reload the current level
    loadMission( $Server::MissionFile );
