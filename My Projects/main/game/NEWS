@@ -1,41 +1,21 @@
 What's new?
 ===========
 
-Version 0.5.0-testing3
-----------------------
+Version 0.5.0
+-------------
 
-Release Date: Nov. 18, 2014
+Release Date: Nov. 19, 2014
 
-- Use map's team colors in team elimination mode.
-- Change default player name to "user".
-- Work on TE1 map.
-- Various tweaks and improvements
-- Bugfixes
-
-
-Version 0.5.0-testing2
-----------------------
-
-Release Date: Nov. 14, 2014
-
-- Slightly improved server browser.
-- Display "DISC TARGET AQUIRED" below disc targets.
-- Lower minimum mouse sensitivity.
-- Try to fix issue #30 (Settings don't get saved under linux)
-- Various tweaks and improvements
-- Bugfixes
-
-
-Version 0.5.0-testing1
-----------------------
-
-Release Date: Nov. 9, 2014
-
-- Add primitive Team Elimination game mode + a simple map for use with it.
-- Contact with water destroys CATs.
-- Use "/tmp/" prefix instead of "[P]" for unauthenticated players.
+- Add primitive "Team Elimination" game mode + a simple map for use with it.
 - Primitive in-game player list.
+- Slightly improved server browser.
+- Contact with water destroys CATs.
 - Try new sound for x-jump.
+- Use "/tmp/" prefix instead of "[P]" for unauthenticated players.
+- Try to fix issue #30 (Settings don't get saved under linux)
+- Display "DISC TARGET AQUIRED" below disc targets.
+- Change default player name to "user".
+- Lower minimum mouse sensitivity.
 - Various tweaks and improvements
 - Bugfixes
 
