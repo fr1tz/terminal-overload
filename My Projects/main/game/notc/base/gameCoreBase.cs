@@ -253,24 +253,24 @@ function GameCoreBase::prepareClient(%game, %client)
    
    %game.queryClientSettings(%client, "prepareClient");
    
-   %files = "xa/notc/core/client/audio/Descriptions/v1/exec.cs" TAB
-            "xa/notc/core/client/audio/Hearing/v1/exec.cs" TAB
-            "xa/notc/core/client/audio/HitSound/v1/exec.cs" TAB
-            "xa/notc/core/client/gui/CatGui/v1/exec.cs" TAB
-            "xa/notc/core/client/gui/EtherformGui/v1/exec.cs" TAB
-            "xa/notc/core/client/gui/ChatHud/v1/exec.cs" TAB
-            "xa/notc/core/client/gui/GuiChanger/v1/exec.cs" TAB
-            "xa/notc/core/client/gui/VitalsHud/v1/exec.cs" TAB
-            "xa/notc/core/client/gui/MinimapHud/v1/exec.cs" TAB
-            "xa/notc/core/client/gui/LoadoutHud/v1/exec.cs" TAB
-            "xa/notc/core/client/gui/MiscHud/v1/exec.cs" TAB
-            "xa/notc/core/client/gui/HudIcons/v1/exec.cs" TAB
-            "xa/notc/core/client/gui/PlayerList/v1/exec.cs" TAB
-            "xa/notc/core/client/misc/Commands/v1/exec.cs" TAB
-            "xa/notc/core/client/misc/Materials/v1/exec.cs" TAB
-            "xa/notc/core/client/postfx/ChromaticLens/v1/exec.cs" TAB
-            "xa/notc/deathmatch/client/gui/EndGameGui/v1/exec.cs" TAB
-            "xa/notc/deathmatch/client/gui/PlayerList/v1/exec.cs";
+   %files = "xa/notc/core/client/audio/Descriptions/v1/exec" TAB
+            "xa/notc/core/client/audio/Hearing/v1/exec" TAB
+            "xa/notc/core/client/audio/HitSound/v1/exec" TAB
+            "xa/notc/core/client/gui/CatGui/v1/exec" TAB
+            "xa/notc/core/client/gui/EtherformGui/v1/exec" TAB
+            "xa/notc/core/client/gui/ChatHud/v1/exec" TAB
+            "xa/notc/core/client/gui/GuiChanger/v1/exec" TAB
+            "xa/notc/core/client/gui/VitalsHud/v1/exec" TAB
+            "xa/notc/core/client/gui/MinimapHud/v1/exec" TAB
+            "xa/notc/core/client/gui/LoadoutHud/v1/exec" TAB
+            "xa/notc/core/client/gui/MiscHud/v1/exec" TAB
+            "xa/notc/core/client/gui/HudIcons/v1/exec" TAB
+            "xa/notc/core/client/gui/PlayerList/v1/exec" TAB
+            "xa/notc/core/client/misc/Commands/v1/exec" TAB
+            "xa/notc/core/client/misc/Materials/v1/exec" TAB
+            "xa/notc/core/client/postfx/ChromaticLens/v1/exec" TAB
+            "xa/notc/deathmatch/client/gui/EndGameGui/v1/exec" TAB
+            "xa/notc/deathmatch/client/gui/PlayerList/v1/exec";
 
    %fieldCount = getFieldCount(%files);
    for(%i = 0; %i < %fieldCount; %i++)

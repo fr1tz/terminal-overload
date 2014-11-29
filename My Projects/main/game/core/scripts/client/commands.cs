@@ -66,7 +66,7 @@ function clientCmdExecContentScript(%path)
    }
    %stor = $instantGroup;
    $instantGroup = ClientMissionCleanup;
-   exec("content/" @ %path);
+   exec("content/" @ %path @ ".cs");
    $instantGroup = %stor;
 }
 
