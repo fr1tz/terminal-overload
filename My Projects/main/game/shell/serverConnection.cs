@@ -216,3 +216,33 @@ function disconnectedCleanup()
    // We can now delete the client physics simulation.
    physicsDestroyWorld( "client" );                 
 }
+
+//----------------------------------------------------------------------------
+// Helper functions
+//----------------------------------------------------------------------------
+
+function cGetPlayerName()
+{
+   if($Pref::AIMS::Enabled)
+      return $Pref::AIMS::PlayerName;
+   else
+      return $Pref::Player::Name;
+}
+
+function cGetAuthAlgs()
+{
+   if($Pref::AIMS::Enabled)
+      return "aims/playerdb/auth.1";
+   else
+      return "";
+}
+
+function connect(%server)
+{
+   %conn = new GameConnection(ServerConnection);
+   RootGroup.add(ServerConnection);
+   %conn.setConnectArgs(cGetPlayerName(), cGetAuthAlgs());
+   %conn.setJoinPassword($Client::Password);
+   %conn.connect(%server);
+}
+

@@ -53,7 +53,8 @@ function StartSelectedDemo()
    RootGroup.add(ServerConnection);
    
    // Execute content scripts.
-   %files = "xa/notc/core/client/audio/Descriptions/v1/exec" TAB
+   %files = "xa/notc/core/client/base/v1/exec" TAB
+            "xa/notc/core/client/audio/Descriptions/v1/exec" TAB
             "xa/notc/core/client/audio/Hearing/v1/exec" TAB
             "xa/notc/core/client/audio/HitSound/v1/exec" TAB
             "xa/notc/core/client/gui/CatGui/v1/exec" TAB

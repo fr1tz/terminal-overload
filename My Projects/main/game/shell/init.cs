@@ -106,7 +106,6 @@ function initGUI()
 
    // Client scripts
    exec("./client.cs");
-   exec("./missionDownload.cs");
    exec("./serverConnection.cs");
    
    loadAutoexec("ClientInit");

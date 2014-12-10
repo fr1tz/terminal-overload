@@ -39,11 +39,6 @@ function initializeCore()
    exec("~/art/gui/profiles.cs");
    exec("~/scripts/gui/cursors.cs");
    
-   exec( "./audioEnvironments.cs" );
-   exec( "./audioDescriptions.cs" );
-   exec( "./audioStates.cs" );
-   exec( "./audioAmbiences.cs" );
-
    // Input devices
    exec("~/scripts/client/oculusVR.cs");
 
@@ -79,7 +74,6 @@ function initializeCore()
    exec("~/scripts/client/devHelpers.cs");
    exec("~/scripts/client/metrics.cs");
    exec("~/scripts/client/recordings.cs");
-   exec("~/scripts/client/centerPrint.cs");
 
    // Materials and Shaders for rendering various object types
    loadCoreMaterials();
