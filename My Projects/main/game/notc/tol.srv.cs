@@ -128,7 +128,7 @@ function createServer(%gameType, %args)
    }
 
    // The common module provides the basic server functionality
-   initBaseServer();
+   exec("./common/exec.cs");
    
    exec("./defaults.cs");
    if(isFile(%prefs))

@@ -5,6 +5,7 @@ This directory and its subdirectories contain the script files
 needed to run a Terminal Overload server.
 
 tol.srv.cs   Server script file for Terminal Overload
+common/      Script files providing common server functionality
 base/        Script files used by all game modes
 client/      Script files abstracting interfacing with client script modules
 dm/          Script files implementing deathmatch game mode
