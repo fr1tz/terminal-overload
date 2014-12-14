@@ -119,9 +119,6 @@ function initGUI()
    setDefaultFov( $pref::Player::defaultFov );
    setZoomSpeed( $pref::Player::zoomSpeed );
 
-   if( isFile( "./audioData.cs" ) )
-      exec( "./audioData.cs" );
-
    // Start up the main menu... this is separated out into a
    // method for easier mod override.
 
