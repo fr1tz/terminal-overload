@@ -18,8 +18,6 @@
    canSaveDynamicFields = "1";
       enabled = "1";
       isDecoy = "0";
-      zBitmapOffset = "-919";
-      zTickThread = "919";
 
    new GuiFadeinBitmapCtrl() {
       fadeColor = "0.262745 0.529412 0.486275 1";
@@ -126,7 +124,7 @@
       };
    };
    new GuiTextCtrl(MainMenuVersionString) {
-      text = "0.3.1+dev";
+      text = "---";
       maxLength = "1024";
       docking = "None";
       margin = "0 0 0 0";
@@ -172,7 +170,7 @@
       canSaveDynamicFields = "0";
 
       new GuiTextCtrl(MainMenuEditHints) {
-         text = "F10/F11: edit World/GUI";
+         text = "F10/F11: edit GUI/World";
          maxLength = "1024";
          docking = "None";
          margin = "0 0 0 0";
