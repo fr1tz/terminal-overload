@@ -239,6 +239,10 @@ function cGetAuthAlgs()
 
 function connect(%server)
 {
+   PreloadGui.clearText();
+   PreloadGui.addLine("CONNECTING TO" SPC %server);
+   Canvas.setContent(PreloadGui);
+
    %conn = new GameConnection(ServerConnection);
    RootGroup.add(ServerConnection);
    %conn.setConnectArgs(cGetPlayerName(), cGetAuthAlgs());

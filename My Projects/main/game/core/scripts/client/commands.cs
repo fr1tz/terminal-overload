@@ -57,6 +57,33 @@ function clientCmdSyncEditorGui()
       EditorGui.syncCameraGui();
 }
 
+function clientCmdInitPreload()
+{
+   $Client::PreloadPhase = true;
+   $Client::PreloadResult = "success";
+   Canvas.setContent(PreloadGui);
+}
+
+function clientCmdFinishPreload()
+{
+   $Client::PreloadPhase = false;
+
+   commandToServer('PreloadFinished', $Client::PreloadResult);
+}
+
+function clientCmdCheckFile(%file, %crc)
+{
+   %local = "MISSING";
+   if(isFile(%file))
+      %local = getFileCRC(%file);
+
+   PreloadGui.addLine(%file @ ":");
+   PreloadGui.addLine("   REMOTE:" SPC %crc SPC "LOCAL:" SPC %local);
+   
+   if(%local !$= %crc)
+      $Client::PreloadResult = "failed";
+}
+
 function clientCmdExecContentScript(%path)
 {
    if(strstr(%path, ".." ) != -1)

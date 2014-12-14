@@ -26,6 +26,30 @@ function serverCmdAuthResponse(%client, %arg1, %arg2, %arg3, %arg4, %arg5, %arg6
    sAimsAuthConn.processAuth();
 }
 
+//-----------------------------------------------------------------------------
+// Preload
+
+function serverCmdPreloadFinished(%client, %result)
+{
+   if(%result $= "success")
+   {
+      // If the mission is running, go ahead download it to the client
+      if ($missionRunning)
+      {
+         %client.loadMission();
+      }
+      else if ($Server::LoadFailMsg !$= "")
+      {
+         messageClient(%client, 'MsgLoadFailed', $Server::LoadFailMsg);
+      }
+
+      %client.countedAsPlayer = true;
+      $Server::PlayerCount++;
+   }
+   else
+      %client.delete("Goodbye");
+}
+
 //----------------------------------------------------------------------------
 // Debug commands
 //----------------------------------------------------------------------------

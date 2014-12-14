@@ -80,7 +80,7 @@ function initGUI()
    exec("./gui/mainMenuGui.cs");
    exec("./gui/startupGui.cs");
    exec("./gui/chooseLevelDlg.cs");
-   exec("./gui/loadingGui.cs");
+   exec("./gui/preloadGui.cs");
    exec("./gui/optionsDlg.cs");
    exec("./gui/optPlayer.cs");
    exec("./gui/optGraphics.cs");
@@ -95,7 +95,7 @@ function initGUI()
    exec("./gui/joinServerDlg.gui");
    exec("./gui/StartupGui.gui");
    exec("./gui/chooseLevelDlg.gui");
-   exec("./gui/loadingGui.gui");
+   exec("./gui/preloadGui.gui");
    exec("./gui/optionsDlg.gui");
    exec("./gui/optPlayer.gui");
    exec("./gui/optGraphics.gui");
@@ -133,9 +133,6 @@ function initGUI()
 
    // Connect to server if requested.
    if ($JoinGameAddress !$= "") {
-      // If we are instantly connecting to an address, load the
-      // loading GUI then attempt the connect.
-      loadLoadingGui();
       connect($JoinGameAddress, "", $Pref::Player::Name);
    }
    else {
@@ -176,23 +173,6 @@ function loadMainMenu()
       if(%file !$= "")
          createAndConnectToLocalServer( "SinglePlayer", %file );
    }
-}
-
-function loadLoadingGui(%displayText)
-{
-   Canvas.setContent("LoadingGui");
-   LoadingProgress.setValue(1);
-
-   if (%displayText !$= "")
-   {
-      LoadingProgressTxt.setValue(%displayText);
-   }
-   else
-   {
-      LoadingProgressTxt.setValue("WAITING FOR SERVER");
-   }
-
-   Canvas.repaint();
 }
 
 function savePrefs()

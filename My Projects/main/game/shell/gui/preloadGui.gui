@@ -1,10 +1,10 @@
 //--- OBJECT WRITE BEGIN ---
-%guiContent = new GuiChunkedBitmapCtrl(LoadingGui) {
+%guiContent = new GuiChunkedBitmapCtrl(PreloadGui) {
    bitmap = "notc/client/graphics/background.png";
    useVariable = "0";
    tile = "0";
    position = "0 0";
-   extent = "1280 1024";
+   extent = "640 480";
    minExtent = "8 8";
    horizSizing = "width";
    vertSizing = "height";
@@ -27,7 +27,7 @@
       anchorBottom = "0";
       anchorLeft = "0";
       anchorRight = "0";
-      position = "-1860 -1988";
+      position = "-2180 -2260";
       extent = "5000 5000";
       minExtent = "250 5000";
       horizSizing = "center";
@@ -40,36 +40,17 @@
       isContainer = "1";
       canSave = "1";
       canSaveDynamicFields = "0";
-
-      new GuiTextCtrl(LoadingProgressTxt) {
-         text = "WAITING FOR SERVER";
-         maxLength = "255";
-         docking = "None";
-         margin = "0 0 0 0";
-         padding = "0 0 0 0";
-         anchorTop = "0";
-         anchorBottom = "1";
-         anchorLeft = "0";
-         anchorRight = "1";
-         position = "2876 2922";
-         extent = "342 20";
-         minExtent = "8 8";
-         horizSizing = "width";
-         vertSizing = "height";
-         profile = "TolMenuTextProfile";
-         visible = "1";
-         active = "1";
-         tooltipProfile = "GuiToolTipProfile";
-         hovertime = "1000";
-         isContainer = "0";
-         canSave = "1";
-         canSaveDynamicFields = "0";
-      };
    };
-   new GuiControl() {
-      position = "240 400";
-      extent = "800 223";
-      minExtent = "8 8";
+   new GuiContainer() {
+      margin = "0 0 0 0";
+      padding = "0 0 0 0";
+      anchorTop = "1";
+      anchorBottom = "0";
+      anchorLeft = "1";
+      anchorRight = "0";
+      position = "0 0";
+      extent = "640 480";
+      minExtent = "8 2";
       horizSizing = "center";
       vertSizing = "center";
       profile = "GuiDefaultProfile";
@@ -81,45 +62,75 @@
       canSave = "1";
       canSaveDynamicFields = "0";
 
-      new GuiBitmapCtrl(LoadingLogo) {
-         bitmap = "shell/gui/images/big_logo_and_glow.png";
-         wrap = "0";
-         position = "-3 7";
-         extent = "792 129";
+      new GuiButtonCtrl() {
+         text = "ABORT";
+         groupNum = "-1";
+         buttonType = "PushButton";
+         useMouseEvents = "0";
+         position = "278 439";
+         extent = "115 30";
          minExtent = "8 2";
          horizSizing = "right";
          vertSizing = "bottom";
-         profile = "GuiDefaultProfile";
+         profile = "TolGuiButtonProfile";
          visible = "1";
          active = "1";
+         command = "disconnect();";
          tooltipProfile = "GuiToolTipProfile";
          hovertime = "1000";
          isContainer = "0";
          canSave = "1";
          canSaveDynamicFields = "0";
       };
-      new GuiProgressBitmapCtrl(LoadingProgress) {
-         maxLength = "1024";
-         docking = "Client";
+      new GuiScrollCtrl() {
+         willFirstRespond = "1";
+         hScrollBar = "alwaysOn";
+         vScrollBar = "alwaysOn";
+         lockHorizScroll = "0";
+         lockVertScroll = "0";
+         constantThumbHeight = "0";
+         childMargin = "0 0";
+         mouseWheelScrollSpeed = "-1";
          margin = "0 0 0 0";
          padding = "0 0 0 0";
          anchorTop = "1";
-         anchorBottom = "1";
+         anchorBottom = "0";
          anchorLeft = "1";
-         anchorRight = "1";
-         position = "38 152";
-         extent = "706 6";
+         anchorRight = "0";
+         position = "10 10";
+         extent = "620 417";
          minExtent = "8 2";
-         horizSizing = "width";
-         vertSizing = "height";
-         profile = "TolGuiProgressBitmapProfile";
+         horizSizing = "right";
+         vertSizing = "bottom";
+         profile = "ConsoleScrollProfile";
          visible = "1";
          active = "1";
          tooltipProfile = "GuiToolTipProfile";
          hovertime = "1000";
-         isContainer = "0";
+         isContainer = "1";
          canSave = "1";
          canSaveDynamicFields = "0";
+
+         new GuiMLTextCtrl() {
+            lineSpacing = "2";
+            allowColorChars = "0";
+            maxChars = "-1";
+            useURLMouseCursor = "0";
+            position = "1 1";
+            extent = "599 14";
+            minExtent = "8 2";
+            horizSizing = "right";
+            vertSizing = "bottom";
+            profile = "GuiConsoleProfile";
+            visible = "1";
+            active = "1";
+            tooltipProfile = "GuiToolTipProfile";
+            hovertime = "1000";
+            isContainer = "0";
+            internalName = "text";
+            canSave = "1";
+            canSaveDynamicFields = "0";
+         };
       };
    };
 };

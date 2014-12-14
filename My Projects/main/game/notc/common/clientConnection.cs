@@ -153,18 +153,19 @@ function GameConnection::onAuthComplete(%client)
       %client.isAdmin,
       %client.isSuperAdmin);
 
-   // If the mission is running, go ahead download it to the client
-   if ($missionRunning)
+   // Preload
+   commandToClient(%client, 'InitPreload');
+   if($Server::RequiredContent)
    {
-      %client.loadMission();
+      %s = $Server::RequiredContent.count();
+      for(%i = 0; %i < %s; %i++)
+      {
+         %file = $Server::RequiredContent.getKey(%i);
+         %crc = $Server::RequiredContent.getValue(%i);
+         commandToClient(%client, 'CheckFile', %file, %crc);
+      }
    }
-   else if ($Server::LoadFailMsg !$= "")
-   {
-      messageClient(%client, 'MsgLoadFailed', $Server::LoadFailMsg);
-   }
-   
-   %client.countedAsPlayer = true;
-   $Server::PlayerCount++;
+   commandToClient(%client, 'FinishPreload');
 }
 
 //-----------------------------------------------------------------------------

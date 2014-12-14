@@ -33,6 +33,8 @@
 
 function destroyServer()
 {
+   if(isObject($Server::RequiredContent))
+      $Server::RequiredContent.delete();
    $Server::ServerType = "";
    allowConnections(false);
    stopHeartbeat();
