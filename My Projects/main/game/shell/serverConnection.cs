@@ -240,7 +240,7 @@ function cGetAuthAlgs()
 function connect(%server)
 {
    PreloadGui.clearText();
-   PreloadGui.addLine("CONNECTING TO" SPC %server);
+   PreloadGui.addText("CONNECTING TO" SPC %server @ "\n");
    Canvas.setContent(PreloadGui);
 
    %conn = new GameConnection(ServerConnection);

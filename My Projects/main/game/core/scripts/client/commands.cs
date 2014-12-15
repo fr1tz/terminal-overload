@@ -59,29 +59,49 @@ function clientCmdSyncEditorGui()
 
 function clientCmdInitPreload()
 {
-   $Client::PreloadPhase = true;
-   $Client::PreloadResult = "success";
+   if(isObject($Client::Preload))
+      $Client::Preload.delete();
+   $Client::Preload = new SimGroup();
+   $Client::Preload.result = "success";
+   $Client::Preload.missingFiles = new ArrayObject();
+   $Client::Preload.add($Client::Preload.missingFiles);
+   PreloadGui.addText("CONNECTED\nCHECKING REQUIRED FILES\n");
    Canvas.setContent(PreloadGui);
 }
 
 function clientCmdFinishPreload()
 {
-   $Client::PreloadPhase = false;
-
-   commandToServer('PreloadFinished', $Client::PreloadResult);
+   PreloadGui.addText("\n");
+   %c = $Client::Preload.missingFiles.count();
+   if(%c == 0)
+   {
+      PreloadGui.addText("HAVE REQUIRED FILES, ASKING TO PROCEED...");
+      commandToServer('PreloadFinished', "success");
+   }
+   else
+   {
+      PreloadGui.addText("MISSING REQUIRED FILES, UNABLE TO PROCEED!");
+      commandToServer('PreloadFinished', "failed");
+      //schedule(ServerConnection, 3000, "disconnect();");
+   }
 }
 
-function clientCmdCheckFile(%file, %crc)
+function clientCmdCheckFile(%file, %size, %crc)
 {
-   %local = "MISSING";
+   %local = 0;
    if(isFile(%file))
       %local = getFileCRC(%file);
-
-   PreloadGui.addLine(%file @ ":");
-   PreloadGui.addLine("   REMOTE:" SPC %crc SPC "LOCAL:" SPC %local);
    
-   if(%local !$= %crc)
-      $Client::PreloadResult = "failed";
+   if(%local $= %crc)
+   {
+      PreloadGui.addText(".");
+   }
+   else
+   {
+      PreloadGui.addText("X");
+      $Client::Preload.missingFiles.push_back(%file, %size);
+      $Client::Preload.result = "failed";
+   }
 }
 
 function clientCmdExecContentScript(%path)

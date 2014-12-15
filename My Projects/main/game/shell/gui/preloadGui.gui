@@ -84,8 +84,8 @@
       };
       new GuiScrollCtrl() {
          willFirstRespond = "1";
-         hScrollBar = "alwaysOn";
-         vScrollBar = "alwaysOn";
+         hScrollBar = "alwaysOff";
+         vScrollBar = "alwaysOff";
          lockHorizScroll = "0";
          lockVertScroll = "0";
          constantThumbHeight = "0";
@@ -108,6 +108,7 @@
          tooltipProfile = "GuiToolTipProfile";
          hovertime = "1000";
          isContainer = "1";
+         internalName = "Scroll";
          canSave = "1";
          canSaveDynamicFields = "0";
 
@@ -117,7 +118,7 @@
             maxChars = "-1";
             useURLMouseCursor = "0";
             position = "1 1";
-            extent = "599 14";
+            extent = "618 14";
             minExtent = "8 2";
             horizSizing = "right";
             vertSizing = "bottom";

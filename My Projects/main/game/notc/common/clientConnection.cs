@@ -155,14 +155,16 @@ function GameConnection::onAuthComplete(%client)
 
    // Preload
    commandToClient(%client, 'InitPreload');
-   if($Server::RequiredContent)
+   if(isObject($Server::RequiredContent))
    {
       %s = $Server::RequiredContent.count();
       for(%i = 0; %i < %s; %i++)
       {
          %file = $Server::RequiredContent.getKey(%i);
-         %crc = $Server::RequiredContent.getValue(%i);
-         commandToClient(%client, 'CheckFile', %file, %crc);
+         %val = $Server::RequiredContent.getValue(%i);
+         %crc = getWord(%val, 0);
+         %size = getWord(%val, 0);
+         commandToClient(%client, 'CheckFile', %file, %size, %crc);
       }
    }
    commandToClient(%client, 'FinishPreload');

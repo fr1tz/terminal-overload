@@ -21,10 +21,10 @@ function PreloadGui::clearText(%this)
    %this-->text.setText("");
 }
 
-function PreloadGui::addLine(%this, %line)
+function PreloadGui::addText(%this, %text)
 {
    echo("PL:" SPC %line);
-   %this-->text.setText(%this-->text.getText() @ %line @ "\n");
-   %this-->text.schedule(0, "scrollToBottom");
+   %this-->text.addText(%text);
+   %this-->scroll.scrollToBottom();
 }
 

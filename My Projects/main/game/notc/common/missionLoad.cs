@@ -18,7 +18,7 @@ function findAndChecksumFiles(%pattern, %arrayObject)
    {
       %crc = getFileCRC(%file);
       if(%crc != 0 && %crc != -1)
-         %arrayObject.push_back(%file, %crc);
+         %arrayObject.push_back(%file, %crc SPC fileSize(%file));
       %file = findNextFile(%pattern);
    }
 }
