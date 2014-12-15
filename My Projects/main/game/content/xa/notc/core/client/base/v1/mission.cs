@@ -112,15 +112,6 @@ function loadLevel( %missionNameOrFile )
    if ( %missionFile $= "" )
       return false;
 
-   // Show the loading screen immediately.
-   if ( isObject( LoadingGui ) )
-   {
-      Canvas.setContent("LoadingGui");
-      LoadingProgress.setValue(1);
-      LoadingProgressTxt.setValue("LOADING MISSION FILE");
-      Canvas.repaint();
-   }
-
    // Prepare and launch the server.
    return createAndConnectToLocalServer( "SinglePlayer", %missionFile );
 }
