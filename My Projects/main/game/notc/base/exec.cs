@@ -3,6 +3,7 @@
 
 function executeBaseServerScripts()
 {
+   exec("./audioDescriptions.cs");
    exec("./bleedfx.cs");
    exec("./commands.cs");
    exec("./deathCamera.cs");

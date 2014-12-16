@@ -5,7 +5,6 @@ exec("./mission.cs");
 exec("./missionDownload.cs");
 exec("./centerPrint.cs");
 exec("./audioEnvironments.cs");
-exec("./audioDescriptions.cs");
 exec("./audioStates.cs");
 exec("./audioAmbiences.cs");
 
