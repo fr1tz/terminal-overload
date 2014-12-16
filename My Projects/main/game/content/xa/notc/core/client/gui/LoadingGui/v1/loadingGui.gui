@@ -81,7 +81,7 @@
       };
       new GuiProgressBitmapCtrl() {
          maxLength = "1024";
-         docking = "Client";
+         docking = "None";
          margin = "0 0 0 0";
          padding = "0 0 0 0";
          anchorTop = "1";
