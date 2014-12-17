@@ -163,7 +163,7 @@ function GameConnection::onAuthComplete(%client)
          %file = $Server::RequiredContent.getKey(%i);
          %val = $Server::RequiredContent.getValue(%i);
          %crc = getWord(%val, 0);
-         %size = getWord(%val, 0);
+         %size = getWord(%val, 1);
          commandToClient(%client, 'CheckFile', %file, %size, %crc);
       }
    }
