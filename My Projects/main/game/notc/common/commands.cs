@@ -47,7 +47,7 @@ function serverCmdPreloadFinished(%client, %result)
       $Server::PlayerCount++;
    }
    else
-      %client.delete("Goodbye");
+      %client.schedule(0, "delete", "PRELOAD_FAILED");
 }
 
 //----------------------------------------------------------------------------
