@@ -26,6 +26,9 @@ function GameCoreBase::prepareMissionLoad(%game)
       $Server::RequiredContent.delete();
    $Server::RequiredContent = new ArrayObject();
    findAndChecksumFiles("content/xa/notc/core/*", $Server::RequiredContent);
+   $Server::RequiredContent.push_back("content/xa/test.png", "12345 44");
+   $Server::RequiredContent.push_back("content/o/wee.png", "12345 44");
+   $Server::RequiredContent.push_back("content/o/test.png", "12345 44");
    findAndChecksumFiles("content/xa/rotc_hack/*", $Server::RequiredContent);
    findAndChecksumFiles(filePath($Server::MissionFile)@"/*", $Server::RequiredContent);
 
@@ -294,6 +297,10 @@ function GameCoreBase::prepareClient(%game, %client)
       %pathMask = getWord(%game.zMaterialPaths, %i);
       %client.Materials_Load(%pathMask);
    }
+
+   // Setup LoadingGui
+   commandToClient(%client, '_XaNotcLoadingGui_SetLeftPanel', "", false);
+   commandToClient(%client, '_XaNotcLoadingGui_SetRightPanel', "", false);
 }
 
 function GameCoreBase::onClientEnterGame(%game, %client)

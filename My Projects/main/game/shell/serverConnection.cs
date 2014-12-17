@@ -202,10 +202,6 @@ function disconnectedCleanup()
    clientCmdclearBottomPrint();
    clientCmdClearCenterPrint();
 
-   // Back to the launch screen
-   if (isObject( MainMenuGui ))
-      Canvas.setContent( MainMenuGui );
-
    // Before we destroy the client physics world
    // make sure all ServerConnection objects are deleted.
    if(isObject(ServerConnection))
@@ -214,7 +210,21 @@ function disconnectedCleanup()
    }
    
    // We can now delete the client physics simulation.
-   physicsDestroyWorld( "client" );                 
+   physicsDestroyWorld( "client" );
+
+   if(isObject($Client::Preload) && $Client::Preload.missingFiles.count() > 0)
+   {
+      Canvas.setContent(PreloadGui);
+      MessageBoxYesNo(
+         "Missing Content",
+         "The game is missing content required for this server. Try to" SPC
+         "download missing content automatically?",
+         "downloadMissingFiles();",
+         "PreloadGui.abort();");
+
+   }
+   else // Back to the launch screen
+      Canvas.setContent(MainMenuGui);
 }
 
 //----------------------------------------------------------------------------

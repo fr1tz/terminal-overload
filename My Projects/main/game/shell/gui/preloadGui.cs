@@ -23,8 +23,12 @@ function PreloadGui::clearText(%this)
 
 function PreloadGui::addText(%this, %text)
 {
-   echo("PL:" SPC %line);
    %this-->text.addText(%text);
    %this-->scroll.scrollToBottom();
+}
+
+function PreloadGui::downloadMissingFiles()
+{
+   downloadMissingFiles();
 }
 

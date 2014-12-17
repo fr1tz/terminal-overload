@@ -4,6 +4,7 @@
 function initBaseClient()
 {
    // Base client functionality
+   exec( "./contentDownload.cs" );
    exec( "./message.cs" );
    exec( "./actionMap.cs" );
    exec( "./renderManager.cs" );
