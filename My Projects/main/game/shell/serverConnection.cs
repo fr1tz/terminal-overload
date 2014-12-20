@@ -100,7 +100,12 @@ function GameConnection::onConnectionDropped(%this, %msg)
 {
    // Established connection was dropped by the server
    disconnectedCleanup();
-   MessageBoxOK( "DISCONNECT", "The server has dropped the connection: " @ %msg);
+   if(%msg $= "PRELOAD_FAILED" && $Client::Preload.state $= "failed")
+   {
+      // Drop expected, don't show message box
+   }
+   else
+      MessageBoxOK("DISCONNECT", "The server has dropped the connection: " @ %msg);
 }
 
 function GameConnection::onConnectionError(%this, %msg)
@@ -212,16 +217,10 @@ function disconnectedCleanup()
    // We can now delete the client physics simulation.
    physicsDestroyWorld( "client" );
 
-   if(isObject($Client::Preload) && $Client::Preload.missingFiles.count() > 0)
+   if(isObject($Client::Preload) && $Client::Preload.state $= "failed")
    {
       Canvas.setContent(PreloadGui);
-      MessageBoxYesNo(
-         "Missing Content",
-         "The game is missing content required for this server. Try to" SPC
-         "download missing content automatically?",
-         "downloadMissingFiles();",
-         "PreloadGui.abort();");
-
+      PreloadGui.preloadFailed();
    }
    else // Back to the launch screen
       Canvas.setContent(MainMenuGui);

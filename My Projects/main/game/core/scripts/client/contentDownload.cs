@@ -3,8 +3,6 @@
 
 function downloadMissingFiles()
 {
-   PreloadGui.addText("WILL TRY TO DOWNLOAD MISSING FILES\n");
-
    if(!isObject($Client::Preload) || $Client::Preload.missingFiles.count() == 0)
    {
       // Nothing to do.
@@ -12,6 +10,7 @@ function downloadMissingFiles()
       return;
    }
    
+   PreloadGui.addText("WILL TRY TO DOWNLOAD MISSING FILES\n");
    ContentDownloader.currIndex = -1;
    downloadNextMissingFile();
 }
@@ -46,16 +45,23 @@ function downloadNextMissingFile()
    PreloadGui.addText("DOWNLOADING" SPC %file);
 }
 
+function onContentDownloadFinished()
+{
+   if($Client::Preload.serverAddress $= "local")
+   {
+      PreloadGui.addText("PLEASE ABORT & RESTART SERVER");
+   }
+   else
+   {
+      PreloadGui.addText("RECONNECTING TO SERVER");
+      connect($Client::Preload.serverAddress);
+   }
+}
+
 //------------------------------------------------------------------------------
 
 if(!isObject(ContentDownloader))
    new notcHttpFileDownloader(ContentDownloader);
-
-function ContentDownloader::onLine(%this, %line)
-{
-   //error("ContentDownloader::onLine()");
-   //PreloadGui.addText(".");
-}
 
 function ContentDownloader::onDNSResolved(%this)
 {
@@ -78,13 +84,20 @@ function ContentDownloader::onConnected(%this)
 function ContentDownloader::onConnectFailed(%this)
 {
    //error("ContentDownloader::onConnectFailed()");
-   PreloadGui.addText(" CONNECTION TO FAILED\n");
+   PreloadGui.addText(" CONNECTION FAILED\n");
    schedule(0, 0, "downloadNextMissingFile");
 }
 
 function ContentDownloader::onDisconnect(%this)
 {
    //error("ContentDownloader::onDisconnect()");
+   PreloadGui.addText(" DISCONNECTED\n");
+   schedule(0, 0, "downloadNextMissingFile");
+}
+
+function ContentDownloader::onDownloadComplete(%this)
+{
+   //error("ContentDownloader::onDownloadComplete()");
    $Client::Preload.missingFiles.erase(ContentDownloader.currIndex);
    ContentDownloader.currIndex--;
    PreloadGui.addText(" DONE\n");

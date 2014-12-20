@@ -27,8 +27,38 @@ function PreloadGui::addText(%this, %text)
    %this-->scroll.scrollToBottom();
 }
 
+function PreloadGui::preloadFailed(%this)
+{
+   %c = $Client::Preload.missingFiles.count();
+   if(%c == 0)
+   {
+      %this.abort();
+      return;
+   }
+   
+   %totalsize = 0;
+   for(%i = 0; %i < %c; %i++)
+      %totalsize += $Client::Preload.missingFiles.getValue(%i);
+   %totalsizeMB = mFloatLength(%totalsize/1000000, 2);
+
+   MessageBoxYesNo(
+      "Missing Content",
+      "The game is missing content required by this server!\n" @
+      "(" @ %c SPC "files," SPC %totalsizeMB SPC "MB total)\n" @
+      "Try to download missing content automatically?",
+      "PreloadGui.downloadMissingFiles();",
+      "PreloadGui.abort();");
+}
+
 function PreloadGui::downloadMissingFiles()
 {
    downloadMissingFiles();
+}
+
+function PreloadGui::abort()
+{
+   if(isObject($Client::Preload))
+      $Client::Preload.delete();
+   disconnect();
 }
 

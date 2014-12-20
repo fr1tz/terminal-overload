@@ -62,7 +62,8 @@ function clientCmdInitPreload()
    if(isObject($Client::Preload))
       $Client::Preload.delete();
    $Client::Preload = new SimGroup();
-   $Client::Preload.result = "success";
+   $Client::Preload.serverAddress = ServerConnection.getAddress();
+   $Client::Preload.state = "working";
    $Client::Preload.missingFiles = new ArrayObject();
    $Client::Preload.add($Client::Preload.missingFiles);
    PreloadGui.addText("CONNECTED\nCHECKING REQUIRED FILES\n");
@@ -82,7 +83,8 @@ function clientCmdFinishPreload()
    else
    {
       PreloadGui.addText("MISSING REQUIRED FILES, UNABLE TO PROCEED!\n");
-      commandToServer('PreloadFinished', "failed");
+      $Client::Preload.state = "failed";
+      commandToServer('PreloadFinished', $Client::Preload.state);
       //schedule(ServerConnection, 3000, "disconnect();");
    }
 }
@@ -101,7 +103,7 @@ function clientCmdCheckFile(%file, %size, %crc)
    {
       PreloadGui.addText("X");
       $Client::Preload.missingFiles.push_back(%file, %size);
-      $Client::Preload.result = "failed";
+      $Client::Preload.state = "failed";
    }
 }
 
