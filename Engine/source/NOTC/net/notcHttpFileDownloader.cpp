@@ -94,6 +94,10 @@ ConsoleDocClass( notcHttpFileDownloader,
 );
 #endif
 
+IMPLEMENT_CALLBACK(notcHttpFileDownloader, onDownloadComplete, void, (),(),
+   "Called when download has finished successfully.\n"
+   );
+
 //--------------------------------------
 
 notcHttpFileDownloader::notcHttpFileDownloader()
@@ -239,6 +243,7 @@ void notcHttpFileDownloader::onConnected()
    send((U8*)buffer, dStrlen(buffer));
    mParseState = ParsingStatusLine;
    mChunkedEncoding = false;
+   mContentLength = -1;
 }
 
 void notcHttpFileDownloader::onConnectFailed()
@@ -274,9 +279,15 @@ bool notcHttpFileDownloader::processLine(UTF8 *line)
    }
    else if(mParseState == ParsingHeader)
    {
-      if(!dStricmp((char *) line, "transfer-encoding: chunked"))
+      if(!dStricmp((char*)line, "transfer-encoding: chunked"))
+      {
          mChunkedEncoding = true;
-      if(line[0] == 0)
+      }
+      else if(!dStrnicmp((char*)line, "content-length:", 15))
+      {
+         mContentLength = dAtoi((char*)line+15);
+      }
+      else if(line[0] == 0)
       {
          if(mChunkedEncoding)
             mParseState = ParsingChunkHeader;
@@ -318,6 +329,15 @@ bool notcHttpFileDownloader::processLine(UTF8 *line)
 U32 notcHttpFileDownloader::onDataReceive(U8 *buffer, U32 bufferLen)
 {
    mFileStream->write(bufferLen, buffer);
+   if(mContentLength > 0)
+   {
+      mContentLength -= bufferLen;
+      if(mContentLength <= 0)
+      {
+         onDownloadComplete_callback();
+         this->disconnect();
+      }
+   }
    return bufferLen;
 }
 

@@ -15,6 +15,8 @@ class FileStream;
 
 class notcHttpFileDownloader : public TCPObject
 {
+public:
+   DECLARE_CALLBACK(void, onDownloadComplete, ());
 private:
    typedef TCPObject Parent;
 protected:
@@ -31,7 +33,7 @@ protected:
  public:
    U32 mStatus;
    F32 mVersion;
-   U32 mContentLength;
+   S32 mContentLength;
    bool mChunkedEncoding;
    U32 mChunkSize;
    const char *mContentType;
