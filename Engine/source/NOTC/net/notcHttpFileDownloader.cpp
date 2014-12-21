@@ -328,14 +328,18 @@ bool notcHttpFileDownloader::processLine(UTF8 *line)
 
 U32 notcHttpFileDownloader::onDataReceive(U8 *buffer, U32 bufferLen)
 {
-   mFileStream->write(bufferLen, buffer);
-   if(mContentLength > 0)
+   if(mFileStream)
    {
-      mContentLength -= bufferLen;
-      if(mContentLength <= 0)
+      mFileStream->write(bufferLen, buffer);
+      if(mContentLength > 0)
       {
-         onDownloadComplete_callback();
-         this->disconnect();
+         mContentLength -= bufferLen;
+         if(mContentLength <= 0)
+         {
+            SAFE_DELETE(mFileStream);
+            onDownloadComplete_callback();
+            this->disconnect();
+         }
       }
    }
    return bufferLen;
