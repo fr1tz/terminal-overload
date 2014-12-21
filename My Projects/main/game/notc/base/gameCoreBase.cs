@@ -26,9 +26,6 @@ function GameCoreBase::prepareMissionLoad(%game)
       $Server::RequiredContent.delete();
    $Server::RequiredContent = new ArrayObject();
    findAndChecksumFiles("content/xa/notc/core/*", $Server::RequiredContent);
-   $Server::RequiredContent.push_back("content/xa/test.png", "12345 44");
-   $Server::RequiredContent.push_back("content/o/wee.png", "12345 44");
-   $Server::RequiredContent.push_back("content/o/test.png", "12345 44");
    findAndChecksumFiles("content/xa/rotc_hack/*", $Server::RequiredContent);
    findAndChecksumFiles(filePath($Server::MissionFile)@"/*", $Server::RequiredContent);
 
