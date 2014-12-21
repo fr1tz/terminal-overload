@@ -47,6 +47,14 @@ function downloadNextMissingFile()
 
 function onContentDownloadFinished()
 {
+   if($Client::Preload.missingFiles.count() > 0)
+   {
+      MessageBoxOK("Content Download Failed",
+         "Not all required files could be downloaded.",
+         "PreloadGui.abort();");
+      return;
+   }
+
    if($Client::Preload.serverAddress $= "local")
    {
       PreloadGui.addText("PLEASE ABORT & RESTART SERVER");
@@ -91,16 +99,23 @@ function ContentDownloader::onConnectFailed(%this)
 function ContentDownloader::onDisconnect(%this)
 {
    //error("ContentDownloader::onDisconnect()");
-   PreloadGui.addText(" DISCONNECTED\n");
-   schedule(0, 0, "downloadNextMissingFile");
+   %this.onDownloadComplete();
 }
 
 function ContentDownloader::onDownloadComplete(%this)
 {
    //error("ContentDownloader::onDownloadComplete()");
-   $Client::Preload.missingFiles.erase(ContentDownloader.currIndex);
-   ContentDownloader.currIndex--;
-   PreloadGui.addText(" DONE\n");
+   %idx = ContentDownloader.currIndex;
+   %file = $Client::Preload.missingFiles.getKey(%idx);
+   %crc = getWord($Client::Preload.missingFiles.getValue(%idx), 1);
+   if(getFileCRC(%file) $= %crc)
+   {
+      $Client::Preload.missingFiles.erase(ContentDownloader.currIndex);
+      ContentDownloader.currIndex--;
+      PreloadGui.addText(" SUCCESS\n");
+   }
+   else
+      PreloadGui.addText(" CRC FAILED\n");
    schedule(0, 0, "downloadNextMissingFile");
 }
 

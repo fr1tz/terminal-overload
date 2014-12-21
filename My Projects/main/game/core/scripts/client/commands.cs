@@ -76,13 +76,13 @@ function clientCmdFinishPreload()
    %c = $Client::Preload.missingFiles.count();
    if(%c == 0)
    {
-      PreloadGui.addText("HAVE REQUIRED FILES, ASKING TO PROCEED...\n");
+      PreloadGui.addText("HAVE REQUIRED FILES\n");
       $Client::Preload.delete();
       commandToServer('PreloadFinished', "success");
    }
    else
    {
-      PreloadGui.addText("MISSING REQUIRED FILES, UNABLE TO PROCEED!\n");
+      PreloadGui.addText("MISSING REQUIRED FILES\n");
       $Client::Preload.state = "failed";
       commandToServer('PreloadFinished', $Client::Preload.state);
       //schedule(ServerConnection, 3000, "disconnect();");
@@ -102,7 +102,7 @@ function clientCmdCheckFile(%file, %size, %crc)
    else
    {
       PreloadGui.addText("X");
-      $Client::Preload.missingFiles.push_back(%file, %size);
+      $Client::Preload.missingFiles.push_back(%file, %size SPC %crc);
       $Client::Preload.state = "failed";
    }
 }

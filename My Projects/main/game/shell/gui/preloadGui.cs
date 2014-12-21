@@ -38,7 +38,7 @@ function PreloadGui::preloadFailed(%this)
    
    %totalsize = 0;
    for(%i = 0; %i < %c; %i++)
-      %totalsize += $Client::Preload.missingFiles.getValue(%i);
+      %totalsize += getWord($Client::Preload.missingFiles.getValue(%i), 0);
    %totalsizeMB = mFloatLength(%totalsize/1000000, 2);
 
    MessageBoxYesNo(
