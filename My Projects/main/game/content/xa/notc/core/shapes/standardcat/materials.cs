@@ -50,7 +50,7 @@ singleton Material(xa_notc_core_shapes_standardcat_trailsmat)
    emissive[0] = "1";
    glow[0] = "0";
    wireframe[0] = "0";
-   diffuseColor[0] = "0.431373 0.431373 0.431373 1";
+   diffuseColor[0] = "0.992157 0.992157 0.992157 1";
    diffuseColorPaletteSlot[0] = "0";
    materialTag0 = "Miscellaneous";
    doubleSided = "0";
@@ -60,7 +60,8 @@ singleton Material(xa_notc_core_shapes_standardcat_trailsmat)
    castShadows = "0";
    vertColor[0] = "1";
    glowOnly[0] = "0";
-   diffuseMap[0] = "content/xa/notc/core/textures/grid.128.24.png";
+   diffuseMap[0] = "content/xa/rotc/p.5.4/shapes/rotc/players/standardcat/base.png";
+   mapTo = "grid.128.24.png";
 };
 
 singleton Material(xa_notc_core_shapes_standardcat_mat1)
