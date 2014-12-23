@@ -23,6 +23,7 @@ function executeBaseServerScripts()
    exec("./shapeBase.cs");
    exec("./staticShape.cs");
    exec("./teleporter.cs");
+   exec("./territoryZone.cs");
    exec("./triggers.cs");
    exec("./turret.cs");
    exec("./vehicle.cs");

@@ -8,7 +8,6 @@ function executeEthernetServerScripts()
    exec("./commands.cs");
    exec("./eth.cs");
    exec("./gameCoreETH.cs");
-   exec("./territoryZone.cs");
    exec("./ethPlayerList.cs");
 }
 
