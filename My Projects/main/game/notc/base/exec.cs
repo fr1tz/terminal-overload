@@ -72,6 +72,8 @@ function executeBaseServerScripts()
    exec("notc/weapons/mg1/exec.cs");
    exec("notc/weapons/mg2/exec.cs");
    exec("notc/weapons/ml1/exec.cs");
+   
+   exec("notc/structures/tg1/exec.cs");
 }
 
 executeBaseServerScripts();
