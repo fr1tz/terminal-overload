@@ -1345,6 +1345,10 @@ void TacticalZone::prepRenderImage(SceneRenderState* state)
       {
          if(this->getZoneColor().alpha == 0)
             continue;
+         if(i == Terrain && !mRenderTerrain)
+            continue;
+         if(i == Other && !mRenderInteriors)
+            continue;
       }
 
       BaseMatInstance* matInst;
