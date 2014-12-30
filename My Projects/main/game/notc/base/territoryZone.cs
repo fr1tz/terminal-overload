@@ -482,7 +482,10 @@ function TerritoryZone::updateOwner(%this, %zone)
 		%zone.zBlocked = true;
 	else if(%zone.getTeamId() == 1 && %zone.zNumBlues != 0)
 		%zone.zBlocked = true;
-   %zone.setFlicker(%zone.zBlocked ? 200 : 0);
+   %flickerTime = %zone.zBlocked ? 200 : 0;
+   %zone.setFlicker(%flickerTime);
+   if(isObject(%zone.zGenerator))
+      %zone.zGenerator.getDataBlock().onZoneFlicker(%zone.zGenerator, %flickerTime);
 }
 
 function TerritoryZone::setZoneOwner(%this, %zone, %teamId)
