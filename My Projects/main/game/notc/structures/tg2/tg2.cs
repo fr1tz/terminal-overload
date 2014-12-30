@@ -53,6 +53,13 @@ function TerritoryGenerator2::onDamage(%this, %obj, %delta)
    {
       %this.removeAssets(%obj);
       %obj.schedule(0, "delete");
+      
+      // Explosion
+      %exp = ItemG1LauncherProjectileExplosion;
+      %pos = %obj.getPosition();
+      %norm = "0 0 1";
+      %colorI = %obj.paletteColors[0];
+      createExplosion(%exp, %pos, %norm, %colorI);
    }
 }
 
