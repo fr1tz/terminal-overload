@@ -19,9 +19,10 @@ function TerritoryGenerator1::create(%this)
 function TerritoryGenerator1::onAdd(%this, %obj)
 {
    echo("TerritoryGenerator1::onAdd()");
+   %obj.zLastUpdatePosition = "";
+   %obj.zUpdateAssetsThread = "";
    %obj.zTower = "";
    %obj.zZone = "";
-   %obj.zUpdateAssetsThread = "";
    %this.updateAssetsThread(%obj);
 }
 
