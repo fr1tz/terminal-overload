@@ -95,3 +95,17 @@ singleton Material(beam_xa_notc_core_shapes_tg2_p1_mat5)
    glowOnly[0] = "0";
    doubleSided = "1";
 };
+
+singleton Material(pins_xa_notc_core_shapes_tg2_p1_mat3)
+{
+   mapTo = "xa_notc_core_shapes_tg2_p1_mat3";
+   diffuseColor[0] = "0.64 0.563579 0 1";
+   translucentBlendOp = "None";
+};
+
+singleton Material(pins_xa_notc_core_shapes_tg2_p1_mat3)
+{
+   mapTo = "xa_notc_core_shapes_tg2_p1_mat3";
+   diffuseColor[0] = "0.64 0.563579 0 1";
+   translucentBlendOp = "None";
+};
