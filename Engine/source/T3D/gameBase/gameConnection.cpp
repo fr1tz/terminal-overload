@@ -33,8 +33,8 @@
 
 #define ControlRequestTime 5000
 
-const U32 GameConnection::CurrentProtocolVersion = 5;
-const U32 GameConnection::MinRequiredProtocolVersion = 5;
+const U32 GameConnection::CurrentProtocolVersion = 6;
+const U32 GameConnection::MinRequiredProtocolVersion = 6;
 
 //----------------------------------------------------------------------------
 
