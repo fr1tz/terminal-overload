@@ -1,7 +1,7 @@
 
 singleton Material(xa_notc_core_shapes_territoryzone_terrainmat)
 {
-   diffuseColor[0] = "0.309804 0.309804 0.309804 1";
+   diffuseColor[0] = "0.443137 0.443137 0.443137 1";
    diffuseColorPaletteSlot[0] = "0";
    doubleSided = "0";
    translucentBlendOp = "AddAlpha";
@@ -26,7 +26,7 @@ singleton Material(xa_notc_core_shapes_territoryzone_terrainmat)
    emissive[1] = "0";
    wireframe[1] = "0";
    diffuseColor[1] = "0.996078 0.996078 0.996078 0";
-   diffuseMap[0] = "content/xa/notc/core/shapes/territoryzone/terrain.png";
+   diffuseMap[0] = "content/xa/notc/core/shapes/standardcat/armor.png";
    translucentZWrite = "0";
    specular[3] = "1 1 1 1";
 };
