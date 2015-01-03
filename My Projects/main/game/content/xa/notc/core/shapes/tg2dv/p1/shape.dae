@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
+  <asset>
+    <contributor>
+      <author>Blender User</author>
+      <authoring_tool>Blender 2.71.0 commit date:2014-06-25, commit time:18:36, hash:9337574</authoring_tool>
+    </contributor>
+    <created>2014-12-31T10:16:43</created>
+    <modified>2014-12-31T10:16:43</modified>
+    <unit name="meter" meter="1"/>
+    <up_axis>Z_UP</up_axis>
+  </asset>
+  <library_images/>
+  <library_effects>
+    <effect id="xa_notc_core_shapes_tg2_p1_mat0-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color sid="emission">1 1 1 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.64 0.563579 0 1</color>
+            </diffuse>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </lambert>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="xa_notc_core_shapes_tg2dv_p1_mat0-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color sid="emission">1 1 1 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.64 0.563579 0 1</color>
+            </diffuse>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </lambert>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="xa_notc_core_shapes_tg2dv_p1_mat1-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color sid="emission">1 1 1 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.64 0.563579 0 1</color>
+            </diffuse>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </lambert>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_materials>
+    <material id="xa_notc_core_shapes_tg2_p1_mat0-material" name="xa_notc_core_shapes_tg2_p1_mat0">
+      <instance_effect url="#xa_notc_core_shapes_tg2_p1_mat0-effect"/>
+    </material>
+    <material id="xa_notc_core_shapes_tg2dv_p1_mat0-material" name="xa_notc_core_shapes_tg2dv_p1_mat0">
+      <instance_effect url="#xa_notc_core_shapes_tg2dv_p1_mat0-effect"/>
+    </material>
+    <material id="xa_notc_core_shapes_tg2dv_p1_mat1-material" name="xa_notc_core_shapes_tg2dv_p1_mat1">
+      <instance_effect url="#xa_notc_core_shapes_tg2dv_p1_mat1-effect"/>
+    </material>
+  </library_materials>
+  <library_geometries>
+    <geometry id="Cone-mesh" name="Cone">
+      <mesh>
+        <source id="Cone-mesh-positions">
+          <float_array id="Cone-mesh-positions-array" count="15">0 2.828427 0 2.828427 -1.3801e-7 0 0 -2.828427 0 0 0 1.9 -2.828427 2.19618e-7 0</float_array>
+          <technique_common>
+            <accessor source="#Cone-mesh-positions-array" count="5" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Cone-mesh-normals">
+          <float_array id="Cone-mesh-normals-array" count="18">-0.4870195 -0.4870194 0.7249994 0.4870194 0.4870194 0.7249994 -0.4870194 0.4870194 0.7249994 0.4870194 -0.4870194 0.7249994 0 0 -1 0 0 -1</float_array>
+          <technique_common>
+            <accessor source="#Cone-mesh-normals-array" count="6" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Cone-mesh-map-0">
+          <float_array id="Cone-mesh-map-0-array" count="36">-3.5 -3.5 0.4999993 4.5 4.5 -3.5 4.5 -3.5 0.4999993 4.5 -3.5 -3.5 4.5 -3.5 0.4999993 4.5 4.5 -3.5 -3.5 -3.5 0.4999993 4.5 -3.5 -3.5 4.5 -3.5 -3.5 -3.5 -3.5 -3.5 4.5 -3.5 4.5 -3.5 -3.5 -3.5</float_array>
+          <technique_common>
+            <accessor source="#Cone-mesh-map-0-array" count="18" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Cone-mesh-vertices">
+          <input semantic="POSITION" source="#Cone-mesh-positions"/>
+        </vertices>
+        <polylist material="xa_notc_core_shapes_tg2_p1_mat0-material" count="6">
+          <input semantic="VERTEX" source="#Cone-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Cone-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Cone-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 3 3 3 3 </vcount>
+          <p>2 0 0 3 0 1 4 0 2 0 1 3 3 1 4 1 1 5 4 2 6 3 2 7 0 2 8 1 3 9 3 3 10 2 3 11 0 4 12 1 4 13 2 4 14 4 5 15 0 5 16 2 5 17</p>
+        </polylist>
+      </mesh>
+    </geometry>
+    <geometry id="Cone_006-mesh" name="Cone.006">
+      <mesh>
+        <source id="Cone_006-mesh-positions">
+          <float_array id="Cone_006-mesh-positions-array" count="15">0 2.828427 0 2.828427 -1.3801e-7 0 0 -2.828427 0 0 0 1.9 -2.828427 2.19618e-7 0</float_array>
+          <technique_common>
+            <accessor source="#Cone_006-mesh-positions-array" count="5" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Cone_006-mesh-normals">
+          <float_array id="Cone_006-mesh-normals-array" count="18">-0.4870195 -0.4870194 0.7249994 0.4870194 0.4870194 0.7249994 -0.4870194 0.4870194 0.7249994 0.4870194 -0.4870194 0.7249994 0 0 -1 0 0 -1</float_array>
+          <technique_common>
+            <accessor source="#Cone_006-mesh-normals-array" count="6" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Cone_006-mesh-map-0">
+          <float_array id="Cone_006-mesh-map-0-array" count="36">-3.5 -3.5 0.4999993 4.5 4.5 -3.5 4.5 -3.5 0.4999993 4.5 -3.5 -3.5 4.5 -3.5 0.4999993 4.5 4.5 -3.5 -3.5 -3.5 0.4999993 4.5 -3.5 -3.5 4.5 -3.5 -3.5 -3.5 -3.5 -3.5 4.5 -3.5 4.5 -3.5 -3.5 -3.5</float_array>
+          <technique_common>
+            <accessor source="#Cone_006-mesh-map-0-array" count="18" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Cone_006-mesh-vertices">
+          <input semantic="POSITION" source="#Cone_006-mesh-positions"/>
+        </vertices>
+        <polylist material="xa_notc_core_shapes_tg2dv_p1_mat0-material" count="6">
+          <input semantic="VERTEX" source="#Cone_006-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Cone_006-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Cone_006-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 3 3 3 3 </vcount>
+          <p>2 0 0 3 0 1 4 0 2 0 1 3 3 1 4 1 1 5 4 2 6 3 2 7 0 2 8 1 3 9 3 3 10 2 3 11 0 4 12 1 4 13 2 4 14 4 5 15 0 5 16 2 5 17</p>
+        </polylist>
+      </mesh>
+    </geometry>
+    <geometry id="Icosphere-mesh" name="Icosphere">
+      <mesh>
+        <source id="Icosphere-mesh-positions">
+          <float_array id="Icosphere-mesh-positions-array" count="126">0 0 -3.344 2.419743 -1.758025 -1.495502 -0.9242416 -2.844571 -1.495503 -2.990962 0 -1.495489 -0.9242416 2.844571 -1.495503 2.419743 1.758025 -1.495502 0.9242416 -2.844571 1.495503 -2.419743 -1.758025 1.495502 -2.419743 1.758025 1.495502 0.9242416 2.844571 1.495503 2.990962 0 1.495489 0 0 3.344 -0.5432514 -1.671984 -2.844588 1.422279 -1.033334 -2.844588 0.8790333 -2.705335 -1.758067 2.844567 0 -1.758061 1.422279 1.033334 -2.844588 -1.75804 0 -2.844579 -2.301306 -1.67199 -1.758062 -0.5432514 1.671984 -2.844588 -2.301306 1.67199 -1.758062 0.8790333 2.705335 -1.758067 3.180338 -1.033338 0 3.180338 1.033338 0 0 -3.344 0 1.965555 -2.705352 0 -3.180338 -1.033338 0 -1.965555 -2.705352 0 -1.965555 2.705352 0 -3.180338 1.033338 0 1.965555 2.705352 0 0 3.344 0 2.301306 -1.67199 1.758062 -0.8790333 -2.705335 1.758067 -2.844567 0 1.758061 -0.8790333 2.705335 1.758067 2.301306 1.67199 1.758062 0.5432514 -1.671984 2.844588 1.75804 0 2.844579 -1.422279 -1.033334 2.844588 -1.422279 1.033334 2.844588 0.5432514 1.671984 2.844588</float_array>
+          <technique_common>
+            <accessor source="#Icosphere-mesh-positions-array" count="42" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Icosphere-mesh-normals">
+          <float_array id="Icosphere-mesh-normals-array" count="240">0.1023809 -0.3150897 -0.9435235 0.700224 -0.2680317 -0.6616988 -0.2680341 -0.1947364 -0.9435229 -0.2680341 0.1947363 -0.9435229 0.1023809 0.3150897 -0.9435235 0.904989 -0.2680315 -0.3303847 0.02474653 -0.9435213 -0.3303861 -0.8896973 -0.3150946 -0.3303847 -0.5746018 0.7487835 -0.3303875 0.5345759 0.7778645 -0.3303865 0.802609 -0.5831265 -0.1256273 -0.3065689 -0.9435216 -0.1256286 -0.9920774 0 -0.1256283 -0.3065689 0.9435216 -0.1256286 0.802609 0.5831265 -0.1256274 0.4089459 -0.6284252 0.6616986 -0.4712997 -0.5831223 0.6616986 -0.700224 0.2680317 0.6616988 0.0385304 0.7487788 0.6616989 0.7240421 0.1947361 0.6616955 -0.03853034 -0.7487791 -0.6616989 0.1875943 -0.5773454 -0.7946576 0.4712997 -0.5831223 -0.6616986 0.700224 0.2680317 -0.6616988 0.6070605 0 -0.7946556 0.3313044 0 -0.943524 -0.7240421 -0.1947361 -0.6616955 -0.4911194 -0.356821 -0.7946576 -0.408946 -0.6284252 -0.6616985 -0.408946 0.6284252 -0.6616985 -0.4911193 0.356821 -0.7946576 -0.7240421 0.1947361 -0.6616955 0.4712997 0.5831223 -0.6616986 0.1875943 0.5773454 -0.7946575 -0.03853034 0.748779 -0.6616989 0.9920774 0 0.1256283 0.9822458 0 -0.1875986 0.904989 0.2680315 -0.3303847 0.3065689 -0.9435216 0.1256286 0.3035309 -0.9341714 -0.1875973 0.5345761 -0.7778645 -0.3303865 -0.802609 -0.5831265 0.1256274 -0.7946556 -0.577348 -0.187595 -0.5746018 -0.7487835 -0.3303875 -0.802609 0.5831265 0.1256273 -0.7946556 0.577348 -0.187595 -0.8896973 0.3150946 -0.3303847 0.3065689 0.9435216 0.1256286 0.3035309 0.9341714 -0.1875973 0.02474653 0.9435213 -0.3303861 0.5746018 -0.7487835 0.3303875 0.7946556 -0.577348 0.187595 0.8896973 -0.3150946 0.3303847 -0.5345759 -0.7778645 0.3303865 -0.3035309 -0.9341715 0.1875973 -0.02474653 -0.9435213 0.3303861 -0.904989 0.2680315 0.3303847 -0.9822458 0 0.1875986 -0.904989 -0.2680315 0.3303847 -0.02474653 0.9435213 0.3303861 -0.3035309 0.9341715 0.1875973 -0.5345761 0.7778645 0.3303865 0.8896973 0.3150946 0.3303847 0.7946556 0.577348 0.187595 0.5746018 0.7487835 0.3303875 0.2680341 -0.1947366 0.9435229 0.4911192 -0.3568211 0.7946576 0.7240421 -0.1947361 0.6616955 -0.1023808 -0.3150899 0.9435234 -0.1875941 -0.5773453 0.7946577 0.0385304 -0.7487788 0.661699 -0.3313044 0 0.943524 -0.6070605 0 0.7946556 -0.700224 -0.2680317 0.6616988 -0.1023808 0.3150899 0.9435234 -0.1875941 0.5773453 0.7946577 -0.4712997 0.5831223 0.6616986 0.2680341 0.1947366 0.9435228 0.4911192 0.3568211 0.7946576 0.4089459 0.6284252 0.6616986</float_array>
+          <technique_common>
+            <accessor source="#Icosphere-mesh-normals-array" count="80" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Icosphere-mesh-vertices">
+          <input semantic="POSITION" source="#Icosphere-mesh-positions"/>
+        </vertices>
+        <polylist material="xa_notc_core_shapes_tg2dv_p1_mat1-material" count="80">
+          <input semantic="VERTEX" source="#Icosphere-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Icosphere-mesh-normals" offset="1"/>
+          <vcount>3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 </vcount>
+          <p>0 0 13 0 12 0 1 1 13 1 15 1 0 2 12 2 17 2 0 3 17 3 19 3 0 4 19 4 16 4 1 5 15 5 22 5 2 6 14 6 24 6 3 7 18 7 26 7 4 8 20 8 28 8 5 9 21 9 30 9 1 10 22 10 25 10 2 11 24 11 27 11 3 12 26 12 29 12 4 13 28 13 31 13 5 14 30 14 23 14 6 15 32 15 37 15 7 16 33 16 39 16 8 17 34 17 40 17 9 18 35 18 41 18 10 19 36 19 38 19 12 20 14 20 2 20 12 21 13 21 14 21 13 22 1 22 14 22 15 23 16 23 5 23 15 24 13 24 16 24 13 25 0 25 16 25 17 26 18 26 3 26 17 27 12 27 18 27 12 28 2 28 18 28 19 29 20 29 4 29 19 30 17 30 20 30 17 31 3 31 20 31 16 32 21 32 5 32 16 33 19 33 21 33 19 34 4 34 21 34 22 35 23 35 10 35 22 36 15 36 23 36 15 37 5 37 23 37 24 38 25 38 6 38 24 39 14 39 25 39 14 40 1 40 25 40 26 41 27 41 7 41 26 42 18 42 27 42 18 43 2 43 27 43 28 44 29 44 8 44 28 45 20 45 29 45 20 46 3 46 29 46 30 47 31 47 9 47 30 48 21 48 31 48 21 49 4 49 31 49 25 50 32 50 6 50 25 51 22 51 32 51 22 52 10 52 32 52 27 53 33 53 7 53 27 54 24 54 33 54 24 55 6 55 33 55 29 56 34 56 8 56 29 57 26 57 34 57 26 58 7 58 34 58 31 59 35 59 9 59 31 60 28 60 35 60 28 61 8 61 35 61 23 62 36 62 10 62 23 63 30 63 36 63 30 64 9 64 36 64 37 65 38 65 11 65 37 66 32 66 38 66 32 67 10 67 38 67 39 68 37 68 11 68 39 69 33 69 37 69 33 70 6 70 37 70 40 71 39 71 11 71 40 72 34 72 39 72 34 73 7 73 39 73 41 74 40 74 11 74 41 75 35 75 40 75 35 76 8 76 40 76 38 77 41 77 11 77 38 78 36 78 41 78 36 79 9 79 41 79</p>
+        </polylist>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_animations>
+    <animation id="Icosphere_rotation_euler_X">
+      <source id="Icosphere_rotation_euler_X-input">
+        <float_array id="Icosphere_rotation_euler_X-input-array" count="15">0.8333333 1.25 1.666667 2.083333 2.5 3.75 4.166666 4.583333 5 5.416666 6.666666 7.083333 7.5 7.916666 8.333333</float_array>
+        <technique_common>
+          <accessor source="#Icosphere_rotation_euler_X-input-array" count="15" stride="1">
+            <param name="TIME" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Icosphere_rotation_euler_X-output">
+        <float_array id="Icosphere_rotation_euler_X-output-array" count="15">0 -90 -180 -270 -360 -360 -270 -180 -90.00006 -5.46415e-5 -5.46415e-5 -6.23397e-5 -7.00379e-5 -6.23397e-5 -5.46415e-5</float_array>
+        <technique_common>
+          <accessor source="#Icosphere_rotation_euler_X-output-array" count="15" stride="1">
+            <param name="ANGLE" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Icosphere_rotation_euler_X-interpolation">
+        <Name_array id="Icosphere_rotation_euler_X-interpolation-array" count="15">LINEAR LINEAR LINEAR LINEAR LINEAR LINEAR LINEAR LINEAR LINEAR LINEAR LINEAR LINEAR LINEAR LINEAR LINEAR</Name_array>
+        <technique_common>
+          <accessor source="#Icosphere_rotation_euler_X-interpolation-array" count="15" stride="1">
+            <param name="INTERPOLATION" type="name"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <sampler id="Icosphere_rotation_euler_X-sampler">
+        <input semantic="INPUT" source="#Icosphere_rotation_euler_X-input"/>
+        <input semantic="OUTPUT" source="#Icosphere_rotation_euler_X-output"/>
+        <input semantic="INTERPOLATION" source="#Icosphere_rotation_euler_X-interpolation"/>
+      </sampler>
+      <channel source="#Icosphere_rotation_euler_X-sampler" target="Icosphere/rotationX.ANGLE"/>
+    </animation>
+    <animation id="Icosphere_rotation_euler_Y">
+      <source id="Icosphere_rotation_euler_Y-input">
+        <float_array id="Icosphere_rotation_euler_Y-input-array" count="15">0.8333333 1.25 1.666667 2.083333 2.5 3.75 4.166666 4.583333 5 5.416666 6.666666 7.083333 7.5 7.916666 8.333333</float_array>
+        <technique_common>
+          <accessor source="#Icosphere_rotation_euler_Y-input-array" count="15" stride="1">
+            <param name="TIME" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Icosphere_rotation_euler_Y-output">
+        <float_array id="Icosphere_rotation_euler_Y-output-array" count="15">0 0 0 0 0 0 0 0 0 0 0 -89.99998 -180 -270.0001 -360.0001</float_array>
+        <technique_common>
+          <accessor source="#Icosphere_rotation_euler_Y-output-array" count="15" stride="1">
+            <param name="ANGLE" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Icosphere_rotation_euler_Y-interpolation">
+        <Name_array id="Icosphere_rotation_euler_Y-interpolation-array" count="15">LINEAR LINEAR LINEAR LINEAR LINEAR LINEAR LINEAR LINEAR LINEAR LINEAR LINEAR LINEAR LINEAR LINEAR LINEAR</Name_array>
+        <technique_common>
+          <accessor source="#Icosphere_rotation_euler_Y-interpolation-array" count="15" stride="1">
+            <param name="INTERPOLATION" type="name"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <sampler id="Icosphere_rotation_euler_Y-sampler">
+        <input semantic="INPUT" source="#Icosphere_rotation_euler_Y-input"/>
+        <input semantic="OUTPUT" source="#Icosphere_rotation_euler_Y-output"/>
+        <input semantic="INTERPOLATION" source="#Icosphere_rotation_euler_Y-interpolation"/>
+      </sampler>
+      <channel source="#Icosphere_rotation_euler_Y-sampler" target="Icosphere/rotationY.ANGLE"/>
+    </animation>
+    <animation id="Icosphere_rotation_euler_Z">
+      <source id="Icosphere_rotation_euler_Z-input">
+        <float_array id="Icosphere_rotation_euler_Z-input-array" count="15">0.8333333 1.25 1.666667 2.083333 2.5 3.75 4.166666 4.583333 5 5.416666 6.666666 7.083333 7.5 7.916666 8.333333</float_array>
+        <technique_common>
+          <accessor source="#Icosphere_rotation_euler_Z-input-array" count="15" stride="1">
+            <param name="TIME" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Icosphere_rotation_euler_Z-output">
+        <float_array id="Icosphere_rotation_euler_Z-output-array" count="15">0 0 0 0 0 0 0 0 0 0 0 0 -7.69819e-6 0 -7.6982e-6</float_array>
+        <technique_common>
+          <accessor source="#Icosphere_rotation_euler_Z-output-array" count="15" stride="1">
+            <param name="ANGLE" type="float"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <source id="Icosphere_rotation_euler_Z-interpolation">
+        <Name_array id="Icosphere_rotation_euler_Z-interpolation-array" count="15">LINEAR LINEAR LINEAR LINEAR LINEAR LINEAR LINEAR LINEAR LINEAR LINEAR LINEAR LINEAR LINEAR LINEAR LINEAR</Name_array>
+        <technique_common>
+          <accessor source="#Icosphere_rotation_euler_Z-interpolation-array" count="15" stride="1">
+            <param name="INTERPOLATION" type="name"/>
+          </accessor>
+        </technique_common>
+      </source>
+      <sampler id="Icosphere_rotation_euler_Z-sampler">
+        <input semantic="INPUT" source="#Icosphere_rotation_euler_Z-input"/>
+        <input semantic="OUTPUT" source="#Icosphere_rotation_euler_Z-output"/>
+        <input semantic="INTERPOLATION" source="#Icosphere_rotation_euler_Z-interpolation"/>
+      </sampler>
+      <channel source="#Icosphere_rotation_euler_Z-sampler" target="Icosphere/rotationZ.ANGLE"/>
+    </animation>
+  </library_animations>
+  <library_controllers/>
+  <library_visual_scenes>
+    <visual_scene id="Scene" name="Scene">
+      <node id="core" name="core" type="NODE">
+        <translate sid="location">2.95231e-12 0 3.436675</translate>
+        <rotate sid="rotationZ">0 0 1 -45</rotate>
+        <rotate sid="rotationY">0 1 0 0</rotate>
+        <rotate sid="rotationX">1 0 0 0</rotate>
+        <scale sid="scale">1 1 1</scale>
+        <instance_geometry url="#Cone-mesh">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="xa_notc_core_shapes_tg2_p1_mat0-material" target="#xa_notc_core_shapes_tg2_p1_mat0-material"/>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+      <node id="core_001" name="core_001" type="NODE">
+        <translate sid="location">2.95231e-12 0 3.436675</translate>
+        <rotate sid="rotationZ">0 0 1 45</rotate>
+        <rotate sid="rotationY">0 1 0 -6.11748e-6</rotate>
+        <rotate sid="rotationX">1 0 0 -180</rotate>
+        <scale sid="scale">1 1 1</scale>
+        <instance_geometry url="#Cone_006-mesh">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="xa_notc_core_shapes_tg2dv_p1_mat0-material" target="#xa_notc_core_shapes_tg2dv_p1_mat0-material"/>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+      <node id="Icosphere" name="Icosphere" type="NODE">
+        <translate sid="location">0 0 3.388809</translate>
+        <rotate sid="rotationZ">0 0 1 -7.6982e-6</rotate>
+        <rotate sid="rotationY">0 1 0 -6.46594e-5</rotate>
+        <rotate sid="rotationX">1 0 0 -5.46415e-5</rotate>
+        <scale sid="scale">1 1 1</scale>
+        <instance_geometry url="#Icosphere-mesh">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="xa_notc_core_shapes_tg2dv_p1_mat1-material" target="#xa_notc_core_shapes_tg2dv_p1_mat1-material"/>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+      <node id="Mount3" name="Mount3" type="NODE">
+        <translate sid="location">0 0 3.373757</translate>
+        <rotate sid="rotationZ">0 0 1 0</rotate>
+        <rotate sid="rotationY">0 1 0 0</rotate>
+        <rotate sid="rotationX">1 0 0 0</rotate>
+        <scale sid="scale">1 1 1</scale>
+      </node>
+      <node id="Eye" name="Eye" type="NODE">
+        <translate sid="location">2.86287e-16 1.289324 4.663081</translate>
+        <rotate sid="rotationZ">0 0 1 0</rotate>
+        <rotate sid="rotationY">0 1 0 0</rotate>
+        <rotate sid="rotationX">1 0 0 0</rotate>
+        <scale sid="scale">1 1 1</scale>
+      </node>
+      <node id="Cam" name="Cam" type="NODE">
+        <translate sid="location">1.21059e-15 -8.472699 8.825754</translate>
+        <rotate sid="rotationZ">0 0 1 0</rotate>
+        <rotate sid="rotationY">0 1 0 0</rotate>
+        <rotate sid="rotationX">1 0 0 0</rotate>
+        <scale sid="scale">1 1 1</scale>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene"/>
+  </scene>
+</COLLADA>
