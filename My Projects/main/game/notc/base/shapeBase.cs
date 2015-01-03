@@ -199,6 +199,13 @@ function ShapeBase::getImpulseDamperStrength(%this)
    return %this.zImpulseDamper*%energy;
 }
 
+//------------------------------------------------------------------------------
+
+function ShapeBase::destroy(%this)
+{
+   %this.damage(0, %this.getPosition(), %this.getDataBlock().maxDamage, 0);
+}
+
 //-----------------------------------------------------------------------------
 // ShapeBase datablock
 //-----------------------------------------------------------------------------
