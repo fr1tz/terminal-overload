@@ -97,7 +97,7 @@ function TerritoryGenerator2::updateAssetsThread(%this, %obj)
    
    %pos = %obj.getPosition();
    
-   if(%pos $= %obj.zLastUpdatePosition)
+   if(%obj.zLastUpdatePosition !$= "" && %pos $= %obj.zLastUpdatePosition)
       return;
       
    %this.removeAssets(%obj);
