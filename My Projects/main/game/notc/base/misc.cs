@@ -125,3 +125,21 @@ function getLevelInfo(%missionFile)
    return 0;
 }
 
+function snapFloat(%val, %snap)
+{
+   if(%snap == 0)
+      return %val;
+      
+   %a = mFmod(%val, %snap);
+
+   if(mAbs(%a) > (%snap/2))
+   {
+      if(%val < 0)
+         %val -= %snap;
+      else
+         %val += %snap;
+   }
+
+   return(%val - %a);
+}
+
