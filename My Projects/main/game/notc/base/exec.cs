@@ -42,6 +42,7 @@ function executeBaseServerScripts()
    exec("notc/forms/etherform/exec.cs");
    exec("notc/forms/standardcat/exec.cs");
    exec("notc/forms/snipercat/exec.cs");
+   exec("notc/forms/tg2dv/exec.cs");
 
    exec("notc/items/damper/exec.cs");
    exec("notc/items/vamp/exec.cs");
