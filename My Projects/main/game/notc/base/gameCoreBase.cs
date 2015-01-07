@@ -834,3 +834,8 @@ function GameCoreBase::F(%game, %client, %nr)
 {
    //echo (%game @"\c4 -> "@ %game.class @" -> GameCoreBase::F");
 }
+
+function GameCoreBase::onZoneOwnerChanged(%game, %zone)
+{
+   //echo (%game @"\c4 -> "@ %game.class @" -> GameCoreBase::onZoneOwnerChanged");
+}

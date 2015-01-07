@@ -391,5 +391,9 @@ function GameCoreETH::F(%game, %client, %nr)
       ETH::joinTeam(%client, %nr);
 }
 
-  
+function GameCoreETH::onZoneOwnerChanged(%game, %zone)
+{
+   //echo (%game @"\c4 -> "@ %game.class @" -> GameCoreETH::onZoneOwnerChanged");
+   ETH::checkRoundEnd();
+}
 

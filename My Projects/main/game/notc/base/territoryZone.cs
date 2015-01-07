@@ -563,7 +563,7 @@ function TerritoryZone::setZoneOwner(%this, %zone, %teamId)
 		Game.team2.numTerritoryZones SPC "blue" SPC
       Game.team0.numTerritoryZones SPC "white");
 		
-	ETH::checkRoundEnd();
+   Game.onZoneOwnerChanged(%obj);
 }
 
 
