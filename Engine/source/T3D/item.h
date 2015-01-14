@@ -164,6 +164,7 @@ class Item: public ShapeBase
    void processTick(const Move *move);
    void interpolateTick(F32 delta);
    virtual void setTransform(const MatrixF &mat);
+   virtual void onUnmount(SceneObject* obj, S32 node);
 
    U32  packUpdate  (NetConnection *conn, U32 mask, BitStream *stream);
    void unpackUpdate(NetConnection *conn,           BitStream *stream);

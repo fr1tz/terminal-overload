@@ -558,6 +558,13 @@ void Item::processTick(const Move* move)
       delta.posVec.y = -delta.warpOffset.y;
       delta.posVec.z = -delta.warpOffset.z;
    }
+   else if(this->isMounted())
+   {
+      mVelocity = mMount.object->getVelocity();
+      MatrixF mat;
+      mMount.object->getMountTransform( mMount.node, mMount.xfm, &mat );
+      Parent::setTransform(mat);
+   }
    else
    {
       if (isServerObject() && mAtRest && (mStatic == false && mDataBlock->sticky == false))
@@ -588,12 +595,20 @@ void Item::interpolateTick(F32 dt)
 {
    Parent::interpolateTick(dt);
 
-   // Client side interpolation
-   Point3F pos = delta.pos + delta.posVec * dt;
-   MatrixF mat = mRenderObjToWorld;
-   mat.setColumn(3,pos);
-   setRenderTransform(mat);
-   delta.dt = dt;
+   if(this->isMounted())
+   {
+      MatrixF mat;
+      mMount.object->getRenderMountTransform(dt, mMount.node, mMount.xfm, &mat);
+      setRenderTransform(mat);
+   }
+   else
+   {
+      Point3F pos = delta.pos + delta.posVec * dt;
+      MatrixF mat = mRenderObjToWorld;
+      mat.setColumn(3,pos);
+      setRenderTransform(mat);
+      delta.dt = dt;
+   }
 }
 
 
@@ -626,6 +641,19 @@ void Item::setTransform(const MatrixF& mat)
    setMaskBits(RotationMask | PositionMask | NoWarpMask);
 }
 
+void Item::onUnmount(SceneObject* obj, S32 node)
+{
+   // Re-orient the item straight up
+   Point3F pos;
+   this->getTransform().getColumn(3, &pos);
+   MatrixF mat;
+   mat.setColumn(3, pos);
+   this->setTransform(mat);
+   this->setVelocity(this->getVelocity());
+
+   // Parent function will call script
+   Parent::onUnmount(obj, node);
+}
 
 //----------------------------------------------------------------------------
 void Item::updateWorkingCollisionSet(const U32 mask, const F32 dt)
