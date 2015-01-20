@@ -233,13 +233,12 @@ void GuiHudIconsHud::drawInfo(GameBase* control, HudInfo* hudInfo)
    if(icon == NULL)
       return;
 
-   Point3F targetPos = obj ? obj->getBoxCenter() : hudInfo->getPosition();
+   Point3F targetPos = obj ? obj->getRenderWorldBox().getCenter() : hudInfo->getPosition();
+   Point3F controlPos = control->getRenderWorldBox().getCenter();
 
-   Point3F shapePos = control->getBoxCenter();
+   F32 targetDist = Point3F(targetPos - controlPos).len();
 
-   F32 targetDist = Point3F(targetPos - control->getPosition()).len();
-
-   Point3F targetVec = targetPos - shapePos;
+   Point3F targetVec = targetPos - controlPos;
    MatrixF mat = MathUtils::createOrientFromDir(targetVec);
 
    Box3F box(-1, -1, -1, 1, 1, 1); 
@@ -254,10 +253,10 @@ void GuiHudIconsHud::drawInfo(GameBase* control, HudInfo* hudInfo)
    Point3F a = targetPos - x + z;
    Point3F b = targetPos + x - z;
 
-   if(mParent->projectLR(shapePos,a,&a) && mParent->projectLR(shapePos,b,&b))
+   if(mParent->projectLR(controlPos,a,&a) && mParent->projectLR(controlPos,b,&b))
    {
       Point3F targetPos2D;
-      if(!mParent->projectLR(shapePos,targetPos,&targetPos2D))
+      if(!mParent->projectLR(controlPos,targetPos,&targetPos2D))
          return;
 
       U32 offset = icon->size;
