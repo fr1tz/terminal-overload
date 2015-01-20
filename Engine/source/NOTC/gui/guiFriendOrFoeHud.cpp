@@ -168,6 +168,10 @@ void GuiFriendOrFoeHud::drawInfo(GameBase* control, HudInfo* hudInfo)
    if(!teamID)
       return;
 
+   // Check if we should ignore this HudInfo object
+   if(hudInfo->getDataSetBoolField(mHudInfoDatasetType_TeamID))
+      return;
+
    SceneObject* obj = hudInfo->getObject();
 
    // Ignore our control object.
