@@ -104,6 +104,17 @@ function ETH::joinTeam(%client, %teamId)
    return true;
 }
 
+function ETH::getTeamColorI(%teamId)
+{
+   %team = Game.team[%teamId];
+   %teamColorF = %team.color;
+   %teamColorI = mFloatLength(getWord(%teamColorF, 0)*255, 0) SPC
+                 mFloatLength(getWord(%teamColorF, 1)*255, 0) SPC
+                 mFloatLength(getWord(%teamColorF, 2)*255, 0) SPC
+                 255;
+   return %teamColorI;
+}
+
 function ETH::getTeamPlayerCount(%teamId)
 {
    %count = 0;
