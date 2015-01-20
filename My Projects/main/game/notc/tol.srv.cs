@@ -174,6 +174,9 @@ function createServer(%gameType, %args)
       case "TE":
          $Server::MissionType = "Team Elimination";
          exec("./TE/exec.cs");
+      case "CTF":
+         $Server::MissionType = "Capture The Flag";
+         exec("./ctf/exec.cs");
    }
    
    %level = "content/xa/notc/mis/" @ %map @ "/mission.mis";

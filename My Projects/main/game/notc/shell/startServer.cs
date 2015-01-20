@@ -14,6 +14,8 @@ function StartServerGui_NOTC::updateArgs(%this)
       %mode = "eth";
    else if(getSubStr(%map, 0, 2) $= "te")
       %mode = "te";
+   else if(getSubStr(%map, 0, 3) $= "ctf")
+      %mode = "ctf";
       
    %args = "-mode" SPC %mode SPC
            "-map" SPC %map;
