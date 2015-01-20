@@ -26,7 +26,7 @@ $HudInfoDatasetType::TeamID = 2;
 // string field: unused
 //    int field: the team ID
 //  float field: unused
-//   bool field: unused
+//   bool field: set to true to not show on GuiFriendOrFoeHud
 
 $HudInfoDatasetType::IconID = 3;
 // string field: unused
