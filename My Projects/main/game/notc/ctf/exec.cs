@@ -7,6 +7,7 @@ function executeCTFServerScripts()
    exec("notc/eth/aiPlayer.cs");
    exec("notc/eth/eth.cs");
    exec("notc/eth/ethPlayerList.cs");
+   exec("./sounds.cs");
    exec("./commands.cs");
    exec("./ctf.cs");
    exec("./flag.cs");

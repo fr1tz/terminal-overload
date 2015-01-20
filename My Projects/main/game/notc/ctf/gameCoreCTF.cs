@@ -177,7 +177,7 @@ function GameCoreCTF::clientRecordingDemo(%game, %client, %isRecording)
       return;
       
    %client.zDemoRecordingSetupInProgress = true;
-   ETH::setupHud(%client);
+   CTF::setupHud(%client);
    %client.control(%client.player);
    %client.zDemoRecordingSetupInProgress = false;
 }

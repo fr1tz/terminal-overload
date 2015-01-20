@@ -81,6 +81,8 @@ function CTF::setupHud(%client)
    %client.MinimapHud_AddIcon(3, "content/xa/notc/core/icons/p1/class2.8x8.png", 8);
    %client.MinimapHud_AddIcon(4, "content/xa/notc/core/icons/p1/class3.8x8.png", 8);
    %client.MinimapHud_AddIcon(128, "content/xa/notc/core/icons/p1/etherform.8x8.png", 8);
+   %client.MinimapHud_AddIcon(129, "content/xa/notc/core/icons/p1/flagstand.14x14.png", 14);
+   %client.MinimapHud_AddIcon(130, "content/xa/notc/core/icons/p1/flag.8x8.png", 8);
    
    // HudIcons
    %client.HudIcons_SetHudInfoDatasetType_Color(2);
@@ -94,6 +96,7 @@ function CTF::setupHud(%client)
    //%client.MinimapHud_AddIcon(3, "content/xa/notc/core/icons/p1/class2.8x8.png", 8);
    //%client.MinimapHud_AddIcon(4, "content/xa/notc/core/icons/p1/class3.8x8.png", 8);
    %client.HudIcons_AddIcon(128, "content/xa/notc/core/icons/p1/etherform.256x256.png", 0);
+   %client.HudIcons_AddIcon(130, "content/xa/notc/core/icons/p1/flag.8x8.png", 8);
 }
 
 function CTF::resetLoadout(%client)
@@ -244,21 +247,29 @@ function CTF::switchToEtherform(%client)
 
 function CTF::onFlagReturned(%teamId)
 {
-   echo("CTF::onFlagReturned()");
+   //echo("CTF::onFlagReturned()");
+   serverPlay2D(ctfFlagReturnedSound);
+   messageAll('MsgFlagReturned', '\c2Team %1 flag has been returned!', %teamId);
 }
 
 function CTF::onFlagCaptured(%teamId)
 {
-   echo("CTF::onFlagCaptured()");
+   //echo("CTF::onFlagCaptured()");
+   serverPlay2D(ctfFlagCapturedSound);
+   messageAll('MsgFlagCaptured', '\c2Team %1 has scored!', %teamId);
 }
 
 function CTF::onFlagTaken(%teamId)
 {
-   echo("CTF::onFlagTaken()");
+   //echo("CTF::onFlagTaken()");
+   serverPlay2D(ctfFlagTakenSound);
+   messageAll('MsgFlagTaken', '\c2Team %1 flag has been taken!', %teamId);
 }
 
 function CTF::onFlagDropped(%teamId)
 {
-   echo("CTF::onFlagDropped()");
+   //echo("CTF::onFlagDropped()");
+   serverPlay2D(ctfFlagDroppedSound);
+   messageAll('MsgFlagDropped', '\c2Team %1 flag has been dropped!', %teamId);
 }
 

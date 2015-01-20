@@ -20,6 +20,14 @@ function ctfFlagStand::create(%this)
 function ctfFlagStand::onAdd(%this, %obj)
 {
    //echo("ctfFlagStand::onAdd()");
+   Parent::onAdd(%this, %obj);
+   
+   %obj.zShapeBaseHudInfo.setDatasetType(0, $HudInfoDatasetType::TeamID);
+   %obj.zShapeBaseHudInfo.setDatasetIntField(0, %obj.getTeamId());
+   %obj.zShapeBaseHudInfo.setDatasetBoolField(0, true);
+   %obj.zShapeBaseHudInfo.setDatasetType(2, $HudInfoDatasetType::IconID);
+   %obj.zShapeBaseHudInfo.setDatasetIntField(2, 129);
+   
    %obj.zFlag = new Item()
    {
       dataBlock = ctfFlag;

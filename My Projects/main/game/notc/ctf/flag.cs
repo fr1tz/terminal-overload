@@ -19,6 +19,11 @@ function ctfFlag::onAdd(%this, %obj)
 {
    //echo("ctfFlag::onAdd()");
    Parent::onAdd(%this, %obj);
+   
+   %obj.zShapeBaseHudInfo.setDatasetType(0, $HudInfoDatasetType::TeamID);
+   %obj.zShapeBaseHudInfo.setDatasetIntField(0, %obj.getTeamId());
+   %obj.zShapeBaseHudInfo.setDatasetType(2, $HudInfoDatasetType::IconID);
+   %obj.zShapeBaseHudInfo.setDatasetIntField(2, 130);
 }
 
 function ctfFlag::onRemove(%this, %obj)
@@ -61,7 +66,7 @@ function ctfFlag::onCollision(%this, %obj, %col, %vec, %vecLen)
          Game.noFlagCallbacks = true;
          %enemyFlag.getDataBlock().returnToFlagstand(%enemyFlag);
          Game.noFlagCallbacks = false;
-         CTF::onFlagCaptured(%enemyFlag.getTeamId());
+         CTF::onFlagCaptured(%flag.getTeamId());
       }
       else
          %flag.getDataBlock().returnToFlagstand(%flag);
@@ -84,7 +89,7 @@ function ctfFlag::returnToFlagstand(%this, %obj)
    {
       %flagstand.getDataBlock().returnFlag(%flagstand);
       if(Game.noFlagCallbacks == false)
-         CTF::onFlagReturned(%flag.getTeamId());
+         CTF::onFlagReturned(%obj.getTeamId());
    }
 }
 
