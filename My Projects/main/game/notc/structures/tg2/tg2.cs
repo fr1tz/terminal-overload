@@ -3,7 +3,7 @@
 
 datablock StaticShapeData(TerritoryGenerator2)
 {
-   category = "Structures";
+   //category = "Structures";
    shapeFile = "content/xa/notc/core/shapes/tg2/p1/core.dae";
    maxDamage = 1000;
 };
