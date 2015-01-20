@@ -37,6 +37,8 @@ singleton Material(xa_notc_core_shapes_tg1_p1_mat2)
    glow[1] = "1";
    emissive[1] = "1";
    wireframe[1] = "1";
+   diffuseColorPaletteSlot[1] = "0";
+   specular[2] = "1 1 1 1";
 };
 
 singleton Material(xa_notc_core_shapes_tg1_p1_mat3)
