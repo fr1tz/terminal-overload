@@ -143,3 +143,25 @@ function snapFloat(%val, %snap)
    return(%val - %a);
 }
 
+function changePalette(%obj, %slot, %colorI)
+{
+   if(!isObject(%obj))
+      return;
+      
+   if(%obj.paletteColors[%slot] $= "")
+      return;
+      
+   %obj.paletteColors[%slot] = %colorI;
+   
+   if(!%obj.isMethod("getDataBlock"))
+      return;
+      
+   %data = %obj.getDataBlock();
+      
+   if(!isObject(%data))
+      return;
+      
+   if(%data.isMethod("onPaletteChange"))
+      %data.onPaletteChange(%obj, %slot, %colorI);
+}
+
