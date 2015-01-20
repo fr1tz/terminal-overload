@@ -53,7 +53,7 @@ function Item::schedulePop(%this)
 
 function ItemData::onAdd(%this, %obj)
 {
-   Parent::onAdd(%this);
+   Parent::onAdd(%this, %obj);
    if(%this.playAmbient)
       %obj.playThread(0, "ambient");
 }
