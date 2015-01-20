@@ -478,6 +478,9 @@ function TerritoryZone::updateOwner(%this, %zone)
 	}
 
 	%zone.zBlocked = false;
+   if(%zone.zUnblockable)
+      return;
+      
 	if(%zone.getTeamId() == 2 && %zone.zNumReds != 0)
 		%zone.zBlocked = true;
 	else if(%zone.getTeamId() == 1 && %zone.zNumBlues != 0)
