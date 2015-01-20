@@ -18,7 +18,7 @@ function TerritoryGenerator1::create(%this)
 
 function TerritoryGenerator1::onAdd(%this, %obj)
 {
-   echo("TerritoryGenerator1::onAdd()");
+   //echo("TerritoryGenerator1::onAdd()");
    %obj.zLastUpdatePosition = "";
    %obj.zUpdateAssetsThread = "";
    %obj.zTower = "";
@@ -29,13 +29,13 @@ function TerritoryGenerator1::onAdd(%this, %obj)
 
 function TerritoryGenerator1::onRemove(%this, %obj)
 {
-   echo("TerritoryGenerator1::onRemove()");
+   //echo("TerritoryGenerator1::onRemove()");
    %this.removeAssets(%obj);
 }
 
 function TerritoryGenerator1::removeAssets(%this, %obj)
 {
-   echo("TerritoryGenerator1::removeAssets()");
+   //echo("TerritoryGenerator1::removeAssets()");
 
    if(isObject(%obj.zTower))
       %obj.zTower.delete();
@@ -49,7 +49,7 @@ function TerritoryGenerator1::removeAssets(%this, %obj)
 
 function TerritoryGenerator1::updateAssetsThread(%this, %obj)
 {
-   echo("TerritoryGenerator1::updateAssetsThread()");
+   //echo("TerritoryGenerator1::updateAssetsThread()");
 
    if(!isObject(%obj))
       return;
@@ -135,7 +135,7 @@ function TerritoryGenerator1::updateAssetsThread(%this, %obj)
 
 function TerritoryGenerator1::onPaletteChange(%this, %obj, %slot, %colorI)
 {
-   echo("TerritoryGenerator1::onPaletteChange()");
+   //echo("TerritoryGenerator1::onPaletteChange()");
    changePalette(%obj.zTower, %slot, %colorI);
    changePalette(%obj.zBeam, %slot, %colorI);
    changePalette(%obj.zZone, %slot, %colorI);
