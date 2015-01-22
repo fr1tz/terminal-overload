@@ -96,12 +96,14 @@ function TE::checkRoundEnd()
       
    if(%team1numCATs == 0 && %team2numCATs > 0)
    {
+      Game.team2.score++;
       centerPrintAll("Team 2 has won this round!",3);
       serverPlay2D(BlueVictorySound);
       Game.zRestartRoundThread = schedule(5000, MissionGroup, "TE::startNewRound");
    }
    else if(%team2numCATs == 0 && %team1numCATs > 0)
    {
+      Game.team1.score++;
       centerPrintAll("Team 1 has won this round!",3);
       serverPlay2D(RedVictorySound);
       Game.zRestartRoundThread = schedule(5000, MissionGroup, "TE::startNewRound");
