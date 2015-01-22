@@ -13,6 +13,9 @@ function CTF::restartGame()
 
    Game.team1.numPlayersOnRoundStart = 0;
    Game.team2.numPlayersOnRoundStart = 0;
+   
+   Game.team1.score = 0;
+   Game.team2.score = 0;
 
    TerritoryZones_reset();
    
@@ -255,6 +258,7 @@ function CTF::onFlagReturned(%teamId)
 function CTF::onFlagCaptured(%teamId)
 {
    //echo("CTF::onFlagCaptured()");
+   Game.team[%teamId].score++;
    serverPlay2D(ctfFlagCapturedSound);
    messageAll('MsgFlagCaptured', '\c2Team %1 has scored!', %teamId);
 }
