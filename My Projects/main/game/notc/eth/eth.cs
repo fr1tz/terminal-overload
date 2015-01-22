@@ -258,6 +258,7 @@ function ETH::checkRoundEnd()
 
    if(Game.team1.numTerritoryZones == 0)
    {
+      Game.team2.score++;
       centerPrintAll("Team 2 has won this round!",3);
       serverPlay2D(BlueVictorySound);
       schedule(5000, MissionGroup, "ETH::startNewRound");
@@ -265,6 +266,7 @@ function ETH::checkRoundEnd()
    }
    else if(Game.team2.numTerritoryZones == 0)
    {
+      Game.team1.score++;
       centerPrintAll("Team 1 has won this round!",3);
       serverPlay2D(RedVictorySound);
       schedule(5000, MissionGroup, "ETH::startNewRound");
