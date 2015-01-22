@@ -22,7 +22,17 @@ function ETH::updatePlayerList(%client)
    }
    
    %t = "<color:ffffff>";
-   %t = %t @ "<tab:10, 150, 200, 250, 350>";
+   if(Game.team1.score !$= "" && Game.team2.score !$= "")
+   {
+      %t = %t @ "<spush><just:center>";
+      %t = %t @ "<font:Quantico:24>Team1   ";
+      %t = %t @ "<font:Quantico:32>" @ Game.team1.score;
+      %t = %t @ " - ";
+      %t = %t @ Game.team2.score;
+      %t = %t @ "<font:Quantico:24>   Team2";
+      %t = %t @ "<spop><br>";
+   }
+   %t = %t @ "<just:left><tab:10, 150, 200, 250, 350>";
    %t = %t @ "\tName\tPing<br><br>";
    %t = %t @ "Team1: <br>";
    %t = %t @ %team1;
