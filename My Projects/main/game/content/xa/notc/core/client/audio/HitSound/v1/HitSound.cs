@@ -9,7 +9,7 @@ package XaNotcHitSound
       Parent::clientCmdGameStart(%seq);
       $XaNotcHitSound::Source1 = sfxCreateSource(
          AudioGui,
-         "content/xa/rotc/p.5.4/sounds/rotc/damage1.wav"
+         "content/o/rotc/p.5.4/sounds/rotc/damage1.wav"
       );
    }
 

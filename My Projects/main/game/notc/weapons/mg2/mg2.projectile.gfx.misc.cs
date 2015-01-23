@@ -47,7 +47,7 @@ datablock ParticleData(WpnMG2ProjectileParticleEmitter_Particles)
 	lifetimeVarianceMS	= 0;
 	spinRandomMin        = 0;
 	spinRandomMax        = 0;
-	textureName			   = "content/xa/rotc/p.5.4/textures/rotc/corona";
+	textureName			   = "content/o/rotc/p.5.4/textures/rotc/corona";
 	colors[0]            = "1 1 1 0.021";
 	colors[1]            = "1 1 1 0";
 	sizes[0]             = "4.99908";
@@ -56,7 +56,7 @@ datablock ParticleData(WpnMG2ProjectileParticleEmitter_Particles)
 	times[1]             = 1.0;
 	useInvAlpha          = false;
 	renderDot            = 0;
-   animTexName = "content/xa/rotc/p.5.4/textures/rotc/corona";
+   animTexName = "content/o/rotc/p.5.4/textures/rotc/corona";
    times[2] = "1";
 };
 

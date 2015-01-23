@@ -3,28 +3,28 @@
 
 datablock SFXProfile(WpnRepelDiscAlertSound)
 {
-   filename = "content/xa/rotc/p.5.4/sounds/rotc/alert1";
+   filename = "content/o/rotc/p.5.4/sounds/rotc/alert1";
    description = AudioGui;
    preload = true;
 };
 
 datablock SFXProfile(WpnRepelDiscSound)
 {
-   filename = "content/xa/rotc/p.5.4/sounds/rotc/spin1";
+   filename = "content/o/rotc/p.5.4/sounds/rotc/spin1";
    description = AudioCloseLoop3D;
    preload = true;
 };
 
 datablock SFXProfile(WpnRepelDiscBounceEffectSound)
 {
-   filename = "content/xa/rotc/p.5.4/sounds/rotc/explosion4";
+   filename = "content/o/rotc/p.5.4/sounds/rotc/explosion4";
    description = AudioDefault3D;
    preload = true;
 };
 
 datablock SFXProfile(WpnRepelDiscHitSound)
 {
-   filename = "content/xa/rotc/p.5.4/sounds/rotc/explosion6";
+   filename = "content/o/rotc/p.5.4/sounds/rotc/explosion6";
    description = AudioDefault3D;
    preload = true;
 };

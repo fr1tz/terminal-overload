@@ -18,7 +18,7 @@ datablock ParticleData(FrmStandardcatSkidTrailEmitter0_Particle)
 	times[0]		= 0.0;
 	times[1]		= 0.5;
 	times[2]		= 1.0;
-	textureName	= "content/xa/rotc/p.5.4/textures/rotc/spark00";
+	textureName	= "content/o/rotc/p.5.4/textures/rotc/spark00";
 	useInvAlpha = false;
 	allowLighting = false;
 };
@@ -57,7 +57,7 @@ datablock ParticleData(FrmStandardcatSkidTrailEmitter1_Particle)
 	times[0]		= 0.0;
 	times[1]		= 0.5;
 	times[2]		= 1.0;
-	textureName	= "content/xa/rotc/p.5.4/textures/rotc/smoke_particle";
+	textureName	= "content/o/rotc/p.5.4/textures/rotc/smoke_particle";
 	useInvAlpha = true;
 	allowLighting = false;
 };
@@ -94,7 +94,7 @@ datablock ParticleData(FrmStandardcatDamageEmitter_Particle)
 	constantAcceleration = 0.0;
 	lifetimeMS			  = 1000;
 	lifetimeVarianceMS	= 0;
-	textureName = "content/xa/rotc/p.5.4/shapes/rotc/misc/debris1.red";
+	textureName = "content/o/rotc/p.5.4/shapes/rotc/misc/debris1.red";
 	colors[0]	  = "1.0 1.0 1.0 1.0";
 	colors[1]	  = "1.0 1.0 1.0 1.0";
 	colors[2]	  = "1.0 1.0 1.0 0.0";
@@ -141,7 +141,7 @@ datablock ParticleData(FrmStandardcatBufferDamageEmitter_Particle)
 	constantAcceleration = 0.0;
 	lifetimeMS			  = 1000;
 	lifetimeVarianceMS	= 0;
-	textureName = "content/xa/rotc/p.5.4/shapes/rotc/misc/debris1.white";
+	textureName = "content/o/rotc/p.5.4/shapes/rotc/misc/debris1.white";
 	colors[0]	  = "1.0 1.0 1.0 1.0";
 	colors[1]	  = "1.0 1.0 1.0 1.0";
 	colors[2]	  = "1.0 1.0 1.0 0.0";
@@ -180,11 +180,11 @@ datablock DebrisData(FrmStandardcatDamageDebris)
 {
     // 2d billboard...
     render2D = true;
-    texture = "content/xa/rotc/p.5.4/textures/rotc/halo1.red.png";
+    texture = "content/o/rotc/p.5.4/textures/rotc/halo1.red.png";
     textureWidth = 0.5;
 
 	// shape...
-	shapeFile = "content/xa/rotc/p.5.4/shapes/rotc/misc/debris1.red.dts";
+	shapeFile = "content/o/rotc/p.5.4/shapes/rotc/misc/debris1.red.dts";
 
 	// bounce...
 	staticOnMaxBounce = true;
@@ -211,11 +211,11 @@ datablock DebrisData(FrmStandardcatBufferDamageDebris)
 {
     // 2d billboard...
     render2D = true;
-    texture = "content/xa/rotc/p.5.4/textures/rotc/halo1.white.png";
+    texture = "content/o/rotc/p.5.4/textures/rotc/halo1.white.png";
     textureWidth = 0.5;
 
 	// shape...
-	shapeFile = "content/xa/rotc/p.5.4/shapes/rotc/misc/debris1.white.dts";
+	shapeFile = "content/o/rotc/p.5.4/shapes/rotc/misc/debris1.white.dts";
 
 	// bounce...
 	staticOnMaxBounce = true;
@@ -257,7 +257,7 @@ datablock ParticleData(FrmStandardcatBufferRepairEmitter_Particle)
 	times[2]		= 1.0;
 	spinRandomMin = 0.0;
 	spinRandomMax = 0.0;
-	textureName	= "content/xa/rotc/p.5.4/textures/rotc/cross1";
+	textureName	= "content/o/rotc/p.5.4/textures/rotc/cross1";
 	allowLighting = false;
 };
 

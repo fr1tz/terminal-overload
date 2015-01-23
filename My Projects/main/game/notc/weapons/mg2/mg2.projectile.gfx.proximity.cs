@@ -14,7 +14,7 @@ datablock ParticleData(WpnMG2ProjectileProximityExplosion_Cloud)
 	spinRandomMin = -200.0;
 	spinRandomMax =  200.0;
 
-	textureName = "content/xa/rotc/p.5.4/textures/rotc/corona.png";
+	textureName = "content/o/rotc/p.5.4/textures/rotc/corona.png";
 
 	colors[0]	  = "1.0 1.0 1.0 1.0";
 	colors[1]	  = "1.0 1.0 1.0 0.5";
@@ -60,7 +60,7 @@ datablock ParticleData(WpnMG2ProjectileProximityExplosion_Smoke)
 	spinRandomMin = -200.0;
 	spinRandomMax =  200.0;
 
-	textureName = "content/xa/rotc/p.5.4/textures/rotc/smoke_particle.png";
+	textureName = "content/o/rotc/p.5.4/textures/rotc/smoke_particle.png";
 
 	colors[0]	  = "0.4 0.4 0.4 0.4";
 	colors[1]	  = "0.4 0.4 0.4 0.2";
@@ -100,7 +100,7 @@ datablock ParticleData(WpnMG2ProjectileProximityExplosion_Shrapnel)
 	constantAcceleration = 0.0;
 	lifetimeMS			  = 1000;
 	lifetimeVarianceMS	= 0;
-	textureName			 = "content/xa/rotc/p.5.4/textures/rotc/corona.png";
+	textureName			 = "content/o/rotc/p.5.4/textures/rotc/corona.png";
 	colors[0]	  = "1 1 1 1.0";
 	colors[1]	  = "1 1 1 0.5";
 	colors[2]	  = "1 1 1 0.0";

@@ -3,14 +3,14 @@
 
 datablock SFXProfile(ItemBounceFireSound)
 {
-   filename = "content/xa/rotc/p.5.4/sounds/rotc/explosion8";
+   filename = "content/o/rotc/p.5.4/sounds/rotc/explosion8";
    description = AudioDefault3D;
    preload = true;
 };
 
 datablock SFXProfile(ItemBounceHitSound)
 {
-   filename = "content/xa/rotc/p.5.4/sounds/rotc/explosion6";
+   filename = "content/o/rotc/p.5.4/sounds/rotc/explosion6";
    description = AudioDefault3D;
    preload = true;
 };

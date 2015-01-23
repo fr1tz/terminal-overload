@@ -48,7 +48,7 @@
       canSaveDynamicFields = "0";
    };
    new GuiBitmapCtrl(centerPrintDlg) {
-      bitmap = "content/xa/torque3d/3.0/gui/hudfill.png";
+      bitmap = "content/o/torque3d/3.0/gui/hudfill.png";
       wrap = "0";
       position = "45 230";
       extent = "550 20";
@@ -86,7 +86,7 @@
       };
    };
    new GuiBitmapCtrl(bottomPrintDlg) {
-      bitmap = "content/xa/torque3d/3.0/gui/hudfill.png";
+      bitmap = "content/o/torque3d/3.0/gui/hudfill.png";
       wrap = "0";
       position = "45 431";
       extent = "550 20";
@@ -124,7 +124,7 @@
       };
    };
    new GuiBitmapCtrl(LagIcon) {
-      bitmap = "content/xa/torque3d/3.0/gui/lagIcon.png";
+      bitmap = "content/o/torque3d/3.0/gui/lagIcon.png";
       wrap = "0";
       position = "572 3";
       extent = "32 32";

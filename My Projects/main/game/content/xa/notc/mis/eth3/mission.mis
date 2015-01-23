@@ -422,7 +422,7 @@ new SimGroup(MissionGroup) {
       layerEnabled[0] = "1";
       layerEnabled[1] = "0";
       layerEnabled[2] = "0";
-      texture[0] = "content/xa/rotc/p.5.4/skies/eth1/cloudlayer1.png";
+      texture[0] = "content/o/rotc/p.5.4/skies/eth1/cloudlayer1.png";
       texture[1] = "content/xa/notc/mis/eth1/sky/cloudlayer2.png";
       texture[2] = "content/xa/notc/mis/eth1/sky/cloudlayer2x.png";
       texScale[0] = "2";
@@ -739,7 +739,7 @@ new SimGroup(MissionGroup) {
       waveMagnitude[1] = "0.2";
       waveMagnitude[2] = "0.2";
       overallWaveMagnitude = "0";
-      rippleTex = "content/xa/torque3d/3.0/water/ripple.dds";
+      rippleTex = "content/o/torque3d/3.0/water/ripple.dds";
       rippleDir[0] = "0 1";
       rippleDir[1] = "0.707 0.707";
       rippleDir[2] = "0.5 0.86";
@@ -779,7 +779,7 @@ new SimGroup(MissionGroup) {
       waterFogDensityOffset = "1";
       wetDepth = "1.5";
       wetDarkening = "0.2";
-      depthGradientTex = "content/xa/torque3d/3.0/water/depthcolor_ramp";
+      depthGradientTex = "content/o/torque3d/3.0/water/depthcolor_ramp";
       depthGradientMax = "50";
       distortStartDist = "0.1";
       distortEndDist = "20";

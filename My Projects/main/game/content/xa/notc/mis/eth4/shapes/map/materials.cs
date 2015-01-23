@@ -16,7 +16,7 @@ singleton Material(struct1_xa_notc_mis_eth4_shapes_map_mat1)
    materialTag0 = "Miscellaneous";
    diffuseColorPaletteSlot[0] = "0";
    diffuseColorPaletteSlot[1] = "1";
-   detailMap[0] = "content/xa/rotc/p.5.4/textures/malloc/detail.grid.png";
+   detailMap[0] = "content/o/rotc/p.5.4/textures/malloc/detail.grid.png";
 };
 
 singleton Material(struct1_xa_notc_mis_eth4_shapes_map_mat2)

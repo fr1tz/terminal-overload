@@ -13,8 +13,8 @@ function loadStartup()
    // A list of the splash screens and logos
    // to cycle through. Note that they have to
    // be in consecutive numerical order
-   StartupGui.bitmap0     = "content/xa/torque3d/3.0/gui/background";
-   StartupGui.logo0       = "content/xa/torque3d/3.0/gui/Torque-3D-logo";
+   StartupGui.bitmap0     = "content/o/torque3d/3.0/gui/background";
+   StartupGui.logo0       = "content/o/torque3d/3.0/gui/Torque-3D-logo";
    StartupGui.logoPos0    = "178 251";
    StartupGui.logoExtent0 = "443 139";
 
@@ -23,7 +23,7 @@ function loadStartup()
    StartupGui.next();
 
    // Play our startup sound
-   //SFXPlayOnce(AudioGui, "content/xa/torque3d/3.0/sound/gui/startup");//SFXPlay(startsnd);
+   //SFXPlayOnce(AudioGui, "content/o/torque3d/3.0/sound/gui/startup");//SFXPlay(startsnd);
 }
 
 function StartupGui::click(%this)

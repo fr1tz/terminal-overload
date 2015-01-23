@@ -68,8 +68,8 @@ datablock ParticleData(WpnInterceptorDiscEmitterParticle : DefaultParticle)
    lifetimeVarianceMS = "0";
    spinSpeed = "0";
    useInvAlpha = "0";
-   textureName = "content/xa/rotc/p.5.4/textures/rotc/zone.grid.png";
-   animTexName = "content/xa/rotc/p.5.4/textures/rotc/zone.grid.png";
+   textureName = "content/o/rotc/p.5.4/textures/rotc/zone.grid.png";
+   animTexName = "content/o/rotc/p.5.4/textures/rotc/zone.grid.png";
    colors[0] = "1 1 1 0.5";
    colors[1] = "1 1 1 0";
    colors[3] = "0.732283 1 0 0";

@@ -60,7 +60,7 @@ singleton Material(xa_notc_core_shapes_standardcat_trailsmat)
    castShadows = "0";
    vertColor[0] = "1";
    glowOnly[0] = "0";
-   diffuseMap[0] = "content/xa/rotc/p.5.4/shapes/rotc/players/standardcat/base.png";
+   diffuseMap[0] = "content/o/rotc/p.5.4/shapes/rotc/players/standardcat/base.png";
    mapTo = "grid.128.24.png";
 };
 
@@ -150,7 +150,7 @@ singleton Material(xa_notc_core_shapes_standardcat_stealthmat2)
    diffuseColor[1] = "0.992157 0.992157 0.992157 1";
    diffuseColorPaletteSlot[0] = "0";
    diffuseColorPaletteSlot[1] = "0";
-   diffuseMap[0] = "content/xa/rotc/p.5.4/textures/rotc/armor.white.png";
+   diffuseMap[0] = "content/o/rotc/p.5.4/textures/rotc/armor.white.png";
    diffuseMap[1] = "content/xa/notc/core/shapes/standardcat/stealth1.png";
    glow[0] = "1";
    glow[1] = "1";

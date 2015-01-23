@@ -2914,9 +2914,9 @@ new SimGroup(MissionGroup) {
       layerEnabled[0] = "1";
       layerEnabled[1] = "0";
       layerEnabled[2] = "0";
-      texture[0] = "content/xa/rotc/p.5.4/textures/eth3/circuit_glow.png";
-      texture[1] = "content/xa/torque3d/3.0/skies/clouds/cloud2";
-      texture[2] = "content/xa/torque3d/3.0/skies/clouds/cloud3";
+      texture[0] = "content/o/rotc/p.5.4/textures/eth3/circuit_glow.png";
+      texture[1] = "content/o/torque3d/3.0/skies/clouds/cloud2";
+      texture[2] = "content/o/torque3d/3.0/skies/clouds/cloud3";
       texScale[0] = "4";
       texScale[1] = "1";
       texScale[2] = "1";

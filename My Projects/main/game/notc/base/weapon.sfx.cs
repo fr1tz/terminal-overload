@@ -3,28 +3,28 @@
 
 datablock SFXProfile(GenericNoDiscTargetSound)
 {
-   filename = "content/xa/rotc/p.5.4/sounds/rotc/denied1";
+   filename = "content/o/rotc/p.5.4/sounds/rotc/denied1";
    description = AudioGui;
    preload = true;
 };
 
 datablock SFXProfile(GenericDiscLaunchSound)
 {
-   filename = "content/xa/rotc/p.5.4/sounds/rotc/throw1";
+   filename = "content/o/rotc/p.5.4/sounds/rotc/throw1";
    description = AudioClose3D;
    preload = true;
 };
 
 datablock SFXProfile(GenericNoAmmoSound)
 {
-   filename = "content/xa/rotc/p.5.4/sounds/rotc/weaponEmpty";
+   filename = "content/o/rotc/p.5.4/sounds/rotc/weaponEmpty";
    description = AudioClose3D;
    preload = true;
 };
 
 datablock SFXProfile(GenericMissEnemyEffect1Sound)
 {
-   filename = "content/xa/rotc/p.5.4/sounds/rotc/flyby1";
+   filename = "content/o/rotc/p.5.4/sounds/rotc/flyby1";
    description = AudioClose3D;
    preload = true;
 };

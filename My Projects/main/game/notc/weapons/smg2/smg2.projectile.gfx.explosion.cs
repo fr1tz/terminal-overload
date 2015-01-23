@@ -56,8 +56,8 @@ datablock ParticleData(WpnSMG2ProjectileExplosion_CloudParticle : DefaultParticl
    sizes[3] = "0";
    times[1] = "1";
    times[2] = "1";
-   textureName = "content/xa/rotc/p.5.4/textures/rotc/unnamed1.png";
-   animTexName = "content/xa/rotc/p.5.4/textures/rotc/unnamed1.png";
+   textureName = "content/o/rotc/p.5.4/textures/rotc/unnamed1.png";
+   animTexName = "content/o/rotc/p.5.4/textures/rotc/unnamed1.png";
    lifetimeMS = "100";
    lifetimeVarianceMS = "0";
    spinSpeed = "0";
@@ -90,7 +90,7 @@ datablock ExplosionData(WpnSMG2ProjectileExplosion)
 	lifetimeMS = "192";
 
 	// shape...
-	//explosionShape = "content/xa/rotc/p.5.4/shapes/rotc/effects/explosion5.green.dts";
+	//explosionShape = "content/o/rotc/p.5.4/shapes/rotc/effects/explosion5.green.dts";
 	faceViewer = false;
 	playSpeed = 4.0;
 	sizes[0] = "0 0 0";

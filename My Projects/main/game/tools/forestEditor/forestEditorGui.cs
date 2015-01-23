@@ -316,7 +316,7 @@ function ForestEditMeshTree::onDoubleClick( %this )
       parentGroup = ForestBrushGroup;
    };          
    
-   //ForestDataManager.setDirty( %element, "content/xa/torque3d/3.0/forest/brushes.cs" );                 
+   //ForestDataManager.setDirty( %element, "content/o/torque3d/3.0/forest/brushes.cs" );                 
 
    ForestEditBrushTree.clearSelection();      
    ForestEditBrushTree.buildVisibleTree( true );

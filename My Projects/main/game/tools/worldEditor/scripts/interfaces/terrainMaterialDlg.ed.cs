@@ -577,7 +577,7 @@ function TerrainMaterialDlg::restoreMaterials( %this )
 function TerrainMaterialDlg::_selectTextureFileDialog( %this, %defaultFileName )
 {
    if( $Pref::TerrainEditor::LastPath $= "" )
-      $Pref::TerrainEditor::LastPath = "content/xa/torque3d/3.0/terrains";
+      $Pref::TerrainEditor::LastPath = "content/o/torque3d/3.0/terrains";
 
    %dlg = new OpenFileDialog()
    {

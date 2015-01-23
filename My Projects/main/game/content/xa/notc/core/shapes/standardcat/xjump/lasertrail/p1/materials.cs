@@ -36,7 +36,7 @@ singleton Material(xa_notc_core_shapes_xjump_lasertrail_p1_mat1)
    materialTag0 = "Miscellaneous";
    diffuseColorPaletteSlot[0] = "0";
    mapTo = "laser1.white.png";
-   diffuseMap[0] = "content/xa/rotc/p.5.4/textures/rotc/laser1.white.png";
+   diffuseMap[0] = "content/o/rotc/p.5.4/textures/rotc/laser1.white.png";
 };
 
 singleton Material(xa_notc_core_shapes_xjump_lasertrail_p1_mat2)
@@ -61,6 +61,6 @@ singleton Material(xa_notc_core_shapes_xjump_lasertrail_p1_mat2)
    glow[1] = "1";
    emissive[1] = "1";
    vertColor[1] = "1";
-   diffuseMap[0] = "content/xa/rotc/p.5.4/textures/rotc/sniper_trail.png";
+   diffuseMap[0] = "content/o/rotc/p.5.4/textures/rotc/sniper_trail.png";
 };
 

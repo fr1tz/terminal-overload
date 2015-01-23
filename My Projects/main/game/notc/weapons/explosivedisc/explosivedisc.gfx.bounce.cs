@@ -8,7 +8,7 @@ datablock ExplosionData(WpnExplosiveDiscBounceEffect)
 	lifetimeMS = 300;
 
 	// shape...
-	//explosionShape = "content/xa/rotc/p.5.4/shapes/rotc/effects/explosion5.green.dts";
+	//explosionShape = "content/o/rotc/p.5.4/shapes/rotc/effects/explosion5.green.dts";
 	faceViewer = false;
 	playSpeed = 4.0;
 	sizes[0] = "0.01 0.01 0.01";

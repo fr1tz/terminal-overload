@@ -12,7 +12,7 @@ datablock ParticleData(WpnMG2ProjectileMissEnemyEffect_CloudParticles)
 
 	useInvAlpha =  false;
 
-   textureName = "content/xa/rotc/p.5.4/textures/rotc/corona.png";
+   textureName = "content/o/rotc/p.5.4/textures/rotc/corona.png";
 
 	colors[0]	  = "1.0 1.0 1.0 0.25";
 	colors[1]	  = "1.0 1.0 1.0 0.0";

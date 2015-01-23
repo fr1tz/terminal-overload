@@ -14,8 +14,8 @@ datablock ParticleData(FrmStandardCatSpawnEffect_Particles1 : DefaultParticle)
    lifetimeVarianceMS = "0";
    dragCoefficient = "0";
    spinSpeed = "1";
-   textureName = "content/xa/rotc/p.5.4/shapes/rotc/misc/debris1.white.png";
-   animTexName = "content/xa/rotc/p.5.4/shapes/rotc/misc/debris1.white.png";
+   textureName = "content/o/rotc/p.5.4/shapes/rotc/misc/debris1.white.png";
+   animTexName = "content/o/rotc/p.5.4/shapes/rotc/misc/debris1.white.png";
    colors[1] = "1 1 1 0";
    colors[2] = "1 1 1 0.330709";
    colors[3] = "1 1 1 0";

@@ -3,7 +3,7 @@
 
 datablock SFXProfile(WpnSG3FireSound)
 {
-   filename = "content/xa/rotc/p.5.4/sounds/rotc/fire1";
+   filename = "content/o/rotc/p.5.4/sounds/rotc/fire1";
    description = AudioClose3D;
    preload = true;
 };

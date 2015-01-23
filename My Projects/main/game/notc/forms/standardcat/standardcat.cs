@@ -27,7 +27,7 @@ datablock PlayerData(FrmStandardcat)
 
    // First person arms
    imageAnimPrefixFP = "soldier";
-   //shapeNameFP[0] = "content/xa/torque3d/3.0/shapes/actors/Soldier/FP/FP_SoldierArms.DAE";
+   //shapeNameFP[0] = "content/o/torque3d/3.0/shapes/actors/Soldier/FP/FP_SoldierArms.DAE";
 
    canObserve = 1;
    cmdCategory = "Clients";
@@ -36,7 +36,7 @@ datablock PlayerData(FrmStandardcat)
    cameraMinFov = "10";
    cameraMaxFov = "180";
 
-   //debrisShapeName = "content/xa/torque3d/3.0/shapes/actors/common/debris_player.dts";
+   //debrisShapeName = "content/o/torque3d/3.0/shapes/actors/common/debris_player.dts";
    debris = PlayerDebris;
 
    throwForce = 30;

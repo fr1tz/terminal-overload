@@ -3,14 +3,14 @@
 
 datablock SFXProfile(FrmEtherformSpawnSound)
 {
-	filename	 = "content/xa/rotc/p.5.4/shapes/rotc/vehicles/etherform/sound.spawn";
+	filename	 = "content/o/rotc/p.5.4/shapes/rotc/vehicles/etherform/sound.spawn";
 	description = AudioDefault3D;
 	preload = true;
 };
 
 datablock SFXProfile(FrmEtherformSingSound)
 {
-	filename	 = "content/xa/rotc/p.5.4/shapes/rotc/vehicles/etherform/sound.sing";
+	filename	 = "content/o/rotc/p.5.4/shapes/rotc/vehicles/etherform/sound.sing";
 	description = AudioCloseLoop3D;
 	preload = true;
 };

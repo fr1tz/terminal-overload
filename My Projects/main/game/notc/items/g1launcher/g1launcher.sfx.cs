@@ -3,35 +3,35 @@
 
 datablock SFXProfile(ItemG1LauncherChargeSound)
 {
-   filename = "content/xa/cat5/p.1/sounds/cat5/charge4up";
+   filename = "content/o/cat5/p.1/sounds/cat5/charge4up";
    description = AudioClose3D;
    preload = true;
 };
 
 datablock SFXProfile(ItemG1LauncherFireSound)
 {
-   filename = "content/xa/torque3d/3.0/sound/weapons/grenadeland";
+   filename = "content/o/torque3d/3.0/sound/weapons/grenadeland";
    description = AudioDefault3D;
    preload = true;
 };
 
 datablock SFXProfile(ItemG1LauncherProjectileSound)
 {
-   filename = "content/xa/rotc/p.5.4/sounds/rotc/missile1";
+   filename = "content/o/rotc/p.5.4/sounds/rotc/missile1";
    description = AudioDefaultLoop3D;
    preload = true;
 };
 
 datablock SFXProfile(ItemG1LauncherProjectileBounceSound)
 {
-   filename = "content/xa/rotc/p.5.4/sounds/rotc/bounce1";
+   filename = "content/o/rotc/p.5.4/sounds/rotc/bounce1";
    description = AudioDefault3D;
    preload = true;
 };
 
 datablock SFXProfile(ItemG1LauncherProjectileExplosionSound)
 {
-   filename = "content/xa/rotc/p.5.4/sounds/rotc/explosion7";
+   filename = "content/o/rotc/p.5.4/sounds/rotc/explosion7";
    description = AudioDefault3D;
    preload = true;
 };

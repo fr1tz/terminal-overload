@@ -57,7 +57,7 @@ singleton Material(xa_notc_core_shapes_sg2_projectile_p1_lasertrail0mat)
 
 singleton Material(xa_notc_core_shapes_sg2_projectile_p1_decalmat)
 {
-   baseTex[0] = "content/xa/torque3d/3.0/decals/rBlast";
+   baseTex[0] = "content/o/torque3d/3.0/decals/rBlast";
 
    vertColor[0] = true;
    translucent = true;

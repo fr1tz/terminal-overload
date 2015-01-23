@@ -3,7 +3,7 @@
 
 datablock SFXProfile(BloodExplosionSound)
 {
-   fileName = "content/xa/rotc/p.5.4/sounds/rotc/explosion1";
+   fileName = "content/o/rotc/p.5.4/sounds/rotc/explosion1";
    description = AudioDefault3D;
    preload = true;
 };
@@ -21,8 +21,8 @@ datablock ParticleData(BloodExplosionSprayParticles : DefaultParticle)
    lifetimeVarianceMS = "0";
    dragCoefficient = "0";
    spinSpeed = "0";
-   textureName = "content/xa/torque3d/3.0/particles/droplet.png";
-   animTexName = "content/xa/torque3d/3.0/particles/droplet.png";
+   textureName = "content/o/torque3d/3.0/particles/droplet.png";
+   animTexName = "content/o/torque3d/3.0/particles/droplet.png";
    colors[1] = "0.992126 0.0787402 0.00787402 0";
    colors[2] = "0.996078 0.0784314 0.00784314 0.330709";
    colors[3] = "1 0.0705882 0 0";

@@ -12,7 +12,7 @@ datablock ParticleData(WpnSMG1ProjectileExplosion_Smoke)
 
 	useInvAlpha =  false;
 
-	textureName = "content/xa/rotc/p.5.4/textures/rotc/corona.png";
+	textureName = "content/o/rotc/p.5.4/textures/rotc/corona.png";
 
 	colors[0]	  = "1.0 1.0 1.0 1.0";
 	colors[1]	  = "1.0 1.0 1.0 0.0";
@@ -23,7 +23,7 @@ datablock ParticleData(WpnSMG1ProjectileExplosion_Smoke)
 
 	allowLighting = 0;
    renderDot = 0;
-   animTexName = "content/xa/rotc/p.5.4/textures/rotc/corona.png";
+   animTexName = "content/o/rotc/p.5.4/textures/rotc/corona.png";
    times[2] = "1";
 };
 
@@ -57,7 +57,7 @@ datablock ParticleData(WpnSMG1ProjectileExplosion_DebrisParticles)
 	constantAcceleration = 0.0;
 	lifetimeMS			  = 1500;
 	lifetimeVarianceMS	= 0;
-	textureName = "content/xa/rotc/p.5.4/shapes/rotc/misc/debris1.white";
+	textureName = "content/o/rotc/p.5.4/shapes/rotc/misc/debris1.white";
 	colors[0]	  = "1.0 1.0 1.0 1.0";
 	colors[1]	  = "1.0 1.0 1.0 1.0";
 	colors[2]	  = "1.0 1.0 1.0 0.0";
@@ -97,8 +97,8 @@ datablock ParticleData(WpnSMG1ProjectileExplosion_CloudParticle : DefaultParticl
    sizes[3] = "0";
    times[1] = "1";
    times[2] = "1";
-   textureName = "content/xa/rotc/p.5.4/textures/rotc/unnamed1.png";
-   animTexName = "content/xa/rotc/p.5.4/textures/rotc/unnamed1.png";
+   textureName = "content/o/rotc/p.5.4/textures/rotc/unnamed1.png";
+   animTexName = "content/o/rotc/p.5.4/textures/rotc/unnamed1.png";
    lifetimeMS = "100";
    lifetimeVarianceMS = "0";
    spinSpeed = "0";
@@ -133,7 +133,7 @@ datablock ExplosionData(WpnSMG1ProjectileExplosion)
 	lifetimeMS = "192";
 
 	// shape...
-	//explosionShape = "content/xa/rotc/p.5.4/shapes/rotc/effects/explosion5.green.dts";
+	//explosionShape = "content/o/rotc/p.5.4/shapes/rotc/effects/explosion5.green.dts";
 	faceViewer = false;
 	playSpeed = 4.0;
 	sizes[0] = "0 0 0";

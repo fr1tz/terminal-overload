@@ -7,7 +7,7 @@
 datablock ShapeBaseImageData(WpnML1MineLightImage)
 {
 	// basic item properties
-	shapeFile = "content/xa/rotc/p.5.4/shapes/rotc/misc/nothing.dts";
+	shapeFile = "content/o/rotc/p.5.4/shapes/rotc/misc/nothing.dts";
 	emap = true;
 
 	// mount point & mount offset...

@@ -58,7 +58,7 @@ datablock ParticleData(WpnSG2ProjectileExplosion_Dust)
 	useInvAlpha			 = true;
 	spinRandomMin		  = -90.0;
 	spinRandomMax		  = 500.0;
-	textureName			 = "content/xa/rotc/p.5.4/textures/rotc/smoke_particle.png";
+	textureName			 = "content/o/rotc/p.5.4/textures/rotc/smoke_particle.png";
 	colors[0]	  = "0.9 0.9 0.9 0.5";
 	colors[1]	  = "0.9 0.9 0.9 0.5";
 	colors[2]	  = "0.9 0.9 0.9 0.0";
@@ -101,7 +101,7 @@ datablock ParticleData(WpnSG2ProjectileExplosion_Smoke)
 	spinRandomMin = -200.0;
 	spinRandomMax =  200.0;
 
-	textureName = "content/xa/rotc/p.5.4/textures/rotc/smoke_particle.png";
+	textureName = "content/o/rotc/p.5.4/textures/rotc/smoke_particle.png";
 
 	colors[0]	  = "0.4 0.4 0.4 0.519";
 	colors[1]	  = "0.4 0.4 0.4 0.2";
@@ -112,7 +112,7 @@ datablock ParticleData(WpnSG2ProjectileExplosion_Smoke)
 	times[0]		= 0.0;
 	times[1]		= 0.5;
 	times[2]		= 1.0;
-   animTexName = "content/xa/rotc/p.5.4/textures/rotc/smoke_particle.png";
+   animTexName = "content/o/rotc/p.5.4/textures/rotc/smoke_particle.png";
    allowLighting = "0";
    constantAcceleration = "-0.42";
    dragCoefficient = "0";
@@ -155,7 +155,7 @@ datablock ParticleData(WpnSG2ProjectileExplosion_DebrisParticles)
 	constantAcceleration = 0.0;
 	lifetimeMS			  = 1500;
 	lifetimeVarianceMS	= 0;
-	textureName = "content/xa/rotc/p.5.4/shapes/rotc/misc/debris1.white";
+	textureName = "content/o/rotc/p.5.4/shapes/rotc/misc/debris1.white";
 	colors[0]	  = "1.0 1.0 1.0 1.0";
 	colors[1]	  = "1.0 1.0 1.0 1.0";
 	colors[2]	  = "1.0 1.0 1.0 0.0";
@@ -258,8 +258,8 @@ datablock ParticleData(WpnSG2ProjectileExplosion_Smoke)
    spinRandomMin = "-200";
    spinRandomMax = "200";
    useInvAlpha = "1";
-   textureName = "content/xa/rotc/p.5.4/textures/rotc/smoke_particle.png";
-   animTexName = "content/xa/rotc/p.5.4/textures/rotc/smoke_particle.png";
+   textureName = "content/o/rotc/p.5.4/textures/rotc/smoke_particle.png";
+   animTexName = "content/o/rotc/p.5.4/textures/rotc/smoke_particle.png";
    colors[0] = "0.4 0.4 0.4 0.519";
    colors[1] = "0.4 0.4 0.4 0.2";
    colors[2] = "0.4 0.4 0.4 0";

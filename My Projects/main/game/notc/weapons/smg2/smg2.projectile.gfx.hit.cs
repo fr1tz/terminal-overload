@@ -13,7 +13,7 @@ datablock ParticleData(WpnSMG2ProjectileImpactExplosion_DebrisParticles)
 	constantAcceleration = 0.0;
 	lifetimeMS			  = 1500;
 	lifetimeVarianceMS	= 0;
-	textureName = "content/xa/rotc/p.5.4/shapes/rotc/misc/debris1.white";
+	textureName = "content/o/rotc/p.5.4/shapes/rotc/misc/debris1.white";
 	colors[0]	  = "1.0 1.0 1.0 1.0";
 	colors[1]	  = "1.0 1.0 1.0 1.0";
 	colors[2]	  = "1.0 1.0 1.0 0.0";

@@ -27,7 +27,7 @@ singleton Material(xa_notc_core_shapes_standardcat_impshield_p1_beammat0)
    rotSpeed[0] = "4.353";
    waveFreq[0] = "0.625";
    waveAmp[0] = "1";
-   diffuseMap[0] = "content/xa/rotc/p.5.4/textures/rotc/groundconnection.png";
+   diffuseMap[0] = "content/o/rotc/p.5.4/textures/rotc/groundconnection.png";
    effectColor[1] = "InvisibleBlack";
 };
 

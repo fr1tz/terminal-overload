@@ -3,42 +3,42 @@
 
 datablock SFXProfile(WpnSR1FireSound)
 {
-   filename = "content/xa/rotc/p.5.4/sounds/rotc/explosion12";
+   filename = "content/o/rotc/p.5.4/sounds/rotc/explosion12";
    description = AudioClose3D;
    preload = true;
 };
 
 datablock SFXProfile(WpnSR1DryFireSound)
 {
-   filename = "content/xa/rotc/p.5.4/sounds/rotc/weaponEmpty";
+   filename = "content/o/rotc/p.5.4/sounds/rotc/weaponEmpty";
    description = AudioClose3D;
    preload = true;
 };
 
 datablock SFXProfile(WpnSR1ChargeSound)
 {
-   filename = "content/xa/rotc/p.5.4/sounds/rotc/charge2";
+   filename = "content/o/rotc/p.5.4/sounds/rotc/charge2";
    description = AudioClose3D;
    preload = true;
 };
 
 datablock SFXProfile(WpnSR1SwitchinSound)
 {
-   filename = "content/xa/torque3d/3.0/sound/weapons/wpn_lurker_switchin";
+   filename = "content/o/torque3d/3.0/sound/weapons/wpn_lurker_switchin";
    description = AudioClose3D;
    preload = true;
 };
 
 datablock SFXProfile(WpnSR1ProjectileImpactSound)
 {
-   filename = "content/xa/rotc/p.5.4/sounds/rotc/explosion2";
+   filename = "content/o/rotc/p.5.4/sounds/rotc/explosion2";
    description = AudioClose3D;
    preload = true;
 };
 
 datablock SFXProfile(WpnSR1ProjectileMissedEnemySound)
 {
-   filename = "content/xa/rotc/p.5.4/sounds/rotc/impact4";
+   filename = "content/o/rotc/p.5.4/sounds/rotc/impact4";
    description = AudioClose3D;
    preload = true;
 };

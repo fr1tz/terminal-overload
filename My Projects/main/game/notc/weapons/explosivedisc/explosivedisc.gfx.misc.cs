@@ -53,8 +53,8 @@ datablock ParticleData(WpnExplosiveDiscEmitterParticle : DefaultParticle)
 	times[0]		= 0.0;
 	times[1]		= 0.2;
 	times[2]		= 1.0;
-   textureName = "content/xa/rotc/p.5.4/textures/rotc/dustParticle.png";
-   animTexName = "content/xa/rotc/p.5.4/textures/rotc/dustParticle.png";
+   textureName = "content/o/rotc/p.5.4/textures/rotc/dustParticle.png";
+   animTexName = "content/o/rotc/p.5.4/textures/rotc/dustParticle.png";
 };
 
 datablock ParticleEmitterData(WpnExplosiveDiscEmitter : DefaultEmitter)

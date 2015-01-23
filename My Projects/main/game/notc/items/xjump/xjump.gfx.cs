@@ -32,7 +32,7 @@ datablock ParticleData(ItemXJumpProjectileExplosion_Cloud)
 	spinRandomMin = -200.0;
 	spinRandomMax =  200.0;
 
-	textureName = "content/xa/rotc/p.5.4/textures/rotc/corona.png";
+	textureName = "content/o/rotc/p.5.4/textures/rotc/corona.png";
 
 	colors[0]	  = "1.0 1.0 1.0 1.0";
 	colors[1]	  = "1.0 1.0 1.0 0.0";
@@ -74,7 +74,7 @@ datablock ParticleData(ItemXJumpProjectileExplosion_Particle0)
 	useInvAlpha			 = "0";
 	spinRandomMin		  = "0";
 	spinRandomMax		  = "1";
-	textureName			 = "content/xa/rotc/p.5.4/textures/rotc/zone.grid.png";
+	textureName			 = "content/o/rotc/p.5.4/textures/rotc/zone.grid.png";
 	colors[0]	  = "0.996078 0.996078 0.996078 1";
 	colors[1]	  = "0.996078 0.996078 0.996078 1";
 	colors[2]	  = "0.897638 0.897638 0.897638 0";
@@ -85,7 +85,7 @@ datablock ParticleData(ItemXJumpProjectileExplosion_Particle0)
 	times[1]		= "1";
 	times[2]		= 1.0;
 	allowLighting = 1;
-   animTexName = "content/xa/rotc/p.5.4/textures/rotc/zone.grid.png";
+   animTexName = "content/o/rotc/p.5.4/textures/rotc/zone.grid.png";
    spinSpeed = "0";
 };
 

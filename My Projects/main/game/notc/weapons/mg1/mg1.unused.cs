@@ -3,42 +3,42 @@
 
 datablock SFXProfile(WpnMG1ProjectileMissEnemySound1)
 {
-   filename = "content/xa/rotc/p.5.4/sounds/rotc/ricochet1-1";
+   filename = "content/o/rotc/p.5.4/sounds/rotc/ricochet1-1";
    description = AudioClose3D;
    preload = true;
 };
 
 datablock SFXProfile(WpnMG1ProjectileMissEnemySound2)
 {
-   filename = "content/xa/rotc/p.5.4/sounds/rotc/ricochet1-2";
+   filename = "content/o/rotc/p.5.4/sounds/rotc/ricochet1-2";
    description = AudioClose3D;
    preload = true;
 };
 
 datablock SFXProfile(WpnMG1ProjectileMissEnemySound3)
 {
-   filename = "content/xa/rotc/p.5.4/sounds/rotc/ricochet1-3";
+   filename = "content/o/rotc/p.5.4/sounds/rotc/ricochet1-3";
    description = AudioClose3D;
    preload = true;
 };
 
 datablock SFXProfile(WpnMG1ProjectileMissEnemySound4)
 {
-   filename = "content/xa/rotc/p.5.4/sounds/rotc/ricochet1-4";
+   filename = "content/o/rotc/p.5.4/sounds/rotc/ricochet1-4";
    description = AudioClose3D;
    preload = true;
 };
 
 datablock SFXProfile(WpnMG1ProjectileMissEnemySound5)
 {
-   filename = "content/xa/rotc/p.5.4/sounds/rotc/ricochet1-5";
+   filename = "content/o/rotc/p.5.4/sounds/rotc/ricochet1-5";
    description = AudioClose3D;
    preload = true;
 };
 
 datablock SFXProfile(WpnMG1ProjectileMissEnemySound6)
 {
-   filename = "content/xa/rotc/p.5.4/sounds/rotc/ricochet1-6";
+   filename = "content/o/rotc/p.5.4/sounds/rotc/ricochet1-6";
    description = AudioClose3D;
    preload = true;
 };

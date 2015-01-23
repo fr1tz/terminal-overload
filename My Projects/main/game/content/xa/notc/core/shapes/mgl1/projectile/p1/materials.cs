@@ -89,7 +89,7 @@ singleton Material(xa_notc_core_shapes_mgl1_projectile_p1_lasertrail2mat0)
    glowOnly[0] = "1";
    emissive[0] = "1";
    vertColor[0] = "1";
-   diffuseMap[0] = "content/xa/rotc/p.5.4/textures/rotc/ring1.png";
+   diffuseMap[0] = "content/o/rotc/p.5.4/textures/rotc/ring1.png";
    materialTag0 = "Miscellaneous";
    mapTo = "trail.png";
    diffuseColorPaletteSlot[0] = "-1";
@@ -98,7 +98,7 @@ singleton Material(xa_notc_core_shapes_mgl1_projectile_p1_lasertrail2mat0)
 
 singleton Material(xa_notc_core_shapes_mgl1_projectile_p1_decalmat)
 {
-   baseTex[0] = "content/xa/torque3d/3.0/decals/rBlast";
+   baseTex[0] = "content/o/torque3d/3.0/decals/rBlast";
 
    vertColor[0] = true;
    translucent = true;

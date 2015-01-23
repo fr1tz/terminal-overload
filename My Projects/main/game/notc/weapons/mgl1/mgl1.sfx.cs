@@ -9,35 +9,35 @@ datablock SFXPlayList(WpnMGL1FireSoundList)
 
 datablock SFXProfile(WpnMGL1FireSound)
 {
-   filename = "content/xa/rotc/p.5.4/sounds/rotc/fire8";
+   filename = "content/o/rotc/p.5.4/sounds/rotc/fire8";
    description = AudioClose3D;
    preload = true;
 };
 
 datablock SFXProfile(WpnMGL1DryFireSound)
 {
-   filename = "content/xa/rotc/p.5.4/sounds/rotc/weaponEmpty";
+   filename = "content/o/rotc/p.5.4/sounds/rotc/weaponEmpty";
    description = AudioClose3D;
    preload = true;
 };
 
 datablock SFXProfile(WpnMGL1SwitchinSound)
 {
-   filename = "content/xa/torque3d/3.0/sound/weapons/wpn_lurker_switchin";
+   filename = "content/o/torque3d/3.0/sound/weapons/wpn_lurker_switchin";
    description = AudioClose3D;
    preload = true;
 };
 
 datablock SFXProfile(WpnMGL1ProjectileSound)
 {
-   filename = "content/xa/rotc/p.5.4/sounds/rotc/slide3";
+   filename = "content/o/rotc/p.5.4/sounds/rotc/slide3";
    description = AudioCloseLoop3D;
    preload = true;
 };
 
 datablock SFXProfile(WpnMGL1ProjectileExplosionSound)
 {
-   filename = "content/xa/rotc/p.5.4/sounds/rotc/explosion13";
+   filename = "content/o/rotc/p.5.4/sounds/rotc/explosion13";
    description = AudioClose3D;
    preload = true;
 };

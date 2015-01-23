@@ -4,7 +4,7 @@
 datablock BallastShapeData(ItemImpShieldShape)
 {
    ignoreDamage = 1;
-   shapeFile = "content/xa/rotc/p.5.4/shapes/rotc/misc/nothing.dts";
+   shapeFile = "content/o/rotc/p.5.4/shapes/rotc/misc/nothing.dts";
    //shapeFile = "content/xa/notc/core/shapes/standardcat/impshield/p1/shape.dae";
    mass = 0;
    inheritEnergyFromMount = true;

@@ -51,8 +51,8 @@ datablock ParticleData(PacketLineSparkParticle : DefaultParticle)
    sizes[3] = "1";
    times[1] = "1";
    times[2] = "1";
-   textureName = "content/xa/rotc/p.5.4/textures/rotc/corona.png";
-   animTexName = "content/xa/rotc/p.5.4/textures/rotc/corona.png";
+   textureName = "content/o/rotc/p.5.4/textures/rotc/corona.png";
+   animTexName = "content/o/rotc/p.5.4/textures/rotc/corona.png";
    colors[0] = "0.996078 0.992157 0.992157 1";
    colors[1] = "0.996078 0.996078 0.996078 1";
    dragCoefficient = "0";

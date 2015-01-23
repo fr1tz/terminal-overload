@@ -393,7 +393,7 @@ new SimGroup(MissionGroup) {
       layerEnabled[0] = "1";
       layerEnabled[1] = "0";
       layerEnabled[2] = "0";
-      texture[0] = "content/xa/rotc/p.5.4/skies/eth1/cloudlayer1.png";
+      texture[0] = "content/o/rotc/p.5.4/skies/eth1/cloudlayer1.png";
       texture[1] = "content/xa/notc/mis/eth1/sky/cloudlayer2.png";
       texture[2] = "content/xa/notc/mis/eth1/sky/cloudlayer2x.png";
       texScale[0] = "2";

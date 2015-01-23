@@ -58,7 +58,7 @@ datablock LightFlareData(FrmEtherformLightFlare)
    overallScale = "1";
    flareEnabled = true;
    renderReflectPass = true;
-   flareTexture = "content/xa/torque3d/3.0/lights/lensFlareSheet1.png";
+   flareTexture = "content/o/torque3d/3.0/lights/lensFlareSheet1.png";
 
    elementRect[0] = "512 512 512 512";
    elementDist[0] = 0.0;

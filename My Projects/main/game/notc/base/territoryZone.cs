@@ -333,14 +333,14 @@ function TerritoryZones_objectUpdateZone(%obj, %enterZone, %leftZone)
 
 datablock SFXProfile(ZoneAquiredSound)
 {
-   filename = "content/xa/rotc/p.5.4/sounds/rotc/events/zone.aquired";
+   filename = "content/o/rotc/p.5.4/sounds/rotc/events/zone.aquired";
    description = AudioGui;
    preload = true;
 };
 
 datablock SFXProfile(ZoneAttackedSound)
 {
-   filename = "content/xa/rotc/p.5.4/sounds/rotc/events/zone.attacked";
+   filename = "content/o/rotc/p.5.4/sounds/rotc/events/zone.attacked";
    description = AudioGui;
    preload = true;
 };

@@ -21,7 +21,7 @@ datablock ParticleData(WpnML1FireEmitter_Particles)
 	constantAcceleration  = 0.0;
 	lifetimeMS            = 50;
 	lifetimeVarianceMS    = 0;
-	textureName           = "content/xa/rotc/p.5.4/textures/rotc/smoke_particle";
+	textureName           = "content/o/rotc/p.5.4/textures/rotc/smoke_particle";
 	colors[0]             = "1.0 1.0 1.0 1.0";
 	colors[1]             = "1.0 1.0 1.0 1.0";
 	colors[2]             = "1.0 1.0 1.0 0.0";
@@ -67,7 +67,7 @@ datablock ParticleData(WpnML1ProjectileParticleEmitter_Particles)
 	spinRandomMin = -200.0;
 	spinRandomMax =  200.0;
 
-	textureName = "content/xa/rotc/p.5.4/textures/rotc/smoke_particle.png";
+	textureName = "content/o/rotc/p.5.4/textures/rotc/smoke_particle.png";
 
 	colors[0]	  = "0.9 0.9 0.9 0.6";
 	colors[1]	  = "0.9 0.9 0.9 0.3";
@@ -189,7 +189,7 @@ datablock ParticleData(WpnML1ProjectileBounceExplosion_Smoke)
 
 	useInvAlpha =  true;
 
-	textureName = "content/xa/rotc/p.5.4/textures/rotc/smoke_particle";
+	textureName = "content/o/rotc/p.5.4/textures/rotc/smoke_particle";
 
 	colors[0]	  = "1.0 1.0 1.0 0.5";
 	colors[1]	  = "1.0 1.0 1.0 0.0";
@@ -251,7 +251,7 @@ datablock ParticleData(WpnML1ProjectileExplosion_Cloud)
 	spinRandomMin = -200.0;
 	spinRandomMax =  200.0;
 
-	textureName = "content/xa/rotc/p.5.4/textures/rotc/corona3.png";
+	textureName = "content/o/rotc/p.5.4/textures/rotc/corona3.png";
 
 	colors[0]	  = "1.0 1.0 1.0 1.0";
 	colors[1]	  = "1.0 1.0 1.0 0.5";
@@ -293,7 +293,7 @@ datablock ParticleData(WpnML1ProjectileExplosion_Dust)
 	useInvAlpha			 = true;
 	spinRandomMin		  = -90.0;
 	spinRandomMax		  = 500.0;
-	textureName			 = "content/xa/rotc/p.5.4/textures/rotc/smoke_particle.png";
+	textureName			 = "content/o/rotc/p.5.4/textures/rotc/smoke_particle.png";
 	colors[0]	  = "0.9 0.9 0.9 0.5";
 	colors[1]	  = "0.9 0.9 0.9 0.5";
 	colors[2]	  = "0.9 0.9 0.9 0.0";
@@ -336,7 +336,7 @@ datablock ParticleData(WpnML1ProjectileExplosion_Smoke)
 	spinRandomMin = -200.0;
 	spinRandomMax =  200.0;
 
-	textureName = "content/xa/rotc/p.5.4/textures/rotc/smoke_particle.png";
+	textureName = "content/o/rotc/p.5.4/textures/rotc/smoke_particle.png";
 
 	colors[0]	  = "0.4 0.4 0.4 0.4";
 	colors[1]	  = "0.4 0.4 0.4 0.2";
@@ -376,7 +376,7 @@ datablock ParticleData(WpnML1ProjectileExplosion_Shrapnel)
 	constantAcceleration = 0.0;
 	lifetimeMS			  = 1000;
 	lifetimeVarianceMS	= 0;
-	textureName			 = "content/xa/rotc/p.5.4/textures/rotc/corona3.png";
+	textureName			 = "content/o/rotc/p.5.4/textures/rotc/corona3.png";
 	colors[0]	  = "1 1 1 1.0";
 	colors[1]	  = "1 1 1 0.5";
 	colors[2]	  = "1 1 1 0.0";
@@ -415,7 +415,7 @@ datablock ParticleData(WpnML1ProjectileExplosion_Sparks)
 	constantAcceleration = 0.0;
 	lifetimeMS			  = 500;
 	lifetimeVarianceMS	= 350;
-	textureName			 = "content/xa/rotc/p.5.4/textures/rotc/particle1.png";
+	textureName			 = "content/o/rotc/p.5.4/textures/rotc/particle1.png";
 	colors[0]	  = "0.56 0.36 0.26 1.0";
 	colors[1]	  = "0.56 0.36 0.26 1.0";
 	colors[2]	  = "1.0 0.36 0.26 0.0";
@@ -496,7 +496,7 @@ datablock ParticleData(WpnML1ProjectileExplosion_Debris_Particle)
 	spinRandomMin = -200.0;
 	spinRandomMax =  200.0;
 
-	textureName = "content/xa/rotc/p.5.4/textures/rotc/smoke_particle.png";
+	textureName = "content/o/rotc/p.5.4/textures/rotc/smoke_particle.png";
 
 	colors[0]	  = "0.9 0.9 0.9 0.4";
 	colors[1]	  = "0.9 0.9 0.9 0.2";

@@ -3,28 +3,28 @@
 
 datablock SFXProfile(ctfFlagTakenSound)
 {
-   filename = "content/xa/cat5/p.1/sounds/cat5/ditty1upshort";
+   filename = "content/o/cat5/p.1/sounds/cat5/ditty1upshort";
    description = AudioGui;
    preload = true;
 };
 
 datablock SFXProfile(ctfFlagDroppedSound)
 {
-   filename = "content/xa/cat5/p.1/sounds/cat5/ditty1downshort";
+   filename = "content/o/cat5/p.1/sounds/cat5/ditty1downshort";
    description = AudioGui;
    preload = true;
 };
 
 datablock SFXProfile(ctfFlagReturnedSound)
 {
-   filename = "content/xa/rotc/p.5.4/sounds/rotc/powerdown3";
+   filename = "content/o/rotc/p.5.4/sounds/rotc/powerdown3";
    description = AudioGui;
    preload = true;
 };
 
 datablock SFXProfile(ctfFlagCapturedSound)
 {
-   filename = "content/xa/rotc/p.5.4/sounds/rotc/events/victory";
+   filename = "content/o/rotc/p.5.4/sounds/rotc/events/victory";
    description = AudioGui;
    preload = true;
 };

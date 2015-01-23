@@ -18,7 +18,7 @@ datablock ParticleData(FrmStandardcatSkidFootEmitter0_Particle)
 	times[0]		= 0.0;
 	times[1]		= 0.5;
 	times[2]		= 1.0;
-	textureName	= "content/xa/rotc/p.5.4/textures/rotc/dustParticle";
+	textureName	= "content/o/rotc/p.5.4/textures/rotc/dustParticle";
 	allowLighting = false;
 };
 
@@ -92,7 +92,7 @@ datablock ParticleData(FrmStandardcatSkidTrailEmitter0_Particle)
 	constantAcceleration = 0.0;
 	lifetimeMS			  = 1500;
 	lifetimeVarianceMS	= 0;
-	textureName = "content/xa/rotc/p.5.4/shapes/rotc/misc/debris1.white";
+	textureName = "content/o/rotc/p.5.4/shapes/rotc/misc/debris1.white";
 	colors[0]	  = "1.0 1.0 1.0 1.0";
 	colors[1]	  = "1.0 1.0 1.0 1.0";
 	colors[2]	  = "1.0 1.0 1.0 0.0";

@@ -51,8 +51,8 @@ datablock ParticleData(FrmStandardCatBleedEffect_Particles : DefaultParticle)
    lifetimeVarianceMS = "0";
    dragCoefficient = "0";
    spinSpeed = "0";
-   textureName = "content/xa/rotc/p.5.4/textures/rotc/spark02.png";
-   animTexName = "content/xa/rotc/p.5.4/textures/rotc/spark02.png";
+   textureName = "content/o/rotc/p.5.4/textures/rotc/spark02.png";
+   animTexName = "content/o/rotc/p.5.4/textures/rotc/spark02.png";
    colors[1] = "1 1 1 0";
    colors[2] = "1 1 1 0.330709";
    colors[3] = "1 1 1 0";

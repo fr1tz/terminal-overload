@@ -3,7 +3,7 @@
 
 datablock SFXProfile(BeepMessageSound)
 {
-   filename = "content/xa/rotc/p.5.4/sounds/rotc/denied1";
+   filename = "content/o/rotc/p.5.4/sounds/rotc/denied1";
    description = AudioGui;
    preload = true;
 };

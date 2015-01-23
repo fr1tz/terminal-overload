@@ -17,7 +17,7 @@ singleton Material(xa_rotc_hack_shapes_mat2)
 {
    mapTo = "flash.front";
    diffuseColorPaletteSlot[0] = "0";
-   diffuseMap[0] = "content/xa/rotc/p.5.4/shapes/rotc/weapons/minigun/flash.front";
+   diffuseMap[0] = "content/o/rotc/p.5.4/shapes/rotc/weapons/minigun/flash.front";
    glow[1] = "1";
    emissive[1] = "1";
    translucent = "1";
@@ -31,7 +31,7 @@ singleton Material(xa_rotc_hack_shapes_mat2)
 singleton Material(xa_rotc_hack_shapes_mat3)
 {
    mapTo = "image.barrel.blue";
-   diffuseMap[0] = "content/xa/rotc/p.5.4/shapes/rotc/weapons/minigun/image.barrel.blue";
+   diffuseMap[0] = "content/o/rotc/p.5.4/shapes/rotc/weapons/minigun/image.barrel.blue";
    glow[1] = "1";
    emissive[1] = "1";
    castShadows = "0";
@@ -39,7 +39,7 @@ singleton Material(xa_rotc_hack_shapes_mat3)
    translucentBlendOp = "AddAlpha";
    translucentZWrite = "0";
    alphaRef = "20";
-   diffuseMap[1] = "content/xa/rotc/p.5.4/textures/rotc/rainbow1.png";
+   diffuseMap[1] = "content/o/rotc/p.5.4/textures/rotc/rainbow1.png";
    materialTag0 = "Miscellaneous";
 };
 
@@ -112,7 +112,7 @@ singleton Material(xa_rotc_hack_shapes_mat6)
 singleton Material(xa_rotc_hack_shapes_mat7)
 {
    mapTo = "image2";
-   diffuseMap[0] = "content/xa/rotc/p.5.4/shapes/rotc/weapons/disc/image2.png";
+   diffuseMap[0] = "content/o/rotc/p.5.4/shapes/rotc/weapons/disc/image2.png";
    showFootprints = "0";
    diffuseMap[1] = "content/xa/notc/core/textures/grid.128.8.png";
 };
@@ -120,7 +120,7 @@ singleton Material(xa_rotc_hack_shapes_mat7)
 singleton Material(xa_rotc_hack_shapes_mat8)
 {
    mapTo = "explosion2_white";
-   diffuseMap[0] = "content/xa/rotc/p.5.4/shapes/rotc/effects/explosion2_white.png";
+   diffuseMap[0] = "content/o/rotc/p.5.4/shapes/rotc/effects/explosion2_white.png";
    glow[0] = "1";
    emissive[0] = "1";
    castShadows = "0";
@@ -151,7 +151,7 @@ singleton Material(xa_rotc_hack_shapes_mat9)
 singleton Material(xa_rotc_hack_shapes_mat10)
 {
    mapTo = "grid.bluegrey";
-   diffuseMap[0] = "content/xa/rotc/p.5.4/shapes/eth/grid.bluegrey.png";
+   diffuseMap[0] = "content/o/rotc/p.5.4/shapes/eth/grid.bluegrey.png";
    glow[0] = "0";
    doubleSided = "1";
    castShadows = "0";

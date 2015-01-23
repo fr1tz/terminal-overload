@@ -1,7 +1,7 @@
 singleton Material(xa_notc_core_shapes_smg2_decal_p1_mat0)
 {
    mapTo = "unmapped_mat";
-   diffuseMap[0] = "content/xa/rotc/p.5.4/textures/rotc/corona.png";
+   diffuseMap[0] = "content/o/rotc/p.5.4/textures/rotc/corona.png";
    translucent = "1";
    translucentBlendOp = "AddAlpha";
    castShadows = "0";

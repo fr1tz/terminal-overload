@@ -13,7 +13,7 @@ datablock ParticleData(ItemG1LauncherProjectile_ParticleEmitter_Particles)
    constantAcceleration = 0.0;
    lifetimeMS           = 400;
    lifetimeVarianceMS   = 100;
-   textureName          = "content/xa/rotc/p.5.4/textures/rotc/ring1";
+   textureName          = "content/o/rotc/p.5.4/textures/rotc/ring1";
    colors[0]     = "1.0 1.0 1.0 1.0";
    colors[1]     = "1.0 1.0 1.0 0.5";
    colors[2]     = "1.0 1.0 1.0 0.0";
@@ -67,7 +67,7 @@ datablock ParticleData(ItemG1LauncherProjectileExplosion_Cloud)
 	spinRandomMin = -200.0;
 	spinRandomMax =  200.0;
 
-	textureName = "content/xa/rotc/p.5.4/textures/rotc/corona.png";
+	textureName = "content/o/rotc/p.5.4/textures/rotc/corona.png";
 
 	colors[0]	  = "1.0 1.0 1.0 1.0";
 	colors[1]	  = "1.0 1.0 1.0 0.0";

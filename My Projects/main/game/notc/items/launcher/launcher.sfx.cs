@@ -3,14 +3,14 @@
 
 datablock SFXProfile(ItemLauncherTargetSound)
 {
-   filename = "content/xa/rotc/p.5.4/sounds/rotc/target1";
+   filename = "content/o/rotc/p.5.4/sounds/rotc/target1";
    description = AudioCloseLoop3D;
    preload = true;
 };
 
 datablock SFXProfile(ItemLauncherTargetLockedSound)
 {
-   filename = "content/xa/rotc/p.5.4/sounds/rotc/target2";
+   filename = "content/o/rotc/p.5.4/sounds/rotc/target2";
    description = AudioCloseLoop3D;
    preload = true;
 };

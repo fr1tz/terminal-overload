@@ -8,8 +8,8 @@ datablock ParticleData(WpnInterceptorDiscExplosion_Particle1)
    lifetimeMS = "500";
    lifetimeVarianceMS = "200";
    useInvAlpha = "1";
-   textureName = "content/xa/rotc/p.5.4/textures/rotc/spark02.png";
-   animTexName = "content/xa/rotc/p.5.4/textures/rotc/spark02.png";
+   textureName = "content/o/rotc/p.5.4/textures/rotc/spark02.png";
+   animTexName = "content/o/rotc/p.5.4/textures/rotc/spark02.png";
    colors[0] = "0.980392 0.980392 0.980392 1";
    colors[1] = "1 1 1 0";
    times[1] = "1";

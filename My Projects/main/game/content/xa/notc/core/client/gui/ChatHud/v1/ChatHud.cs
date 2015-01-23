@@ -29,10 +29,10 @@ function playMessageSound(%message, %voice, %pitch)
 
    if (%voice !$= "")
    {
-      %wavFile = "content/xa/torque3d/3.0/sound/voice/" @ %voice @ "/" @ %wav;
+      %wavFile = "content/o/torque3d/3.0/sound/voice/" @ %voice @ "/" @ %wav;
    }
    else
-      %wavFile = "content/xa/torque3d/3.0/sound/" @ %wav;
+      %wavFile = "content/o/torque3d/3.0/sound/" @ %wav;
 
    if (strstr(%wavFile, ".wav") != (strlen(%wavFile) - 4))
       %wavFile = %wavFile @ ".wav";
