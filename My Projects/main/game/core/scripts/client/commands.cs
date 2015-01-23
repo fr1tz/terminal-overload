@@ -74,7 +74,7 @@ function clientCmdFinishPreload()
 {
    PreloadGui.addText("\n");
    %c = $Client::Preload.missingFiles.count();
-   if(true || %c == 0)
+   if(%c == 0)
    {
       PreloadGui.addText("HAVE REQUIRED FILES\n");
       $Client::Preload.delete();
