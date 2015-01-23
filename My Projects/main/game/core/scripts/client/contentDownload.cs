@@ -35,7 +35,7 @@ function downloadNextMissingFile()
    }
    %path = "/o/" @ getSubStr(%file, 10);
    
-   if(!ContentDownloader.download("www.terminal-overload.org:80", %path, %file))
+   if(!ContentDownloader.download("content.terminal-overload.org:80", %path, %file))
    {
       PreloadGui.addText("UNABLE TO OPEN" SPC %file SPC "FOR WRITING\n");
       schedule(0, 0, "downloadNextMissingFile");
