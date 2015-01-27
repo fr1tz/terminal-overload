@@ -112,7 +112,7 @@
          canSave = "1";
          canSaveDynamicFields = "0";
 
-         new GuiMLTextCtrl() {
+         new GuiMLTextCtrl(PreloadGuiText) {
             lineSpacing = "2";
             allowColorChars = "0";
             maxChars = "-1";

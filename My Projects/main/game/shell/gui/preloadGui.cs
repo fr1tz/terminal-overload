@@ -1,9 +1,13 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
+function PreloadGuiText::onResize(%this, %width, %height)
+{
+   %this.schedule(0, "scrollToBottom");
+}
+
 function PreloadGui::onAdd(%this)
 {
-
 }
 
 function PreloadGui::onWake(%this)
@@ -24,7 +28,6 @@ function PreloadGui::clearText(%this)
 function PreloadGui::addText(%this, %text)
 {
    %this-->text.addText(%text);
-   %this-->scroll.scrollToBottom();
 }
 
 function PreloadGui::preloadFailed(%this)
