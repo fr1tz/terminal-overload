@@ -2,8 +2,6 @@
 #include "windowManager/sdl/sdlWindow.h"
 #include "console/console.h"
 
-extern bool OpenGLCompat;
-
 namespace PlatformGL
 {
 
@@ -15,21 +13,18 @@ namespace PlatformGL
            return;
 
        inited = true;
-       const U32 majorOGL = 3;
+       const U32 majorOGL = 4;
        const U32 minorOGL = 2;
        U32 debugFlag = 0;
 #ifdef TORQUE_DEBUG
        debugFlag |= SDL_GL_CONTEXT_DEBUG_FLAG;
 #endif
 
-       // Request core profile unless -OpenGLCompat command line arg has been used
-       if(!OpenGLCompat)
-       {
-          Con::printf("Will request OpenGL 3.2 core profile.");
-          SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, majorOGL);
-          SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, minorOGL);
-          SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-       }
+#if 0  // cause problem with glew, no extension load
+       SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, majorOGL);
+       SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, minorOGL);
+       SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+#endif
        SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, debugFlag);
 
        SDL_ClearError();

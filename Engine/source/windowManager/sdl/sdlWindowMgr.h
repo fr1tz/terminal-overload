@@ -54,6 +54,10 @@ class PlatformWindowManagerSDL : public PlatformWindowManager
    /// Parent window, used in window setup in web plugin scenarios.
    SDL_Window *mParentWindow;
 
+   /// This is set as part of the canvas being shown, and flags that the windows should render as normal from now on.
+   // Basically a flag that lets the window manager know that we've handled the splash screen, and to operate as normal.
+   bool mDisplayWindow;
+
    /// set via command line -offscreen option, controls whether rendering/input
    // is intended for offscreen rendering
    bool mOffscreenRender;
@@ -94,6 +98,8 @@ public:
 
    virtual void lowerCurtain();
    virtual void raiseCurtain();
+
+   virtual void setDisplayWindow(bool set) { mDisplayWindow = set; }
 };
 
 #endif

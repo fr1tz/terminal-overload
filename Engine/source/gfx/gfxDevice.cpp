@@ -260,6 +260,7 @@ GFXDevice::~GFXDevice()
 #endif
 
    SAFE_DELETE( mTextureManager );
+   SAFE_DELETE( mFrameTime );
 
    // Clear out our state block references
    mCurrentStateBlocks.clear();

@@ -1662,7 +1662,7 @@ void ReflectCubeFeatHLSL::processVert( Vector<ShaderComponent*> &componentList,
     cubeVertPos->setType( "float3" );
     LangElement *cubeVertPosDecl = new DecOp( cubeVertPos );
 
-    meta->addStatement( new GenOp( "   @ = mul((float3x3)@, @).xyz;\r\n", 
+    meta->addStatement( new GenOp( "   @ = mul(@, float4(@,1)).xyz;\r\n", 
                         cubeVertPosDecl, cubeTrans, LangElement::find( "position" ) ) );
 
     // cube normal
@@ -1683,23 +1683,14 @@ void ReflectCubeFeatHLSL::processVert( Vector<ShaderComponent*> &componentList,
         eyePos->constSortPos = cspPass;
     }
 
-    // cube position
-    Var * cubePos = new Var;
-    cubePos->setName( "cubePos" );
-    cubePos->setType( "float3" );
-    LangElement *cubePosDecl = new DecOp( cubePos );
-
-    meta->addStatement( new GenOp( "   @ = float3( @[0][3], @[1][3], @[2][3] );\r\n", 
-                        cubePosDecl, cubeTrans, cubeTrans, cubeTrans ) );
-
     // eye to vert
     Var * eyeToVert = new Var;
     eyeToVert->setName( "eyeToVert" );
     eyeToVert->setType( "float3" );
     LangElement *e2vDecl = new DecOp( eyeToVert );
 
-    meta->addStatement( new GenOp( "   @ = @ - ( @ - @ );\r\n", 
-                        e2vDecl, cubeVertPos, eyePos, cubePos ) );
+    meta->addStatement( new GenOp( "   @ = @ - @;\r\n", 
+                        e2vDecl, cubeVertPos, eyePos ) );
 
     // grab connector texcoord register
     ShaderConnector *connectComp = dynamic_cast<ShaderConnector *>( componentList[C_CONNECTOR] );
@@ -1853,6 +1844,7 @@ void ReflectCubeFeatHLSL::setTexData(  Material::StageData &stageDat,
             passData.mTexSlot[ texIndex++ ].texObject = tex;
          }
       }
+   }
    }
    
    if( stageDat.getCubemap() )

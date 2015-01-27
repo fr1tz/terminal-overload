@@ -1,5 +1,24 @@
-// Copyright information can be found in the file named COPYING
-// located in the root directory of this distribution.
+//-----------------------------------------------------------------------------
+// Copyright (c) 2012 GarageGames, LLC
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to
+// deal in the Software without restriction, including without limitation the
+// rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+// sell copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+// IN THE SOFTWARE.
+//-----------------------------------------------------------------------------
 
 #include "gfx/D3D9/pc/gfxPCD3D9Device.h"
 #include "gfx/D3D9/pc/gfxPCD3D9Target.h"
@@ -513,6 +532,34 @@ void GFXPCD3D9Device::init( const GFXVideoMode &mode, PlatformWindow *window /* 
    // regenStates();
 }
 
+//------------------------------------------------------------------------------
+void GFXPCD3D9Device::enterDebugEvent(ColorI color, const char *name)
+{
+   // BJGFIX
+   WCHAR  eventName[260];
+   MultiByteToWideChar( CP_ACP, 0, name, -1, eventName, 260 );
+
+   D3DPERF_BeginEvent(D3DCOLOR_ARGB(color.alpha, color.red, color.green, color.blue),
+      (LPCWSTR)&eventName);
+}
+
+//------------------------------------------------------------------------------
+void GFXPCD3D9Device::leaveDebugEvent()
+{
+   D3DPERF_EndEvent();
+}
+
+//------------------------------------------------------------------------------
+void GFXPCD3D9Device::setDebugMarker(ColorI color, const char *name)
+{
+   // BJGFIX
+   WCHAR  eventName[260];
+   MultiByteToWideChar( CP_ACP, 0, name, -1, eventName, 260 );
+
+   D3DPERF_SetMarker(D3DCOLOR_ARGB(color.alpha, color.red, color.green, color.blue), 
+      (LPCWSTR)&eventName);
+}
+
 //-----------------------------------------------------------------------------
 
 void GFXPCD3D9Device::setMatrix( GFXMatrixType mtype, const MatrixF &mat ) 
@@ -972,10 +1019,6 @@ bool GFXPCD3D9Device::beginSceneInternal()
 GFXWindowTarget * GFXPCD3D9Device::allocWindowTarget( PlatformWindow *window )
 {
    AssertFatal(window,"GFXD3D9Device::allocWindowTarget - no window provided!");
-#ifndef TORQUE_OS_XENON
-   //AssertFatal(dynamic_cast<Win32Window*>(window), 
-   //   "GFXD3D9Device::allocWindowTarget - only works with Win32Windows!");
-#endif
 
    // Set up a new window target...
    GFXPCD3D9WindowTarget *gdwt = new GFXPCD3D9WindowTarget();

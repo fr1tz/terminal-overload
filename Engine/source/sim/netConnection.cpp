@@ -332,6 +332,7 @@ void NetConnection::setNetClassGroup(U32 grp)
 }
 
 NetConnection::NetConnection()
+ : mNetAddress()
 {
    mTranslateStrings = false;
    mConnectSequence = 0;
@@ -414,6 +415,9 @@ NetConnection::NetConnection()
 
    // Disable starting a new journal recording or playback from here on
    Journal::Disable();
+
+   // Ensure NetAddress is cleared
+   dMemset(&mNetAddress, '\0', sizeof(NetAddress));
 }
 
 NetConnection::~NetConnection()

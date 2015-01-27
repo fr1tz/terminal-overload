@@ -55,6 +55,30 @@ protected:
       NextFreeMask = Parent::NextFreeMask << 6,
    };
 
+public:
+
+   enum BaseTexFormat
+   {
+      NONE, DDS, PNG, JPG
+   };
+
+   static const char* formatToExtension(BaseTexFormat format)
+   {
+      switch (format)
+      {
+      case DDS:
+         return "dds";
+      case PNG:
+         return "png";
+      case JPG:
+         return "jpg";
+      default:
+         return "";
+      }
+   };
+
+protected:
+
    Box3F mBounds;
 
    ///
@@ -112,6 +136,8 @@ protected:
 
    /// The desired size for the base texture.
    U32 mBaseTexSize;
+
+   BaseTexFormat mBaseTexFormat;
 
    ///
    TerrCell *mCell;
@@ -194,7 +220,8 @@ protected:
    // Protected fields
    static bool _setTerrainFile( void *obj, const char *index, const char *data );
    static bool _setSquareSize( void *obj, const char *index, const char *data );
-   static bool _setBaseTexSize( void *obj, const char *index, const char *data );
+   static bool _setBaseTexSize(void *obj, const char *index, const char *data);
+   static bool _setBaseTexFormat(void *obj, const char *index, const char *data);
    static bool _setLightMapSize( void *obj, const char *index, const char *data );
 
 public:

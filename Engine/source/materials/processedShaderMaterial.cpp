@@ -1,5 +1,24 @@
-// Copyright information can be found in the file named COPYING
-// located in the root directory of this distribution.
+//-----------------------------------------------------------------------------
+// Copyright (c) 2012 GarageGames, LLC
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to
+// deal in the Software without restriction, including without limitation the
+// rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+// sell copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+// IN THE SOFTWARE.
+//-----------------------------------------------------------------------------
 
 #include "platform/platform.h"
 #include "materials/processedShaderMaterial.h"
@@ -37,6 +56,11 @@ void ShaderConstHandles::init( GFXShader *shader, CustomMaterial* mat /*=NULL*/ 
    mSpecularColorSC = shader->getShaderConstHandle(ShaderGenVars::specularColor);
    mSpecularPowerSC = shader->getShaderConstHandle(ShaderGenVars::specularPower);
    mSpecularStrengthSC = shader->getShaderConstHandle(ShaderGenVars::specularStrength);
+   mAccuScaleSC = shader->getShaderConstHandle("$accuScale");
+   mAccuDirectionSC = shader->getShaderConstHandle("$accuDirection");
+   mAccuStrengthSC = shader->getShaderConstHandle("$accuStrength");
+   mAccuCoverageSC = shader->getShaderConstHandle("$accuCoverage");
+   mAccuSpecularSC = shader->getShaderConstHandle("$accuSpecular");
    mParallaxInfoSC = shader->getShaderConstHandle("$parallaxInfo");
    mFogDataSC = shader->getShaderConstHandle(ShaderGenVars::fogData);
    mFogColorSC = shader->getShaderConstHandle(ShaderGenVars::fogColor);
@@ -311,6 +335,7 @@ void ProcessedShaderMaterial::_determineFeatures(  U32 stageNum,
    if (  features.hasFeature( MFT_UseInstancing ) &&
          mMaxStages == 1 &&
          !mMaterial->mGlow[0] &&
+         !mMaterial->mDynamicCubemap &&
          shaderVersion >= 3.0f )
       fd.features.addFeature( MFT_UseInstancing );
 
@@ -402,6 +427,34 @@ void ProcessedShaderMaterial::_determineFeatures(  U32 stageNum,
       // the alpha channel.
       if( mStages[stageNum].getTex( MFT_SpecularMap )->mHasTransparency )
          fd.features.addFeature( MFT_GlossMap );
+   }
+
+   if ( mMaterial->mAccuEnabled[stageNum] )
+   {
+      fd.features.addFeature( MFT_AccuMap );
+      mHasAccumulation = true;
+   }
+
+   // we need both diffuse and normal maps + sm3 to have an accu map
+   if(   fd.features[ MFT_AccuMap ] && 
+       ( !fd.features[ MFT_DiffuseMap ] || 
+         !fd.features[ MFT_NormalMap ] ||
+         GFX->getPixelShaderVersion() < 3.0f ) ) {
+      AssertWarn(false, "SAHARA: Using an Accu Map requires SM 3.0 and a normal map.");
+      fd.features.removeFeature( MFT_AccuMap );
+      mHasAccumulation = false;
+   }
+
+   // if we still have the AccuMap feature, we add all accu constant features
+   if ( fd.features[ MFT_AccuMap ] ) {
+      // add the dependencies of the accu map
+      fd.features.addFeature( MFT_AccuScale );
+      fd.features.addFeature( MFT_AccuDirection );
+      fd.features.addFeature( MFT_AccuStrength );
+      fd.features.addFeature( MFT_AccuCoverage );
+      fd.features.addFeature( MFT_AccuSpecular );
+      // now remove some features that are not compatible with this
+      fd.features.removeFeature( MFT_UseInstancing );
    }
 
    // Without a base texture use the diffuse color
@@ -500,7 +553,10 @@ bool ProcessedShaderMaterial::_createPasses( MaterialFeatureData &stageFeatures,
       passData.mNumTexReg += numTexReg;
       passData.mFeatureData.features.addFeature( *info.type );
 
-      U32 oldTexNumber = texIndex; // TODO OPENL REVIEW
+#if defined(TORQUE_DEBUG) && defined( TORQUE_OPENGL)
+      U32 oldTexNumber = texIndex;
+#endif
+
       info.feature->setTexData( mStages[stageNum], stageFeatures, passData, texIndex );
 
 #if defined(TORQUE_DEBUG) && defined( TORQUE_OPENGL)
@@ -787,6 +843,13 @@ void ProcessedShaderMaterial::setTextureStages( SceneRenderState *state, const S
 
          case Material::BackBuff:
             GFX->setTexture( i, sgData.backBuffTex );
+            break;
+
+         case Material::AccuMap:
+            if ( sgData.accuTex )
+               GFX->setTexture( i, sgData.accuTex );
+            else
+               GFX->setTexture( i, GFXTexHandle::ZERO );
             break;
             
          case Material::TexTarget:
@@ -1116,6 +1179,17 @@ void ProcessedShaderMaterial::_setShaderConstants(SceneRenderState * state, cons
          0.0f, 0.0f ); // TODO: Wrap mode flags?
       shaderConsts->setSafe(handles->mBumpAtlasTileSC, atlasTileParams);
    }
+   
+   if( handles->mAccuScaleSC->isValid() )
+      shaderConsts->set( handles->mAccuScaleSC, mMaterial->mAccuScale[stageNum] );
+   if( handles->mAccuDirectionSC->isValid() )
+      shaderConsts->set( handles->mAccuDirectionSC, mMaterial->mAccuDirection[stageNum] );
+   if( handles->mAccuStrengthSC->isValid() )
+      shaderConsts->set( handles->mAccuStrengthSC, mMaterial->mAccuStrength[stageNum] );
+   if( handles->mAccuCoverageSC->isValid() )
+      shaderConsts->set( handles->mAccuCoverageSC, mMaterial->mAccuCoverage[stageNum] );
+   if( handles->mAccuSpecularSC->isValid() )
+      shaderConsts->set( handles->mAccuSpecularSC, mMaterial->mAccuSpecular[stageNum] );
 }
 
 bool ProcessedShaderMaterial::_hasCubemap(U32 pass)

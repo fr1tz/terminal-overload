@@ -9,6 +9,8 @@ uniform vec2 blurDimension;
 
 in vec2 tex0;
 
+out vec4 OUT_col;
+
 void main()
 {
    // Preshader
@@ -24,5 +26,5 @@ void main()
       accum += texture(diffuseMap0, BaseTexCoord + float(i) * SampleOffset);
    }
    accum /= blurSamples;
-   OUT_FragColor0 = accum;
+   OUT_col = accum;
 }

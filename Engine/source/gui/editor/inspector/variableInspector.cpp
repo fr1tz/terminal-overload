@@ -3,6 +3,7 @@
 
 #include "gui/editor/inspector/variableInspector.h"
 #include "gui/editor/inspector/variableGroup.h"
+#include "console/engineAPI.h"
 
 GuiVariableInspector::GuiVariableInspector()
 {
@@ -42,7 +43,7 @@ void GuiVariableInspector::loadVars( String searchStr )
    //group->inspectGroup();
 }
 
-ConsoleMethod( GuiVariableInspector, loadVars, void, 3, 3, "loadVars( searchString )" )
+DefineConsoleMethod( GuiVariableInspector, loadVars, void, ( const char * searchString ), , "loadVars( searchString )" )
 {
-   object->loadVars( argv[2] );
+   object->loadVars( searchString );
 }

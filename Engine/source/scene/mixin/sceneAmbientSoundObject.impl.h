@@ -1,6 +1,9 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
+#ifndef _SCENEAMBIENTSOUNDOBJECT_IMPL_H_
+#define _SCENEAMBIENTSOUNDOBJECT_IMPL_H_
+
 #include "platform/platform.h"
 #include "scene/mixin/sceneAmbientSoundObject.h"
 
@@ -93,3 +96,5 @@ bool SceneAmbientSoundObject< Base >::_setSoundAmbience( void* object, const cha
    p->setSoundAmbience( ambience );
    return false;
 }
+
+#endif // _SCENEAMBIENTSOUNDOBJECT_IMPL_H_

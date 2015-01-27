@@ -1,6 +1,7 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
+#include "console/engineAPI.h"
 #include "platform/platform.h"
 #include "T3D/gameBase/gameProcess.h"
 
@@ -14,7 +15,7 @@ ClientProcessList* ClientProcessList::smClientProcessList = NULL;
 ServerProcessList* ServerProcessList::smServerProcessList = NULL;
 static U32 gNetOrderNextId = 0;
 
-ConsoleFunction( dumpProcessList, void, 1, 1, 
+DefineConsoleFunction( dumpProcessList, void, ( ), ,
    "Dumps all ProcessObjects in ServerProcessList and ClientProcessList to the console." )
 {
    Con::printf( "client process list:" );

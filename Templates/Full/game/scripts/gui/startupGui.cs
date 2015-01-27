@@ -26,6 +26,12 @@ function loadStartup()
    //SFXPlayOnce(AudioGui, "art/sound/gui/startup");//SFXPlay(startsnd);
 }
 
+function StartupGui::onWake(%this)
+{
+   $enableDirectInput = "1";
+   activateDirectInput();
+}
+
 function StartupGui::click(%this)
 {
    %this.done = true;

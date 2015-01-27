@@ -215,8 +215,8 @@ DefineEngineMethod(GuiMenuBar, addMenu, void, (const char* menuText, S32 menuId)
    object->addMenu(menuText, menuId);
 }
 
-DefineEngineMethod(GuiMenuBar, addMenuItem, void, (const char* targetMenu, const char* menuItemText, S32 menuItemId, const char* accelerator, int checkGroup),
-												 ("","",0,NULL,-1),
+DefineEngineMethod(GuiMenuBar, addMenuItem, void, (const char* targetMenu, const char* menuItemText, S32 menuItemId, const char* accelerator, int checkGroup, const char *cmd),
+												 ("","",0,NULL,-1,""),
    "@brief Adds a menu item to the specified menu.  The menu argument can be either the text of a menu or its id.\n\n"
    "@param menu Menu name or menu Id to add the new item to.\n"
    "@param menuItemText Text for the new menu item.\n"
@@ -250,7 +250,7 @@ DefineEngineMethod(GuiMenuBar, addMenuItem, void, (const char* targetMenu, const
       Con::errorf("Cannot find menu %s for addMenuItem.", targetMenu);
       return;
    }
-   object->addMenuItem(menu, menuItemText, menuItemId, accelerator != NULL ? accelerator : "", checkGroup == -1 ? -1 : checkGroup);
+   object->addMenuItem(menu, menuItemText, menuItemId, accelerator != NULL ? accelerator : "", checkGroup == -1 ? -1 : checkGroup, cmd);
 }
 
 DefineEngineMethod(GuiMenuBar, setMenuItemEnable, void, (const char* menuTarget, const char* menuItemTarget, bool enabled),,
@@ -888,7 +888,7 @@ void GuiMenuBar::removeMenuItem(Menu *menu, MenuItem *menuItem)
    delete menuItem;
 }
 
-GuiMenuBar::MenuItem* GuiMenuBar::addMenuItem(Menu *menu, const char *text, U32 id, const char *accelerator, S32 checkGroup)
+GuiMenuBar::MenuItem* GuiMenuBar::addMenuItem(Menu *menu, const char *text, U32 id, const char *accelerator, S32 checkGroup, const char *cmd )
 {
    // allocate the new menu item
    MenuItem *newMenuItem = new MenuItem;
@@ -897,6 +897,7 @@ GuiMenuBar::MenuItem* GuiMenuBar::addMenuItem(Menu *menu, const char *text, U32 
       newMenuItem->accelerator = dStrdup(accelerator);
    else
       newMenuItem->accelerator = NULL;
+   newMenuItem->cmd = cmd;
    newMenuItem->id = id;
    newMenuItem->checkGroup = checkGroup;
    newMenuItem->nextMenuItem = NULL;
@@ -1346,9 +1347,8 @@ void GuiMenuBar::onRender(Point2I offset, const RectI &updateRect)
    renderChildControls( offset, updateRect );
 }
 
-void GuiMenuBar::buildAcceleratorMap()
+void GuiMenuBar::buildWindowAcceleratorMap( WindowInputGenerator &inputGenerator )
 {
-   Parent::buildAcceleratorMap();
    // ok, accelerator map is cleared...
    // add all our keys:
    mCurAcceleratorIndex = 1;
@@ -1363,16 +1363,20 @@ void GuiMenuBar::buildAcceleratorMap()
             continue;
          }
          EventDescriptor accelEvent;
-			ActionMap::createEventDescriptor(item->accelerator, &accelEvent);
+		 ActionMap::createEventDescriptor(item->accelerator, &accelEvent);
    
          //now we have a modifier, and a key, add them to the canvas
-         GuiCanvas *root = getRoot();
-         if (root)
-            root->addAcceleratorKey(this, mCurAcceleratorIndex, accelEvent.eventCode, accelEvent.flags);
+         inputGenerator.addAcceleratorKey( this, item->cmd, accelEvent.eventCode, accelEvent.flags);
+
          item->acceleratorIndex = mCurAcceleratorIndex;
          mCurAcceleratorIndex++;
       }
    }
+}
+
+void GuiMenuBar::removeWindowAcceleratorMap( WindowInputGenerator &inputGenerator )
+{
+    inputGenerator.removeAcceleratorKeys( this );
 }
 
 void GuiMenuBar::acceleratorKeyPress(U32 index)

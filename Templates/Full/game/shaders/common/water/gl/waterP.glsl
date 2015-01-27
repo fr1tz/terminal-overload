@@ -126,6 +126,8 @@ uniform vec4	      sunColor;
 uniform float        sunBrightness;
 uniform float        reflectivity;
 
+out vec4 OUT_col;
+
 //-----------------------------------------------------------------------------
 // Main                                                                        
 //-----------------------------------------------------------------------------
@@ -371,5 +373,5 @@ void main()
 
    //return OUT;
    
-   OUT_FragColor0 = hdrEncode( OUT );
+   OUT_col = hdrEncode( OUT );
 }

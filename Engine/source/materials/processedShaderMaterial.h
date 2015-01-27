@@ -29,6 +29,11 @@ public:
    GFXShaderConstHandle* mSpecularPowerSC;
    GFXShaderConstHandle* mSpecularStrengthSC;
    GFXShaderConstHandle* mParallaxInfoSC;
+   GFXShaderConstHandle* mAccuScaleSC;
+   GFXShaderConstHandle* mAccuDirectionSC;
+   GFXShaderConstHandle* mAccuStrengthSC;
+   GFXShaderConstHandle* mAccuCoverageSC;
+   GFXShaderConstHandle* mAccuSpecularSC;
    GFXShaderConstHandle* mFogDataSC;
    GFXShaderConstHandle* mFogColorSC;   
    GFXShaderConstHandle* mDetailScaleSC;

@@ -92,6 +92,8 @@ uniform vec4       rippleMagnitude;
 uniform vec4       specularParams;
 uniform mat4     modelMat;
 
+out vec4 OUT_col;
+
 //-----------------------------------------------------------------------------
 // Main                                                                        
 //-----------------------------------------------------------------------------
@@ -117,7 +119,7 @@ void main()
    distortPos.xy += bumpNorm.xy * distortAmt;   
  
  #ifdef UNDERWATER
-   OUT_FragColor0 = hdrEncode( textureProj( refractBuff, distortPos ) );   
+   OUT_col = hdrEncode( textureProj( refractBuff, distortPos ) );   
  #else
 
    vec3 eyeVec = IN_objPos.xyz - eyePos;
@@ -189,7 +191,7 @@ void main()
 
    #endif
    
-   OUT_FragColor0 = OUT;
+   OUT_col = OUT;
    
 #endif   
 }

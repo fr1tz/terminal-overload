@@ -652,6 +652,12 @@ protected:
    void *mData; ///< available for use by app...initialized to 0
 
    void prepCollision();
+
+//-------------------------------------------------------------------------------------
+// accumulation
+//-------------------------------------------------------------------------------------
+
+   bool hasAccumulation();
 };
 
 

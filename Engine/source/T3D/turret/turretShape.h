@@ -4,7 +4,7 @@
 #ifndef _TURRETSHAPE_H_
 #define _TURRETSHAPE_H_
 
-#ifndef _SHAPEBASE_H_
+#ifndef _ITEM_H_
    #include "T3D/item.h"
 #endif
 

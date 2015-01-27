@@ -1,5 +1,24 @@
-// Copyright information can be found in the file named COPYING
-// located in the root directory of this distribution.
+//-----------------------------------------------------------------------------
+// Copyright (c) 2012 GarageGames, LLC
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to
+// deal in the Software without restriction, including without limitation the
+// rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+// sell copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+// IN THE SOFTWARE.
+//-----------------------------------------------------------------------------
 
 #ifndef _WINDOWMANAGER_PLATFORMWINDOW_H_
 #define _WINDOWMANAGER_PLATFORMWINDOW_H_
@@ -74,26 +93,22 @@ protected:
    // Basically a flag that lets the window manager know that we've handled the splash screen, and to operate as normal.
    bool mDisplayWindow;
 
-   /// Generic handle for the portable menu bar
-   void* mPortableMenuHandle;
-
    /// Protected constructor so that the win
    PlatformWindow()
    {
       mIsBackground = false; // This could be toggled to true to prefer performance.
       mMinimumSize.set(0,0);
-		mLockedSize.set(0,0);
-		mResizeLocked = false;
+      mLockedSize.set(0,0);
+      mResizeLocked = false;
       mEnableKeyboardTranslation = false;
       mEnableAccelerators = true;
       mCursorController = NULL;
-      // This controller maps window input (Mouse/Keyboard) to a generic input consumer
-      mWindowInputGenerator = new WindowInputGenerator( this );
       mSuppressReset = false;
-
       mOffscreenRender = false;
       mDisplayWindow = false;
-      mPortableMenuHandle = NULL;
+
+      // This controller maps window input (Mouse/Keyboard) to a generic input consumer
+      mWindowInputGenerator = new WindowInputGenerator( this );
    }
 
 public:
@@ -108,6 +123,8 @@ public:
 
    /// Get the WindowController associated with this window
    virtual void setInputController( IProcessInput *controller ) { if( mWindowInputGenerator ) mWindowInputGenerator->setInputController( controller ); };
+
+   WindowInputGenerator* getInputGenerator() const { return mWindowInputGenerator; }
 
    /// Get the ID that uniquely identifies this window in the context of its
    /// window manager.
@@ -479,12 +496,6 @@ public:
    ResizeEvent       resizeEvent;
    IdleEvent         idleEvent;
 
-   /// @}
-
-   /// @name Portable menu handle
-   /// @{
-   void* &getPortableMenuHandle() { return mPortableMenuHandle; }
-   void  setPortableMenuHandle(void* menuHandle) { mPortableMenuHandle = menuHandle; }  
    /// @}
    
    /// Get the platform specific object needed to create or attach an accelerated

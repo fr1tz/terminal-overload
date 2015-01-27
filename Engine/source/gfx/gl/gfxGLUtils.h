@@ -1,5 +1,24 @@
-// Copyright information can be found in the file named COPYING
-// located in the root directory of this distribution.
+//-----------------------------------------------------------------------------
+// Copyright (c) 2012 GarageGames, LLC
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to
+// deal in the Software without restriction, including without limitation the
+// rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+// sell copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+// IN THE SOFTWARE.
+//-----------------------------------------------------------------------------
 
 #ifndef TORQUE_GFX_GL_GFXGLUTILS_H_
 #define TORQUE_GFX_GL_GFXGLUTILS_H_
@@ -163,6 +182,13 @@ GFXGLPreserveInteger TORQUE_CONCAT(preserve_, __LINE__) (GL_ARRAY_BUFFER, GL_ARR
 #define PRESERVE_INDEX_BUFFER() \
 GFXGLPreserveInteger TORQUE_CONCAT(preserve_, __LINE__) (GL_ELEMENT_ARRAY_BUFFER, GL_ELEMENT_ARRAY_BUFFER_BINDING, (GFXGLPreserveInteger::BindFn)glBindBuffer)
 
+#define _GET_BUFFER_BINDING( BINDING ) \
+BINDING == GL_ARRAY_BUFFER ? GL_ARRAY_BUFFER_BINDING : ( BINDING == GL_ELEMENT_ARRAY_BUFFER ?  GL_ELEMENT_ARRAY_BUFFER_BINDING : 0 )
+
+/// Helper macro to preserve the current element array binding.
+#define PRESERVE_BUFFER( BINDING ) \
+GFXGLPreserveInteger TORQUE_CONCAT(preserve_, __LINE__) (BINDING, _GET_BUFFER_BINDING(BINDING), (GFXGLPreserveInteger::BindFn)glBindBuffer)
+
 /// ASSERT: Never call glActiveTexture for a "bind to modify" or in a PRESERVER_TEXTURE MACRO scope.
 
 /// Helper macro to preserve the current 1D texture binding.
@@ -191,35 +217,41 @@ GFXGLPreserveTexture TORQUE_CONCAT(preserve_, __LINE__) (binding, _GET_TEXTURE_B
 GFXGLPreserveInteger TORQUE_CONCAT(preserve_, __LINE__) (GL_READ_FRAMEBUFFER, GL_READ_FRAMEBUFFER_BINDING, (GFXGLPreserveInteger::BindFn)glBindFramebuffer);\
 GFXGLPreserveInteger TORQUE_CONCAT(preserve2_, __LINE__) (GL_DRAW_FRAMEBUFFER, GL_DRAW_FRAMEBUFFER_BINDING, (GFXGLPreserveInteger::BindFn)glBindFramebuffer)
 
-// Handy macro for checking the status of a framebuffer.  Framebuffers can fail in 
-// all sorts of interesting ways, these are just the most common.  Further, no existing GL profiling 
-// tool catches framebuffer errors when the framebuffer is created, so we actually need this.
-#define CHECK_FRAMEBUFFER_STATUS()\
-{\
-GLenum status;\
-status = glCheckFramebufferStatus(GL_FRAMEBUFFER);\
-switch(status) {\
-case GL_FRAMEBUFFER_COMPLETE:\
-break;\
-case GL_FRAMEBUFFER_UNSUPPORTED:\
-AssertFatal(false, "Unsupported FBO");\
-break;\
-case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT:\
-AssertFatal(false, "Incomplete FBO Attachment");\
-break;\
-case GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT:\
-AssertFatal(false, "Incomplete FBO Missing Attachment");\
-break;\
-case GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER:\
-AssertFatal(false, "Incomplete FBO Draw buffer");\
-break;\
-case GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER:\
-AssertFatal(false, "Incomplete FBO Read buffer");\
-break;\
-default:\
-/* programming error; will fail on all hardware */\
-AssertFatal(false, "Something really bad happened with an FBO");\
-}\
-}
+
+#if TORQUE_DEBUG
+
+    // Handy macro for checking the status of a framebuffer.  Framebuffers can fail in 
+    // all sorts of interesting ways, these are just the most common.  Further, no existing GL profiling 
+    // tool catches framebuffer errors when the framebuffer is created, so we actually need this.
+    #define CHECK_FRAMEBUFFER_STATUS()\
+    {\
+    GLenum status;\
+    status = glCheckFramebufferStatus(GL_FRAMEBUFFER);\
+    switch(status) {\
+    case GL_FRAMEBUFFER_COMPLETE:\
+    break;\
+    case GL_FRAMEBUFFER_UNSUPPORTED:\
+    AssertFatal(false, "Unsupported FBO");\
+    break;\
+    case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT:\
+    AssertFatal(false, "Incomplete FBO Attachment");\
+    break;\
+    case GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT:\
+    AssertFatal(false, "Incomplete FBO Missing Attachment");\
+    break;\
+    case GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER:\
+    AssertFatal(false, "Incomplete FBO Draw buffer");\
+    break;\
+    case GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER:\
+    AssertFatal(false, "Incomplete FBO Read buffer");\
+    break;\
+    default:\
+    /* programming error; will fail on all hardware */\
+    AssertFatal(false, "Something really bad happened with an FBO");\
+    }\
+    }
+#else
+    #define CHECK_FRAMEBUFFER_STATUS()
+#endif //TORQUE_DEBUG
 
 #endif

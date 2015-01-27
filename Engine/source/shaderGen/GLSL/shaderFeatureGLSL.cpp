@@ -70,10 +70,11 @@ LangElement* ShaderFeatureGLSL::assignColor( LangElement *elem,
    {
       // create color var
       color = new Var;
-      color->setName( getOutputTargetVarName( outputTarget ) );
       color->setType( "vec4" );
+      color->setName( getOutputTargetVarName( outputTarget ) );
+      color->setStructName( "OUT" );
 
-      return new GenOp( "@ = @", new DecOp(color), elem );
+      return new GenOp( "@ = @", color, elem );
    }
 
    LangElement *assign;
@@ -966,11 +967,8 @@ void DiffuseMapFeatGLSL::setTexData(   Material::StageData &stageDat,
                                        U32 &texIndex )
 {
    GFXTextureObject *tex = stageDat.getTex( MFT_DiffuseMap );
-   if ( tex )
-   {
-      passData.mSamplerNames[ texIndex ] = "diffuseMap";
-      passData.mTexSlot[ texIndex++ ].texObject = tex;
-   }
+   passData.mSamplerNames[ texIndex ] = "diffuseMap";
+   passData.mTexSlot[ texIndex++ ].texObject = tex;
 }
 
 
@@ -1662,7 +1660,7 @@ void ReflectCubeFeatGLSL::processVert( Vector<ShaderComponent*> &componentList,
     cubeVertPos->setType( "vec3" );
    LangElement *cubeVertPosDecl = new DecOp( cubeVertPos );
 
-    meta->addStatement( new GenOp( "   @ = tMul(mat3( @ ), @).xyz;\r\n",
+   meta->addStatement( new GenOp( "   @ = tMul( @, float4(@,1)).xyz;\r\n",
                        cubeVertPosDecl, cubeTrans, LangElement::find( "position" ) ) );
 
    // cube normal
@@ -1674,6 +1672,9 @@ void ReflectCubeFeatGLSL::processVert( Vector<ShaderComponent*> &componentList,
     meta->addStatement( new GenOp( "   @ = ( tMul( (@),  vec4(@, 0) ) ).xyz;\r\n",
                        cubeNormDecl, cubeTrans, inNormal ) );
 
+    meta->addStatement( new GenOp( "   @ = bool(length(@)) ? normalize(@) : @;\r\n",
+                        cubeNormal, cubeNormal, cubeNormal, cubeNormal ) );
+
     // grab the eye position
     Var *eyePos = (Var*)LangElement::find( "eyePosWorld" );
     if ( !eyePos )
@@ -1683,23 +1684,14 @@ void ReflectCubeFeatGLSL::processVert( Vector<ShaderComponent*> &componentList,
         eyePos->constSortPos = cspPass;
     }
 
-    // cube position
-    Var * cubePos = new Var;
-    cubePos->setName( "cubePos" );
-    cubePos->setType( "vec3" );
-    LangElement *cubePosDecl = new DecOp( cubePos );
-
-    meta->addStatement( new GenOp( "   @ = vec3( @[3][0], @[3][1], @[3][2] );\r\n",
-                        cubePosDecl, cubeTrans, cubeTrans, cubeTrans ) );
-
    // eye to vert
    Var * eyeToVert = new Var;
    eyeToVert->setName( "eyeToVert" );
     eyeToVert->setType( "vec3" );
    LangElement *e2vDecl = new DecOp( eyeToVert );
 
-    meta->addStatement( new GenOp( "   @ = @ - ( @ - @ );\r\n", 
-                        e2vDecl, cubeVertPos, eyePos, cubePos ) );
+    meta->addStatement( new GenOp( "   @ = @ - @;\r\n", 
+                        e2vDecl, cubeVertPos, eyePos ) );
 
    // grab connector texcoord register
    ShaderConnector *connectComp = dynamic_cast<ShaderConnector *>( componentList[C_CONNECTOR] );
@@ -1799,7 +1791,7 @@ void ReflectCubeFeatGLSL::processPix(  Vector<ShaderComponent*> &componentList,
    else
    {
       if ( attn )
-         lerpVal = new GenOp( "saturate( @ ).xxxx", attn );
+         lerpVal = new GenOp( "vec4( saturate( @ ) ).xxxx", attn );
       else
          blendOp = Material::Mul;
    }
@@ -2167,6 +2159,7 @@ void FogFeatGLSL::processPix( Vector<ShaderComponent*> &componentList,
       color = new Var;
       color->setType( "vec4" );
       color->setName( "col" );
+      color->setStructName("OUT");
    }
 	
    Var *fogAmount;
@@ -2379,7 +2372,7 @@ void RenderTargetZeroGLSL::processPix( Vector<ShaderComponent*> &componentList, 
 {
    // Do not actually assign zero, but instead a number so close to zero it may as well be zero.
    // This will prevent a divide by zero causing an FP special on float render targets
-   output = new GenOp( "   @;\r\n", assignColor( new GenOp( "0.00001" ), Material::None, NULL, mOutputTargetMask ) );
+   output = new GenOp( "   @;\r\n", assignColor( new GenOp( "vec4(0.00001)" ), Material::None, NULL, mOutputTargetMask ) );
 }
 
 

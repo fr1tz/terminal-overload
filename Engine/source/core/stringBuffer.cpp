@@ -5,6 +5,7 @@
 #include "core/frameAllocator.h"
 #include "core/strings/unicode.h"
 #include "core/strings/stringFunctions.h"
+#include "console/engineAPI.h"
 
 
 #if defined(TORQUE_DEBUG)
@@ -28,12 +29,12 @@
          void dumpAllStrings();
    };
 
-   ConsoleFunction(sbmDumpStats, void, 1, 1, "")
+   DefineConsoleFunction( sbmDumpStats, void, (), , "()")
    {
       StringBufferManager::getManager().dumpStats();
    }
 
-   ConsoleFunction(sbmDumpStrings, void, 1, 1, "")
+   DefineConsoleFunction( sbmDumpStrings, void, (), , "()")
    {
       StringBufferManager::getManager().dumpAllStrings();
    }

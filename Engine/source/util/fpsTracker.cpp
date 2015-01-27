@@ -3,6 +3,7 @@
 
 #include "util/fpsTracker.h"
 #include "console/console.h"
+#include "console/engineAPI.h"
 
 FPSTracker gFPS;
 
@@ -68,7 +69,7 @@ void FPSTracker::update()
    }
 }
 
-ConsoleFunction( resetFPSTracker, void, 1, 1, "()"
+DefineConsoleFunction( resetFPSTracker, void, (), , "()"
    "@brief Reset FPS stats (fps::)\n\n"
    "@ingroup Game")
 {

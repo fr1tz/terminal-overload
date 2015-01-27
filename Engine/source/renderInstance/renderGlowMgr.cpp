@@ -3,6 +3,7 @@
 
 #include "platform/platform.h"
 #include "renderInstance/renderGlowMgr.h"
+#include "renderInstance/renderParticleMgr.h"
 
 #include "scene/sceneManager.h"
 #include "scene/sceneRenderState.h"
@@ -70,6 +71,9 @@ RenderGlowMgr::RenderGlowMgr()
 {
    notifyType( RenderPassManager::RIT_Decal );
    notifyType( RenderPassManager::RIT_Translucent );
+   notifyType( RenderPassManager::RIT_Particle );
+
+   mParticleRenderMgr = NULL;
 
    mNamedTarget.registerWithName( "glowbuffer" );
    mTargetSizeType = WindowSize;
@@ -103,6 +107,14 @@ void RenderGlowMgr::addElement( RenderInst *inst )
    // manner so we can skip glow in a non-diffuse render pass.
    //if ( !mParentManager->getSceneManager()->getSceneState()->isDiffusePass() )
       //return RenderBinManager::arSkipped;
+   ParticleRenderInst *particleInst = NULL;
+   if(inst->type == RenderPassManager::RIT_Particle)
+      particleInst = static_cast<ParticleRenderInst*>(inst);
+   if(particleInst && particleInst->glow)
+   {
+      internalAddElement(inst);
+      return;
+   }
 
    // Skip it if we don't have a glowing material.
    BaseMatInstance *matInst = getMaterial( inst );
@@ -152,7 +164,31 @@ void RenderGlowMgr::render( SceneRenderState *state )
 
    for( U32 j=0; j<binSize; )
    {
-      MeshRenderInst *ri = static_cast<MeshRenderInst*>(mElementList[j].inst);
+      RenderInst *_ri = mElementList[j].inst;
+      if(_ri->type == RenderPassManager::RIT_Particle)
+      {
+         // Find the particle render manager (if we don't have it)
+         if(mParticleRenderMgr == NULL)
+         {
+            RenderPassManager *rpm = state->getRenderPass();
+            for( U32 i = 0; i < rpm->getManagerCount(); i++ )
+            {
+               RenderBinManager *bin = rpm->getManager(i);
+               if( bin->getRenderInstType() == RenderParticleMgr::RIT_Particles )
+               {
+                  mParticleRenderMgr = reinterpret_cast<RenderParticleMgr *>(bin);
+                  break;
+               }
+            }
+         }
+
+         ParticleRenderInst *ri = static_cast<ParticleRenderInst*>(_ri);
+         mParticleRenderMgr->renderParticle(ri, state);
+         j++;
+         continue;
+      }
+
+      MeshRenderInst *ri = static_cast<MeshRenderInst*>(_ri);
 
       setupSGData( ri, sgData );
 
@@ -172,6 +208,9 @@ void RenderGlowMgr::render( SceneRenderState *state )
          U32 a;
          for( a=j; a<binSize; a++ )
          {
+            if (mElementList[a].inst->type == RenderPassManager::RIT_Particle)
+               break;
+
             MeshRenderInst *passRI = static_cast<MeshRenderInst*>(mElementList[a].inst);
 
             if ( newPassNeeded( ri, passRI ) )

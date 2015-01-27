@@ -19,7 +19,7 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 // IN THE SOFTWARE.
 //-----------------------------------------------------------------------------
-#if defined( TORQUE_SDL )
+#if defined( TORQUE_SDL ) && !defined( TORQUE_DEDICATED )
 
 #include "gfx/gfxCubemap.h"
 #include "gfx/screenshot.h"
@@ -108,7 +108,6 @@ void GFXGLDevice::enumerateAdapters( Vector<GFXAdapter*> &adapterList )
    glGetIntegerv(GL_MINOR_VERSION, &minor);
    if( major < 3 || ( major == 3 && minor < 2 ) )
    {
-      Con::errorf("GFXGLDevice: Error! Need OpenGL 3.2 at least, have %i.%i.", major, minor);
       return;
    }
 

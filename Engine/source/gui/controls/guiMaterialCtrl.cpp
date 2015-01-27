@@ -10,6 +10,7 @@
 #include "core/util/safeDelete.h"
 #include "console/console.h"
 #include "console/consoleTypes.h"
+#include "console/engineAPI.h"
 #include "gfx/gfxDevice.h"
 #include "math/util/matrixSet.h"
 #include "scene/sceneRenderState.h"
@@ -148,8 +149,8 @@ void GuiMaterialCtrl::onRender( Point2I offset, const RectI &updateRect )
    GFX->setTexture( 0, NULL );
 }
 
-ConsoleMethod( GuiMaterialCtrl, setMaterial, bool, 3, 3, "( string materialName )"
+DefineConsoleMethod( GuiMaterialCtrl, setMaterial, bool, ( const char * materialName ), , "( string materialName )"
                "Set the material to be displayed in the control." )
 {
-   return object->setMaterial( argv[2] );
+   return object->setMaterial( materialName );
 }

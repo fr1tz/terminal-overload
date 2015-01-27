@@ -81,6 +81,4 @@ mat4 mat4FromRow( float r0c0, float r0c1, float r0c2, float r0c3,
 
 #ifdef TORQUE_PIXEL_SHADER
 	void clip(float a) { if(a < 0) discard;}
-   
-   out vec4 OUT_FragColor0;
 #endif

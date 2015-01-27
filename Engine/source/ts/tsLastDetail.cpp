@@ -20,6 +20,7 @@
 #include "materials/materialManager.h"
 #include "materials/materialFeatureTypes.h"
 #include "console/consoleTypes.h"
+#include "console/engineAPI.h"
 
 
 GFXImplementVertexFormat( ImposterState )
@@ -523,12 +524,9 @@ void TSLastDetail::updateImposterImages( bool forceUpdate )
       GFX->endScene();
 }
 
-ConsoleFunction(tsUpdateImposterImages, void, 1, 2, "tsUpdateImposterImages( bool forceupdate )")
+DefineConsoleFunction( tsUpdateImposterImages, void, (bool forceUpdate), (false), "tsUpdateImposterImages( bool forceupdate )")
 {
-   if ( argc > 1 )
-      TSLastDetail::updateImposterImages( dAtob( argv[1] ) );
-   else
-      TSLastDetail::updateImposterImages();
+   TSLastDetail::updateImposterImages(forceUpdate);
 }
 
 

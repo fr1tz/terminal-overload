@@ -17,7 +17,6 @@
    #include "sfx/sfxCommon.h"
 #endif
 
-
 class SFXAmbience;
 class SFXSoundscape;
 
@@ -35,6 +34,8 @@ class LevelInfo : public NetObject
       F32 mNearClip;
 
       F32 mVisibleDistance;
+
+      F32 mVisibleGhostDistance;
 
       F32 mDecalBias;
 

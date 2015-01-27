@@ -1,5 +1,24 @@
-// Copyright information can be found in the file named COPYING
-// located in the root directory of this distribution.
+//-----------------------------------------------------------------------------
+// Copyright (c) 2012 GarageGames, LLC
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to
+// deal in the Software without restriction, including without limitation the
+// rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+// sell copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+// IN THE SOFTWARE.
+//-----------------------------------------------------------------------------
 
 #include "console/console.h"
 #include "gfx/gl/gfxGLDevice.h"
@@ -151,12 +170,15 @@ void _GFXGLTextureTargetFBOImpl::applyState()
       if(color)
       {
          hasColor = true;
-         if( color->getBinding( ) == GL_TEXTURE_2D )
+         const GLenum binding = color->getBinding();
+         if( binding == GL_TEXTURE_2D || (binding >= GL_TEXTURE_CUBE_MAP_POSITIVE_X && binding <= GL_TEXTURE_CUBE_MAP_NEGATIVE_Z) )
             glFramebufferTexture2D( GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, color->getBinding( ), color->getHandle( ), color->getMipLevel( ) );
-         else if( color->getBinding( ) == GL_TEXTURE_1D )
+         else if( binding == GL_TEXTURE_1D )
             glFramebufferTexture1D( GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, color->getBinding( ), color->getHandle( ), color->getMipLevel( ) );
-         else if( color->getBinding( ) == GL_TEXTURE_3D )
+         else if( binding == GL_TEXTURE_3D )
             glFramebufferTexture3D( GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, color->getBinding( ), color->getHandle( ), color->getMipLevel( ), color->getZOffset( ) );
+         else
+             Con::errorf("_GFXGLTextureTargetFBOImpl::applyState - Bad binding");
       }
       else
       {
@@ -183,8 +205,21 @@ void _GFXGLTextureTargetFBOImpl::applyState()
 
 void _GFXGLTextureTargetFBOImpl::makeActive()
 {
-   glBindFramebuffer(GL_FRAMEBUFFER, mFramebuffer);
-   GFXGL->getOpenglCache()->setCacheBinded(GL_FRAMEBUFFER, mFramebuffer);
+    glBindFramebuffer(GL_FRAMEBUFFER, mFramebuffer);
+    GFXGL->getOpenglCache()->setCacheBinded(GL_FRAMEBUFFER, mFramebuffer);
+
+    int i = 0;
+    GLenum draws[16];
+    for( i = 0; i < GFXGL->getNumRenderTargets(); ++i)
+    {
+        _GFXGLTargetDesc* color = mTarget->getTargetDesc( static_cast<GFXTextureTarget::RenderSlot>(GFXTextureTarget::Color0+i ));
+        if(color)
+            draws[i] = GL_COLOR_ATTACHMENT0 + i;
+        else
+            break;
+    }
+
+    glDrawBuffers( i, draws );
 }
 
 void _GFXGLTextureTargetFBOImpl::finish()
@@ -200,9 +235,12 @@ void _GFXGLTextureTargetFBOImpl::finish()
    
       // Generate mips if necessary
       // Assumes a 2D texture.
-      PRESERVE_TEXTURE(color->getBinding());
-      glBindTexture(color->getBinding(), color->getHandle());
-      glGenerateMipmapEXT(GL_TEXTURE_2D);
+      GLenum binding = color->getBinding();
+      binding = (binding >= GL_TEXTURE_CUBE_MAP_POSITIVE_X && binding <= GL_TEXTURE_CUBE_MAP_NEGATIVE_Z) ? GL_TEXTURE_CUBE_MAP : binding;
+
+      PRESERVE_TEXTURE( binding );
+      glBindTexture( binding, color->getHandle() );
+      glGenerateMipmap( binding );
    }
 }
 
@@ -353,9 +391,12 @@ void GFXGLTextureTarget::resolveTo(GFXTextureObject* obj)
 
    if( gglHasExtension(ARB_copy_image) && mTargets[Color0]->isCompatible(glTexture) )
    {
+      GLenum binding = mTargets[Color0]->getBinding();      
+      binding = (binding >= GL_TEXTURE_CUBE_MAP_POSITIVE_X && binding <= GL_TEXTURE_CUBE_MAP_NEGATIVE_Z) ? GL_TEXTURE_CUBE_MAP : binding;
+      U32 srcStartDepth = binding == GL_TEXTURE_CUBE_MAP ? mTargets[Color0]->getBinding() - GL_TEXTURE_CUBE_MAP_POSITIVE_X : 0;
       glCopyImageSubData(
-        mTargets[Color0]->getHandle(), GL_TEXTURE_2D, 0, 0, 0, 0,
-        glTexture->getHandle(), GL_TEXTURE_2D, 0, 0, 0, 0,
+        mTargets[Color0]->getHandle(), binding, 0, 0, 0, srcStartDepth,
+        glTexture->getHandle(), glTexture->getBinding(), 0, 0, 0, 0,
         mTargets[Color0]->getWidth(), mTargets[Color0]->getHeight(), 1);
 
       return;
@@ -364,10 +405,10 @@ void GFXGLTextureTarget::resolveTo(GFXTextureObject* obj)
    PRESERVE_FRAMEBUFFER();
    
    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, mCopyFboDst);
-   glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, glTexture->getHandle(), 0);
+   glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, glTexture->getBinding(), glTexture->getHandle(), 0);
    
    glBindFramebuffer(GL_READ_FRAMEBUFFER, mCopyFboSrc);
-   glFramebufferTexture2D(GL_READ_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D,mTargets[Color0]->getHandle(), 0);
+   glFramebufferTexture2D(GL_READ_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, mTargets[Color0]->getBinding(), mTargets[Color0]->getHandle(), 0);
    
    glBlitFramebuffer(0, 0, mTargets[Color0]->getWidth(), mTargets[Color0]->getHeight(),
       0, 0, glTexture->getWidth(), glTexture->getHeight(), GL_COLOR_BUFFER_BIT, GL_NEAREST);

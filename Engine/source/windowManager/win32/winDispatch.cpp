@@ -39,11 +39,7 @@
 #include "core/util/journal/process.h"
 #include "core/util/journal/journaledSignal.h"
 
-#if defined( TORQUE_SDL )
-
-void Dispatch(DispatchType type,HWND hWnd,UINT message,WPARAM wparam,WPARAM lparam) {}
-
-#else
+#if !defined( TORQUE_SDL )
 
 static U32 _ModifierKeys=0;
 static BYTE keyboardState[256];
@@ -456,7 +452,7 @@ static bool _dispatch(HWND hWnd,UINT message,WPARAM wParam,WPARAM lParam)
 		// Quit indicates that we're not going to receive anymore Win32 messages.
 		// Therefore, it's appropriate to flag our event loop for exit as well,
 		// since we won't be getting any more messages.
-		Process::requestShutdown();
+		Process::requestShutdown((S32)wParam);
 		break;
 				  }
 

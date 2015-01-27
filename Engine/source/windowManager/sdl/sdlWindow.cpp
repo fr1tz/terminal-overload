@@ -411,7 +411,7 @@ void PlatformWindowSDL::show()
    if (mOffscreenRender)
       return;
 
-	SDL_RaiseWindow( mWindowHandle );
+	SDL_ShowWindow( mWindowHandle );
 }
 
 void PlatformWindowSDL::close()
@@ -499,8 +499,9 @@ void PlatformWindowSDL::_triggerTextNotify(const SDL_Event& evt)
    }
    else // get a wchar string
    {
-      U16 wchar[16]; // evt.text.text is char[32] long
-      dMemcpy(wchar, evt.text.text, sizeof(char)*32);
+      const U32 len = strlen(evt.text.text);
+      U16 wchar[16] = {};
+      dMemcpy(wchar, evt.text.text, sizeof(char)*len);
 
       for(int i = 0; i < 16; ++i)
       {

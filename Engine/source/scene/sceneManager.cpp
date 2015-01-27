@@ -21,7 +21,6 @@
 // For player object bounds workaround.
 #include "T3D/player.h"
 
-
 extern bool gEditingMission;
 
 
@@ -94,6 +93,7 @@ SceneManager::SceneManager( bool isClient )
      mDisplayTargetResolution( 0, 0 ),
      mDefaultRenderPass( NULL ),
      mVisibleDistance( 500.f ),
+     mVisibleGhostDistance( 0 ),
      mNearClip( 0.1f ),
      mAmbientLightColor( ColorF( 0.1f, 0.1f, 0.1f, 1.0f ) ),
      mZoneManager( NULL )

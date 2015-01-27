@@ -8,7 +8,9 @@
 #include "math/mMatrix.h"
 #endif
 
-
+#ifndef _GFXDEVICE_H_
+#include "gfx/gfxDevice.h"
+#endif
 
 class SceneRenderState;
 class GFXCubemap;
@@ -89,7 +91,13 @@ protected:
    /// are forward lit and need lights.
    LightQuery *mLightQuery;
 
+   // The accumulation texture provided by an accumulation
+   // volume. This is passed down per-object.
+   GFXTextureObject* mAccuTex;
+
 public:
+
+   
 
    TSRenderState();
    TSRenderState( const TSRenderState &state );
@@ -136,6 +144,10 @@ public:
    ///@see mLightQuery
    void setLightQuery( LightQuery *query ) { mLightQuery = query; }
    LightQuery* getLightQuery() const { return mLightQuery; }
+
+   ///@see mAccuTex
+   void setAccuTex( GFXTextureObject* query ) { mAccuTex = query; }
+   GFXTextureObject* getAccuTex() const { return mAccuTex; }
 
    /// @}
 };

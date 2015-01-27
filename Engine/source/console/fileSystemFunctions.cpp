@@ -677,7 +677,7 @@ DefineEngineFunction(makeFullPath, String, ( const char* path, const char* cwd )
 	"@ingroup FileSystem")
 {
    static const U32 bufSize = 512;
-   char *buf = Con::getReturnBuffer(buf);
+   char *buf = Con::getReturnBuffer(bufSize);
    Platform::makeFullPathName(path, buf, bufSize, dStrlen(cwd) > 1 ? cwd : NULL);
    return buf;
 }
@@ -704,7 +704,7 @@ DefineEngineFunction(pathConcat, String, ( const char* path, const char* file),,
 	"@ingroup FileSystem")
 {
    static const U32 bufSize = 1024;
-   char *buf = Con::getReturnBuffer(buf);
+   char *buf = Con::getReturnBuffer(bufSize);
    Platform::makeFullPathName(file, buf, bufSize, path);
    return buf;
 }

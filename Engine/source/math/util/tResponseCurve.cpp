@@ -2,6 +2,7 @@
 // located in the root directory of this distribution.
 
 #include "tResponseCurve.h"
+#include "console/engineAPI.h"
 
 IMPLEMENT_CONOBJECT( SimResponseCurve );
 
@@ -44,17 +45,17 @@ void SimResponseCurve::clear()
    mCurve.clear();
 }
 
-ConsoleMethod( SimResponseCurve, addPoint, void, 4, 4, "addPoint( F32 value, F32 time )" )
+DefineConsoleMethod( SimResponseCurve, addPoint, void, ( F32 value, F32 time ), , "addPoint( F32 value, F32 time )" )
 {
-   object->addPoint( dAtof(argv[2]), dAtof(argv[3]) );
+   object->addPoint( value, time );
 }
 
-ConsoleMethod( SimResponseCurve, getValue, F32, 3, 3, "getValue( F32 time )" )
+DefineConsoleMethod( SimResponseCurve, getValue, F32, ( F32 time ), , "getValue( F32 time )" )
 {
-   return object->getValue( dAtof(argv[2]) );
+   return object->getValue( time );
 }
 
-ConsoleMethod( SimResponseCurve, clear, void, 2, 2, "clear()" )
+DefineConsoleMethod( SimResponseCurve, clear, void, (), , "clear()" )
 {
    object->clear();
 }

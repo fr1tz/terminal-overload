@@ -1,5 +1,24 @@
-// Copyright information can be found in the file named COPYING
-// located in the root directory of this distribution.
+//-----------------------------------------------------------------------------
+// Copyright (c) 2012 GarageGames, LLC
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to
+// deal in the Software without restriction, including without limitation the
+// rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+// sell copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+// IN THE SOFTWARE.
+//-----------------------------------------------------------------------------
 
 #ifndef _GUIMENUBAR_H_
 #define _GUIMENUBAR_H_
@@ -13,6 +32,7 @@
 
 class GuiMenuBar;
 class GuiMenuTextListCtrl;
+class WindowInputGenerator;
 
 class GuiMenuBackgroundCtrl : public GuiControl
 {
@@ -89,6 +109,7 @@ public:
 
 		Menu* submenuParentMenu; //  For a submenu, this is the parent menu
       Menu* submenu;
+      String cmd;
 	};
 
 	struct Menu
@@ -149,7 +170,7 @@ public:
 	static MenuItem *findMenuItem(Menu *menu, const char *menuItem); // takes either a menu text or a string id
 	void removeMenu(Menu *menu);
 	static void removeMenuItem(Menu *menu, MenuItem *menuItem);
-	static MenuItem* addMenuItem(Menu *menu, const char *text, U32 id, const char *accelerator, S32 checkGroup);
+	static MenuItem* addMenuItem(Menu *menu, const char *text, U32 id, const char *accelerator, S32 checkGroup, const char *cmd);
    static MenuItem* addMenuItem(Menu *menu, MenuItem *menuItem);
 	static void clearMenuItems(Menu *menu);
    void clearMenus();
@@ -187,7 +208,8 @@ public:
    
    void onAction();
    void closeMenu();
-   void buildAcceleratorMap();
+   void buildWindowAcceleratorMap( WindowInputGenerator &inputGenerator );
+   void removeWindowAcceleratorMap( WindowInputGenerator &inputGenerator );
    void acceleratorKeyPress(U32 index);
 
    virtual void menuItemSelected(Menu *menu, MenuItem *item);

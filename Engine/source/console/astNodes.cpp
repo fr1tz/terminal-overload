@@ -87,6 +87,8 @@ static U32 conversionOp(TypeReq src, TypeReq dst)
          return OP_STR_TO_FLT;
       case TypeReqNone:
          return OP_STR_TO_NONE;
+      case TypeReqVar:
+         return OP_SAVEVAR_STR;
       default:
          break;
       }
@@ -101,6 +103,8 @@ static U32 conversionOp(TypeReq src, TypeReq dst)
          return OP_FLT_TO_STR;
       case TypeReqNone:
          return OP_FLT_TO_NONE;
+      case TypeReqVar:
+         return OP_SAVEVAR_FLT;
       default:
          break;
       }
@@ -115,6 +119,24 @@ static U32 conversionOp(TypeReq src, TypeReq dst)
          return OP_UINT_TO_STR;
       case TypeReqNone:
          return OP_UINT_TO_NONE;
+      case TypeReqVar:
+         return OP_SAVEVAR_UINT;
+      default:
+         break;
+      }
+   }
+   else if(src == TypeReqVar)
+   {
+      switch(dst)
+      {
+      case TypeReqUInt:
+         return OP_LOADVAR_UINT;
+      case TypeReqFloat:
+         return OP_LOADVAR_FLT;
+      case TypeReqString:
+         return OP_LOADVAR_STR;
+      case TypeReqNone:
+         return OP_COPYVAR_TO_NONE;
       default:
          break;
       }
@@ -173,8 +195,22 @@ U32 ReturnStmtNode::compileStmt(CodeStream &codeStream, U32 ip)
       codeStream.emit(OP_RETURN_VOID);
    else
    {
-      ip = expr->compile(codeStream, ip, TypeReqString);
-      codeStream.emit(OP_RETURN);
+      TypeReq walkType = expr->getPreferredType();
+      if (walkType == TypeReqNone) walkType = TypeReqString;
+      ip = expr->compile(codeStream, ip, walkType);
+
+      // Return the correct type
+      switch (walkType) {
+      case TypeReqUInt:
+         codeStream.emit(OP_RETURN_UINT);
+         break;
+      case TypeReqFloat:
+         codeStream.emit(OP_RETURN_FLT);
+         break;
+      default:
+         codeStream.emit(OP_RETURN);
+         break;
+      }
    }
    return codeStream.tell();
 }
@@ -679,7 +715,12 @@ U32 VarNode::compile(CodeStream &codeStream, U32 ip, TypeReq type)
    case TypeReqString:
       codeStream.emit(OP_LOADVAR_STR);
       break;
+   case TypeReqVar:
+      codeStream.emit(OP_LOADVAR_VAR);
+      break;
    case TypeReqNone:
+      break;
+   default:
       break;
    }
    return codeStream.tell();
@@ -862,7 +903,20 @@ U32 AssignExprNode::compile(CodeStream &codeStream, U32 ip, TypeReq type)
    if(subType == TypeReqNone)
       subType = type;
    if(subType == TypeReqNone)
-      subType = TypeReqString;
+   {
+      // What we need to do in this case is turn it into a VarNode reference. 
+      // Unfortunately other nodes such as field access (SlotAccessNode) 
+      // cannot be optimized in the same manner as all fields are exposed 
+      // and set as strings.
+      if (dynamic_cast<VarNode*>(expr) != NULL)
+      {
+         subType = TypeReqVar;
+      }
+      else
+      {
+         subType = TypeReqString;
+      }
+   }
    // if it's an array expr, the formula is:
    // eval expr
    // (push and pop if it's TypeReqString) OP_ADVANCE_STR
@@ -884,6 +938,7 @@ U32 AssignExprNode::compile(CodeStream &codeStream, U32 ip, TypeReq type)
    precompileIdent(varName);
    
    ip = expr->compile(codeStream, ip, subType);
+
    if(arrayIndex)
    {
       if(subType == TypeReqString)
@@ -914,6 +969,9 @@ U32 AssignExprNode::compile(CodeStream &codeStream, U32 ip, TypeReq type)
       break;
    case TypeReqFloat:
       codeStream.emit(OP_SAVEVAR_FLT);
+      break;
+   case TypeReqVar:
+      codeStream.emit(OP_SAVEVAR_VAR);
       break;
    case TypeReqNone:
       break;
@@ -1083,8 +1141,21 @@ U32 FuncCallExprNode::compile(CodeStream &codeStream, U32 ip, TypeReq type)
    codeStream.emit(OP_PUSH_FRAME);
    for(ExprNode *walk = args; walk; walk = (ExprNode *) walk->getNext())
    {
-      ip = walk->compile(codeStream, ip, TypeReqString);
-      codeStream.emit(OP_PUSH);
+      TypeReq walkType = walk->getPreferredType();
+      if (walkType == TypeReqNone) walkType = TypeReqString;
+      ip = walk->compile(codeStream, ip, walkType);
+      switch (walk->getPreferredType())
+      {
+         case TypeReqFloat:
+            codeStream.emit(OP_PUSH_FLT);
+            break;
+         case TypeReqUInt:
+            codeStream.emit(OP_PUSH_UINT);
+            break;
+         default:
+            codeStream.emit(OP_PUSH);
+            break;
+      }
    }
    if(callType == MethodCall || callType == ParentCall)
       codeStream.emit(OP_CALLFUNC);
@@ -1373,6 +1444,7 @@ U32 ObjectDeclNode::compileSubObject(CodeStream &codeStream, U32 ip, bool root)
    // OP_FINISH_OBJECT <-- fail point jumps to this opcode
    
    codeStream.emit(OP_PUSH_FRAME);
+
    ip = classNameExpr->compile(codeStream, ip, TypeReqString);
    codeStream.emit(OP_PUSH);
 
@@ -1380,8 +1452,21 @@ U32 ObjectDeclNode::compileSubObject(CodeStream &codeStream, U32 ip, bool root)
    codeStream.emit(OP_PUSH);
    for(ExprNode *exprWalk = argList; exprWalk; exprWalk = (ExprNode *) exprWalk->getNext())
    {
-      ip = exprWalk->compile(codeStream, ip, TypeReqString);
-      codeStream.emit(OP_PUSH);
+      TypeReq walkType = exprWalk->getPreferredType();
+      if (walkType == TypeReqNone) walkType = TypeReqString;
+      ip = exprWalk->compile(codeStream, ip, walkType);
+      switch (exprWalk->getPreferredType())
+      {
+         case TypeReqFloat:
+            codeStream.emit(OP_PUSH_FLT);
+            break;
+         case TypeReqUInt:
+            codeStream.emit(OP_PUSH_UINT);
+            break;
+         default:
+            codeStream.emit(OP_PUSH);
+            break;      
+      }
    }
    codeStream.emit(OP_CREATE_OBJECT);
    codeStream.emitSTE(parentObject);

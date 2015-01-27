@@ -2,6 +2,10 @@
 // located in the root directory of this distribution.
 
 #include "component/dynamicConsoleMethodComponent.h"
+#include "console/stringStack.h"
+
+extern StringStack STR;
+extern ConsoleValueStack CSTK;
 
 IMPLEMENT_CO_NETOBJECT_V1(DynamicConsoleMethodComponent);
 
@@ -71,7 +75,9 @@ const char *DynamicConsoleMethodComponent::callMethod( S32 argc, const char* met
    argv[1] = methodName;
    argv[2] = methodName;
 
-   return callMethodArgList( argc , argv );
+   StringStackConsoleWrapper argsw(argc, argv);
+
+   return callMethodArgList( argsw.count() , argsw );
 }
 
 #ifdef TORQUE_DEBUG
@@ -98,7 +104,7 @@ void DynamicConsoleMethodComponent::injectMethodCall( const char* method )
 }
 #endif
 
-const char* DynamicConsoleMethodComponent::callMethodArgList( U32 argc, const char *argv[], bool callThis /* = true  */ )
+const char* DynamicConsoleMethodComponent::callMethodArgList( U32 argc, ConsoleValueRef argv[], bool callThis /* = true  */ )
 {
 #ifdef TORQUE_DEBUG
    injectMethodCall( argv[0] );
@@ -109,7 +115,7 @@ const char* DynamicConsoleMethodComponent::callMethodArgList( U32 argc, const ch
 
 // Call all components that implement methodName giving them a chance to operate
 // Components are called in reverse order of addition
-const char *DynamicConsoleMethodComponent::_callMethod( U32 argc, const char *argv[], bool callThis /* = true  */ )
+const char *DynamicConsoleMethodComponent::_callMethod( U32 argc, ConsoleValueRef argv[], bool callThis /* = true  */ )
 {
    // Set Owner
    SimObject *pThis = dynamic_cast<SimObject *>( this );
@@ -131,10 +137,20 @@ const char *DynamicConsoleMethodComponent::_callMethod( U32 argc, const char *ar
          DynamicConsoleMethodComponent *pThisComponent = dynamic_cast<DynamicConsoleMethodComponent*>( pComponent );
          AssertFatal( pThisComponent, "DynamicConsoleMethodComponent::callMethod - Non DynamicConsoleMethodComponent component attempting to callback!");
 
+         // Prevent stack corruption
+         STR.pushFrame();
+         CSTK.pushFrame();
+         // --
+
          // Only call on first depth components
          // Should isMethod check these calls?  [11/22/2006 justind]
          if(pComponent->isEnabled())
             Con::execute( pThisComponent, argc, argv );
+
+         // Prevent stack corruption
+         STR.popFrame();
+         CSTK.popFrame();
+         // --
 
          // Bail if this was the first element
          //if( nItr == componentList.begin() )
@@ -142,12 +158,21 @@ const char *DynamicConsoleMethodComponent::_callMethod( U32 argc, const char *ar
       }
       unlockComponentList();
    }
+
+   // Prevent stack corruption
+   STR.pushFrame();
+   CSTK.pushFrame();
+   // --
    
    // Set Owner Field
    const char* result = "";
    if(callThis)
       result = Con::execute( pThis, argc, argv, true ); // true - exec method onThisOnly, not on DCMCs
 
+   // Prevent stack corruption
+   STR.popFrame();
+   CSTK.popFrame();
+   // --
    return result;
 }
 

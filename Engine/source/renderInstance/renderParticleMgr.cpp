@@ -1,5 +1,24 @@
-// Copyright information can be found in the file named COPYING
-// located in the root directory of this distribution.
+//-----------------------------------------------------------------------------
+// Copyright (c) 2012 GarageGames, LLC
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to
+// deal in the Software without restriction, including without limitation the
+// rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+// sell copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+// IN THE SOFTWARE.
+//-----------------------------------------------------------------------------
 
 #include "platform/platform.h"
 #include "renderInstance/renderParticleMgr.h"
@@ -55,14 +74,15 @@ RenderParticleMgr::RenderParticleMgr()
 {
    // Render particles at 1/4 resolution
    mTargetSizeType = WindowSizeScaled;
-   mTargetScale.set(0.25f, 0.25f);
+   mTargetScale.set(0.5f, 0.5f);
 
    // We use the target chain like a texture pool, not like a swap chain
    if(!RenderToSingleTarget)
       setTargetChainLength(5);
    else
       mOffscreenSystems.setSize(1);
-
+   
+   notifyType( RenderPassManager::RIT_Particle );
    LightManager::smActivateSignal.notify( this, &RenderParticleMgr::_onLMActivate );
 }
 
@@ -358,7 +378,7 @@ void RenderParticleMgr::renderInstance(ParticleRenderInst *ri, SceneRenderState 
    // Draw system path, or draw composite path
    if(ri->systemState == PSS_DrawComplete)
       return;
-
+   
    if(ri->systemState != PSS_AwaitingCompositeDraw)
    {
       // Set proper stateblock, and update state
@@ -367,7 +387,7 @@ void RenderParticleMgr::renderInstance(ParticleRenderInst *ri, SceneRenderState 
          GFX->setStateBlock( _getOffscreenStateBlock(ri) );
          ri->systemState = PSS_AwaitingCompositeDraw;
          mParticleShaderConsts.mShaderConsts->setSafe( mParticleShaderConsts.mModelViewProjSC, 
-           *ri->modelViewProj * mOffscreenSystems[ri->targetIndex].clipMatrix );
+            *ri->modelViewProj * mOffscreenSystems[ri->targetIndex].clipMatrix );
       }
       else
       {
@@ -379,63 +399,7 @@ void RenderParticleMgr::renderInstance(ParticleRenderInst *ri, SceneRenderState 
          mParticleShaderConsts.mShaderConsts->setSafe( mParticleShaderConsts.mModelViewProjSC, *ri->modelViewProj );
       }
 
-      // We want to turn everything into variation on a pre-multiplied alpha blend
-      F32 alphaFactor = 0.0f, alphaScale = 1.0f;
-      switch(ri->blendStyle)
-      {
-         // SrcAlpha, InvSrcAlpha
-      case ParticleRenderInst::BlendNormal:
-         alphaFactor = 1.0f;
-         break;
-
-         // SrcAlpha, One
-      case ParticleRenderInst::BlendAdditive:
-         alphaFactor = 1.0f;
-         alphaScale = 0.0f;
-         break;
-
-         // SrcColor, One
-      case ParticleRenderInst::BlendGreyscale:
-         alphaFactor = -1.0f;
-         alphaScale = 0.0f;
-         break;
-      }
-      mParticleShaderConsts.mShaderConsts->setSafe( mParticleShaderConsts.mAlphaFactorSC, alphaFactor );
-      mParticleShaderConsts.mShaderConsts->setSafe( mParticleShaderConsts.mAlphaScaleSC, alphaScale );
-
-      mParticleShaderConsts.mShaderConsts->setSafe( mParticleShaderConsts.mFSModelViewProjSC, *ri->modelViewProj  );
-      mParticleShaderConsts.mShaderConsts->setSafe( mParticleShaderConsts.mOneOverFarSC, 1.0f / state->getFarPlane() );     
-
-      if ( mParticleShaderConsts.mOneOverSoftnessSC->isValid() )
-      {
-         F32 oneOverSoftness = 1.0f;
-         if ( ri->softnessDistance > 0.0f )
-            oneOverSoftness = 1.0f / ( ri->softnessDistance / state->getFarPlane() );
-         mParticleShaderConsts.mShaderConsts->set( mParticleShaderConsts.mOneOverSoftnessSC, oneOverSoftness );
-      }
-
-      GFX->setShader( mParticleShader );
-      GFX->setShaderConstBuffer( mParticleShaderConsts.mShaderConsts );
-
-      GFX->setTexture( mParticleShaderConsts.mSamplerDiffuse->getSamplerRegister(), ri->diffuseTex );
-
-      // Set up the prepass texture.
-      if ( mParticleShaderConsts.mPrePassTargetParamsSC->isValid() )
-      {
-         GFXTextureObject *texObject = mPrepassTarget ? mPrepassTarget->getTexture(0) : NULL;
-         GFX->setTexture( mParticleShaderConsts.mSamplerPrePassTex->getSamplerRegister(), texObject );
-
-         Point4F rtParams( 0.0f, 0.0f, 1.0f, 1.0f );
-         if ( texObject )
-            ScreenSpace::RenderTargetParameters(texObject->getSize(), mPrepassTarget->getViewport(), rtParams);
-
-         mParticleShaderConsts.mShaderConsts->set( mParticleShaderConsts.mPrePassTargetParamsSC, rtParams );
-      }
-
-      GFX->setPrimitiveBuffer( *ri->primBuff );
-      GFX->setVertexBuffer( *ri->vertBuff );
-
-      GFX->drawIndexedPrimitive( GFXTriangleList, 0, 0, ri->count * 4, 0, ri->count * 2 );
+      renderParticle(ri, state);
    }
    else if(ri->systemState == PSS_AwaitingCompositeDraw)
    {
@@ -471,6 +435,13 @@ void RenderParticleMgr::renderInstance(ParticleRenderInst *ri, SceneRenderState 
          ScreenSpace::RenderTargetParameters(texObject->getSize(), mEdgeTarget->getViewport(), rtParams);
          mParticleCompositeShaderConsts.mShaderConsts->setSafe( mParticleCompositeShaderConsts.mEdgeTargetParamsSC, rtParams );
       }
+      else
+      {
+         AssertFatal(false, "No edge texture target defined, if you want to use mixed particle"
+            "rendering, then make sure that the EdgeDetectPostEffect is enabled.");
+         ri->systemState = PSS_AwaitingHighResDraw;
+         return;
+      }
 
       // Set shader and constant buffer
       GFX->setShader( mParticleCompositeShader );
@@ -500,6 +471,68 @@ void RenderParticleMgr::renderInstance(ParticleRenderInst *ri, SceneRenderState 
       // Mark this system as having been composited this frame
       systemEntry.drawnThisFrame = true;
    }
+}
+
+void RenderParticleMgr::renderParticle(ParticleRenderInst* ri, SceneRenderState* state)
+{
+   // We want to turn everything into variation on a pre-multiplied alpha blend
+   F32 alphaFactor = 0.0f, alphaScale = 1.0f;
+   switch(ri->blendStyle)
+   {
+      // SrcAlpha, InvSrcAlpha
+   case ParticleRenderInst::BlendNormal:
+      alphaFactor = 1.0f;
+      break;
+
+      // SrcAlpha, One
+   case ParticleRenderInst::BlendAdditive:
+      alphaFactor = 1.0f;
+      alphaScale = 0.0f;
+      break;
+
+      // SrcColor, One
+   case ParticleRenderInst::BlendGreyscale:
+      alphaFactor = -1.0f;
+      alphaScale = 0.0f;
+      break;
+   }
+
+   mParticleShaderConsts.mShaderConsts->setSafe( mParticleShaderConsts.mAlphaFactorSC, alphaFactor );
+   mParticleShaderConsts.mShaderConsts->setSafe( mParticleShaderConsts.mAlphaScaleSC, alphaScale );
+
+   mParticleShaderConsts.mShaderConsts->setSafe( mParticleShaderConsts.mFSModelViewProjSC, *ri->modelViewProj  );
+   mParticleShaderConsts.mShaderConsts->setSafe( mParticleShaderConsts.mOneOverFarSC, 1.0f / state->getFarPlane() );     
+
+   if ( mParticleShaderConsts.mOneOverSoftnessSC->isValid() )
+   {
+      F32 oneOverSoftness = 1.0f;
+      if ( ri->softnessDistance > 0.0f )
+         oneOverSoftness = 1.0f / ( ri->softnessDistance / state->getFarPlane() );
+      mParticleShaderConsts.mShaderConsts->set( mParticleShaderConsts.mOneOverSoftnessSC, oneOverSoftness );
+   }
+
+   GFX->setShader( mParticleShader );
+   GFX->setShaderConstBuffer( mParticleShaderConsts.mShaderConsts );
+
+      GFX->setTexture( mParticleShaderConsts.mSamplerDiffuse->getSamplerRegister(), ri->diffuseTex );
+
+   // Set up the prepass texture.
+   if ( mParticleShaderConsts.mPrePassTargetParamsSC->isValid() )
+   {
+      GFXTextureObject *texObject = mPrepassTarget ? mPrepassTarget->getTexture(0) : NULL;
+         GFX->setTexture( mParticleShaderConsts.mSamplerPrePassTex->getSamplerRegister(), texObject );
+
+      Point4F rtParams( 0.0f, 0.0f, 1.0f, 1.0f );
+      if ( texObject )
+         ScreenSpace::RenderTargetParameters(texObject->getSize(), mPrepassTarget->getViewport(), rtParams);
+
+      mParticleShaderConsts.mShaderConsts->set( mParticleShaderConsts.mPrePassTargetParamsSC, rtParams );
+   }
+
+   GFX->setPrimitiveBuffer( *ri->primBuff );
+   GFX->setVertexBuffer( *ri->vertBuff );
+
+   GFX->drawIndexedPrimitive( GFXTriangleList, 0, 0, ri->count * 4, 0, ri->count * 2 );
 }
 
 bool RenderParticleMgr::_initShader()
@@ -674,8 +707,8 @@ GFXStateBlockRef RenderParticleMgr::_getHighResStateBlock(ParticleRenderInst *ri
 GFXStateBlockRef RenderParticleMgr::_getMixedResStateBlock(ParticleRenderInst *ri)
 {
    const U8 blendStyle = ri->blendStyle;
-   if ( mHighResBlocks[blendStyle].isValid() )
-      return mHighResBlocks[blendStyle];
+   if ( mMixedResBlocks[blendStyle].isValid() )
+      return mMixedResBlocks[blendStyle];
 
    GFXStateBlockDesc d;
 
@@ -739,8 +772,8 @@ GFXStateBlockRef RenderParticleMgr::_getMixedResStateBlock(ParticleRenderInst *r
    // Prepass sampler
    d.samplers[1] = GFXSamplerStateDesc::getClampPoint();
 
-   mHighResBlocks[blendStyle] = GFX->createStateBlock(d);
-   return mHighResBlocks[blendStyle];
+   mMixedResBlocks[blendStyle] = GFX->createStateBlock(d);
+   return mMixedResBlocks[blendStyle];
 }
 
 GFXStateBlockRef RenderParticleMgr::_getCompositeStateBlock(ParticleRenderInst *ri)

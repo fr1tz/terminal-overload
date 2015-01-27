@@ -55,6 +55,9 @@ enum ProcessorType
    CPU_AMD_K6_2,
    CPU_AMD_K6_3,
    CPU_AMD_Athlon,
+   CPU_AMD_Phenom,
+   CPU_AMD_PhenomII,
+   CPU_AMD_Bulldozer,
    CPU_AMD_Unknown,
    CPU_Cyrix_6x86,
    CPU_Cyrix_MediaGX,
@@ -196,7 +199,7 @@ namespace Platform
    bool excludeOtherInstances(const char *string);
    bool checkOtherInstances(const char *string);
    void restartInstance();
-   void postQuitMessage(const U32 in_quitVal);
+   void postQuitMessage(const S32 in_quitVal);
    void forceShutdown(S32 returnValue);
 
    // Debug

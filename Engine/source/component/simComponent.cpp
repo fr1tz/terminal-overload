@@ -6,6 +6,7 @@
 #include "console/consoleTypes.h"
 #include "component/simComponent.h"
 #include "core/stream/stream.h"
+#include "console/engineAPI.h"
 
 SimComponent::SimComponent() : mOwner( NULL )
 {
@@ -152,7 +153,7 @@ void SimComponent::onRemove()
 
 //////////////////////////////////////////////////////////////////////////
 
-bool SimComponent::processArguments(S32 argc, const char **argv)
+bool SimComponent::processArguments(S32 argc, ConsoleValueRef *argv)
 {
    for(S32 i = 0; i < argc; i++)
    {
@@ -160,7 +161,7 @@ bool SimComponent::processArguments(S32 argc, const char **argv)
       if(obj)
          addComponent(obj);
       else
-         Con::printf("SimComponent::processArguments - Invalid Component Object \"%s\"", argv[i]);
+         Con::printf("SimComponent::processArguments - Invalid Component Object \"%s\"", (const char*)argv[i]);
    }
    return true;
 }
@@ -364,7 +365,7 @@ ConsoleMethod( SimComponent, addComponents, bool, 3, 64, "%obj.addComponents( %c
       if(obj)
          object->addComponent(obj);
       else
-         Con::printf("SimComponent::addComponents - Invalid Component Object \"%s\"", argv[i]);
+         Con::printf("SimComponent::addComponents - Invalid Component Object \"%s\"", (const char*)argv[i]);
    }
    return true;
 }
@@ -380,22 +381,21 @@ ConsoleMethod( SimComponent, removeComponents, bool, 3, 64, "%obj.removeComponen
       if(obj)
          object->removeComponent(obj);
       else
-         Con::printf("SimComponent::removeComponents - Invalid Component Object \"%s\"", argv[i]);
+         Con::printf("SimComponent::removeComponents - Invalid Component Object \"%s\"", (const char*)argv[i]);
    }
    return true;
 }
 
-ConsoleMethod( SimComponent, getComponentCount, S32, 2, 2, "() Get the current component count\n"
+DefineConsoleMethod( SimComponent, getComponentCount, S32, (), , "() Get the current component count\n"
 			  "@return The number of components in the list as an integer")
 {
    return object->getComponentCount();
 }
 
-ConsoleMethod( SimComponent, getComponent, S32, 3, 3, "(idx) Get the component corresponding to the given index.\n"
+DefineConsoleMethod( SimComponent, getComponent, S32, (S32 idx), , "(idx) Get the component corresponding to the given index.\n"
 			  "@param idx An integer index value corresponding to the desired component.\n"
 			  "@return The id of the component at the given index as an integer")
 {
-   S32 idx = dAtoi(argv[2]);
    if(idx < 0 || idx >= object->getComponentCount())
    {
       Con::errorf("SimComponent::getComponent - Invalid index %d", idx);
@@ -406,27 +406,27 @@ ConsoleMethod( SimComponent, getComponent, S32, 3, 3, "(idx) Get the component c
    return c ? c->getId() : 0;
 }
 
-ConsoleMethod(SimComponent, setEnabled, void, 3, 3, "(enabled) Sets or unsets the enabled flag\n"
+DefineConsoleMethod(SimComponent, setEnabled, void, (bool enabled), , "(enabled) Sets or unsets the enabled flag\n"
 			  "@param enabled Boolean value\n"
 			  "@return No return value")
 {
-   object->setEnabled(dAtob(argv[2]));
+   object->setEnabled(enabled);
 }
 
-ConsoleMethod(SimComponent, isEnabled, bool, 2, 2, "() Check whether SimComponent is currently enabled\n"
+DefineConsoleMethod(SimComponent, isEnabled, bool, (), , "() Check whether SimComponent is currently enabled\n"
 			  "@return true if enabled and false if not")
 {
    return object->isEnabled();
 }
 
-ConsoleMethod(SimComponent, setIsTemplate, void, 3, 3, "(template) Sets or unsets the template flag\n"
+DefineConsoleMethod(SimComponent, setIsTemplate, void, (bool templateFlag), , "(template) Sets or unsets the template flag\n"
 			  "@param template Boolean value\n"
 			  "@return No return value")
 {
-   object->setIsTemplate(dAtob(argv[2]));
+   object->setIsTemplate(templateFlag);
 }
 
-ConsoleMethod(SimComponent, getIsTemplate, bool, 2, 2, "() Check whether SimComponent is currently a template\n"
+DefineConsoleMethod(SimComponent, getIsTemplate, bool, (), , "() Check whether SimComponent is currently a template\n"
 			  "@return true if is a template and false if not")
 {
    return object->getIsTemplate();

@@ -867,6 +867,17 @@ function MaterialEditorGui::guiSync( %this, %material )
       MaterialEditorPropertiesWindow-->specMapDisplayBitmap.setBitmap( (%material).specularMap[%layer] );
    }
    
+   MaterialEditorPropertiesWindow-->accuScaleTextEdit.setText((%material).accuScale[%layer]);
+   MaterialEditorPropertiesWindow-->accuScaleTextEdit.setText((%material).accuScale[%layer]);
+   MaterialEditorPropertiesWindow-->accuDirectionTextEdit.setText((%material).accuDirection[%layer]);
+   MaterialEditorPropertiesWindow-->accuDirectionTextEdit.setText((%material).accuDirection[%layer]);
+   MaterialEditorPropertiesWindow-->accuStrengthTextEdit.setText((%material).accuStrength[%layer]);
+   MaterialEditorPropertiesWindow-->accuStrengthTextEdit.setText((%material).accuStrength[%layer]);
+   MaterialEditorPropertiesWindow-->accuCoverageTextEdit.setText((%material).accuCoverage[%layer]);
+   MaterialEditorPropertiesWindow-->accuCoverageTextEdit.setText((%material).accuCoverage[%layer]);
+   MaterialEditorPropertiesWindow-->accuSpecularTextEdit.setText((%material).accuSpecular[%layer]);
+   MaterialEditorPropertiesWindow-->accuSpecularTextEdit.setText((%material).accuSpecular[%layer]);
+   
    MaterialEditorPropertiesWindow-->detailScaleTextEdit.setText( getWord((%material).detailScale[%layer], 0) );
    MaterialEditorPropertiesWindow-->detailNormalStrengthTextEdit.setText( getWord((%material).detailNormalMapStrength[%layer], 0) );
    
@@ -946,6 +957,9 @@ function MaterialEditorGui::guiSync( %this, %material )
    MaterialEditorPropertiesWindow-->SequenceTextEditSSS.setText( %numFrames );
    MaterialEditorPropertiesWindow-->SequenceSliderFPS.setValue( (%material).sequenceFramePerSec[%layer] );
    MaterialEditorPropertiesWindow-->SequenceSliderSSS.setValue( %numFrames );
+   
+   // Accumulation
+   MaterialEditorPropertiesWindow-->accuCheckbox.setValue((%material).accuEnabled[%layer]);   
    
    %this.preventUndo = false;
 }
@@ -2229,4 +2243,11 @@ function MaterialEditorMapThumbnail::onRightClick( %this )
    %popup.filePath = %fullPath;
    
    %popup.showPopup( Canvas );
+}
+
+// Accumulation
+function MaterialEditorGui::updateAccuCheckbox(%this, %value)
+{
+   MaterialEditorGui.updateActiveMaterial("accuEnabled[" @ MaterialEditorGui.currentLayer @ "]", %value);   
+   MaterialEditorGui.guiSync( materialEd_previewMaterial );
 }

@@ -1,10 +1,31 @@
-// Copyright information can be found in the file named COPYING
-// located in the root directory of this distribution.
+//-----------------------------------------------------------------------------
+// Copyright (c) 2012 GarageGames, LLC
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to
+// deal in the Software without restriction, including without limitation the
+// rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+// sell copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+// IN THE SOFTWARE.
+//-----------------------------------------------------------------------------
 
 #ifndef _PLATFORMASSERT_H_
 #define _PLATFORMASSERT_H_
 
+#ifndef _PLATFORM_H_
 #include "platform/platform.h"
+#endif
 
 class PlatformAssert
 {
@@ -22,7 +43,10 @@ private:
    bool ignoreAll;
 
    virtual bool displayMessageBox(const char *title, const char *message, bool retry);
-   virtual bool process(Type assertType, const char* filename, U32 lineNumber, const char* message);
+   virtual bool process(Type         assertType,
+                const char*  filename,
+                U32          lineNumber,
+                const char*  message);
 
    PlatformAssert();
    virtual ~PlatformAssert();
@@ -30,7 +54,10 @@ private:
 public:
    static void create( PlatformAssert* newAssertClass = NULL );
    static void destroy();
-   static bool processAssert(Type assertType, const char*  filename, U32 lineNumber, const char* message);
+   static bool processAssert(Type         assertType,
+                             const char*  filename,
+                             U32          lineNumber,
+                             const char*  message);
    static char *message(const char *message, ...);
    static bool processingAssert();
 };
@@ -47,7 +74,9 @@ public:
 
       These asserts are only present in DEBUG builds.
     */
-    #define AssertWarn(x, y)  { if ((x) == 0) {::PlatformAssert::processAssert(::PlatformAssert::Warning, __FILE__, __LINE__,  y);} }   
+   #define AssertWarn(x, y)      \
+         { if ((x)==0) \
+            ::PlatformAssert::processAssert(::PlatformAssert::Warning, __FILE__, __LINE__,  y); }
 
    /*!
       Helper macro called when AssertFatal failed.
@@ -71,7 +100,9 @@ public:
       This assert is very useful for verifying data as well as function entry and
       exit conditions.
     */
-   #define AssertFatal(x, y) { if ( ((bool)(x)) == (bool)0 ) { if( ::PlatformAssert::processAssert(::PlatformAssert::Fatal, __FILE__, __LINE__,  y) ) { TORQUE_DEBUGBREAK(); } ON_FAIL_ASSERTFATAL; } }
+   #define AssertFatal(x, y)         \
+      { if (((bool)(x))==false) \
+         { if ( ::PlatformAssert::processAssert(::PlatformAssert::Fatal, __FILE__, __LINE__,  y) ) { ::Platform::debugBreak(); } } } 
 
 #else
    #define AssertFatal(x, y)   { TORQUE_UNUSED(x); TORQUE_UNUSED(y); }
@@ -90,7 +121,9 @@ public:
    This assert should only be used for rare conditions where the application cannot continue
    execution without seg-faulting and you want to display a nice exit message.
  */
-    #define AssertISV(x, y) { if ( (x) == 0)  { if ( ::PlatformAssert::processAssert(::PlatformAssert::Fatal_ISV, __FILE__, __LINE__,  y) ) { TORQUE_DEBUGBREAK(); } } }
+#define AssertISV(x, y)  \
+   { if ((x)==0)         \
+{ if ( ::PlatformAssert::processAssert(::PlatformAssert::Fatal_ISV, __FILE__, __LINE__,  y) ) { ::Platform::debugBreak(); } } }
 
 
 /*!

@@ -160,6 +160,7 @@ protected:
 
    F32 mExposure;
    F32 mNightInterpolant;
+   F32 mZOffset;
 
    VectorF mLightDir;
    VectorF mSunDir;

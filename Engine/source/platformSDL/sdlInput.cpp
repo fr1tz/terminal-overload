@@ -71,7 +71,6 @@ struct AsciiData
 
 #define NUM_KEYS ( KEY_OEM_102 + 1 )
 #define KEY_FIRST KEY_ESCAPE
-static AsciiData AsciiTable[NUM_KEYS];
 
 //------------------------------------------------------------------------------
 void Input::init()
@@ -115,40 +114,13 @@ ConsoleFunction( getJoystickAxes, const char*, 2, 2, "getJoystickAxes( instance 
 //------------------------------------------------------------------------------
 U16 Input::getKeyCode( U16 asciiCode )
 {
-   U16 keyCode = 0;
-   U16 i;
+    if( asciiCode > 255 )
+        return 0;
 
-   // This is done three times so the lowerkey will always
-   // be found first. Some foreign keyboards have duplicate
-   // chars on some keys.
-   for ( i = KEY_FIRST; i < NUM_KEYS && !keyCode; i++ )
-   {
-      if ( AsciiTable[i].lower.ascii == asciiCode )
-      {
-         keyCode = i;
-         break;
-      };
-   }
-
-   for ( i = KEY_FIRST; i < NUM_KEYS && !keyCode; i++ )
-   {
-      if ( AsciiTable[i].upper.ascii == asciiCode )
-      {
-         keyCode = i;
-         break;
-      };
-   }
-
-   for ( i = KEY_FIRST; i < NUM_KEYS && !keyCode; i++ )
-   {
-      if ( AsciiTable[i].goofy.ascii == asciiCode )
-      {
-         keyCode = i;
-         break;
-      };
-   }
-
-   return( keyCode );
+    char c[2];
+    c[0]= asciiCode;
+    c[1] = NULL;
+    return KeyMapSDL::getTorqueScanCodeFromSDL( SDL_GetScancodeFromName( c ) );
 }
 
 //------------------------------------------------------------------------------

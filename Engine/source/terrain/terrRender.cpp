@@ -151,15 +151,16 @@ bool TerrainBlock::_initBaseShader()
    desc.zDefined = true;
    desc.zWriteEnable = false;
    desc.zEnable = false;
-   desc.setBlend( true, GFXBlendSrcAlpha, GFXBlendInvSrcAlpha );
+   desc.setBlend( true, GFXBlendSrcAlpha, GFXBlendOne );
    desc.cullDefined = true;
    desc.cullMode = GFXCullNone;
+   desc.colorWriteAlpha = false;
    mBaseShaderSB = GFX->createStateBlock( desc );
 
    return true;
 }
 
-void TerrainBlock::_updateBaseTexture( bool writeToCache )
+void TerrainBlock::_updateBaseTexture(bool writeToCache)
 {
    if ( !mBaseShader && !_initBaseShader() )
       return;
@@ -230,6 +231,8 @@ void TerrainBlock::_updateBaseTexture( bool writeToCache )
    mBaseTarget->attachTexture( GFXTextureTarget::Color0, blendTex );
    GFX->setActiveRenderTarget( mBaseTarget );
 
+   GFX->clear( GFXClearTarget, ColorI(0,0,0,255), 1.0f, 0 );
+
    GFX->setTexture( 0, mLayerTex );
    mBaseShaderConsts->setSafe( mBaseLayerSizeConst, (F32)mLayerTex->getWidth() );      
 
@@ -269,7 +272,14 @@ void TerrainBlock::_updateBaseTexture( bool writeToCache )
       GFX->endScene();
 
    /// Do we cache this sucker?
-   if ( writeToCache )
+   if (mBaseTexFormat == NONE || !writeToCache)
+   {
+      // We didn't cache the result, so set the base texture
+      // to the render target we updated.  This should be good
+      // for realtime painting cases.
+      mBaseTex = blendTex;
+   }
+   else if (mBaseTexFormat == DDS)
    {
       String cachePath = _getBaseTexCacheFileName();
 
@@ -306,10 +316,16 @@ void TerrainBlock::_updateBaseTexture( bool writeToCache )
    }
    else
    {
-      // We didn't cache the result, so set the base texture
-      // to the render target we updated.  This should be good
-      // for realtime painting cases.
-      mBaseTex = blendTex;
+      FileStream stream;
+      if (!stream.open(_getBaseTexCacheFileName(), Torque::FS::File::Write))
+      {
+         mBaseTex = blendTex;
+         return;
+      }
+
+      GBitmap bitmap(blendTex->getWidth(), blendTex->getHeight(), false, GFXFormatR8G8B8);
+      blendTex->copyToBmp(&bitmap);
+      bitmap.writeBitmap(formatToExtension(mBaseTexFormat), stream);
    }
 }
 

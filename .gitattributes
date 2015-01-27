@@ -10,6 +10,9 @@
 *.h text
 *.cpp text
 *.hpp text
+*.ppm text
+*.nsh text
+*.nlf text
 *.command
 *.txt
 *.ini

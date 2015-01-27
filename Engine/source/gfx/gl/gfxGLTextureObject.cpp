@@ -1,5 +1,24 @@
-// Copyright information can be found in the file named COPYING
-// located in the root directory of this distribution.
+//-----------------------------------------------------------------------------
+// Copyright (c) 2012 GarageGames, LLC
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to
+// deal in the Software without restriction, including without limitation the
+// rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+// sell copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+// IN THE SOFTWARE.
+//-----------------------------------------------------------------------------
 
 #include "console/console.h"
 #include "gfx/gl/tGL/tGL.h"
@@ -224,12 +243,23 @@ void GFXGLTextureObject::bind(U32 textureUnit)
    mSampler = ssd;
 }
 
-U8* GFXGLTextureObject::getTextureData()
+U8* GFXGLTextureObject::getTextureData( U32 mip )
 {
-   U8* data = new U8[mTextureSize.x * mTextureSize.y * mBytesPerTexel];
+   AssertFatal( mMipLevels, "");
+   mip = (mip < mMipLevels) ? mip : 0;
+
+   const U32 dataSize = isCompressedFormat(mFormat) 
+       ? getCompressedSurfaceSize( mFormat, mTextureSize.x, mTextureSize.y, mip ) 
+       : (mTextureSize.x >> mip) * (mTextureSize.y >> mip) * mBytesPerTexel;
+
+   U8* data = new U8[dataSize];
    PRESERVE_TEXTURE(mBinding);
    glBindTexture(mBinding, mHandle);
-   glGetTexImage(mBinding, 0, GFXGLTextureFormat[mFormat], GFXGLTextureType[mFormat], data);
+
+   if( isCompressedFormat(mFormat) )
+      glGetCompressedTexImage( mBinding, mip, data );
+   else
+      glGetTexImage(mBinding, mip, GFXGLTextureFormat[mFormat], GFXGLTextureType[mFormat], data);
    return data;
 }
 

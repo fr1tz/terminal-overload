@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <cstdarg>
 
 #ifndef _TORQUE_TYPES_H_
 #include "platform/types.h"
@@ -38,6 +39,11 @@ inline char *dStrncat(char *dst, const char *src, dsize_t len)
 inline S32  dStrcmp(const char *str1, const char *str2)
 {
    return strcmp(str1, str2);   
+}
+
+inline bool dStrIsEmpty(const char *src)
+{
+   return src == 0 || src[0] == '\0';
 }
 
 inline S32  dStrncmp(const char *str1, const char *str2, dsize_t len)
@@ -205,9 +211,9 @@ int dItoa(int n, char s[]);
 // standard I/O functions [defined in platformString.cpp]
 
 extern void   dPrintf(const char *format, ...);
-extern S32    dVprintf(const char *format, void *arglist);
+extern S32    dVprintf(const char *format, va_list arglist);
 extern S32    dSprintf(char *buffer, U32 bufferSize, const char *format, ...);
-extern S32    dVsprintf(char *buffer, U32 bufferSize, const char *format, void *arglist);
+extern S32    dVsprintf(char *buffer, U32 bufferSize, const char *format, va_list arglist);
 extern S32    dSscanf(const char *buffer, const char *format, ...);
 
 #endif

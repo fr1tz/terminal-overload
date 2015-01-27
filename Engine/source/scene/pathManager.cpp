@@ -11,6 +11,7 @@
 #include "scene/sceneManager.h"
 #include "platform/profiler.h"
 #include "core/module.h"
+#include "console/engineAPI.h"
 
 extern bool gEditingMission;
 
@@ -187,12 +188,12 @@ void PathManager::clearPaths()
 #endif
 }
 
-ConsoleFunction(clearServerPaths, void, 1, 1, "")
+DefineConsoleFunction( clearServerPaths, void, ( ), , "")
 {
    gServerPathManager->clearPaths();
 }
 
-ConsoleFunction(clearClientPaths, void, 1, 1, "")
+DefineConsoleFunction( clearClientPaths, void, ( ), , "")
 {
    gClientPathManager->clearPaths();
 }

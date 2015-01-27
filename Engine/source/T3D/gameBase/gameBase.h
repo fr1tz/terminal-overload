@@ -16,6 +16,10 @@
 #ifndef _DYNAMIC_CONSOLETYPES_H_
 #include "console/dynamicTypes.h"
 #endif
+#ifndef __SCENEMANAGER_H__  
+#include "scene/sceneManager.h"    
+#define __SCENEMANAGER_H__  
+#endif
 
 class NetConnection;
 class ProcessList;

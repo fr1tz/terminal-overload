@@ -1,5 +1,24 @@
-// Copyright information can be found in the file named COPYING
-// located in the root directory of this distribution.
+//-----------------------------------------------------------------------------
+// Copyright (c) 2012 GarageGames, LLC
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to
+// deal in the Software without restriction, including without limitation the
+// rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+// sell copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+// IN THE SOFTWARE.
+//-----------------------------------------------------------------------------
 
 #include "platform/platform.h"
 #include "gfx/gl/gfxGLTextureManager.h"
@@ -90,8 +109,8 @@ void GFXGLTextureManager::innerCreateTexture( GFXGLTextureObject *retTex,
    glBindTexture(retTex->getBinding(), retTex->getHandle());
    
    // Create it
-   // TODO: Reenable mipmaps on render targets when Apple fixes their drivers
-   if(forceMips && !retTex->mIsNPoT2)
+   // @todo OPENGL - Creating mipmaps for compressed formats. Not supported on OpenGL ES and bugged on AMD. We use mipmaps present on file.
+   if( forceMips && !retTex->mIsNPoT2 && !isCompressedFormat(format) )
    {
       retTex->mMipLevels = numMipLevels > 1 ? numMipLevels : 0;
    }
@@ -104,6 +123,8 @@ void GFXGLTextureManager::innerCreateTexture( GFXGLTextureObject *retTex,
       retTex->mMipLevels = numMipLevels;
    }
 
+   // @todo OPENGL - OpenGL ES2 not support mipmaps on NPOT textures
+#if 0
    if(!retTex->mIsNPoT2)
    {
       if(!isPow2(width))
@@ -113,6 +134,7 @@ void GFXGLTextureManager::innerCreateTexture( GFXGLTextureObject *retTex,
       if(depth && !isPow2(depth))
          depth = getNextPow2(depth);
    }
+#endif
    
    AssertFatal(GFXGLTextureInternalFormat[format] != GL_ZERO, "GFXGLTextureManager::innerCreateTexture - invalid internal format");
    AssertFatal(GFXGLTextureFormat[format] != GL_ZERO, "GFXGLTextureManager::innerCreateTexture - invalid format");
@@ -123,43 +145,55 @@ void GFXGLTextureManager::innerCreateTexture( GFXGLTextureObject *retTex,
       retTex->mMipLevels = getMaxMipmaps(width, height, 1);
 
     glTexParameteri(binding, GL_TEXTURE_MAX_LEVEL, retTex->mMipLevels-1 );
+    
+    if( gglHasExtension(ARB_texture_storage) )
+    {
+        if(binding == GL_TEXTURE_2D)
+            glTexStorage2D( retTex->getBinding(), retTex->mMipLevels, GFXGLTextureInternalFormat[format], width, height );
+        else if(binding == GL_TEXTURE_1D)
+            glTexStorage1D( retTex->getBinding(), retTex->mMipLevels, GFXGLTextureInternalFormat[format], getMax(width, height) );
+        else
+            glTexStorage3D( retTex->getBinding(), retTex->mMipLevels, GFXGLTextureInternalFormat[format], width, height, depth );
+    }
+    else
+    {
+        //If it wasn't for problems on amd drivers this next part could be really simplified and we wouldn't need to go through manually creating our
+        //mipmap pyramid and instead just use glGenerateMipmap
+        if(isCompressedFormat(format))
+        {
+            AssertFatal(binding == GL_TEXTURE_2D, 
+            "GFXGLTextureManager::innerCreateTexture - Only compressed 2D textures are supported");
 
-   //If it wasn't for problems on amd drivers this next part could be really simplified and we wouldn't need to go through manually creating our
-   //mipmap pyramid and instead just use glGenerateMipmap
-   if(isCompressedFormat(format))
-   {
-      AssertFatal(binding == GL_TEXTURE_2D, 
-      "GFXGLTextureManager::innerCreateTexture - Only compressed 2D textures are supported");
-
-      U32 tempWidth = width;
-      U32 tempHeight = height;
-      U32 size = getCompressedSurfaceSize(format,height,width);
-      //Fill compressed images with 0's
-      U8 *pTemp = (U8*)dMalloc(sizeof(U8)*size);
-      dMemset(pTemp,0,size);
+            U32 tempWidth = width;
+            U32 tempHeight = height;
+            U32 size = getCompressedSurfaceSize(format,height,width);
+            //Fill compressed images with 0's
+            U8 *pTemp = (U8*)dMalloc(sizeof(U8)*size);
+            dMemset(pTemp,0,size);
      
-      for(U32 i=0;i< retTex->mMipLevels;i++)
-      {
-         tempWidth = getMax( U32(1), width >> i );
-         tempHeight = getMax( U32(1), height >> i );
-         size = getCompressedSurfaceSize(format,width,height,i);
-         glCompressedTexImage2D(binding,i,GFXGLTextureInternalFormat[format],tempWidth,tempHeight,0,size,pTemp);
-      }
+            for(U32 i=0;i< retTex->mMipLevels;i++)
+            {
+                tempWidth = getMax( U32(1), width >> i );
+                tempHeight = getMax( U32(1), height >> i );
+                size = getCompressedSurfaceSize(format,width,height,i);
+                glCompressedTexImage2D(binding,i,GFXGLTextureInternalFormat[format],tempWidth,tempHeight,0,size,pTemp);
+            }
 
-      dFree(pTemp);
-   }
-   else
-   {   
-      if(binding == GL_TEXTURE_2D)
-         glTexImage2D(binding, 0, GFXGLTextureInternalFormat[format], width, height, 0, GFXGLTextureFormat[format], GFXGLTextureType[format], NULL);
-      else if(binding == GL_TEXTURE_1D)
-         glTexImage1D(binding, 0, GFXGLTextureInternalFormat[format], (width > 1 ? width : height), 0, GFXGLTextureFormat[format], GFXGLTextureType[format], NULL);
-      else
-         glTexImage3D(GL_TEXTURE_3D, 0, GFXGLTextureInternalFormat[format], width, height, depth, 0, GFXGLTextureFormat[format], GFXGLTextureType[format], NULL);
+            dFree(pTemp);
+        }
+        else
+        {   
+            if(binding == GL_TEXTURE_2D)
+                glTexImage2D(binding, 0, GFXGLTextureInternalFormat[format], width, height, 0, GFXGLTextureFormat[format], GFXGLTextureType[format], NULL);
+            else if(binding == GL_TEXTURE_1D)
+                glTexImage1D(binding, 0, GFXGLTextureInternalFormat[format], (width > 1 ? width : height), 0, GFXGLTextureFormat[format], GFXGLTextureType[format], NULL);
+            else
+                glTexImage3D(GL_TEXTURE_3D, 0, GFXGLTextureInternalFormat[format], width, height, depth, 0, GFXGLTextureFormat[format], GFXGLTextureType[format], NULL);
 
-      if(retTex->mMipLevels > 1)
-         glGenerateMipmap(binding);
-   }
+            if(retTex->mMipLevels > 1)
+                glGenerateMipmap(binding);
+        }
+    }
    
    // Complete the texture
    // Complete the texture - this does get changed later but we need to complete the texture anyway

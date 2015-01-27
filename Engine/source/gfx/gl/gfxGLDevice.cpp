@@ -1,5 +1,24 @@
-// Copyright information can be found in the file named COPYING
-// located in the root directory of this distribution.
+//-----------------------------------------------------------------------------
+// Copyright (c) 2012 GarageGames, LLC
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to
+// deal in the Software without restriction, including without limitation the
+// rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+// sell copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+// IN THE SOFTWARE.
+//-----------------------------------------------------------------------------
 
 #include "platform/platform.h"
 #include "gfx/gl/gfxGLDevice.h"
@@ -65,6 +84,11 @@ void loadGLExtensions(void *context)
 void STDCALL glDebugCallback(GLenum source, GLenum type, GLuint id,
    GLenum severity, GLsizei length, const GLchar* message, void* userParam)
 {
+#if defined(TORQUE_DEBUG) && !defined(TORQUE_DEBUG_GFX)
+	if( type == GL_DEBUG_TYPE_OTHER_ARB ) 
+		return;
+#endif
+
    Con::errorf("OPENGL: %s", message);
 }
 
@@ -73,6 +97,27 @@ void STDCALL glAmdDebugCallback(GLuint id, GLenum category, GLenum severity, GLs
 {
    Con::errorf("OPENGL: %s",message);
 }
+
+
+// >>>> OPENGL INTEL WORKAROUND @todo OPENGL INTEL remove
+PFNGLBINDFRAMEBUFFERPROC __openglBindFramebuffer = NULL;
+
+void STDCALL _t3d_glBindFramebuffer(GLenum target, GLuint framebuffer)
+{
+    if( target == GL_FRAMEBUFFER )
+    {
+        if( GFXGL->getOpenglCache()->getCacheBinded( GL_DRAW_FRAMEBUFFER ) == framebuffer
+            && GFXGL->getOpenglCache()->getCacheBinded( GL_READ_FRAMEBUFFER ) == framebuffer )
+            return;
+    }
+    else if( GFXGL->getOpenglCache()->getCacheBinded( target ) == framebuffer )
+        return;
+
+    __openglBindFramebuffer(target, framebuffer);
+    GFXGL->getOpenglCache()->setCacheBinded( target, framebuffer);
+}
+// <<<< OPENGL INTEL WORKAROUND
+
 
 void GFXGLDevice::initGLState()
 {  
@@ -96,8 +141,16 @@ void GFXGLDevice::initGLState()
    mSupportsAnisotropic = mCardProfiler->queryProfile( "GL::suppAnisotropic" );
 
    String vendorStr = (const char*)glGetString( GL_VENDOR );
-   if( vendorStr.find("NVIDIA") != String::NPos)
+   if( vendorStr.find("NVIDIA", 0, String::NoCase | String::Left) != String::NPos)
       mUseGlMap = false;
+
+
+   if( vendorStr.find("INTEL", 0, String::NoCase | String::Left ) != String::NPos)
+   {
+      // @todo OPENGL INTEL - This is a workaround for a warning spam or even crashes with actual framebuffer code, remove when implemented TGL layer.
+      __openglBindFramebuffer = glBindFramebuffer;
+      glBindFramebuffer = &_t3d_glBindFramebuffer;
+   }
 
 #if TORQUE_DEBUG
    if( gglHasExtension(ARB_debug_output) )

@@ -29,6 +29,7 @@
 #include "materials/materialFeatureData.h"
 #include "materials/materialFeatureTypes.h"
 #include "console/engineAPI.h"
+#include "T3D/accumulationVolume.h"
 
 using namespace Torque;
 
@@ -92,6 +93,11 @@ TSStatic::TSStatic()
    mMeshCulling = false;
    mUseOriginSort = false;
 
+   mUseAlphaFade     = false;
+   mAlphaFadeStart   = 100.0f;
+   mAlphaFadeEnd     = 150.0f;
+   mInvertAlphaFade  = false;
+   mAlphaFade = 1.0f;
    mPhysicsRep = NULL;
 
    mCollisionType = CollisionMesh;
@@ -172,6 +178,13 @@ void TSStatic::initPersistFields()
          "When set to false, the slightest bump will stop the player from walking on top of the object.\n");
    
    endGroup("Collision");
+
+   addGroup( "AlphaFade" );  
+      addField( "alphaFadeEnable",   TypeBool,   Offset(mUseAlphaFade,    TSStatic), "Turn on/off Alpha Fade" );  
+      addField( "alphaFadeStart",    TypeF32,    Offset(mAlphaFadeStart,  TSStatic), "Distance of start Alpha Fade" );  
+      addField( "alphaFadeEnd",      TypeF32,    Offset(mAlphaFadeEnd,    TSStatic), "Distance of end Alpha Fade" );  
+      addField( "alphaFadeInverse", TypeBool,    Offset(mInvertAlphaFade, TSStatic), "Invert Alpha Fade's Start & End Distance" );  
+   endGroup( "AlphaFade" );
 
    addGroup("Debug");
 
@@ -261,6 +274,13 @@ bool TSStatic::onAdd()
    addToScene();
 
    _updateShouldTick();
+
+   // Accumulation
+   if ( isClientObject() && mShapeInstance )
+   {
+      if ( mShapeInstance->hasAccumulation() ) 
+         AccumulationVolume::addObject(this);
+   }
 
    return true;
 }
@@ -371,6 +391,13 @@ void TSStatic::_updatePhysics()
 void TSStatic::onRemove()
 {
    SAFE_DELETE( mPhysicsRep );
+
+   // Accumulation
+   if ( isClientObject() && mShapeInstance )
+   {
+      if ( mShapeInstance->hasAccumulation() ) 
+         AccumulationVolume::removeObject(this);
+   }
 
    mConvexList->nukeList();
 
@@ -483,6 +510,36 @@ void TSStatic::prepRenderImage( SceneRenderState* state )
    if (dist < 0.01f)
       dist = 0.01f;
 
+   if (mUseAlphaFade)
+   {
+      mAlphaFade = 1.0f;
+      if ((mAlphaFadeStart < mAlphaFadeEnd) && mAlphaFadeStart > 0.1f)
+      {
+         if (mInvertAlphaFade)
+         {
+            if (dist <= mAlphaFadeStart)
+            {
+               return;
+            }
+            if (dist < mAlphaFadeEnd)
+            {
+               mAlphaFade = ((dist - mAlphaFadeStart) / (mAlphaFadeEnd - mAlphaFadeStart));
+            }
+         }
+         else
+         {
+            if (dist >= mAlphaFadeEnd)
+            {
+               return;
+            }
+            if (dist > mAlphaFadeStart)
+            {
+               mAlphaFade -= ((dist - mAlphaFadeStart) / (mAlphaFadeEnd - mAlphaFadeStart));
+            }
+         }
+      }
+   }
+
    F32 invScale = (1.0f/getMax(getMax(mObjScale.x,mObjScale.y),mObjScale.z));   
 
    if ( mForceDetail == -1 )
@@ -500,6 +557,9 @@ void TSStatic::prepRenderImage( SceneRenderState* state )
    rdata.setSceneState( state );
    rdata.setFadeOverride( 1.0f );
    rdata.setOriginSort( mUseOriginSort );
+
+   // Acculumation
+   rdata.setAccuTex(mAccuTex);
 
    // If we have submesh culling enabled then prepare
    // the object space frustum to pass to the shape.
@@ -526,6 +586,19 @@ void TSStatic::prepRenderImage( SceneRenderState* state )
    GFX->setWorldMatrix( mat );
 
    mShapeInstance->animate();
+   if(mShapeInstance)
+   {
+      if (mUseAlphaFade)
+      {
+         mShapeInstance->setAlphaAlways(mAlphaFade);
+         S32 s = mShapeInstance->mMeshObjects.size();
+         
+         for(S32 x = 0; x < s; x++)
+         {
+            mShapeInstance->mMeshObjects[x].visible = mAlphaFade;
+         }
+      }
+   }
    mShapeInstance->render( rdata );
 
    if ( mRenderNormalScalar > 0 )
@@ -575,6 +648,13 @@ void TSStatic::setTransform(const MatrixF & mat)
    if ( mPhysicsRep )
       mPhysicsRep->setTransform( mat );
 
+   // Accumulation
+   if ( isClientObject() && mShapeInstance )
+   {
+      if ( mShapeInstance->hasAccumulation() ) 
+         AccumulationVolume::updateObject(this);
+   }
+
    // Since this is a static it's render transform changes 1
    // to 1 with it's collision transform... no interpolation.
    setRenderTransform(mat);
@@ -605,6 +685,13 @@ U32 TSStatic::packUpdate(NetConnection *con, U32 mask, BitStream *stream)
    stream->write( mForceDetail );
 
    stream->writeFlag( mPlayAmbient );
+
+   if ( stream->writeFlag(mUseAlphaFade) )  
+   {  
+      stream->write(mAlphaFadeStart);  
+      stream->write(mAlphaFadeEnd);  
+      stream->write(mInvertAlphaFade);  
+   } 
 
    if ( mLightPlugin )
       retMask |= mLightPlugin->packUpdate(this, AdvancedStaticOptionsMask, con, mask, stream);
@@ -663,6 +750,14 @@ void TSStatic::unpackUpdate(NetConnection *con, BitStream *stream)
 
    mPlayAmbient = stream->readFlag();
 
+   mUseAlphaFade = stream->readFlag();  
+   if (mUseAlphaFade)
+   {
+      stream->read(&mAlphaFadeStart);  
+      stream->read(&mAlphaFadeEnd);  
+      stream->read(&mInvertAlphaFade);  
+   }
+
    if ( mLightPlugin )
    {
       mLightPlugin->unpackUpdate(this, con, stream);
@@ -683,41 +778,9 @@ bool TSStatic::castRay(const Point3F &start, const Point3F &end, RayInfo* info)
 
    if ( mCollisionType == Bounds )
    {
-      F32 st, et, fst = 0.0f, fet = 1.0f;
-      F32 *bmin = &mObjBox.minExtents.x;
-      F32 *bmax = &mObjBox.maxExtents.x;
-      F32 const *si = &start.x;
-      F32 const *ei = &end.x;
-
-      for ( U32 i = 0; i < 3; i++ )
-      {
-         if (*si < *ei) 
-         {
-            if ( *si > *bmax || *ei < *bmin )
-               return false;
-            F32 di = *ei - *si;
-            st = ( *si < *bmin ) ? ( *bmin - *si ) / di : 0.0f;
-            et = ( *ei > *bmax ) ? ( *bmax - *si ) / di : 1.0f;
-         }
-         else 
-         {
-            if ( *ei > *bmax || *si < *bmin )
-               return false;
-            F32 di = *ei - *si;
-            st = ( *si > *bmax ) ? ( *bmax - *si ) / di : 0.0f;
-            et = ( *ei < *bmin ) ? ( *bmin - *si ) / di : 1.0f;
-         }
-         if ( st > fst ) fst = st;
-         if ( et < fet ) fet = et;
-         if ( fet < fst )
-            return false;
-         bmin++; bmax++;
-         si++; ei++;
-      }
-
-      info->normal = start - end;
-      info->normal.normalizeSafe();
-      getTransform().mulV( info->normal );
+      F32 fst;
+      if (!mObjBox.collideLine(start, end, &fst, &info->normal))
+         return false;
 
       info->t = fst;
       info->object = this;
@@ -937,7 +1000,7 @@ void TSStaticPolysoupConvex::getPolyList(AbstractPolyList *list)
                list->addPoint(verts[2]);
                list->addPoint(verts[1]);
 
-   list->begin(0, (U32)idx ^ (U32)mesh);
+   list->begin(0, (U32)idx ^ (uintptr_t)mesh);
    list->vertex(base + 2);
    list->vertex(base + 1);
    list->vertex(base + 0);

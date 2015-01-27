@@ -21,7 +21,7 @@
 //-----------------------------------------------------------------------------
 
 #include "../../../gl/hlslCompat.glsl"
-#include "../../gl/postFx.glsl"
+#include "../../gl/postFX.glsl"
 
 uniform sampler2D frameSampler;
 uniform sampler2D backBuffer;
@@ -35,6 +35,8 @@ uniform float density;
 uniform float weight;
 uniform float decay;
 uniform float exposure;
+
+out vec4 OUT_col;
 
 void main()
 {  
@@ -55,7 +57,7 @@ void main()
 	
 	if ( samples <= 0 )
    {
-	   OUT_FragColor0 = bbCol;
+	   OUT_col = bbCol;
       return;
    }
 
@@ -88,5 +90,5 @@ void main()
 	//return bbCol * decay;
 	
     // Output final color with a further scale control factor.      
-    OUT_FragColor0 = saturate( amount ) * vec4( color * exposure, 1 ) + bbCol;
+    OUT_col = saturate( amount ) * vec4( color * exposure, 1 ) + bbCol;
 }  

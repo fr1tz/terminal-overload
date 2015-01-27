@@ -22,7 +22,7 @@
 
 #include "../../../gl/hlslCompat.glsl"
 #include "shadergen:/autogenConditioners.h"
-#include "../../gl/postFx.glsl"
+#include "../../gl/postFX.glsl"
 
 uniform sampler2D backBuffer;   // The original backbuffer.
 uniform sampler2D prepassTex;   // The pre-pass depth and normals.
@@ -31,6 +31,7 @@ uniform float brightScalar;
 
 const vec3 LUMINANCE_VECTOR = vec3(0.3125f, 0.6154f, 0.0721f);
 
+out vec4 OUT_col;
 
 void main()
 {
@@ -50,5 +51,5 @@ void main()
         col *= brightScalar;
     }
     
-    OUT_FragColor0 = col;
+    OUT_col = col;
 }

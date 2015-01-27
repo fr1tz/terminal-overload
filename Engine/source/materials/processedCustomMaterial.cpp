@@ -30,6 +30,7 @@ ProcessedCustomMaterial::ProcessedCustomMaterial(Material &mat)
    mCustomMaterial = static_cast<CustomMaterial*>(mMaterial);
    mHasSetStageData = false;
    mHasGlow = false;
+   mHasAccumulation = false;
    mMaxStages = 0;
    mMaxTex = 0;
 }

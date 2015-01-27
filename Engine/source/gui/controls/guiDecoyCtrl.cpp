@@ -6,6 +6,7 @@
 #include "gui/buttons/guiButtonBaseCtrl.h"
 
 #include "console/consoleTypes.h"
+#include "console/engineAPI.h"
 #include "gfx/primBuilder.h"
 
 //-----------------------------------------------------------------------------

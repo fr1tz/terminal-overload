@@ -53,6 +53,8 @@ private:
 
    U32  mMissionCRC;             // crc of the current mission file from the server
 
+   F32 mVisibleGhostDistance;
+
 private:
    U32 mLastControlRequestTime;
    S32 mDataBlockModifiedKey;
@@ -135,6 +137,9 @@ public:
    /// @}
 
    bool canRemoteCreate();
+
+   void setVisibleGhostDistance(F32 dist);
+   F32 getVisibleGhostDistance();
 
 private:
    /// @name Connection State

@@ -80,16 +80,16 @@ void PopupMenu::createPlatformMenu()
 // Public Methods
 //////////////////////////////////////////////////////////////////////////
 
-S32 PopupMenu::insertItem(S32 pos, const char *title, const char* accelerator)
+S32 PopupMenu::insertItem(S32 pos, const char *title, const char* accelerator, const char* cmd)
 {   
    GuiMenuBar::MenuItem *item = GuiMenuBar::findMenuItem( mData->mMenuGui, title );
    if(item)
    {
-      setItem( pos, title, accelerator);
+      setItem( pos, title, accelerator, cmd);
       return pos;
    }
 
-   item = GuiMenuBar::addMenuItem( mData->mMenuGui, title, pos, accelerator, -1 );
+   item = GuiMenuBar::addMenuItem( mData->mMenuGui, title, pos, accelerator, -1, cmd );
    item->submenuParentMenu = this->mData->mMenuGui;
    
    return pos;
@@ -97,7 +97,7 @@ S32 PopupMenu::insertItem(S32 pos, const char *title, const char* accelerator)
 
 S32 PopupMenu::insertSubMenu(S32 pos, const char *title, PopupMenu *submenu)
 {  
-   GuiMenuBar::MenuItem *item = GuiMenuBar::addMenuItem( mData->mMenuGui, title, pos, "", -1 );
+   GuiMenuBar::MenuItem *item = GuiMenuBar::addMenuItem( mData->mMenuGui, title, pos, "", -1, "" );
    item->isSubmenu = true;
    item->submenu = submenu->mData->mMenuGui;
    item->submenuParentMenu = this->mData->mMenuGui;
@@ -105,7 +105,7 @@ S32 PopupMenu::insertSubMenu(S32 pos, const char *title, PopupMenu *submenu)
    return pos;
 }
 
-bool PopupMenu::setItem(S32 pos, const char *title, const char* accelerator)
+bool PopupMenu::setItem(S32 pos, const char *title, const char* accelerator, const char* cmd)
 {
    GuiMenuBar::MenuItem *item = NULL;
 
@@ -114,6 +114,7 @@ bool PopupMenu::setItem(S32 pos, const char *title, const char* accelerator)
    if(item)
    {
       item->id = pos;
+      item->cmd = cmd;
       if( accelerator && accelerator[0] )
          item->accelerator = dStrdup( accelerator );
       else

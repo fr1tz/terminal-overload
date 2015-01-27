@@ -1,6 +1,9 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
+#ifndef _GFX_D3D_VIDEOCAPTURED3D9_H_
+#define _GFX_D3D_VIDEOCAPTURED3D9_H_
+
 #ifndef _VIDEOCAPTURE_H_
 #include "gfx/video/videoCapture.h"
 #endif
@@ -61,3 +64,5 @@ public:
    VideoFrameGrabberD3D9();
    ~VideoFrameGrabberD3D9();
 };
+
+#endif // _GFX_D3D_VIDEOCAPTURED3D9_H_

@@ -3,6 +3,7 @@
 
 #include "core/strings/stringFunctions.h"
 #include "console/console.h"
+#include "console/engineAPI.h"
 
 #include "math/mMath.h"
 

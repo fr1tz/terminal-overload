@@ -6,6 +6,7 @@
 
 #include "console/console.h"
 #include "console/consoleTypes.h"
+#include "console/engineAPI.h"
 #include "gfx/gfxDrawUtil.h"
 
 
@@ -157,13 +158,13 @@ ConsoleDocClass( GuiIdleCamFadeBitmapCtrl,
 				"This is going to be deprecated, and any useful code ported to FadeinBitmap\n\n"
 				"@internal");
 
-ConsoleMethod(GuiIdleCamFadeBitmapCtrl, fadeIn, void, 2, 2, "()"
+DefineConsoleMethod(GuiIdleCamFadeBitmapCtrl, fadeIn, void, (), , "()"
 			  "@internal")
 {
    object->fadeIn();
 }
 
-ConsoleMethod(GuiIdleCamFadeBitmapCtrl, fadeOut, void, 2, 2, "()"
+DefineConsoleMethod(GuiIdleCamFadeBitmapCtrl, fadeOut, void, (), , "()"
 			  "@internal")
 {
    object->fadeOut();

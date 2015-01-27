@@ -23,7 +23,7 @@
 // Based on 'Cubic Lens Distortion HLSL Shader' by François Tarlier
 // www.francois-tarlier.com/blog/index.php/2009/11/cubic-lens-distortion-shader
 
-#include "./postFx.glsl"
+#include "./postFX.glsl"
 #include "../../gl/torque.glsl"
 #include "../../gl/hlslCompat.glsl"
 
@@ -31,6 +31,8 @@ uniform sampler2D backBuffer;
 uniform float distCoeff;
 uniform float cubeDistort;
 uniform vec3 colorDistort;
+
+out vec4 OUT_col;
 
 void main()
 {
@@ -56,5 +58,5 @@ void main()
         outColor[i] = tex2Dlod( backBuffer, vec4(x,y,0,0) )[i];
     }
 
-    OUT_FragColor0 = vec4( outColor.rgb, 1 );
+    OUT_col = vec4( outColor.rgb, 1 );
 }

@@ -28,6 +28,8 @@ uniform float     cloudCoverage;
 uniform vec3      cloudBaseColor;
 uniform float	  cloudExposure;
 
+out vec4 OUT_col;
+
 //-----------------------------------------------------------------------------
 // Globals                                                                        
 //-----------------------------------------------------------------------------
@@ -122,5 +124,5 @@ void main()
 
    cResultColor.a = mix( cResultColor.a, 0.0, 1.0 - pow(IN_worldDist,2.0) );
 
-   OUT_FragColor0 = cResultColor;
+   OUT_col = cResultColor;
 }   

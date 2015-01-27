@@ -17,6 +17,8 @@
 #endif
 
 
+
+
 /// Core stack for interpreter operations.
 ///
 /// This class provides some powerful semantics for working with strings, and is
@@ -53,6 +55,7 @@ struct StringStack
          mBuffer = (char *) dRealloc(mBuffer, mBufferSize);
       }
    }
+
    void validateArgBufferSize(U32 size)
    {
       if(size > mArgBufferSize)
@@ -61,6 +64,7 @@ struct StringStack
          mArgBuffer = (char *) dRealloc(mArgBuffer, mArgBufferSize);
       }
    }
+
    StringStack()
    {
       mBufferSize = 0;
@@ -74,6 +78,8 @@ struct StringStack
       mFunctionOffset = 0;
       validateBufferSize(8192);
       validateArgBufferSize(2048);
+      dMemset(mBuffer, '\0', mBufferSize);
+      dMemset(mArgBuffer, '\0', mArgBufferSize);
    }
    ~StringStack()
    {
@@ -120,6 +126,7 @@ struct StringStack
    /// Clear the function offset.
    void clearFunctionOffset()
    {
+      //Con::printf("StringStack mFunctionOffset = 0 (from %i)", mFunctionOffset);
       mFunctionOffset = 0;
    }
 
@@ -164,6 +171,11 @@ struct StringStack
    inline const char *getStringValue()
    {
       return mBuffer + mStart;
+   }
+
+   inline const char *getPreviousStringValue()
+   {
+      return mBuffer + mStartOffsets[mStartStackSize-1];
    }
 
    /// Advance the start stack, placing a zero length string on the top.
@@ -236,9 +248,9 @@ struct StringStack
       return ret;
    }
 
-   
    void pushFrame()
    {
+      //Con::printf("StringStack pushFrame [frame=%i, start=%i]", mNumFrames, mStartStackSize);
       mFrameOffsets[mNumFrames++] = mStartStackSize;
       mStartOffsets[mStartStackSize++] = mStart;
       mStart += ReturnBufferSpace;
@@ -247,13 +259,64 @@ struct StringStack
 
    void popFrame()
    {
+      //Con::printf("StringStack popFrame [frame=%i, start=%i]", mNumFrames, mStartStackSize);
       mStartStackSize = mFrameOffsets[--mNumFrames];
       mStart = mStartOffsets[mStartStackSize];
       mLen = 0;
    }
 
+   void clearFrames()
+   {
+      //Con::printf("StringStack clearFrames");
+      mNumFrames = 0;
+      mStart = 0;
+      mLen = 0;
+      mStartStackSize = 0;
+      mFunctionOffset = 0;
+   }
+
    /// Get the arguments for a function call from the stack.
    void getArgcArgv(StringTableEntry name, U32 *argc, const char ***in_argv, bool popStackFrame = false);
+};
+
+
+// New console value stack
+class ConsoleValueStack
+{
+   enum {
+      MaxStackDepth = 1024,
+      MaxArgs = 20,
+      ReturnBufferSpace = 512
+   };
+
+public:
+   ConsoleValueStack();
+   ~ConsoleValueStack();
+
+   void pushVar(ConsoleValue *variable);
+   void pushValue(ConsoleValue &value);
+   ConsoleValue* pop();
+
+   ConsoleValue *pushString(const char *value);
+   ConsoleValue *pushStackString(const char *value);
+   ConsoleValue *pushUINT(U32 value);
+   ConsoleValue *pushFLT(float value);
+
+   void pushFrame();
+   void popFrame();
+
+   void resetFrame();
+   void clearFrames();
+
+   void getArgcArgv(StringTableEntry name, U32 *argc, ConsoleValueRef **in_argv, bool popStackFrame = false);
+
+   ConsoleValue mStack[MaxStackDepth];
+   U32 mStackFrames[MaxStackDepth];
+
+   U32 mFrame;
+   U32 mStackPos;
+
+   ConsoleValueRef mArgv[MaxArgs];
 };
 
 #endif

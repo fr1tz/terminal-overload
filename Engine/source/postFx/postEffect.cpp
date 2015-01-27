@@ -384,7 +384,9 @@ bool PostEffect::onAdd()
          texFilename = scriptPath.getFullPath() + '/' + texFilename;
 
       // Try to load the texture.
-      mTextures[i].set( texFilename, &PostFxTextureProfile, avar( "%s() - (line %d)", __FUNCTION__, __LINE__ ) );
+      bool success = mTextures[i].set( texFilename, &PostFxTextureProfile, avar( "%s() - (line %d)", __FUNCTION__, __LINE__ ) );
+      if (!success)
+         Con::errorf("Invalid Texture for PostEffect (%s), The Texture '%s' does not exist!", this->getName(), texFilename.c_str());
    }
 
    // Is the target a named target?
@@ -636,7 +638,9 @@ void PostEffect::_setupConstants( const SceneRenderState *state )
       Point2F offset((F32)viewport.point.x / (F32)targetSize.x, (F32)viewport.point.y / (F32)targetSize.y );
       Point2F scale((F32)viewport.extent.x / (F32)targetSize.x, (F32)viewport.extent.y / (F32)targetSize.y );
 
-      const Point2F halfPixel( 0.5f / targetSize.x, 0.5f / targetSize.y );
+      const bool hasTexelPixelOffset = GFX->getAdapterType() == Direct3D9;
+      const Point2F halfPixel(  hasTexelPixelOffset ? (0.5f / targetSize.x) : 0.0f, 
+                                hasTexelPixelOffset ? (0.5f / targetSize.y) : 0.0f );
 
       Point4F targetParams;
       targetParams.x = offset.x + halfPixel.x;

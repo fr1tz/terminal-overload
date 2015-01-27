@@ -1,5 +1,24 @@
-// Copyright information can be found in the file named COPYING
-// located in the root directory of this distribution.
+//-----------------------------------------------------------------------------
+// Copyright (c) 2012 GarageGames, LLC
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to
+// deal in the Software without restriction, including without limitation the
+// rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+// sell copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+// IN THE SOFTWARE.
+//-----------------------------------------------------------------------------
 
 #include "gfx/gFont.h"
 #include "gfx/bitmap/gBitmap.h"
@@ -22,39 +41,39 @@
 #include <stdlib.h>
 XftFont *loadFont(const char *name, S32 size, Display *display)
 {
-    XftFont *fontInfo = NULL;
-    const char* fontname = name;
-    if (dStrlen(fontname)==0)
-        fontname = "arial";
-    else if (stristr(name, "arial") != NULL)
-        fontname = "arial";
-    else if (stristr(name, "lucida console") != NULL)
-        fontname = "lucida console";
-    
-    const char* weight = "medium";
-    const char* slant = "roman"; // no slant
+  XftFont *fontInfo = NULL;
+  const char* fontname = name;
+  if (dStrlen(fontname)==0)
+    fontname = "arial";
+  else if (stristr(name, "arial") != NULL)
+    fontname = "arial";
+  else if (stristr(name, "lucida console") != NULL)
+    fontname = "lucida console";
 
-    if (stristr(name, "bold") != NULL)
-        weight = "bold";
-    if (stristr(name, "italic") != NULL)
-        slant = "italic";
-    
-    int mSize = size - 2 - (int)((float)size * 0.1);
-    char xfontName[512];
-    // We specify a lower DPI to get 'correct' looking fonts, if we go with the
-    // native DPI the fonts are to big and don't fit the widgets.
-    dSprintf(xfontName, 512, "%s-%d:%s:slant=%s:dpi=76", fontname, mSize, weight, slant);
-    
-    // Lets see if Xft can get a font for us.
-    char xftname[1024];
-    fontInfo = XftFontOpenName(display, DefaultScreen(display), xfontName);
-    // Cant find a suitabke font, default to a known font (6x10)
-    if ( !fontInfo )
+  const char* weight = "medium";
+  const char* slant = "roman"; // no slant
+
+  if (stristr(name, "bold") != NULL)
+    weight = "bold";
+  if (stristr(name, "italic") != NULL)
+    slant = "italic";
+
+  int mSize = size - 2 - (int)((float)size * 0.1);
+  char xfontName[512];
+  // We specify a lower DPI to get 'correct' looking fonts, if we go with the
+  // native DPI the fonts are to big and don't fit the widgets.
+  dSprintf(xfontName, 512, "%s-%d:%s:slant=%s:dpi=76", fontname, mSize, weight, slant);
+
+  // Lets see if Xft can get a font for us.
+  char xftname[1024];
+  fontInfo = XftFontOpenName(display, DefaultScreen(display), xfontName);
+  // Cant find a suitabke font, default to a known font (6x10)
+  if ( !fontInfo )
     {
-        dSprintf(xfontName, 512, "6x10-%d:%s:slant=%s:dpi=76", mSize, weight, slant);
-        fontInfo = XftFontOpenName(display, DefaultScreen(display), xfontName);
+  	dSprintf(xfontName, 512, "6x10-%d:%s:slant=%s:dpi=76", mSize, weight, slant);
+      fontInfo = XftFontOpenName(display, DefaultScreen(display), xfontName);
     }
-    XftNameUnparse(fontInfo->pattern, xftname, 1024);
+      XftNameUnparse(fontInfo->pattern, xftname, 1024);
 
 #ifdef DEBUG
     Con::printf("Font '%s %d' mapped to '%s'\n", name, size, xftname);
@@ -167,7 +186,7 @@ XftFont *loadFont(const char *name, S32 size, Display *display)
 
 
 // XA: New class for the unix unicode font
-PlatformFont *createPlatformFont(const char *name, U32 size, U32 charset /* = TGE_ANSI_CHARSET */)
+PlatformFont *createPlatformFont(const char *name, dsize_t size, U32 charset /* = TGE_ANSI_CHARSET */)
 {
   PlatformFont *retFont = new x86UNIXFont;
 
@@ -185,7 +204,7 @@ x86UNIXFont::~x86UNIXFont()
 {}
 
 
-bool x86UNIXFont::create(const char *name, U32 size, U32 charset)
+bool x86UNIXFont::create(const char *name, dsize_t size, U32 charset)
 {
   Display *display = XOpenDisplay(getenv("DISPLAY"));
   if (display == NULL)

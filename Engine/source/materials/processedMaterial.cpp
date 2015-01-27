@@ -74,6 +74,7 @@ ProcessedMaterial::ProcessedMaterial()
    mCurrentParams( NULL ),
    mHasSetStageData( false ),
    mHasGlow( false ),   
+   mHasAccumulation( false ),   
    mMaxStages( 0 ),
    mVertexFormat( NULL ),
    mUserObject( NULL )

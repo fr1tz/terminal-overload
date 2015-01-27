@@ -56,6 +56,7 @@ PlatformWindowManagerSDL::PlatformWindowManagerSDL()
 
    mCurtainWindow = NULL;
 
+   mDisplayWindow = true;
    mOffscreenRender = false;
 
    buildMonitorsList();
@@ -152,7 +153,7 @@ PlatformWindow *PlatformWindowManagerSDL::createWindow(GFXDevice *device, const 
 {
    // Do the allocation.
    PlatformWindowSDL *window = new PlatformWindowSDL();   
-   U32 windowFlags = SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE;
+   U32 windowFlags = /*SDL_WINDOW_SHOWN |*/ SDL_WINDOW_RESIZABLE;
 
    if(GFX->getAdapterType() == OpenGL)
        windowFlags |= SDL_WINDOW_OPENGL;
@@ -334,6 +335,11 @@ void PlatformWindowManagerSDL::raiseCurtain()
    // TODO SDL
 }
 
+bool Platform::closeSplashWindow()
+{
+    return true;
+}
+
 void Platform::openFolder(const char* path )
 {
     AssertFatal(0, "Not Implemented");
@@ -359,7 +365,5 @@ void InitWindowingSystem()
 AFTER_MODULE_INIT(gfx)
 {   
    int res = SDL_Init( SDL_INIT_VIDEO | SDL_INIT_JOYSTICK | SDL_INIT_HAPTIC | SDL_INIT_GAMECONTROLLER | SDL_INIT_EVENTS | SDL_INIT_NOPARACHUTE );
-   if(res == -1)
-      Con::errorf("SDL_INIT() failed: %s.", SDL_GetError());
    AssertFatal(res != -1, "SDL init error");
 }

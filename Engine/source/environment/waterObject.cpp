@@ -390,7 +390,7 @@ void WaterObject::inspectPostApply()
    setMaskBits( UpdateMask | WaveMask | TextureMask | SoundMask );
 }
 
-bool WaterObject::processArguments( S32 argc, const char **argv )
+bool WaterObject::processArguments( S32 argc, ConsoleValueRef *argv )
 {
    if( typeid( *this ) == typeid( WaterObject ) )
    {
@@ -872,6 +872,10 @@ void WaterObject::onRemove()
    {
       mPlaneReflector.unregisterReflector();
       cleanupMaterials();
+
+      PostEffect *underWaterEffect = getUnderwaterEffect( );
+      if( underWaterEffect )
+         underWaterEffect->disable( );
    }
 
    Parent::onRemove();

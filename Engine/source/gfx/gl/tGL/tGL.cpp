@@ -29,7 +29,6 @@ namespace GL
 {
    void gglPerformBinds()
    {
-      glewExperimental = GL_TRUE;
       GLenum err = glewInit();
       AssertFatal(GLEW_OK == err, avar("Error: %s\n", glewGetErrorString(err)) );
    }

@@ -3,7 +3,6 @@
 #include "gfx/gfxDebugEvent.h"
 
 #include "gfx/gl/gfxGLDevice.h"
-#include "gfx/gfxProfiler.h"
 
 #ifndef TORQUE_BASIC_GPU_PROFILER
    //#define TORQUE_BASIC_GPU_PROFILER
@@ -80,12 +79,19 @@ protected:
 };
 
 
+#ifdef TORQUE_BASIC_GPU_PROFILER
+
+#include "gfx/gfxProfiler.h"
+
+
 GFXProfiler<GLTimer> gfxProfiler;
 
 DefineConsoleFunction(printGFXGLTimers, void,(), ,"")
 {
    gfxProfiler.printTimes();
 }
+
+#endif
 
 bool initGLProfiler(GFXDevice::GFXDeviceEventType ev)
 {

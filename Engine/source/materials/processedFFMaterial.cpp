@@ -48,6 +48,7 @@ void ProcessedFFMaterial::_construct()
 {   
    mHasSetStageData = false;
    mHasGlow = false;
+   mHasAccumulation = false;
    mIsLightingMaterial = false;
    mDefaultHandle = new FFMaterialParameterHandle();
    mDefaultParameters = new MaterialParameters();
@@ -349,7 +350,7 @@ void ProcessedFFMaterial::_initPassStateBlock( RenderPassData *rpd, GFXStateBloc
       result.blendDefined = true;
       result.blendEnable = true;
       result.blendSrc = GFXBlendOne;
-      result.blendSrc = GFXBlendOne;
+      result.blendDest = GFXBlendZero;
    }
 
    // This is here for generic FF shader fallbacks.
