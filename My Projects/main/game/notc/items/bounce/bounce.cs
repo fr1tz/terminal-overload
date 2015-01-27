@@ -91,7 +91,7 @@ function ItemStandardcatBounceShape::fire(%this, %obj)
 
          // Apply impulse
          %targetPos = %targetObject.getWorldBoxCenter();
-         %impulseVec = VectorSub(%targetPos, %pos);
+         %impulseVec = %targetObject.getVelocity();
          %impulseVec = VectorNormalize(%impulseVec);
          %impulseVec = VectorScale(%impulseVec, 6000);
          %targetObject.impulse(%targetPos, %impulseVec, %mount);
