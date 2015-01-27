@@ -22,13 +22,6 @@ function GameCoreBase::prepareMissionLoad(%game)
 {
    //echo(%game @"\c4 -> "@ %game.class @" -> GameCoreBase::prepareMissionLoad");
    
-   if(isObject($Server::RequiredContent))
-      $Server::RequiredContent.delete();
-   $Server::RequiredContent = new ArrayObject();
-   findAndChecksumFiles("content/xa/notc/core/*", $Server::RequiredContent);
-   findAndChecksumFiles("content/xa/rotc_hack/*", $Server::RequiredContent);
-   findAndChecksumFiles(filePath($Server::MissionFile)@"/*", $Server::RequiredContent);
-
    %game.zMaterialPaths = "content/xa/notc/core" SPC
       "content/xa/rotc_hack" SPC
       filePath($Server::MissionFile);
@@ -87,6 +80,14 @@ function GameCoreBase::prepareMissionLoad(%game)
    echo("ServerMaterialsGroup has" SPC ServerMaterialsGroup.getCount() SPC "materials.");
 
    $instantGroup = %instantGroupStor;
+   
+   requiredContent_init();
+   requiredContent_addFromMaterials();
+   requiredContent_addFromDataBlocks();
+   requiredContent_addFromPattern("content/xa/notc/core/*");
+   requiredContent_addFromPattern("content/xa/rotc_hack/*");
+   requiredContent_addFromPattern(filePath($Server::MissionFile)@"/*");
+   requiredContent_filter();
 }
 
 function GameCoreBase::onMissionLoaded(%game)

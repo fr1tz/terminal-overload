@@ -5,6 +5,7 @@ exec("./auth.cs");
 exec("./audio.cs");
 exec("./message.cs");
 exec("./commands.cs");
+exec("./content.cs");
 exec("./levelInfo.cs");
 exec("./missionLoad.cs");
 exec("./missionDownload.cs");

@@ -11,20 +11,6 @@ $MissionLoadPause = 5000;
 
 //-----------------------------------------------------------------------------
 
-function findAndChecksumFiles(%pattern, %arrayObject)
-{
-   %file = findFirstFile(%pattern);
-   while(%file !$= "")
-   {
-      %crc = getFileCRC(%file);
-      if(%crc != 0 && %crc != -1)
-         %arrayObject.push_back(%file, %crc SPC fileSize(%file));
-      %file = findNextFile(%pattern);
-   }
-}
-
-//-----------------------------------------------------------------------------
-
 function loadMission( %missionName, %isFirstMission ) 
 {
    endMission();
