@@ -49,6 +49,8 @@ function TerritoryGenerator2::onDamage(%this, %obj, %delta)
    %health = 1 - %obj.getDamagePercent();
    %scale = 6 + 24*%health;
    %obj.zZone.setScale(%scale SPC %scale SPC "32");
+   if(%delta > 0)
+      %obj.zZone.flash("1 1 1 1");
    if(%health == 0)
    {
       %this.removeAssets(%obj);
@@ -148,7 +150,7 @@ function TerritoryGenerator2::updateAssetsThread(%this, %obj)
       teamId = 0;
       position = %pos;
       rotation = "0 0 1 0";
-      scale = "32 32 32";
+      scale = "30 30 30";
       canSave = "1";
       canSaveDynamicFields = "1";
       showOnMinimap = "1";
