@@ -1,18 +1,21 @@
 new TerrainMaterial()
 {
-   detailDistance = "6000";
+   detailDistance = "9999";
    internalName = "xa_notc_mis_ctf1_termat1";
-   diffuseSize = "4";
-   detailSize = "32";
-   detailStrength = "1";
+   diffuseSize = "256";
+   detailSize = "0.5";
+   detailStrength = "0.1";
    macroStrength = "0.1";
-   diffuseMap = "content/o/rotc/p.5.4/textures/eth/dark_grey_blue_grid";
-   detailMap = "content/o/rotc/p.5.4/textures/eth/dark_grey_blue_grid";
+   detailMap = "content/xa/notc/core/textures/grid.128.4";
+   macroMap = "content/xa/notc/core/textures/grid.128.4";
+   macroSize = "4";
+   macroDistance = "9999";
+   diffuseMap = "content/xa/notc/mis/ctf1/textures/xa_notc_mis_ctf1_termat1";
 };
 
 singleton Material(xa_notc_mis_ctf1_termat1fx)
 {
-   mapTo = "xa_notc_mis_eth5_grid";
+   mapTo = "xa_notc_mis_ctf1_termat1";
    footstepSoundId = "2";
    terrainMaterials = "1";
    ShowDust = "true";
