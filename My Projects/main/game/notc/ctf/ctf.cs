@@ -17,7 +17,7 @@ function CTF::restartGame()
    Game.team1.score = 0;
    Game.team2.score = 0;
 
-   TerritoryZones_reset();
+   TerritoryZones_repairTick();
    
    CTF::applyTeamColors(MissionGroup);
    
