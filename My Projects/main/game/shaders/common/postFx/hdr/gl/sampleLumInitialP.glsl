@@ -22,12 +22,14 @@
 
 #include "../../../gl/torque.glsl"
 #include "../../../gl/hlslCompat.glsl"
-#include "../../gl/postFx.glsl"
+#include "../../gl/postFX.glsl"
 
 uniform sampler2D inputTex;
 uniform vec2 texSize0;
 
 uniform float g_fMinLuminace;
+
+out vec4 OUT_col;
 
 const vec2 gTapOffsets[9] = vec2[]
 (
@@ -56,5 +58,5 @@ void main()
 
    average = exp( average / 9.0 );
 
-   OUT_FragColor0 = vec4( average, 0.0, 0.0, 1.0 );
+   OUT_col = vec4( average, 0.0, 0.0, 1.0 );
 }

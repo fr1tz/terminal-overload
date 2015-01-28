@@ -22,7 +22,7 @@
 
 #include "../../../gl/hlslCompat.glsl"
 #include "shadergen:/autogenConditioners.h"
-#include "../../gl/postFx.glsl"
+#include "../../gl/postFX.glsl"
 
 #define DOSMALL
 #define DOLARGE
@@ -56,6 +56,8 @@ uniform float lDepthMax;
 uniform float lDepthPow;
 uniform float lNormalTol;
 uniform float lNormalPow;
+
+out vec4 OUT_col;
 
 
 #ifndef QUALITY
@@ -152,7 +154,7 @@ void main()
    // Early out if too far away.
    if ( depth > 0.99999999 )
    {
-      OUT_FragColor0 = vec4( 0,0,0,0 );
+      OUT_col = vec4( 0,0,0,0 );
       return;
    }
 
@@ -270,7 +272,7 @@ void main()
    // seems backwards, but it makes it simple to deal with the SSAO
    // being disabled in the lighting shaders.   
    
-   OUT_FragColor0 = vec4(occlusion, vec3(0.0));
+   OUT_col = vec4(occlusion, vec3(0.0));
 }
 
 

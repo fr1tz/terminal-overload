@@ -23,10 +23,12 @@
 #include "../../../gl/torque.glsl"
 #include "../../../gl/hlslCompat.glsl"
 #include "shadergen:/autogenConditioners.h"
-#include "../../gl/postFx.glsl"
+#include "../../gl/postFX.glsl"
 
 uniform sampler2D inputTex;
 uniform float brightPassThreshold;
+
+out vec4 OUT_col;
 
 void main()
 {
@@ -36,5 +38,5 @@ void main()
    float lum = hdrLuminance( _sample.rgb );
 
    // Write the colour to the bright-pass render target
-   OUT_FragColor0 = ( vec4( lum.rrr, 1 ) );
+   OUT_col = ( vec4( lum.rrr, 1 ) );
 }

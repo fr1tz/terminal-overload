@@ -23,7 +23,7 @@
 #include "../../gl/hlslCompat.glsl"
 #include "../../gl/torque.glsl"
 #include "shadergen:/autogenConditioners.h"
-#include "postFx.glsl"
+#include "postFX.glsl"
 
 #undef IN_uv0
 #define _IN_uv0 uv0
@@ -36,6 +36,8 @@ uniform float velocityMultiplier;
 
 uniform sampler2D backBuffer;
 uniform sampler2D prepassTex;
+
+out vec4 OUT_col;
 
 void main()
 {
@@ -72,5 +74,5 @@ void main()
       color += currentColor;
    }
    
-   OUT_FragColor0 = color / samples;
+   OUT_col = color / samples;
 }

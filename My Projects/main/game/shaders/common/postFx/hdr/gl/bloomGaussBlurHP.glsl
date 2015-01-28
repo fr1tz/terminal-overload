@@ -22,13 +22,15 @@
 
 #include "../../../gl/hlslCompat.glsl"
 #include "shadergen:/autogenConditioners.h"
-#include "../../gl/postFx.glsl"
+#include "../../gl/postFX.glsl"
 
 uniform sampler2D inputTex ;
 uniform vec2 oneOverTargetSize;
 uniform float gaussMultiplier;
 uniform float gaussMean;
 uniform float gaussStdDev;
+
+out vec4 OUT_col;
 
 #define PI 3.141592654
 
@@ -66,5 +68,5 @@ void main()
       color += (texture( inputTex, IN_uv0 + vec2( offset, 0.0f ) ) * weight );
    }
    
-   OUT_FragColor0 = vec4( color.rgb, 1.0f );
+   OUT_col = vec4( color.rgb, 1.0f );
 }

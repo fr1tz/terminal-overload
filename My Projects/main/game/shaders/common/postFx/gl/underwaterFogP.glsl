@@ -22,7 +22,7 @@
 
 #include "../../gl/hlslCompat.glsl"  
 #include "../../gl/torque.glsl"
-#include "postFx.glsl"
+#include "postFX.glsl"
 #include "shadergen:/autogenConditioners.h"
 
 //-----------------------------------------------------------------------------
@@ -50,6 +50,8 @@ uniform vec4    waterFogPlane;
 uniform vec2    nearFar;      
 uniform vec4    rtParams0;
 uniform float     waterDepthGradMax;
+
+out vec4 OUT_col;
 
 void main() 
 {    
@@ -134,5 +136,5 @@ void main()
    
    vec3 outColor = mix( inColor, fogColor.rgb, fogAmt );
    
-   OUT_FragColor0 = vec4( hdrEncode( outColor ), 1 );        
+   OUT_col = vec4( hdrEncode( outColor ), 1 );        
 }

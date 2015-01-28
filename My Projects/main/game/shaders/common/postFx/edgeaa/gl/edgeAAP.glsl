@@ -22,11 +22,13 @@
 
 #include "../../../gl/hlslCompat.glsl"
 #include "shadergen:/autogenConditioners.h"
-#include "../../gl/postFx.glsl"
+#include "../../gl/postFX.glsl"
 
 uniform sampler2D edgeBuffer;
 uniform sampler2D backBuffer;
 uniform vec2 targetSize;
+
+out vec4 OUT_col;
 
 void main()
 {
@@ -64,5 +66,5 @@ void main()
    }
    accumColor /= 9.0;
    
-   OUT_FragColor0 = accumColor;
+   OUT_col = accumColor;
 }

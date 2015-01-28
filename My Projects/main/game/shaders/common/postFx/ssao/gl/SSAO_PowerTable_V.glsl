@@ -22,7 +22,7 @@
 
 #include "../../../gl/torque.glsl"
 #include "../../../gl/hlslCompat.glsl"
-#include "../../gl/postFx.glsl"
+#include "../../gl/postFX.glsl"
                     
 void main()
 {

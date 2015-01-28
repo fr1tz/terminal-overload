@@ -22,13 +22,15 @@
 
 #include "../../../gl/hlslCompat.glsl"
 #include "shadergen:/autogenConditioners.h"
-#include "../../gl/postFx.glsl"
+#include "../../gl/postFX.glsl"
 
 uniform sampler2D currLum;
 uniform sampler2D lastAdaptedLum;
 
 uniform float adaptRate;
 uniform float deltaTime;
+
+out vec4 OUT_col;
 
 void main()
 {
@@ -42,5 +44,5 @@ void main()
    float diff = fCurrentLum - fAdaptedLum;
    float fNewAdaptation = fAdaptedLum + ( diff * ( 1.0 - exp( -deltaTime * adaptRate ) ) );
 
-   OUT_FragColor0 = vec4( fNewAdaptation, 0.0, 0.0, 1.0f );
+   OUT_col = vec4( fNewAdaptation, 0.0, 0.0, 1.0f );
 }
