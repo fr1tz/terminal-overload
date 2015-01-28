@@ -2629,13 +2629,16 @@ ConsoleFunctionGroupBegin( Cryptography, "Cryptographic functions" );
 
 #include "core/sha256.h"
 
-ConsoleFunction( sha256, const char*, 2, 2, "(data)" )
+DefineConsoleFunction( sha256, const char*, ( const char* data ), , "(string data)" 
+				"@brief Create SHA256 hash from data.\n\n"
+				"@param data Data to hash\n"
+				"@return 64 character hash\n")
 {
 	U8 digest[32];
 
 	context_sha256_t ctx;
 	sha256_starts(&ctx);
-	sha256_update(&ctx, (const U8*)argv[1], dStrlen(argv[1]));
+	sha256_update(&ctx, (const U8*)data, dStrlen(data));
 	sha256_finish(&ctx, digest);
 
 	char* ret = Con::getReturnBuffer(65);
