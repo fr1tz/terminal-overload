@@ -47,7 +47,7 @@ function TerritoryGenerator2::onDamage(%this, %obj, %delta)
    //echo("TerritoryGenerator2::onDamage()");
    Parent::onDamage(%this, %obj, %delta);
    %health = 1 - %obj.getDamagePercent();
-   %scale = 6 + 24*%health;
+   %scale = 6 + 16*%health;
    %obj.zZone.setScale(%scale SPC %scale SPC "32");
    if(%delta > 0)
       %obj.zZone.flash("1 1 1 1");
@@ -150,7 +150,7 @@ function TerritoryGenerator2::updateAssetsThread(%this, %obj)
       teamId = 0;
       position = %pos;
       rotation = "0 0 1 0";
-      scale = "30 30 30";
+      scale = "22 22 30";
       canSave = "1";
       canSaveDynamicFields = "1";
       showOnMinimap = "1";
