@@ -56,7 +56,7 @@ singleton PostEffect( GlowPostFx )
    stateBlock = PFX_DefaultStateBlock;
    texture[0] = "#glowbuffer";
    target = "$outTex";
-   targetScale = "1.0 1.0";
+   targetScale = "0.5 0.5";
    
    isEnabled = true;
                
