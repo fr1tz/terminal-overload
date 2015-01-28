@@ -318,8 +318,10 @@ function ShapeBaseData::damage(%this, %obj, %source, %position, %amount, %damage
          %bufDamageDealt
       );
    }
-
-   %bleed = %this.getBleed(%obj, %healthDamageDealt);
+   
+   %bleed = "";
+   if(%this.isMethod("getBleed"))
+      %bleed = %this.getBleed(%obj, %healthDamageDealt);
    if(isObject(%bleed))
    {
       %dpos = %position;
