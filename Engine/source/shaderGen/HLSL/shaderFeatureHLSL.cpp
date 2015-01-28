@@ -1842,7 +1842,6 @@ void ReflectCubeFeatHLSL::setTexData(  Material::StageData &stageDat,
          {
             passData.mSamplerNames[ texIndex ] = "bumpMap";
             passData.mTexSlot[ texIndex++ ].texObject = tex;
-         }
       }
    }
    }

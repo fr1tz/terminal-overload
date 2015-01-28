@@ -28,18 +28,7 @@ namespace
       FEATUREMGR->registerFeature( MFT_TerrainMacroMap, new TerrainMacroMapFeatHLSL );
       FEATUREMGR->registerFeature( MFT_TerrainLightMap, new TerrainLightMapFeatHLSL );
       FEATUREMGR->registerFeature( MFT_TerrainSideProject, new NamedFeatureHLSL( "Terrain Side Projection" ) );
-      FEATUREMGR->registerFeature( MFT_TerrainAdditive, new TerrainAdditiveFeatHLSL );     
-   }
-
-};
-
-MODULE_BEGIN( TerrainFeatHLSL )
-
-   MODULE_INIT_AFTER( ShaderGen )
-
-   MODULE_INIT
-   {      
-      SHADERGEN->getFeatureInitSignal().notify(&register_hlsl_shader_features_for_terrain);
+      FEATUREMGR->registerFeature( MFT_TerrainAdditive, new TerrainAdditiveFeatHLSL );
    }
 
 };
