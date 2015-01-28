@@ -422,6 +422,24 @@ function FrmTerritoryGenerator2DV::canMaterialize(%this, %client, %pos, %normal,
 function FrmTerritoryGenerator2DV::transform(%this, %obj)
 {
    %pos = %obj.getPosition();
+
+   // Check for nearby objects.
+   %radius = 22;
+   %typeMask = $TypeMasks::ShapeBaseObjectType | $TypeMasks::StaticShapeObjectType;
+	InitContainerRadiusSearch(%pos, %radius, %typeMask);
+	while((%targetObject = containerSearchNext()) != 0)
+	{
+      if(%targetObject == %obj)
+         continue;
+         
+      if(%targetObject.getType() & $TypeMasks::TerrainObjectType)
+         continue;
+
+      //echo(%targetObject.getClassName());
+      %obj.client.beepMsg("You're too close to another object!");
+      return;
+	}
+
    %x1 = getWord(%pos, 0);
    %y1 = getWord(%pos, 1);
    %z1 = getWord(%pos, 2);
