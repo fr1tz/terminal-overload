@@ -344,6 +344,8 @@ function GameCoreCTF::etherformManifest(%game, %obj)
    switch(%client.zActiveLoadout)
    {
       case 2:
+         %data = FrmSniperCat;
+      case 4:
          %data = FrmTerritoryGenerator2DV;
    }
 
