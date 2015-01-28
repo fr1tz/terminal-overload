@@ -109,7 +109,7 @@ function TerritoryGenerator1::updateAssetsThread(%this, %obj)
       teamId = %obj.teamId;
       position = %pos;
       rotation = "0 0 1 0";
-      scale = "48 48 32";
+      scale = "22 22 32";
       canSave = "1";
       canSaveDynamicFields = "1";
       showOnMinimap = "1";
