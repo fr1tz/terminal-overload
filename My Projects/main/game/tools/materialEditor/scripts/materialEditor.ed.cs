@@ -1,5 +1,24 @@
-// Copyright information can be found in the file named COPYING
-// located in the root directory of this distribution.
+//-----------------------------------------------------------------------------
+// Copyright (c) 2012 GarageGames, LLC
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to
+// deal in the Software without restriction, including without limitation the
+// rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+// sell copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+// IN THE SOFTWARE.
+//-----------------------------------------------------------------------------
 
 // Material Editor originally created by Dave Calabrese and Travis Vroman of Gaslight Studios
 
@@ -866,8 +885,19 @@ function MaterialEditorGui::guiSync( %this, %material )
       MaterialEditorPropertiesWindow-->specMapNameText.setText( (%material).specularMap[%layer] );
       MaterialEditorPropertiesWindow-->specMapDisplayBitmap.setBitmap( (%material).specularMap[%layer] );
    }
-
+   
    MaterialEditorPropertiesWindow-->diffuseColorPaletteSlotTextEdit.setText( getWord((%material).diffuseColorPaletteSlot[%layer], 0) );
+   MaterialEditorPropertiesWindow-->accuScaleTextEdit.setText((%material).accuScale[%layer]);
+   MaterialEditorPropertiesWindow-->accuScaleTextEdit.setText((%material).accuScale[%layer]);
+   MaterialEditorPropertiesWindow-->accuDirectionTextEdit.setText((%material).accuDirection[%layer]);
+   MaterialEditorPropertiesWindow-->accuDirectionTextEdit.setText((%material).accuDirection[%layer]);
+   MaterialEditorPropertiesWindow-->accuStrengthTextEdit.setText((%material).accuStrength[%layer]);
+   MaterialEditorPropertiesWindow-->accuStrengthTextEdit.setText((%material).accuStrength[%layer]);
+   MaterialEditorPropertiesWindow-->accuCoverageTextEdit.setText((%material).accuCoverage[%layer]);
+   MaterialEditorPropertiesWindow-->accuCoverageTextEdit.setText((%material).accuCoverage[%layer]);
+   MaterialEditorPropertiesWindow-->accuSpecularTextEdit.setText((%material).accuSpecular[%layer]);
+   MaterialEditorPropertiesWindow-->accuSpecularTextEdit.setText((%material).accuSpecular[%layer]);
+   
    MaterialEditorPropertiesWindow-->detailScaleTextEdit.setText( getWord((%material).detailScale[%layer], 0) );
    MaterialEditorPropertiesWindow-->detailNormalStrengthTextEdit.setText( getWord((%material).detailNormalMapStrength[%layer], 0) );
    
@@ -949,6 +979,9 @@ function MaterialEditorGui::guiSync( %this, %material )
    MaterialEditorPropertiesWindow-->SequenceTextEditSSS.setText( %numFrames );
    MaterialEditorPropertiesWindow-->SequenceSliderFPS.setValue( (%material).sequenceFramePerSec[%layer] );
    MaterialEditorPropertiesWindow-->SequenceSliderSSS.setValue( %numFrames );
+   
+   // Accumulation
+   MaterialEditorPropertiesWindow-->accuCheckbox.setValue((%material).accuEnabled[%layer]);   
    
    %this.preventUndo = false;
 }
@@ -2238,4 +2271,11 @@ function MaterialEditorMapThumbnail::onRightClick( %this )
    %popup.filePath = %fullPath;
    
    %popup.showPopup( Canvas );
+}
+
+// Accumulation
+function MaterialEditorGui::updateAccuCheckbox(%this, %value)
+{
+   MaterialEditorGui.updateActiveMaterial("accuEnabled[" @ MaterialEditorGui.currentLayer @ "]", %value);   
+   MaterialEditorGui.guiSync( materialEd_previewMaterial );
 }

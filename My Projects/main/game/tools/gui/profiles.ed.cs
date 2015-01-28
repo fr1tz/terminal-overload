@@ -1,5 +1,24 @@
-// Copyright information can be found in the file named COPYING
-// located in the root directory of this distribution.
+//-----------------------------------------------------------------------------
+// Copyright (c) 2012 GarageGames, LLC
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to
+// deal in the Software without restriction, including without limitation the
+// rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+// sell copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+// IN THE SOFTWARE.
+//-----------------------------------------------------------------------------
 
 function execEditorProfilesCS()
 {
@@ -564,6 +583,7 @@ if( !isObject( ToolsGuiTabPageProfile ) )
 new GuiControlProfile( ToolsGuiTabPageProfile : ToolsGuiDefaultProfile )
 {
    fontType = "Arial";
+   fontSize = 10;
    justify = "center";
    bitmap = "./images/tab";
    opaque = false;
@@ -646,7 +666,7 @@ singleton GuiControlProfile( GuiBackFillProfile )
    border = true;
    borderColor = "255 128 128";
    fontType = "Arial";
-   fontSize = 14;
+   fontSize = 12;
    fontColor = "0 0 0";
    fontColorHL = "50 50 50";
    fixedExtent = true;
