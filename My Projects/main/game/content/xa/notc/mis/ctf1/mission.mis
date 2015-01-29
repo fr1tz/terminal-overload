@@ -98,7 +98,7 @@ new SimGroup(MissionGroup) {
          client = "-1";
          teamId = "0";
          position = "250 -2 60";
-         rotation = "0.0300875 0.0172483 -0.999399 59.679";
+         rotation = "0.0300875 0.0172483 -0.999398 59.679";
          scale = "1 1 1";
          paletteColors[0] = "252 153 52 255";
          paletteColors[1] = "252 153 52 255";
@@ -158,7 +158,7 @@ new SimGroup(MissionGroup) {
          scale = "1 1 1";
          paletteColors[0] = "255 255 255 255";
          paletteColors[1] = "255 255 255 255";
-         paletteColors[2] = "255 255 255 255";
+         paletteColors[2] = "White";
          paletteColors[3] = "255 255 255 255";
          paletteColors[4] = "255 255 255 255";
          paletteColors[5] = "255 255 255 255";
@@ -352,7 +352,7 @@ new SimGroup(MissionGroup) {
       rotation = "1 0 0 0";
       paletteColors[0] = "255 255 255 255";
       paletteColors[1] = "255 255 255 255";
-      paletteColors[2] = "White";
+      paletteColors[2] = "255 255 255 255";
       paletteColors[3] = "255 255 255 255";
       paletteColors[4] = "255 255 255 255";
       paletteColors[5] = "255 255 255 255";
@@ -437,9 +437,9 @@ new SimGroup(MissionGroup) {
       persistentId = "977d5117-9bfc-11e4-80f9-a56f6d61d603";
          paletteSlot0 = "0 128 255 255";
          paletteSlot1 = "0 128 255 255";
-         zFlag = "4402";
-         zHudInfoSet = "4400";
-         zShapeBaseHudInfo = "4401";
+         zFlag = "4400";
+         zHudInfoSet = "4398";
+         zShapeBaseHudInfo = "4399";
    };
    new StaticShape(Team1FlagStand) {
       isAIControlled = "0";
@@ -470,16 +470,16 @@ new SimGroup(MissionGroup) {
       persistentId = "ab8f3cb5-9bfc-11e4-80f9-a56f6d61d603";
          paletteSlot0 = "255 26 0 255";
          paletteSlot1 = "255 26 0 255";
-         zFlag = "4408";
-         zHudInfoSet = "4406";
-         zShapeBaseHudInfo = "4407";
+         zFlag = "4406";
+         zHudInfoSet = "4404";
+         zShapeBaseHudInfo = "4405";
    };
    new StaticMetaShape() {
       isAIControlled = "0";
       dataBlock = "TerritoryGenerator1";
       client = "-1";
       teamId = "1";
-      position = "-250 10 46";
+      position = "-250 -2 43.5";
       rotation = "1 0 0 0";
       scale = "1 1 1";
       paletteColors[0] = "255 26 0 255";
@@ -500,11 +500,11 @@ new SimGroup(MissionGroup) {
       paletteColors[15] = "255 255 255 255";
       canSave = "1";
       canSaveDynamicFields = "1";
-         zBeam = "10616";
-         zLastUpdatePosition = "-250 10 46";
-         zTower = "10615";
-         zUpdateAssetsThread = "260542";
-         zZone = "10617";
+         zBeam = "6467";
+         zLastUpdatePosition = "-250 -2 43.5";
+         zTower = "6466";
+         zUpdateAssetsThread = "13290";
+         zZone = "6468";
    };
    new StaticMetaShape() {
       isAIControlled = "0";
@@ -532,11 +532,11 @@ new SimGroup(MissionGroup) {
       paletteColors[15] = "255 255 255 255";
       canSave = "1";
       canSaveDynamicFields = "1";
-         zBeam = "4417";
+         zBeam = "6287";
          zLastUpdatePosition = "250 -2 43.396";
-         zTower = "4416";
-         zUpdateAssetsThread = "260543";
-         zZone = "4418";
+         zTower = "6286";
+         zUpdateAssetsThread = "13291";
+         zZone = "6288";
    };
 };
 //--- OBJECT WRITE END ---
