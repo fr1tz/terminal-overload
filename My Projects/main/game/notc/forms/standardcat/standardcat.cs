@@ -825,6 +825,11 @@ function FrmStandardcat::onDisabled(%this, %obj, %state)
    %obj.setInventory(ItemBounce, 0);
    %obj.setInventory(ItemG1Launcher, 0);
    
+   // Unmount any object mounted to us.
+   %n = %obj.getMountedObjectCount();
+   for(%i = %n-1; %i >= 0; %i--)
+      %obj.unmountObject(%obj.getMountedObject(%i));
+
    %obj.changeSkin("xa_notc_core_shapes_standardcat_erasemat" SPC
       "xa_notc_core_shapes_standardcat_erasemat");
 }
