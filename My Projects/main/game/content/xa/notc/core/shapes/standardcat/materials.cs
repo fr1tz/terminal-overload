@@ -176,7 +176,7 @@ singleton Material(xa_notc_core_shapes_standardcat_erasemat)
    mapTo = "xa_notc_core_shapes_standardcat_erasemat";
    emissive[0] = "1";
    glow[0] = "1";
-   diffuseColor[0] = "1 1 1 1";
+   diffuseColor[0] = "0.968628 0.968628 0.968628 1";
    diffuseColorPaletteSlot[0] = "0";
    diffuseMap[0] = "content/xa/notc/core/textures/grid.128.4.h1.png";
    pixelSpecular[0] = "0";
@@ -193,7 +193,7 @@ singleton Material(xa_notc_core_shapes_standardcat_erasemat)
    alphaRef = "1";
    showFootprints = "0";
    wireframe[0] = "1";
-   glowOnly[0] = "0";
+   glowOnly[0] = "1";
    animFlags[0] = "0x00000009";
    scrollDir[0] = "1 1";
    scrollSpeed[0] = "10";
