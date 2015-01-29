@@ -1,6 +1,20 @@
 What's new?
 ===========
 
+Version 0.6.0-testing1
+----------------------
+
+Release Date: Jan. 29, 2015
+
+- Add primitive "Capture The Flag" game mode + a simple map for use with it.
+- Add new form for CTF mode: Territory Generator delivery vehicle.
+- Add primitive support for automatic download of missing content.
+- Tweak B.O.U.N.C.E. impulse direction.
+- Update to Torque3D 3.6.2.
+- Various tweaks and improvements
+- Bugfixes
+
+
 Version 0.5.0
 -------------
 
