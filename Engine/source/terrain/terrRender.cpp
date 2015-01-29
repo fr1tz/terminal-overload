@@ -87,6 +87,9 @@ void TerrainBlock::_updateMaterials()
 
 void TerrainBlock::_updateLayerTexture()
 {
+   if(this->isServerObject())
+      return;
+
    const U32 layerSize = mFile->mSize;
    const Vector<U8> &layerMap = mFile->mLayerMap;
    const U32 pixelCount = layerMap.size();
@@ -162,6 +165,9 @@ bool TerrainBlock::_initBaseShader()
 
 void TerrainBlock::_updateBaseTexture(bool writeToCache)
 {
+   if(this->isServerObject())
+      return;
+
    if ( !mBaseShader && !_initBaseShader() )
       return;
 
