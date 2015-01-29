@@ -643,14 +643,6 @@ void Item::setTransform(const MatrixF& mat)
 
 void Item::onUnmount(SceneObject* obj, S32 node)
 {
-   // Re-orient the item straight up
-   Point3F pos;
-   this->getTransform().getColumn(3, &pos);
-   MatrixF mat;
-   mat.setColumn(3, pos);
-   this->setTransform(mat);
-   this->setVelocity(this->getVelocity());
-
    // Parent function will call script
    Parent::onUnmount(obj, node);
 }
