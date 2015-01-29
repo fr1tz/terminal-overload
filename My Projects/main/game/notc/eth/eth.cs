@@ -299,10 +299,10 @@ function ETH::setupHud(%client)
    %client.MinimapHud_AddColor(1, Game.team1.color);
    %client.MinimapHud_AddColor(2, Game.team2.color);
    %client.MinimapHud_ClearIcons();
-   %client.MinimapHud_AddIcon(1, "content/xa/notc/core/icons/p1/class0.8x8.png", 8);
-   %client.MinimapHud_AddIcon(2, "content/xa/notc/core/icons/p1/class1.8x8.png", 8);
-   %client.MinimapHud_AddIcon(3, "content/xa/notc/core/icons/p1/class2.8x8.png", 8);
-   %client.MinimapHud_AddIcon(4, "content/xa/notc/core/icons/p1/class3.8x8.png", 8);
+   %client.MinimapHud_AddIcon(1,   "content/xa/notc/core/icons/p1/cat1.9x9.png", 9);
+   %client.MinimapHud_AddIcon(2,   "content/xa/notc/core/icons/p1/cat2.9x9.png", 9);
+   %client.MinimapHud_AddIcon(3,   "content/xa/notc/core/icons/p1/cat3.9x9.png", 9);
+   %client.MinimapHud_AddIcon(4,   "content/xa/notc/core/icons/p1/cat4.9x9.png", 9);
    %client.MinimapHud_AddIcon(128, "content/xa/notc/core/icons/p1/etherform.8x8.png", 8);
    
    // HudIcons
