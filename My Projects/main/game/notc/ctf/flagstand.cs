@@ -43,6 +43,7 @@ function ctfFlagStand::onAdd(%this, %obj)
 function ctfFlagStand::onRemove(%this, %obj)
 {
    //echo("ctfFlagStand::onRemove()");
+   Parent::onRemove(%this, %obj);
    if(isObject(%obj.zFlag))
       %obj.zFlag.delete();
 }

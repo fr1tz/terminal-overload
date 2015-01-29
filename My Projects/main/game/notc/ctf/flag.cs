@@ -22,6 +22,7 @@ function ctfFlag::onAdd(%this, %obj)
    
    %obj.zShapeBaseHudInfo.setDatasetType(0, $HudInfoDatasetType::TeamID);
    %obj.zShapeBaseHudInfo.setDatasetIntField(0, %obj.getTeamId());
+   %obj.zShapeBaseHudInfo.setDatasetBoolField(0, false);
    %obj.zShapeBaseHudInfo.setDatasetType(2, $HudInfoDatasetType::IconID);
    %obj.zShapeBaseHudInfo.setDatasetIntField(2, 130);
 }
@@ -29,7 +30,7 @@ function ctfFlag::onAdd(%this, %obj)
 function ctfFlag::onRemove(%this, %obj)
 {
    //echo("ctfFlag::onRemove()");
-   Parent::onAdd(%this, %obj);
+   Parent::onRemove(%this, %obj);
 }
 
 function ctfFlag::onCollision(%this, %obj, %col, %vec, %vecLen)
@@ -97,9 +98,13 @@ function ctfFlag::onMount(%this, %obj, %mount, %node)
 {
    //echo("ctfFlag::onMount()");
    
-   if(%mount != %obj.zFlagstand && Game.noFlagCallbacks == false)
-      CTF::onFlagTaken(%obj.getTeamId());
-   
+   if(%mount != %obj.zFlagstand)
+   {
+      %obj.zShapeBaseHudInfo.setDatasetBoolField(0, true);
+      if(Game.noFlagCallbacks == false)
+         CTF::onFlagTaken(%obj.getTeamId());
+   }
+
    if(%obj.zReturnThread !$= "")
       cancel(%obj.zReturnThread);
 }
@@ -107,6 +112,9 @@ function ctfFlag::onMount(%this, %obj, %mount, %node)
 function ctfFlag::onUnmount(%this, %obj, %mount)
 {
    //echo("ctfFlag::onUnmount()");
+   %obj.setPosition(%obj.getPosition());
+   
+   %obj.zShapeBaseHudInfo.setDatasetBoolField(0, false);
    
    if(%mount != %obj.zFlagstand && Game.noFlagCallbacks == false)
       CTF::onFlagDropped(%obj.getTeamId());
