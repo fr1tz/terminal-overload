@@ -417,6 +417,9 @@ function FrmStandardcat::onCollision(%this,%obj,%col,%vec,%vecLen)
 
    if(%obj.zDontEnterVehicles)
       return;
+      
+   if(!%col.isMethod("getDataBlock"))
+      return;
  
    %data = %col.getDataBlock();
    
