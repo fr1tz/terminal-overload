@@ -11,6 +11,7 @@ datablock ItemData(ctfFlag)
    emap = true;
 
    // Dynamic properties defined by the scripts
+   ignoreDamage = true;
    pickUpName = "Flag";
    description = "Flag";
 };
