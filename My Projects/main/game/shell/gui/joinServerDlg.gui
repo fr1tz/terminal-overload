@@ -52,7 +52,6 @@ new GuiControlProfile(GuiServerListScrollProfile)
       enabled = "1";
 
    new GuiWindowCtrl() {
-      text = "Play";
       resizeWidth = "0";
       resizeHeight = "0";
       canMove = "1";
@@ -87,8 +86,8 @@ new GuiControlProfile(GuiServerListScrollProfile)
          groupNum = "-1";
          buttonType = "PushButton";
          useMouseEvents = "0";
-         position = "236 437";
-         extent = "162 35";
+         position = "470 446";
+         extent = "160 22";
          minExtent = "8 8";
          horizSizing = "right";
          vertSizing = "top";
@@ -117,8 +116,8 @@ new GuiControlProfile(GuiServerListScrollProfile)
          anchorBottom = "0";
          anchorLeft = "1";
          anchorRight = "0";
-         position = "10 150";
-         extent = "620 278";
+         position = "10 95";
+         extent = "620 342";
          minExtent = "8 8";
          horizSizing = "right";
          vertSizing = "bottom";
@@ -136,7 +135,7 @@ new GuiControlProfile(GuiServerListScrollProfile)
             fitParentWidth = "1";
             clipColumnText = "1";
             position = "1 1";
-            extent = "605 8";
+            extent = "602 8";
             minExtent = "8 8";
             horizSizing = "right";
             vertSizing = "bottom";
@@ -160,7 +159,7 @@ new GuiControlProfile(GuiServerListScrollProfile)
          anchorBottom = "0";
          anchorLeft = "1";
          anchorRight = "0";
-         position = "190 128";
+         position = "189 78";
          extent = "34 18";
          minExtent = "8 8";
          horizSizing = "right";
@@ -183,7 +182,7 @@ new GuiControlProfile(GuiServerListScrollProfile)
          anchorBottom = "0";
          anchorLeft = "1";
          anchorRight = "0";
-         position = "250 128";
+         position = "249 78";
          extent = "26 18";
          minExtent = "8 8";
          horizSizing = "right";
@@ -206,7 +205,7 @@ new GuiControlProfile(GuiServerListScrollProfile)
          anchorBottom = "0";
          anchorLeft = "1";
          anchorRight = "0";
-         position = "375 128";
+         position = "374 78";
          extent = "27 18";
          minExtent = "8 8";
          horizSizing = "right";
@@ -229,7 +228,7 @@ new GuiControlProfile(GuiServerListScrollProfile)
          anchorBottom = "0";
          anchorLeft = "1";
          anchorRight = "0";
-         position = "150 128";
+         position = "149 78";
          extent = "21 18";
          minExtent = "8 8";
          horizSizing = "right";
@@ -252,7 +251,7 @@ new GuiControlProfile(GuiServerListScrollProfile)
          anchorBottom = "0";
          anchorLeft = "1";
          anchorRight = "0";
-         position = "12 128";
+         position = "11 78";
          extent = "60 18";
          minExtent = "8 8";
          horizSizing = "right";
@@ -275,7 +274,7 @@ new GuiControlProfile(GuiServerListScrollProfile)
          anchorBottom = "0";
          anchorLeft = "1";
          anchorRight = "0";
-         position = "500 128";
+         position = "499 78";
          extent = "20 18";
          minExtent = "8 8";
          horizSizing = "right";
@@ -387,7 +386,6 @@ new GuiControlProfile(GuiServerListScrollProfile)
          };
       };
       new GuiTextCtrl(JS_status) {
-         text = "";
          maxLength = "255";
          margin = "0 0 0 0";
          padding = "0 0 0 0";
@@ -395,8 +393,8 @@ new GuiControlProfile(GuiServerListScrollProfile)
          anchorBottom = "0";
          anchorLeft = "1";
          anchorRight = "0";
-         position = "269 107";
-         extent = "79 18";
+         position = "269 57";
+         extent = "8 18";
          minExtent = "8 8";
          horizSizing = "center";
          vertSizing = "bottom";
@@ -410,12 +408,12 @@ new GuiControlProfile(GuiServerListScrollProfile)
          canSaveDynamicFields = "0";
       };
       new GuiButtonCtrl(JS_queryMaster) {
-         text = "INTERNET";
+         text = "Search Internet";
          groupNum = "-1";
          buttonType = "PushButton";
          useMouseEvents = "0";
-         position = "155 64";
-         extent = "115 35";
+         position = "42 8";
+         extent = "158 35";
          minExtent = "8 8";
          horizSizing = "right";
          vertSizing = "bottom";
@@ -430,11 +428,11 @@ new GuiControlProfile(GuiServerListScrollProfile)
          canSaveDynamicFields = "0";
       };
       new GuiButtonCtrl() {
-         text = "HOST";
+         text = "Host";
          groupNum = "-1";
          buttonType = "PushButton";
          useMouseEvents = "1";
-         position = "355 64";
+         position = "330 8";
          extent = "89 35";
          minExtent = "8 8";
          horizSizing = "relative";
@@ -450,12 +448,12 @@ new GuiControlProfile(GuiServerListScrollProfile)
          canSaveDynamicFields = "0";
       };
       new GuiButtonCtrl(JS_queryLan) {
-         text = "LAN";
+         text = "Search LAN";
          groupNum = "-1";
          buttonType = "PushButton";
          useMouseEvents = "0";
-         position = "281 64";
-         extent = "63 35";
+         position = "205 8";
+         extent = "121 35";
          minExtent = "8 8";
          horizSizing = "right";
          vertSizing = "bottom";
@@ -470,19 +468,39 @@ new GuiControlProfile(GuiServerListScrollProfile)
          canSaveDynamicFields = "0";
       };
       new GuiButtonCtrl(JS_refreshServer) {
-         text = "refresh";
+         text = "Refresh Server";
          groupNum = "-1";
          buttonType = "PushButton";
          useMouseEvents = "0";
-         position = "497 79";
-         extent = "41 20";
+         position = "300 446";
+         extent = "160 22";
          minExtent = "8 8";
          horizSizing = "right";
          vertSizing = "bottom";
-         profile = "GuiButtonProfile";
+         profile = "TolGuiButtonProfile";
          visible = "1";
          active = "1";
          command = "JoinServerDlg.refresh();";
+         tooltipProfile = "GuiToolTipProfile";
+         hovertime = "1000";
+         isContainer = "0";
+         canSave = "1";
+         canSaveDynamicFields = "0";
+      };
+      new GuiMLTextCtrl() {
+         lineSpacing = "2";
+         allowColorChars = "0";
+         maxChars = "-1";
+         text = "<just:center>Looking for players?<br><linkcolor:ffffff><a:terminal-overload.org/findplayers>http://terminal-overload.org/findplayers</a>";
+         useURLMouseCursor = "1";
+         position = "435 11";
+         extent = "195 28";
+         minExtent = "8 2";
+         horizSizing = "right";
+         vertSizing = "bottom";
+         profile = "GuiMLTextProfile";
+         visible = "1";
+         active = "1";
          tooltipProfile = "GuiToolTipProfile";
          hovertime = "1000";
          isContainer = "0";
