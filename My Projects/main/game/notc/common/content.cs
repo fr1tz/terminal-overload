@@ -110,13 +110,14 @@ function requiredContent_addFromPattern(%pattern)
 
 function requiredContent_filter()
 {
-   %filterExt = ".xcf .blend .blend1 .mmpz .svg";
+   %filterExt = ".xcf .dae .blend .blend1 .mmpz .svg .max";
    %n = $Server::RequiredContent.count();
    for(%i = %n-1; %i >= 0; %i--)
    {
       %file = $Server::RequiredContent.getKey(%i);
       %ext = requiredContent_getFileExt(%file);
-      if(strstr(%filterExt, %ext) >= 0)
+      if(strstr(%filterExt, %ext) >= 0
+      || getSubStr(%file, strlen(%file)-12, 9) $= "_basetex.")
       {
          //echo(%file SPC "("@%ext@")");
          $Server::RequiredContent.erase(%i);
