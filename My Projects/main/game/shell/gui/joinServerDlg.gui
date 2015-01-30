@@ -52,6 +52,7 @@ new GuiControlProfile(GuiServerListScrollProfile)
       enabled = "1";
 
    new GuiWindowCtrl() {
+      text = "   ";
       resizeWidth = "0";
       resizeHeight = "0";
       canMove = "1";
