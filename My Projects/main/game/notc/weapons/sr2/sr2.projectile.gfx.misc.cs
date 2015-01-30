@@ -4,7 +4,7 @@
 datablock DecalData(WpnSR2ProjectileDecal)
 {
    Material = "xa_notc_core_shapes_sr2_decal_p1_mat0";
-   size = "3";
+   size = "1";
    lifeSpan = "0";
    randomize = "0";
    texRows = "1";
@@ -28,6 +28,53 @@ datablock DecalData(WpnSR2ProjectileDecal)
    paletteSlot = "0";
 };
 
+datablock ParticleData(WpnSR2ProjectileExplosion_DebrisParticles)
+{
+	spinSpeed = 200;
+	spinRandomMin = -200.0;
+	spinRandomMax =  200.0;
+	dragCoefficient		= 1;
+	gravityCoefficient	= 2.5;
+	windCoefficient		= 0.0;
+	inheritedVelFactor	= 0.0;
+	constantAcceleration = 0.0;
+	lifetimeMS			  = 1500;
+	lifetimeVarianceMS	= 0;
+	textureName = "content/o/rotc/p.5.4/textures/rotc/zone.grid.png";
+	colors[0]	  = "1.0 1.0 1.0 1.0";
+	colors[1]	  = "1.0 1.0 1.0 1.0";
+	colors[2]	  = "1.0 1.0 1.0 0.0";
+	sizes[0]		= 0.55;
+	sizes[1]		= 0.55;
+	sizes[2]		= 0.55;
+	times[0]		= 0.0;
+	times[1]		= 0.5;
+	times[2]		= 1.0;
+	useInvAlpha =  false;
+	allowLighting = 0;
+   glow = 1;
+   animTexName = "content/o/rotc/p.5.4/textures/rotc/zone.grid.png";
+};
+
+datablock ParticleEmitterData(WpnSR2ProjectileExplosion_DebrisEmitter)
+{
+	ejectionPeriodMS = 1;
+	periodVarianceMS = 0;
+	ejectionVelocity = 30.0;
+	velocityVariance = 20.0;
+	ejectionOffset	= 0.0;
+	thetaMin			= 0;
+	thetaMax			= 60;
+	phiReferenceVel  = 0;
+	phiVariance		= 360;
+	lifetimeMS		 = 8;
+	lifetimeVarianceMS = 0;
+	overrideAdvances = false;
+	orientParticles  = true;
+	particles = "WpnSR2ProjectileExplosion_DebrisParticles";
+   paletteSlot = 0;
+};
+
 datablock ExplosionData(WpnSR2ProjectileExplosion)
 {
 	soundProfile = WpnSR2ProjectileImpactSound;
@@ -40,6 +87,15 @@ datablock ExplosionData(WpnSR2ProjectileExplosion)
 	sizes[1] = "0.5 0.5 0.5";
 	times[0] = 0.0;
 	times[1] = 1.0;
+ 
+	emitter[0] = WpnSR2ProjectileExplosion_DebrisEmitter;
+
+	// Camera shake
+	shakeCamera = true;
+	camShakeFreq = "10.0 6.0 9.0";
+	camShakeAmp = "20.0 20.0 20.0";
+	camShakeDuration = 0.5;
+	camShakeRadius = 20.0;
 
 	// Dynamic light
 	lightStartRadius = 0;
