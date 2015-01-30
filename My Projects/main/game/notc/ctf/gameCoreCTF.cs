@@ -341,19 +341,21 @@ function GameCoreCTF::etherformManifest(%game, %obj)
    }
    
    %data = FrmStandardcat;
+   %isCAT = true;
    switch(%client.zActiveLoadout)
    {
       case 2:
          %data = FrmSniperCat;
       case 4:
          %data = FrmTerritoryGenerator2DV;
+         %isCAT = false;
    }
 
    %player = new Player() {
       dataBlock = %data;
       client = %client;
       teamId = %client.team.teamId;
-      isCAT = true;
+      isCAT = %isCAT;
    };
    MissionCleanup.add(%player);
    copyPalette(%obj, %player);
