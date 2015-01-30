@@ -27,14 +27,14 @@ function downloadNextMissingFile()
    
    %file = $Client::Preload.missingFiles.getKey(ContentDownloader.currIndex);
    
-   if(getSubStr(%file, 0, 10) !$= "content/o/")
+   if(getSubStr(%file, 0, 8) !$= "content/")
    {
-      PreloadGui.addText("UNABLE TO DOWNLOAD" SPC %file @ ": UNKNOWN REPO\n");
+      PreloadGui.addText("SKIPPING" SPC %file @ ": NOT PART OF CONTENT\n");
       schedule(0, 0, "downloadNextMissingFile");
       return;
    }
-   %path = "/o/" @ getSubStr(%file, 10);
-   
+   %path = getSubStr(%file, 7);
+
    if(!ContentDownloader.download("content.terminal-overload.org:80", %path, %file))
    {
       PreloadGui.addText("UNABLE TO OPEN" SPC %file SPC "FOR WRITING\n");
@@ -115,7 +115,32 @@ function ContentDownloader::onDownloadComplete(%this)
       PreloadGui.addText(" SUCCESS\n");
    }
    else
-      PreloadGui.addText(" CRC FAILED\n");
+   {
+      %notFound = false;
+      %fo = new FileObject();
+      if(%fo.openForRead(%file))
+      {
+   		while(!%fo.isEOF())
+         {
+   			%line = %fo.readLine();
+   			%line = strlwr(trim(%line));
+            if(strstr(%line, "error 404") >= 0)
+            {
+               %notFound = true;
+               break;
+            }
+   		}
+   		%fo.close();
+   	}
+      %fo.delete();
+      if(%notFound)
+      {
+         fileDelete(%file);
+         PreloadGui.addText(" FAILED (FILE NOT FOUND)\n");
+      }
+      else
+         PreloadGui.addText(" FAILED (CRC MISMATCH)\n");
+   }
    schedule(0, 0, "downloadNextMissingFile");
 }
 
