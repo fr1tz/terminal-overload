@@ -296,9 +296,9 @@ function GameCoreBase::prepareClient(%game, %client)
       %client.Materials_Load(%pathMask);
    }
 
-   // Setup LoadingGui
-   commandToClient(%client, '_XaNotcLoadingGui_SetLeftPanel', "", false);
-   commandToClient(%client, '_XaNotcLoadingGui_SetRightPanel', "", false);
+   // Setup LoadingGui background.
+   %background = filePath($Server::MissionFile)@"/mission_preview.png";
+   commandToClient(%client, '_XaNotcLoadingGui_SetBackground', %background);
 }
 
 function GameCoreBase::onClientEnterGame(%game, %client)
