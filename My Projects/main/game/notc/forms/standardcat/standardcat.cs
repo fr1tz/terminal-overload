@@ -975,3 +975,25 @@ function FrmStandardcat::isStealthActive(%this, %obj)
    return %obj.zStealthActive;
 }
 
+// Called from script
+function FrmStandardcat::updateImpulseDamperProperties(%this, %obj)
+{
+   if(%obj.zHasFlag)
+      %obj.setRechargeRate(1000, 1);
+   else
+      %obj.setRechargeRate(%obj.zImpulseDamperRechargeRate, 1);
+}
+
+// Called from script
+function FrmStandardcat::onFlagTaken(%this, %obj)
+{
+   %obj.zHasFlag = true;
+   %this.updateImpulseDamperProperties(%obj);
+}
+
+// Called from script
+function FrmStandardcat::onFlagDropped(%this, %obj)
+{
+   %obj.zHasFlag = false;
+   %this.updateImpulseDamperProperties(%obj);
+}

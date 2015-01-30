@@ -22,18 +22,24 @@ function ItemImpShield::onInventory(%this, %obj, %amount)
 {
    if(%amount == 0)
    {
-      %obj.zImpulseDamper = 0.0;
       %obj.setEnergyLevel(0, 1);
-      %obj.setRechargeRate(0.0, 1);
-
+   
+      %obj.zImpulseDamper = 0.0;
+      %obj.zImpulseDamperRechargeRate = 0.0;
+      if(%obj.getDataBlock().isMethod("updateImpulseDamperProperties"))
+         %obj.getDataBlock().updateImpulseDamperProperties(%obj);
+         
       if(isObject(%obj.ballast))
          %obj.ballast.delete();
    }
    else
    {
-      %obj.zImpulseDamper = 0.75;
       %obj.setEnergyLevel(50, 1);
-      %obj.setRechargeRate(0.4, 1);
+   
+      %obj.zImpulseDamper = 0.75;
+      %obj.zImpulseDamperRechargeRate = 0.4;
+      if(%obj.getDataBlock().isMethod("updateImpulseDamperProperties"))
+         %obj.getDataBlock().updateImpulseDamperProperties(%obj);
       
       %obj.ballast = new BallastShape() {
          dataBlock = ItemImpShieldShape;
