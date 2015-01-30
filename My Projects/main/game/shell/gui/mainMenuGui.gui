@@ -18,6 +18,8 @@
    canSaveDynamicFields = "1";
       enabled = "1";
       isDecoy = "0";
+      zBitmapOffset = "-23021";
+      zTickThread = "23054";
 
    new GuiFadeinBitmapCtrl() {
       fadeColor = "0.262745 0.529412 0.486275 1";
@@ -123,30 +125,6 @@
          canSaveDynamicFields = "0";
       };
    };
-   new GuiTextCtrl(MainMenuVersionString) {
-      text = "---";
-      maxLength = "1024";
-      docking = "None";
-      margin = "0 0 0 0";
-      padding = "0 0 0 0";
-      anchorTop = "0";
-      anchorBottom = "1";
-      anchorLeft = "0";
-      anchorRight = "1";
-      position = "544 456";
-      extent = "88 28";
-      minExtent = "8 2";
-      horizSizing = "relative";
-      vertSizing = "relative";
-      profile = "TolMenuTextProfile";
-      visible = "1";
-      active = "1";
-      tooltipProfile = "GuiToolTipProfile";
-      hovertime = "1000";
-      isContainer = "1";
-      canSave = "1";
-      canSaveDynamicFields = "0";
-   };
    new GuiContainer() {
       docking = "None";
       margin = "0 0 0 0";
@@ -170,7 +148,7 @@
       canSaveDynamicFields = "0";
 
       new GuiTextCtrl(MainMenuEditHints) {
-         text = "F10/F11: edit GUI/World";
+         text = "F10/F11: Edit Mission / GUI";
          maxLength = "1024";
          docking = "None";
          margin = "0 0 0 0";
@@ -179,7 +157,7 @@
          anchorBottom = "1";
          anchorLeft = "1";
          anchorRight = "0";
-         position = "0 363";
+         position = "1 387";
          extent = "250 25";
          minExtent = "8 2";
          horizSizing = "center";
@@ -194,7 +172,7 @@
          canSaveDynamicFields = "0";
       };
       new GuiControl() {
-         position = "0 200";
+         position = "1 224";
          extent = "250 160";
          minExtent = "8 2";
          horizSizing = "center";
@@ -335,10 +313,10 @@
          lineSpacing = "2";
          allowColorChars = "0";
          maxChars = "-1";
-         text = "Note: This is still a very early version of the game, so don\'t expect anything yet.\r\nBeware of bugs, incompleteness and general crappiness. ";
+         text = "Note:<br>This is still a very early version of the game, so don\'t expect anything yet. Beware of bugs, incompleteness and general crappiness. ";
          useURLMouseCursor = "0";
-         position = "24 408";
-         extent = "201 56";
+         position = "408 418";
+         extent = "224 56";
          minExtent = "8 2";
          horizSizing = "center";
          vertSizing = "bottom";
@@ -356,7 +334,7 @@
          groupNum = "-1";
          buttonType = "PushButton";
          useMouseEvents = "0";
-         position = "85 139";
+         position = "86 163";
          extent = "80 35";
          minExtent = "8 8";
          horizSizing = "center";
@@ -369,6 +347,50 @@
          hovertime = "1000";
          isContainer = "0";
          internalName = "MotdButton";
+         canSave = "1";
+         canSaveDynamicFields = "0";
+      };
+      new GuiMLTextCtrl() {
+         lineSpacing = "2";
+         allowColorChars = "0";
+         maxChars = "-1";
+         text = "<linkcolor:ffffff><a:www.terminal-overload.org>www.terminal-overload.org</a>";
+         useURLMouseCursor = "1";
+         position = "58 446";
+         extent = "132 14";
+         minExtent = "8 2";
+         horizSizing = "right";
+         vertSizing = "bottom";
+         profile = "GuiMLTextProfile";
+         visible = "1";
+         active = "1";
+         tooltipProfile = "GuiToolTipProfile";
+         hovertime = "1000";
+         isContainer = "0";
+         canSave = "1";
+         canSaveDynamicFields = "0";
+      };
+      new GuiTextCtrl(MainMenuVersionString) {
+         text = "VERSION";
+         maxLength = "1024";
+         docking = "None";
+         margin = "0 0 0 0";
+         padding = "0 0 0 0";
+         anchorTop = "0";
+         anchorBottom = "1";
+         anchorLeft = "0";
+         anchorRight = "1";
+         position = "17 112";
+         extent = "213 28";
+         minExtent = "8 2";
+         horizSizing = "relative";
+         vertSizing = "relative";
+         profile = "TolMenuTextProfile";
+         visible = "1";
+         active = "1";
+         tooltipProfile = "GuiToolTipProfile";
+         hovertime = "1000";
+         isContainer = "1";
          canSave = "1";
          canSaveDynamicFields = "0";
       };
