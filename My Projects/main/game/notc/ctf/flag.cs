@@ -99,13 +99,16 @@ function ctfFlag::onMount(%this, %obj, %mount, %node)
 {
    //echo("ctfFlag::onMount()");
    
+   if(%mount.getDataBlock().isMethod("onFlagTaken"))
+      %mount.getDataBlock().onFlagTaken(%mount);
+      
    if(%mount != %obj.zFlagstand)
    {
       %obj.zShapeBaseHudInfo.setDatasetBoolField(0, true);
       if(Game.noFlagCallbacks == false)
          CTF::onFlagTaken(%obj.getTeamId());
    }
-
+   
    if(%obj.zReturnThread !$= "")
       cancel(%obj.zReturnThread);
 }
@@ -114,6 +117,9 @@ function ctfFlag::onUnmount(%this, %obj, %mount)
 {
    //echo("ctfFlag::onUnmount()");
    %obj.setPosition(%obj.getPosition());
+   
+   if(%mount.getDataBlock().isMethod("onFlagDropped"))
+      %mount.getDataBlock().onFlagDropped(%mount);
    
    %obj.zShapeBaseHudInfo.setDatasetBoolField(0, false);
    
