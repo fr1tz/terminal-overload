@@ -77,6 +77,24 @@ function GameCoreCTF::prepareClient(%game, %client)
    //echo (%game @"\c4 -> "@ %game.class @" -> GameCoreCTF::prepareClient");
 
    Parent::prepareClient(%game, %client);
+   
+   // Setup LoadingGui layers.
+   %t[1] = "";
+   %t[2] = "<just:center><color:FFFFFF><font:Quantico:18>" @
+           "<spush><font:Quantico:32>CAPTURE THE FLAG<spop><br>" @
+           "Steal the enemy flag and bring it back to your flag";
+   %t[3] = "";
+   for(%i = 1; %i <= 3; %i++)
+   {
+      commandToClient(%client, '_XaNotcLoadingGui_SetLayer', %i, "", false);
+   	%l = strlen(%t[%i]); %n = 0;
+   	while(%n < %l)
+   	{
+   		%chunk = getSubStr(%t[%i], %n, 255);
+         commandToClient(%client, '_XaNotcLoadingGui_SetLayer', %i, %chunk, true);
+   		%n += 255;
+   	}
+   }
 }
 
 function GameCoreCTF::onClientEnterGame(%game, %client)

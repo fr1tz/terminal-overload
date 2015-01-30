@@ -71,6 +71,24 @@ function GameCoreTE::prepareClient(%game, %client)
    //echo (%game @"\c4 -> "@ %game.class @" -> GameCoreTE::prepareClient");
 
    Parent::prepareClient(%game, %client);
+   
+   // Setup LoadingGui layers.
+   %t[1] = "";
+   %t[2] = "<just:center><color:FFFFFF><font:Quantico:18>" @
+           "<spush><font:Quantico:32>TEAM ELIMINATION<spop><br>" @
+           "Eliminate all members of the opposing team";
+   %t[3] = "";
+   for(%i = 1; %i <= 3; %i++)
+   {
+      commandToClient(%client, '_XaNotcLoadingGui_SetLayer', %i, "", false);
+   	%l = strlen(%t[%i]); %n = 0;
+   	while(%n < %l)
+   	{
+   		%chunk = getSubStr(%t[%i], %n, 255);
+         commandToClient(%client, '_XaNotcLoadingGui_SetLayer', %i, %chunk, true);
+   		%n += 255;
+   	}
+   }
 }
 
 function GameCoreTE::onClientEnterGame(%game, %client)
