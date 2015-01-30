@@ -30,7 +30,6 @@ singleton Material(xa_notc_mis_eth5_gridfx)
    parallaxScale[0] = "1";
    useAnisotropic[0] = "1";
    diffuseColor[0] = "0.0235294 1 0 1";
-   diffuseMap[1] = "content/xa/notc/mis/dm1/textures/grid1.png";
    glow[1] = "1";
    emissive[1] = "1";
    detailScale[2] = "64 64";
