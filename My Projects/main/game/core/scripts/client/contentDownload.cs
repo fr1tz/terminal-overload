@@ -11,21 +11,21 @@ function downloadMissingFiles()
    }
    
    PreloadGui.addText("WILL TRY TO DOWNLOAD MISSING FILES\n");
-   ContentDownloader.currIndex = -1;
+   $Client::Preload.missingFiles.currIndex = -1;
    downloadNextMissingFile();
 }
 
 function downloadNextMissingFile()
 {
-   ContentDownloader.currIndex++;
+   $Client::Preload.missingFiles.currIndex++;
    
-   if(ContentDownloader.currIndex >= $Client::Preload.missingFiles.count())
+   if($Client::Preload.missingFiles.currIndex >= $Client::Preload.missingFiles.count())
    {
       onContentDownloadFinished();
       return;
    }
    
-   %file = $Client::Preload.missingFiles.getKey(ContentDownloader.currIndex);
+   %file = $Client::Preload.missingFiles.getKey($Client::Preload.missingFiles.currIndex);
    
    if(getSubStr(%file, 0, 8) !$= "content/")
    {
@@ -34,6 +34,12 @@ function downloadNextMissingFile()
       return;
    }
    %path = getSubStr(%file, 7);
+
+   if(isObject(ContentDownloader))
+      ContentDownloader.delete(); 
+   new notcHttpFileDownloader(ContentDownloader);
+
+   //echo(%path SPC "->" SPC %file);
 
    if(!ContentDownloader.download("content.terminal-overload.org:80", %path, %file))
    {
@@ -67,9 +73,6 @@ function onContentDownloadFinished()
 }
 
 //------------------------------------------------------------------------------
-
-if(!isObject(ContentDownloader))
-   new notcHttpFileDownloader(ContentDownloader);
 
 function ContentDownloader::onDNSResolved(%this)
 {
@@ -105,13 +108,13 @@ function ContentDownloader::onDisconnect(%this)
 function ContentDownloader::onDownloadComplete(%this)
 {
    //error("ContentDownloader::onDownloadComplete()");
-   %idx = ContentDownloader.currIndex;
+   %idx = $Client::Preload.missingFiles.currIndex;
    %file = $Client::Preload.missingFiles.getKey(%idx);
    %crc = getWord($Client::Preload.missingFiles.getValue(%idx), 1);
    if(getFileCRC(%file) $= %crc)
    {
-      $Client::Preload.missingFiles.erase(ContentDownloader.currIndex);
-      ContentDownloader.currIndex--;
+      $Client::Preload.missingFiles.erase($Client::Preload.missingFiles.currIndex);
+      $Client::Preload.missingFiles.currIndex--;
       PreloadGui.addText(" SUCCESS\n");
    }
    else
