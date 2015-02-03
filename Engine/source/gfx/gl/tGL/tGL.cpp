@@ -25,11 +25,14 @@
 #include "core/strings/stringFunctions.h"
 #include "console/console.h"
 
+extern bool OpenGLCompat;
+
 namespace GL
 {
    void gglPerformBinds()
    {
-      glewExperimental = GL_TRUE;
+      if(!OpenGLCompat)
+         glewExperimental = GL_TRUE;
       GLenum err = glewInit();
       AssertFatal(GLEW_OK == err, avar("Error: %s\n", glewGetErrorString(err)) );
    }

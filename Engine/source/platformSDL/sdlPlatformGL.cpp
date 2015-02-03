@@ -15,7 +15,7 @@ namespace PlatformGL
            return;
 
        inited = true;
-       const U32 majorOGL = 3;
+       const U32 majorOGL = 4;
        const U32 minorOGL = 2;
        U32 debugFlag = 0;
 #ifdef TORQUE_DEBUG
@@ -26,8 +26,8 @@ namespace PlatformGL
        if(!OpenGLCompat)
        {
           Con::printf("Will request OpenGL 3.2 core profile.");
-          SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, majorOGL);
-          SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, minorOGL);
+          SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+          SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
           SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
        }
        SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, debugFlag);
