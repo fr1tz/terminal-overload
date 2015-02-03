@@ -155,6 +155,8 @@ bool notcHttpFileDownloader::download(const char *host, const char *path, const 
    mPost = NULL;
 
    this->connect(host);
+
+   return true;
 }
 
 static char getHex(char c)
