@@ -36,7 +36,7 @@ datablock PlayerData(FrmTerritoryGenerator2DV)
    drag = 0.0;
    maxdrag = 0;
    density = 10;
-   maxDamage = 1000;
+   maxDamage = 100;
    maxEnergy[0] = 100; // damage damper
    maxEnergy[1] = 100; // impulse damper
    damageBuffer = 0;
