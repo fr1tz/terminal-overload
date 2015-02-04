@@ -148,7 +148,7 @@
       canSaveDynamicFields = "0";
 
       new GuiTextCtrl(MainMenuEditHints) {
-         text = "F10/F11: Edit Mission / GUI";
+         text = "F10/F11: GUI/Map Editor";
          maxLength = "1024";
          docking = "None";
          margin = "0 0 0 0";
