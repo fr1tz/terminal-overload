@@ -89,7 +89,7 @@ function ContentDownloader::onDNSFailed(%this)
 function ContentDownloader::onConnected(%this)
 {
    //error("ContentDownloader::onConnected()");
-   PreloadGui.addText(" CONNECTED");
+   //PreloadGui.addText(" CONNECTED");
 }
 
 function ContentDownloader::onConnectFailed(%this)
@@ -138,11 +138,11 @@ function ContentDownloader::onDownloadComplete(%this)
       %fo.delete();
       if(%notFound)
       {
+         PreloadGui.addText(" FILE NOT FOUND\n");
          fileDelete(%file);
-         PreloadGui.addText(" FAILED (FILE NOT FOUND)\n");
       }
       else
-         PreloadGui.addText(" FAILED (CRC MISMATCH)\n");
+         PreloadGui.addText(" CRC MISMATCH\n");
    }
    schedule(0, 0, "downloadNextMissingFile");
 }
