@@ -409,7 +409,7 @@ function ETH::switchToEtherform(%client)
    %slot = %client.zActiveLoadout;
    %client.zLoadoutProgress[%slot] = %percent;
    %client.LoadoutHud_UpdateSlot(%slot, "", "", %percent);
-   error(%percent);
+   //error(%percent);
 
    %tagged = %player.isTagged();
    %pos = %player.getWorldBoxCenter();
