@@ -40,14 +40,17 @@ function ctfFlag::onCollision(%this, %obj, %col, %vec, %vecLen)
    
    if(!%col.isCAT)
       return;
-   
+      
    %flag = %obj;
    %cat = %col;
+
+   if(%cat.getDamageState() !$= "Enabled")
+      return;
 
    %mount = %flag.getObjectMount();
    if(%flag.getTeamId() == %cat.getTeamId())
    {
-      if(%mount)
+      if(%mount && %mount == %flag.zFlagstand)
       {
          // See if CAT is carrying enemy flag.
          %enemyFlag = "";
@@ -55,7 +58,7 @@ function ctfFlag::onCollision(%this, %obj, %col, %vec, %vecLen)
          for(%i = 0; %i < %n; %i++)
          {
             %m = %cat.getMountedObject(%i);
-            if(%m.getDataBlock() == %this)
+            if(%m.isMethod("getDataBlock") && %m.getDataBlock() == %this)
             {
                %enemyFlag = %m;
                break;
@@ -70,7 +73,7 @@ function ctfFlag::onCollision(%this, %obj, %col, %vec, %vecLen)
          Game.noFlagCallbacks = false;
          CTF::onFlagCaptured(%flag.getTeamId());
       }
-      else
+      else if(!%mount)
          %flag.getDataBlock().returnToFlagstand(%flag);
    }
    else
