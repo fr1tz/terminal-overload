@@ -22,6 +22,13 @@ function GameCoreBase::prepareMissionLoad(%game)
 {
    //echo(%game @"\c4 -> "@ %game.class @" -> GameCoreBase::prepareMissionLoad");
    
+   requiredContent_init();
+   
+   requiredContent_addFromDataBlocks();
+   requiredContent_addFromPattern("content/xa/notc/core/*");
+   requiredContent_addFromPattern("content/xa/rotc_hack/*");
+   requiredContent_addFromPattern(filePath($Server::MissionFile)@"/*");
+   
    %game.zMaterialPaths = "content/xa/notc/core" SPC
       "content/xa/rotc_hack" SPC
       filePath($Server::MissionFile);
@@ -73,6 +80,7 @@ function GameCoreBase::prepareMissionLoad(%game)
            %file = findNextFile( %pathMask @ "/*/materials.cs" ))
       {
          echo(" Found" SPC %file);
+         requiredContent_addFile(%file);
          exec(%file);
       }
    }
@@ -81,12 +89,7 @@ function GameCoreBase::prepareMissionLoad(%game)
 
    $instantGroup = %instantGroupStor;
    
-   requiredContent_init();
    requiredContent_addFromMaterials();
-   requiredContent_addFromDataBlocks();
-   requiredContent_addFromPattern("content/xa/notc/core/*");
-   requiredContent_addFromPattern("content/xa/rotc_hack/*");
-   requiredContent_addFromPattern(filePath($Server::MissionFile)@"/*");
    requiredContent_filter();
 }
 
@@ -262,6 +265,7 @@ function GameCoreBase::prepareClient(%game, %client)
    %game.queryClientSettings(%client, "prepareClient");
    
    %files = "xa/notc/core/client/base/v1/exec" TAB
+            "xa/notc/core/client/settings/notc1/exec" TAB
             "xa/notc/core/client/audio/Descriptions/v1/exec" TAB
             "xa/notc/core/client/audio/Hearing/v1/exec" TAB
             "xa/notc/core/client/audio/HitSound/v1/exec" TAB
