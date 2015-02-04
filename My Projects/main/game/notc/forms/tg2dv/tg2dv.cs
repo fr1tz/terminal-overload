@@ -502,9 +502,11 @@ function FrmTerritoryGenerator2DV::transform(%this, %obj)
    %struct.setTeamId(%obj.getTeamId());
    %struct.setTransform(%pos2);
    %struct.getDataBlock().updateAssetsThread(%struct);
+   %struct.setDamageLevel(%struct.getDataBlock().maxDamage * %obj.getDamagePercent());
 
    createExplosion(FrmStandardCatSpawnEffect, %pos2, "0 0 1");
    
+   %obj.setDamageLevel(%this.maxDamage);
    %obj.setTransform(%pos2);
    %obj.schedule(0, "delete");
    Game.onUnitDestroyed(%obj);
