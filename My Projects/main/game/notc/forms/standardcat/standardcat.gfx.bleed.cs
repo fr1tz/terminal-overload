@@ -51,8 +51,8 @@ datablock ParticleData(FrmStandardCatBleedEffect_Particles : DefaultParticle)
    lifetimeVarianceMS = "0";
    dragCoefficient = "0";
    spinSpeed = "0";
-   textureName = "content/o/rotc/p.5.4/textures/rotc/spark02.png";
-   animTexName = "content/o/rotc/p.5.4/textures/rotc/spark02.png";
+   textureName = "content/o/rotc/p.5.4/textures/rotc/star3.orange.png";
+   animTexName = "content/o/rotc/p.5.4/textures/rotc/star3.orange.png";
    colors[1] = "1 1 1 0";
    colors[2] = "1 1 1 0.330709";
    colors[3] = "1 1 1 0";
@@ -60,8 +60,9 @@ datablock ParticleData(FrmStandardCatBleedEffect_Particles : DefaultParticle)
    ejectionVelocity = "0";
    softnessDistance = "1";
    ejectionOffset = "0";
-   gravityCoefficient = "2.99634";
+   gravityCoefficient = "3";
    colors[0] = "0.992126 0.992126 0.992126 1";
+   useInvAlpha = "0";
 };
 
 //------------------------------------------------------------------------------
@@ -110,6 +111,7 @@ datablock ParticleEmitterData(FrmStandardCatBleedEffect10Emitter : DefaultEmitte
    lightEndBrightness = "1.80392";
    paletteSlot = -1;
    emitter0 = "FrmStandardCatBleedEffect_Sting_Emitter";
+   glow = "1";
 };
 
 datablock ExplosionData(FrmStandardCatBleedEffect10)
@@ -124,7 +126,7 @@ datablock ExplosionData(FrmStandardCatBleedEffect10)
    particleRadius = "0.1";
    particleDensity = "2";
    emitter[0] = "FrmStandardCatBleedEffect10Emitter";
-   Debris = "FrmStandardCatBleedEffect_Debris";
+   //Debris = "FrmStandardCatBleedEffect_Debris";
    debrisThetaMax = "60";
    debrisNum = "2";
    debrisVelocity = 10;
