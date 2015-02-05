@@ -6,7 +6,7 @@ singleton Material(xa_notc_core_shapes_mgl1_projectile_p2_mat1)
    diffuseColorPaletteSlot[0] = "0";
    doubleSided = "1";
    translucentBlendOp = "LerpAlpha";
-   glow[0] = "0";
+   glow[0] = "1";
    emissive[0] = "1";
    castShadows = "0";
    translucent = "1";

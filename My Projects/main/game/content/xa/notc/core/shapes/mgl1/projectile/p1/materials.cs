@@ -48,7 +48,7 @@ singleton Material(xa_notc_core_shapes_mgl1_projectile_p1_lasertrail0mat0)
    castShadows = "0";
    translucent = "1";
    showFootprints = "0";
-   glow[0] = "0";
+   glow[0] = "1";
    glowOnly[0] = "0";
    emissive[0] = "1";
    vertColor[0] = "1";
