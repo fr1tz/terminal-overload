@@ -384,7 +384,7 @@ function AIPlayer::spawn(%teamId, %weapon)
    {
       Game.loadOut(%player);
       
-      %player.setInventory(WpnSMG2, 1);
+      %player.setInventory(WpnSMG3, 1);
       %player.setInventory(WpnSG3, 1);
       %player.setInventory(WpnSG2, 1);
       %player.setInventory(WpnSG2Ammo, 9999);
@@ -399,7 +399,7 @@ function AIPlayer::spawn(%teamId, %weapon)
       
       if(%weapon == 1)
       {
-         %player.mountImage(WpnSMG2Image, 0);
+         %player.mountImage(WpnSMG3Image, 0);
          %player.singleShot();
       }
       else if(%weapon == 2)

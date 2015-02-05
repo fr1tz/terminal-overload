@@ -172,7 +172,7 @@ function GameCoreDM::loadOut(%game, %player)
 
    %player.clearWeaponCycle();
    %player.addToWeaponCycle(WpnMGL2);
-   %player.addToWeaponCycle(WpnSMG2);
+   %player.addToWeaponCycle(WpnSMG3);
    %player.addToWeaponCycle(WpnSG1);
    %player.addToWeaponCycle(WpnSR1);
    %player.addToWeaponCycle(WpnMG2);
@@ -186,7 +186,7 @@ function GameCoreDM::loadOut(%game, %player)
    
    %player.setInventory(ItemG1Launcher, 1);
    
-   %player.setInventory(WpnSMG2, 1);
+   %player.setInventory(WpnSMG3, 1);
    %player.setInventory(WpnMGL2, 1);
 
    if (%player.getDatablock().mainWeapon.image !$= "")

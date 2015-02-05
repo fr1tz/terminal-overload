@@ -366,11 +366,11 @@ function ETH::loadoutPlayer(%player)
          %player.setInventory(ItemEtherboard, 1);
          %player.setInventory(ItemStealth, 1);
          %player.setInventory(WpnRazorDiscAmmo, 9999);
-         %player.setInventory(WpnSMG2, 1);
+         %player.setInventory(WpnSMG3, 1);
          %player.setInventory(WpnSG3, 1);
-         %player.addToWeaponCycle(WpnSMG2);
+         %player.addToWeaponCycle(WpnSMG3);
          %player.addToWeaponCycle(WpnSG3);
-         %player.mountImage(WpnSMG2Image, 0);
+         %player.mountImage(WpnSMG3Image, 0);
       case 1:
          %player.setInventory(ItemEtherboard, 1);
          %player.setInventory(ItemStealth, 1);

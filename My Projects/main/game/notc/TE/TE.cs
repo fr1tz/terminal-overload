@@ -208,12 +208,12 @@ function TE::loadoutPlayer(%player)
    %player.setInventory(ItemEtherboard, 1);
    %player.setInventory(ItemStealth, 1);
    %player.setInventory(WpnRazorDiscAmmo, 9999);
-   %player.setInventory(WpnSMG2, 1);
-   %player.addToWeaponCycle(WpnSMG2);
+   %player.setInventory(WpnSMG2, 3);
+   %player.addToWeaponCycle(WpnSMG3);
    %player.setInventory(WpnMGL2, 1);
    %player.addToWeaponCycle(WpnMGL2);
    %player.setInventory(WpnSR2, 1);
    %player.addToWeaponCycle(WpnSR2);
-   %player.mountImage(WpnSMG2Image, 0);
+   %player.mountImage(WpnSMG3Image, 0);
 }
 
