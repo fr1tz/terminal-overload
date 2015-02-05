@@ -11,7 +11,7 @@ singleton Material(shape_xa_notc_core_shapes_flagstand_p1_mat1)
    glow[0] = "1";
    emissive[0] = "1";
    emissive[1] = "1";
-   wireframe[0] = "1";
+   wireframe[0] = "0";
    wireframe[1] = "1";
    doubleSided = "1";
    castShadows = "0";
