@@ -5,7 +5,7 @@ datablock ShapeBaseImageData(WpnMGL2Image)
 {
    // Basic Item properties
    shapeFile = "content/xa/rotc_hack/shapes/assaultrifle.tp.dts";
-   shapeFileFP = "content/xa/rotc_hack/shapes/assaultrifle.fp.dts";
+   shapeFileFP = "content/xa/notc/core/shapes/mgl2/image/p1/shape.fp.dae";
    emap = true;
 
    imageAnimPrefix = "Rifle";
@@ -17,7 +17,7 @@ datablock ShapeBaseImageData(WpnMGL2Image)
    firstPerson = true;
    animateOnServer = true;
    useEyeNode = "0";
-   eyeOffset = "0.275 0.1 -0.05";
+   eyeOffset = "0.2 0.05 -0.225";
 
    // When firing from a point offset from the eye, muzzle correction
    // will adjust the muzzle vector to point to the eye LOS point.
@@ -82,6 +82,8 @@ datablock ShapeBaseImageData(WpnMGL2Image)
       stateArmThread[2]                = "holdrifle";
 		stateSpinThread[2]               = "FullSpeed";
 		stateSequence[2]                 = "idle";
+      stateTimeoutValue[2]             = 10;
+      stateWaitForTimeout[2]           = false;
 
 		stateName[3]                     = "Fire";
 		stateTransitionOnTimeout[3]      = "AfterFire";
