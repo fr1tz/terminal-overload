@@ -580,6 +580,9 @@ public:
    /// @{
    ParticleEmitterData* repairParticleEmitter;
    S32 repairParticleID;
+   ParticleEmitterData* damageParticleEmitter;
+   S32 damageParticleID;
+   F32 damageParticleMultiplier;
    /// @}
 
    /// @name Shape trails
@@ -1087,6 +1090,7 @@ protected:
    /// @name Damage info eyecandy
    /// @{
    ParticleEmitter* mRepairEmitter;
+	ParticleEmitter* mDamageEmitter;
    F32 mDamageDelta;
    F32 mLastTickDamage;
    /// @}
