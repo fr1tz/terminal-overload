@@ -596,6 +596,64 @@ datablock ParticleEmitterData(FrmStandardcatRepairEmitter)
    paletteSlot = 0;
 };
 
+//------------------------------------------------------------------------------
+// damage particle emitter...
+
+datablock ParticleData(FrmStandardcatDamageEmitter_Particle)
+{
+   sizes[0] = "0.4";
+   sizes[1] = "0";
+   sizes[2] = "0";
+   sizes[3] = "0";
+   times[1] = "1";
+   times[2] = "1";
+   inheritedVelFactor = "0";
+   lifetimeMS = "1000";
+   lifetimeVarianceMS = "0";
+   dragCoefficient = "0";
+   spinSpeed = "0";
+   textureName = "content/xa/notc/core/textures/white.128.png";
+   animTexName = "content/xa/notc/core/textures/white.128.png";
+   colors[1] = "0.976378 0.992126 0.338583 0";
+   colors[2] = "1 1 1 0.330709";
+   colors[3] = "1 1 1 0";
+   ejectionPeriodMS = "2";
+   ejectionVelocity = "0";
+   softnessDistance = "1";
+   ejectionOffset = "0";
+   gravityCoefficient = "2.99634";
+   colors[0] = "0.976378 0.992126 0.322835 1";
+   useInvAlpha = "0";
+};
+
+datablock ParticleEmitterData(FrmStandardcatDamageEmitter)
+{
+   particles = "FrmStandardcatDamageEmitter_Particle";
+   ejectionPeriodMS = "1";
+   periodVarianceMS = "0";
+   softnessDistance = "1";
+   ejectionVelocity = "15";
+   ejectionOffset = "0";
+   thetaMin = "0";
+   thetaMax = "80";
+   orientParticles = "1";
+   blendStyle = "ADDITIVE";
+   soundProfile = "FrmStandardcatBleedEffectSound";
+   particleDensity = "2";
+   particleRadius = "0.1";
+   emitter[0] = "FrmStandardCatBleedEffect_Sting_Emitter";
+   lifetimeMS = "0";
+   lightStartRadius = "4.94118";
+   lightStartColor = "1 0 0 1";
+   lightEndColor = "0.992126 0 0 1";
+   lightStartBrightness = "0.784314";
+   lightEndBrightness = "1.80392";
+   paletteSlot = -1;
+   emitter0 = "FrmStandardCatBleedEffect_Sting_Emitter";
+   glow = "1";
+   targetLockTimeMS = "480";
+};
+
 //-----------------------------------------------------------------------------
 // jump explosion
 

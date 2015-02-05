@@ -162,6 +162,8 @@ datablock PlayerData(FrmStandardcat)
    exitSplashSoundVelocity = 5.0;
    
    repairParticleEmitter = FrmStandardcatRepairEmitter;
+   damageParticleEmitter = FrmStandardcatDamageEmitter;
+   damageParticleMultiplier = 2;
    
    // Shape trails
    numShapeTrails = 5;
@@ -272,6 +274,7 @@ datablock PlayerData(FrmStandardcat)
 
    maxInv[WpnSMG1] = 1;
    maxInv[WpnSMG2] = 1;
+   maxInv[WpnSMG3] = 1;
    maxInv[WpnMGL1] = 1;
    maxInv[WpnMGL2] = 1;
    maxInv[WpnSG1] = 1;
@@ -591,6 +594,11 @@ function FrmStandardcat::clientAction(%this, %obj, %nr)
 // Called by ShapeBase script code.
 function FrmStandardcat::getBleed(%this, %obj, %dmg, %src)
 {
+   if(%dmg > 0)
+      return ""; // Our damage particle emitter takes care of this
+   else
+      return FrmStandardCatBleedEffect0;
+
    if(%dmg > 90)
       return FrmStandardCatBleedEffect100;
    else if(%dmg > 80)
