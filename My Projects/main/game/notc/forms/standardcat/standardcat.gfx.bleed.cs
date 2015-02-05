@@ -40,7 +40,7 @@ datablock DebrisData(FrmStandardCatBleedEffect_Debris)
 
 datablock ParticleData(FrmStandardCatBleedEffect_Particles : DefaultParticle)
 {
-   sizes[0] = "1";
+   sizes[0] = "0.5";
    sizes[1] = "0";
    sizes[2] = "0";
    sizes[3] = "0";
@@ -51,9 +51,9 @@ datablock ParticleData(FrmStandardCatBleedEffect_Particles : DefaultParticle)
    lifetimeVarianceMS = "0";
    dragCoefficient = "0";
    spinSpeed = "0";
-   textureName = "content/o/rotc/p.5.4/textures/rotc/star3.orange.png";
-   animTexName = "content/o/rotc/p.5.4/textures/rotc/star3.orange.png";
-   colors[1] = "1 1 1 0";
+   textureName = "content/xa/notc/core/textures/white.128.png";
+   animTexName = "content/xa/notc/core/textures/white.128.png";
+   colors[1] = "0.980392 0.996078 0.345098 0";
    colors[2] = "1 1 1 0.330709";
    colors[3] = "1 1 1 0";
    ejectionPeriodMS = "2";
@@ -61,7 +61,7 @@ datablock ParticleData(FrmStandardCatBleedEffect_Particles : DefaultParticle)
    softnessDistance = "1";
    ejectionOffset = "0";
    gravityCoefficient = "3";
-   colors[0] = "0.992126 0.992126 0.992126 1";
+   colors[0] = "0.980392 0.996078 0.32549 1";
    useInvAlpha = "0";
 };
 
