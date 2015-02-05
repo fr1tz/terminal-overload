@@ -18,6 +18,7 @@
 #include "T3D/gameBase/gameConnection.h"
 #include "T3D/gameBase/gameProcess.h"
 #include "T3D/fx/particleEmitter.h"
+#include "T3D/shapeBase.h"
 #include "materials/materialManager.h"
 #include "materials/baseMatInstance.h"
 #include "renderInstance/renderPassManager.h"
@@ -205,6 +206,9 @@ MultiNodeLaserBeam::MultiNodeLaserBeam()
    //mTypeMask |= StaticRenderedObjectType;
    mNetFlags.set(IsGhost);
 
+   mSourceShape = NULL;
+   mSourceSlot = 0;
+
    mRender = mFade = false;
    mFadeMode = 0;
 
@@ -218,6 +222,14 @@ MultiNodeLaserBeam::MultiNodeLaserBeam()
 MultiNodeLaserBeam::~MultiNodeLaserBeam()
 {
    //
+}
+
+void MultiNodeLaserBeam::setSourceShape(ShapeBase* shape, U32 slot)
+{
+   mSourceShape = shape;
+   mSourceSlot = slot;
+   if(mSourceShape)
+      this->deleteNotify(mSourceShape);
 }
 
 void MultiNodeLaserBeam::setRender(bool b)
@@ -389,6 +401,14 @@ void MultiNodeLaserBeam::onRemove()
    Parent::onRemove();
 }
 
+void MultiNodeLaserBeam::onDeleteNotify(SimObject* obj)
+{
+	Parent::onDeleteNotify(obj);
+
+   if(obj == mSourceShape)
+		mSourceShape = NULL;
+}
+
 bool MultiNodeLaserBeam::onNewDataBlock(GameBaseData* dptr, bool reload)
 {
    mDataBlock = dynamic_cast<MultiNodeLaserBeamData*>(dptr);
@@ -508,9 +528,28 @@ void MultiNodeLaserBeam::advanceTime(F32 dt)
 			mNodes[i].pos += windVec * dt;
 		}
 
+      Point3F deltaVec;
+
 		// node movement
-      if(i == 0 || i == s-1) // (never move first/last node)
-         continue;
+      if(i == 0 || i == s-1)
+      {
+         if(mSourceShape && i == 0)
+         {
+            Point3F newPos; 
+            mSourceShape->getRenderMuzzlePoint(mSourceSlot, &newPos);
+            deltaVec = newPos - mNodes[i].pos;
+            mNodes[i].pos += deltaVec;
+         }
+         
+         continue; // No additional movement for first/last node
+      }
+
+      if(mSourceShape)
+      {
+         F32 f = 1 - F32(i)/F32(s);
+         mNodes[i].pos += deltaVec*f;
+      }
+
 		for(int j = 0; j < 3; j++) 
 		{
 			// update node velocity?...

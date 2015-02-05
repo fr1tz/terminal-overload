@@ -14,6 +14,8 @@
 #include "gfx/gfxPrimitiveBuffer.h"
 #endif
 
+class ShapeBase;
+
 class MultiNodeLaserBeamData : public GameBaseData
 {
    typedef GameBaseData Parent;
@@ -75,6 +77,9 @@ class MultiNodeLaserBeam : public GameBase
   private:
    MultiNodeLaserBeamData* mDataBlock;
 
+   ShapeBase* mSourceShape;
+   U32        mSourceSlot;
+
    // rendering...
    bool    mRender;
    bool    mFade;
@@ -117,6 +122,7 @@ class MultiNodeLaserBeam : public GameBase
    // SimObject...
    bool onAdd();
    void onRemove();
+   void onDeleteNotify(SimObject* obj);
  
    // SceneObject...
    void prepRenderImage(SceneRenderState *state);
@@ -128,6 +134,7 @@ class MultiNodeLaserBeam : public GameBase
    bool onNewDataBlock(GameBaseData* dptr, bool reload);
 
    // MultiNodeLaserBeam...
+   void setSourceShape(ShapeBase* shape, U32 slot);
    void updateRenderData(const Point3F& camPos, U32 lane);
    void setRender(bool b);
    void clearNodes();
