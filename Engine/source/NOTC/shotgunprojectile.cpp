@@ -1000,6 +1000,8 @@ void ShotgunProjectile::clientProcessHits()
                      trail->smoothDist(2);
                   if(mDataBlock->laserTrailFlags[i] & 4)
                      trail->smoothReverseDist(mDataBlock->range);
+                  if(mDataBlock->laserTrailFlags[i] & 8)
+                     trail->setSourceShape(mSourceObject, mSourceObjectSlot);
                   trail->fade();
                   trail->deleteOnFadeout();
                }
