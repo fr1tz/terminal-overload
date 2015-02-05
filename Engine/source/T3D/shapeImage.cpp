@@ -3185,11 +3185,14 @@ void ShapeBase::setImageState(U32 imageSlot, U32 newState,bool force)
 	// Also stop any sound from last state if it was a charge state.
    if((lastState->sound && lastState->sound->getDescription()->mIsLooping) || lastState->charge)  
    {  
-      for(Vector<SFXSource*>::iterator i = image.mSoundSources.begin(); i != image.mSoundSources.end(); i++)      
-         SFX_DELETE((*i));    
-
-      image.mSoundSources.clear();  
-   }  
+      // Only stop looping sound if it's different from new state's sound
+      if(stateData.sound != lastState->sound)
+      {
+         for(Vector<SFXSource*>::iterator i = image.mSoundSources.begin(); i != image.mSoundSources.end(); i++)      
+            SFX_DELETE((*i));    
+         image.mSoundSources.clear(); 
+      }
+   }
 
    // Mount pending images
    if (image.nextImage != InvalidImagePtr && stateData.allowImageChange) {
@@ -3516,7 +3519,16 @@ void ShapeBase::setImageState(U32 imageSlot, U32 newState,bool force)
       if(stateData.soundFlags & 1)
          SFX->playOnce(stateData.sound, &getRenderTransform(), &velocity);
       else
-	      image.addSoundSource(SFX->createSource( stateData.sound, &getRenderTransform(), &velocity )); 
+      {
+         if(lastState->sound == stateData.sound && lastState->sound->getDescription()->mIsLooping)
+         {
+            // Already have existing looping sound
+         }
+         else
+         {
+	         image.addSoundSource(SFX->createSource( stateData.sound, &getRenderTransform(), &velocity )); 
+         }
+      }
    }
 
    // Play animation
