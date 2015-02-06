@@ -819,6 +819,10 @@ function FrmStandardcat::onDisabled(%this, %obj, %state)
 {
    Parent::onDisabled(%this, %obj, %state);
    
+   // Remove light.
+   %obj.zLight.delete();
+   %obj.zLight = "";
+   
    // Delete all HudInfo objects linked to this object
    while(%obj.zHudInfoSet.getCount() > 0)
       %obj.zHudInfoSet.getObject(0).delete();
