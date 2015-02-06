@@ -285,6 +285,7 @@ datablock PlayerData(FrmStandardcat)
    maxInv[WpnMG1] = 1;
    maxInv[WpnMG2] = 1;
    maxInv[WpnML1] = 1;
+   maxInv[WpnRFL1] = 1;
    
    maxInv[WpnMGL1Ammo] = 9999;
    maxInv[WpnSG1Ammo] = 9999;
