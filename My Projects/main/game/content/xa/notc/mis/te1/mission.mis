@@ -7,6 +7,7 @@ new SimGroup(MissionGroup) {
    new LevelInfo(theLevelInfo) {
       nearClip = "0.05";
       visibleDistance = "99999";
+      visibleGhostDistance = "0";
       decalBias = "0.0015";
       fogColor = "0.0313726 0.996078 0.00784314 1";
       fogDensity = "0";
@@ -23,9 +24,9 @@ new SimGroup(MissionGroup) {
          dep0 = "content/xa/notc/mis/dm1";
          desc0 = "TODO";
          LevelName = "TE1";
-         teamColors0 = "1 1 1";
-         teamColors1 = "0.666 0 0.666";
-         teamColors2 = "0 0.666 0.666";
+         teamColors0 = "0.7 0.7 0.7";
+         teamColors1 = "1 0.1 0";
+         teamColors2 = "0 0.5 1";
    };
    new SimGroup(CameraBookmarks) {
       canSave = "1";
@@ -160,7 +161,7 @@ new SimGroup(MissionGroup) {
          dataBlock = "SpawnSphereMarker";
          client = "-1";
          teamId = "0";
-         position = "-27.4785 -145.191 37.9319";
+         position = "-27.4785 -90.7559 120.451";
          rotation = "1 0 0 0";
          scale = "1 1 1";
          paletteColors[0] = "252 153 52 255";
@@ -196,7 +197,7 @@ new SimGroup(MissionGroup) {
          dataBlock = "SpawnSphereMarker";
          client = "-1";
          teamId = "0";
-         position = "-21.5651 -145.191 37.9319";
+         position = "-21.5651 -90.7559 120.451";
          rotation = "1 0 0 0";
          scale = "1 1 1";
          paletteColors[0] = "252 153 52 255";
@@ -232,7 +233,7 @@ new SimGroup(MissionGroup) {
          dataBlock = "SpawnSphereMarker";
          client = "-1";
          teamId = "0";
-         position = "-15.9939 -145.191 37.9319";
+         position = "-15.9939 -90.7559 120.451";
          rotation = "1 0 0 0";
          scale = "1 1 1";
          paletteColors[0] = "252 153 52 255";
@@ -268,7 +269,7 @@ new SimGroup(MissionGroup) {
          dataBlock = "SpawnSphereMarker";
          client = "-1";
          teamId = "0";
-         position = "-10.1509 -145.191 37.9319";
+         position = "-10.1509 -90.7559 120.451";
          rotation = "1 0 0 0";
          scale = "1 1 1";
          paletteColors[0] = "252 153 52 255";
@@ -304,7 +305,7 @@ new SimGroup(MissionGroup) {
          dataBlock = "SpawnSphereMarker";
          client = "-1";
          teamId = "0";
-         position = "-4.76708 -145.191 37.9319";
+         position = "-4.76708 -90.7559 120.451";
          rotation = "1 0 0 0";
          scale = "1 1 1";
          paletteColors[0] = "252 153 52 255";
@@ -340,7 +341,7 @@ new SimGroup(MissionGroup) {
          dataBlock = "SpawnSphereMarker";
          client = "-1";
          teamId = "0";
-         position = "0.690539 -145.191 37.9319";
+         position = "0.690539 -90.7559 120.451";
          rotation = "1 0 0 0";
          scale = "1 1 1";
          paletteColors[0] = "252 153 52 255";
@@ -376,7 +377,7 @@ new SimGroup(MissionGroup) {
          dataBlock = "SpawnSphereMarker";
          client = "-1";
          teamId = "0";
-         position = "6.60394 -145.191 37.9319";
+         position = "6.60394 -90.7559 120.451";
          rotation = "1 0 0 0";
          scale = "1 1 1";
          paletteColors[0] = "252 153 52 255";
@@ -412,7 +413,7 @@ new SimGroup(MissionGroup) {
          dataBlock = "SpawnSphereMarker";
          client = "-1";
          teamId = "0";
-         position = "12.1751 -145.191 37.9319";
+         position = "12.1751 -90.7559 120.451";
          rotation = "1 0 0 0";
          scale = "1 1 1";
          paletteColors[0] = "252 153 52 255";
@@ -448,7 +449,7 @@ new SimGroup(MissionGroup) {
          dataBlock = "SpawnSphereMarker";
          client = "-1";
          teamId = "0";
-         position = "18.0181 -145.191 37.9319";
+         position = "18.0181 -90.7559 120.451";
          rotation = "1 0 0 0";
          scale = "1 1 1";
          paletteColors[0] = "252 153 52 255";
@@ -484,7 +485,7 @@ new SimGroup(MissionGroup) {
          dataBlock = "SpawnSphereMarker";
          client = "-1";
          teamId = "0";
-         position = "23.402 -145.191 37.9319";
+         position = "23.402 -90.7559 120.451";
          rotation = "1 0 0 0";
          scale = "1 1 1";
          paletteColors[0] = "252 153 52 255";
@@ -520,7 +521,7 @@ new SimGroup(MissionGroup) {
          dataBlock = "SpawnSphereMarker";
          client = "-1";
          teamId = "0";
-         position = "29.0781 -145.191 37.9319";
+         position = "29.0781 -90.7559 120.451";
          rotation = "1 0 0 0";
          scale = "1 1 1";
          paletteColors[0] = "252 153 52 255";
@@ -556,7 +557,7 @@ new SimGroup(MissionGroup) {
          dataBlock = "SpawnSphereMarker";
          client = "-1";
          teamId = "0";
-         position = "34.9915 -145.191 37.9319";
+         position = "34.9915 -90.7559 120.451";
          rotation = "1 0 0 0";
          scale = "1 1 1";
          paletteColors[0] = "252 153 52 255";
@@ -592,7 +593,7 @@ new SimGroup(MissionGroup) {
          dataBlock = "SpawnSphereMarker";
          client = "-1";
          teamId = "0";
-         position = "40.5627 -145.191 37.9319";
+         position = "40.5627 -90.7559 120.451";
          rotation = "1 0 0 0";
          scale = "1 1 1";
          paletteColors[0] = "252 153 52 255";
@@ -628,7 +629,7 @@ new SimGroup(MissionGroup) {
          dataBlock = "SpawnSphereMarker";
          client = "-1";
          teamId = "0";
-         position = "46.4057 -145.191 37.9319";
+         position = "46.4057 -90.7559 120.451";
          rotation = "1 0 0 0";
          scale = "1 1 1";
          paletteColors[0] = "252 153 52 255";
@@ -664,7 +665,7 @@ new SimGroup(MissionGroup) {
          dataBlock = "SpawnSphereMarker";
          client = "-1";
          teamId = "0";
-         position = "51.7896 -145.191 37.9319";
+         position = "51.7896 -90.7559 120.451";
          rotation = "1 0 0 0";
          scale = "1 1 1";
          paletteColors[0] = "252 153 52 255";
@@ -700,7 +701,7 @@ new SimGroup(MissionGroup) {
          dataBlock = "SpawnSphereMarker";
          client = "-1";
          teamId = "0";
-         position = "-55.317 -145.191 37.9319";
+         position = "-55.317 -90.7559 120.451";
          rotation = "1 0 0 0";
          scale = "1 1 1";
          paletteColors[0] = "252 153 52 255";
@@ -736,7 +737,7 @@ new SimGroup(MissionGroup) {
          dataBlock = "SpawnSphereMarker";
          client = "-1";
          teamId = "0";
-         position = "-49.4036 -145.191 37.9319";
+         position = "-49.4036 -90.7559 120.451";
          rotation = "1 0 0 0";
          scale = "1 1 1";
          paletteColors[0] = "252 153 52 255";
@@ -772,7 +773,7 @@ new SimGroup(MissionGroup) {
          dataBlock = "SpawnSphereMarker";
          client = "-1";
          teamId = "0";
-         position = "-43.8324 -145.191 37.9319";
+         position = "-43.8324 -90.7559 120.451";
          rotation = "1 0 0 0";
          scale = "1 1 1";
          paletteColors[0] = "252 153 52 255";
@@ -808,7 +809,7 @@ new SimGroup(MissionGroup) {
          dataBlock = "SpawnSphereMarker";
          client = "-1";
          teamId = "0";
-         position = "-37.9894 -145.191 37.9319";
+         position = "-37.9894 -90.7559 120.451";
          rotation = "1 0 0 0";
          scale = "1 1 1";
          paletteColors[0] = "252 153 52 255";
@@ -844,7 +845,7 @@ new SimGroup(MissionGroup) {
          dataBlock = "SpawnSphereMarker";
          client = "-1";
          teamId = "0";
-         position = "-32.6055 -145.191 37.9319";
+         position = "-32.6055 -90.7559 120.451";
          rotation = "1 0 0 0";
          scale = "1 1 1";
          paletteColors[0] = "252 153 52 255";
@@ -886,7 +887,7 @@ new SimGroup(MissionGroup) {
          dataBlock = "SpawnSphereMarker";
          client = "-1";
          teamId = "0";
-         position = "23.9399 143.985 37.9319";
+         position = "23.9399 90.101 120.57";
          rotation = "0 0 1 180";
          scale = "1 1 1";
          paletteColors[0] = "252 153 52 255";
@@ -922,7 +923,7 @@ new SimGroup(MissionGroup) {
          dataBlock = "SpawnSphereMarker";
          client = "-1";
          teamId = "0";
-         position = "18.0265 143.985 37.9319";
+         position = "18.0265 90.101 120.57";
          rotation = "0 0 1 180";
          scale = "1 1 1";
          paletteColors[0] = "252 153 52 255";
@@ -958,7 +959,7 @@ new SimGroup(MissionGroup) {
          dataBlock = "SpawnSphereMarker";
          client = "-1";
          teamId = "0";
-         position = "12.4553 143.985 37.9319";
+         position = "12.4553 90.101 120.57";
          rotation = "0 0 1 180";
          scale = "1 1 1";
          paletteColors[0] = "252 153 52 255";
@@ -994,7 +995,7 @@ new SimGroup(MissionGroup) {
          dataBlock = "SpawnSphereMarker";
          client = "-1";
          teamId = "0";
-         position = "6.6123 143.985 37.9319";
+         position = "6.6123 90.101 120.57";
          rotation = "0 0 1 180";
          scale = "1 1 1";
          paletteColors[0] = "252 153 52 255";
@@ -1030,7 +1031,7 @@ new SimGroup(MissionGroup) {
          dataBlock = "SpawnSphereMarker";
          client = "-1";
          teamId = "0";
-         position = "1.22848 143.985 37.9319";
+         position = "1.22848 90.101 120.57";
          rotation = "0 0 1 180";
          scale = "1 1 1";
          paletteColors[0] = "252 153 52 255";
@@ -1066,7 +1067,7 @@ new SimGroup(MissionGroup) {
          dataBlock = "SpawnSphereMarker";
          client = "-1";
          teamId = "0";
-         position = "-4.22913 143.985 37.9319";
+         position = "-4.22913 90.101 120.57";
          rotation = "0 0 1 180";
          scale = "1 1 1";
          paletteColors[0] = "252 153 52 255";
@@ -1102,7 +1103,7 @@ new SimGroup(MissionGroup) {
          dataBlock = "SpawnSphereMarker";
          client = "-1";
          teamId = "0";
-         position = "-10.1426 143.985 37.9319";
+         position = "-10.1426 90.101 120.57";
          rotation = "0 0 1 180";
          scale = "1 1 1";
          paletteColors[0] = "252 153 52 255";
@@ -1138,7 +1139,7 @@ new SimGroup(MissionGroup) {
          dataBlock = "SpawnSphereMarker";
          client = "-1";
          teamId = "0";
-         position = "-15.7137 143.985 37.9319";
+         position = "-15.7137 90.101 120.57";
          rotation = "0 0 1 180";
          scale = "1 1 1";
          paletteColors[0] = "252 153 52 255";
@@ -1174,7 +1175,7 @@ new SimGroup(MissionGroup) {
          dataBlock = "SpawnSphereMarker";
          client = "-1";
          teamId = "0";
-         position = "-21.5567 143.985 37.9319";
+         position = "-21.5567 90.101 120.57";
          rotation = "0 0 1 180";
          scale = "1 1 1";
          paletteColors[0] = "252 153 52 255";
@@ -1210,7 +1211,7 @@ new SimGroup(MissionGroup) {
          dataBlock = "SpawnSphereMarker";
          client = "-1";
          teamId = "0";
-         position = "-26.9406 143.985 37.9319";
+         position = "-26.9406 90.101 120.57";
          rotation = "0 0 1 180";
          scale = "1 1 1";
          paletteColors[0] = "252 153 52 255";
@@ -1246,7 +1247,7 @@ new SimGroup(MissionGroup) {
          dataBlock = "SpawnSphereMarker";
          client = "-1";
          teamId = "0";
-         position = "-32.6167 143.985 37.9319";
+         position = "-32.6167 90.101 120.57";
          rotation = "0 0 1 180";
          scale = "1 1 1";
          paletteColors[0] = "252 153 52 255";
@@ -1282,7 +1283,7 @@ new SimGroup(MissionGroup) {
          dataBlock = "SpawnSphereMarker";
          client = "-1";
          teamId = "0";
-         position = "-38.5301 143.985 37.9319";
+         position = "-38.5301 90.101 120.57";
          rotation = "0 0 1 180";
          scale = "1 1 1";
          paletteColors[0] = "252 153 52 255";
@@ -1318,7 +1319,7 @@ new SimGroup(MissionGroup) {
          dataBlock = "SpawnSphereMarker";
          client = "-1";
          teamId = "0";
-         position = "-44.1013 143.985 37.9319";
+         position = "-44.1013 90.101 120.57";
          rotation = "0 0 1 180";
          scale = "1 1 1";
          paletteColors[0] = "252 153 52 255";
@@ -1354,7 +1355,7 @@ new SimGroup(MissionGroup) {
          dataBlock = "SpawnSphereMarker";
          client = "-1";
          teamId = "0";
-         position = "-49.9443 143.985 37.9319";
+         position = "-49.9443 90.101 120.57";
          rotation = "0 0 1 180";
          scale = "1 1 1";
          paletteColors[0] = "252 153 52 255";
@@ -1390,7 +1391,7 @@ new SimGroup(MissionGroup) {
          dataBlock = "SpawnSphereMarker";
          client = "-1";
          teamId = "0";
-         position = "-55.3282 143.985 37.9319";
+         position = "-55.3282 90.101 120.57";
          rotation = "0 0 1 180";
          scale = "1 1 1";
          paletteColors[0] = "252 153 52 255";
@@ -1426,7 +1427,7 @@ new SimGroup(MissionGroup) {
          dataBlock = "SpawnSphereMarker";
          client = "-1";
          teamId = "0";
-         position = "51.7784 143.985 37.9319";
+         position = "51.7784 90.101 120.57";
          rotation = "0 0 1 180";
          scale = "1 1 1";
          paletteColors[0] = "252 153 52 255";
@@ -1462,7 +1463,7 @@ new SimGroup(MissionGroup) {
          dataBlock = "SpawnSphereMarker";
          client = "-1";
          teamId = "0";
-         position = "45.865 143.985 37.9319";
+         position = "45.865 90.101 120.57";
          rotation = "0 0 1 180";
          scale = "1 1 1";
          paletteColors[0] = "252 153 52 255";
@@ -1498,7 +1499,7 @@ new SimGroup(MissionGroup) {
          dataBlock = "SpawnSphereMarker";
          client = "-1";
          teamId = "0";
-         position = "40.2938 143.985 37.9319";
+         position = "40.2938 90.101 120.57";
          rotation = "0 0 1 180";
          scale = "1 1 1";
          paletteColors[0] = "252 153 52 255";
@@ -1534,7 +1535,7 @@ new SimGroup(MissionGroup) {
          dataBlock = "SpawnSphereMarker";
          client = "-1";
          teamId = "0";
-         position = "34.4508 143.985 37.9319";
+         position = "34.4508 90.101 120.57";
          rotation = "0 0 1 180";
          scale = "1 1 1";
          paletteColors[0] = "252 153 52 255";
@@ -1570,7 +1571,7 @@ new SimGroup(MissionGroup) {
          dataBlock = "SpawnSphereMarker";
          client = "-1";
          teamId = "0";
-         position = "29.0669 143.985 37.9319";
+         position = "29.0669 90.101 120.57";
          rotation = "0 0 1 180";
          scale = "1 1 1";
          paletteColors[0] = "252 153 52 255";
@@ -1793,6 +1794,10 @@ new SimGroup(MissionGroup) {
       collisionType = "Visible Mesh";
       decalType = "Visible Mesh";
       allowPlayerStep = "1";
+      alphaFadeEnable = "0";
+      alphaFadeStart = "100";
+      alphaFadeEnd = "150";
+      alphaFadeInverse = "0";
       renderNormals = "0";
       forceDetail = "-1";
       position = "0 0 -191.028";
@@ -1882,7 +1887,7 @@ new SimGroup(MissionGroup) {
          msToNext = "1000";
          smoothingType = "Spline";
          position = "37 116 201";
-         rotation = "0.0209759 0.0211819 -0.999556 90.5878";
+         rotation = "0.0209759 0.0211819 -0.999556 90.5879";
          scale = "1 1 1";
          paletteColors[0] = "227 209 124 255";
          paletteColors[1] = "227 209 124 255";
@@ -1994,9 +1999,10 @@ new SimGroup(MissionGroup) {
       castShadows = "1";
       squareSize = "4";
       baseTexSize = "1024";
+      baseTexFormat = "JPG";
       lightMapSize = "256";
       screenError = "16";
-      position = "-512 -512 -0.02211";
+      position = "-512 -512 -1";
       rotation = "1 0 0 0";
       paletteColors[0] = "255 255 255 255";
       paletteColors[1] = "255 255 255 255";
