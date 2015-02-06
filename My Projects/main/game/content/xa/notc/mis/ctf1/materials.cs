@@ -1,16 +1,17 @@
+
 new TerrainMaterial()
 {
-   detailDistance = "9999";
-   internalName = "xa_notc_mis_ctf1_termat1";
+   diffuseMap = "content/xa/notc/mis/ctf1/textures/xa_notc_mis_ctf1_termat1";
    diffuseSize = "256";
+   detailMap = "content/xa/notc/core/textures/grid.128.4";
    detailSize = "0.5";
    detailStrength = "0.1";
-   macroStrength = "0.1";
-   detailMap = "content/xa/notc/core/textures/grid.128.4";
+   detailDistance = "9999";
    macroMap = "content/xa/notc/core/textures/grid.128.4";
    macroSize = "4";
+   macroStrength = "0.1";
    macroDistance = "9999";
-   diffuseMap = "content/xa/notc/mis/ctf1/textures/xa_notc_mis_ctf1_termat1";
+   internalName = "xa_notc_mis_ctf1_termat1";
 };
 
 singleton Material(xa_notc_mis_ctf1_termat1fx)
