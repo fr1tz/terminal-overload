@@ -12,7 +12,7 @@ datablock ShotgunProjectileData(WpnSMG3Projectile)
 
    explodesNearEnemies = false;
    explodesNearEnemiesRadius = 5;
-   missEnemyEffect = 0; //GenericMissEnemyEffect1;
+   //missEnemyEffect = GenericMissEnemyEffect1;
  
    energyDrain = 2; // how much energy does firing this projectile drain?
 
@@ -20,7 +20,7 @@ datablock ShotgunProjectileData(WpnSMG3Projectile)
 
 	// script damage properties...
 	impactDamage       = 15;
-	impactImpulse      = 600;
+	impactImpulse      = 0;
 	splashDamage       = 0;
 	splashDamageRadius = 0;
 	splashImpulse      = 0;

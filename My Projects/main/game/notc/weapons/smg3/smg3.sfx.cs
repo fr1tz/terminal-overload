@@ -1,10 +1,20 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
+datablock SFXDescription(WpnSMG3FireSoundDescription : AudioEffect)
+{
+   volume            = 1.0;
+   isLooping         = true;
+   is3D              = true;
+   ReferenceDistance = 125.0;
+   MinDistance       = 125.0;
+   MaxDistance       = 150.0;
+};
+
 datablock SFXProfile(WpnSMG3FireSound)
 {
    filename = "content/o/rotc/p.5.4/sounds/rotc/charge5";
-   description = AudioDefaultLoop3D;
+   description = WpnSMG3FireSoundDescription;
    preload = true;
 };
 
@@ -24,7 +34,7 @@ datablock SFXProfile(WpnSMG3SwitchinSound)
 
 datablock SFXProfile(WpnSMG3ProjectileImpactSound)
 {
-   filename = "content/o/cat5/p.1/sounds/cat5/charge4fire";
+   filename = "content/o/rotc/p.5.4/sounds/rotc/debris1";
    description = AudioDefault3D;
    preload = true;
 };
