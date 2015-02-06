@@ -194,8 +194,6 @@ function TE::loadoutPlayer(%player)
    %player.zShapeBaseHudInfo.setDatasetType(2, $HudInfoDatasetType::IconID);
    %player.zShapeBaseHudInfo.setDatasetIntField(2, 1);
    
-   %player.clearWeaponCycle();
-
    %player.setInventory(ItemDamper, 1);
    %player.setInventory(ItemVAMP, 1);
    %player.setInventory(ItemImpShield, 1);
@@ -207,13 +205,29 @@ function TE::loadoutPlayer(%player)
    
    %player.setInventory(ItemEtherboard, 1);
    %player.setInventory(ItemStealth, 1);
+   
    %player.setInventory(WpnRazorDiscAmmo, 9999);
-   %player.setInventory(WpnSMG2, 3);
-   %player.addToWeaponCycle(WpnSMG3);
+   
+   %player.setInventory(WpnSMG3, 1);
+   %player.setInventory(WpnRFL1, 1);
    %player.setInventory(WpnMGL2, 1);
-   %player.addToWeaponCycle(WpnMGL2);
+   %player.setInventory(WpnSG3, 1);
    %player.setInventory(WpnSR2, 1);
+   %player.setInventory(WpnSMG4, 1);
+   %player.setInventory(WpnMG2, 1);
+   %player.setInventory(WpnSG2, 1);
+   
+   %player.clearWeaponCycle();
+
+   %player.addToWeaponCycle(WpnSMG3);
+   %player.addToWeaponCycle(WpnRFL1);
+   %player.addToWeaponCycle(WpnMGL2);
+   %player.addToWeaponCycle(WpnSG3);
    %player.addToWeaponCycle(WpnSR2);
+   %player.addToWeaponCycle(WpnSMG4);
+   %player.addToWeaponCycle(WpnMG2);
+   %player.addToWeaponCycle(WpnSG2);
+
    %player.mountImage(WpnSMG3Image, 0);
 }
 

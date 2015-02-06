@@ -265,8 +265,41 @@ function GameCoreTE::clientAction(%game, %client, %nr)
    %obj = %client.getControlObject();
    if(!isObject(%obj))
       return;
-
-   %obj.getDataBlock().clientAction(%obj, %nr);
+      
+   if(%nr >= 1 && %nr <= 4 && %obj.isCAT)
+   {
+      %image = %obj.getMountedImage(0);
+      if(%nr == 1)
+      {
+         if(%image == WpnSMG3Image.getId())
+            %obj.mountImage(WpnRFL1Image, 0);
+         else
+            %obj.mountImage(WpnSMG3Image, 0);
+      }
+      else if(%nr == 2)
+      {
+         if(%image == WpnMGL2Image.getId())
+            %obj.mountImage(WpnSG3Image, 0);
+         else
+            %obj.mountImage(WpnMGL2Image, 0);
+      }
+      else if(%nr == 3)
+      {
+         if(%image == WpnSR2Image.getId())
+            %obj.mountImage(WpnSMG4Image, 0);
+         else
+            %obj.mountImage(WpnSR2Image, 0);
+      }
+      else if(%nr == 4)
+      {
+         if(%image == WpnMG2Image.getId())
+            %obj.mountImage(WpnSG2Image, 0);
+         else
+            %obj.mountImage(WpnMG2Image, 0);
+      }
+   }
+   else
+      %obj.getDataBlock().clientAction(%obj, %nr);
 }
 
 function GameCoreTE::etherformManifest(%game, %obj)
