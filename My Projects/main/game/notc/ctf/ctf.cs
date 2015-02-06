@@ -151,28 +151,34 @@ function CTF::loadoutPlayer(%player)
          %player.setInventory(ItemStealth, 1);
          %player.setInventory(WpnRazorDiscAmmo, 9999);
          %player.setInventory(WpnSMG3, 1);
-         %player.setInventory(WpnSG3, 1);
+         %player.setInventory(WpnRFL1, 1);
          %player.addToWeaponCycle(WpnSMG3);
-         %player.addToWeaponCycle(WpnSG3);
+         %player.addToWeaponCycle(WpnRFL1);
          %player.mountImage(WpnSMG3Image, 0);
       case 1:
          %player.setInventory(ItemEtherboard, 1);
          %player.setInventory(ItemStealth, 1);
          %player.setInventory(WpnRepelDiscAmmo, 9999);
          %player.setInventory(WpnMGL2, 1);
+         %player.setInventory(WpnSG3, 1);
          %player.addToWeaponCycle(WpnMGL2);
+         %player.addToWeaponCycle(WpnSG3);
          %player.mountImage(WpnMGL2Image, 0);
       case 2:
          %player.setInventory(ItemEtherboard, 1);
          %player.setInventory(ItemStealth, 1);
          %player.setInventory(WpnExplosiveDiscAmmo, 9999);
          %player.setInventory(WpnSR2, 1);
+         %player.setInventory(WpnSMG4, 1);
          %player.addToWeaponCycle(WpnSR2);
+         %player.addToWeaponCycle(WpnSMG4);
          %player.mountImage(WpnSR2Image, 0);
       case 3:
          %player.setInventory(WpnRepelDiscAmmo, 9999);
          %player.setInventory(WpnMG2, 1);
+         %player.setInventory(WpnSG2, 1);
          %player.addToWeaponCycle(WpnMG2);
+         %player.addToWeaponCycle(WpnSG2);
          %player.mountImage(WpnMG2Image, 0);
    }
 }
