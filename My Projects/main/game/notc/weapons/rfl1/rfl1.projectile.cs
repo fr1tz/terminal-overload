@@ -93,8 +93,8 @@ datablock ProjectileData(WpnRFL1Projectile)
 	bypassDamageBuffer = false;
  
    explodesNearEnemies = false;
-   explodesNearEnemiesRadius = 2;
-   explodesNearEnemiesMask = $TypeMasks::PlayerObjectType;
+   explodesNearEnemiesRadius = 5;
+   missEnemyEffect = GenericMissEnemyEffect1;
  
    energyDrain = 16;
 
