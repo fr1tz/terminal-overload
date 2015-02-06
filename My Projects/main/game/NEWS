@@ -1,6 +1,22 @@
 What's new?
 ===========
 
+Version 0.6.0-testing3
+----------------------
+
+Release Date: Feb. 6, 2015
+
+- Reduce Territory Generator Delivery Vehicle's health from 1000 to 100.
+- New weapons: SMG3, SMG4 and RFL1
+- Change CTF mode class weapons:
+  - Class 1: SMG3 and RFL1
+  - Class 2: MGL2 and SG3
+  - Class 3: SR2 and SMG4
+  - Class 4: MG2 and SG2
+- Various tweaks and improvements
+- Bugfixes
+
+
 Version 0.6.0-testing2
 ----------------------
 
