@@ -20,8 +20,8 @@ datablock ItemData(WpnRFL1)
 
    // Dynamic properties defined by the scripts
    PreviewImage = 'lurker.png';
-   pickUpName = "MGL2";
-   description = "MGL2";
+   pickUpName = "RFL1";
+   description = "RFL1";
    image = WpnRFL1Image;
    reticle = "crossHair";
 };
