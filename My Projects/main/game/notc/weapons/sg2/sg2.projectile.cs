@@ -22,14 +22,8 @@ function WpnSG2PseudoProjectile::onAdd(%this, %obj)
 {
    // Create actual projectile.
    %data = WpnSG2Projectile;
-   %ammo = WpnSG2Ammo;
 	%player = %obj.sourceObject;
 	%slot = %obj.sourceSlot;
- 
-   if(%player.getInventory(%ammo) == 0)
-      return;
-      
-   %player.decInventory(%ammo, 1);
 
    %muzzleVector = %player.getMuzzleVector(0);
 	%muzzlePoint = %player.getMuzzlePoint(0);

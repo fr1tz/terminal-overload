@@ -28,16 +28,16 @@ datablock ShapeBaseImageData(WpnSG2Image)
    // provides some hooks into the inventory system.
    class = "WeaponImage";
 
-   ammoSource = "Hybrid";
+   ammoSource = "Energy";
    minEnergy = 16;
 
    projectile = WpnSG2PseudoProjectile;
 
-   casing = WpnSG2ProjectileShell;
-   shellExitDir        = "1.0 0.3 1.0";
-   shellExitOffset     = "0.15 -0.56 -0.1";
-   shellExitVariance   = 15.0;
-   shellVelocity       = 3.0;
+   //casing = WpnSG2ProjectileShell;
+   //shellExitDir        = "1.0 0.3 1.0";
+   //shellExitOffset     = "0.15 -0.56 -0.1";
+   //shellExitVariance   = 15.0;
+   //shellVelocity       = 3.0;
 
    // Weapon lights up while firing
    lightType = "WeaponFireLight";
@@ -56,7 +56,6 @@ datablock ShapeBaseImageData(WpnSG2Image)
    
    // Script fields
    item = WpnSG2;
-   ammo = WpnSG2Ammo;
 
 	//-------------------------------------------------
 	// image states...
