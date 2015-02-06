@@ -385,12 +385,13 @@ function AIPlayer::spawn(%teamId, %weapon)
       Game.loadOut(%player);
       
       %player.setInventory(WpnSMG3, 1);
+      %player.setInventory(WpnSMG4, 1);
       %player.setInventory(WpnSG3, 1);
       %player.setInventory(WpnSG2, 1);
-      %player.setInventory(WpnSG2Ammo, 9999);
       %player.setInventory(WpnMG2, 1);
       %player.setInventory(WpnMGL2, 1);
       %player.setInventory(WpnSR2, 1);
+      %player.setInventory(WpnRFL1, 1);
       
       %player.shootingDelay = 100;
       //%player.followPath(%path, -1);
@@ -400,7 +401,7 @@ function AIPlayer::spawn(%teamId, %weapon)
       if(%weapon == 1)
       {
          %player.mountImage(WpnSMG3Image, 0);
-         %player.singleShot();
+         %player.setImageTrigger(0, true);
       }
       else if(%weapon == 2)
       {
@@ -426,6 +427,16 @@ function AIPlayer::spawn(%teamId, %weapon)
       {
          %player.mountImage(WpnMG2Image, 0);
          %player.setImageTrigger(0, true);
+      }
+      else if(%weapon == 7)
+      {
+         %player.mountImage(WpnSMG4Image, 0);
+         %player.singleShot();
+      }
+      else if(%weapon == 8)
+      {
+         %player.mountImage(WpnRFL1Image, 0);
+         %player.singleShot();
       }
 
       return %player;
