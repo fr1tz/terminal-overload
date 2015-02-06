@@ -275,6 +275,7 @@ datablock PlayerData(FrmStandardcat)
    maxInv[WpnSMG1] = 1;
    maxInv[WpnSMG2] = 1;
    maxInv[WpnSMG3] = 1;
+   maxInv[WpnSMG4] = 1;
    maxInv[WpnMGL1] = 1;
    maxInv[WpnMGL2] = 1;
    maxInv[WpnSG1] = 1;
@@ -289,7 +290,6 @@ datablock PlayerData(FrmStandardcat)
    
    maxInv[WpnMGL1Ammo] = 9999;
    maxInv[WpnSG1Ammo] = 9999;
-   maxInv[WpnSG2Ammo] = 9999;
    maxInv[WpnSR1Ammo] = 9999;
    maxInv[WpnMG1Ammo] = 9999;
    maxInv[WpnML1Ammo] = 9999;
