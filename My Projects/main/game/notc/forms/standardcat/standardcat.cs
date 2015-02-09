@@ -879,6 +879,9 @@ function FrmStandardcat::addDiscTarget(%this, %obj, %target)
       
    if(%target.getTeamId() == %obj.getTeamId())
       return;
+      
+   if(%target.getDamageState() !$= "Enabled")
+      return;
 
 	%count = %obj.zDiscTargetSet.getCount();
 	for(%idx= 0; %idx < %count; %idx++)
