@@ -865,6 +865,9 @@ function FrmStandardcat::damage(%this, %obj, %sourceObject, %position, %damage, 
 // Called from script
 function FrmStandardcat::addDiscTarget(%this, %obj, %target)
 {
+   if(!%target.isCAT)
+      return;
+
    if(%target.getDataBlock().ignoreDamage)
       return;
 
