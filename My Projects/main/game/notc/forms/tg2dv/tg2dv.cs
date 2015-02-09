@@ -298,6 +298,18 @@ function FrmTerritoryGenerator2DV::onTrigger(%this, %obj, %triggerNum, %val)
       %this.transform(%obj);
 }
 
+function FrmTerritoryGenerator2DV::onDisabled(%this, %obj, %state)
+{
+   // Explosion
+   %exp = ItemG1LauncherProjectileExplosion;
+   %pos = %obj.getPosition();
+   %norm = "0 0 1";
+   %colorI = %obj.paletteColors[0];
+   createExplosion(%exp, %pos, %norm, %colorI);
+   
+   %obj.schedule(0, "delete");
+}
+
 // Called by script
 function FrmTerritoryGenerator2DV::playSpawnEffects(%this, %obj)
 {
@@ -316,28 +328,7 @@ function FrmTerritoryGenerator2DV::clientAction(%this, %obj, %nr)
 // Called by ShapeBase script code.
 function FrmTerritoryGenerator2DV::getBleed(%this, %obj, %dmg, %src)
 {
-   if(%dmg > 90)
-      return FrmStandardCatBleedEffect100;
-   else if(%dmg > 80)
-      return FrmStandardCatBleedEffect90;
-   else if(%dmg > 70)
-      return FrmStandardCatBleedEffect80;
-   else if(%dmg > 60)
-      return FrmStandardCatBleedEffect70;
-   else if(%dmg > 50)
-      return FrmStandardCatBleedEffect60;
-   else if(%dmg > 40)
-      return FrmStandardCatBleedEffect50;
-   else if(%dmg > 30)
-      return FrmStandardCatBleedEffect40;
-   else if(%dmg > 20)
-      return FrmStandardCatBleedEffect30;
-   else if(%dmg > 10)
-      return FrmStandardCatBleedEffect20;
-   else if(%dmg > 0)
-      return FrmStandardCatBleedEffect10;
-   else
-      return FrmStandardCatBleedEffect0;
+   return FrmStandardcat::getBleed(%this, %obj, %dmg, %src);
 }
 
 function FrmTerritoryGenerator2DV::canMaterialize(%this, %client, %pos, %normal, %transform)
