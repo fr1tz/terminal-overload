@@ -62,7 +62,7 @@ datablock ShapeBaseImageData(WpnMGL2Image)
 	//
 		// preactivation...
 		stateName[0]                     = "Preactivate";
-		stateTransitionOnAmmo[0]         = "Activate";
+		stateTransitionOnAmmo[0]         = "Ready";
 		stateTransitionOnNoAmmo[0]		   = "NoAmmo";
 		stateTimeoutValue[0]             = 0.0;
 		stateSequence[0]                 = "idle";
