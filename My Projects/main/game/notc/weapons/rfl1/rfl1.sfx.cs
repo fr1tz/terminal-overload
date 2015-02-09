@@ -37,7 +37,7 @@ datablock SFXProfile(WpnRFL1ProjectileSound)
 
 datablock SFXProfile(WpnRFL1ProjectileExplosionSound)
 {
-   filename = "content/o/rotc/p.5.4/sounds/rotc/explosion13";
+   filename = "content/o/cat5/p.1/sounds/cat5/impact1a";
    description = AudioClose3D;
    preload = true;
 };
