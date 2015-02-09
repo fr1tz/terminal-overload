@@ -529,7 +529,7 @@ function JoinServerDlg::query(%this)
       0,          // maxBots
       2,          // regionMask
       0,          // maxPing
-      100,        // minCPU
+      0,          // minCPU
       0           // filterFlags
    );
 }
@@ -547,7 +547,7 @@ function JoinServerDlg::queryLan(%this)
       0,          // maxBots
       2,          // regionMask
       0,          // maxPing
-      100,        // minCPU
+      0,          // minCPU
       0           // filterFlags
    );
 }
