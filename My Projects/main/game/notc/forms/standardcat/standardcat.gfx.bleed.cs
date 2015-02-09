@@ -125,7 +125,7 @@ datablock ExplosionData(FrmStandardCatBleedEffect10)
    lightEndBrightness = "1.80392";
    particleRadius = "0.1";
    particleDensity = "2";
-   emitter[0] = "FrmStandardCatBleedEffect10Emitter";
+   //emitter[0] = "FrmStandardCatBleedEffect10Emitter";
    //Debris = "FrmStandardCatBleedEffect_Debris";
    debrisThetaMax = "60";
    debrisNum = "2";

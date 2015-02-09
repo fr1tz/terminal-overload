@@ -596,7 +596,7 @@ function FrmStandardcat::clientAction(%this, %obj, %nr)
 function FrmStandardcat::getBleed(%this, %obj, %dmg, %src)
 {
    if(%dmg > 0)
-      return ""; // Our damage particle emitter takes care of this
+      return FrmStandardCatBleedEffect10;
    else
       return FrmStandardCatBleedEffect0;
 
