@@ -12,7 +12,7 @@ datablock ShotgunProjectileData(WpnSMG4PseudoProjectile)
 	referenceSpreadRadius = 0.0;
 	referenceSpreadDistance = 50;
  
-   energyDrain = 5;
+   energyDrain = 3;
 
    muzzleVelocity      = 9999;
    velInheritFactor    = 0;
