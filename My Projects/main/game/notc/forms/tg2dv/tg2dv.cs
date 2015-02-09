@@ -146,6 +146,8 @@ datablock PlayerData(FrmTerritoryGenerator2DV)
    exitSplashSoundVelocity = 5.0;
    
    repairParticleEmitter = FrmStandardcatRepairEmitter;
+   damageParticleEmitter = FrmStandardcatDamageEmitter;
+   damageParticleMultiplier = 2;
    
    // Shape trails
    numShapeTrails = 0;
