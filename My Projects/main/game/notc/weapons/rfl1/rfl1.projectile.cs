@@ -85,7 +85,7 @@ datablock ProjectileData(WpnRFL1Projectile)
    //lightDesc = BulletProjectileLightDesc;
 
 	// script damage properties...
-	impactDamage       = 30;
+	impactDamage       = 60;
 	impactImpulse      = 2500;
 	splashDamage       = 0;
 	splashDamageRadius = 0;
