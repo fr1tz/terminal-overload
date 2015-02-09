@@ -1,45 +1,25 @@
 What's new?
 ===========
 
-Version 0.6.0-testing3
-----------------------
+Version 0.6.0
+-------------
 
-Release Date: Feb. 6, 2015
+Release Date: Feb. 9, 2015
 
 - New weapons: SMG3, SMG4 and RFL1
+- Add primitive "Capture The Flag" game mode and a simple map for use with it.
+- Add new form for CTF mode: Territory Generator delivery vehicle.
 - In Team Elimination mode, CATs carry all available weapons.
-- Change CTF mode class weapons:
+- Add primitive support for automatic download of missing content.
+- Change CAT classes weapon loadouts:
   - Class 1: SMG3 and RFL1
   - Class 2: MGL2 and SG3
   - Class 3: SR2 and SMG4
   - Class 4: MG2 and SG2
-- Reduce Territory Generator Delivery Vehicle's health from 1000 to 100.
-- Changes to ETH1 and TE1 maps.
-- Various tweaks and improvements
-- Bugfixes
-
-
-Version 0.6.0-testing2
-----------------------
-
-Release Date: Jan. 30, 2015
-
-- Make carrying a flag supercharge a CAT's impulse damper recharge rate.
-- Improve loading screen.
-- Various tweaks and improvements
-- Bugfixes
-
-
-Version 0.6.0-testing1
-----------------------
-
-Release Date: Jan. 29, 2015
-
-- Add primitive "Capture The Flag" game mode + a simple map for use with it.
-- Add new form for CTF mode: Territory Generator delivery vehicle.
-- Add primitive support for automatic download of missing content.
 - Tweak B.O.U.N.C.E. impulse direction.
+- Changes to ETH1 and TE1 maps.
 - Update to Torque3D 3.6.2.
+- Improve loading screen.
 - Various tweaks and improvements
 - Bugfixes
 
