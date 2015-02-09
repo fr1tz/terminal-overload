@@ -125,62 +125,7 @@ function CTF::loadoutEtherform(%player)
 function CTF::loadoutPlayer(%player)
 {
    //echo("CTF::loadoutPlayer()");
-
-   %client = %player.client;
-   if(!isObject(%client))
-      return;
-
-   // Setup ShapeBase HudInfo object icon
-   %player.zShapeBaseHudInfo.setDatasetType(2, $HudInfoDatasetType::IconID);
-   %player.zShapeBaseHudInfo.setDatasetIntField(2, %client.zActiveLoadout+1);
-
-   %player.setInventory(ItemDamper, 1);
-   %player.setInventory(ItemVAMP, 1);
-   %player.setInventory(ItemImpShield, 1);
-   %player.setInventory(ItemLauncher, 1);
-   %player.setInventory(ItemBounce, 1);
-   %player.setInventory(ItemXJump, 1);
-
-   %player.setInventory(ItemG1Launcher, 1);
-   
-   %player.clearWeaponCycle();
-   switch(%client.zActiveLoadout)
-   {
-      case 0:
-         %player.setInventory(ItemEtherboard, 1);
-         %player.setInventory(ItemStealth, 1);
-         %player.setInventory(WpnRazorDiscAmmo, 9999);
-         %player.setInventory(WpnSMG3, 1);
-         %player.setInventory(WpnRFL1, 1);
-         %player.addToWeaponCycle(WpnSMG3);
-         %player.addToWeaponCycle(WpnRFL1);
-         %player.mountImage(WpnSMG3Image, 0);
-      case 1:
-         %player.setInventory(ItemEtherboard, 1);
-         %player.setInventory(ItemStealth, 1);
-         %player.setInventory(WpnRepelDiscAmmo, 9999);
-         %player.setInventory(WpnMGL2, 1);
-         %player.setInventory(WpnSG3, 1);
-         %player.addToWeaponCycle(WpnMGL2);
-         %player.addToWeaponCycle(WpnSG3);
-         %player.mountImage(WpnMGL2Image, 0);
-      case 2:
-         %player.setInventory(ItemEtherboard, 1);
-         %player.setInventory(ItemStealth, 1);
-         %player.setInventory(WpnExplosiveDiscAmmo, 9999);
-         %player.setInventory(WpnSR2, 1);
-         %player.setInventory(WpnSMG4, 1);
-         %player.addToWeaponCycle(WpnSR2);
-         %player.addToWeaponCycle(WpnSMG4);
-         %player.mountImage(WpnSR2Image, 0);
-      case 3:
-         %player.setInventory(WpnRepelDiscAmmo, 9999);
-         %player.setInventory(WpnMG2, 1);
-         %player.setInventory(WpnSG2, 1);
-         %player.addToWeaponCycle(WpnMG2);
-         %player.addToWeaponCycle(WpnSG2);
-         %player.mountImage(WpnMG2Image, 0);
-   }
+   ETH::loadoutPlayer(%player);
 }
 
 function CTF::switchToEtherform(%client)
