@@ -22,6 +22,8 @@
 
 #include "platform/nativeDialogs/fileDialog.h"
 
+#ifndef TORQUE_SDL
+
 #ifdef TORQUE_TOOLS
 //-----------------------------------------------------------------------------
 // PlatformFileDlgData Implementation
@@ -351,4 +353,5 @@ void OpenFolderDialog::initPersistFields()
     Parent::initPersistFields();
 }
 
+#endif
 #endif

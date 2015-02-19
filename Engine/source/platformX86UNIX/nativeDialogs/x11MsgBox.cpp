@@ -25,8 +25,12 @@
 
 //-----------------------------------------------------------------------------
 
+#ifndef TORQUE_SDL
+
 S32 Platform::messageBox(const UTF8 *title, const UTF8 *message, MBButtons buttons, MBIcons icon)
 {
     AssertFatal(0, "Not Implemented");
     return 0;
 }
+
+#endif
