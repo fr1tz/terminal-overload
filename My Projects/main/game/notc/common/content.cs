@@ -110,7 +110,7 @@ function requiredContent_addFromPattern(%pattern)
 
 function requiredContent_filter()
 {
-   %filterExt = ".xcf .dae .blend .blend1 .mmpz .svg .max";
+   %filterExt = ".xcf .dae .blend .blend1 .mmpz .svg .max .ml";
    %n = $Server::RequiredContent.count();
    for(%i = %n-1; %i >= 0; %i--)
    {
