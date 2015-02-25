@@ -3,7 +3,9 @@
 
 datablock ExplosionData(WpnSR2ProjectileHit)
 {
-	explosionShape = "content/xa/notc/core/shapes/mgl1/impactdmg/p1/shape.dae";
+	soundProfile = WpnSR2ProjectileImpactSound;
+
+	//explosionShape = "content/xa/notc/core/shapes/mgl1/impactdmg/p1/shape.dae";
 	faceViewer	  = false;
 	playSpeed = 4.0;
 	sizes[0] = "3.0 3.0 3.0";
