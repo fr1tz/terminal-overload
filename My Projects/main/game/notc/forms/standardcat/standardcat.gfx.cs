@@ -654,6 +654,51 @@ datablock ParticleEmitterData(FrmStandardcatDamageEmitter)
    targetLockTimeMS = "480";
 };
 
+//------------------------------------------------------------------------------
+// buffer damage particle emitter...
+
+datablock ParticleData(FrmStandardcatBufferDamageEmitter_Particle)
+{
+   times[0] = "0";
+   times[1] = "1";
+   sizes[0] = "0.2";
+   sizes[1] = "0";
+   colors[0] = "1 1 1 1";
+   colors[1] = "1 1 1 0";
+   inheritedVelFactor = "0";
+   lifetimeMS = "1000";
+   lifetimeVarianceMS = "0";
+   dragCoefficient = "0";
+   spinSpeed = "0";
+   textureName = "content/xa/notc/core/textures/white.128.png";
+   animTexName = "content/xa/notc/core/textures/white.128.png";
+   ejectionPeriodMS = "2";
+   ejectionVelocity = "0";
+   softnessDistance = "1";
+   ejectionOffset = "0";
+   gravityCoefficient = "2.99634";
+   useInvAlpha = "0";
+};
+
+datablock ParticleEmitterData(FrmStandardcatBufferDamageEmitter)
+{
+   particles = "FrmStandardcatBufferDamageEmitter_Particle";
+   ejectionPeriodMS = "1";
+   periodVarianceMS = "0";
+   softnessDistance = "1";
+   ejectionVelocity = "15";
+   ejectionOffset = "0";
+   thetaMin = "0";
+   thetaMax = "80";
+   orientParticles = "1";
+   blendStyle = "ADDITIVE";
+   particleDensity = "2";
+   particleRadius = "0.1";
+   lifetimeMS = "0";
+   paletteSlot = -1;
+   glow = "1";
+};
+
 //-----------------------------------------------------------------------------
 // jump explosion
 

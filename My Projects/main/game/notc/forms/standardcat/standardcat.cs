@@ -164,6 +164,8 @@ datablock PlayerData(FrmStandardcat)
    repairParticleEmitter = FrmStandardcatRepairEmitter;
    damageParticleEmitter = FrmStandardcatDamageEmitter;
    damageParticleMultiplier = 2;
+   bufferDamageParticleEmitter = FrmStandardcatBufferDamageEmitter;
+   bufferDamageParticleMultiplier = 2;
    
    // Shape trails
    numShapeTrails = 5;
