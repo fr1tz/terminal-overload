@@ -102,13 +102,31 @@ singleton Material(xa_notc_core_shapes_standardcat_mat2)
    doubleSided = "0";
    translucent = "0";
    translucentZWrite = "0";
-   translucentBlendOp = "None";
+   translucentBlendOp = "AddAlpha";
    alphaRef = "0";
    showFootprints = "0";
    pixelSpecular[1] = "0";
    specularPower[0] = "1";
    diffuseMap[1] = "content/xa/notc/core/textures/grid.128.8.png";
    detailScale[0] = "16 16";
+   diffuseColor[2] = "0.992157 0.996078 0.996078 1";
+   emissive[2] = "1";
+   wireframe[2] = "0";
+   glow[2] = "1";
+   glowOnly[2] = "0";
+   castShadows = "0";
+   animFlags[2] = "0x00000000";
+   scrollDir[2] = "0 -1";
+   scrollSpeed[2] = "1.059";
+   diffuseColorPaletteSlot[2] = "15";
+   rotSpeed[2] = "1.529";
+   rotPivotOffset[2] = "-0.5 -0.5";
+   waveType[2] = "Triangle";
+   waveFreq[2] = "0.313";
+   waveAmp[2] = "1";
+   diffuseMap[2] = "content/xa/notc/core/shapes/standardcat/damagebuffer.png";
+   effectColor[0] = "0 0 0 0";
+   specular[1] = "1 1 1 1";
 };
 
 singleton Material(xa_notc_core_shapes_standardcat_stealthmat1)
