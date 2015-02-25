@@ -89,10 +89,12 @@ datablock ProjectileData(WpnSG2Projectile)
    
    energyDrain = 16;
  
-   explosion           = "WpnSG2ProjectileExplosion";
-   decal               = "WpnSG2ProjectileDecal";
-   laserTrail[0]       = "WpnSG2ProjectileLaserTrail0";
-   //particleEmitter     = "WpnSG2ProjectileParticleEmitter";
+   explosion                  = "WpnSG2ProjectileExplosion";
+   impactExplosion[0]         = "WpnSG2ProjectileHit";
+   impactExplosionTypeMask[0] = $TypeMasks::ShapeBaseObjectType;
+   decal                      = "WpnSG2ProjectileDecal";
+   laserTrail[0]              = "WpnSG2ProjectileLaserTrail0";
+   //particleEmitter          = "WpnSG2ProjectileParticleEmitter";
 
    muzzleVelocity      = 200;
    velInheritFactor    = 0.5;

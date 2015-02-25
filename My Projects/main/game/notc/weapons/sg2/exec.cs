@@ -5,6 +5,7 @@ exec("./sg2.sfx.cs");
 exec("./sg2.gfx.cs");
 exec("./sg2.gfx.fireexplosion.cs");
 exec("./sg2.item.cs");
+exec("./sg2.projectile.gfx.hit.cs");
 exec("./sg2.projectile.cs");
 exec("./sg2.image.cs");
 
