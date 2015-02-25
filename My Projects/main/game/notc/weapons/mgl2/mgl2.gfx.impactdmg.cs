@@ -3,7 +3,7 @@
 
 datablock ExplosionData(WpnMGL2ProjectileImpactDmgExplosion : WpnMGL2ProjectileExplosion)
 {
-	explosionShape = "content/xa/notc/core/shapes/mgl1/impactdmg/p1/shape.dae";
+	//explosionShape = "content/xa/notc/core/shapes/mgl1/impactdmg/p1/shape.dae";
 	faceViewer	  = false;
 	playSpeed = 4.0;
 	sizes[0] = "0.5 0.5 0.5";
