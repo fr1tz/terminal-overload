@@ -4205,6 +4205,8 @@ bool Player::updateImageTargetFollow(MountedImage& image)
 
 void Player::updateDamageLevel()
 {
+   Parent::updateDamageLevel();
+
    if (!isGhost())
       setDamageState((mDamage >= mDataBlock->maxDamage)? Disabled: Enabled);
    if (mDamageThread)
