@@ -1452,9 +1452,17 @@ void ShapeBase::processTick(const Move* move)
 		F32 store = mDamageBuffer;
 
 		if(mDamageBuffer > mDataBlock->damageBuffer)
+      {
 			mDamageBuffer -= mDamageBufferDischargeRate;
+         if(mDamageBuffer < mDataBlock->damageBuffer)
+            mDamageBuffer = mDataBlock->damageBuffer;
+      }
 		else
+      {
 			mDamageBuffer += mDamageBufferRechargeRate;
+         if(mDamageBuffer > mDataBlock->damageBuffer)
+            mDamageBuffer = mDataBlock->damageBuffer;
+      }
 
 		if(mDamageBuffer < 0)
 			mDamageBuffer = 0;
@@ -2021,11 +2029,14 @@ void ShapeBase::updateDamageLevel()
       }
    }     
 
+   F32 db = mClampF(this->getDamageBufferValue(), 0, 1);
+   if(db < 1)
+      mPalette.colors[15] = mPalette.colors[13];
+   else
+      mPalette.colors[15] = mPalette.colors[14];
+   mPalette.colors[15].alpha = db * F32(mPalette.colors[15].alpha);
    if(mDamageBufferThread)
-   {
-      F32 db = mClampF(this->getDamageBufferValue(), 0, 1);
       mShapeInstance->setPos(mDamageBufferThread, db);
-   }
 }
 
 
