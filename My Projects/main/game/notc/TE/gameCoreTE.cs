@@ -213,6 +213,8 @@ function GameCoreTE::loadOut(%game, %player)
 
    %player.paletteColors[0] = %teamColorI;
    %player.paletteColors[1] = %teamColorI;
+   %player.paletteColors[13] = "255 255 255 255";
+   %player.paletteColors[14] = %teamColorI;
 
    if(isObject(%player.light))
    {
