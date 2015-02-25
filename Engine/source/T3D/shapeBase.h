@@ -583,6 +583,9 @@ public:
    ParticleEmitterData* damageParticleEmitter;
    S32 damageParticleID;
    F32 damageParticleMultiplier;
+   ParticleEmitterData* bufferDamageParticleEmitter;
+   S32 bufferDamageParticleID;
+   F32 bufferDamageParticleMultiplier;
    /// @}
 
    /// @name Shape trails
@@ -1093,6 +1096,9 @@ protected:
 	ParticleEmitter* mDamageEmitter;
    F32 mDamageDelta;
    F32 mLastTickDamage;
+	ParticleEmitter* mBufferDamageEmitter;
+   F32 mDamageBufferDelta;
+   F32 mLastTickDamageBuffer;
    /// @}
 
    /// @name Control info

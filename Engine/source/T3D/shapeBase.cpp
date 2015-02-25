@@ -176,6 +176,9 @@ ShapeBaseData::ShapeBaseData()
    damageParticleEmitter( NULL ),
    damageParticleID( 0 ),
    damageParticleMultiplier( 1.0 ),
+   bufferDamageParticleEmitter( NULL ),
+   bufferDamageParticleID( 0 ),
+   bufferDamageParticleMultiplier( 1.0 ),
    numShapeTrails( 0 ),
    shapeTrailsMaterialName( StringTable->insert("") ),
    shapeTrailsMatInst( NULL ),
@@ -279,8 +282,18 @@ bool ShapeBaseData::preload(bool server, String &errorStr)
          {
             Con::errorf( ConsoleLogEntry::General, "ShapeBaseData::preload: Invalid packet, bad datablockId(damageParticleEmitter): 0x%x", damageParticleID );
          }
-         AssertFatal(!(damageParticleEmitter && ((damageParticleID < DataBlockObjectIdFirst) || (repairParticleID > DataBlockObjectIdLast))),
+         AssertFatal(!(damageParticleEmitter && ((damageParticleID < DataBlockObjectIdFirst) || (damageParticleID > DataBlockObjectIdLast))),
             "ShapeBaseData::preload: invalid damageParticleEmitter data");
+      }
+
+      if( !bufferDamageParticleEmitter && damageParticleID != 0 )
+      {
+         if( Sim::findObject( bufferDamageParticleID, bufferDamageParticleEmitter ) == false)
+         {
+            Con::errorf( ConsoleLogEntry::General, "ShapeBaseData::preload: Invalid packet, bad datablockId(bufferDamageParticleEmitter): 0x%x", bufferDamageParticleID );
+         }
+         AssertFatal(!(bufferDamageParticleEmitter && ((bufferDamageParticleID < DataBlockObjectIdFirst) || (bufferDamageParticleID > DataBlockObjectIdLast))),
+            "ShapeBaseData::preload: invalid bufferDamageParticleEmitter data");
       }
 
       if( !debris && debrisID != 0 )
@@ -549,6 +562,10 @@ void ShapeBaseData::initPersistFields()
          "Particle emitter to use when object's damage level increases." );
       addField( "damageParticleMultiplier", TypeF32, Offset(damageParticleMultiplier, ShapeBaseData),
          "Damage particle amount multiplier." );
+      addField( "bufferDamageParticleEmitter", TYPEID< ParticleEmitterData >(), Offset(bufferDamageParticleEmitter, ShapeBaseData),
+         "Particle emitter to use when object's damage buffer decreases." );
+      addField( "bufferDamageParticleMultiplier", TypeF32, Offset(bufferDamageParticleMultiplier, ShapeBaseData),
+         "Buffer damage particle amount multiplier." );
       addField( "numShapeTrails", TypeS32, Offset(numShapeTrails, ShapeBaseData),
          "Max. number of shape trails to render when moving.");
       addField( "shapeTrailsMaterial", TypeMaterialName, Offset( shapeTrailsMaterialName, ShapeBaseData ),
@@ -804,6 +821,12 @@ void ShapeBaseData::packData(BitStream* stream)
       stream->write(damageParticleMultiplier);
    }
 
+   if( stream->writeFlag( bufferDamageParticleEmitter ) )
+   {
+      stream->writeRangedU32( bufferDamageParticleEmitter->getId(), DataBlockObjectIdFirst,  DataBlockObjectIdLast );
+      stream->write(bufferDamageParticleMultiplier);
+   }
+
    stream->write(numShapeTrails);
    stream->writeString(shapeTrailsMaterialName);
 
@@ -933,6 +956,12 @@ void ShapeBaseData::unpackData(BitStream* stream)
       stream->read(&damageParticleMultiplier);
    }
 
+   if( stream->readFlag() )
+   {
+      bufferDamageParticleID = (S32)stream->readRangedU32(DataBlockObjectIdFirst, DataBlockObjectIdLast);
+      stream->read(&bufferDamageParticleMultiplier);
+   }
+
    stream->read(&numShapeTrails);
    shapeTrailsMaterialName = stream->readSTString();
 
@@ -1030,6 +1059,9 @@ ShapeBase::ShapeBase()
    mDamageEmitter( NULL ),
    mDamageDelta( 0 ),
    mLastTickDamage( 0 ),
+   mBufferDamageEmitter( NULL ),
+   mDamageBufferDelta( 0 ),
+   mLastTickDamageBuffer( 0 ),
    damageDir( 0.0f, 0.0f, 1.0f ),
    mShapeBaseMount( NULL ),
    mMass( 1.0f ),
@@ -1199,6 +1231,19 @@ bool ShapeBase::onAdd()
             mDamageEmitter = NULL;
          }	
       }
+
+      if(mDataBlock->bufferDamageParticleEmitter != NULL)
+      {
+         mBufferDamageEmitter = new ParticleEmitter;
+         mBufferDamageEmitter->setPalette(this->getPalette());
+         mBufferDamageEmitter->onNewDataBlock(mDataBlock->bufferDamageParticleEmitter, false);
+         if( !mBufferDamageEmitter->registerObject() )
+         {
+            Con::warnf( ConsoleLogEntry::General, "Could not register buffer damage particle emitter for class: %s", mDataBlock->getName() );
+            delete mBufferDamageEmitter;
+            mBufferDamageEmitter = NULL;
+         }	
+      }
    }
 
 /*
@@ -1242,6 +1287,12 @@ void ShapeBase::onRemove()
 	   {
 		   mDamageEmitter->deleteWhenEmpty();
 		   mDamageEmitter = NULL;
+	   }
+
+	   if(mBufferDamageEmitter)
+	   {
+		   mBufferDamageEmitter->deleteWhenEmpty();
+		   mBufferDamageEmitter = NULL;
 	   }
    }
 }
@@ -1409,6 +1460,7 @@ void ShapeBase::onImpact(VectorF vec)
 void ShapeBase::processTick(const Move* move)
 {
    F32 beginTickDamage = mDamage;
+   F32 beginTickDamageBuffer = mDamageBuffer;
 
    Parent::processTick(move);
 
@@ -1590,9 +1642,11 @@ void ShapeBase::processTick(const Move* move)
    {
       // Add damage that occured between end of last tick and begin of this tick.
       mDamageDelta += beginTickDamage - mLastTickDamage;
+      mDamageBufferDelta += beginTickDamageBuffer - mLastTickDamageBuffer;
 
       // Add damage that occured in this tick.
       mDamageDelta += mDamage - beginTickDamage;
+      mDamageBufferDelta += mDamageBuffer - beginTickDamageBuffer;
 
       const Point3F axis(0, 1, 0);
       const Point3F& vel = this->getVelocity();
@@ -1644,14 +1698,20 @@ void ShapeBase::processTick(const Move* move)
 				}
 			}
 #endif
+      }
 
-			mDamageDelta = 0;
+      if(mBufferDamageEmitter && mDamageBufferDelta < 0)
+		{
+         const Point3F& pos = this->getRenderWorldBox().getCenter();
+			mBufferDamageEmitter->emitParticles(pos, axis, 0, vel, -mDamageBufferDelta*mDataBlock->bufferDamageParticleMultiplier);
 		}
 
-      mDamageDelta = 0;
+		mDamageDelta = 0;
+		mDamageBufferDelta = 0;
    }
 
    mLastTickDamage = mDamage;
+   mLastTickDamageBuffer = mDamageBuffer;
 }
 
 void ShapeBase::advanceTime(F32 dt)
