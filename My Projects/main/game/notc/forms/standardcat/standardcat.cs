@@ -49,10 +49,10 @@ datablock PlayerData(FrmStandardcat)
    drag = 0.0;
    maxdrag = 0;
    density = 10;
-   maxDamage = 75;
+   maxDamage = 50;
    maxEnergy[0] = 100; // damage damper
    maxEnergy[1] = 100; // impulse damper
-   damageBuffer = 25;
+   damageBuffer = 50;
    energyPerDamagePoint = 75;
 
 	repairRate = 0.8;
