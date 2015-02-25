@@ -53,7 +53,7 @@ datablock ExplosionData(WpnSMG2ProjectileHit)
 	lifetimeMS = "192";
 
 	// shape...
-	explosionShape = "content/xa/notc/core/shapes/mgl1/impactdmg/p1/shape.dae";
+	//explosionShape = "content/xa/notc/core/shapes/mgl1/impactdmg/p1/shape.dae";
 	faceViewer	  = false;
 	playSpeed = 4.0;
 	sizes[0] = "1.0 1.0 1.0";
