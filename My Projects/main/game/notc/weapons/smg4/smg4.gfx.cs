@@ -586,13 +586,3 @@ datablock ExplosionData(WpnSMG4ProjectileExplosion)
    targetLockTimeMS = "480";
 };
 
-//-----------------------------------------------------------------------------
-// impact
-
-datablock ExplosionData(WpnSMG4ProjectileImpact : WpnSMG4ProjectileExplosion)
-{
-	soundProfile = WpnSMG4ProjectileExplosionSound;
-	debrisThetaMax = 60;
-	emitter[2] = DefaultMediumWhiteDebrisEmitter;
-};
-
