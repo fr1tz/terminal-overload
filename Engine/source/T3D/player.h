@@ -710,7 +710,7 @@ protected:
 
    virtual U32 getArmAction() const { return mArmAnimation.action; }
    virtual bool setArmThread(U32 action, bool updateClients = true);
-   virtual void setActionThread(U32 action,bool forward,bool hold = false,bool wait = false,bool fsp = false, bool forceSet = false);
+   virtual void setActionThread(U32 action,bool forward,bool hold = false,bool wait = false,bool fsp = true, bool forceSet = false);
    virtual void updateActionThread();
    virtual void pickBestMoveAction(U32 startAnim, U32 endAnim, U32 * action, bool * forward) const;
    virtual void pickActionAnimation();
@@ -861,7 +861,7 @@ public:
 
    // Animation
    const char* getStateName();
-   bool setActionThread(const char* sequence,bool hold,bool wait,bool fsp = false);
+   bool setActionThread(const char* sequence,bool hold,bool wait,bool fsp = true);
    const String& getArmThread() const;
    bool setArmThread(const char* sequence, bool updateClients = true);
 
