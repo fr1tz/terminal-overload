@@ -112,25 +112,67 @@ function ShapeBase::reloadWeapon(%this)
 
 //------------------------------------------------------------------------------
 
-function ShapeBase::setHitSoundPitch(%this, %pitch)
+function ShapeBase::playHitNotification(%this, %healthPercent, %dmgBufPercent,
+   %healthDamage, %bufferDamage, %targetAcquired)
 {
-   if(%pitch > %this.inflictedDamageSoundPitch)
-      %this.inflictedDamageSoundPitch = %pitch;
+   //echo("ShapeBase::playHitNotification()");
+   
+   if(%this.zHitSoundHealthPercent $= "")
+      %this.zHitSoundHealthPercent = 1.0;
+   if(%this.zHitSoundDmgBufPercent $= "")
+      %this.zHitSoundDmgBufPercent = 1.0;
+   if(%this.zHitSoundTargetAquired)
+      %this.zHitSoundTargetAquired = false;
+   if(%this.zHitSoundHealthDamage $= "")
+      %this.zHitSoundHealthDamage = 0;
+   if(%this.zHitSoundBufferDamage $= "")
+      %this.zHitSoundBufferDamage = 0;
 
-   cancel(%this.inflictedDamageThread);
-   %this.inflictedDamageThread = %this.schedule(0, "playHitSound");
+   if(%healthPercent < %this.zHitSoundHealthPercent)
+      %this.zHitSoundHealthPercent = %healthPercent;
+   if(%dmgBufPercent < %this.zHitSoundDmgBufPercent)
+      %this.zHitSoundDmgBufPercent = %dmgBufPercent;
+   if(%targetAcquired)
+      %this.zHitSoundTargetAquired = true;
+   %this.zHitSoundHealthDamage += %healthDamage;
+   %this.zHitSoundBufferDamage += %bufferDamage;
+
+   // We need to schedule the actual playing of the sound because this method
+   // might get called multiple times on the same tick.
+   cancel(%this.playHitNotificationThread);
+   %this.playHitNotificationThread = %this.schedule(0, "playHitNotificationActual");
 }
 
-function ShapeBase::playHitSound(%this)
+function ShapeBase::playHitNotificationActual(%this)
 {
-   if(%this.client)
-   {
-      %pitch = 0.9 + %this.inflictedDamageSoundPitch / 2;
-      commandToClient(%this.client, 'PlayHitSound', %pitch);
-   }
+   //echo("ShapeBase::playHitNotificationActual()");
 
-   %this.inflictedDamageSoundPitch = 0;
-   %this.inflictedDamageSoundLocked = false;
+   if(!isObject(%this.client))
+      return;
+      
+   //error("health:" SPC %this.zHitSoundHealthPercent*100 @ "%");
+   //echo("dmgbuf:" SPC %this.zHitSoundDmgBufPercent*100 @ "%");
+      
+   if(%this.zHitSoundHealthDamage > 0)
+   {
+      %number = %this.zHitSoundTargetAquired ? 4 : 3;
+      %volume = 0.4 + 0.6*%this.zHitSoundHealthDamage/50;
+      %pitch = 0.9 + (1-%this.zHitSoundHealthPercent)/2;
+      commandToClient(%this.client, 'PlayHitSound', 1, %volume, %pitch);
+   }
+   else if(%this.zHitSoundBufferDamage > 0)
+   {
+      %number = %this.zHitSoundTargetAquired ? 1 : 1;
+      %volume = 0.4 + 0.6*%this.zHitSoundBufferDamage/50;
+      %pitch = 0.5 + %this.zHitSoundDmgBufPercent;
+      commandToClient(%this.client, 'PlayHitSound', 2, %volume, %pitch);
+   }
+      
+   %this.zHitSoundHealthPercent = "";
+   %this.zHitSoundDmgBufPercent = "";
+   %this.zHitSoundTargetAquired = "";
+   %this.zHitSoundHealthDamage  = "";
+   %this.zHitSoundBufferDamage  = "";
 }
 
 function ShapeBase::activateStealth(%this, %time)
@@ -356,7 +398,10 @@ function ShapeBaseData::onDamage(%this, %obj, %delta)
 // Called by script
 function ShapeBaseData::onHitEnemy(%this, %obj, %enemy, %healthDmg, %bufDmg)
 {
-   %obj.setHitSoundPitch(%enemy.getDamagePercent());
+   %enemyData = %enemy.getDataBlock();
+   %healthPercent = 1 - %enemy.getDamageLevel() / %enemyData.maxDamage;
+   %dmgBufPercent = %enemy.getDamageBufferLevel() / %enemyData.damageBuffer;
+   %obj.playHitNotification(%healthPercent, %dmgBufPercent, %healthDmg, %bufDmg);
    
    // Health takeback
 	if(%obj.zVAMP > 0)
