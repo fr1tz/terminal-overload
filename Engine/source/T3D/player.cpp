@@ -4878,7 +4878,7 @@ void Player::pickActionAnimation()
 
    bool forward = true;
    U32 action = PlayerData::RootAnim;
-   bool fsp = false;
+   bool fsp = true;
    
    // Jetting overrides the fall animation condition
    if (mJetting)
