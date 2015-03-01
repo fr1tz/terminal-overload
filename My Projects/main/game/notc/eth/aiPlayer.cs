@@ -240,7 +240,7 @@ function AIPlayer::fire(%this,%bool)
 
 function AIPlayer::aimAt(%this,%object)
 {
-   echo("Aim: "@ %object);
+   //echo("Aim: "@ %object);
    %this.setAimObject(%object);
    %this.nextTask();
 }
