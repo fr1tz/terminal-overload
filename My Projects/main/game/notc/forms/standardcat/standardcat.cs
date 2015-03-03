@@ -52,13 +52,16 @@ datablock PlayerData(FrmStandardcat)
    maxDamage = 50;
    maxEnergy[0] = 100; // damage damper
    maxEnergy[1] = 100; // impulse damper
+   maxEnergy[2] = 100;
    damageBuffer = 50;
    energyPerDamagePoint = 75;
 
 	repairRate = 0.8;
 	damageBufferRechargeRate = 0.15;
 	damageBufferDischargeRate = 0.15;
-	rechargeRate = 0.4;
+	rechargeRate[0] = 0.4;
+	rechargeRate[1] = 0.4;
+	rechargeRate[2] = 0.4;
 
    runForce = 100 * 90;
    runEnergyDrain = 0;
@@ -100,7 +103,7 @@ datablock PlayerData(FrmStandardcat)
    minJumpEnergy = 0;
    jumpDelay = 0;
    
-   xJumpEnergySlot = 1;
+   xJumpEnergySlot = 2;
    xJumpChargeRate = 2.0;
    xJumpSpeedFactorD = 25;
    xJumpPowerBaseConst = 0;
@@ -552,6 +555,8 @@ function FrmStandardcat::onXJump(%this, %obj, %dir)
    //echo("FrmStandardcat::onXJump()");
    if(%obj.hasInventory(ItemXJump))
       ItemXJump.onXJump(%obj, %dir);
+   %newLevel = (%obj.getEnergyLevel(1)-%obj.getXJumpCharge());
+   %obj.setEnergyLevel(%newLevel, 1);
 }
 
 // Called by engine
