@@ -34,7 +34,7 @@ function ItemImpShield::onInventory(%this, %obj, %amount)
    }
    else
    {
-      %obj.setEnergyLevel(50, 1);
+      %obj.setEnergyLevel(%obj.getDataBlock().maxEnergy[1], 1);
    
       %obj.zImpulseDamper = 0.75;
       %obj.zImpulseDamperRechargeRate = 0.4;
