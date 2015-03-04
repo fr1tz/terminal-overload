@@ -1,8 +1,21 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
-function StartServerGui_NOTC::updateArgs(%this)
+function StartServerGui_NOTC::updateArgs(%this, %selected)
 {
+   if(%selected $= "casual")
+   {
+      %this-->as.setValue(0);
+      %this-->am.setValue(0);
+      %this-->vamp.setValue(0);
+   }
+   else if(%selected $= "advanced")
+   {
+      %this-->as.setValue(1);
+      %this-->am.setValue(1);
+      %this-->vamp.setValue(1);
+   }
+
    %args = "";
    
    %mode = "eth";
@@ -23,21 +36,37 @@ function StartServerGui_NOTC::updateArgs(%this)
    if(!$pref::HostMultiPlayer)
       %args = "-sp" SPC %args;
       
-   if(%this-->advanced.getValue())
+   if(%this-->as.getValue() == false
+   && %this-->am.getValue() == false
+   && %this-->vamp.getValue() == false)
    {
-      %this-->as.setValue(1);
-      %this-->as.setActive(false);
-      %this-->am.setValue(1);
-      %this-->am.setActive(false);
-      %this-->vamp.setValue(1);
-      %this-->vamp.setActive(false);
+      if(%selected $= "")
+      {
+         %this-->typeCasual.setValue(1);
+         %this-->typeAdvanced.setValue(0);
+         %this-->typeVariant.setValue(0);
+      }
+   }
+   else if(%this-->as.getValue() == true
+   && %this-->am.getValue() == true
+   && %this-->vamp.getValue() == true)
+   {
+      if(%selected $= "")
+      {
+         %this-->typeCasual.setValue(0);
+         %this-->typeAdvanced.setValue(1);
+         %this-->typeVariant.setValue(0);
+      }
       %args = %args SPC "-advanced";
    }
    else
    {
-      %this-->as.setActive(true);
-      %this-->am.setActive(true);
-      %this-->vamp.setActive(true);
+      if(%selected $= "")
+      {
+         %this-->typeCasual.setValue(0);
+         %this-->typeAdvanced.setValue(0);
+         %this-->typeVariant.setValue(1);
+      }
       if(%this-->as.getValue())
          %args = %args SPC "-as";
       if(%this-->am.getValue())
@@ -45,7 +74,7 @@ function StartServerGui_NOTC::updateArgs(%this)
       if(%this-->vamp.getValue())
          %args = %args SPC "-vamp";
    }
-   
+      
    shellSetStartServerArgs("tol", %args);
 }
 
