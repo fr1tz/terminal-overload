@@ -21,6 +21,8 @@ function ctfFlag::onAdd(%this, %obj)
    //echo("ctfFlag::onAdd()");
    Parent::onAdd(%this, %obj);
    
+   %obj.zUnmountOnConcussion = true;
+   
    %obj.zShapeBaseHudInfo.setDatasetType(0, $HudInfoDatasetType::TeamID);
    %obj.zShapeBaseHudInfo.setDatasetIntField(0, %obj.getTeamId());
    %obj.zShapeBaseHudInfo.setDatasetBoolField(0, false);
@@ -46,6 +48,11 @@ function ctfFlag::onCollision(%this, %obj, %col, %vec, %vecLen)
 
    if(%cat.getDamageState() !$= "Enabled")
       return;
+      
+   // Last object that mounted a flag can't re-mount it immediately.
+   if(%col == %flag.zLastMounter)
+      if(getSimTime() - %flag.zLastUnmountTime < 500)
+         return;
 
    %mount = %flag.getObjectMount();
    if(%flag.getTeamId() == %cat.getTeamId())
@@ -120,6 +127,9 @@ function ctfFlag::onUnmount(%this, %obj, %mount)
 {
    //echo("ctfFlag::onUnmount()");
    %obj.setPosition(%obj.getPosition());
+   
+   %obj.zLastMounter = %mount;
+   %obj.zLastUnmountTime = getSimTime();
    
    if(%mount.getDataBlock().isMethod("onFlagDropped"))
       %mount.getDataBlock().onFlagDropped(%mount);

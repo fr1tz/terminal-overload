@@ -83,6 +83,15 @@ function WpnRepelDisc::onCollision(%this,%obj,%col,%fade,%pos,%normal,%dist)
    }
    else if(%col.getType() & $TypeMasks::PlayerObjectType)
 	{
+      // Unmount from enemy anything that's succeptible to concussions.
+      %n = %col.getMountedObjectCount();
+      for(%i = %n-1; %i >= 0; %i--)
+      {
+         %m = %col.getMountedObject(%i);
+         if(%m.zUnmountOnConcussion)
+            %col.unmountObject(%m);
+      }
+ 
       %source = %obj.sourceObject;
 
 		// Push enemy away from player.
