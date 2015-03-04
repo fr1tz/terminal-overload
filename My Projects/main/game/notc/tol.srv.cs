@@ -83,7 +83,7 @@ function createServer(%gameType, %args)
 {
    // Server::GameType is sent to the master server.
    // This variable should uniquely identify your game and/or mod.
-   $Server::GameType = "TOL" SPC $GameVersionString;
+   $Server::GameType = "Terminal Overload" SPC "\c1" @ $GameVersionString;
    
    // Server::Status is returned in the Game Info Query and represents the
    // current status of the server. This string sould be very short.
@@ -146,6 +146,41 @@ function createServer(%gameType, %args)
             $Server::NOTC::Mutator::VAMP = true;
       }
    }
+   
+   $Server::NOTC::MutatorList = "";
+   if($Server::NOTC::Mutator::AS)
+      $Server::NOTC::MutatorList = $Server::NOTC::MutatorList SPC "AS";
+   if($Server::NOTC::Mutator::AM)
+      $Server::NOTC::MutatorList = $Server::NOTC::MutatorList SPC "AM";
+   if($Server::NOTC::Mutator::VAMP)
+      $Server::NOTC::MutatorList = $Server::NOTC::MutatorList SPC "VAMP";
+   $Server::NOTC::MutatorList = trim($Server::NOTC::MutatorList);
+   
+   if($Server::NOTC::MutatorList $= "")
+      $Server::GameType = $Server::GameType SPC "\c2Casual";
+   else if($Server::NOTC::MutatorList $= "AS AM VAMP")
+      $Server::GameType = $Server::GameType SPC "\c5Advanced";
+   else
+      $Server::GameType = $Server::GameType SPC "\c6Variant";
+
+   %modeVariant = "(Variant)";
+   if($Server::NOTC::MutatorList $= "")
+   {
+      %modeVariant = "";
+   }
+   else if($Server::NOTC::MutatorList $= "AS AM VAMP")
+   {
+      %modeVariant = "(Advanced)";
+   }
+   else if(getWordCount($Server::NOTC::MutatorList) == 1)
+   {
+      if($Server::NOTC::MutatorList $= "AS")
+         %modeVariant = "(Advanced Shooting)";
+      else if($Server::NOTC::MutatorList $= "AM")
+         %modeVariant = "(Advanced Movement)";
+      else if($Server::NOTC::MutatorList $= "VAMP")
+         %modeVariant = "(V-AMP)";
+   }
 
    // The common module provides the basic server functionality
    exec("./common/exec.cs");
@@ -153,10 +188,6 @@ function createServer(%gameType, %args)
    exec("./defaults.cs");
    if(isFile(%prefs))
       exec(%prefs);
-
-   // Server::GameType is sent to the master server.
-   // This variable should uniquely identify your game and/or mod.
-   $Server::GameType = "TOL" SPC $GameVersionString;
 
    // GameStartTime is the sim time the game started. Used to calculated
    // game elapsed time.
@@ -196,6 +227,8 @@ function createServer(%gameType, %args)
          $Server::MissionType = "Capture The Flag";
          exec("./ctf/exec.cs");
    }
+   
+   $Server::MissionType = $Server::MissionType SPC %modeVariant;
    
    %level = "content/xa/notc/mis/" @ %map @ "/mission.mis";
 
