@@ -4,20 +4,20 @@ new GuiControlProfile(GuiServerListTextProfile)
 {
    fontType = "Quantico";
    fontSize = 14;
-   fontColor = "1 1 1 255";
-   fontColorHL = "2 254 2 255";
-   fontColorNA = "255 0 0";
-   fontColors[6] = "100 100 100";
-   fontColors[7] = "100 100 0";
-   fontColors[8] = "0 0 100";
-   fontColors[9] = "0 100 0";
    category = "Core";
    fillColor = "253 253 253 255";
    fillColorHL = "126 181 154 255";
    fillColorNA = "128 128 128 255";
-   fontColors[0] = "1 1 1 255";
-   fontColors[1] = "2 254 2 255";
-   fontColors[2] = "255 0 0 255";
+   fontColors[0] = "0   0   0   255";
+   fontColors[1] = "100 100 100 255";
+   fontColors[2] = "50  150 50  255";
+   fontColors[3] = "255 100 0   255";
+   fontColors[4] = "100 50  50  255";
+   fontColors[5] = "255 50  50  255";
+   fontColors[6] = "50  50  100 255";
+   fontColors[7] = "0   100 255 255";
+   fontColors[8] = "100 25  150 255";
+   fontColors[9] = "255 0   255 255";
 };
 
 if(!isObject(GuiServerListScrollProfile))
@@ -94,7 +94,7 @@ new GuiControlProfile(GuiServerListScrollProfile)
          vertSizing = "top";
          profile = "TolGuiButtonProfile";
          visible = "1";
-         active = "1";
+         active = "0";
          command = "JoinServerDlg.join();";
          tooltipProfile = "GuiToolTipProfile";
          hovertime = "1000";
@@ -104,7 +104,7 @@ new GuiControlProfile(GuiServerListScrollProfile)
       };
       new GuiScrollCtrl() {
          willFirstRespond = "1";
-         hScrollBar = "dynamic";
+         hScrollBar = "alwaysOff";
          vScrollBar = "alwaysOn";
          lockHorizScroll = "0";
          lockVertScroll = "0";
@@ -122,7 +122,7 @@ new GuiControlProfile(GuiServerListScrollProfile)
          minExtent = "8 8";
          horizSizing = "right";
          vertSizing = "bottom";
-         profile = "GuiServerListScrollProfile";
+         profile = "GuiScrollProfile";
          visible = "1";
          active = "1";
          tooltipProfile = "GuiToolTipProfile";
@@ -132,11 +132,11 @@ new GuiControlProfile(GuiServerListScrollProfile)
          canSaveDynamicFields = "0";
 
          new GuiTextListCtrl(JS_serverList) {
-            columns = "0 140 180 240 365 490";
+            columns = "0 160 200 260 490";
             fitParentWidth = "1";
-            clipColumnText = "1";
+            clipColumnText = "0";
             position = "1 1";
-            extent = "602 8";
+            extent = "605 8";
             minExtent = "8 8";
             horizSizing = "right";
             vertSizing = "bottom";
@@ -160,31 +160,8 @@ new GuiControlProfile(GuiServerListScrollProfile)
          anchorBottom = "0";
          anchorLeft = "1";
          anchorRight = "0";
-         position = "189 78";
+         position = "209 78";
          extent = "34 18";
-         minExtent = "8 8";
-         horizSizing = "right";
-         vertSizing = "bottom";
-         profile = "GuiAutoSizeTextProfile";
-         visible = "1";
-         active = "1";
-         tooltipProfile = "GuiToolTipProfile";
-         hovertime = "1000";
-         isContainer = "0";
-         canSave = "1";
-         canSaveDynamicFields = "0";
-      };
-      new GuiTextCtrl() {
-         text = "Game";
-         maxLength = "255";
-         margin = "0 0 0 0";
-         padding = "0 0 0 0";
-         anchorTop = "1";
-         anchorBottom = "0";
-         anchorLeft = "1";
-         anchorRight = "0";
-         position = "249 78";
-         extent = "26 18";
          minExtent = "8 8";
          horizSizing = "right";
          vertSizing = "bottom";
@@ -206,7 +183,7 @@ new GuiControlProfile(GuiServerListScrollProfile)
          anchorBottom = "0";
          anchorLeft = "1";
          anchorRight = "0";
-         position = "374 78";
+         position = "269 78";
          extent = "27 18";
          minExtent = "8 8";
          horizSizing = "right";
@@ -229,7 +206,7 @@ new GuiControlProfile(GuiServerListScrollProfile)
          anchorBottom = "0";
          anchorLeft = "1";
          anchorRight = "0";
-         position = "149 78";
+         position = "169 78";
          extent = "21 18";
          minExtent = "8 8";
          horizSizing = "right";
@@ -394,7 +371,7 @@ new GuiControlProfile(GuiServerListScrollProfile)
          anchorBottom = "0";
          anchorLeft = "1";
          anchorRight = "0";
-         position = "269 57";
+         position = "316 57";
          extent = "8 18";
          minExtent = "8 8";
          horizSizing = "center";
@@ -428,7 +405,7 @@ new GuiControlProfile(GuiServerListScrollProfile)
          canSave = "1";
          canSaveDynamicFields = "0";
       };
-      new GuiButtonCtrl() {
+      new GuiButtonCtrl(JS_host) {
          text = "Host";
          groupNum = "-1";
          buttonType = "PushButton";
@@ -480,7 +457,7 @@ new GuiControlProfile(GuiServerListScrollProfile)
          vertSizing = "bottom";
          profile = "TolGuiButtonProfile";
          visible = "1";
-         active = "1";
+         active = "0";
          command = "JoinServerDlg.refresh();";
          tooltipProfile = "GuiToolTipProfile";
          hovertime = "1000";
@@ -604,33 +581,50 @@ function JoinServerDlg::exit(%this)
 }
 
 //----------------------------------------
+
+
+
 function JoinServerDlg::update(%this)
 {
    JS_status.setText(JS_status.zMsg);
    
+   %gameTypes = new ArrayObject();
+   %compatibleServers = new ArrayObject();
+   %incompatibleServers = new ArrayObject();
+   
+   %sc = getServerCount();
+   for(%i = 0; %i < %sc; %i++)
+   {
+      setServerInfo(%i);
+      %gameTypes.push_back(%i, $ServerInfo::GameType);
+      if($ServerInfo::Compatible)
+         %compatibleServers.push_back(%i, $ServerInfo::PlayerCount);
+      else
+         %incompatibleServers.push_back(%i, $ServerInfo::PlayerCount);
+   }
+   
+   %gameTypes.uniqueValue();
+   %gameTypes.sorta();
+   %compatibleServers.sortnd();
+   %incompatibleServers.sortnd();
+   
    // Copy the servers into the server list.
    JS_queryStatus.setVisible(false);
    JS_serverList.clear();
-   %sc = getServerCount();
-   for( %i = 0; %i < %sc; %i ++ ) {
-      setServerInfo(%i);
-      %name = $ServerInfo::Name;
-      if(!$ServerInfo::Compatible)
-         %name = "\c6" SPC %name;
-      else
-         %name = "\c0" SPC %name;
-      JS_serverList.addRow( %i,
-         %name TAB
-         $ServerInfo::Ping TAB
-         $ServerInfo::PlayerCount SPC "/" SPC $ServerInfo::MaxPlayers TAB
-         $ServerInfo::GameType TAB
-         $ServerInfo::MissionType TAB
-         $ServerInfo::MissionName
-      );
+   for(%idx = 0; %idx < %gameTypes.count(); %idx++)
+   {
+      %gameType = %gameTypes.getValue(%idx);
+      %this.update_addServerArray(%gameType, %compatibleServers);
+   }
+   for(%idx = 0; %idx < %gameTypes.count(); %idx++)
+   {
+      %gameType = %gameTypes.getValue(%idx);
+      %this.update_addServerArray(%gameType, %incompatibleServers);
    }
    
-   // Sort by number of players
-   JS_serverList.sortNumerical(2, false);
+   %gameTypes.delete();
+   %compatibleServers.delete();
+   %incompatibleServers.delete();
    
    if(JS_serverList.zLastSelectedId !$= "")
    {
@@ -643,20 +637,93 @@ function JoinServerDlg::update(%this)
    }
 } 
 
+function JoinServerDlg::update_addServerArray(%this, %gameType, %serverArray)
+{
+   %headerAdded = false;
+   
+   %sep = "------------------------------------------------------------" @
+          "------------------------------------------------------------" @
+          "------------------------------------------------------------";
+
+   for(%i = 0; %i < %serverArray.count(); %i++)
+   {
+      %serverIdx = %serverArray.getKey(%i);
+      setServerInfo(%serverIdx);
+      if($ServerInfo::GameType !$= %gameType)
+         continue;
+         
+      if(!%headerAdded)
+      {
+         %pad = "";
+         %n = (140 - strlen(%gameType))/2;
+         while(%n-- > 0)
+            %pad = %pad @ "-";
+      
+         %header = "\c0---" SPC %gameType SPC "\c0" @ %sep;
+         if(!$ServerInfo::Compatible)
+            %header = "\c1" @ StripMLControlChars(%header);
+
+         JS_serverList.addRow(-1, "");
+         JS_serverList.addRow(-1, %header);
+         JS_serverList.addRow(-1, "");
+         
+         %headerAdded = true;
+      }
+      
+      %name = $ServerInfo::Name;
+      %ping = $ServerInfo::Ping;
+      %pc = $ServerInfo::PlayerCount;
+      %pcmax = $ServerInfo::MaxPlayers;
+      %mode = $ServerInfo::MissionType;
+      %map = $ServerInfo::MissionName;
+      
+      if(!$ServerInfo::Compatible)
+      {
+         %name = StripMLControlChars(%name);
+         %ping = StripMLControlChars(%ping);
+         %pc = StripMLControlChars(%pc);
+         %pcmax = StripMLControlChars(%pcmax);
+         %mode = StripMLControlChars(%mode);
+         %map = StripMLControlChars(%map);
+      }
+
+      %row = %name TAB %ping TAB %pc SPC "/" SPC %pcmax TAB %mode TAB %map;
+
+      if($ServerInfo::Compatible)
+         %row = "\c0" @ %row;
+      else
+         %row = "\c1" @ %row;
+         
+      JS_serverList.addRow(%serverIdx, %row);
+   }
+}
+
 function JS_serverList::onSelect(%this, %id, %text)
 {
    %index = JS_serverList.getSelectedId();
-   setServerInfo(%index);
-   if($ServerInfo::Compatible)
+   if(%index >= 0)
    {
-      hilightControl(JS_status, false);
-      JS_status.setText(JS_status.zMsg);
-      JS_joinServer.setActive(true);
+      setServerInfo(%index);
+      if($ServerInfo::Compatible)
+      {
+         hilightControl(JS_status, false);
+         JS_status.setText(JS_status.zMsg);
+         JS_refreshServer.setActive(true);
+         JS_joinServer.setActive(true);
+      }
+      else
+      {
+         JS_status.setText("Selected server not compatible with this version!");
+         hilightControl(JS_status, true);
+         JS_refreshServer.setActive(true);
+         JS_joinServer.setActive(false);
+      }
    }
    else
    {
-      JS_status.setText("Selected server not compatible with this version!");
-      hilightControl(JS_status, true);
+      hilightControl(JS_status, false);
+      JS_status.setText("");
+      JS_refreshServer.setActive(false);
       JS_joinServer.setActive(false);
    }
    
@@ -680,8 +747,11 @@ function onServerQueryStatus(%status, %msg, %value)
       case "start":
          hilightControl(JS_status, false);
          JS_status.setText("");
-         JS_joinServer.setActive(false);
          JS_queryMaster.setActive(false);
+         JS_queryLAN.setActive(false);
+         JS_host.setActive(false);
+         JS_refreshServer.setActive(false);
+         JS_joinServer.setActive(false);
          JS_statusText.setText(%msg);
          JS_statusBar.setValue(0);
          JS_serverList.clear();
@@ -696,6 +766,8 @@ function onServerQueryStatus(%status, %msg, %value)
 
       case "done":
          JS_queryMaster.setActive(true);
+         JS_queryLAN.setActive(true);
+         JS_host.setActive(true);
          JS_queryStatus.setVisible(false);
          JS_status.zMsg = %msg;
          JoinServerDlg.update();
