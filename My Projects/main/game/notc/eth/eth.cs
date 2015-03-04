@@ -351,7 +351,8 @@ function ETH::loadoutPlayer(%player)
    %player.zShapeBaseHudInfo.setDatasetIntField(2, %client.zActiveLoadout+1);
 
    %player.setInventory(ItemDamper, 1);
-   //%player.setInventory(ItemVAMP, 1);
+   if($Server::NOTC::Mutator::VAMP)
+      %player.setInventory(ItemVAMP, 1);
    %player.setInventory(ItemImpShield, 1);
    %player.setInventory(ItemLauncher, 1);
    %player.setInventory(ItemBounce, 1);

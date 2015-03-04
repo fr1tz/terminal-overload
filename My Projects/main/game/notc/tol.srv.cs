@@ -99,7 +99,11 @@ function createServer(%gameType, %args)
    %mode = "ETH";
    %map = "eth1";
    %prefs = "";
-
+   
+   $Server::NOTC::Mutator::AS = false;
+   $Server::NOTC::Mutator::AM = false;
+   $Server::NOTC::Mutator::VAMP = false;
+   
    // Parse arguments.
    for(%i = 0; %i < getWordCount(%args); %i++)
    {
@@ -126,6 +130,20 @@ function createServer(%gameType, %args)
             %nextarg = getWord(%args, %i+1);
             if(%nextarg !$= "")
                %prefs = %nextarg;
+               
+         case "-as":
+            $Server::NOTC::Mutator::AS = true;
+            
+         case "-am":
+            $Server::NOTC::Mutator::AM = true;
+            
+         case "-vamp":
+            $Server::NOTC::Mutator::VAMP = true;
+            
+         case "-advanced":
+            $Server::NOTC::Mutator::AS = true;
+            $Server::NOTC::Mutator::AM = true;
+            $Server::NOTC::Mutator::VAMP = true;
       }
    }
 

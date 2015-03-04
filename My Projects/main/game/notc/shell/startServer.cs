@@ -22,6 +22,29 @@ function StartServerGui_NOTC::updateArgs(%this)
            
    if(!$pref::HostMultiPlayer)
       %args = "-sp" SPC %args;
+      
+   if(%this-->advanced.getValue())
+   {
+      %this-->as.setValue(1);
+      %this-->as.setActive(false);
+      %this-->am.setValue(1);
+      %this-->am.setActive(false);
+      %this-->vamp.setValue(1);
+      %this-->vamp.setActive(false);
+      %args = %args SPC "-advanced";
+   }
+   else
+   {
+      %this-->as.setActive(true);
+      %this-->am.setActive(true);
+      %this-->vamp.setActive(true);
+      if(%this-->as.getValue())
+         %args = %args SPC "-as";
+      if(%this-->am.getValue())
+         %args = %args SPC "-am";
+      if(%this-->vamp.getValue())
+         %args = %args SPC "-vamp";
+   }
    
    shellSetStartServerArgs("tol", %args);
 }

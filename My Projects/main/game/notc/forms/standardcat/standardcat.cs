@@ -50,8 +50,8 @@ datablock PlayerData(FrmStandardcat)
    maxdrag = 0;
    density = 10;
    maxDamage = 50;
-   maxEnergy[0] = 9999999999;
-   maxEnergy[1] = 9999999999;
+   maxEnergy[0] = ($Server::NOTC::Mutator::AS ? 100 : 9999999999);
+   maxEnergy[1] = ($Server::NOTC::Mutator::AM ? 100 : 9999999999);
    maxEnergy[2] = 100;
    damageBuffer = 50;
    energyPerDamagePoint = 75;
@@ -59,8 +59,8 @@ datablock PlayerData(FrmStandardcat)
 	repairRate = 0.8;
 	damageBufferRechargeRate = 0.15;
 	damageBufferDischargeRate = 0.15;
-	rechargeRate[0] = 9999999999;
-	rechargeRate[1] = 9999999999;
+	rechargeRate[0] = ($Server::NOTC::Mutator::AS ? 0.4 : 9999999999);
+	rechargeRate[1] = ($Server::NOTC::Mutator::AM ? 0.4 : 9999999999);
 	rechargeRate[2] = 0.4;
 
    runForce = 100 * 90;
