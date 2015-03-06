@@ -9,7 +9,7 @@ package NotcHitSound
       Parent::clientCmdGameStart(%seq);
       $NotcHitSound::Source[1] = sfxCreateSource(
          AudioGui,
-         "content/xa/notc/core/sounds/healthhit1.wav"
+         "content/o/rotc/p.5.4/sounds/rotc/explosion1.wav"
       );
       $NotcHitSound::Source[2] = sfxCreateSource(
          AudioGui,
