@@ -156,14 +156,16 @@ function ShapeBase::playHitNotificationActual(%this)
    if(%this.zHitSoundHealthDamage > 0)
    {
       %number = %this.zHitSoundTargetAquired ? 4 : 3;
-      %volume = 0.4 + 0.6*%this.zHitSoundHealthDamage/50;
+      //%volume = 0.4 + 0.6*%this.zHitSoundHealthDamage/50;
+      %volume = 1.0;
       %pitch = 0.9 + (1-%this.zHitSoundHealthPercent)/2;
       commandToClient(%this.client, 'PlayHitSound', 1, %volume, %pitch);
    }
    else if(%this.zHitSoundBufferDamage > 0)
    {
       %number = %this.zHitSoundTargetAquired ? 1 : 1;
-      %volume = 0.4 + 0.6*%this.zHitSoundBufferDamage/50;
+      //%volume = 0.4 + 0.6*%this.zHitSoundBufferDamage/50;
+      %volume = 1.0;
       %pitch = 0.5 + %this.zHitSoundDmgBufPercent;
       commandToClient(%this.client, 'PlayHitSound', 2, %volume, %pitch);
    }
