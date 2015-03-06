@@ -602,10 +602,11 @@ function FrmStandardcat::clientAction(%this, %obj, %nr)
 // Called by ShapeBase script code.
 function FrmStandardcat::getBleed(%this, %obj, %dmg, %src)
 {
-   if(%dmg > 0)
-      return FrmStandardCatBleedEffect10;
-   else
-      return FrmStandardCatBleedEffect0;
+//   echo(%dmg);
+//   if(%dmg > 0)
+//      return FrmStandardCatBleedEffect50;
+//   else
+//      return FrmStandardCatBleedEffect30;
 
    if(%dmg > 90)
       return FrmStandardCatBleedEffect100;

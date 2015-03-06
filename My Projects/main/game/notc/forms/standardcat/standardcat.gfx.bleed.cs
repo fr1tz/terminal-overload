@@ -116,7 +116,16 @@ datablock ParticleEmitterData(FrmStandardCatBleedEffect10Emitter : DefaultEmitte
 
 datablock ExplosionData(FrmStandardCatBleedEffect10)
 {
-   soundProfile = FrmStandardcatBleedEffectSound;
+   //soundProfile = FrmStandardcatBleedEffectSound;
+   
+   explosionShape = "content/xa/notc/core/shapes/mgl1/impactdmg/p1/shape.dae";
+	faceViewer	  = true;
+	playSpeed = 8.0;
+	sizes[0] = "0.1 0.1 0.1";
+	sizes[1] = "1.0 1.0 1.0";
+	times[0] = 0.0;
+	times[1] = 1.0;
+   
    lifetimeMS = "64";
    lightStartRadius = "4.94118";
    lightStartColor = "1 0 0 1";
@@ -138,53 +147,62 @@ datablock ExplosionData(FrmStandardCatBleedEffect20 : FrmStandardCatBleedEffect1
 {
    lifetimeMS = "96";
    debrisNum = "6";
+	sizes[1] = "2 2 2";
 };
 
 datablock ExplosionData(FrmStandardCatBleedEffect30 : FrmStandardCatBleedEffect10)
 {
    lifetimeMS = "128";
    debrisNum = "6";
+	sizes[1] = "3 3 3";
 };
 
 datablock ExplosionData(FrmStandardCatBleedEffect40 : FrmStandardCatBleedEffect10)
 {
    lifetimeMS = "160";
    debrisNum = "8";
+	sizes[1] = "4 4 4";
 };
 
 datablock ExplosionData(FrmStandardCatBleedEffect50 : FrmStandardCatBleedEffect10)
 {
    lifetimeMS = "192";
    debrisNum = "10";
+	sizes[1] = "5 5 5";
 };
 
 datablock ExplosionData(FrmStandardCatBleedEffect60 : FrmStandardCatBleedEffect10)
 {
    lifetimeMS = "224";
    debrisNum = "12";
+	sizes[1] = "6 6 6";
 };
 
 datablock ExplosionData(FrmStandardCatBleedEffect70 : FrmStandardCatBleedEffect10)
 {
    lifetimeMS = "256";
    debrisNum = "14";
+	sizes[1] = "7 7 7";
 };
 
 datablock ExplosionData(FrmStandardCatBleedEffect80 : FrmStandardCatBleedEffect10)
 {
    lifetimeMS = "288";
    debrisNum = "16";
+	sizes[1] = "8 8 8";
 };
 
 datablock ExplosionData(FrmStandardCatBleedEffect90 : FrmStandardCatBleedEffect10)
 {
    lifetimeMS = "320";
    debrisNum = "18";
+	sizes[1] = "9 9 9";
 };
 
 datablock ExplosionData(FrmStandardCatBleedEffect100 : FrmStandardCatBleedEffect10)
 {
    lifetimeMS = "352";
    debrisNum = "20";
+	sizes[1] = "10 10 10";
 };
 
