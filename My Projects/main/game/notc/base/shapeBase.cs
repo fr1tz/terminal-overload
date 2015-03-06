@@ -299,6 +299,9 @@ function ShapeBaseData::damage(%this, %obj, %source, %position, %amount, %damage
 {
    if(%this.ignoreDamage)
       return;
+      
+   if(%source.getTeamId() == %obj.getTeamId())
+      %amount = 0;
 
 	// Find original source object.
    %originalSource = 0;
