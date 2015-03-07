@@ -14,6 +14,7 @@ function CatGui::onWake(%this)
    Canvas.pushDialog(MiscHud);
    Canvas.pushDialog(XaNotcMinimapHud);
    Canvas.pushDialog(XaNotcCatHud);
+   Canvas.pushDialog(XaNotcMinimapHudEffectsLayer);
 
    // Message hud dialog
    if ( isObject( MainChatHud ) )
@@ -55,6 +56,17 @@ function CatGui::clearHud( %this )
       %this.getObject( 0 ).delete();
 }
 
+function CatGui::setMeter(%this, %meterCtrl, %percent)
+{
+   %count = %meterCtrl.getCount();
+   %visible = mFloor(%count * %percent);
+   for(%i = 0; %i < %count; %i++)
+   {
+      %blip = %meterCtrl.getObject(%i);
+      %blip.setVisible(%i < %visible);
+   }
+}
+
 function CatGui::tickThread(%this)
 {
    if(%this.zTickThread !$= "")
@@ -71,47 +83,37 @@ function CatGui::tickThread(%this)
    if(!isObject(%control))
       return;
       
-   //CatGuiDamageBufferText.setText(%control.getDamageBufferLevel());
-   //CatGuiMassText.setText(%control.getMass());
-   //%image = %control.getMountedImage(0);
-   //if(isObject(%image))
-   //{
-   //   if(%image.ammoSource $= "Energy")
-   //      CatGuiAmmoText.setText("-");
-   //   else
-   //      CatGuiAmmoText.setText(%control.getImageMagazineRounds(0));
-   //}
-   //else
-   //   CatGuiAmmoText.setText("");
-      
-   %impshield = -1;
-   %n = 0;
-   if(%control.isMethod("getMountedObjectCount"))
-      %n = %control.getMountedObjectCount();
-
-   for(%i = 0; %i < %n; %i++)
-   {
-      %obj = %control.getMountedObject(%i);
-      if(isObject(%obj) && %obj.getClassName() $= "BallastShape")
-         %impshield = %obj;
-   }
-
-   if(isObject(%impshield))
-      CatGuiImpShield.setValue(%impshield.getLevel());
-   else
-      CatGuiImpShield.setValue(0);
-      
    %data = %control.getDataBlock();
    %damageDamper = %control.getEnergyLevel(0) / %data.maxEnergy[0];
    %impulseDamper = %control.getEnergyLevel(1) / %data.maxEnergy[1];
-   %xJumpCharge = %control.getXJumpCharge() / %data.maxEnergy[1];
+   %xJump = %control.getEnergyLevel(2) / %data.maxEnergy[2];
+   %xJumpCharge = %control.getXJumpCharge() / %data.maxEnergy[2];
    %damageBuffer = %control.getDamageBufferLevel() / %data.damageBuffer;
    %health = 1 - %control.getDamageLevel() / %data.maxDamage;
-   
-   XaNotcCatHud-->impulseDamper.setValue(%impulseDamper);
+
+   XaNotcCatHud-->xJump.setValue(%xJump);
    XaNotcCatHud-->xJumpCharge.setValue(%xJumpCharge);
-   XaNotcCatHud-->damageDamper.setValue(%damageDamper);
-      
+   
+   %this.setMeter(XaNotcCatHud-->dpblips, %damageDamper);
+   %this.setMeter(XaNotcCatHud-->kpblips, %impulseDamper);
+   %this.setMeter(XaNotcCatHud-->shieldblips, %damageBuffer);
+   %this.setMeter(XaNotcCatHud-->healthblips, %health);
+   
+   %dpMax = 50;
+   if(%this.zMaxDamageProtection !$= "")
+      %dpMax = %this.zMaxDamageProtection;
+   %dp = mFloatLength(%damageDamper*%dpMax, 0);
+   
+   %kpMax = 75;
+   if(%this.zMaxKnockbackProtection !$= "")
+      %kpMax = %this.zMaxKnockbackProtection;
+   %kp = mFloatLength(%impulseDamper*%kpMax, 0);
+   
+   XaNotcCatHud-->dpnumber.setNumber(%dp);
+   XaNotcCatHud-->kpnumber.setNumber(%kp);
+   
+   %this-->monitorNoise.setValue(getRandom(0, 100), getRandom(0, 100));
+
    if(isObject(MiscHud))
    {
       MiscHud-->ImpulseDamperGraph.addDatum(0, %impulseDamper);

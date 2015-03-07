@@ -62,6 +62,7 @@ function onStart()
    exec("./scripts/gui/guiTreeViewCtrl.cs");
    exec("./scripts/gui/FileDialog.cs");
    exec("./scripts/gui/messageBoxes/messageBox.ed.cs");
+   exec("./scripts/gui/bitmapText.cs");
    
    echo(" % - Initialized Core");
 }

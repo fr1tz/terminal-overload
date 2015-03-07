@@ -37,8 +37,26 @@ function clientCmd_XaNotcMinimapHud_AddIcon(%id, %bitmap, %size)
    XaNotcMinimapHud-->map.addIcon(%id, %bitmap, %size);
 }
 
-function XaNotcMinimapHud::onAdd(%this)
-{
+//------------------------------------------------------------------------------
 
+function XaNotcMinimapHudEffectsLayer::onWake(%this)
+{
+   %this.tickThread();
 }
 
+function XaNotcMinimapHudEffectsLayer::onSleep(%this)
+{
+   cancel(%this.zTickThread);
+}
+
+function XaNotcMinimapHudEffectsLayer::tickThread(%this)
+{
+   if(%this.zTickThread !$= "")
+   {
+      cancel(%this.zTickThread);
+      %this.zTickThread = "";
+   }
+   %this.zTickThread = %this.schedule(64, "tickThread");
+
+   %this-->monitorNoise.setValue(getRandom(0, 256), getRandom(0, 256));
+}

@@ -1,3 +1,5 @@
+exec("./profiles.cs");
+
 //--- OBJECT WRITE BEGIN ---
 %guiContent = new GameTSCtrl(CatGui) {
    cameraZRot = "0";
@@ -29,6 +31,48 @@
       zTeamId = "0";
       zTickThread = "11990";
 
+   new notcGuiBitmapCtrl() {
+      bitmap = "content/xa/notc/core/client/gui/CatGui/v1/graphics/background_sharp.png";
+      wrap = "0";
+      flipX = "0";
+      flipY = "0";
+      crisp = "1";
+      position = "0 0";
+      extent = "640 480";
+      minExtent = "8 2";
+      horizSizing = "relative";
+      vertSizing = "relative";
+      profile = "NotcCatHudDefaultProfile";
+      visible = "1";
+      active = "1";
+      tooltipProfile = "GuiToolTipProfile";
+      hovertime = "1000";
+      isContainer = "0";
+      internalName = "bgSharp";
+      canSave = "1";
+      canSaveDynamicFields = "0";
+   };
+   new notcGuiBitmapCtrl() {
+      bitmap = "content/xa/notc/core/client/gui/CatGui/v1/graphics/background_blur.png";
+      wrap = "0";
+      flipX = "0";
+      flipY = "0";
+      crisp = "0";
+      position = "0 0";
+      extent = "640 480";
+      minExtent = "8 2";
+      horizSizing = "relative";
+      vertSizing = "relative";
+      profile = "NotcCatHudDefaultProfile";
+      visible = "1";
+      active = "1";
+      tooltipProfile = "GuiToolTipProfile";
+      hovertime = "1000";
+      isContainer = "0";
+      internalName = "bgBlur";
+      canSave = "1";
+      canSaveDynamicFields = "0";
+   };
    new GuiDiscTargetsHud() {
       frameColor = "1 1 1 1";
       discTargetHudInfoDataSetType = "1";

@@ -168,4 +168,63 @@ package MiscHud
 
 activatePackage(MiscHud);
 
+function MiscHud::onWake(%this)
+{
+   // Start tick thread.
+   %this.tickThread();
+}
+
+function MiscHud::onSleep(%this)
+{
+   cancel(%this.zTickThread);
+}
+
+function MiscHud::tickThread(%this)
+{
+   if(%this.zTickThread !$= "")
+   {
+      cancel(%this.zTickThread);
+      %this.zTickThread = "";
+   }
+   %this.zTickThread = %this.schedule(64, "tickThread");
+
+   if(!isObject(ServerConnection))
+      return;
+
+   %control = ServerConnection.getControlObject();
+   if(!isObject(%control))
+      return;
+      
+   return;
+
+   %data = %control.getDataBlock();
+   %damageDamper = %control.getEnergyLevel(0) / %data.maxEnergy[0];
+   %impulseDamper = %control.getEnergyLevel(1) / %data.maxEnergy[1];
+   %energy = %control.getEnergyLevel(2) / %data.maxEnergy[2];
+   %xJumpCharge = %control.getXJumpCharge() / %data.maxEnergy[2];
+   %damageBuffer = %control.getDamageBufferLevel() / %data.damageBuffer;
+   %health = 1 - %control.getDamageLevel() / %data.maxDamage;
+
+   XaNotcCatHud-->impulseDamper.setValue(%impulseDamper);
+   XaNotcCatHud-->damageDamper.setValue(%damageDamper);
+   XaNotcCatHud-->energy.setValue(%energy);
+   XaNotcCatHud-->xJumpCharge.setValue(%xJumpCharge);
+
+   if(isObject(MiscHud))
+   {
+      MiscHud-->ImpulseDamperGraph.addDatum(0, %impulseDamper);
+      MiscHud-->DamageDamperGraph.addDatum(0, %damageDamper);
+      MiscHud-->DamageBufferGraph.addDatum(0, %damageBuffer);
+      MiscHud-->HealthGraph.addDatum(0, %health);
+   }
+
+   if(isObject(XaNotcVitalsHud))
+   {
+      XaNotcVitalsHud-->ImpulseDamperGraph.addDatum(0, %impulseDamper);
+      XaNotcVitalsHud-->DamageDamperGraph.addDatum(0, %damageDamper);
+      XaNotcVitalsHud-->DamageBufferGraph.addDatum(0, %damageBuffer);
+      XaNotcVitalsHud-->HealthGraph.addDatum(0, %health);
+   }
+}
+
 

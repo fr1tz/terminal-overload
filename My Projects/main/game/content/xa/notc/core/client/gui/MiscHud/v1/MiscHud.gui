@@ -147,7 +147,7 @@
       maxChars = "-1";
       useURLMouseCursor = "0";
       position = "10 0";
-      extent = "630 11";
+      extent = "630 16";
       minExtent = "8 8";
       horizSizing = "right";
       vertSizing = "top";
@@ -466,7 +466,7 @@
 
          new GuiGraphCtrl() {
             centerY = "1";
-            plotColor[0] = "1 1 1 1";
+            plotColor[0] = "White";
             plotColor[1] = "1 0 0 1";
             plotColor[2] = "0 1 0 1";
             plotColor[3] = "0 0 1 1";

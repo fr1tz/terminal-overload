@@ -14,6 +14,7 @@ function EtherformGui::onWake(%this)
    {
       Canvas.pushDialog( XaNotcLoadoutHud );
       Canvas.pushDialog( XaNotcMinimapHud );
+      Canvas.pushDialog( XaNotcMinimapHudEffectsLayer );
       Canvas.pushDialog( MiscHud );
       Canvas.pushDialog( MainChatHud );
       chatHud.attach(HudMessageVector);
