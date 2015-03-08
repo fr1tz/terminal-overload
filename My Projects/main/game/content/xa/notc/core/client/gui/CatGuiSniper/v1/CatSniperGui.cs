@@ -1,8 +1,11 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
-function CatGui::onWake(%this)
+function notcCatSniperGui::onWake(%this)
 {
+   if(!notcCatSniperGuiPostFX.isEnabled())
+      notcCatSniperGuiPostFX.enable();
+
    // Turn off any shell sounds...
    // sfxStop( ... );
    
@@ -37,11 +40,11 @@ function CatGui::onWake(%this)
       schedule(0, 0, "refreshBottomTextCtrl");
 }
 
-function CatGui::onSleep(%this)
+function notcCatSniperGui::onSleep(%this)
 {
-   if(NotcBlurPostFx.isEnabled())
-      NotcBlurPostFx.disable();
-
+   if(notcCatSniperGuiPostFX.isEnabled())
+      notcCatSniperGuiPostFX.disable();
+      
    if ( isObject( MainChatHud ) )
       Canvas.popDialog( MainChatHud );
       
@@ -51,7 +54,7 @@ function CatGui::onSleep(%this)
    //XaNotc1CatMoveMap.pop();
 }
 
-function CatGui::clearHud( %this )
+function notcCatSniperGui::clearHud( %this )
 {
    Canvas.popDialog( MainChatHud );
 
@@ -59,7 +62,7 @@ function CatGui::clearHud( %this )
       %this.getObject( 0 ).delete();
 }
 
-function CatGui::tickThread(%this)
+function notcCatSniperGui::tickThread(%this)
 {
    if(%this.zTickThread !$= "")
    {
@@ -77,38 +80,22 @@ function CatGui::tickThread(%this)
       
    %data = %control.getDataBlock();
 
-   %fov = ServerConnection.getControlCameraFov();
+   //echo($MouseZoomValue);
+   
    %zoomRange = $Pref::NOTC1::DefaultFov-%data.cameraMinFov;
-   %zoomAmount = 1 - (%fov-%data.cameraMinFov)/%zoomRange;
+   %zoomAmount = 1 - ($MouseZoomValue-%data.cameraMinFov)/%zoomRange;
    
-   %scale = 1.0;
-   if(ServerConnection.isFirstPerson() && %zoomAmount > 0)
-   {
-      %blurryNess = 0.9;
-      %minScale = 0.05;
-      %zoomAmountScaled = (1-%minScale) * %zoomAmount * %blurryNess;
-      %scale = (1-%zoomAmountScaled)*(1-%zoomAmountScaled);
-      %scale += %minScale;
-      %scale = mClamp(%scale, %minScale, 1);
-   }
-   //echo(%scale);
-   if(%scale < 1)
-   {
-      NotcBlurPostFx.targetScale = %scale SPC %scale;
-      if(!NotcBlurPostFx.isEnabled())
-         NotcBlurPostFx.enable();
-   }
-   else
-   {
-      if(NotcBlurPostFx.isEnabled())
-         NotcBlurPostFx.disable();
-   }
-
+   //notcCatSniperGuiZoom.setVisible($MouseZoomValue != $Pref::NOTC1::DefaultFov);
+   %irisSize = (1-%zoomAmount) * 20;
+   //notcCatSniperGui-->iris.sizeX = %irisSize;
+   //notcCatSniperGui-->iris.sizeY = %irisSize;
+   //notcCatSniperGui-->iris.setVisible(false);
+   
    %scanlinesAlpha = mClamp(50 + 205*%zoomAmount, 50, 255);
-   %scanlinesAlpha = 25;
-   notcCatGuiFeedOverlayProfile.fillColor = "255 255 255" SPC %scanlinesAlpha;
+   %scanlinesAlpha = 100;
+   notcCatSniperGuiFeedOverlayProfile.fillColor = "255 255 255" SPC %scanlinesAlpha;
    
-   //echo(NotcCatGuiScanlinesProfile.fillColor);
+   //echo(NotcnotcCatSniperGuiScanlinesProfile.fillColor);
    
    %this.zZoomNoiseOffset -= 1;
    //%this-->ZoomNoise.setValue(%this.zZoomNoiseOffset, %this.zZoomNoiseOffset);

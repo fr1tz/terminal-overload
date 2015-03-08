@@ -1,19 +1,18 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
-function loadContentModule_NotcCatGui()
+function loadContentModule_notcCatGui()
 {
    exec("./CatGui.cs");
-   exec("./CatHud.gui");
    exec("./CatGui.gui");
 }
 
-if(isFunction("unloadContentModule_NotcCatGui"))
-   unloadContentModule_NotcCatGui();
+if(isFunction("unloadContentModule_notcCatGui"))
+   unloadContentModule_notcCatGui();
 
-loadContentModule_NotcCatGui();
+loadContentModule_notcCatGui();
 
-function unloadContentModule_NotcCatGui()
+function unloadContentModule_notcCatGui()
 {
 
 }

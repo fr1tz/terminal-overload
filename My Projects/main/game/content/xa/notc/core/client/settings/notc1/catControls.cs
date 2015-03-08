@@ -56,9 +56,6 @@ $XaNotc1CatMoveMap_RemapCount++;
 $XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Select disc slot #2";
 $XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "XaNotc1CatMoveMap_selectDiscSlot2";
 $XaNotc1CatMoveMap_RemapCount++;
-$XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Select disc slot #3";
-$XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "XaNotc1CatMoveMap_selectDiscSlot3";
-$XaNotc1CatMoveMap_RemapCount++;
 $XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Fire B.O.U.N.C.E.";
 $XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "XaNotc1CatMoveMap_fireBounce";
 $XaNotc1CatMoveMap_RemapCount++;
@@ -68,8 +65,11 @@ $XaNotc1CatMoveMap_RemapCount++;
 $XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Free Look";
 $XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "XaNotc1CatMoveMap_toggleFreeLook";
 $XaNotc1CatMoveMap_RemapCount++;
-$XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Switch 1st/3rd";
+$XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Toggle internal/external view";
 $XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "XaNotc1CatMoveMap_toggleFirstPerson";
+$XaNotc1CatMoveMap_RemapCount++;
+$XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Switch internal view feed";
+$XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "XaNotc1CatMoveMap_switchFeed";
 $XaNotc1CatMoveMap_RemapCount++;
 
 function XaNotcSettings1_CatControlsGui::onWake(%this)

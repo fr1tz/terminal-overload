@@ -290,7 +290,6 @@ function XaNotc1CatMoveMap_selectDiscSlot3(%val)
 
 XaNotc1CatMoveMap.bind(keyboard, "e", XaNotc1CatMoveMap_selectDiscSlot1);
 XaNotc1CatMoveMap.bind(keyboard, "r", XaNotc1CatMoveMap_selectDiscSlot2);
-XaNotc1CatMoveMap.bind(keyboard, "f", XaNotc1CatMoveMap_selectDiscSlot3);
 
 //------------------------------------------------------------------------------
 // B.O.U.N.C.E.
@@ -369,31 +368,8 @@ XaNotc1CatMoveMap.bind(gamepad, triggerl, XaNotc1CatMoveMap_gamepadAltTrigger);
 if($Player::CurrentFOV $= "")
    $Player::CurrentFOV = $pref::Player::DefaultFOV / 2;
 
-function XaNotc1CatMoveMap_mouseZoom(%val)
-{
-	if(Canvas.isCursorOn())
-		return;
-
-	if($MouseZoomValue == 0)
-		$MouseZoomValue = $Pref::NOTC1::DefaultFov;
-
-	%minFov = ServerConnection.getControlObject().getDataBlock().cameraMinFov;
-	%step = ($Pref::NOTC1::DefaultFov - %minFov)/$Pref::NOTC1::MouseZoomSteps;
-
-	if(%val > 0)
-		$MouseZoomValue -= %step;
-	else
-		$MouseZoomValue += %step;
-
-	if($MouseZoomValue < %minFov)
-		$MouseZoomValue = %minFov;
-	else if($MouseZoomValue > $Pref::NOTC1::DefaultFov)
-		$MouseZoomValue = $Pref::NOTC1::DefaultFov;
-
-	setFov($MouseZoomValue);
-}
-
 XaNotc1CatMoveMap.bind(mouse, "zaxis", XaNotc1CatMoveMap_mouseZoom);
+XaNotc1CatMoveMap.bind(keyboard, "f", XaNotc1CatMoveMap_switchFeed);
 
 //------------------------------------------------------------------------------
 // Camera & View functions

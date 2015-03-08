@@ -45,10 +45,9 @@ function GameConnection::onControlObjectChange(%this)
 {
    echo ("*** Control Object Changed");
    
-   // Reset the current FOV to match the new object
-   // and turn off any current zoom.
-   resetCurrentFOV();
-   turnOffZoom();
+   // FIXME: should not interact with NOTC stuff directly
+   setFov($Pref::NOTC1::DefaultFov);
+   $MouseZoomValue = $Pref::NOTC1::DefaultFov;
    
    // Use instant input unless we're playing back a recording
    %control = %this.getControlObject();
