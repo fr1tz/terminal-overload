@@ -302,9 +302,6 @@ function ShapeBaseData::damage(%this, %obj, %source, %position, %amount, %damage
    if(%this.ignoreDamage)
       return;
       
-   if(%source.getTeamId() == %obj.getTeamId())
-      %amount = 0;
-
 	// Find original source object.
    %originalSource = 0;
    if(isObject(%source))
@@ -313,6 +310,16 @@ function ShapeBaseData::damage(%this, %obj, %source, %position, %amount, %damage
          %originalSource = %source.sourceObject;
       else if(%source.getType() & $TypeMasks::ShapeBaseObjectType)
          %originalSource = %source.client.player;
+   }
+   
+   // Friendly fire
+   if(isObject(%originalSource))
+   {
+      if(%originalSource.getTeamId() == %obj.getTeamId())
+      {
+         if(%obj != %originalSource)
+            %amount = 0;
+      }
    }
    
 	// Reduce damage based on energy level?
