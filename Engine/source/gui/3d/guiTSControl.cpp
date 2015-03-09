@@ -117,6 +117,7 @@ namespace
 GuiTSCtrl::GuiTSCtrl()
 {
    mCameraZRot = 0;
+   mCameraXRot = 0;
    mForceFOV = 0;
    mReflectPriority = 1.0f;
 
@@ -147,6 +148,8 @@ void GuiTSCtrl::initPersistFields()
    
       addField("cameraZRot", TypeF32, Offset(mCameraZRot, GuiTSCtrl),
          "Z rotation angle of camera." );
+      addField("cameraXRot", TypeF32, Offset(mCameraXRot, GuiTSCtrl),
+         "X rotation angle of camera." );
       addField("forceFOV",   TypeF32, Offset(mForceFOV,   GuiTSCtrl),
          "The vertical field of view in degrees or zero to use the normal camera FOV." );
          
@@ -360,9 +363,9 @@ void GuiTSCtrl::onRender(Point2I offset, const RectI &updateRect)
    if(mForceFOV != 0)
       mLastCameraQuery.fov = mDegToRad(mForceFOV);
 
-   if(mCameraZRot)
+   if(mCameraZRot || mCameraXRot)
    {
-      MatrixF rotMat(EulerF(0, 0, mDegToRad(mCameraZRot)));
+      MatrixF rotMat(EulerF(mDegToRad(mCameraXRot), 0, mDegToRad(mCameraZRot)));
       mLastCameraQuery.cameraMatrix.mul(rotMat);
    }
 

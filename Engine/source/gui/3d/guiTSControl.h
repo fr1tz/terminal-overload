@@ -37,6 +37,7 @@ public:
 protected:
    static U32     smFrameCount;
    F32            mCameraZRot;
+   F32            mCameraXRot;
    F32            mForceFOV;
 
    /// A list of GuiTSCtrl which are awake and 
