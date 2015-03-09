@@ -807,9 +807,9 @@ public:
    /// Apply an impulse at the given point, with magnitude/direction of vec
    void applyImpulse(const Point3F& pos,const VectorF& vec);
    /// Get the rotation of the player
-   const Point3F& getRotation() { return mRot; }
+   const Point3F& getRotation() { return useInstantInput() ? mInstantInput.rot : mRot; }
    /// Get the rotation of the head of the player
-   const Point3F& getHeadRotation() { return mHead; }
+   const Point3F& getHeadRotation() { return useInstantInput() ? mInstantInput.head : mHead; }
    void getDamageLocation(const Point3F& in_rPos, const char *&out_rpVert, const char *&out_rpQuad);
 
    void allowAllPoses();

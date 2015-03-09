@@ -7324,6 +7324,14 @@ void Player::unpackUpdate(NetConnection *con, BitStream *stream)
 
 
 //----------------------------------------------------------------------------
+
+DefineEngineMethod( Player, getPitch, F32, (),,
+   "@brief Get the value of the player's current pitch.\n\n"
+   "@return The current pitch value\n" )
+{
+   return object->getHeadRotation().x;
+}
+
 DefineEngineMethod( Player, getPose, const char*, (),,
    "@brief Get the name of the player's current pose.\n\n"
 
