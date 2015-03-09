@@ -55,8 +55,11 @@ float4 main( PFXVertToPix IN ) : COLOR0
     
     outColor = tex2Dlod( backBuffer, float4(x,y,0,0) );
     float v = (outColor[0] + outColor[1] + outColor[2]) / 3;
-    for(int i = 0; i < 3; i++)
-      outColor[i] = v;
+    outColor[0] = v*2;
+    outColor[1] = 0;
+    outColor[2] = 0;
+    //for(int i = 0; i < 3; i++)
+    //  outColor[i] = v;
       //outColor[i] = outColor[i]*keepColor[i] + clamp(v-keepColor[i],0,1);
 
     return float4( outColor.rgb, 1 );

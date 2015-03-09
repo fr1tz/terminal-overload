@@ -3,8 +3,10 @@
 
 exec("./cmds.cs");
 exec("./default.prefs.cs");
-exec("./movemap.cat.cs");
+exec("./mm.funcs.cat.cs");
+exec("./mm.funcs.sniper.cs");
 exec("./default.bind.cat.cs");
+exec("./default.bind.sniper.cs");
 exec("./default.bind.etherform.cs");
 exec("./default.bind.misc.cs");
 exec("./catControls.cs");

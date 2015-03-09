@@ -6,7 +6,22 @@ singleton GuiControlProfile(notcCatSniperGuiDefaultProfile : GuiDefaultProfile)
    fillColor = "255 255 255 255";
 };
 
+singleton GuiControlProfile(notcCatSniperGuiMaskProfile : GuiDefaultProfile)
+{
+   fillColor = "0 255 255 255";
+};
+
 singleton GuiControlProfile(notcCatSniperGuiFeedOverlayProfile : GuiDefaultProfile)
 {
    fillColor = "255 255 255 255";
+};
+
+singleton GuiControlProfile(notcCatSniperGuiCrosshairProfile : GuiDefaultProfile)
+{
+   fillColor = "255 100 0 255";
+};
+
+singleton GuiControlProfile(notcCatSniperGuiZeroElevProfile : GuiDefaultProfile)
+{
+   fillColor = "255 100 0 100";
 };
