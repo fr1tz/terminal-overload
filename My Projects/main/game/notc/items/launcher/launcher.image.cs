@@ -70,7 +70,7 @@ datablock ShapeBaseImageData(ItemLauncherImage)
 {
    // Basic Item properties
    shapeFile = "content/xa/notc/core/shapes/standardcat/launcher/p1/shape.dae";
-   shapeFileFP = "content/xa/notc/core/shapes/standardcat/launcher/p1/shape.dae";
+   shapeFileFP = "content/o/rotc/p.5.4/shapes/rotc/misc/nothing.dts";
    emap = true;
 
    // Specify mount point & offset for 3rd person, and eye offset
@@ -78,6 +78,7 @@ datablock ShapeBaseImageData(ItemLauncherImage)
 	mountPoint = 4;
 	offset = "-0.20 0 0.05";
 	rotation = "1 0 0 -12";
+   eyeOffset = "-1 0 0";
 
    // When firing from a point offset from the eye, muzzle correction
    // will adjust the muzzle vector to point to the eye LOS point.
