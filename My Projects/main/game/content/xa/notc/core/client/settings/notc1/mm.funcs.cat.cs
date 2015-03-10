@@ -34,7 +34,7 @@ function XaNotc1CatMoveMap_mouseZoom(%val)
    
    %pos = (1/($MouseZoomSteps)) * $MouseZoomStep;
    //echo(%pos);
-   %f = (1-%pos)*(1-%pos);
+   %f = mPow(1-%pos, 2);
    $MouseZoomValue = %minFov + (%maxFov-%minFov)*%f;
    setFov($MouseZoomValue);
 }

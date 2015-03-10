@@ -5,7 +5,14 @@ function notcCatSniperGui::onAdd(%this)
 {
    %this-->ts.cameraXRot = 0;
    %this-->ts.cameraZRot = 0;
-   %this.zElevation = 0.5;
+   %this.zElevation = 0.25;
+   
+   %this.zScanForTargets = false;
+   
+   %this.sounds[0] = sfxCreateSource(
+      AudioGui,
+      "content/xa/notc/core/sounds/test1.wav"
+   );
 }
 
 function notcCatSniperGui::onWake(%this)
@@ -17,23 +24,23 @@ function notcCatSniperGui::onWake(%this)
 
    // Turn off any shell sounds...
    // sfxStop( ... );
-   
-   %this-->ts.cameraXRot = 0;
-   %this-->ts.cameraZRot = 0;
-   //%this.setElevation(%this.zElevation);
-   %this.setElevation(0);
 
-   //setFov($cameraFov*0.5);
-   
+   //%this.setElevation(%this.zElevation);
+   //%this.updateView();
+   if($cameraFov > 45)
+      $cameraFov = 45;
+   setFov($cameraFov);
+   %this.updateView();
+
    %this.zZoomNoiseOffset = 0;
 
    $enableDirectInput = "1";
    activateDirectInput();
    
    Canvas.pushDialog(MiscHud);
-   //Canvas.pushDialog(XaNotcMinimapHud);
-   //Canvas.pushDialog(notcCatHud);
-   //Canvas.pushDialog(XaNotcMinimapHudEffectsLayer);
+   Canvas.pushDialog(XaNotcMinimapHud);
+   Canvas.pushDialog(notcCatHud);
+   Canvas.pushDialog(XaNotcMinimapHudEffectsLayer);
 
    // Message hud dialog
    if ( isObject( MainChatHud ) )
@@ -70,7 +77,10 @@ function notcCatSniperGui::onSleep(%this)
    if ( isObject( MainChatHud ) )
       Canvas.popDialog( MainChatHud );
       
+   //MoveManager_addPitch(%this-->ts.cameraXRot*(mPi()/180));
    //setFov(mClamp($cameraFov*2,1,$Pref::NOTC1::DefaultFov));
+   setFov($Pref::NOTC1::DefaultFov);
+   $MouseZoomStep = 0;
       
    cancel(%this.zTickThread);
    
@@ -93,7 +103,7 @@ function notcCatSniperGui::tickThread(%this)
       cancel(%this.zTickThread);
       %this.zTickThread = "";
    }
-   %this.zTickThread = %this.schedule(64, "tickThread");
+   %this.zTickThread = %this.schedule(32, "tickThread");
 
    if(!isObject(ServerConnection))
       return;
@@ -103,6 +113,11 @@ function notcCatSniperGui::tickThread(%this)
       return;
       
    %data = %control.getDataBlock();
+   
+   if(%this.zScanForTargets)
+      %this.scanForTarget();
+   
+   %this.renderTargeting();
 
    //echo($MouseZoomValue);
    
@@ -128,12 +143,23 @@ function notcCatSniperGui::tickThread(%this)
 
 //-----------------------------------------------------------------------------
 
+function notcCatSniperGui::updateView(%this)
+{
+   %control = ServerConnection.getControlObject();
+   if(!isObject(%control))
+      return;
+
+   %fov = $cameraFov;
+   %maxElevDeg = %fov/2;
+   %elevDeg = %maxElevDeg * %this.zElevation;
+   %this-->ts.cameraXRot = %elevDeg;
+   
+   %this.updateCrosshair();
+}
+
 function notcCatSniperGui::setElevation(%this, %elevation)
 {
    //echo("notcCatSniperGui::setElevation():" SPC %elevation);
-   
-   if(!isObject(ServerConnection))
-      return;
 
    %control = ServerConnection.getControlObject();
    if(!isObject(%control))
@@ -144,8 +170,8 @@ function notcCatSniperGui::setElevation(%this, %elevation)
    %fov = $cameraFov;
    %maxElevDeg = %fov/2;
    %elevDeg = %maxElevDeg * %elevation;
-   %elevDegDt = %elevDeg - %this-->ts.cameraXRot;
 
+   %elevDegDt = %elevDeg - %this-->ts.cameraXRot;
    %pitchAdd = 0;
    if(%elevDegDt != 0)
       %pitchAdd = -%elevDegDt*(mPi()/180);
@@ -155,19 +181,111 @@ function notcCatSniperGui::setElevation(%this, %elevation)
 
    %this.zElevation = %newElevation;
    //echo(%this.zElevation);
+   %this.updateCrosshair();
+}
 
-   // Update GUI
+function notcCatSniperGui::updateCrosshair(%this)
+{
    %width = getWord(%this-->ts.getExtent(), 0);
    %height = getWord(%this-->ts.getExtent(), 1);
    %crosshairX = 0.5 * %width;
    %crosshairY = 0.5 * %height - %height*%this.zElevation*0.5;
    //echo(%crosshairX SPC %crosshairY);
    
-   %this-->zeroElev.setPosition(0, 0.5*%height);
-   %this-->zeroElev.setExtent(%width SPC "1");
-   
-   %this-->crosshair.setPosition(%crosshairX-60, %crosshairY-60);
+   %size = %this-->ts.getWorldToScreenScale();
 
-   %this-->targetX.setVisible(false);
-   %this-->targetY.setVisible(false);
+   %w = mFloatLength(%size,0);
+   %h = mFloatLength(%size,0);
+   %this-->crosshairScaled.setExtent(%w SPC %h);
+   %this-->crosshairScaled.setPosition(%crosshairX-%w/2, %crosshairY-%h/2);
+
+   %w = 100;
+   %h = 100;
+   %this-->crosshairStatic.setExtent(%w SPC %h);
+   %this-->crosshairStatic.setPosition(%crosshairX-%w/2, %crosshairY-%h/2);
+}
+
+function notcCatSniperGui::scanForTarget(%this)
+{
+   %control = ServerConnection.getControlObject();
+   if(!isObject(%control))
+      return;
+
+   %mask = $TypeMasks::ShapeBaseObjectType;
+   %fvec = %control.getEyeVector();
+   %start = %control.getEyePoint();
+   %end = VectorAdd(%start, VectorScale(%fvec, 99999));
+   %result = containerRayCast( %start, %end, %mask, %control, true );
+
+   %target = getWord(%result, 0);
+   if(!isObject(%target))
+   {
+      %this.zTarget = "";
+      return;
+   }
+      
+   %this.zTarget = %target;
+   %this.zScanForTargets = false;
+
+   echo(%this.zTarget);
+   %this.sounds[0].play();
+}
+
+function notcCatSniperGui::renderTargeting(%this)
+{
+   %control = ServerConnection.getControlObject();
+   if(!isObject(%control))
+      return;
+      
+   %this-->target.setVisible(false);
+   %this-->crosshairScaled.setVisible(false);
+
+   if(isObject(%this.zTarget) && %this.zTarget.getDamageState() $= "Enabled")
+   {
+      %pos3D = %this.zTarget.getWorldBoxCenter();
+      %pos = %this-->ts.project(%pos3D);
+      //echo(%pos3D SPC "->" SPC %pos);
+      
+      %targetX = getWord(%pos, 0);
+      %targetY = getWord(%pos, 1);
+      %depth   = getWord(%pos, 2);
+      
+      %targetDist = VectorLen(VectorSub(%pos3D, %control.getEyePoint()));
+      
+      %width = getWord(%this-->ts.getExtent(), 0);
+      %height = getWord(%this-->ts.getExtent(), 1);
+      
+      %this-->target-->VLine.setPosition(%targetX, 0);
+      %this-->target-->VLine.setExtent("1" SPC %height);
+      %this-->target-->HLine.setPosition(0, %targetY);
+      %this-->target-->HLine.setExtent(%width SPC "1");
+      
+      //%wb = %this.zTarget.getWorldBox();
+      //%p1 = %this-->ts.project(getWords(%wb, 0, 2));
+      //%p2 = %this-->ts.project(getWords(%wb, 3, 5));
+      //%size = VectorLen(VectorSub(%p2,%p1));
+      %size = %targetDist; 
+      %size = %size * %this-->ts.getWorldToScreenScale() / 1000;
+      %size = mFloatLength(%size/5, 0);
+      
+      %this-->target-->VBlock.setPosition(%targetX-%size/2, 0);
+      %this-->target-->VBlock.setExtent(%size SPC %height);
+      %this-->target-->HBlock.setPosition(0, %targetY-%size/2);
+      %this-->target-->HBlock.setExtent(%width SPC %size);
+      
+      %w = %targetDist * getWord(%this-->ts.getWorldToScreenScale(), 0) / 1000;
+      %h = %targetDist * getWord(%this-->ts.getWorldToScreenScale(), 1) / 1000;
+      %this-->target-->distOverlay.setExtent(mFloatLength(%w,0) SPC mFloatLength(%h,0));
+      %this-->target-->distOverlay.setPosition(%targetX-%w/2, %targetY-%h/2);
+      
+      %this-->target.setVisible(true);
+      %this-->target-->VBlock.setVisible(%depth < 1);
+      %this-->target-->VLine.setVisible(%depth < 1);
+      %this-->target-->distOverlay.setVisible(%depth < 1);
+      //%this-->crosshairScaled.setVisible(true);
+   }
+   else
+   {
+      %this.zTarget = "";
+   }
 }

@@ -61,7 +61,7 @@ XaNotc1CatSniperMoveMap.bind( mouse, button2, XaNotc1CatSniperMoveMap_trigger3 )
 XaNotc1CatSniperMoveMap.bind(gamepad, triggerr, XaNotc1CatMoveMap_gamepadFire);
 XaNotc1CatSniperMoveMap.bind(gamepad, triggerl, XaNotc1CatMoveMap_gamepadAltTrigger);
 
-XaNotc1CatSniperMoveMap.bind(mouse, "zaxis", XaNotc1CatMoveMap_mouseZoom);
+XaNotc1CatSniperMoveMap.bind(mouse, "zaxis", XaNotc1CatSniperMoveMap_mouseZoom);
 XaNotc1CatSniperMoveMap.bind(keyboard, "f", XaNotc1CatMoveMap_switchFeed);
 
 XaNotc1CatSniperMoveMap.bind( keyboard, v, XaNotc1CatMoveMap_toggleFreeLook ); // v for vanity

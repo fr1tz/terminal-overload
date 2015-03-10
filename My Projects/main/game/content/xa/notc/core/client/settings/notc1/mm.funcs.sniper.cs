@@ -47,6 +47,32 @@ function XaNotc1CatSniperMoveMap_trigger1(%val)
 
 function XaNotc1CatSniperMoveMap_trigger3(%val)
 {
+   notcCatSniperGui.zScanForTargets = %val;
+   if(%val)
+      notcCatSniperGui.scanForTarget();
+}
 
+function XaNotc1CatSniperMoveMap_mouseZoom(%val)
+{
+	if(Canvas.isCursorOn())
+		return;
+
+   if($MouseZoomSteps $= "")
+      $MouseZoomSteps = $Pref::NOTC1::MouseZoomSteps;
+      
+   %oldFov = $cameraFov;
+
+	%minFov = ServerConnection.getControlObject().getDataBlock().cameraMinFov;
+   %maxFov = 45;
+   
+   %newFov = %oldFov * (%val > 0 ? 0.5 : 2);
+   %newFov = mClamp(%newFov, %minFov, %maxFov);
+   
+   if(%newFov == %oldFov)
+      return;
+
+   $cameraFov = %newFov;
+   setFov(%newFov);
+   notcCatSniperGui.updateView();
 }
 
