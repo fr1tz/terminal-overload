@@ -141,11 +141,11 @@ singleton Material(xa_rotc_hack_shapes_mat9)
    glowOnly[0] = "0";
    materialTag0 = "Miscellaneous";
    diffuseColor[0] = "0.996078 0.988235 0.996078 0.568";
-   diffuseColor[1] = "0.992157 0.996078 0.992157 1";
+   diffuseColor[1] = "0.992157 0.996078 0.992157 0";
    emissive[1] = "1";
    diffuseColorPaletteSlot[0] = "0";
-   diffuseMap[0] = "content/xa/notc/core/shapes/standardcat/stealth1.png";
    wireframe[1] = "1";
+   diffuseColor[3] = "1 1 1 1";
 };
 
 singleton Material(xa_rotc_hack_shapes_mat10)
