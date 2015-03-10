@@ -11,10 +11,12 @@ function CatGui::onWake(%this)
    $enableDirectInput = "1";
    activateDirectInput();
    
+   Canvas.pushDialog(notcCatHud);
+   Canvas.pushDialog(notcCatGuiOverlay);
    Canvas.pushDialog(MiscHud);
    Canvas.pushDialog(XaNotcMinimapHud);
-   Canvas.pushDialog(notcCatHud);
    Canvas.pushDialog(XaNotcMinimapHudEffectsLayer);
+
    
    // Message hud dialog
    if ( isObject( MainChatHud ) )

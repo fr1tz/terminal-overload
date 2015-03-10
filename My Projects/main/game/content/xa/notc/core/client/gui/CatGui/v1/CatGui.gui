@@ -3,6 +3,7 @@ exec("./profiles.cs");
 //--- OBJECT WRITE BEGIN ---
 %guiContent = new GameTSCtrl(CatGui) {
    cameraZRot = "0";
+   cameraXRot = "0";
    forceFOV = "0";
    reflectPriority = "1";
    renderStyle = "standard";
@@ -30,8 +31,8 @@ exec("./profiles.cs");
       noCursor = "1";
       zScanlinesOffset = "-2183";
       zTeamId = "0";
-      zTickThread = "601908";
-      zZoomNoiseOffset = "-151";
+      zTickThread = "233744";
+      zZoomNoiseOffset = "-265";
 
    new GuiDiscTargetsHud() {
       frameColor = "1 1 1 1";
@@ -185,27 +186,6 @@ exec("./profiles.cs");
       tooltipProfile = "GuiToolTipProfile";
       hovertime = "1000";
       isContainer = "0";
-      canSave = "1";
-      canSaveDynamicFields = "0";
-   };
-   new notcGuiBitmapCtrl() {
-      bitmap = "content/xa/notc/core/client/gui/CatGui/v1/graphics/feedOverlay2.png";
-      wrap = "1";
-      flipX = "0";
-      flipY = "0";
-      crisp = "1";
-      position = "0 0";
-      extent = "640 480";
-      minExtent = "8 2";
-      horizSizing = "relative";
-      vertSizing = "relative";
-      profile = "notcCatGuiFeedOverlayProfile";
-      visible = "1";
-      active = "1";
-      tooltipProfile = "GuiToolTipProfile";
-      hovertime = "1000";
-      isContainer = "0";
-      internalName = "feedOverlay";
       canSave = "1";
       canSaveDynamicFields = "0";
    };

@@ -57,6 +57,9 @@ function XaNotc1CatSniperMoveMap_mouseZoom(%val)
 	if(Canvas.isCursorOn())
 		return;
 
+   if(!ServerConnection.isFirstPerson())
+      return;
+
    if($MouseZoomSteps $= "")
       $MouseZoomSteps = $Pref::NOTC1::MouseZoomSteps;
       

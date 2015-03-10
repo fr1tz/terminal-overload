@@ -270,6 +270,7 @@ function GameCoreBase::prepareClient(%game, %client)
             "xa/notc/core/client/audio/Hearing/v1/exec" TAB
             "xa/notc/core/client/audio/HitSound/v1/exec" TAB
             "xa/notc/core/client/gui/LoadingGui/v1/exec" TAB
+            "xa/notc/core/client/gui/UserGui/v1/exec" TAB
             "xa/notc/core/client/gui/CatHud/v1/exec" TAB
             "xa/notc/core/client/gui/CatGui/v1/exec" TAB
             "xa/notc/core/client/gui/CatGuiSniper/v1/exec" TAB

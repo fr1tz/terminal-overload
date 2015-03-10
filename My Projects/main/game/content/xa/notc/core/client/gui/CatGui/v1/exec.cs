@@ -5,6 +5,7 @@ function loadContentModule_notcCatGui()
 {
    exec("./CatGui.cs");
    exec("./CatGui.gui");
+   exec("./CatGuiOverlay.gui");
 }
 
 if(isFunction("unloadContentModule_notcCatGui"))

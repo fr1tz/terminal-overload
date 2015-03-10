@@ -52,3 +52,13 @@ singleton GuiControlProfile(notcCatHudShieldProfile : GuiDefaultProfile)
    fillColor = "255 255 255 255";
 };
 
+singleton GuiControlProfile(notcCatHudKnockbackProtectionProfile : GuiDefaultProfile)
+{
+   fillColor = "50 255 50 150";
+};
+
+singleton GuiControlProfile(notcCatHudDamageProtectionProfile : GuiDefaultProfile)
+{
+   fillColor = "50 255 50 150";
+};
+

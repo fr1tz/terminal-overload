@@ -20,6 +20,7 @@ function notcCatHud::setMeter(%this, %meterCtrl, %percent)
       %blip = %meterCtrl.getObject(%i);
       %blip.setVisible(%i < %visible);
    }
+   %meterCtrl.zNumVisible = %visible;
 }
 
 function notcCatHud::tickThread(%this)
@@ -66,6 +67,13 @@ function notcCatHud::tickThread(%this)
 
    notcCatHud-->dpnumber.setNumber(%dp);
    notcCatHud-->kpnumber.setNumber(%kp);
+   
+   if(notcCatHud-->dpblips.zNumVisible <= 6)
+      notcCatHudDamageProtectionProfile.fillColor = "255 25 25 200";
+   else if(notcCatHud-->dpblips.zNumVisible <= 9)
+      notcCatHudDamageProtectionProfile.fillColor = "255 100 0 175";
+   else
+      notcCatHudDamageProtectionProfile.fillColor = "50 255 50 150";
 
    if(isObject(MiscHud))
    {

@@ -383,15 +383,6 @@ function XaNotc1CatMoveMap_toggleFreeLook( %val )
       $mvFreeLook = false;
 }
 
-function XaNotc1CatMoveMap_toggleFirstPerson(%val)
-{
-   if (%val)
-   {
-      ServerConnection.setFirstPerson(!ServerConnection.isFirstPerson());
-   }
-}
-
-
 XaNotc1CatMoveMap.bind( keyboard, v, XaNotc1CatMoveMap_toggleFreeLook ); // v for vanity
 
 XaNotc1CatMoveMap.bind( gamepad, btn_x, XaNotc1CatMoveMap_toggleFirstPerson );

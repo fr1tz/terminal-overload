@@ -36,12 +36,13 @@ function notcCatSniperGui::onWake(%this)
 
    $enableDirectInput = "1";
    activateDirectInput();
-   
+
+   Canvas.pushDialog(notcCatHud);
+   Canvas.pushDialog(notcCatSniperGuiOverlay);
    Canvas.pushDialog(MiscHud);
    Canvas.pushDialog(XaNotcMinimapHud);
-   Canvas.pushDialog(notcCatHud);
    Canvas.pushDialog(XaNotcMinimapHudEffectsLayer);
-   
+
    sfxPlayOnce(AudioGui, "content/xa/notc/core/sounds/charge1.wav");
 
    // Message hud dialog

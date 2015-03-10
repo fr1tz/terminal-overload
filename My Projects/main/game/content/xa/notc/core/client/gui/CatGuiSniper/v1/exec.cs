@@ -5,6 +5,7 @@ function loadContentModule_notcCatSniperGui()
 {
    exec("./CatSniperGui.cs");
    exec("./CatSniperGui.gui");
+   exec("./CatSniperGuiOverlay.gui");
    exec("./postFx.cs");
 }
 
