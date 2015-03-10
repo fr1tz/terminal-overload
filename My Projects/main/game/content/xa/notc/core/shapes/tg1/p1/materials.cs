@@ -83,6 +83,6 @@ singleton Material(xa_notc_core_shapes_tg1_p1_mat5)
    wireframe[0] = "1";
    specular[3] = "1 1 1 1";
    glowOnly[0] = "0";
-   doubleSided = "1";
+   doubleSided = "0";
 };
 
