@@ -15,7 +15,7 @@ function CatGui::onWake(%this)
    Canvas.pushDialog(XaNotcMinimapHud);
    Canvas.pushDialog(notcCatHud);
    Canvas.pushDialog(XaNotcMinimapHudEffectsLayer);
-
+   
    // Message hud dialog
    if ( isObject( MainChatHud ) )
    {

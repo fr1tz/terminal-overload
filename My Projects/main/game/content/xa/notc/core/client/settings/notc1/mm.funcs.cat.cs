@@ -37,4 +37,5 @@ function XaNotc1CatMoveMap_mouseZoom(%val)
    %f = mPow(1-%pos, 2);
    $MouseZoomValue = %minFov + (%maxFov-%minFov)*%f;
    setFov($MouseZoomValue);
+   sfxPlayOnce(AudioGui, "content/o/rotc/p.5.4/sounds/rotc/weaponSwitch.wav");
 }

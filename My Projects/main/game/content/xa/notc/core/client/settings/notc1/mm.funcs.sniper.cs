@@ -74,5 +74,6 @@ function XaNotc1CatSniperMoveMap_mouseZoom(%val)
    $cameraFov = %newFov;
    setFov(%newFov);
    notcCatSniperGui.updateView();
+   sfxPlayOnce(AudioGui, "content/o/rotc/p.5.4/sounds/rotc/weaponSwitch.wav");
 }
 

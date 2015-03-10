@@ -41,6 +41,8 @@ function notcCatSniperGui::onWake(%this)
    Canvas.pushDialog(XaNotcMinimapHud);
    Canvas.pushDialog(notcCatHud);
    Canvas.pushDialog(XaNotcMinimapHudEffectsLayer);
+   
+   sfxPlayOnce(AudioGui, "content/xa/notc/core/sounds/charge1.wav");
 
    // Message hud dialog
    if ( isObject( MainChatHud ) )
@@ -76,6 +78,8 @@ function notcCatSniperGui::onSleep(%this)
       
    if ( isObject( MainChatHud ) )
       Canvas.popDialog( MainChatHud );
+      
+   sfxPlayOnce(AudioGui, "content/xa/notc/core/sounds/charge1rev.wav");
       
    //MoveManager_addPitch(%this-->ts.cameraXRot*(mPi()/180));
    //setFov(mClamp($cameraFov*2,1,$Pref::NOTC1::DefaultFov));
