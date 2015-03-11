@@ -9,7 +9,7 @@ abort()
 
 print_game_version_string()
 {
-	cut -d '"' -f 2 < '../My Projects/main/game/version.cs'
+	grep 'GameVersionString' '../My Projects/main/game/version.cs' | cut -d '"' -f 2 
 }
 
 echo "Cleaning work/ directory..."
