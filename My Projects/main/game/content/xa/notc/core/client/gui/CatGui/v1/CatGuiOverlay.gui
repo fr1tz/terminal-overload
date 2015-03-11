@@ -50,7 +50,7 @@
    };
    new notcGuiBitmapCtrl() {
       bitmap = "content/xa/notc/core/client/gui/CatGui/v1/graphics/feedOverlay2.png";
-      wrap = "1";
+      wrap = "0";
       flipX = "0";
       flipY = "0";
       crisp = "1";
