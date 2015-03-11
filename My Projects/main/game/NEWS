@@ -1,6 +1,38 @@
 What's new?
 ===========
 
+Version 0.7.0-dev1
+------------------
+
+Release Date: Mar. 11, 2015
+
+- HUD changes and new specialized "Sniping View" for CATs (default key: f)
+- CATs now lose any flags they're carrying if they get hit by a repel disc.
+- Terminology changes:
+  - Damage Buffer -> Shield
+  - Damage Damper -> Damage Protection
+  - Impulse Damper -> Knockback Protection
+- Try to make default game more accessible:
+  - Disable friendly fire.
+  - Don't restore shooter's health when damaging enemies.
+  - Damage and knockback protection always at maximum level
+  - Reduce Standard CAT health to 50 but increase shield to 50.
+  - CAT's armor now reflects its shield level.
+  - Improved hit notifications
+- Add mutators:
+  - Advanced Shooting: Firing weapons reduces damage protection.
+                       Hitting enemies restores damage protection.
+  - Advanced Movement: Using etherboard or x-jump reduces knockback protection.
+  - V-AMP: Damaging enemies restores health.
+  - Advanced: Combination of Advanced Shooting, Advanced Movement and V-AMP
+- Weapon changes:
+  - RFL1: Reduce recoil.
+  - SMG3: Reduce damage.
+  - SMG4: By-pass shields.
+- Various tweaks and improvements
+- Bugfixes
+
+
 Version 0.6.0
 -------------
 
