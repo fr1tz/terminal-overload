@@ -65,7 +65,7 @@ datablock ProjectileData(WpnSMG4Projectile)
 	splashDamage       = 0;
 	splashDamageRadius = 0;
 	splashImpulse      = 0;
-	bypassDamageBuffer = false;
+	bypassDamageBuffer = true;
  
    explodesNearEnemies = false;
    explodesNearEnemiesRadius = 5;
