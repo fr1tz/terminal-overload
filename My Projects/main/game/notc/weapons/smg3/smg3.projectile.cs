@@ -19,7 +19,7 @@ datablock ShotgunProjectileData(WpnSMG3Projectile)
    //lightDesc = BulletProjectileLightDesc;
 
 	// script damage properties...
-	impactDamage       = 15;
+	impactDamage       = 10;
 	impactImpulse      = 0;
 	splashDamage       = 0;
 	splashDamageRadius = 0;
