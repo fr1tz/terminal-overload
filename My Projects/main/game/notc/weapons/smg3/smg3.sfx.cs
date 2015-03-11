@@ -13,7 +13,7 @@ datablock SFXDescription(WpnSMG3FireSoundDescription : AudioEffect)
 
 datablock SFXProfile(WpnSMG3FireSound)
 {
-   filename = "content/o/rotc/p.5.4/sounds/rotc/charge5";
+   filename = "content/o/cat5/p.1/sounds/cat5/spark_loop_1";
    description = WpnSMG3FireSoundDescription;
    preload = true;
 };
