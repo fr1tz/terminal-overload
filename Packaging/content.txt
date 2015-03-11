@@ -1,3 +1,4 @@
+fonts/
 xa/rotc_hack/
 xa/notc/core/
 xa/notc/mis/eth1/
