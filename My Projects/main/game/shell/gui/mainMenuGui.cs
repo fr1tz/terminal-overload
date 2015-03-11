@@ -18,6 +18,12 @@ function MainMenuGui::onWake(%this)
        getWebDeployment() &&
        isObject(%this-->ExitButton))
       %this-->ExitButton.setVisible(false);
+      
+   if($GameVersionType !$= "public" && $GameVersionFeedbackURL !$= "")
+   {
+      if(WelcomeDlg.zUnderstood == false)
+         Canvas.pushDialog(WelcomeDlg);
+   }
 
    // Start tick thread.
    %this.tickThread();

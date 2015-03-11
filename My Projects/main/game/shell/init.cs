@@ -87,6 +87,7 @@ function initGUI()
    exec("./gui/optAudio.cs");
    exec("./gui/optGame.cs");
    exec("./gui/motdDlg.cs");
+   exec("./gui/welcomeDlg.cs");
    exec("./gui/ingameMenuDlg.cs");
 
    // Load up the shell GUIs
@@ -102,6 +103,7 @@ function initGUI()
    exec("./gui/optAudio.gui");
    exec("./gui/optGame.gui");
    exec("./gui/motdDlg.gui");
+   exec("./gui/welcomeDlg.gui");
    exec("./gui/ingameMenuDlg.gui");
 
    // Client scripts
