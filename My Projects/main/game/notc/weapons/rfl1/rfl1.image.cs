@@ -136,8 +136,8 @@ function WpnRFL1Image::onMount(%this, %obj, %slot)
    
    // Set up recoil
    %obj.setImageRecoilEnabled(%slot, true);
-   %obj.setImageCurrentRecoil(%slot, 40);
-   %obj.setImageMaxRecoil(%slot, 40);
+   %obj.setImageCurrentRecoil(%slot, 10);
+   %obj.setImageMaxRecoil(%slot, 10);
    %obj.setImageRecoilAdd(%slot, 0);
    %obj.setImageRecoilDelta(%slot, -0);
    
