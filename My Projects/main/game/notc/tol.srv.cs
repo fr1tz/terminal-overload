@@ -163,12 +163,8 @@ function createServer(%gameType, %args)
    else
       $Server::GameType = $Server::GameType SPC "\c6Variant";
 
-   %modeVariant = "(Variant)";
-   if($Server::NOTC::MutatorList $= "")
-   {
-      %modeVariant = "";
-   }
-   else if($Server::NOTC::MutatorList $= "AS AM VAMP")
+   %modeVariant = "";
+   if($Server::NOTC::MutatorList $= "AS AM VAMP")
    {
       %modeVariant = "(Advanced)";
    }
@@ -180,6 +176,10 @@ function createServer(%gameType, %args)
          %modeVariant = "(Advanced Movement)";
       else if($Server::NOTC::MutatorList $= "VAMP")
          %modeVariant = "(V-AMP)";
+   }
+   else if(getWordCount($Server::NOTC::MutatorList) >= 2)
+   {
+      %modeVariant = "(Multiple Mutators)";
    }
 
    // The common module provides the basic server functionality
