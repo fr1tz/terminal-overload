@@ -3,4 +3,5 @@
 
 exec("./ChatHud.cs");
 exec("./ChatHud.gui");
+exec("./MessageHud.gui");
 
