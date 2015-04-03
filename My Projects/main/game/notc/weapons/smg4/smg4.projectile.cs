@@ -78,13 +78,13 @@ datablock ProjectileData(WpnSMG4Projectile)
    impactExplosion[0]         = "WpnSMG1ProjectileImpactDmgExplosion";
    impactExplosionTypeMask[0] = $TypeMasks::ShapeBaseObjectType;
    decal                      = "WpnSMG4ProjectileDecal";
-   laserTrail[0]              = 0; //"WpnSMG4ProjectileLaserTrail0";
-   laserTrail[1]              = "WpnSMG4ProjectileLaserTrail1";
+   laserTrail[0]              = "WpnSMG4ProjectileLaserTrail0";
+   laserTrail[1]              = 0; //"WpnSMG4ProjectileLaserTrail1";
    //laserTrail[2]              = "WpnSMG4ProjectileLaserTrail2";
    //particleEmitter          = "WpnSMG4ProjectileParticleEmitter";
 
    muzzleVelocity      = 500;
-   velInheritFactor    = 0.8;
+   velInheritFactor    = 0.6;
 
    armingDelay         = 0;
    lifetime            = 2000;
