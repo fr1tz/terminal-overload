@@ -60,8 +60,8 @@ singleton Material(xa_notc_core_shapes_standardcat_trailsmat)
    castShadows = "0";
    vertColor[0] = "1";
    glowOnly[0] = "0";
-   diffuseMap[0] = "content/o/rotc/p.5.4/shapes/rotc/players/standardcat/base.png";
    mapTo = "grid.128.24.png";
+   effectColor[0] = "InvisibleBlack";
 };
 
 singleton Material(xa_notc_core_shapes_standardcat_mat1)
