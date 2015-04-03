@@ -46,21 +46,21 @@ singleton Material(xa_rotc_hack_shapes_mat3)
 singleton Material(xa_rotc_hack_shapes_mat4)
 {
    mapTo = "image";
-   diffuseColor[0] = "0.235294 0.235294 0.235294 1";
+   diffuseColor[0] = "0.00392157 0.00392157 0.00392157 1";
    diffuseColorPaletteSlot[0] = "-1";
    specular[0] = "0.682353 0.686275 0.686275 1";
    specularPower[0] = "46";
    glow[0] = "0";
    emissive[0] = "0";
    diffuseColor[1] = "0.992157 0.992157 0.992157 1";
-   diffuseColorPaletteSlot[1] = "-1";
+   diffuseColorPaletteSlot[1] = "0";
    wireframe[1] = "0";
    emissive[1] = "1";
-   glow[1] = "0";
+   glow[1] = "1";
    doubleSided = "1";
-   translucentBlendOp = "AddAlpha";
+   translucentBlendOp = "None";
    castShadows = "0";
-   translucent = "1";
+   translucent = "0";
    showFootprints = "0";
    materialTag0 = "Miscellaneous";
    specularStrength[0] = "0.0980392";
