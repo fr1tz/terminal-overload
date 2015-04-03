@@ -53,9 +53,9 @@ function WpnSMG4PseudoProjectile::onAdd(%this, %obj)
 
 datablock ProjectileData(WpnSMG4Projectile)
 {
-   projectileShapeName = "content/xa/notc/core/shapes/mg1/projectile/p1/shape.dae";
+   projectileShapeName = "content/xa/notc/core/shapes/smg4/projectile/p1/shape.dae";
    
-   sound = WpnSMG4ProjectileSound;
+   //sound = WpnSMG4ProjectileSound;
 
    //lightDesc = BulletProjectileLightDesc;
 
@@ -79,7 +79,7 @@ datablock ProjectileData(WpnSMG4Projectile)
    impactExplosionTypeMask[0] = $TypeMasks::ShapeBaseObjectType;
    decal                      = "WpnSMG4ProjectileDecal";
    laserTrail[0]              = 0; //"WpnSMG4ProjectileLaserTrail0";
-   //laserTrail[1]            = "WpnSMG4ProjectileLaserTrail0";
+   laserTrail[1]              = "WpnSMG4ProjectileLaserTrail1";
    //laserTrail[2]              = "WpnSMG4ProjectileLaserTrail2";
    //particleEmitter          = "WpnSMG4ProjectileParticleEmitter";
 

@@ -81,34 +81,10 @@ datablock ParticleEmitterData(WpnSMG4ProjectileParticleEmitter)
 
 datablock MultiNodeLaserBeamData(WpnSMG4ProjectileLaserTrail0)
 {
-	material = "xa_notc_core_shapes_mgl1_projectile_p1_lasertrail2mat0";
+	material = "xa_notc_core_shapes_smg4_trail_p1_lasertrail0mat0";
 	renderMode = $MultiNodeLaserBeamRenderMode::FaceViewer;
-   width = 0.005;
-	fadeTime = 500;
-	windCoefficient = 0.0;
-
-	// node x movement...
-	nodeMoveMode[0]     = $NodeMoveMode::None;
-	nodeMoveSpeed[0]    = -0.002;
-	nodeMoveSpeedAdd[0] =  0.004;
-	// node y movement...
-	nodeMoveMode[1]     = $NodeMoveMode::None;
-	nodeMoveSpeed[1]    = -0.002;
-	nodeMoveSpeedAdd[1] =  0.004;
-	// node z movement...
-	nodeMoveMode[2]     = $NodeMoveMode::ConstantSpeed;
-	nodeMoveSpeed[2]    = 0.5;
-	nodeMoveSpeedAdd[2] = 0.5;
-
-	//nodeDistance = 2;
-};
-
-datablock MultiNodeLaserBeamData(WpnSMG4ProjectileLaserTrail1)
-{
-	material = "xa_notc_core_shapes_mgl1_projectile_p1_lasertrail1mat0";
-	renderMode = $MultiNodeLaserBeamRenderMode::FaceViewer;
-   width = 0.001;
-	fadeTime = 300;
+   width = 0.2;
+	fadeTime = 100;
 	windCoefficient = 0.0;
 
 	// node x movement...
@@ -123,15 +99,16 @@ datablock MultiNodeLaserBeamData(WpnSMG4ProjectileLaserTrail1)
 	nodeMoveMode[2]     = $NodeMoveMode::None;
 	nodeMoveSpeed[2]    = 0.5;
 	nodeMoveSpeedAdd[2] = 0.5;
+
+	//nodeDistance = 2;
 };
 
-
-datablock MultiNodeLaserBeamData(WpnSMG4ProjectileLaserTrail2)
+datablock MultiNodeLaserBeamData(WpnSMG4ProjectileLaserTrail1)
 {
-	material = "xa_notc_core_shapes_mgl1_projectile_p1_lasertrail2mat0";
+	material = "xa_notc_core_shapes_smg4_trail_p1_lasertrail1mat0";
 	renderMode = $MultiNodeLaserBeamRenderMode::FaceViewer;
-   width = 0.05;
-	fadeTime = 1000;
+   width = 0.2;
+	fadeTime = 500;
 	windCoefficient = 0.0;
 
 	// node x movement...
@@ -143,11 +120,9 @@ datablock MultiNodeLaserBeamData(WpnSMG4ProjectileLaserTrail2)
 	nodeMoveSpeed[1]    = -0.002;
 	nodeMoveSpeedAdd[1] =  0.004;
 	// node z movement...
-	nodeMoveMode[2]     = $NodeMoveMode::ConstantSpeed;
+	nodeMoveMode[2]     = $NodeMoveMode::None;
 	nodeMoveSpeed[2]    = 0.5;
 	nodeMoveSpeedAdd[2] = 0.5;
-
-	nodeDistance = 2;
 };
 
 //-----------------------------------------------------------------------------

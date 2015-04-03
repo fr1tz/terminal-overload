@@ -9,7 +9,7 @@ datablock SFXPlayList(WpnSMG4FireSoundList)
 
 datablock SFXProfile(WpnSMG4FireSound)
 {
-   filename = "content/o/cat5/p.1/sounds/cat5/charge4fire";
+   filename = "content/o/rotc/p.5.4/sounds/rotc/fire7";
    description = AudioClose3D;
    preload = true;
 };

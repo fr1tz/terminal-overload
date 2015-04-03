@@ -5,7 +5,7 @@ datablock ShapeBaseImageData(WpnSMG4Image)
 {
    // Basic Item properties
    shapeFile = "content/xa/notc/core/shapes/smg1/image/p1/shape.tp.dae";
-   shapeFileFP = "content/xa/notc/core/shapes/smg1/image/p1/shape.fp.dae";
+   shapeFileFP = "content/xa/notc/core/shapes/smg4/image/p1/shape.fp.dae";
    emap = true;
 
    imageAnimPrefix = "Rifle";
@@ -17,7 +17,7 @@ datablock ShapeBaseImageData(WpnSMG4Image)
    firstPerson = true;
    animateOnServer = true;
    useEyeNode = "0";
-   eyeOffset = "0.15 -0.0 -0.20";
+   eyeOffset = "0.125 -0 -0.25";
 
    // When firing from a point offset from the eye, muzzle correction
    // will adjust the muzzle vector to point to the eye LOS point.
@@ -150,7 +150,7 @@ function WpnSMG4Image::onMount(%this, %obj, %slot)
    %obj.setImageInaccuracy(%slot, "enabled", true);
 
    // Set up recoil.
-   %obj.setImageRecoilEnabled(%slot, false);
+   %obj.setImageRecoilEnabled(%slot, true);
    %obj.setImageCurrentRecoil(%slot, 7);
    %obj.setImageMaxRecoil(%slot, 7);
    %obj.setImageRecoilAdd(%slot, 0);
