@@ -147,62 +147,62 @@ datablock ExplosionData(FrmStandardCatBleedEffect20 : FrmStandardCatBleedEffect1
 {
    lifetimeMS = "96";
    debrisNum = "6";
-	sizes[1] = "2 2 2";
+	sizes[1] = "4 4 4";
 };
 
 datablock ExplosionData(FrmStandardCatBleedEffect30 : FrmStandardCatBleedEffect10)
 {
    lifetimeMS = "128";
    debrisNum = "6";
-	sizes[1] = "3 3 3";
+	sizes[1] = "6 6 6";
 };
 
 datablock ExplosionData(FrmStandardCatBleedEffect40 : FrmStandardCatBleedEffect10)
 {
    lifetimeMS = "160";
    debrisNum = "8";
-	sizes[1] = "4 4 4";
+	sizes[1] = "8 8 8";
 };
 
 datablock ExplosionData(FrmStandardCatBleedEffect50 : FrmStandardCatBleedEffect10)
 {
    lifetimeMS = "192";
    debrisNum = "10";
-	sizes[1] = "5 5 5";
+	sizes[1] = "10 10 10";
 };
 
 datablock ExplosionData(FrmStandardCatBleedEffect60 : FrmStandardCatBleedEffect10)
 {
    lifetimeMS = "224";
    debrisNum = "12";
-	sizes[1] = "6 6 6";
+	sizes[1] = "12 12 12";
 };
 
 datablock ExplosionData(FrmStandardCatBleedEffect70 : FrmStandardCatBleedEffect10)
 {
    lifetimeMS = "256";
    debrisNum = "14";
-	sizes[1] = "7 7 7";
+	sizes[1] = "14 14 14";
 };
 
 datablock ExplosionData(FrmStandardCatBleedEffect80 : FrmStandardCatBleedEffect10)
 {
    lifetimeMS = "288";
    debrisNum = "16";
-	sizes[1] = "8 8 8";
+	sizes[1] = "16 16 16";
 };
 
 datablock ExplosionData(FrmStandardCatBleedEffect90 : FrmStandardCatBleedEffect10)
 {
    lifetimeMS = "320";
    debrisNum = "18";
-	sizes[1] = "9 9 9";
+	sizes[1] = "18 18 18";
 };
 
 datablock ExplosionData(FrmStandardCatBleedEffect100 : FrmStandardCatBleedEffect10)
 {
    lifetimeMS = "352";
    debrisNum = "20";
-	sizes[1] = "10 10 10";
+	sizes[1] = "20 20 20";
 };
 
