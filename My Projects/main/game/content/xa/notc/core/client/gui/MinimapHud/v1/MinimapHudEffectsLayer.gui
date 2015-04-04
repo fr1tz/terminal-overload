@@ -55,7 +55,7 @@
       minExtent = "8 2";
       horizSizing = "relative";
       vertSizing = "relative";
-      profile = "NotcCatHudDefaultProfile";
+      profile = "GuiDefaultProfile";
       visible = "0";
       active = "1";
       tooltipProfile = "GuiToolTipProfile";
@@ -68,7 +68,7 @@
    new GuiBitmapCtrl() {
       bitmap = "shell/graphics/noise2.png";
       wrap = "1";
-      position = "261 360";
+      position = "27 360";
       extent = "118 118";
       minExtent = "8 2";
       horizSizing = "relative";
@@ -86,7 +86,7 @@
    new GuiBitmapCtrl() {
       bitmap = "content/xa/notc/core/client/gui/CatGui/v1/graphics/monitorScanlines.png";
       wrap = "1";
-      position = "261 360";
+      position = "27 360";
       extent = "118 118";
       minExtent = "8 2";
       horizSizing = "relative";

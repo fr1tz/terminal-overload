@@ -55,7 +55,7 @@
       minExtent = "8 2";
       horizSizing = "relative";
       vertSizing = "relative";
-      profile = "NotcCatHudDefaultProfile";
+      profile = "GuiDefaultProfile";
       visible = "0";
       active = "1";
       tooltipProfile = "GuiToolTipProfile";
@@ -90,7 +90,7 @@
       visRadius = "1000";
       hudInfoDatasetType_Color = "2";
       hudInfoDatasetType_Icon = "3";
-      position = "261 360";
+      position = "27 360";
       extent = "118 118";
       minExtent = "8 2";
       horizSizing = "relative";
