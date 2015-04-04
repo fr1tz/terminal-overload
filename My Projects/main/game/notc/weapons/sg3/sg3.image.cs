@@ -5,7 +5,7 @@ datablock ShapeBaseImageData(WpnSG3Image)
 {
    // Basic Item properties
    shapeFile = "content/xa/rotc_hack/shapes/blaster.tp.dts";
-   shapeFileFP = "content/xa/rotc_hack/shapes/blaster.fp.dts";
+   shapeFileFP = "content/xa/notc/core/shapes/sg3/image/p1/shape.fp.dae";
    emap = true;
 
    imageAnimPrefix = "Rifle";
@@ -17,7 +17,7 @@ datablock ShapeBaseImageData(WpnSG3Image)
    firstPerson = true;
    animateOnServer = true;
    useEyeNode = "0";
-   eyeOffset = "0.3 -0.0 -0.125";
+   eyeOffset = "0.125 -0.05 -0.225";
 
    // When firing from a point offset from the eye, muzzle correction
    // will adjust the muzzle vector to point to the eye LOS point.
@@ -94,6 +94,7 @@ datablock ShapeBaseImageData(WpnSG3Image)
 		stateEjectShell[3]               = false;
 		stateArmThread[3]                = "aimblaster";
 		stateSequence[3]                 = "fire";
+		stateScaleAnimationFP[3]         = false;
 		stateSound[3]                    = WpnSG3FireSound;
 		stateSoundFlags[3]               = 1;
 		//stateEmitter[3]                  = RedBlaster4FireEmitter;
@@ -106,8 +107,8 @@ datablock ShapeBaseImageData(WpnSG3Image)
 		stateTransitionOnTimeout[4]      = "Ready";
 		stateTimeoutValue[4]             = 0.960;
 		stateAllowImageChange[4]         = false;
-		stateSequence[4]                 = "Reload";
-		stateSound[4]                    = WpnSG2ReloadSound;
+		//stateSequence[4]                 = "Reload";
+		//stateSound[4]                    = WpnSG2ReloadSound;
 
 		// keep aiming...
 		stateName[5]                     = "KeepAiming";
