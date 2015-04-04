@@ -11,7 +11,7 @@ datablock ShotgunProjectileData(WpnSG3Projectile)
 	numBullets = 10;
 	muzzleSpreadRadius = 0.5;
 	referenceSpreadRadius = 1.0;
-	referenceSpreadDistance = 25;
+	referenceSpreadDistance = 15;
  
    explodesNearEnemies = false;
    explodesNearEnemiesRadius = 5;
