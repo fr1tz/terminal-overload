@@ -175,9 +175,12 @@ function GameCoreDM::loadOut(%game, %player)
    %player.addToWeaponCycle(WpnSMG3);
    %player.addToWeaponCycle(WpnSG1);
    %player.addToWeaponCycle(WpnSR1);
+   %player.addToWeaponCycle(WpnSMG4);
    %player.addToWeaponCycle(WpnMG2);
    //%player.addToWeaponCycle(WpnML1);
 
+   if($Server::NOTC::Mutator::VAMP)
+      %player.setInventory(ItemVAMP, 1);
    %player.setInventory(ItemImpShield, 1);
    %player.setInventory(ItemEtherboard, 1);
    %player.setInventory(ItemLauncher, 1);
@@ -188,6 +191,7 @@ function GameCoreDM::loadOut(%game, %player)
    
    %player.setInventory(WpnSMG3, 1);
    %player.setInventory(WpnMGL2, 1);
+   %player.setInventory(WpnSMG4, 1);
 
    if (%player.getDatablock().mainWeapon.image !$= "")
       %player.mountImage(%player.getDatablock().mainWeapon.image, 0);
