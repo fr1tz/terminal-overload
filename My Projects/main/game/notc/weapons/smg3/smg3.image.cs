@@ -17,7 +17,7 @@ datablock ShapeBaseImageData(WpnSMG3Image)
    firstPerson = true;
    animateOnServer = true;
    useEyeNode = "0";
-   eyeOffset = "0.1 -0.1 -0.2";
+   eyeOffset = "0.1 -0.04 -0.2";
 
    // When firing from a point offset from the eye, muzzle correction
    // will adjust the muzzle vector to point to the eye LOS point.
