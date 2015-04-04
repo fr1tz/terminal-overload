@@ -3,6 +3,7 @@
 
 exec("./sg3.sfx.cs");
 exec("./sg3.item.cs");
+exec("./sg3.projectile.gfx.cs");
 exec("./sg3.projectile.cs");
 exec("./sg3.image.cs");
 
