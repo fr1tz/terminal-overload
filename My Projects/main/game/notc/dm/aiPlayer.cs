@@ -403,6 +403,7 @@ function AIPlayer::spawn(%loadout, %path)
       Game.loadOut(%player);
       
       %player.setInventory(WpnSMG3, 1);
+      %player.setInventory(WpnSMG4, 1);
       %player.setInventory(WpnSG3, 1);
       %player.setInventory(WpnSG2, 1);
       %player.setInventory(WpnSG2Ammo, 9999);
@@ -444,6 +445,16 @@ function AIPlayer::spawn(%loadout, %path)
       {
          %player.mountImage(WpnMG2Image, 0);
          %player.setImageTrigger(0, true);
+      }
+      else if(%loadout == 7)
+      {
+         %player.mountImage(WpnSMG4Image, 0);
+         %player.singleShot();
+      }
+      else if(%loadout == 8)
+      {
+         %player.mountImage(WpnRFL1Image, 0);
+         %player.singleShot();
       }
 
       return %player;
