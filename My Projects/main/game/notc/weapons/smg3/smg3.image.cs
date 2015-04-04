@@ -5,7 +5,7 @@ datablock ShapeBaseImageData(WpnSMG3Image)
 {
    // Basic Item properties
    shapeFile = "content/xa/notc/core/shapes/sg1/image/p2/shape.tp.dae";
-   shapeFileFP = "content/xa/notc/core/shapes/sg1/image/p1/shape.fp.dae";
+   shapeFileFP = "content/xa/notc/core/shapes/smg3/image/p1/shape.fp.dae";
    emap = true;
 
    imageAnimPrefix = "Rifle";
