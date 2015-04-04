@@ -3,7 +3,7 @@
 
 datablock ProjectileData(WpnMG2Projectile)
 {
-   projectileShapeName = "content/xa/notc/core/shapes/mg2/projectile/p1/shape.dae";
+   projectileShapeName = "content/xa/notc/core/shapes/mg1/projectile/p2/shape.dae";
    hideShapeWhileOverlappingMuzzlePoint = true;
 
    //lightDesc = BulletProjectileLightDesc;
