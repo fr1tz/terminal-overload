@@ -73,7 +73,7 @@ datablock ProjectileData(WpnSMG4Projectile)
  
    energyDrain = 5;
 
-   explosion                  = "WpnSMG1ProjectileExplosion";
+   explosion                  = "WpnSMG4ProjectileExplosion";
    //nearEnemyExplosion         = "WpnSMG4ProjectileSplashDmgExplosion";
    impactExplosion[0]         = "WpnSMG1ProjectileImpactDmgExplosion";
    impactExplosionTypeMask[0] = $TypeMasks::ShapeBaseObjectType;
