@@ -1,7 +1,7 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
-singleton PostEffect( NotcBlurPostFx )
+singleton PostEffect(NotcBlurPostFx)
 {
    renderTime = "PFXAfterDiffuse";
    renderPriority = 0.2;
@@ -14,7 +14,7 @@ singleton PostEffect( NotcBlurPostFx )
    target = "$outTex";
    targetScale = "1.0 1.0";
    
-   new PostEffect()
+   singleton PostEffect(NotcBlurPostFx2)
    {
       shader = PFX_PassthruShader;
       stateBlock = PFX_DefaultStateBlock;
