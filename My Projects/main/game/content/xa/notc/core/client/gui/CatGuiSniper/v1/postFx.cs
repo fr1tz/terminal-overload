@@ -16,9 +16,11 @@ singleton ShaderData( PFX_notcCatSniperGuiShader )
    DXPixelShaderFile 	= "content/xa/notc/core/shaders/postFx/CatSniperGui.hlsl";
    
    OGLVertexShaderFile  = "shaders/common/postFx/gl/postFxV.glsl";
-   OGLPixelShaderFile   = "shaders/common/postFx/gl/chromaticLens.glsl";
-   
+   OGLPixelShaderFile   = "content/xa/notc/core/shaders/postFx/CatSniperGui.glsl";
+
    samplerNames[0] = "$backBuffer";
+   
+   //defines = "WHITE_COLOR=float4(1.0,1.0,1.0,0.0);MUL_COLOR=float4(1.0,0.25,0.25,0.0)";
    
    pixVersion = 3.0;
 };
@@ -33,25 +35,8 @@ singleton PostEffect( notcCatSniperGuiPostFX )
    shader = PFX_notcCatSniperGuiShader;
    stateBlock = PFX_DefaultnotcCatSniperGuiStateBlock;
    texture[0] = "$backBuffer";
-   target = "$outTex";
+   target = "$backBuffer";
    targetScale = "1.0 1.0";
-
-   new PostEffect(XXX)
-   {
-      shader = PFX_PassthruShader;
-      stateBlock = PFX_DefaultStateBlock;
-      texture[0] = "$inTex";
-      target = "$outTex";
-      targetScale = "1.0 0.5";
-   };
-
-   new PostEffect(YYY)
-   {
-      shader = PFX_PassthruShader;
-      stateBlock = PFX_DefaultStateBlock;
-      texture[0] = "$inTex";
-      target = "$backBuffer";
-   };
 };
 
 function notcCatSniperGuiPostFX::setShaderConsts( %this )
@@ -62,8 +47,5 @@ function notcCatSniperGuiPostFX::setShaderConsts( %this )
       %colorF = %colorF SPC getWord(%colorI, %i)/255;
    %colorF = trim(%colorF);
 
-   %this.setShaderConst( "$distCoeff",  $distCoeff); //-1.5);
-   %this.setShaderConst( "$cubeDistort", $cubeDistort);
-   %this.setShaderConst( "$colorDistort", "0 0 0");
    %this.setShaderConst( "$keepColor", %colorF);
 }

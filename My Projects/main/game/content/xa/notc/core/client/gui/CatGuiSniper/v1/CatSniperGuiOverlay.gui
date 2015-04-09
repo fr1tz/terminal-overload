@@ -67,7 +67,7 @@
    };
    new GuiFadeinBitmapCtrl() {
       fadeColor = "0.00392157 0.00392157 0.00392157 1";
-      fadeInTime = "200";
+      fadeInTime = "50";
       waitTime = "0";
       fadeOutTime = "0";
       fadeInEase = "0 1 -1 -1";

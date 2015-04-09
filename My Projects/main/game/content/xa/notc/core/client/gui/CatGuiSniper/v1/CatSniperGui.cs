@@ -30,7 +30,7 @@ function notcCatSniperGui::onWake(%this)
    if($cameraFov > 45)
       $cameraFov = 45;
    setFov($cameraFov);
-   %this.updateView();
+   %this.schedule(0, "updateView");
 
    %this.zZoomNoiseOffset = 0;
 
@@ -60,8 +60,8 @@ function notcCatSniperGui::onWake(%this)
    %this.tickThread();
    
    %colorI = ServerConnection.getControlObject().paletteColors[0];
-   notcCatSniperGuiDefaultProfile.fontColor = %colorI;
-   notcCatSniperGuiDefaultProfile.fillColor = %colorI;
+   //notcCatSniperGuiDefaultProfile.fontColor = %colorI;
+   //notcCatSniperGuiDefaultProfile.fillColor = %colorI;
 
    // hack city - these controls are floating around and need to be clamped
    if ( isFunction( "refreshCenterTextCtrl" ) )
@@ -208,6 +208,15 @@ function notcCatSniperGui::updateCrosshair(%this)
    %h = 100;
    %this-->crosshairStatic.setExtent(%w SPC %h);
    %this-->crosshairStatic.setPosition(%crosshairX-%w/2, %crosshairY-%h/2);
+   
+   %this-->crosshair-->vline1.setPosition(%crosshairX, 0);
+   %this-->crosshair-->vline1.setExtent("1" SPC %crosshairY-5);
+   %this-->crosshair-->vline2.setPosition(%crosshairX, %crosshairY+5);
+   %this-->crosshair-->vline2.setExtent("1" SPC %height);
+   %this-->crosshair-->hline1.setPosition(0, %crosshairY);
+   %this-->crosshair-->hline1.setExtent(%crosshairX-5 SPC "1");
+   %this-->crosshair-->hline2.setPosition(%crosshairX+5, %crosshairY);
+   %this-->crosshair-->hline2.setExtent(%width SPC "1");
 }
 
 function notcCatSniperGui::scanForTarget(%this)
@@ -232,7 +241,7 @@ function notcCatSniperGui::scanForTarget(%this)
    %this.zTarget = %target;
    %this.zScanForTargets = false;
 
-   echo(%this.zTarget);
+   //echo(%this.zTarget);
    %this.sounds[0].play();
 }
 
