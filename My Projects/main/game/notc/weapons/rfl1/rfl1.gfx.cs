@@ -189,39 +189,39 @@ datablock ParticleData(WpnRFL1ProjectileExplosion_Cloud)
 {
 	dragCoeffiecient	  = 0.4;
 	gravityCoefficient	= 0;
-	inheritedVelFactor	= "0.0234834";
+	inheritedVelFactor	= "0";
 
-	lifetimeMS			  = 250;
+	lifetimeMS			  = "250";
 	lifetimeVarianceMS	= 0;
 
 	useInvAlpha = false;
 	spinRandomMin = -200.0;
 	spinRandomMax =  200.0;
 
-	textureName = "content/o/rotc/p.5.4/textures/rotc/corona.png";
+	textureName = "content/o/rotc/p.5.4/textures/rotc/laser1.white.png";
 
 	colors[0]	  = "1.0 1.0 1.0 1.0";
 	colors[1]	  = "1 1 1 0.496063";
 	colors[2]	  = "1.0 1.0 1.0 0.0";
-	sizes[0]		= "3";
-	sizes[1]		= "1";
+	sizes[0]		= "0.5";
+	sizes[1]		= "0";
 	sizes[2]		= 0.0;
 	times[0]		= 0.0;
-	times[1]		= "0.498039";
+	times[1]		= "1";
 	times[2]		= 1.0;
 
 	allowLighting = 0;
  
-   paletteSlot = 0;
-   animTexName = "content/o/rotc/p.5.4/textures/rotc/corona.png";
+   animTexName = "content/o/rotc/p.5.4/textures/rotc/laser1.white.png";
+   spinSpeed = "0";
 };
 
 datablock ParticleEmitterData(WpnRFL1ProjectileExplosion_CloudEmitter)
 {
-	ejectionPeriodMS = 1;
+	ejectionPeriodMS = "5";
 	periodVarianceMS = 0;
 
-	ejectionVelocity = 0.25;
+	ejectionVelocity = "20";
 	velocityVariance = 0.25;
 
 	thetaMin			= 0.0;
@@ -230,46 +230,9 @@ datablock ParticleEmitterData(WpnRFL1ProjectileExplosion_CloudEmitter)
 	lifetimeMS		 = 100;
 
 	particles = "WpnRFL1ProjectileExplosion_Cloud";
-};
-
-datablock ParticleData(WpnRFL1ProjectileExplosion_Dust)
-{
-	dragCoefficient		= 1.0;
-	gravityCoefficient	= -0.01;
-	inheritedVelFactor	= 0.0;
-	constantAcceleration = 0.0;
-	lifetimeMS			  = 2000;
-	lifetimeVarianceMS	= 100;
-	useInvAlpha			 = true;
-	spinRandomMin		  = -90.0;
-	spinRandomMax		  = 500.0;
-	textureName			 = "content/o/rotc/p.5.4/textures/rotc/smoke_particle.png";
-	colors[0]	  = "0.9 0.9 0.9 0.5";
-	colors[1]	  = "0.9 0.9 0.9 0.5";
-	colors[2]	  = "0.9 0.9 0.9 0.0";
-	sizes[0]		= 0.9;
-	sizes[1]		= 1.5;
-	sizes[2]		= 1.6;
-	times[0]		= 0.0;
-	times[1]		= 0.7;
-	times[2]		= 1.0;
-	allowLighting = true;
-};
-
-datablock ParticleEmitterData(WpnRFL1ProjectileExplosion_DustEmitter)
-{
-	ejectionPeriodMS = 5;
-	periodVarianceMS = 0;
-	ejectionVelocity = 2.0;
-	velocityVariance = 0.0;
-	ejectionOffset	= 0.0;
-	thetaMin			= 0;
-	thetaMax			= 180;
-	phiReferenceVel  = 0;
-	phiVariance		= 360;
-	overrideAdvances = false;
-	lifetimeMS		 = 50;
-	particles = "WpnRFL1ProjectileExplosion_Dust";
+   blendStyle = "ADDITIVE";
+   paletteSlot = 0;
+   glow = "1";
 };
 
 
@@ -390,8 +353,7 @@ datablock ExplosionData(WpnRFL1ProjectileExplosion)
 
 	emitter[0] = WpnRFL1ProjectileExplosion_SmokeEmitter;
 	emitter[1] = WpnRFL1ProjectileExplosion_DebrisEmitter;
-//	emitter[1] = WpnRFL1ProjectileExplosion_DustEmitter;
-//	emitter[2] = WpnRFL1ProjectileExplosion_SparksEmitter;
+   emitter[2] = WpnRFL1ProjectileExplosion_CloudEmitter;
 
 	// Camera shake
 	shakeCamera = false;
@@ -401,12 +363,13 @@ datablock ExplosionData(WpnRFL1ProjectileExplosion)
 	camShakeRadius = 20.0;
 
 	// Dynamic light
-	lightStartRadius = "10";
+	lightStartRadius = "9.96078";
 	lightEndRadius = 0;
 	lightStartColor = "0.984252 0.992126 0.992126 1";
 	lightEndColor = "0.984252 0.984252 0.984252 1";
-   lightStartBrightness = "16.0784";
-   lightEndBrightness = "16.1569";
+   lightStartBrightness = "16";
+   lightEndBrightness = "0";
    targetLockTimeMS = "480";
+
 };
 
