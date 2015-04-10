@@ -25,12 +25,12 @@ singleton GuiControlProfile(notcCatSniperGuiFeedOverlayProfile : GuiDefaultProfi
 
 singleton GuiControlProfile(notcCatSniperGuiTargetLineProfile : GuiDefaultProfile)
 {
-   fillColor = "255 100 0 255";
+   fillColor = "255 100 0 25";
 };
 
 singleton GuiControlProfile(notcCatSniperGuiTargetBlockProfile : GuiDefaultProfile)
 {
-   fillColor = "255 100 0 50";
+   fillColor = "255 100 0 25";
 };
 
 singleton GuiControlProfile(notcCatSniperGuiCrosshairProfile : GuiDefaultProfile)

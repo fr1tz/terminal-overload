@@ -293,7 +293,8 @@ function notcCatSniperGui::renderTargeting(%this)
       %this-->target-->distOverlay.setPosition(%targetX-%w/2, %targetY-%h/2);
       
       %this-->target.setVisible(true);
-      %this-->target-->VBlock.setVisible(%depth < 1);
+      %this-->target-->HBlock.setVisible(false);
+      %this-->target-->VBlock.setVisible(false);
       %this-->target-->VLine.setVisible(%depth < 1);
       %this-->target-->distOverlay.setVisible(%depth < 1);
       //%this-->crosshairScaled.setVisible(true);
