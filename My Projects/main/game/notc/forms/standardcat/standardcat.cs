@@ -89,7 +89,7 @@ datablock PlayerData(FrmStandardcat)
 	slideForce = 20 * 90;
 	slideEnergyDrain = 0.7;
    slideEnergySlot = 1;
-	minSlideEnergy = 1;
+	minSlideEnergy = 0;
 	maxSlideForwardSpeed = 30;
 	maxSlideBackwardSpeed = 25;
 	maxSlideSideSpeed = 12;
