@@ -29,7 +29,7 @@ datablock ShapeBaseImageData(WpnSG2Image)
    class = "WeaponImage";
 
    ammoSource = "Energy";
-   minEnergy = 16;
+   minEnergy = 0;
 
    projectile = WpnSG2PseudoProjectile;
 
