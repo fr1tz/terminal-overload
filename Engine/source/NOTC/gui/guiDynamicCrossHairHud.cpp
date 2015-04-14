@@ -127,7 +127,8 @@ void GuiDynamicCrossHairHud::onRender(Point2I offset, const RectI &updateRect)
 	ShapeBase::MountedImage* image = control->getImageStruct(0);
 	if(image && image->dataBlock)
 	{
-		if(mSize == 0)
+	   F32 r = image->inaccuracy.enabled ? image->inaccuracy.radius : 0;
+      if(mSize == 0)
 		{
 			Point3F muzzlePoint, muzzleVector;
 			control->getRenderMuzzlePoint(0, &muzzlePoint);
@@ -137,7 +138,7 @@ void GuiDynamicCrossHairHud::onRender(Point2I offset, const RectI &updateRect)
 			Point3F zv; mat.getColumn(2, &zv);
 			zv.normalize();
 			Point3F c = muzzlePoint + muzzleVector*image->inaccuracy.distance;
-			Point3F e = c + zv*image->inaccuracy.radius;
+			Point3F e = c + zv*r;
 			control->getEyeTransform(&mat);
 			Point3F pov = mat.getPosition();
 			longRangeProject(parent, pov, c, &c);
@@ -145,7 +146,7 @@ void GuiDynamicCrossHairHud::onRender(Point2I offset, const RectI &updateRect)
 			crosshairOffset = mAbs(e.y - c.y);
 		}
 		if(mAlphaFactor != 0)
-			crosshairAlpha = mClampF(1.0 - image->inaccuracy.radius/mAlphaFactor, 0, 1);
+			crosshairAlpha = mClampF(1.0 - r/mAlphaFactor, 0, 1);
 		//Con::printf("%f -> %f", crosshairOffset, crosshairAlpha);
 		//Con::printf("crosshairOffset: %f", crosshairOffset);
 	}
