@@ -143,6 +143,9 @@ public:
    DecalData *decal;                   // (impact) Decal Datablock
    S32 decalId;                        // (impact) Decal ID
 
+   DecalData *bounceDecal;             // (bounce) Decal Datablock
+   S32 bounceDecalId;                  // (bounce) Decal ID
+
    SFXTrack* sound;                    // Projectile Sound
    
    LightDescription *lightDesc;

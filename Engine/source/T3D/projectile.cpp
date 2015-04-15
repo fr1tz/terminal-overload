@@ -222,6 +222,9 @@ ProjectileData::ProjectileData()
    decal = NULL;
    decalId = 0;
 
+   bounceDecal = NULL;
+   bounceDecalId = 0;
+
    lightDesc = NULL;
    lightDescId = 0;
 }
@@ -298,6 +301,9 @@ void ProjectileData::initPersistFields()
 
    addField("decal", TYPEID< DecalData >(), Offset(decal, ProjectileData),
       "@brief Decal datablock used for decals placed at projectile explosion points.\n\n");
+
+   addField("bounceDecal", TYPEID< DecalData >(), Offset(bounceDecal, ProjectileData),
+      "@brief Decal datablock used for decals placed at bounce points.\n\n");
 
    addField("lightDesc", TYPEID< LightDescription >(), Offset(lightDesc, ProjectileData),
       "@brief LightDescription datablock used for lights attached to the projectile.\n\n");
@@ -422,6 +428,10 @@ bool ProjectileData::preload(bool server, String &errorStr)
       if (!decal && decalId != 0)
          if (Sim::findObject(decalId, decal) == false)
             Con::errorf(ConsoleLogEntry::General, "ProjectileData::preload: Invalid packet, bad datablockId(decal): %d", decalId);
+
+      if (!bounceDecal && bounceDecalId != 0)
+         if (Sim::findObject(bounceDecalId, bounceDecal) == false)
+            Con::errorf(ConsoleLogEntry::General, "ProjectileData::preload: Invalid packet, bad datablockId(bounceDecal): %d", bounceDecalId);
 
       String sfxErrorStr;
       if( !sfxResolve( &sound, sfxErrorStr ) )
@@ -548,6 +558,10 @@ void ProjectileData::packData(BitStream* stream)
       stream->writeRangedU32(decal->getId(), DataBlockObjectIdFirst,
                                               DataBlockObjectIdLast);
 
+   if (stream->writeFlag(bounceDecal != NULL))
+      stream->writeRangedU32(bounceDecal->getId(), DataBlockObjectIdFirst,
+                                              DataBlockObjectIdLast);
+
    sfxWrite( stream, sound );
 
    if ( stream->writeFlag(lightDesc != NULL))
@@ -660,6 +674,9 @@ void ProjectileData::unpackData(BitStream* stream)
 
    if (stream->readFlag())
       decalId = stream->readRangedU32(DataBlockObjectIdFirst, DataBlockObjectIdLast);
+
+   if (stream->readFlag())
+      bounceDecalId = stream->readRangedU32(DataBlockObjectIdFirst, DataBlockObjectIdLast);
    
    sfxRead( stream, &sound );
 
@@ -2225,9 +2242,9 @@ void Projectile::createBounceExplosion(const RayInfo& rInfo, bool decal)
    }
 
    // Decal
-   if(decal && mDataBlock->decal)     
+   if(decal && mDataBlock->bounceDecal)     
    {
-      DecalInstance* dinst = gDecalManager->addDecal(p, n, 0.0f, mDataBlock->decal);
+      DecalInstance* dinst = gDecalManager->addDecal(p, n, 0.0f, mDataBlock->bounceDecal);
       if(dinst)
          dinst->mPalette = this->getPalette();
    }
