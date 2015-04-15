@@ -46,7 +46,7 @@ datablock NortDiscData(WpnRazorDisc)
    bounceEffect[0] = WpnRazorDiscBounceEffect;
    bounceEffectTypeMask[0] = $TypeMasks::StaticObjectType;
    
-   decal = WpnRazorDiscDecal;
+   bounceDecal = WpnRazorDiscDecal;
    
    lightDesc = WpnRazorDiscLightDesc;
 

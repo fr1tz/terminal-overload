@@ -46,7 +46,7 @@ datablock NortDiscData(WpnInterceptorDisc)
    bounceEffect[0] = WpnInterceptorDiscBounceEffect;
    bounceEffectTypeMask[0] = $TypeMasks::StaticObjectType;
    
-   decal = WpnInterceptorDiscDecal;
+   bounceDecal = WpnInterceptorDiscDecal;
    
    lightDesc = WpnInterceptorDiscLightDesc;
 

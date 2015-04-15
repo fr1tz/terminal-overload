@@ -46,7 +46,7 @@ datablock NortDiscData(WpnExplosiveDisc)
    bounceEffect[0] = WpnExplosiveDiscBounceEffect;
    bounceEffectTypeMask[0] = $TypeMasks::StaticObjectType;
    
-   decal = WpnExplosiveDiscDecal;
+   bounceDecal = WpnExplosiveDiscDecal;
    
    lightDesc = WpnExplosiveDiscLightDesc;
 
