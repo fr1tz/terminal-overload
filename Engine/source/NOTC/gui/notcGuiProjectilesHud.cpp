@@ -22,7 +22,7 @@ class notcGuiProjectilesHud : public GuiControl
    GuiTSCtrl* mParent;
 
    S32 mRotSpeed;
-   F32 mTargetDist;
+   Point3F mTargetPos;
 
 protected:
    void drawProjectileBox(ShapeBase* control, Projectile* prj);
@@ -84,14 +84,14 @@ notcGuiProjectilesHud::notcGuiProjectilesHud()
 {
    mParent = NULL;
    mRotSpeed = 200;
-   mTargetDist = 0;
+   mTargetPos.set(0,0,0);
 }
 
 void notcGuiProjectilesHud::initPersistFields()
 {
    addGroup("Rendering");     
    addField("flickerTime", TypeS32, Offset( mRotSpeed, notcGuiProjectilesHud ), "Speed of blinking when target is aquired."  );
-   addField("targetDist", TypeF32, Offset( mTargetDist, notcGuiProjectilesHud ), "Distance to target."  );
+   addField("targetPos", TypePoint3F, Offset( mTargetPos, notcGuiProjectilesHud ), "Target position."  );
    endGroup("Rendering");     
 
    Parent::initPersistFields();
@@ -131,7 +131,10 @@ void notcGuiProjectilesHud::drawProjectileBox(ShapeBase* control, Projectile* pr
 {
    Point3F pos = prj->getRenderPosition();
    Point3F controlPos = control->getBoxCenter();
-   F32 projectileDist = Point3F(pos - controlPos).len();
+
+   Point3F projectilePos = pos; projectilePos.z = mTargetPos.z;
+   F32 projectileDist = (projectilePos - controlPos).len();
+   F32 targetDist = (mTargetPos - controlPos).len();
 
    Point3F vec = pos - controlPos;
    MatrixF mat = MathUtils::createOrientFromDir(vec);
@@ -166,7 +169,7 @@ void notcGuiProjectilesHud::drawProjectileBox(ShapeBase* control, Projectile* pr
       return;
 
    ColorI color = mProfile->mFillColor;
-   if(mTargetDist != 0 && projectileDist > mTargetDist)
+   if(mTargetPos.len() > 0 && projectileDist > targetDist)
       color = mProfile->mFillColorNA;
 
    //GFX->getDrawUtil()->drawRectFill(rect, color);
@@ -184,7 +187,10 @@ void notcGuiProjectilesHud::drawProjectileLine(ShapeBase* control, Projectile* p
    Point3F p1 = prj->getRenderPosition();
    Point3F p2 = p1 - vec;
    Point3F controlPos = control->getBoxCenter();
-   F32 projectileDist = Point3F(p1 - controlPos).len();
+
+   Point3F projectilePos = p1; projectilePos.z = mTargetPos.z;
+   F32 projectileDist = (projectilePos - controlPos).len();
+   F32 targetDist = (mTargetPos - controlPos).len();
 
    if(!mParent->projectLR(controlPos,p1,&p1))
       return;
@@ -193,7 +199,7 @@ void notcGuiProjectilesHud::drawProjectileLine(ShapeBase* control, Projectile* p
       p2 = p1;
 
    ColorI color = mProfile->mFillColor;
-   if(mTargetDist != 0 && projectileDist > mTargetDist)
+   if(mTargetPos.len() > 0 && projectileDist > targetDist)
       color = mProfile->mFillColorNA;
 
    GFX->getDrawUtil()->drawLine(p1.x, p1.y, p2.x, p2.y, color);
