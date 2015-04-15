@@ -71,6 +71,12 @@ $XaNotc1CatMoveMap_RemapCount++;
 $XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Switch internal view feed";
 $XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "XaNotc1CatMoveMap_switchFeed";
 $XaNotc1CatMoveMap_RemapCount++;
+$XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Adjust sights (sniper feed)";
+$XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "XaNotc1CatMoveMap_adjustSniperSights";
+$XaNotc1CatMoveMap_RemapCount++;
+$XaNotc1CatMoveMap_RemapName[$XaNotc1CatMoveMap_RemapCount] = "Select target (sniper feed)";
+$XaNotc1CatMoveMap_RemapCmd[$XaNotc1CatMoveMap_RemapCount] = "XaNotc1CatMoveMap_scanForSniperTarget";
+$XaNotc1CatMoveMap_RemapCount++;
 
 function XaNotcSettings1_CatControlsGui::onWake(%this)
 {

@@ -107,24 +107,6 @@ function XaNotc1CatMoveMap_yaw(%val)
    MoveManager_addYaw(%yawAdj);
 }
 
-function XaNotc1CatMoveMap_pitch(%val)
-{
-   MouseInputGraph_input(1, %val);
-
-   %pitchAdj = XaNotc1CatMoveMap_getMouseAdjustAmount(%val);
-   if(ServerConnection.isControlObjectRotDampedCamera())
-   {
-      // Clamp and scale
-      %pitchAdj = mClamp(%pitchAdj, -m2Pi()+0.01, m2Pi()-0.01);
-      %pitchAdj *= 0.5;
-   }
-   
-   if($Pref::NOTC1::MouseInvertY)
-      %pitchAdj = -%pitchAdj;
-
-   MoveManager_addPitch(%pitchAdj);
-}
-
 function XaNotc1CatMoveMap_jump(%val)
 {
    $mvTriggerCount2++;
@@ -468,5 +450,9 @@ XaNotc1CatMoveMap.bind(keyboard, "q", XaNotc1CatMoveMap_cycleWeapons);
 //XaNotc1CatMoveMap.bind(keyboard, q, XaNotc1CatMoveMap_nextWeapon);
 //XaNotc1CatMoveMap.bind(keyboard, "ctrl q", XaNotc1CatMoveMap_prevWeapon);
 //XaNotc1CatMoveMap.bind(mouse, "zaxis", XaNotc1CatMoveMap_mouseWheelWeaponCycle);
+
+
+XaNotc1CatMoveMap.bind(keyboard, "v", XaNotc1CatMoveMap_adjustSniperSights);
+XaNotc1CatMoveMap.bind(keyboard, "c", XaNotc1CatMoveMap_scanForSniperTarget);
 
 
