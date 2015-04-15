@@ -265,6 +265,7 @@ function notcCatSniperGui::renderTargeting(%this)
       %depth   = getWord(%pos, 2);
       
       %targetDist = VectorLen(VectorSub(%pos3D, %control.getEyePoint()));
+      %this-->projectilesHud.targetDist = %targetDist;
       
       %width = getWord(%this-->ts.getExtent(), 0);
       %height = getWord(%this-->ts.getExtent(), 1);
@@ -302,5 +303,6 @@ function notcCatSniperGui::renderTargeting(%this)
    else
    {
       %this.zTarget = "";
+      %this-->projectilesHud.targetDist = 0;
    }
 }
