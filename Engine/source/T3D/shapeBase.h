@@ -164,7 +164,7 @@ struct ShapeBaseImageData: public GameBaseData {
          S32 altTrigger[2];         ///< Second trigger up/down
          S32 wet[2];                ///< wet/notWet
          S32 motion[2];             ///< NoMotion/Motion
-         S32 charged[2];            ///< Charged 
+         S32 charged[2];            ///< Charged
          S32 timeout;               ///< Transition after delay
          S32 genericTrigger[ShapeBaseImageData::MaxGenericTriggers][2];    ///< Generic trigger Out/In
       } transition;
@@ -176,6 +176,8 @@ struct ShapeBaseImageData: public GameBaseData {
       /// @{
 
       ProjectileData* fireProjectile; ///< Fire projectile in this state? (added for NOTC)
+      S32 fireProjectileId;
+
       bool fire;                    ///< Can only have one fire state
       bool altFire;                 ///< Can only have one alternate fire state
       bool reload;                  ///< Can only have one reload state
@@ -251,6 +253,8 @@ struct ShapeBaseImageData: public GameBaseData {
                                     ///  the imageSlot.
       ParticleEmitterData* emitter; ///< A particle emitter; this emitter will emit as long as the gun is in this
                                     ///  this state.
+      S32 emitterId;
+
       SFXTrack* sound;
       U8 soundFlags;
       F32 emitterTime;              ///<
@@ -330,18 +334,18 @@ struct ShapeBaseImageData: public GameBaseData {
    F32                     stateEmitterTime           [MaxStates];
    const char*             stateEmitterNode           [MaxStates];
    /// @}
- 
+
    /// @name Camera Shake ( while firing )
    /// @{
    bool              shakeCamera;
    VectorF           camShakeFreq;
-   VectorF           camShakeAmp;         
+   VectorF           camShakeAmp;
    /// @}
 
    /// Maximum number of sounds this image can play at a time.
    /// Any value <= 0 indicates that it can play an infinite number of sounds.
-   S32 maxConcurrentSounds; 
-   
+   S32 maxConcurrentSounds;
+
    /// If true it we will allow multiple timeout transitions to occur within
    /// a single tick ( eg. they have a very small timeout ).
    bool useRemainderDT;
@@ -379,19 +383,19 @@ struct ShapeBaseImageData: public GameBaseData {
                                           ///  animation sequences played in 3rd person. [optional]
    StringTableEntry  imageAnimPrefixFP;   ///< Passed along to the mounting shape to modify
                                           ///  animation sequences played in first person. [optional]
-	                       
+
    U32               mountPoint;    ///< Mount point for the image.
    MatrixF           mountOffset;   ///< Mount point offset, so we know where the image is.
    MatrixF           eyeOffset;     ///< Offset from eye for first person.
 
-   ProjectileData* projectile;      ///< Information about what projectile this
-                                    ///  image fires.
+   ProjectileData* projectile;      ///< Information about what projectile this image fires.
+   S32 projectileId;
 
 	S32 ammoSource;                  ///< How does the image know whether is has ammo?
                                     ///
                                     ///  One of: Manual, Energy, Magazine, Hybrid.
 
-   /// @name Targeting 
+   /// @name Targeting
    /// @{
    U32 targetingMask;               ///< What types of objects can be targeted?
    U32 targetingMaxDist;            ///< How far can we target?
@@ -503,7 +507,7 @@ struct ShapeBaseImageData: public GameBaseData {
    static void initPersistFields();
    virtual void packData(BitStream* stream);
    virtual void unpackData(BitStream* stream);
-   
+
    void inspectPostApply();
 
    /// @}
@@ -532,7 +536,7 @@ DefineEnumType( ShapeBaseImageRecoilState );
 struct ShapeBaseData : public GameBaseData {
   private:
    typedef GameBaseData Parent;
-   
+
    static bool _setMass( void* object, const char* index, const char* data );
 
 public:
@@ -836,7 +840,7 @@ public:
 		enum Mode {           ///< Mode the image operates in (added for NOTC -mag)
 			StandardMode,      ///  'StandardMode' is the mode known from stock torque
 			ClientFireMode,    ///  while the 'ClientFireMode' makes the image behave more
-		} mode;               ///  like the weapons in other games (ie. client controls fire) 
+		} mode;               ///  like the weapons in other games (ie. client controls fire)
 
 		/// In ClientFireMode we have to filter some updates to the client
 		/// that's controlling the image.
@@ -941,7 +945,7 @@ public:
       LightInfo* lightInfo;   ///< The real light (if any) associated with this weapon image.
 
       Vector<SFXSource*> mSoundSources; ///< Vector of currently playing sounds
-      void updateSoundSources(const MatrixF& renderTransform);  
+      void updateSoundSources(const MatrixF& renderTransform);
       void addSoundSource(SFXSource* source);
 
       /// Represent the state of a specific particle emitter on the image.
@@ -1032,7 +1036,7 @@ protected:
    ///
    /// @see notifyCollision(), queueCollision()
    /// @{
-   struct CollisionTimeout 
+   struct CollisionTimeout
    {
       CollisionTimeout* next;
       SceneObject* object;
@@ -1138,10 +1142,10 @@ protected:
    /// @param   ammo        Does the image have ammo?
    /// @param   triggerDown Is the trigger on this image down?
    /// @param   altTriggerDown Is the second trigger on this image down?
-   virtual void setImage(  U32 imageSlot, 
-                           ShapeBaseImageData* imageData, 
+   virtual void setImage(  U32 imageSlot,
+                           ShapeBaseImageData* imageData,
                            NetStringHandle &skinNameHandle,
-                           bool loaded = true, bool ammo = false, 
+                           bool loaded = true, bool ammo = false,
                            bool triggerDown = false,
                            bool altTriggerDown = false,
                            bool motion = false,
@@ -1249,13 +1253,13 @@ protected:
    bool findTarget(const Point3F& start, const Point3F& end, RayInfo* rInfo);
    /// @}
 
-   /// The inner prep render function that does the 
+   /// The inner prep render function that does the
    /// standard work to render the shapes.
-   void _prepRenderImage(  SceneRenderState* state, 
-                           bool renderSelf, 
+   void _prepRenderImage(  SceneRenderState* state,
+                           bool renderSelf,
                            bool renderMountedImages );
 
-   /// Renders the shape bounds as well as the 
+   /// Renders the shape bounds as well as the
    /// bounds of all mounted shape images.
    void _renderBoundingBox( ObjectRenderInst *ri, SceneRenderState *state, BaseMatInstance* );
 
@@ -1301,7 +1305,7 @@ public:
    static F32  sDamageFlashDec;
    static F32  sFullCorrectionDistance;
    static F32  sCloakSpeed;               // Time to cloak, in seconds
-      
+
    CubeReflector mCubeReflector;
 
    /// @name Initialization
@@ -1325,33 +1329,33 @@ public:
 
    /// @name Mesh Visibility
    /// @{
-   
+
 protected:
 
    /// A bit vector of the meshes forced to be hidden.
    BitVector mMeshHidden;
 
    /// Sync the shape instance with the hidden mesh bit vector.
-   void _updateHiddenMeshes();               
+   void _updateHiddenMeshes();
 
 public:
 
    /// Change the hidden state on all the meshes.
-   void setAllMeshesHidden( bool forceHidden );  
+   void setAllMeshesHidden( bool forceHidden );
 
    /// Set the force hidden state on a mesh.
-   void setMeshHidden( S32 meshIndex, bool forceHidden ); 
-                        
+   void setMeshHidden( S32 meshIndex, bool forceHidden );
+
    /// Set the force hidden state on a named mesh.
-   void setMeshHidden( const char *meshName, bool forceHidden ); 
-   
+   void setMeshHidden( const char *meshName, bool forceHidden );
+
 #ifndef TORQUE_SHIPPING
 
    /// Prints the list of meshes and their visibility state
    /// to the console for debugging purposes.
    void dumpMeshVisibility();
-                      
-#endif   
+
+#endif
 
    /// @}
 
@@ -1404,9 +1408,9 @@ public:
    ///
    /// @return damage buffer amount factor
 	F32  getDamageBufferValue();
- 
-   /// Returns the datablock.maxDamage value  
-   F32 getMaxDamage(); 
+
+   /// Returns the datablock.maxDamage value
+   F32 getMaxDamage();
 
    /// Returns the rate at which the object regenerates damage
    F32  getRepairRate() { return mRepairRate; }
@@ -1444,7 +1448,7 @@ public:
    /// Sets the rate at which the damage buffer replentishes itself
    /// @param   rate   Rate at which energy restores
    void setDamageBufferRechargeRate(F32 rate) {
-	   mDamageBufferRechargeRate = rate; 
+	   mDamageBufferRechargeRate = rate;
 	   this->setMaskBits(RareUpdatesMask);
    }
 
@@ -1557,9 +1561,9 @@ public:
    /// @}
 
    /// @name Mounted objects
-   /// @{   
-   virtual void onMount( SceneObject *obj, S32 node );   
-   virtual void onUnmount( SceneObject *obj,S32 node );   
+   /// @{
+   virtual void onMount( SceneObject *obj, S32 node );
+   virtual void onUnmount( SceneObject *obj,S32 node );
    virtual void getMountTransform( S32 index, const MatrixF &xfm, MatrixF *outMat );
    virtual void getRenderMountTransform( F32 delta, S32 index, const MatrixF &xfm, MatrixF *outMat );
    /// @}
@@ -1722,7 +1726,7 @@ public:
    /// @param   imageSlot   Image slot
    bool getImageLoadedState(U32 imageSlot);
 
-   /// Sets image charge 
+   /// Sets image charge
    /// @param   imageSlot   Image slot
    /// @param   charge      Charge amount
    void setImageCharge(U32 imageSlot, F32 charge);
@@ -1731,7 +1735,7 @@ public:
    /// @param   imageSlot   Image slot
    F32 getImageCharge(U32 imageSlot);
 
-   /// Sets the target of the image 
+   /// Sets the target of the image
    /// @param   imageSlot   Image slot
    /// @param   target      Target
    void setImageTarget(U32 imageSlot, GameBase* target);
@@ -1866,8 +1870,8 @@ public:
    ///
    /// @note These are meaningless on the server.
    /// @{
-   virtual void getRenderRetractionTransform(U32 index,MatrixF* mat);   
-   virtual void getRenderMuzzleTransform(U32 index,MatrixF* mat);   
+   virtual void getRenderRetractionTransform(U32 index,MatrixF* mat);
+   virtual void getRenderMuzzleTransform(U32 index,MatrixF* mat);
    virtual void getRenderImageTransform(U32 imageSlot,MatrixF* mat,bool noEyeOffset=false);
    virtual void getRenderImageTransform(U32 index,S32 node, MatrixF* mat);
    virtual void getRenderImageTransform(U32 index, StringTableEntry nodeName, MatrixF* mat);
@@ -1920,7 +1924,7 @@ public:
    /// Sets the controlling object
    /// @param   obj   New controlling object
    virtual void setControllingObject(ShapeBase* obj);
-   
+
    ///
    virtual void setControllingClient( GameConnection* connection );
 
@@ -1946,7 +1950,7 @@ public:
    /// Returns true if this object can only be used as a third person camera
    bool onlyThirdPerson() const;
 
-   /// Returns the vertical field of view in degrees for 
+   /// Returns the vertical field of view in degrees for
    /// this object if used as a camera.
    virtual F32 getCameraFov() { return mCameraFov; }
 
@@ -1954,12 +1958,12 @@ public:
    /// if this object is used as a camera.
    virtual F32 getDefaultCameraFov() { return mDataBlock->cameraDefaultFov; }
 
-   /// Sets the vertical field of view in degrees for this 
+   /// Sets the vertical field of view in degrees for this
    /// object if used as a camera.
    /// @param   yfov  The vertical FOV in degrees to test.
    virtual void setCameraFov(F32 fov);
 
-   /// Returns true if the vertical FOV in degrees is within 
+   /// Returns true if the vertical FOV in degrees is within
    /// allowable parameters of the datablock.
    /// @param   yfov  The vertical FOV in degrees to test.
    /// @see ShapeBaseData::cameraMinFov
@@ -1979,7 +1983,7 @@ public:
    /// @see SceneObject
    virtual void prepRenderImage( SceneRenderState* state );
 
-   /// Used from ShapeBase::_prepRenderImage() to submit render 
+   /// Used from ShapeBase::_prepRenderImage() to submit render
    /// instances for the main shape or its mounted elements.
    virtual void prepBatchRender( SceneRenderState *state, S32 mountedImageIndex );
 
@@ -2094,9 +2098,9 @@ inline const char* ShapeBase::getSkinName()
 
 inline WaterObject* ShapeBase::getCurrentWaterObject()
 {
-   if ( isMounted() && mShapeBaseMount )   
+   if ( isMounted() && mShapeBaseMount )
       return mShapeBaseMount->getCurrentWaterObject();
-   
+
    return mCurrentWaterObject;
 }
 

@@ -39,16 +39,16 @@ class ImageTargetingEvent : public NetEvent
 	S32     mSlot;      // image's slot
 	S32     mTargetId;  // ghost ID of the target (0 if target lost)
 	bool    mLocked;   // target aquired?
-	
+
   public:
 	ImageTargetingEvent() { mObjId = mSlot = mTargetId = 0; mLocked = false; }
 	ImageTargetingEvent(U32 objId, U32 slot, U32 targetId, bool aquired);
-    
+
 	virtual void pack   (NetConnection* conn, BitStream* bstream);
 	virtual void unpack (NetConnection* conn, BitStream* bstream);
 	virtual void write  (NetConnection* conn, BitStream* bstream);
 	virtual void process(NetConnection* conn);
- 
+
 	DECLARE_CONOBJECT(ImageTargetingEvent);
 };
 
@@ -76,7 +76,7 @@ void ImageTargetingEvent::unpack(NetConnection* conn, BitStream* bstream)
 {
 	mObjId    = bstream->readRangedU32(0, NetConnection::MaxGhostCount);
 	mSlot     = bstream->readRangedU32(0, ShapeBase::MaxMountedImages - 1);
-	mTargetId = bstream->readRangedU32(0, NetConnection::MaxGhostCount);	
+	mTargetId = bstream->readRangedU32(0, NetConnection::MaxGhostCount);
 	mLocked  = bstream->readFlag();
 }
 
@@ -113,7 +113,7 @@ void ImageTargetingEvent::process(NetConnection* conn)
 	// a client is only allowed "to speak"
 	// for his own control object...
 	if( shape != gameconn->getControlObject() )
-		return;		
+		return;
 
 	shape->clientImageChangedTarget(conn, mSlot, target, mLocked);
 }
@@ -225,7 +225,7 @@ ShapeBaseImageData::StateData::StateData()
    emitter = NULL;
    script = 0;
    ignoreLoadedForReady = false;
-   
+
    ejectShell = false;
    scaleAnimation = false;
    scaleAnimationFP = false;
@@ -273,6 +273,7 @@ ShapeBaseImageData::ShapeBaseImageData()
    accuFire = false;
 
    projectile = NULL;
+   projectileId = 0;
 
    targetingMask = 0;
    targetingMaxDist = 100;
@@ -335,7 +336,7 @@ ShapeBaseImageData::ShapeBaseImageData()
 
       stateWaitForTimeout[i] = true;
       stateTimeoutValue[i] = 0;
-		stateFireProjectile[i] = NULL;
+      stateFireProjectile[i] = NULL;
       stateFire[i] = false;
       stateAlternateFire[i] = false;
       stateReload[i] = false;
@@ -357,10 +358,8 @@ ShapeBaseImageData::ShapeBaseImageData()
 		stateArmThread[i] = 0;
       stateSequence[i] = 0;
       stateSequenceRandomFlash[i] = false;
-
       stateShapeSequence[i] = 0;
       stateScaleShapeSequence[i] = false;
-
       stateSound[i] = 0;
       stateSoundFlags[i] = 0;
       stateScript[i] = 0;
@@ -381,7 +380,7 @@ ShapeBaseImageData::ShapeBaseImageData()
    shellExitDir.normalize();
    shellExitVariance = 20.0;
    shellVelocity = 1.0;
-   
+
    fireStateName = NULL;
 
    for(U32 i=0; i<MaxShapes; ++i)
@@ -453,7 +452,8 @@ bool ShapeBaseImageData::onAdd()
 
          s.waitForTimeout = stateWaitForTimeout[i];
          s.timeoutValue = stateTimeoutValue[i];
-			s.fireProjectile = stateFireProjectile[i];
+         s.fireProjectile = stateFireProjectile[i];
+         s.fireProjectileId = 0;
          s.fire = stateFire[i];
          s.altFire = stateAlternateFire[i];
          s.reload = stateReload[i];
@@ -481,6 +481,7 @@ bool ShapeBaseImageData::onAdd()
          s.soundFlags = stateSoundFlags[i];
          s.script = stateScript[i];
          s.emitter = stateEmitter[i];
+         s.emitterId = 0;
          s.emitterTime = stateEmitterTime[i];
 
          // Resolved at load time
@@ -520,20 +521,20 @@ bool ShapeBaseImageData::preload(bool server, String &errorStr)
 
    // Resolve objects transmitted from server
    if (!server) {
-      if (projectile)
-         if (Sim::findObject(SimObjectId(projectile), projectile) == false)
+      if (!projectile && projectileId != 0)
+         if (Sim::findObject(SimObjectId(projectileId), projectile) == false)
             Con::errorf(ConsoleLogEntry::General, "Error, unable to load projectile for shapebaseimagedata");
 
-		for (U32 i = 0; i < MaxStates; i++) 
+		for (U32 i = 0; i < MaxStates; i++)
 		{
-         if (state[i].fireProjectile)
-            if (!Sim::findObject(SimObjectId(state[i].fireProjectile), state[i].fireProjectile))
-               Con::errorf(ConsoleLogEntry::General, "Error, unable to load fireProjectile for image datablock");
+            if(!state[i].fireProjectile && state[i].fireProjectileId != 0)
+               if (!Sim::findObject(SimObjectId(state[i].fireProjectileId), state[i].fireProjectile))
+                  Con::errorf(ConsoleLogEntry::General, "Error, unable to load fireProjectile for image datablock");
 
-			if (state[i].emitter)
-				if (!Sim::findObject(SimObjectId(state[i].emitter), state[i].emitter))
+			if(!state[i].emitter && state[i].emitterId != 0)
+				if (!Sim::findObject(SimObjectId(state[i].emitterId), state[i].emitter))
 					Con::errorf(ConsoleLogEntry::General, "Error, unable to load emitter for image datablock");
-               
+
 			String str;
 			if( !sfxResolve( &state[ i ].sound, str ) )
 				Con::errorf( ConsoleLogEntry::General, str.c_str() );
@@ -1103,7 +1104,7 @@ void ShapeBaseImageData::initPersistFields()
       "@brief Maximum number of sounds this Image can play at a time.\n\n"
       "Any value <= 0 indicates that it can play an infinite number of sounds." );
 
-   addField( "useRemainderDT", TypeBool, Offset(useRemainderDT, ShapeBaseImageData), 
+   addField( "useRemainderDT", TypeBool, Offset(useRemainderDT, ShapeBaseImageData),
       "@brief If true, allow multiple timeout transitions to occur within a single "
       "tick (useful if states have a very small timeout).\n\n" );
 
@@ -1160,8 +1161,7 @@ void ShapeBaseImageData::packData(BitStream* stream)
 
    // Write the projectile datablock
    if (stream->writeFlag(projectile))
-      stream->writeRangedU32(packed? SimObjectId(projectile):
-                             projectile->getId(),DataBlockObjectIdFirst,DataBlockObjectIdLast);
+      stream->writeRangedU32(projectile->getId(),DataBlockObjectIdFirst,DataBlockObjectIdLast);
 
    stream->writeInt(targetingMask,    32);
    stream->writeInt(targetingMaxDist, 32);
@@ -1181,7 +1181,7 @@ void ShapeBaseImageData::packData(BitStream* stream)
    }
 
    if ( stream->writeFlag( shakeCamera ) )
-   {      
+   {
       mathWrite( *stream, camShakeFreq );
       mathWrite( *stream, camShakeAmp );
    }
@@ -1191,10 +1191,7 @@ void ShapeBaseImageData::packData(BitStream* stream)
    stream->write(shellVelocity);
 
    if( stream->writeFlag( casing ) )
-   {
-      stream->writeRangedU32(packed? SimObjectId(casing):
-         casing->getId(),DataBlockObjectIdFirst,DataBlockObjectIdLast);
-   }
+      stream->writeRangedU32(casing->getId(),DataBlockObjectIdFirst,DataBlockObjectIdLast);
 
    for (U32 i = 0; i < MaxStates; i++)
       if (stream->writeFlag(state[i].name && state[i].name[0])) {
@@ -1252,11 +1249,8 @@ void ShapeBaseImageData::packData(BitStream* stream)
             stream->write(s.timeoutValue);
 
          stream->writeFlag(s.waitForTimeout);
-			if(stream->writeFlag(s.fireProjectile))
-			{
-				stream->writeRangedU32(packed? SimObjectId(s.fireProjectile):
-					s.fireProjectile->getId(),DataBlockObjectIdFirst,DataBlockObjectIdLast);
-			}
+         if(stream->writeFlag(s.fireProjectile))
+		    stream->writeRangedU32(s.fireProjectile->getId(),DataBlockObjectIdFirst,DataBlockObjectIdLast);
          stream->writeFlag(s.fire);
          stream->writeFlag(s.altFire);
          stream->writeFlag(s.reload);
@@ -1302,8 +1296,7 @@ void ShapeBaseImageData::packData(BitStream* stream)
 
          if (stream->writeFlag(s.emitter))
          {
-            stream->writeRangedU32(packed? SimObjectId(s.emitter):
-                                   s.emitter->getId(),DataBlockObjectIdFirst,DataBlockObjectIdLast);
+            stream->writeRangedU32(s.emitter->getId(),DataBlockObjectIdFirst,DataBlockObjectIdLast);
             stream->write(s.emitterTime);
 
             for( U32 j=0; j<MaxShapes; ++j )
@@ -1360,7 +1353,7 @@ void ShapeBaseImageData::unpackData(BitStream* stream)
 	ammoSource = stream->readRangedU32(0, NumAmmoSources-1);
 
    stream->read(&mass);
-   
+
    stream->read(&minEnergy);
    stream->read(&minCharge);
 
@@ -1369,8 +1362,8 @@ void ShapeBaseImageData::unpackData(BitStream* stream)
       hasFlash[j] = stream->readFlag();
    }
 
-   projectile = (stream->readFlag() ?
-                 (ProjectileData*)stream->readRangedU32(DataBlockObjectIdFirst,
+   projectileId = (stream->readFlag() ?
+                 (S32)stream->readRangedU32(DataBlockObjectIdFirst,
                                                         DataBlockObjectIdLast) : 0);
 
    targetingMask    = stream->readInt(32);
@@ -1394,7 +1387,7 @@ void ShapeBaseImageData::unpackData(BitStream* stream)
    if ( shakeCamera )
    {
       mathRead( *stream, &camShakeFreq );
-      mathRead( *stream, &camShakeAmp );      
+      mathRead( *stream, &camShakeAmp );
    }
 
    mathRead( *stream, &shellExitDir );
@@ -1403,7 +1396,7 @@ void ShapeBaseImageData::unpackData(BitStream* stream)
 
    if(stream->readFlag())
    {
-      casingID = stream->readRangedU32(DataBlockObjectIdFirst, DataBlockObjectIdLast);
+      casingID = (S32)stream->readRangedU32(DataBlockObjectIdFirst, DataBlockObjectIdLast);
    }
 
    for (U32 i = 0; i < MaxStates; i++) {
@@ -1478,11 +1471,11 @@ void ShapeBaseImageData::unpackData(BitStream* stream)
          s.waitForTimeout = stream->readFlag();
 			if(stream->readFlag())
 			{
-            s.fireProjectile = (ProjectileData*) stream->readRangedU32(DataBlockObjectIdFirst,
+               s.fireProjectileId = stream->readRangedU32(DataBlockObjectIdFirst,
 					DataBlockObjectIdLast);
 			}
 			else
-				s.fireProjectile = NULL;
+				s.fireProjectileId = 0;
          s.fire = stream->readFlag();
          s.altFire = stream->readFlag();
          s.reload = stream->readFlag();
@@ -1538,8 +1531,7 @@ void ShapeBaseImageData::unpackData(BitStream* stream)
 
          if (stream->readFlag())
          {
-            s.emitter = (ParticleEmitterData*) stream->readRangedU32(DataBlockObjectIdFirst,
-                                                                     DataBlockObjectIdLast);
+            s.emitterId = stream->readRangedU32(DataBlockObjectIdFirst, DataBlockObjectIdLast);
             stream->read(&s.emitterTime);
 
             for( U32 j=0; j<MaxShapes; ++j )
@@ -1548,13 +1540,13 @@ void ShapeBaseImageData::unpackData(BitStream* stream)
             }
          }
          else
-            s.emitter = 0;
-            
+            s.emitterId = 0;
+
          sfxRead( stream, &s.sound );
          stream->read(&s.soundFlags);
       }
    }
-   
+
    stream->read(&maxConcurrentSounds);
    useRemainderDT = stream->readFlag();
 
@@ -1567,7 +1559,7 @@ void ShapeBaseImageData::inspectPostApply()
 
    // This does not do a very good job of applying changes to states
    // which may have occured in the editor, but at least we can do this...
-   useEyeOffset = !eyeOffset.isIdentity();   
+   useEyeOffset = !eyeOffset.isIdentity();
 }
 
 //----------------------------------------------------------------------------
@@ -1647,11 +1639,11 @@ ShapeBase::MountedImage::~MountedImage()
    }
 
    // stop sound
-   for(Vector<SFXSource*>::iterator i = mSoundSources.begin(); i != mSoundSources.end(); i++)  
-   {  
-      SFX_DELETE((*i));  
-   }  
-   mSoundSources.clear(); 
+   for(Vector<SFXSource*>::iterator i = mSoundSources.begin(); i != mSoundSources.end(); i++)
+   {
+      SFX_DELETE((*i));
+   }
+   mSoundSources.clear();
 
    for (S32 i = 0; i < MaxImageEmitters; i++)
       if (bool(emitter[i].emitter))
@@ -1713,12 +1705,12 @@ void ShapeBase::MountedImage::updateDoAnimateAllShapes(const ShapeBase* owner)
 
    if (owner->isClientObject())
    {
-      // If this client object doesn't have a controlling client, then according to 
-      // ShapeBase::isFirstPerson() it cannot ever be in first person mode.  So no need 
-      // to animate any shapes beyond the current one. 
-      if (!owner->getControllingClient()) 
-      { 
-         return; 
+      // If this client object doesn't have a controlling client, then according to
+      // ShapeBase::isFirstPerson() it cannot ever be in first person mode.  So no need
+      // to animate any shapes beyond the current one.
+      if (!owner->getControllingClient())
+      {
+         return;
       }
 
       doAnimateAllShapes = dataBlock->animateAllShapes;
@@ -1923,7 +1915,7 @@ bool ShapeBase::getImageGenericTriggerState(U32 imageSlot, U32 trigger)
 void ShapeBase::setImageMagazineRounds(U32 imageSlot, U32 rounds)
 {
    MountedImage& image = mMountedImageList[imageSlot];
-   if(image.dataBlock && image.magazineRounds != rounds) 
+   if(image.dataBlock && image.magazineRounds != rounds)
 	{
       setMaskBits(ImageMaskN << imageSlot);
       image.magazineRounds = rounds;
@@ -1943,9 +1935,9 @@ U32 ShapeBase::getImageMagazineRounds(U32 imageSlot)
 void ShapeBase::setImageAmmoState(U32 imageSlot,bool ammo)
 {
    MountedImage& image = mMountedImageList[imageSlot];
-   if(image.dataBlock 
-	&& image.dataBlock->ammoSource == ShapeBaseImageData::Manual 
-	&& image.ammo != ammo) 
+   if(image.dataBlock
+	&& image.dataBlock->ammoSource == ShapeBaseImageData::Manual
+	&& image.ammo != ammo)
 	{
       setMaskBits(ImageMaskN << imageSlot);
       image.ammo = ammo;
@@ -2158,7 +2150,7 @@ void ShapeBase::setImageRecoilDelta(U32 imageSlot, S32 r)
 		setMaskBits(ImageRecoilMask);
 	}
 }
- 
+
 // Added for NOTC
 bool ShapeBase::getImageRecoilEnabled(U32 imageSlot)
 {
@@ -2299,7 +2291,7 @@ void ShapeBase::getMountTransform( S32 index, const MatrixF &xfm, MatrixF *outMa
    }
 
    // Then let SceneObject handle it.
-   Parent::getMountTransform( index, xfm, outMat );      
+   Parent::getMountTransform( index, xfm, outMat );
 }
 
 void ShapeBase::getImageTransform(U32 imageSlot,MatrixF* mat)
@@ -2424,7 +2416,7 @@ void ShapeBase::getRenderMountTransform( F32 delta, S32 mountPoint, const Matrix
    }
 
    // Then let SceneObject handle it.
-   Parent::getRenderMountTransform( delta, mountPoint, xfm, outMat );   
+   Parent::getRenderMountTransform( delta, mountPoint, xfm, outMat );
 }
 
 
@@ -2432,7 +2424,7 @@ void ShapeBase::getRenderImageTransform( U32 imageSlot, MatrixF* mat, bool noEye
 {
    // Image transform in world space
    MountedImage& image = mMountedImageList[imageSlot];
-   if (image.dataBlock) 
+   if (image.dataBlock)
    {
       ShapeBaseImageData& data = *image.dataBlock;
       U32 shapeIndex = getImageShapeIndex(image);
@@ -2445,12 +2437,12 @@ void ShapeBase::getRenderImageTransform( U32 imageSlot, MatrixF* mat, bool noEye
 
          mat->mul(nmat, mountTransform);
       }
-      else if ( !noEyeOffset && data.useEyeOffset && isFirstPerson() ) 
+      else if ( !noEyeOffset && data.useEyeOffset && isFirstPerson() )
       {
          getRenderEyeTransform(&nmat);
          mat->mul(nmat,data.eyeOffset);
       }
-      else 
+      else
       {
          getRenderMountTransform( 0.0f, data.mountPoint, MatrixF::Identity, &nmat );
          mat->mul(nmat,data.mountTransform[shapeIndex]);
@@ -2484,13 +2476,13 @@ void ShapeBase::getRenderImageTransform(U32 imageSlot,S32 node,MatrixF* mat)
 
             mmat.mul(emat, mountTransform);
          }
-         else if ( data.useEyeOffset && isFirstPerson() ) 
+         else if ( data.useEyeOffset && isFirstPerson() )
          {
             MatrixF emat;
             getRenderEyeTransform(&emat);
             mmat.mul(emat,data.eyeOffset);
          }
-         else 
+         else
          {
             MatrixF emat;
             getRenderMountTransform( 0.0f, data.mountPoint, MatrixF::Identity, &emat );
@@ -2668,11 +2660,11 @@ void ShapeBase::onImageAnimThreadUpdate(U32 imageSlot, S32 imageShapeIndex, F32 
 
 //----------------------------------------------------------------------------
 
-void ShapeBase::setImage(  U32 imageSlot, 
-                           ShapeBaseImageData* imageData, 
-                           NetStringHandle& skinNameHandle, 
-                           bool loaded, 
-                           bool ammo, 
+void ShapeBase::setImage(  U32 imageSlot,
+                           ShapeBaseImageData* imageData,
+                           NetStringHandle& skinNameHandle,
+                           bool loaded,
+                           bool ammo,
                            bool triggerDown,
                            bool altTriggerDown,
                            bool motion,
@@ -2883,11 +2875,11 @@ void ShapeBase::resetImageSlot(U32 imageSlot)
    }
 
    // stop sound
-   for(Vector<SFXSource*>::iterator i = image.mSoundSources.begin(); i != image.mSoundSources.end(); i++)  
-   {  
-      SFX_DELETE((*i));  
-   }  
-   image.mSoundSources.clear(); 
+   for(Vector<SFXSource*>::iterator i = image.mSoundSources.begin(); i != image.mSoundSources.end(); i++)
+   {
+      SFX_DELETE((*i));
+   }
+   image.mSoundSources.clear();
 
    for (S32 i = 0; i < MaxImageEmitters; i++) {
       MountedImage::ImageEmitter& em = image.emitter[i];
@@ -3084,7 +3076,7 @@ void ShapeBase::setImageState(U32 imageSlot, U32 newState,bool force)
       return;
    MountedImage& image = mMountedImageList[imageSlot];
 
-	// The client never enters the initial fire state on its own 
+	// The client never enters the initial fire state on its own
 	// unless he's in ClientFireMode, but he will always re-enter it.
    if(isGhost() && !force && newState == image.dataBlock->fireState)
 	{
@@ -3101,7 +3093,7 @@ void ShapeBase::setImageState(U32 imageSlot, U32 newState,bool force)
 		if(!enterState) return;
 	}
 
-	// The client never enters the initial alternate fire state on its own 
+	// The client never enters the initial alternate fire state on its own
 	// unless he's in ClientFireMode, but he will always re-enter it.
    if(isGhost() && !force && newState == image.dataBlock->altFireState)
 	{
@@ -3183,14 +3175,14 @@ void ShapeBase::setImageState(U32 imageSlot, U32 newState,bool force)
 
    // Stop any looping sounds used in the last state.
 	// Also stop any sound from last state if it was a charge state.
-   if((lastState->sound && lastState->sound->getDescription()->mIsLooping) || lastState->charge)  
-   {  
+   if((lastState->sound && lastState->sound->getDescription()->mIsLooping) || lastState->charge)
+   {
       // Only stop looping sound if it's different from new state's sound
       if(stateData.sound != lastState->sound)
       {
-         for(Vector<SFXSource*>::iterator i = image.mSoundSources.begin(); i != image.mSoundSources.end(); i++)      
-            SFX_DELETE((*i));    
-         image.mSoundSources.clear(); 
+         for(Vector<SFXSource*>::iterator i = image.mSoundSources.begin(); i != image.mSoundSources.end(); i++)
+            SFX_DELETE((*i));
+         image.mSoundSources.clear();
       }
    }
 
@@ -3223,7 +3215,7 @@ void ShapeBase::setImageState(U32 imageSlot, U32 newState,bool force)
    // Check for immediate transitions, but only if we don't need to wait for
    // a time out.  Only perform this wait if we're not forced to change.
    S32 ns;
-   if(stateData.timeoutValue <= 0 || !stateData.waitForTimeout) 
+   if(stateData.timeoutValue <= 0 || !stateData.waitForTimeout)
    {
       if ((ns = stateData.transition.loaded[image.loaded]) != -1) {
          setImageState(imageSlot,ns);
@@ -3262,7 +3254,7 @@ void ShapeBase::setImageState(U32 imageSlot, U32 newState,bool force)
       if( !stateData.charge && (ns = stateData.transition.charged[image.charged]) != -1) {
          setImageState(imageSlot, ns);
          return;
-      } 
+      }
       if ((ns = stateData.transition.trigger[image.triggerDown]) != -1) {
          setImageState(imageSlot,ns);
          return;
@@ -3302,7 +3294,7 @@ void ShapeBase::setImageState(U32 imageSlot, U32 newState,bool force)
 		{
 			Player* player = (Player*)this;
 			player->setArmThread(stateData.armThread, false);
-		} 
+		}
 	}
 
 	// Fire projectile? (note: this is experimental code -mag)
@@ -3318,7 +3310,7 @@ void ShapeBase::setImageState(U32 imageSlot, U32 newState,bool force)
 				if(conn && this == conn->getControlObject())
 					createProjectile = true;
 			}
-			else // on the server: create projectile only if shape is not 
+			else // on the server: create projectile only if shape is not
 			{    //                being controlled by a client...
 				if(this->getControllingClient() == NULL)
 					createProjectile = true;
@@ -3396,7 +3388,7 @@ void ShapeBase::setImageState(U32 imageSlot, U32 newState,bool force)
 						prj = NULL;
 					}
 					else
-					{	
+					{
 						// drain energy...
 						if(shotgunData->energyDrain > 0)
 							this->setEnergyLevel(this->getEnergyLevel() - shotgunData->energyDrain * shotgunData->numBullets);
@@ -3448,7 +3440,7 @@ void ShapeBase::setImageState(U32 imageSlot, U32 newState,bool force)
 		if(image.recoilEnabled)
 		{
 			image.currentRecoil += image.recoilAdd;
-			if(image.currentRecoil > image.maxRecoil) 
+			if(image.currentRecoil > image.maxRecoil)
 				image.currentRecoil = image.maxRecoil;
 
 			GameConnection* conn = GameConnection::getConnectionToServer();
@@ -3526,7 +3518,7 @@ void ShapeBase::setImageState(U32 imageSlot, U32 newState,bool force)
          }
          else
          {
-	         image.addSoundSource(SFX->createSource( stateData.sound, &getRenderTransform(), &velocity )); 
+	         image.addSoundSource(SFX->createSource( stateData.sound, &getRenderTransform(), &velocity ));
          }
       }
    }
@@ -3593,7 +3585,7 @@ void ShapeBase::updateAnimThread(U32 imageSlot, S32 imageShapeIndex, ShapeBaseIm
       if (!image.dataBlock->shapeIsValid[i] || i != imageShapeIndex && !image.doAnimateAllShapes)
          continue;
 
-      if (image.animThread[i] && stateData.sequence[i] != -1) 
+      if (image.animThread[i] && stateData.sequence[i] != -1)
       {
          S32 seqIndex = stateData.sequence[i];  // Standard index without any prefix
          bool scaleAnim = stateData.scaleAnimation;
@@ -3678,7 +3670,7 @@ void ShapeBase::updateAnimThread(U32 imageSlot, S32 imageShapeIndex, ShapeBaseIm
                image.shapeInstance[i]->setSequence(image.animThread[i], seqIndex, stateData.direction ? 0.0f : 1.0f);
             }
 
-            if (stateData.flashSequence[i] == false) 
+            if (stateData.flashSequence[i] == false)
             {
                F32 timeScale = (scaleAnim && stateData.timeoutValue) ?
                   image.shapeInstance[i]->getDuration(image.animThread[i]) / stateData.timeoutValue : 1.0f;
@@ -3816,7 +3808,7 @@ TICKAGAIN:
 			+ image.inaccuracy.muzzleMovement;
 			//+ image.inaccuracy.recoil;
 
-		image.inaccuracy.radius = mClampF(image.inaccuracy.radius, 
+		image.inaccuracy.radius = mClampF(image.inaccuracy.radius,
 			image.inaccuracy.radiusmin, image.inaccuracy.radiusmax);
 	}
 
@@ -3848,7 +3840,7 @@ TICKAGAIN:
 
 		//this->getRenderMuzzlePoint(0,&eyePoint);
 		//this->getRenderMuzzleVector(0,&eyeVec);
-		
+
 		if(image.currTarget)
 		{
 			GameBase* target = image.currTarget;
@@ -3857,7 +3849,7 @@ TICKAGAIN:
 			Point3F targetDir = targetPos - eyePoint;
 			F32 targetDist = targetDir.len();
 
-			bool targetLost = false;	
+			bool targetLost = false;
 
 			// Test to see if target still matches our targeting mask...
 			if(!(target->getTargetingMask() & imageData.targetingMask))
@@ -3882,7 +3874,7 @@ TICKAGAIN:
 
 				ImageTargetingEvent* event = new ImageTargetingEvent(
 					this->getNetIndex(),
-					imageSlot, 
+					imageSlot,
 					0,
 					false
 				);
@@ -3980,7 +3972,7 @@ TICKAGAIN:
 		this->setEnergyLevel(newEnergy);
 
 	// Ammo
-   if(imageData.ammoSource == ShapeBaseImageData::Energy) 
+   if(imageData.ammoSource == ShapeBaseImageData::Energy)
    {
 		if(image.mode == MountedImage::ClientFireMode)
 		{
@@ -3999,7 +3991,7 @@ TICKAGAIN:
 			}
 		}
    }
-	else if(imageData.ammoSource == ShapeBaseImageData::Magazine) 
+	else if(imageData.ammoSource == ShapeBaseImageData::Magazine)
    {
 		if(image.mode == MountedImage::ClientFireMode)
 		{
@@ -4018,18 +4010,18 @@ TICKAGAIN:
 			}
 		}
    }
-	else if(imageData.ammoSource == ShapeBaseImageData::Hybrid) 
+	else if(imageData.ammoSource == ShapeBaseImageData::Hybrid)
    {
 		if(image.mode == MountedImage::ClientFireMode)
 		{
-			image.ammo = (image.magazineRounds > 0 
+			image.ammo = (image.magazineRounds > 0
 			        && newEnergy > imageData.minEnergy);
 		}
 		else if(image.mode == MountedImage::StandardMode)
 		{
 			if(isServerObject())
 			{
-				bool ammo = (image.magazineRounds > 0 
+				bool ammo = (image.magazineRounds > 0
 				      && newEnergy > imageData.minEnergy);
 				if (ammo != image.ammo)
 				{
@@ -4051,25 +4043,25 @@ TICKAGAIN:
       {
          F32 timeScale;
 
-         switch (stateData.spin) 
+         switch (stateData.spin)
          {
             case ShapeBaseImageData::StateData::IgnoreSpin:
             case ShapeBaseImageData::StateData::NoSpin:
-            case ShapeBaseImageData::StateData::FullSpin: 
+            case ShapeBaseImageData::StateData::FullSpin:
             {
                timeScale = 0;
                image.shapeInstance[i]->setTimeScale(image.spinThread[i], image.shapeInstance[i]->getTimeScale(image.spinThread[i]));
                break;
             }
 
-            case ShapeBaseImageData::StateData::SpinUp: 
+            case ShapeBaseImageData::StateData::SpinUp:
             {
                timeScale = 1.0f - image.delayTime / stateData.timeoutValue;
                image.shapeInstance[i]->setTimeScale(image.spinThread[i],timeScale);
                break;
             }
 
-            case ShapeBaseImageData::StateData::SpinDown: 
+            case ShapeBaseImageData::StateData::SpinDown:
             {
                timeScale = image.delayTime / stateData.timeoutValue;
                image.shapeInstance[i]->setTimeScale(image.spinThread[i],timeScale);
@@ -4081,11 +4073,11 @@ TICKAGAIN:
 
    // Check for transitions. On some states we must wait for the
    // full timeout value before moving on.
-   if (image.delayTime <= 0 || !stateData.waitForTimeout) 
+   if (image.delayTime <= 0 || !stateData.waitForTimeout)
    {
       S32 ns;
 
-      if ((ns = stateData.transition.loaded[image.loaded]) != -1) 
+      if ((ns = stateData.transition.loaded[image.loaded]) != -1)
          setImageState(imageSlot,ns);
       else if ((ns = stateData.transition.genericTrigger[0][image.genericTrigger[0]]) != -1)
          setImageState(imageSlot,ns);
@@ -4095,7 +4087,7 @@ TICKAGAIN:
          setImageState(imageSlot,ns);
       else if ((ns = stateData.transition.genericTrigger[3][image.genericTrigger[3]]) != -1)
          setImageState(imageSlot,ns);
-      else if ((ns = stateData.transition.ammo[image.ammo]) != -1) 
+      else if ((ns = stateData.transition.ammo[image.ammo]) != -1)
          setImageState(imageSlot,ns);
       else if ((ns = stateData.transition.targetLocked[image.targetState == MountedImage::TargetLocked]) != -1)
          setImageState(imageSlot,ns);
@@ -4109,9 +4101,9 @@ TICKAGAIN:
          setImageState(imageSlot,ns);
       else if ((ns = stateData.transition.trigger[image.triggerDown]) != -1)
          setImageState(imageSlot,ns);
-      else if ((ns = stateData.transition.altTrigger[image.altTriggerDown]) != -1) 
+      else if ((ns = stateData.transition.altTrigger[image.altTriggerDown]) != -1)
          setImageState(imageSlot,ns);
-      else if (image.delayTime <= 0 && (ns = stateData.transition.timeout) != -1) 
+      else if (image.delayTime <= 0 && (ns = stateData.transition.timeout) != -1)
          setImageState(imageSlot,ns);
    }
 
@@ -4122,11 +4114,11 @@ TICKAGAIN:
       goto TICKAGAIN;
 	}
 #else
-	if(imageData.useRemainderDT && image.rDT > 0.0f && image.delayTime > 0.0f && dt != 0.0f )  
-	{  
-		dt = image.rDT;  
-		goto TICKAGAIN;  
-   }  
+	if(imageData.useRemainderDT && image.rDT > 0.0f && image.delayTime > 0.0f && dt != 0.0f )
+	{
+		dt = image.rDT;
+		goto TICKAGAIN;
+   }
 #endif
 }
 
@@ -4273,9 +4265,9 @@ void ShapeBase::submitLights( LightManager *lm, bool staticLighting )
       ShapeBaseImageData *imageData = getMountedImage( i );
 
       if ( imageData != NULL && imageData->lightType != ShapeBaseImageData::NoLight )
-      {                  
-         MountedImage &image = mMountedImageList[i];         
-         
+      {
+         MountedImage &image = mMountedImageList[i];
+
          F32 intensity;
 
          switch ( imageData->lightType )
@@ -4307,15 +4299,15 @@ void ShapeBase::submitLights( LightManager *lm, bool staticLighting )
             image.lightInfo = LightManager::createLightInfo();
 
          image.lightInfo->setColor( imageData->lightColor );
-         image.lightInfo->setBrightness( intensity );   
-         image.lightInfo->setRange( imageData->lightRadius );  
+         image.lightInfo->setBrightness( intensity );
+         image.lightInfo->setRange( imageData->lightRadius );
 
          if ( imageData->lightType == ShapeBaseImageData::SpotLight )
          {
             image.lightInfo->setType( LightInfo::Spot );
             // Do we want to expose these or not?
             image.lightInfo->setInnerConeAngle( 15 );
-            image.lightInfo->setOuterConeAngle( 40 );      
+            image.lightInfo->setOuterConeAngle( 40 );
          }
          else
             image.lightInfo->setType( LightInfo::Point );
@@ -4325,7 +4317,7 @@ void ShapeBase::submitLights( LightManager *lm, bool staticLighting )
 
          image.lightInfo->setTransform( imageMat );
 
-         lm->registerGlobalLight( image.lightInfo, NULL );         
+         lm->registerGlobalLight( image.lightInfo, NULL );
       }
    }
 }
@@ -4388,7 +4380,7 @@ bool ShapeBase::checkImageTargetingAim(MountedImage& image)
 	else
 	{
 		// Test to see if it's behind something...
-		static U32 losMask = 
+		static U32 losMask =
 			TerrainObjectType
          | ShapeBaseObjectType
 			| StaticShapeObjectType;
@@ -4403,7 +4395,7 @@ bool ShapeBase::checkImageTargetingAim(MountedImage& image)
 			selfMount = this->getObjectMount();
 			selfMount->disableCollision();
 		}
-		
+
 		// don't collide with the target or the thing it's mounted on
 		target->disableCollision();
 		if(target->getTypeMask() & ShapeBaseObjectType)
@@ -4482,7 +4474,7 @@ void ShapeBase::ejectShellCasing( U32 imageSlot )
 void ShapeBase::clientFiredShotgun(
 	NetConnection* client,
 	int slot,
-	const ShotgunHits& hits, 
+	const ShotgunHits& hits,
 	ShotgunProjectileData* datablock,
 	const Point3F& pos,
 	const Point3F& vel)

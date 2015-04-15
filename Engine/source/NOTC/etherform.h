@@ -21,7 +21,7 @@
 class MultiNodeLaserBeam;
 class MultiNodeLaserBeamData;
 
-class EtherformData: public ShapeBaseData 
+class EtherformData: public ShapeBaseData
 {
 	typedef ShapeBaseData Parent;
 
@@ -49,6 +49,7 @@ public:
       MaxJetEmitters,
    };
    ParticleEmitterData* jetEmitter[MaxJetEmitters];
+   S32 jetEmitterId[MaxJetEmitters];
    F32 minTrailSpeed;
 
 	DECLARE_CONOBJECT(EtherformData);
@@ -72,7 +73,7 @@ class Etherform : public ShapeBase
 	Point3F mCameraTargetPos;
 	/// @}
 
-   struct ContactInfo 
+   struct ContactInfo
    {
       bool contacted;
       SceneObject *contactObject;
@@ -80,8 +81,8 @@ class Etherform : public ShapeBase
 
       void clear()
       {
-         contacted=false; 
-         contactObject = NULL; 
+         contacted=false;
+         contactObject = NULL;
          contactNormal.set(1,1,1);
       }
 

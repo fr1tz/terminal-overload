@@ -41,9 +41,9 @@ static S32 sMaxPredictionTicks = 30;   // Number of ticks to predict
 
 //
 static U32 sCollisionMoveMask =  TerrainObjectType       |
-                                 WaterObjectType         | 
+                                 WaterObjectType         |
                                  PlayerObjectType        |
-                                 StaticShapeObjectType   | 
+                                 StaticShapeObjectType   |
                                  VehicleObjectType       |
                                  PhysicalZoneObjectType;
 
@@ -70,7 +70,10 @@ EtherformData::EtherformData()
 	dMemset( laserTrailIdList, 0, sizeof( laserTrailIdList ) );
 
    for (S32 j = 0; j < MaxJetEmitters; j++)
+   {
       jetEmitter[j] = 0;
+      jetEmitterId[j] = 0;
+   }
    minTrailSpeed = 1;
 }
 
@@ -103,10 +106,9 @@ bool EtherformData::preload(bool server, String &errorStr)
 
 		for (S32 j = 0; j < MaxJetEmitters; j++)
 		{
-			U32 id = (U32)jetEmitter[j];
-			if(id)
-				if(Sim::findObject(id,jetEmitter[j]) == false)
-					Con::errorf( ConsoleLogEntry::General, "EtherformData::onAdd: Invalid packet, bad datablockId(particleTrail): 0x%x", id );
+			if(!jetEmitter[j] && jetEmitterId[j] != 0)
+				if(Sim::findObject(jetEmitterId[j],jetEmitter[j]) == false)
+					Con::errorf( ConsoleLogEntry::General, "EtherformData::onAdd: Invalid packet, bad datablockId(particleTrail): 0x%x", jetEmitterId[j] );
 		}
    }
 
@@ -134,10 +136,7 @@ void EtherformData::packData(BitStream* stream)
    for (S32 j = 0; j < MaxJetEmitters; j++)
    {
       if (stream->writeFlag(jetEmitter[j]))
-      {
-         SimObjectId writtenId = packed ? SimObjectId(jetEmitter[j]) : jetEmitter[j]->getId();
-         stream->writeRangedU32(writtenId, DataBlockObjectIdFirst,DataBlockObjectIdLast);
-      }
+         stream->writeRangedU32(jetEmitter[j]->getId(), DataBlockObjectIdFirst,DataBlockObjectIdLast);
    }
    stream->write(minTrailSpeed);
 }
@@ -161,10 +160,8 @@ void EtherformData::unpackData(BitStream* stream)
    }
 
    for (S32 j = 0; j < MaxJetEmitters; j++) {
-      jetEmitter[j] = NULL;
       if (stream->readFlag())
-         jetEmitter[j] = (ParticleEmitterData*)stream->readRangedU32(DataBlockObjectIdFirst,
-                                                                     DataBlockObjectIdLast);
+         jetEmitterId[j] = stream->readRangedU32(DataBlockObjectIdFirst,DataBlockObjectIdLast);
    }
    stream->read(&minTrailSpeed);
 }
@@ -456,7 +453,7 @@ Point3F Etherform::_move( const F32 travelTime, Collision *outCol )
 {
    // Try and move to new pos
    F32 totalMotion  = 0.0f;
-   
+
    // TODO: not used?
    //F32 initialSpeed = mVelocity.len();
 
@@ -577,7 +574,7 @@ Point3F Etherform::_move( const F32 travelTime, Collision *outCol )
       }
 
       // Take into account any physical zones...
-      for (U32 j = 0; j < physZoneCollisionList.getCount(); j++) 
+      for (U32 j = 0; j < physZoneCollisionList.getCount(); j++)
       {
          AssertFatal(dynamic_cast<PhysicalZone*>(physZoneCollisionList[j].object), "Bad phys zone!");
          const PhysicalZone* pZone = (PhysicalZone*)physZoneCollisionList[j].object;
@@ -585,7 +582,7 @@ Point3F Etherform::_move( const F32 travelTime, Collision *outCol )
             mVelocity *= pZone->getVelocityMod();
       }
 
-      if (collisionList.getCount() != 0 && collisionList.getTime() < 1.0f) 
+      if (collisionList.getCount() != 0 && collisionList.getTime() < 1.0f)
       {
          // Set to collision point
          F32 velLen = mVelocity.len();
@@ -670,16 +667,16 @@ Point3F Etherform::_move( const F32 travelTime, Collision *outCol )
 void Etherform::_handleCollision( const Collision &collision )
 {
    // Track collisions
-   if(!isGhost() 
-	&& collision.object 
+   if(!isGhost()
+	&& collision.object
 	&& collision.object != mContactInfo.contactObject)
 	{
 		queueCollision( collision.object, mVelocity - collision.object->getVelocity());
 	}
 }
 
-void Etherform::_findContact( SceneObject **contactObject, 
-                           VectorF *contactNormal, 
+void Etherform::_findContact( SceneObject **contactObject,
+                           VectorF *contactNormal,
                            Vector<SceneObject*> *outOverlapObjects )
 {
    Point3F pos;
@@ -722,7 +719,7 @@ void Etherform::_findContact( SceneObject **contactObject,
       Convex* pConvex = pList->mConvex;
 
       U32 objectMask = pConvex->getObject()->getTypeMask();
-      
+
       if (  ( objectMask & sCollisionMoveMask ) &&
             !( objectMask & PhysicalZoneObjectType ) )
       {
@@ -798,7 +795,7 @@ void Etherform::findContact(VectorF *contactNormal)
          // If we've overlapped the worldbounding boxes, then that's it...
          Item* item = static_cast<Item*>( obj );
          if (  getWorldBox().isOverlapped(item->getWorldBox()) &&
-               item->getCollisionObject() != this && 
+               item->getCollisionObject() != this &&
                !item->isHidden() )
             queueCollision(item,getVelocity() - item->getVelocity());
       }
@@ -925,7 +922,7 @@ void Etherform::updateWorkingCollisionSet()
       // Must update
       updateSet = true;
    }
-   
+
    // Actually perform the query, if necessary
    if (updateSet == true)
    {
@@ -944,8 +941,8 @@ void Etherform::updateWorkingCollisionSet()
 void Etherform::updateVelocity(const Move* move)
 {
 	Point3F vec,pos;
-	if(move) 
-	{       
+	if(move)
+	{
 		//Prevent interpolating the wrong way round a circle.
 		if(mRot.z > M_PI_F)
 		 mRot.z -= M_2PI_F;
@@ -1005,7 +1002,7 @@ bool Etherform::updatePos(const F32 travelTime)
    getTransform().getColumn(3, &delta.posVec);
 
    // When mounted to another object, only Z rotation used.
-   if(isMounted()) 
+   if(isMounted())
 	{
       mVelocity = mMount.object->getVelocity();
       setPosition(Point3F(0.0f, 0.0f, 0.0f), mRot);
@@ -1025,7 +1022,7 @@ bool Etherform::updatePos(const F32 travelTime)
       newPos = delta.posVec;
    else
       newPos = _move(travelTime, &col);
-   
+
    _handleCollision(col);
 
    // DEBUG:
@@ -1036,7 +1033,7 @@ bool Etherform::updatePos(const F32 travelTime)
 
    // Set new position
 	// If on the client, calc delta for backstepping
-	if(isClientObject()) 
+	if(isClientObject())
 	{
 		delta.pos = newPos;
 		delta.rot = mRot;
@@ -1049,7 +1046,7 @@ bool Etherform::updatePos(const F32 travelTime)
    this->setMaskBits(MoveMask);
    this->updateContainer();
 
-   if (!isGhost())  
+   if (!isGhost())
    {
       // Collisions are only queued on the server and can be
       // generated by either updateMove or updatePos
@@ -1316,7 +1313,7 @@ void Etherform::consoleInit()
 {
    Con::addVariable("Etherform::minWarpTicks", TypeF32, &sMinWarpTicks);
    Con::addVariable("Etherform::maxWarpTicks", TypeS32, &sMaxWarpTicks);
-   Con::addVariable("Etherform::maxPredictionTicks", TypeS32, &sMaxPredictionTicks);   
+   Con::addVariable("Etherform::maxPredictionTicks", TypeS32, &sMaxPredictionTicks);
 }
 
 Point3F &Etherform::getPosition()
@@ -1364,7 +1361,7 @@ void Etherform::setTransform(const MatrixF& mat)
    this->setMaskBits(MoveMask | NoWarpMask); // don't warp to new transform on clients
 }
 
-/* 
+/*
 void Etherform::setRenderTransform(const MatrixF& mat)
 {
    // This method should never be called on the client.
@@ -1398,7 +1395,7 @@ void Etherform::getCameraTransform(F32* pos, MatrixF* mat)
 		this->getRenderEyeTransform(&eye);
 
 		Point3F rpos = this->getRenderPosition();
-		mat->mul(eye,rot);		
+		mat->mul(eye,rot);
 		mat->setColumn(3, rpos + (mCameraPos-rpos) * *pos);
 
 		//

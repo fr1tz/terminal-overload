@@ -157,7 +157,7 @@ void MultiNodeLaserBeamData::packData(BitStream* stream)
 
 	if(stream->writeFlag(nodeDistance != 0.0f))
 		stream->write(nodeDistance);
-	
+
 	stream->writeInt(fadeTime >> 5, 10);
 }
 
@@ -426,7 +426,7 @@ void MultiNodeLaserBeam::processTick(const Move* move)
 
 	mCurrTick++;
 
-	if( mFade ) 
+	if( mFade )
 	{
 		bool visibleNodes = false;
 		for(int i=0; i<mNodes.size(); i++ )
@@ -460,9 +460,9 @@ void MultiNodeLaserBeam::processTick(const Move* move)
 				{
 					if(mNodes[mNodes.size()-2].alpha <= 0)
 						mNodes.pop_back();
-					else 
+					else
 						break;
-				}				
+				}
 			}
 			else
 			{
@@ -470,7 +470,7 @@ void MultiNodeLaserBeam::processTick(const Move* move)
 				{
 					if(mNodes[1].alpha <= 0)
 						mNodes.pop_front();
-					else 
+					else
 						break;
 				}
 			}
@@ -515,7 +515,7 @@ void MultiNodeLaserBeam::advanceTime(F32 dt)
 #endif
 			d *= mNodes[i].alpha;
 		}
-		if(d > 0) 
+		if(d > 0)
 		{
 			mNodes[i].alpha -= d;
 			if(mNodes[i].alpha < 0.01)
@@ -523,7 +523,7 @@ void MultiNodeLaserBeam::advanceTime(F32 dt)
 		}
 
 		// wind
-		if(mDataBlock->windCoefficient != 0.0f && i > 0) 
+		if(mDataBlock->windCoefficient != 0.0f && i > 0)
 		{
 			mNodes[i].pos += windVec * dt;
 		}
@@ -535,12 +535,12 @@ void MultiNodeLaserBeam::advanceTime(F32 dt)
       {
          if(mSourceShape && i == 0)
          {
-            Point3F newPos; 
+            Point3F newPos;
             mSourceShape->getRenderMuzzlePoint(mSourceSlot, &newPos);
             deltaVec = newPos - mNodes[i].pos;
             mNodes[i].pos += deltaVec;
          }
-         
+
          continue; // No additional movement for first/last node
       }
 
@@ -550,7 +550,7 @@ void MultiNodeLaserBeam::advanceTime(F32 dt)
          mNodes[i].pos += deltaVec*f;
       }
 
-		for(int j = 0; j < 3; j++) 
+		for(int j = 0; j < 3; j++)
 		{
 			// update node velocity?...
 			if(mDataBlock->nodeMoveMode[j] == MultiNodeLaserBeamData::DynamicSpeed)
@@ -664,7 +664,7 @@ void MultiNodeLaserBeam::prepRenderImage(SceneRenderState* state)
 
       // We sort by the material then vertex buffer
       ri->defaultKey = matInst->getStateHint();
-      ri->defaultKey2 = (U32)ri->vertBuff; // Not 64bit safe!
+      ri->defaultKey2 = 0;
 
       // Submit our RenderInst to the RenderPassManager
       state->getRenderPass()->addInst(ri);
@@ -678,7 +678,7 @@ void MultiNodeLaserBeam::updateRenderData(const Point3F& camPos, U32 lane)
    dst->primType = GFXTriangleList;
 
    if(!mRender || mNodes.size() < 2 )
-   {     
+   {
       dst->numVerts = 0;
       dst->numPrims = 0;
       return;
@@ -709,7 +709,7 @@ void MultiNodeLaserBeam::updateRenderData(const Point3F& camPos, U32 lane)
 			default: // FaceViewer
 				Point3F dirFromCam = mNodes[0].pos - camPos;
 				mCross(dirFromCam, mNodes[0].pos - mNodes[mNodes.size()-1].pos, &mCrossVec);
-				mCrossVec.normalize(); 
+				mCrossVec.normalize();
 				break;
 		}
 

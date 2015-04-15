@@ -1015,7 +1015,7 @@ void TacticalZone::setFlicker(U32 flickerTime)
 {
    if(mFlickerTime == flickerTime)
       return;
-   mFlickerTime = flickerTime;  
+   mFlickerTime = flickerTime;
 	this->setMaskBits(FlickerMask);
 }
 
@@ -1387,8 +1387,8 @@ void TacticalZone::prepRenderImage(SceneRenderState* state)
          ri->translucentSort = true;
       }
 
-      // Make it the sort distance the max distance so that 
-      // it renders after all the other opaque geometry in 
+      // Make it the sort distance the max distance so that
+      // it renders after all the other opaque geometry in
       // the prepass bin.
       ri->sortDistSq = F32_MAX;
 
@@ -1436,7 +1436,7 @@ void TacticalZone::prepRenderImage(SceneRenderState* state)
 
       // We sort by the material then vertex buffer
       ri->defaultKey = matInst->getStateHint();
-      ri->defaultKey2 = (U32)ri->vertBuff; // Not 64bit safe!
+      ri->defaultKey2 = 0;
 
       // Submit our RenderInst to the RenderPassManager
       state->getRenderPass()->addInst( ri );

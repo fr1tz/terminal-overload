@@ -36,9 +36,9 @@ struct PlayerData: public ShapeBaseData {
    };
    bool renderFirstPerson;    ///< Render the player shape in first person
 
-   /// Render shadows while in first person when 
+   /// Render shadows while in first person when
    /// renderFirstPerson is disabled.
-   bool firstPersonShadows; 
+   bool firstPersonShadows;
 
    StringTableEntry  imageAnimPrefix;                             ///< Passed along to mounted images to modify
                                                                   ///  animation sequences played in third person. [optional]
@@ -286,7 +286,7 @@ struct PlayerData: public ShapeBaseData {
       LandAnim,
       JetAnim,
 
-      // 
+      //
       NumTableActionAnims = JetAnim + 1,
 
       NumExtraActionAnims = 512 - NumTableActionAnims,
@@ -379,7 +379,7 @@ struct PlayerData: public ShapeBaseData {
    F32 footSplashHeight;
 
    // Air control
-	F32 glideForce; ///< Force used to accel player while in air and not sliding 
+	F32 glideForce; ///< Force used to accel player while in air and not sliding
    F32 airControl; ///< Air control (if glideForce is 0)
 
    // Jump off surfaces at their normal rather than straight up
@@ -392,8 +392,10 @@ struct PlayerData: public ShapeBaseData {
    S32 splashEmitterIDList[NUM_SPLASH_EMITTERS];
 
    ParticleEmitterData* slideEmitter[NumSlideEmitters];
+   S32 slideEmitterId[NumSlideEmitters];
 
-	ParticleEmitterData* skidEmitter[NumSkidEmitters];
+   ParticleEmitterData* skidEmitter[NumSkidEmitters];
+   S32 skidEmitterId[NumSkidEmitters];
    /// @}
 
    //
@@ -527,11 +529,11 @@ protected:
    bool mRunSurface;                ///< Is the player currently in contact with a surface he can run on?
    bool mFalling;                   ///< Falling in mid-air?
    F32 mSlideContact;               ///< FIXME insert desc
-   S32 mJumpDelay;                  ///< Delay till next jump   
+   S32 mJumpDelay;                  ///< Delay till next jump
    bool mXJumpChargeInProgress;     ///< Currently charging an x-jump?
    F32 mXJumpCharge;                ///< Current XJump charge
    bool mInstantXJumpReady;         ///< To avoid multiple instant x-jumps if trigger is held down
-   
+
    Pose  mPose;
    bool  mAllowJumping;
    bool  mAllowJetJumping;
@@ -546,7 +548,7 @@ protected:
 
    bool  mAllowChargedXJump;
    bool  mAllowInstantXJump;
-   
+
    S32 mContactTimer;               ///< Ticks since last contact
 
    Point3F mJumpSurfaceNormal;      ///< Normal of the surface the player last jumped on
@@ -620,7 +622,7 @@ protected:
    Point3F mLastPos;          ///< Holds the last position for physics updates
    Point3F mLastWaterPos;     ///< Same as mLastPos, but for water
 
-   struct ContactInfo 
+   struct ContactInfo
    {
       bool contacted, jump, run;
       SceneObject *contactObject;
@@ -628,8 +630,8 @@ protected:
 
       void clear()
       {
-         contacted=jump=run=false; 
-         contactObject = NULL; 
+         contacted=jump=run=false;
+         contactObject = NULL;
          contactNormal.set(1,1,1);
       }
 
@@ -661,17 +663,17 @@ protected:
    TSThread *mShapeFPFlashThread[ShapeBase::MaxMountedImages];
    TSThread *mShapeFPSpinThread[ShapeBase::MaxMountedImages];
 
-   
+
   public:
-  
+
    // New collision
    OrthoBoxConvex mConvex;
    Box3F          mWorkingQueryBox;
 
-   /// Standing / Crouched / Prone or Swimming   
+   /// Standing / Crouched / Prone or Swimming
    Pose getPose() const { return mPose; }
    virtual const char* getPoseName() const;
-   
+
    /// Setting this from script directly might not actually work,
    /// This is really just a helper for the player class so that its bounding box
    /// will get resized appropriately when the pose changes
@@ -743,14 +745,14 @@ protected:
    void setControllingClient(GameConnection* client);
 
    void calcClassRenderData();
-   
+
    /// Play sound for foot contact.
    ///
    /// @param triggeredLeft If true, left foot hit; right otherwise.
    /// @param contactMaterial Material onto which the player stepped; may be NULL.
    /// @param contactObject Object onto which the player stepped; may be NULL.
    void playFootstepSound( bool triggeredLeft, Material* contactMaterial, SceneObject* contactObject );
-   
+
    /// Play an impact sound.
    void playImpactSound();
 
@@ -796,7 +798,7 @@ public:
    void getRenderEyeBaseTransform(MatrixF* mat, bool includeBank);
    void getCameraParameters(F32 *min, F32 *max, Point3F *offset, MatrixF *rot);
    void getMuzzleTransform(U32 imageSlot,MatrixF* mat);
-   void getRenderMuzzleTransform(U32 imageSlot,MatrixF* mat);   
+   void getRenderMuzzleTransform(U32 imageSlot,MatrixF* mat);
 
    virtual void getMuzzleVector(U32 imageSlot,VectorF* vec);
    /// @}
@@ -830,7 +832,7 @@ public:
 
    bool canJump();                                         ///< Can the player jump?
    bool canJetJump();                                      ///< Can the player jet?
-   bool canChargeXJump(); 
+   bool canChargeXJump();
    bool canInstantXJump();
    bool canSwim();                                         ///< Can the player swim?
    bool canCrouch();
@@ -868,7 +870,7 @@ public:
    // Object control
    void setControlObject(ShapeBase *obj);
    ShapeBase* getControlObject();
-   
+
    //
    void updateWorkingCollisionSet();
    bool useInstantInput();
@@ -890,7 +892,7 @@ public:
    void unpackUpdate(NetConnection *conn,           BitStream *stream);
 
    virtual void prepRenderImage( SceneRenderState* state );
-   virtual void renderConvex( ObjectRenderInst *ri, SceneRenderState *state, BaseMatInstance *overrideMat );   
+   virtual void renderConvex( ObjectRenderInst *ri, SceneRenderState *state, BaseMatInstance *overrideMat );
    virtual void renderMountedImage( U32 imageSlot, TSRenderState &rstate, SceneRenderState *state );
 };
 
