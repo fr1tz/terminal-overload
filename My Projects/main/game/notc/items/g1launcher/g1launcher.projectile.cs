@@ -5,7 +5,7 @@ datablock ProjectileData(ItemG1LauncherProjectile)
 {
    collisionMask = $CollisionMask::Normal;
 
-   projectileShapeName = "content/xa/notc/core/shapes/mgl1/projectile/p1/shape.dae";
+   projectileShapeName = "content/xa/notc/core/shapes/g1launcher/projectile/p1/shape.dae";
 
    //sound = ItemG1LauncherProjectileSound;
 
@@ -20,9 +20,11 @@ datablock ProjectileData(ItemG1LauncherProjectile)
    splashDamageFalloff = $SplashDamageFalloff::None;
    bypassDamageBuffer  = true;
 
+   decal               = ItemG1LauncherProjectile_Decal;
    explosion           = ItemG1LauncherProjectileExplosion;
    bounceEffect[0]     = ItemG1LauncherProjectileBounceEffect;
    particleEmitter     = ItemG1LauncherProjectile_ParticleEmitter;
+   //laserTrail[0]       = ItemG1LauncherProjectile_LaserTrail0;
 
    muzzleVelocity      = 200;
    velInheritFactor    = 0.0;
