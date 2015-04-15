@@ -5,7 +5,7 @@ function notcCatSniperGui::onAdd(%this)
 {
    %this-->ts.cameraXRot = 0;
    %this-->ts.cameraZRot = 0;
-   %this.zElevation = 0.25;
+   %this.zElevation = 0;
    
    %this.zScanForTargets = false;
    
@@ -265,7 +265,7 @@ function notcCatSniperGui::renderTargeting(%this)
       %depth   = getWord(%pos, 2);
       
       %targetDist = VectorLen(VectorSub(%pos3D, %control.getEyePoint()));
-      %this-->projectilesHud.targetDist = %targetDist;
+      %this-->projectilesHud.targetPos = %pos3D;
       
       %width = getWord(%this-->ts.getExtent(), 0);
       %height = getWord(%this-->ts.getExtent(), 1);
@@ -303,6 +303,6 @@ function notcCatSniperGui::renderTargeting(%this)
    else
    {
       %this.zTarget = "";
-      %this-->projectilesHud.targetDist = 0;
+      %this-->projectilesHud.targetPos = "0 0 0";
    }
 }
