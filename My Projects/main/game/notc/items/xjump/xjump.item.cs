@@ -47,7 +47,7 @@ function ItemXJump::onXJump(%this, %obj, %dir)
       initialVelocity = %vel;
       initialPosition = %pos;
       sourceObject    = %obj;
-      sourceSlot      = -1;
+      sourceSlot      = 0;
       client          = %obj.client;
    };
    copyPalette(%obj, %p);
