@@ -53,7 +53,7 @@ datablock PlayerData(FrmStandardcat)
    maxEnergy[0] = ($Server::NOTC::Mutator::AS ? 100 : 9999999999);
    maxEnergy[1] = ($Server::NOTC::Mutator::AM ? 100 : 9999999999);
    maxEnergy[2] = 100;
-   damageBuffer = 50;
+   damageBuffer = 25;
    energyPerDamagePoint = 75;
 
 	repairRate = 0.8;
