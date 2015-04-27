@@ -369,6 +369,7 @@ function FrmStandardcat::onAdd(%this, %obj)
    %obj.allowChargedXJump(false);
    %obj.allowInstantXJump(false);
    %obj.setEnergyLevel(%this.maxEnergy);
+   %obj.setDamageBufferLevel(%this.damageBuffer);
 	%obj.isCAT = true;
  
    // Setup light
