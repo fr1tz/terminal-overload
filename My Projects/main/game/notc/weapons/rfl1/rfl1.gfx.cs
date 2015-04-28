@@ -54,7 +54,7 @@ datablock ParticleEmitterData(WpnRFL1ProjectileParticleEmitter)
 datablock MultiNodeLaserBeamData(WpnRFL1ProjectileLaserTrail0)
 {
 	material[0] = "xa_notc_core_shapes_rfl1_trail_p1_lasertrail0mat0";
-   width[0] = 0.2;
+   width[0] = 0.5;
  
 	renderMode = $MultiNodeLaserBeamRenderMode::FaceViewer;
 
