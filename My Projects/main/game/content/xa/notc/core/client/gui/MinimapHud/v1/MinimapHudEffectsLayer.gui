@@ -22,6 +22,7 @@
       margin = "0 0 0 0";
       noCursor = "1";
       padding = "0 0 0 0";
+      zTickThread = "227919";
 
    new notcGuiBitmapCtrl() {
       bitmap = "shell/graphics/tol-background.png";
@@ -62,42 +63,6 @@
       hovertime = "1000";
       isContainer = "0";
       hidden = "1";
-      canSave = "1";
-      canSaveDynamicFields = "0";
-   };
-   new GuiBitmapCtrl() {
-      bitmap = "shell/graphics/noise2.png";
-      wrap = "1";
-      position = "27 360";
-      extent = "118 118";
-      minExtent = "8 2";
-      horizSizing = "relative";
-      vertSizing = "relative";
-      profile = "GuiDefaultProfile";
-      visible = "1";
-      active = "1";
-      tooltipProfile = "GuiToolTipProfile";
-      hovertime = "1000";
-      isContainer = "0";
-      internalName = "monitorNoise";
-      canSave = "1";
-      canSaveDynamicFields = "0";
-   };
-   new GuiBitmapCtrl() {
-      bitmap = "content/xa/notc/core/client/gui/CatGui/v1/graphics/monitorScanlines.png";
-      wrap = "1";
-      position = "27 360";
-      extent = "118 118";
-      minExtent = "8 2";
-      horizSizing = "relative";
-      vertSizing = "relative";
-      profile = "GuiDefaultProfile";
-      visible = "1";
-      active = "1";
-      tooltipProfile = "GuiToolTipProfile";
-      hovertime = "1000";
-      isContainer = "0";
-      internalName = "monitorScanlines";
       canSave = "1";
       canSaveDynamicFields = "0";
    };

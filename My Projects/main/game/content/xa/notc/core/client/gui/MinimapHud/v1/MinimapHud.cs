@@ -39,17 +39,17 @@ function clientCmd_XaNotcMinimapHud_AddIcon(%id, %bitmap, %size)
 
 //------------------------------------------------------------------------------
 
-function XaNotcMinimapHudEffectsLayer::onWake(%this)
+function XaNotcMinimapHud::onWake(%this)
 {
    %this.tickThread();
 }
 
-function XaNotcMinimapHudEffectsLayer::onSleep(%this)
+function XaNotcMinimapHud::onSleep(%this)
 {
    cancel(%this.zTickThread);
 }
 
-function XaNotcMinimapHudEffectsLayer::tickThread(%this)
+function XaNotcMinimapHud::tickThread(%this)
 {
    if(%this.zTickThread !$= "")
    {
