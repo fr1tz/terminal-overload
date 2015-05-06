@@ -1,59 +1,123 @@
 
 //--- OBJECT WRITE BEGIN ---
 %guiContent = new GuiControl(MessageHud) {
-   profile = "GuiDefaultProfile";
-   horizSizing = "width";
-   vertSizing = "height";
    position = "0 0";
    extent = "640 480";
    minExtent = "8 8";
+   horizSizing = "width";
+   vertSizing = "height";
+   profile = "GuiDefaultProfile";
    visible = "0";
-   noCursor = true;
+   active = "1";
+   tooltipProfile = "GuiToolTipProfile";
+   hovertime = "1000";
+   isContainer = "1";
+   hidden = "1";
+   canSave = "1";
+   canSaveDynamicFields = "1";
+      noCursor = "1";
 
    new GuiControl(MessageHud_Frame) {
-      profile = "GuiDefaultProfile";
-      horizSizing = "right";
-      vertSizing = "bottom";
       position = "120 375";
       extent = "400 40";
       minExtent = "8 8";
+      horizSizing = "right";
+      vertSizing = "bottom";
+      profile = "GuiDefaultProfile";
       visible = "1";
+      active = "1";
+      tooltipProfile = "GuiToolTipProfile";
+      hovertime = "1000";
+      isContainer = "1";
+      canSave = "1";
+      canSaveDynamicFields = "0";
 
       new GuiControl() {
-         profile = "GuiDefaultProfile";
-         horizSizing = "width";
-         vertSizing = "height";
          position = "8 8";
          extent = "384 24";
          minExtent = "8 8";
+         horizSizing = "width";
+         vertSizing = "height";
+         profile = "GuiDefaultProfile";
          visible = "1";
-         helpTag = "0";
+         active = "1";
+         tooltipProfile = "GuiToolTipProfile";
+         hovertime = "1000";
+         isContainer = "1";
+         canSave = "1";
+         canSaveDynamicFields = "0";
       };
-
-      new GuiTextCtrl(MessageHud_Text)
-      {
-         profile = "ChatHudTextProfile";
+      new notcGuiBitmapCtrl() {
+         bitmap = "content/xa/notc/core/client/gui/CatGuiSniper/v1/graphics/white.png";
+         wrap = "0";
+         flipX = "0";
+         flipY = "0";
+         crisp = "0";
+         position = "0 0";
+         extent = "10 10";
+         minExtent = "8 2";
          horizSizing = "right";
          vertSizing = "bottom";
+         profile = "GuiDefaultProfile";
+         visible = "1";
+         active = "1";
+         tooltipProfile = "GuiToolTipProfile";
+         hovertime = "1000";
+         isContainer = "0";
+         canSave = "1";
+         canSaveDynamicFields = "0";
+      };
+      new GuiTextCtrl(MessageHud_Text) {
+         maxLength = "1024";
+         margin = "0 0 0 0";
+         padding = "0 0 0 0";
+         anchorTop = "1";
+         anchorBottom = "0";
+         anchorLeft = "1";
+         anchorRight = "0";
          position = "14 12";
-         extent = "10 22";
+         extent = "8 18";
          minExtent = "8 8";
-         visible = "1";
-      };
-
-      new GuiTextEditCtrl(MessageHud_Edit)
-      {
-         profile = "ChatHudEditProfile";
          horizSizing = "right";
          vertSizing = "bottom";
-         position = "0 13";
-         extent = "10 22";
-         minExtent = "8 8";
+         profile = "ChatHudTextProfile";
          visible = "1";
-         altCommand = "$ThisControl.eval();";
+         active = "1";
+         tooltipProfile = "GuiToolTipProfile";
+         hovertime = "1000";
+         isContainer = "1";
+         canSave = "1";
+         canSaveDynamicFields = "0";
+      };
+      new GuiTextEditCtrl(MessageHud_Edit) {
          escapeCommand = "MessageHud_Edit.onEscape();";
          historySize = "5";
+         tabComplete = "0";
+         sinkAllKeyEvents = "0";
+         password = "0";
+         passwordMask = "*";
          maxLength = "120";
+         margin = "0 0 0 0";
+         padding = "0 0 0 0";
+         anchorTop = "1";
+         anchorBottom = "0";
+         anchorLeft = "1";
+         anchorRight = "0";
+         position = "0 13";
+         extent = "10 26";
+         minExtent = "8 8";
+         horizSizing = "right";
+         vertSizing = "bottom";
+         profile = "ChatHudEditProfile";
+         visible = "1";
+         active = "1";
+         altCommand = "$ThisControl.eval();";
+         tooltipProfile = "GuiToolTipProfile";
+         hovertime = "1000";
+         isContainer = "1";
+         canSave = "1";
+         canSaveDynamicFields = "0";
       };
    };
 };
+//--- OBJECT WRITE END ---

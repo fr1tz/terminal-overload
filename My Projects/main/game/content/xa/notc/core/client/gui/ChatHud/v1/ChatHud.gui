@@ -1,10 +1,12 @@
+exec("content/xa/notc/core/client/gui/HudWindow/v1/profiles.cs");
+
 //--- OBJECT WRITE BEGIN ---
 %guiContent = new GuiControl(MainChatHud) {
    position = "0 0";
    extent = "640 480";
    minExtent = "8 8";
-   horizSizing = "width";
-   vertSizing = "height";
+   horizSizing = "relative";
+   vertSizing = "relative";
    profile = "GuiModelessDialogProfile";
    visible = "1";
    active = "1";
@@ -16,12 +18,63 @@
       helpTag = "0";
       noCursor = "1";
 
-   new GuiControl() {
+   new notcGuiBitmapCtrl() {
+      bitmap = "content/xa/notc/core/client/gui/ChatHud/v1/graphics/button.png";
+      wrap = "0";
+      flipX = "0";
+      flipY = "0";
+      crisp = "1";
       position = "0 0";
-      extent = "640 480";
-      minExtent = "8 8";
+      extent = "120 20";
+      minExtent = "8 2";
       horizSizing = "relative";
       vertSizing = "relative";
+      profile = "GuiDefaultProfile";
+      visible = "0";
+      active = "1";
+      tooltipProfile = "GuiToolTipProfile";
+      hovertime = "1000";
+      isContainer = "0";
+      hidden = "1";
+      canSave = "1";
+      canSaveDynamicFields = "0";
+   };
+   new GuiWindowCtrl() {
+      text = " MESSAGES";
+      resizeWidth = "0";
+      resizeHeight = "0";
+      canMove = "0";
+      canClose = "0";
+      canMinimize = "0";
+      canMaximize = "0";
+      canCollapse = "0";
+      edgeSnap = "1";
+      margin = "0 0 0 0";
+      padding = "0 0 0 0";
+      anchorTop = "1";
+      anchorBottom = "0";
+      anchorLeft = "1";
+      anchorRight = "0";
+      position = "0 0";
+      extent = "120 20";
+      minExtent = "8 2";
+      horizSizing = "relative";
+      vertSizing = "bottom";
+      profile = "notcHudLightWindowProfile";
+      visible = "1";
+      active = "1";
+      tooltipProfile = "GuiToolTipProfile";
+      hovertime = "1000";
+      isContainer = "1";
+      canSave = "1";
+      canSaveDynamicFields = "0";
+   };
+   new GuiControl() {
+      position = "0 20";
+      extent = "640 460";
+      minExtent = "8 8";
+      horizSizing = "relative";
+      vertSizing = "height";
       profile = "GuiModelessDialogProfile";
       visible = "1";
       active = "1";
@@ -32,8 +85,8 @@
       canSaveDynamicFields = "0";
 
       new GuiControl(OuterChatHud) {
-         position = "8 8";
-         extent = "303 56";
+         position = "0 0";
+         extent = "303 184";
          minExtent = "8 8";
          horizSizing = "relative";
          vertSizing = "bottom";
@@ -46,13 +99,130 @@
          canSave = "1";
          canSaveDynamicFields = "0";
 
+         new GuiControl() {
+            position = "0 0";
+            extent = "303 148";
+            minExtent = "8 2";
+            horizSizing = "width";
+            vertSizing = "height";
+            profile = "GuiDefaultProfile";
+            visible = "0";
+            active = "1";
+            tooltipProfile = "GuiToolTipProfile";
+            hovertime = "1000";
+            isContainer = "1";
+            hidden = "1";
+            canSave = "1";
+            canSaveDynamicFields = "0";
+
+            new notcGuiBitmapCtrl() {
+               bitmap = "content/xa/notc/core/client/gui/buttons/style1/button.left.png";
+               wrap = "0";
+               flipX = "0";
+               flipY = "0";
+               crisp = "0";
+               position = "0 0";
+               extent = "20 148";
+               minExtent = "8 2";
+               horizSizing = "right";
+               vertSizing = "relative";
+               profile = "GuiDefaultProfile";
+               visible = "1";
+               active = "1";
+               tooltipProfile = "GuiToolTipProfile";
+               hovertime = "1000";
+               isContainer = "0";
+               canSave = "1";
+               canSaveDynamicFields = "0";
+            };
+            new notcGuiBitmapCtrl() {
+               bitmap = "content/xa/notc/core/client/gui/buttons/style1/button.span.png";
+               wrap = "0";
+               flipX = "0";
+               flipY = "0";
+               crisp = "0";
+               position = "20 0";
+               extent = "263 148";
+               minExtent = "8 2";
+               horizSizing = "width";
+               vertSizing = "relative";
+               profile = "GuiDefaultProfile";
+               visible = "1";
+               active = "1";
+               tooltipProfile = "GuiToolTipProfile";
+               hovertime = "1000";
+               isContainer = "0";
+               canSave = "1";
+               canSaveDynamicFields = "0";
+            };
+            new notcGuiBitmapCtrl() {
+               bitmap = "content/xa/notc/core/client/gui/buttons/style1/button.right.png";
+               wrap = "0";
+               flipX = "0";
+               flipY = "0";
+               crisp = "0";
+               position = "283 0";
+               extent = "20 148";
+               minExtent = "8 2";
+               horizSizing = "left";
+               vertSizing = "relative";
+               profile = "GuiDefaultProfile";
+               visible = "1";
+               active = "1";
+               tooltipProfile = "GuiToolTipProfile";
+               hovertime = "1000";
+               isContainer = "0";
+               canSave = "1";
+               canSaveDynamicFields = "0";
+            };
+            new notcGuiBitmapCtrl() {
+               bitmap = "content/xa/notc/core/client/gui/buttons/style1/text.chat.png";
+               wrap = "0";
+               flipX = "0";
+               flipY = "0";
+               crisp = "0";
+               position = "130 0";
+               extent = "42 148";
+               minExtent = "8 2";
+               horizSizing = "center";
+               vertSizing = "relative";
+               profile = "GuiDefaultProfile";
+               visible = "1";
+               active = "1";
+               tooltipProfile = "GuiToolTipProfile";
+               hovertime = "1000";
+               isContainer = "0";
+               canSave = "1";
+               canSaveDynamicFields = "0";
+            };
+         };
+         new notcGuiBitmapCtrl() {
+            bitmap = "content/xa/notc/core/client/gui/ChatHud/v1/graphics/line.png";
+            wrap = "1";
+            flipX = "0";
+            flipY = "0";
+            crisp = "1";
+            position = "0 0";
+            extent = "19 184";
+            minExtent = "8 2";
+            horizSizing = "right";
+            vertSizing = "relative";
+            profile = "GuiDefaultProfile";
+            visible = "1";
+            active = "1";
+            tooltipProfile = "GuiToolTipProfile";
+            hovertime = "1000";
+            isContainer = "0";
+            canSave = "1";
+            canSaveDynamicFields = "0";
+         };
          new GuiButtonCtrl(ChatPageDown) {
-            text = "Dwn";
+            text = "...";
             groupNum = "-1";
             buttonType = "PushButton";
             useMouseEvents = "0";
-            position = "258 36";
-            extent = "36 14";
+            position = "838 168";
+            extent = "17 14";
             minExtent = "8 8";
             horizSizing = "left";
             vertSizing = "top";
@@ -81,11 +251,11 @@
             anchorBottom = "0";
             anchorLeft = "1";
             anchorRight = "0";
-            position = "0 0";
-            extent = "303 56";
+            position = "10 0";
+            extent = "303 182";
             minExtent = "8 8";
-            horizSizing = "relative";
-            vertSizing = "relative";
+            horizSizing = "width";
+            vertSizing = "height";
             profile = "ChatHudScrollProfile";
             visible = "1";
             active = "1";
@@ -98,7 +268,6 @@
             new GuiMessageVectorCtrl(ChatHud) {
                lineSpacing = "0";
                lineContinuedIndex = "10";
-               allowedMatches[0] = "http";
                allowedMatches[1] = "tgeserver";
                matchColor = "0 0 255 255";
                maxColorIndex = "5";
