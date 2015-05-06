@@ -77,9 +77,17 @@ function notcCatHud::tickThread(%this)
 
    if(isObject(MiscHud))
    {
+      %impulseDamperPercent = mFloatLength(%impulseDamper*75, 0) @ "%";
+      MiscHud-->ImpulseDamperText.setText(%impulseDamperPercent);
       MiscHud-->ImpulseDamperGraph.addDatum(0, %impulseDamper);
+      %damageDamperPercent = mFloatLength(%damageDamper*50, 0) @ "%";
+      MiscHud-->DamageDamperText.setText(%damageDamperPercent);
       MiscHud-->DamageDamperGraph.addDatum(0, %damageDamper);
+      %damageBufferText = mFloatLength(%control.getDamageBufferLevel(), 0);
+      MiscHud-->DamageBufferText.setText(%damageBufferText);
       MiscHud-->DamageBufferGraph.addDatum(0, %damageBuffer);
+      %healthText = mFloatLength(%data.maxDamage-%control.getDamageLevel(), 0);
+      MiscHud-->HealthText.setText(%healthText);
       MiscHud-->HealthGraph.addDatum(0, %health);
    }
 
