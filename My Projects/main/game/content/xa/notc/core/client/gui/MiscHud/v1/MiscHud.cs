@@ -170,12 +170,14 @@ activatePackage(MiscHud);
 
 function MiscHud::onWake(%this)
 {
+   hilightControl(LagIcon-->image, true);
    // Start tick thread.
    %this.tickThread();
 }
 
 function MiscHud::onSleep(%this)
 {
+   hilightControl(LagIcon-->image, false);
    cancel(%this.zTickThread);
 }
 
