@@ -36,20 +36,27 @@ function updateHilightedGuiControlsThread()
 	for(%i = 0; %i < %set.getCount(); %i++)
 	{
 		%control = %set.getObject(%i);
-		if(%set.hilightState == true)
+      if(%control.isMethod("setText"))
       {
-         if(%control.zText !$= "")
-            %control.setText(%control.zText);
-      }
-		else
-      {
-         if(%control.isMethod("getText"))
-            %control.zText = %control.getText();
-         else
-            %control.zText = %control.text;
-			%control.setText("");
-      }
+   		if(%set.hilightState == true)
+         {
 
+            if(%control.zText !$= "")
+               %control.setText(%control.zText);
+         }
+   		else
+         {
+            if(%control.isMethod("getText"))
+               %control.zText = %control.getText();
+            else
+               %control.zText = %control.text;
+   			%control.setText("");
+         }
+      }
+      else
+      {
+         %control.setVisible(%set.hilightState);
+      }
 	}
 
 	startUpdateHilightedGuiControlsThread();
