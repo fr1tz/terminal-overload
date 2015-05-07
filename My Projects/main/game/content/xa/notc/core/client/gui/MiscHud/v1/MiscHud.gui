@@ -184,7 +184,7 @@ exec("content/xa/notc/core/client/gui/HudWindow/v1/profiles.cs");
       canSaveDynamicFields = "0";
    };
    new GuiWindowCtrl() {
-      text = "STATS";
+      text = "STATUS";
       resizeWidth = "0";
       resizeHeight = "0";
       canMove = "0";

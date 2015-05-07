@@ -187,6 +187,11 @@ function MiscHud::tickThread(%this)
       %this.zTickThread = "";
    }
    %this.zTickThread = %this.schedule(64, "tickThread");
+   
+   %this-->ImpulseDamperText.setText(" ---");
+   %this-->DamageDamperText.setText(" ---");
+   %this-->DamageBufferText.setText(" ---");
+   %this-->HealthText.setText(" ---");
 
    if(!isObject(ServerConnection))
       return;
@@ -195,36 +200,29 @@ function MiscHud::tickThread(%this)
    if(!isObject(%control))
       return;
       
-   return;
+   if(%control.getClassName() $= "Etherform")
+      return;
 
    %data = %control.getDataBlock();
    %damageDamper = %control.getEnergyLevel(0) / %data.maxEnergy[0];
    %impulseDamper = %control.getEnergyLevel(1) / %data.maxEnergy[1];
-   %energy = %control.getEnergyLevel(2) / %data.maxEnergy[2];
+   %xJump = %control.getEnergyLevel(2) / %data.maxEnergy[2];
    %xJumpCharge = %control.getXJumpCharge() / %data.maxEnergy[2];
    %damageBuffer = %control.getDamageBufferLevel() / %data.damageBuffer;
    %health = 1 - %control.getDamageLevel() / %data.maxDamage;
 
-   XaNotcCatHud-->impulseDamper.setValue(%impulseDamper);
-   XaNotcCatHud-->damageDamper.setValue(%damageDamper);
-   XaNotcCatHud-->energy.setValue(%energy);
-   XaNotcCatHud-->xJumpCharge.setValue(%xJumpCharge);
-
-   if(isObject(MiscHud))
-   {
-      MiscHud-->ImpulseDamperGraph.addDatum(0, %impulseDamper);
-      MiscHud-->DamageDamperGraph.addDatum(0, %damageDamper);
-      MiscHud-->DamageBufferGraph.addDatum(0, %damageBuffer);
-      MiscHud-->HealthGraph.addDatum(0, %health);
-   }
-
-   if(isObject(XaNotcVitalsHud))
-   {
-      XaNotcVitalsHud-->ImpulseDamperGraph.addDatum(0, %impulseDamper);
-      XaNotcVitalsHud-->DamageDamperGraph.addDatum(0, %damageDamper);
-      XaNotcVitalsHud-->DamageBufferGraph.addDatum(0, %damageBuffer);
-      XaNotcVitalsHud-->HealthGraph.addDatum(0, %health);
-   }
+   %impulseDamperPercent = mFloatLength(%impulseDamper*75, 0) @ "%";
+   %this-->ImpulseDamperText.setText(%impulseDamperPercent);
+   %this-->ImpulseDamperGraph.addDatum(0, %impulseDamper);
+   %damageDamperPercent = mFloatLength(%damageDamper*50, 0) @ "%";
+   %this-->DamageDamperText.setText(%damageDamperPercent);
+   %this-->DamageDamperGraph.addDatum(0, %damageDamper);
+   %damageBufferText = mFloatLength(%control.getDamageBufferLevel(), 0);
+   %this-->DamageBufferText.setText(%damageBufferText);
+   %this-->DamageBufferGraph.addDatum(0, %damageBuffer);
+   %healthText = mFloatLength(%data.maxDamage-%control.getDamageLevel(), 0);
+   %this-->HealthText.setText(%healthText);
+   %this-->HealthGraph.addDatum(0, %health);
 }
 
 

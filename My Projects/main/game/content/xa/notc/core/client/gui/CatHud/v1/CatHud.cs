@@ -74,30 +74,6 @@ function notcCatHud::tickThread(%this)
       notcCatHudDamageProtectionProfile.fillColor = "255 100 0 175";
    else
       notcCatHudDamageProtectionProfile.fillColor = "50 255 50 150";
-
-   if(isObject(MiscHud))
-   {
-      %impulseDamperPercent = mFloatLength(%impulseDamper*75, 0) @ "%";
-      MiscHud-->ImpulseDamperText.setText(%impulseDamperPercent);
-      MiscHud-->ImpulseDamperGraph.addDatum(0, %impulseDamper);
-      %damageDamperPercent = mFloatLength(%damageDamper*50, 0) @ "%";
-      MiscHud-->DamageDamperText.setText(%damageDamperPercent);
-      MiscHud-->DamageDamperGraph.addDatum(0, %damageDamper);
-      %damageBufferText = mFloatLength(%control.getDamageBufferLevel(), 0);
-      MiscHud-->DamageBufferText.setText(%damageBufferText);
-      MiscHud-->DamageBufferGraph.addDatum(0, %damageBuffer);
-      %healthText = mFloatLength(%data.maxDamage-%control.getDamageLevel(), 0);
-      MiscHud-->HealthText.setText(%healthText);
-      MiscHud-->HealthGraph.addDatum(0, %health);
-   }
-
-   if(isObject(XaNotcVitalsHud))
-   {
-      XaNotcVitalsHud-->ImpulseDamperGraph.addDatum(0, %impulseDamper);
-      XaNotcVitalsHud-->DamageDamperGraph.addDatum(0, %damageDamper);
-      XaNotcVitalsHud-->DamageBufferGraph.addDatum(0, %damageBuffer);
-      XaNotcVitalsHud-->HealthGraph.addDatum(0, %health);
-   }
 }
 
 //-----------------------------------------------------------------------------
