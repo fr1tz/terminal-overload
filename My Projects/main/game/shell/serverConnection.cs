@@ -59,7 +59,7 @@ function GameConnection::setLagIcon(%this, %state)
 {
    if (%this.getAddress() $= "local")
       return;
-   LagIcon.setVisible(%state $= "true");
+   LagIcon.setVisible(%state);
 }
 
 function GameConnection::onFlash(%this, %state)
