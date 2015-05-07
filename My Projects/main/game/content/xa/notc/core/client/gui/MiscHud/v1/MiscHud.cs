@@ -170,15 +170,41 @@ activatePackage(MiscHud);
 
 function MiscHud::onWake(%this)
 {
-   hilightControl(LagIcon-->image, true);
    // Start tick thread.
    %this.tickThread();
+   %this.animThread();
 }
 
 function MiscHud::onSleep(%this)
 {
-   hilightControl(LagIcon-->image, false);
    cancel(%this.zTickThread);
+   cancel(%this.zAnimThread);
+}
+
+function MiscHud::animThread(%this)
+{
+   if(%this.zAnimThread !$= "")
+   {
+      cancel(%this.zAnimThread);
+      %this.zAnimThread = "";
+   }
+   %this.zAnimThread = %this.schedule(16, "animThread");
+
+   if(LagIcon.isVisible())
+   {
+      LagIcon-->noise.setValue(getRandom(0, 1024), getRandom(0, 1024));
+      LagIcon.zBlinkDelay--;
+      if(LagIcon.zBlinkDelay <= 0)
+      {
+         LagIcon-->flash.setVisible(!LagIcon-->flash.isVisible());
+         LagIcon.zBlinkDelay = 10;
+      }
+   }
+   else
+   {
+      LagIcon-->flash.setVisible(true);
+      LagIcon.zBlinkDelay = 10;
+   }
 }
 
 function MiscHud::tickThread(%this)
@@ -190,11 +216,27 @@ function MiscHud::tickThread(%this)
    }
    %this.zTickThread = %this.schedule(64, "tickThread");
    
+   if(LagIcon.isVisible())
+   {
+      LagIcon-->noise.setValue(getRandom(0, 1024), getRandom(0, 1024));
+      LagIcon.zBlinkDelay--;
+      if(LagIcon.zBlinkDelay <= 0)
+      {
+         LagIcon-->flash.setVisible(!LagIcon-->flash.isVisible());
+         LagIcon.zBlinkDelay = 10;
+      }
+   }
+   else
+   {
+      LagIcon-->flash.setVisible(true);
+      LagIcon.zBlinkDelay = 10;
+   }
+
    %this-->ImpulseDamperText.setText(" ---");
    %this-->DamageDamperText.setText(" ---");
    %this-->DamageBufferText.setText(" ---");
    %this-->HealthText.setText(" ---");
-
+   
    if(!isObject(ServerConnection))
       return;
 
