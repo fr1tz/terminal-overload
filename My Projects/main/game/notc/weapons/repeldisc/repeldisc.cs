@@ -43,7 +43,7 @@ datablock NortDiscData(WpnRepelDisc)
 
    particleEmitter     = "WpnRepelDiscEmitter";
    
-   bounceEffect[0] = WpnRepelDiscBounceEffect;
+   bounceEffect[0] = WpnRepelDiscHit;
    bounceEffectTypeMask[0] = $TypeMasks::StaticObjectType;
    
    bounceDecal = WpnRepelDiscDecal;
