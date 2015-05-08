@@ -2214,3 +2214,23 @@ DefineEngineMethod( GameConnection, getVisibleGhostDistance, F32, (),,
 {
    return object->getVisibleGhostDistance();
 }
+
+DefineEngineMethod( GameConnection, getMoveListLastMoveAck, S32, (),,"")
+{
+   return object->mMoveList->getLastMoveAck();
+}
+
+DefineEngineMethod( GameConnection, getMoveListLastClientMove, S32, (),,"")
+{
+   return object->mMoveList->getLastClientMove();
+}
+
+DefineEngineMethod( GameConnection, getMoveListFirstMoveIndex, S32, (),,"")
+{
+   return object->mMoveList->getFirstMoveIndex();
+}
+
+DefineEngineMethod( GameConnection, getMoveListMoveVecSize, S32, (),,"")
+{
+   return object->mMoveList->getMoveVecSize();
+}

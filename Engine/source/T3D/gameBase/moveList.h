@@ -76,6 +76,11 @@ public:
 
    virtual void ackMoves( U32 count );
 
+   U32 getLastMoveAck() const { return mLastMoveAck; }
+   U32 getLastClientMove() const { return mLastClientMove; }
+   U32 getFirstMoveIndex() const { return mFirstMoveIndex; }
+   U32 getMoveVecSize() const { return mMoveVec.size(); }
+
 protected:
 
    bool getNextMove( Move &curMove );
