@@ -318,24 +318,14 @@ function MessageHud::open(%this)
       return;
 
    if(%this.isTeamMsg)
-      %text = "TEAM:";
+      %text = "CHAT.TEAM> ";
    else
-      %text = "GLOBAL:";
+      %text = "CHAT.GLOBAL> ";
 
-   MessageHud_Text.setValue(%text);
-
-   %windowPos = "0 " @ ( getWord( outerChatHud.position, 1 ) + getWord( outerChatHud.extent, 1 ) + 1 );
-   %windowExt = getWord( OuterChatHud.extent, 0 ) @ " " @ getWord( MessageHud_Frame.extent, 1 );
-
-   %textExtent = getWord(MessageHud_Text.extent, 0) + 14;
-   %ctrlExtent = getWord(MessageHud_Frame.extent, 0);
+   MessageHud_Edit.setValue(%text);
+   MessageHud_Edit.extent = "439 24";
 
    Canvas.pushDialog(%this);
-
-   messageHud_Frame.position = %windowPos;
-   messageHud_Frame.extent = %windowExt;
-   MessageHud_Edit.position = setWord(MessageHud_Edit.position, 0, %textExtent + %offset);
-   MessageHud_Edit.extent = setWord(MessageHud_Edit.extent, 0, %ctrlExtent - %textExtent - (2 * %offset));
 
    %this.setVisible(true);
    deactivateKeyboard();
@@ -353,7 +343,6 @@ function MessageHud::close(%this)
    %this.setVisible(false);
    if ( $enableDirectInput )
       activateKeyboard();
-   MessageHud_Edit.setValue("");
 }
 
 
@@ -382,11 +371,13 @@ function MessageHud_Edit::eval(%this)
 
    if(%text !$= "")
    {
-      if(MessageHud.isTeamMsg)
-         commandToServer('teamMessageSent', %text);
-      else
-         commandToServer('messageSent', %text);
+      if(getWord(%text, 0) $= "CHAT.TEAM>")
+         commandToServer('teamMessageSent', getWords(%text,1));
+      else if(getWord(%text, 0) $= "CHAT.GLOBAL>")
+         commandToServer('messageSent', getWords(%text,1));
    }
+   
+   MessageHud_Edit.setValue("");
 
    MessageHud.close();
 }
