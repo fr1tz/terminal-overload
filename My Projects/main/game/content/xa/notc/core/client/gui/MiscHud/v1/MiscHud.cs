@@ -168,6 +168,11 @@ package MiscHud
 
 activatePackage(MiscHud);
 
+function MiscHud::onAdd(%this)
+{
+   LagOverlay.zCurrentNoise = 0;
+}
+
 function MiscHud::onWake(%this)
 {
    // Start tick thread.
@@ -189,21 +194,80 @@ function MiscHud::animThread(%this)
       %this.zAnimThread = "";
    }
    %this.zAnimThread = %this.schedule(16, "animThread");
+   
+   LagOverlay-->noise.setValue(getRandom(0, 1024), getRandom(0, 1024));
 
    if(LagIcon.isVisible())
    {
-      LagIcon-->noise.setValue(getRandom(0, 1024), getRandom(0, 1024));
       LagIcon.zBlinkDelay--;
       if(LagIcon.zBlinkDelay <= 0)
       {
          LagIcon-->flash.setVisible(!LagIcon-->flash.isVisible());
-         LagIcon.zBlinkDelay = 10;
+         LagIcon.zBlinkDelay = 30;
       }
    }
    else
    {
       LagIcon-->flash.setVisible(true);
-      LagIcon.zBlinkDelay = 10;
+      LagIcon.zBlinkDelay = 30;
+   }
+
+   if(!isObject(ServerConnection))
+      return;
+      
+   %lastMoveAck = ServerConnection.getMoveListLastMoveAck();
+   %lastClientMove = ServerConnection.getMoveListLastClientMove();
+   %firstMoveIndex = ServerConnection.getMoveListFirstMoveIndex();
+   %moveVecSize = ServerConnection.getMoveListMoveVecSize();
+
+   //echo(%lastMoveAck SPC %lastClientMove SPC %firstMoveIndex SPC %moveVecSize);
+      
+   %x = %lastClientMove-%lastMoveAck;
+   //echo(%x);
+   if(%x >= 30)
+   {
+      LagOverlay-->frozen.setVisible(true);
+      %targetNoise = 1;
+   }
+   else
+   {
+      LagOverlay-->frozen.setVisible(false);
+      %targetNoise = mClamp(%x-10, 0, 20)/50;
+      %targetNoise += ServerConnection.getPacketLoss()/2;
+   }
+
+   if(%targetNoise > LagOverlay.zCurrentNoise)
+   {
+      LagOverlay.zCurrentNoise += 0.01;
+      if(LagOverlay.zCurrentNoise > %targetNoise)
+         LagOverlay.zCurrentNoise = %targetNoise;
+   }
+   else
+   {
+      LagOverlay.zCurrentNoise -= 0.01;
+      if(LagOverlay.zCurrentNoise < %targetNoise)
+         LagOverlay.zCurrentNoise = %targetNoise;
+   }
+
+   //echo(LagOverlay.zCurrentNoise SPC "->" SPC %targetNoise);
+
+   notcMiscHudLatencyNoiseProfile.fillColor = "255 255 255" SPC 255*LagOverlay.zCurrentNoise;
+
+
+   
+   if(LagOverlay-->frozen.isVisible())
+   {
+      LagOverlay-->frozen-->flash.zBlinkDelay--;
+      if(LagOverlay-->frozen-->flash.zBlinkDelay <= 0)
+      {
+         LagOverlay-->frozen-->flash.setVisible(!LagOverlay-->frozen-->flash.isVisible());
+         LagOverlay-->frozen-->flash.zBlinkDelay = 30;
+      }
+   }
+   else
+   {
+      LagOverlay-->frozen-->flash.setVisible(true);
+      LagOverlay-->frozen-->flash.zBlinkDelay = 30;
    }
 }
 
@@ -216,22 +280,6 @@ function MiscHud::tickThread(%this)
    }
    %this.zTickThread = %this.schedule(64, "tickThread");
    
-   if(LagIcon.isVisible())
-   {
-      LagIcon-->noise.setValue(getRandom(0, 1024), getRandom(0, 1024));
-      LagIcon.zBlinkDelay--;
-      if(LagIcon.zBlinkDelay <= 0)
-      {
-         LagIcon-->flash.setVisible(!LagIcon-->flash.isVisible());
-         LagIcon.zBlinkDelay = 10;
-      }
-   }
-   else
-   {
-      LagIcon-->flash.setVisible(true);
-      LagIcon.zBlinkDelay = 10;
-   }
-
    %this-->ImpulseDamperText.setText(" ---");
    %this-->DamageDamperText.setText(" ---");
    %this-->DamageBufferText.setText(" ---");
