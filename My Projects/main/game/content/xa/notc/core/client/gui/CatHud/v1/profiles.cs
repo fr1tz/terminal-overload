@@ -1,17 +1,6 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
-if( !isObject( notcCatHudXJumpChargeProfile ) )
-new GuiControlProfile( notcCatHudXJumpChargeProfile )
-{
-   opaque = true;
-   fillcolor = "0 125 255";
-   fontColor = "0 0 0";
-   fontColorHL = "150 150 150";
-   //borderColor = GuiDefaultProfile.borderColor;
-   border = true;
-};
-
 singleton GuiControlProfile(notcCatHudNumericTextProfile)
 {
    opaque = false;
@@ -54,11 +43,17 @@ singleton GuiControlProfile(notcCatHudShieldProfile : GuiDefaultProfile)
 
 singleton GuiControlProfile(notcCatHudKnockbackProtectionProfile : GuiDefaultProfile)
 {
-   fillColor = "50 255 50 150";
+   fillColor = "0 255 255";
 };
 
 singleton GuiControlProfile(notcCatHudDamageProtectionProfile : GuiDefaultProfile)
 {
    fillColor = "50 255 50 150";
 };
+
+singleton GuiControlProfile(notcCatHudXJumpEnergyProfile : GuiDefaultProfile)
+{
+   fillColor = "255 255 255 150";
+};
+
 

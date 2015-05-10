@@ -68,12 +68,19 @@ function notcCatHud::tickThread(%this)
    notcCatHud-->dpnumber.setNumber(%dp);
    notcCatHud-->kpnumber.setNumber(%kp);
    
-   if(notcCatHud-->dpblips.zNumVisible <= 6)
-      notcCatHudDamageProtectionProfile.fillColor = "255 25 25 200";
-   else if(notcCatHud-->dpblips.zNumVisible <= 9)
-      notcCatHudDamageProtectionProfile.fillColor = "255 100 0 175";
-   else
-      notcCatHudDamageProtectionProfile.fillColor = "50 255 50 150";
+   %r = mFloatLength(255 * (1-%damageDamper), 0);
+   %g = mFloatLength(255 * %damageDamper, 0);
+   %b = 0;
+   %color = %r SPC %g SPC %b;
+   //%color = "255 0 255";
+   notcCatHudDamageProtectionProfile.fillColor = %color;
+   
+//   if(notcCatHud-->dpblips.zNumVisible <= 6)
+//      notcCatHudDamageProtectionProfile.fillColor = "255 25 25 200";
+//   else if(notcCatHud-->dpblips.zNumVisible <= 9)
+//      notcCatHudDamageProtectionProfile.fillColor = "255 100 0 175";
+//   else
+//      notcCatHudDamageProtectionProfile.fillColor = "50 255 50 150";
 }
 
 //-----------------------------------------------------------------------------
