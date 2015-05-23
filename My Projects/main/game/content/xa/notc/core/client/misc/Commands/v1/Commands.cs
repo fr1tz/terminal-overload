@@ -73,6 +73,13 @@ package Commands
          paletteColors[0] = %colorI;
       };
    }
+   
+   function clientCmdSetDamageDirection(%dir)
+   {
+      %content = Canvas.getContent();
+      if(%content.isMethod("setDamageDirection"))
+         %content.setDamageDirection(%dir);
+   }
 };
 
 activatePackage(Commands);
