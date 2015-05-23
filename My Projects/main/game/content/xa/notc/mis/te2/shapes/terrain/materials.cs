@@ -30,10 +30,10 @@ singleton Material(shape_notc_mis_te2_shapes_terrain_mat1)
 singleton Material(shape_notc_mis_te2_shapes_terrain_mat2)
 {
    mapTo = "notc_mis_te2_shapes_terrain_mat2";
-   diffuseColor[0] = "0.00784314 0.831373 0.917647 1";
+   diffuseColor[0] = "0.2 0.976471 0.996078 0.091";
    specular[0] = "0.5 0.5 0.5 1";
    specularPower[0] = "50";
-   translucentBlendOp = "None";
+   translucentBlendOp = "AddAlpha";
    diffuseColor[1] = "0.027451 0.470588 0.00392157 0";
    glow[0] = "0";
    emissive[0] = "1";
@@ -41,4 +41,7 @@ singleton Material(shape_notc_mis_te2_shapes_terrain_mat2)
    wireframe[1] = "1";
    materialTag0 = "Miscellaneous";
    wireframe[0] = "1";
+   castShadows = "0";
+   showFootprints = "0";
+   translucent = "1";
 };
