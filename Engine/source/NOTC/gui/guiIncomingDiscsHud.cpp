@@ -22,8 +22,9 @@ class GuiIncomingDiscsHud : public GuiControl
    GuiTSCtrl* mParent;
 
    // Field data
-   ColorF mColor;
    S32 mRotSpeed;
+   String mBitmap;
+   GFXTexHandle mTex;
 
 protected:
    void drawDisc(ShapeBase* control, NortDisc* disc);
@@ -32,6 +33,8 @@ public:
    GuiIncomingDiscsHud();
 
    // GuiControl
+   virtual bool onWake();
+   virtual void onSleep();
    virtual void onRender(Point2I offset, const RectI &updateRect);
 
    // ITickable
@@ -83,15 +86,14 @@ ConsoleDocClass( GuiIncomingDiscsHud,
 GuiIncomingDiscsHud::GuiIncomingDiscsHud()
 {
    mParent = NULL;
-   mColor.set( 1, 1, 1, 1 );
    mRotSpeed = 200;
 }
 
 void GuiIncomingDiscsHud::initPersistFields()
 {
    addGroup("Rendering");     
-   addField("color", TypeColorF, Offset( mColor, GuiIncomingDiscsHud ), "Color for the control"  );
-   addField("flickerTime", TypeS32, Offset( mRotSpeed, GuiIncomingDiscsHud ), "Speed of blinking when target is aquired."  );
+   addField("rotSpeed", TypeS32, Offset( mRotSpeed, GuiIncomingDiscsHud ), "How fast the bitmap over the disc rotates"  );
+   addField("bitmap", TypeImageFilename, Offset( mBitmap, GuiIncomingDiscsHud ), "Bitmap drawn over discs."  );
    endGroup("Rendering");     
 
    Parent::initPersistFields();
@@ -99,12 +101,28 @@ void GuiIncomingDiscsHud::initPersistFields()
 
 //----------------------------------------------------------------------------
 
+bool GuiIncomingDiscsHud::onWake()
+{
+   if(!Parent::onWake())
+      return false;
+
+   if(mBitmap.isNotEmpty())
+      mTex.set(mBitmap, &GFXDefaultGUIProfile, avar("%s() - mBitmap (line %d)", __FUNCTION__, __LINE__) );
+   else
+      mTex = NULL;
+
+   return true;
+}
+
+void GuiIncomingDiscsHud::onSleep()
+{
+   mTex = NULL;
+
+   Parent::onSleep();
+}
+
 void GuiIncomingDiscsHud::onRender( Point2I, const RectI &updateRect)
 {
-   U32 time = Platform::getRealMilliseconds();
-   if((time/mRotSpeed) % 2 == 0)
-      return;
-
    // Must be in a TS Control
    mParent = dynamic_cast<GuiTSCtrl*>(getParent());
    if(!mParent) 
@@ -139,76 +157,38 @@ void GuiIncomingDiscsHud::drawDisc(ShapeBase* control, NortDisc* disc)
    Point3F targetPos = disc->getPosition();
    Point3F shapePos = control->getBoxCenter();
 
-   F32 targetDist = Point3F(targetPos - control->getPosition()).len();
-
-   Point3F targetVec = targetPos - shapePos;
-   MatrixF mat = MathUtils::createOrientFromDir(targetVec);
-
    Point3F targetPos2D;
    if(!mParent->projectLR(shapePos,targetPos,&targetPos2D))
       return;
 
-   U32 offset = 32;
+   Point3F center(targetPos2D.x, targetPos2D.y, 0);
 
-   Point2I upperLeft(targetPos2D.x-offset/2,targetPos2D.y-offset/2);
-   Point2I extent(offset,offset);
+   Point2I upperLeft(-32, -32);
+   Point2I extent(64, 64);
    RectI rect(upperLeft, extent);
 
-   if(!rect.isValidRect())
-      return;
+   GFX->pushWorldMatrix();
 
-   GFX->getDrawUtil()->drawRectFill(rect, mColor);
+   F32 time = Sim::getCurrentTime();
+   F32 rot = 0;
+   if(mRotSpeed > 0)
+      rot = (time/mRotSpeed);
+   MatrixF rotMat(EulerF(0.0, 0.0, -rot), center);
 
-#if 0
-	Point3F shapePos = control->getBoxCenter();
-	Point3F targetPos = disc->getRenderPosition();
+   GFX->multWorld(rotMat);
 
-	if( longRangeProject(mParent,shapePos,targetPos,&targetPos) )	
-	{
-		Point2F pos(targetPos.x, targetPos.y);
-		F32 rotation = rotateFunc();
-		glLineWidth(4.0);
-		glColor4ub(mProfile->mFillColor.red,
-			mProfile->mFillColor.green,
-			mProfile->mFillColor.blue,
-			mProfile->mFillColor.alpha);
-		drawAdditiveCircle(pos, 32, 3, rotation, true);
-		glLineWidth(2.0);
-		glColor4ub(mProfile->mFillColor.red,
-			mProfile->mFillColor.green,
-			mProfile->mFillColor.blue,
-			mProfile->mFillColor.alpha);
-		drawAdditiveCircle(pos, 32, 3, rotation, true);
-		bool isLocked = false;
-		for(int i = 0; i < ShapeBase::MaxMountedImages - 1; i++)
-		{
-			ShapeBase::MountedImage* image = control->getImageStruct(i); 
-			if(!image->dataBlock || !image->state->target || !image->currTarget) continue;
-			if(!image->targetState == ShapeBase::MountedImage::TargetAquired) continue;
-			if(image->currTarget == disc)
-			{
-				glLineWidth(1.0);
-				glColor4ub(mProfile->mFontColor.red,
-					mProfile->mFontColor.green,
-					mProfile->mFontColor.blue,
-					mProfile->mFontColor.alpha);
-				drawAdditiveCircle(pos, 32, 3, rotation, true);
-				isLocked = true;
-				break;
-			}
-		}
-		if(!isLocked)
-		{
-			glLineWidth(1.0);
-			glColor4ub(mProfile->mFillColor.red,
-				mProfile->mFillColor.green,
-				mProfile->mFillColor.blue,
-				mProfile->mFillColor.alpha);
-			drawAdditiveCircle(pos, 32, 3, rotation, true);
-		}
-	}	
+   if(mTex)
+   {
+      GFX->getDrawUtil()->setBitmapModulation(mProfile->mFillColor);
+      GFX->getDrawUtil()->drawBitmapStretch(mTex, rect,
+         GFXBitmapFlip_None, GFXTextureFilterPoint, false);
+      GFX->getDrawUtil()->clearBitmapModulation();
+   }
+   else
+   {
+      GFX->getDrawUtil()->drawRect(rect, mProfile->mFillColor);
+   }
 
-	glLineWidth(1.0);
-#endif
+   GFX->popWorldMatrix();
 }
 
