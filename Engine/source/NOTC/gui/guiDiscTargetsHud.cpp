@@ -118,9 +118,6 @@ void GuiDiscTargetsHud::onRender( Point2I, const RectI &updateRect)
    if(!mParent) 
       return;
 
-   if(mCurrTick % 2)
-      return;
-
    // Must have a connection and control object
    GameConnection* conn = GameConnection::getConnectionToServer();
    if (!conn) return;
@@ -187,19 +184,53 @@ void GuiDiscTargetsHud::drawTarget(GameBase* control, HudInfo* hudInfo)
       if(!mParent->projectLR(shapePos,targetPos,&targetPos2D))
          return;
 
-      U32 offset = s;
-      if( offset < 24 ) offset = 24;
+      S32 offset = s/4;
+      if( offset < 6 ) offset = 6;
 
-      Point2I upperLeft(targetPos2D.x-offset/2,targetPos2D.y-offset/2);
-      extent.set(offset,offset);
-      RectI rect(upperLeft,extent);
+      F32 ulOffset = 0.5f - GFX->getFillConventionOffset();
+      Point2F upperLeft(-offset,-offset);
+      Point2F lowerRight(offset,offset);
+      Point2F nw(-1,-1); /*  \  */
+      Point2F ne(1,-1); /*  /  */
 
-      if(!rect.isValidRect())
+      F32 time = Sim::getCurrentTime();
+      F32 rot = (time/250.0);
+      MatrixF rotMatrix(EulerF(0.0, 0.0, -rot));
+      Point3F center(targetPos2D.x, targetPos2D.y, 0.0 );
+
+      GFXVertexBufferHandle<GFXVertexPC> verts(GFX, 10, GFXBufferTypeVolatile);
+      verts.lock();
+      verts[0].point.set( upperLeft.x + ulOffset + nw.x, upperLeft.y + ulOffset + nw.y, 0.0f );
+      verts[1].point.set( upperLeft.x + ulOffset - nw.x, upperLeft.y + ulOffset - nw.y, 0.0f );
+      verts[2].point.set( lowerRight.x + ne.x, upperLeft.y + ulOffset + ne.y, 0.0f );
+      verts[3].point.set( lowerRight.x - ne.x, upperLeft.y + ulOffset - ne.y, 0.0f );
+      verts[4].point.set( lowerRight.x - nw.x, lowerRight.y - nw.y, 0.0f );
+      verts[5].point.set( lowerRight.x + nw.x, lowerRight.y + nw.y, 0.0f );
+      verts[6].point.set( upperLeft.x + ulOffset - ne.x, lowerRight.y - ne.y, 0.0f );
+      verts[7].point.set( upperLeft.x + ulOffset + ne.x, lowerRight.y + ne.y, 0.0f );
+      verts[8].point.set( upperLeft.x + ulOffset + nw.x, upperLeft.y + ulOffset + nw.y, 0.0f ); // same as 0
+      verts[9].point.set( upperLeft.x + ulOffset - nw.x, upperLeft.y + ulOffset - nw.y, 0.0f ); // same as 1
+      for (S32 i=0; i<10; i++)
+         verts[i].color = mProfile->mFontColor;
+      for(S32 i = 0; i < 10; i++)
+      {
+         rotMatrix.mulP(verts[i].point);
+         verts[i].point += center;
+      }
+      verts.unlock();
+
+      GFX->setVertexBuffer( verts );
+      GFX->setupGenericShaders();
+      GFX->drawPrimitive( GFXTriangleStrip, 0, 8 );
+
+      if(mCurrTick % 2)
          return;
-
-      GFX->getDrawUtil()->drawRect(rect, mFrameColor);
-
-      Point2I textPos = upperLeft;
+      offset = s;
+      if( offset < 24 ) offset = 24;
+      Point2I ul(targetPos2D.x-offset/2,targetPos2D.y-offset/2);
+      extent.set(offset,offset);
+      RectI rect(ul,extent);
+      Point2I textPos = ul;
       if(mTextOffset.y > 0)
          textPos.y += extent.y;
       textPos.x += extent.x/2;
