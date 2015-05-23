@@ -235,12 +235,12 @@ void GuiFriendOrFoeHud::drawInfo(GameBase* control, HudInfo* hudInfo)
       if(teamID == control->getTeamId() && mFriendTex)
       {
          GFX->getDrawUtil()->drawBitmapStretch(mFriendTex, rect,
-            GFXBitmapFlip_None, GFXTextureFilterLinear, false);
+            GFXBitmapFlip_None, GFXTextureFilterPoint, false);
       }
       else if(mFoeTex)
       {
          GFX->getDrawUtil()->drawBitmapStretch(mFoeTex, rect,
-            GFXBitmapFlip_None, GFXTextureFilterLinear, false);
+            GFXBitmapFlip_None, GFXTextureFilterPoint, false);
       }
       GFX->getDrawUtil()->clearBitmapModulation();
    }
