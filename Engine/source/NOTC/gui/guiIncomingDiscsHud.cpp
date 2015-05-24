@@ -154,7 +154,7 @@ void GuiIncomingDiscsHud::drawDisc(ShapeBase* control, NortDisc* disc)
 	if(disc->state() != NortDisc::Attacking)
 		return;
 
-   Point3F targetPos = disc->getPosition();
+   Point3F targetPos = disc->getRenderPosition();
    Point3F shapePos = control->getBoxCenter();
 
    Point3F targetPos2D;
@@ -181,7 +181,7 @@ void GuiIncomingDiscsHud::drawDisc(ShapeBase* control, NortDisc* disc)
    {
       GFX->getDrawUtil()->setBitmapModulation(mProfile->mFillColor);
       GFX->getDrawUtil()->drawBitmapStretch(mTex, rect,
-         GFXBitmapFlip_None, GFXTextureFilterPoint, false);
+         GFXBitmapFlip_None, GFXTextureFilterLinear, false);
       GFX->getDrawUtil()->clearBitmapModulation();
    }
    else
