@@ -25,8 +25,8 @@ exec("content/xa/notc/core/client/gui/HudWindow/v1/profiles.cs");
       margin = "0 0 0 0";
       noCursor = "1";
       padding = "0 0 0 0";
-      zAnimThread = "56973";
-      zTickThread = "56971";
+      zAnimThread = "16945";
+      zTickThread = "16943";
 
    new GuiControl(LagOverlay) {
       position = "0 0";
@@ -404,7 +404,7 @@ exec("content/xa/notc/core/client/gui/HudWindow/v1/profiles.cs");
                canSaveDynamicFields = "0";
 
                new notcGuiBitmapCtrl() {
-                  bitmap = "content/xa/notc/core/client/gui/CatGui/v1/graphics/blips/kbprotection.png";
+                  bitmap = "content/xa/notc/core/client/gui/MiscHud/v1/graphics/icon.kbprotection.png";
                   wrap = "0";
                   flipX = "0";
                   flipY = "0";
@@ -538,13 +538,13 @@ exec("content/xa/notc/core/client/gui/HudWindow/v1/profiles.cs");
                canSaveDynamicFields = "0";
 
                new notcGuiBitmapCtrl() {
-                  bitmap = "content/xa/notc/core/client/gui/CatGui/v1/graphics/blips/protection1.png";
+                  bitmap = "content/xa/notc/core/client/gui/MiscHud/v1/graphics/icon.dmgprotection.png";
                   wrap = "0";
                   flipX = "0";
                   flipY = "0";
                   crisp = "0";
-                  position = "2 2";
-                  extent = "15 15";
+                  position = "4 2";
+                  extent = "10 15";
                   minExtent = "8 2";
                   horizSizing = "right";
                   vertSizing = "center";
@@ -598,7 +598,7 @@ exec("content/xa/notc/core/client/gui/HudWindow/v1/profiles.cs");
 
                   new GuiGraphCtrl() {
                      centerY = "1";
-                     plotColor[0] = "0.996078 0.00784314 0.901961 1";
+                     plotColor[0] = "1 0.5 0 1";
                      plotColor[1] = "1 0 0 1";
                      plotColor[2] = "0 1 0 1";
                      plotColor[3] = "0 0 1 1";
@@ -672,7 +672,7 @@ exec("content/xa/notc/core/client/gui/HudWindow/v1/profiles.cs");
                canSaveDynamicFields = "0";
 
                new notcGuiBitmapCtrl() {
-                  bitmap = "content/xa/notc/core/client/gui/CatGui/v1/graphics/blips/shield1.png";
+                  bitmap = "content/xa/notc/core/client/gui/MiscHud/v1/graphics/icon.shield.png";
                   wrap = "0";
                   flipX = "0";
                   flipY = "0";
@@ -692,7 +692,7 @@ exec("content/xa/notc/core/client/gui/HudWindow/v1/profiles.cs");
                   canSaveDynamicFields = "0";
                };
                new GuiTextCtrl() {
-                  text = "50";
+                  text = "25";
                   maxLength = "1024";
                   margin = "0 0 0 0";
                   padding = "0 0 0 0";
@@ -806,7 +806,7 @@ exec("content/xa/notc/core/client/gui/HudWindow/v1/profiles.cs");
                canSaveDynamicFields = "0";
 
                new notcGuiBitmapCtrl() {
-                  bitmap = "content/xa/notc/core/client/gui/CatGui/v1/graphics/blips/health1.png";
+                  bitmap = "content/xa/notc/core/client/gui/MiscHud/v1/graphics/icon.health.png";
                   wrap = "0";
                   flipX = "0";
                   flipY = "0";
@@ -964,7 +964,7 @@ exec("content/xa/notc/core/client/gui/HudWindow/v1/profiles.cs");
             flipY = "0";
             crisp = "1";
             position = "4 4";
-            extent = "32 32";
+            extent = "32 31";
             minExtent = "8 2";
             horizSizing = "relative";
             vertSizing = "relative";

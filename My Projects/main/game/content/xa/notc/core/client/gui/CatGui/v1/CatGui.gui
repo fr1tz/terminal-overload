@@ -31,8 +31,8 @@ exec("./profiles.cs");
       noCursor = "1";
       zScanlinesOffset = "-2183";
       zTeamId = "0";
-      zTickThread = "233744";
-      zZoomNoiseOffset = "-265";
+      zTickThread = "48973";
+      zZoomNoiseOffset = "-308";
 
    new GuiDiscTargetsHud() {
       frameColor = "1 1 1 1";
@@ -91,7 +91,7 @@ exec("./profiles.cs");
    new GuiFriendOrFoeHud() {
       hudInfoDatasetType_TeamID = "2";
       friendBitmap = "content/xa/notc/core/icons/p1/teammate.png";
-      foeBitmap = "content/xa/notc/core/icons/p1/enemy.png";
+      foeBitmap = "content/xa/notc/core/client/gui/CatGuiSniper/v1/graphics/foe.png";
       position = "0 0";
       extent = "640 480";
       minExtent = "8 2";
@@ -107,8 +107,8 @@ exec("./profiles.cs");
       canSaveDynamicFields = "0";
    };
    new GuiIncomingDiscsHud() {
-      color = "1 1 1 1";
-      flickerTime = "64";
+      rotSpeed = "200";
+      bitmap = "content/xa/notc/core/client/gui/CatHud/v1/graphics/disc.png";
       position = "0 0";
       extent = "640 480";
       minExtent = "8 2";

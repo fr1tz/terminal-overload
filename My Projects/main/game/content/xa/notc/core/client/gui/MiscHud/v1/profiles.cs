@@ -20,8 +20,8 @@ singleton GuiControlProfile(notcMiscHudDamageDamperProfile)
    opaque = false;
    fontType = "Quantico";
    fontSize = 12;
-   fontColor = "255 0 255";
-   fillColor = "255 0 255";
+   fontColor = "255 128 0";
+   fillColor = "255 128 0";
 };
 
 singleton GuiControlProfile(notcMiscHudDamageBufferProfile)
