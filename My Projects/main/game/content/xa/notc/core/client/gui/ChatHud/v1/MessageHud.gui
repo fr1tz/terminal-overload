@@ -1,3 +1,4 @@
+exec("./profiles.cs");
 exec("content/xa/notc/core/client/gui/HudWindow/v1/profiles.cs");
 
 //--- OBJECT WRITE BEGIN ---
@@ -63,8 +64,7 @@ exec("content/xa/notc/core/client/gui/HudWindow/v1/profiles.cs");
          canSave = "1";
          canSaveDynamicFields = "0";
 
-         new GuiTextCtrl(MessageHud_Text) {
-            text = "GLOBAL:";
+         new GuiTextCtrl(notcMessageHud_Text) {
             maxLength = "1024";
             margin = "0 0 0 0";
             padding = "0 0 0 0";
@@ -73,11 +73,11 @@ exec("content/xa/notc/core/client/gui/HudWindow/v1/profiles.cs");
             anchorLeft = "1";
             anchorRight = "0";
             position = "7 2";
-            extent = "70 24";
+            extent = "8 24";
             minExtent = "8 8";
             horizSizing = "right";
             vertSizing = "bottom";
-            profile = "ChatHudTextProfile";
+            profile = "notcChatHudTextProfile";
             visible = "1";
             active = "1";
             tooltipProfile = "GuiToolTipProfile";
@@ -86,14 +86,14 @@ exec("content/xa/notc/core/client/gui/HudWindow/v1/profiles.cs");
             canSave = "1";
             canSaveDynamicFields = "0";
          };
-         new GuiTextEditCtrl(MessageHud_Edit) {
+         new GuiTextEditCtrl(notcMessageHud_Edit) {
             escapeCommand = "MessageHud_Edit.onEscape();";
             historySize = "5";
             tabComplete = "0";
             sinkAllKeyEvents = "0";
             password = "0";
             passwordMask = "*";
-            text = "CHAT.GLOBAL>";
+            text = "asdasd";
             maxLength = "120";
             margin = "0 0 0 0";
             padding = "0 0 0 0";
@@ -101,12 +101,12 @@ exec("content/xa/notc/core/client/gui/HudWindow/v1/profiles.cs");
             anchorBottom = "0";
             anchorLeft = "1";
             anchorRight = "0";
-            position = "90 2";
-            extent = "403 24";
+            position = "126 2";
+            extent = "367 24";
             minExtent = "8 8";
             horizSizing = "right";
             vertSizing = "bottom";
-            profile = "ChatHudEditProfile";
+            profile = "notcChatHudEditProfile";
             visible = "1";
             active = "1";
             altCommand = "$ThisControl.eval();";

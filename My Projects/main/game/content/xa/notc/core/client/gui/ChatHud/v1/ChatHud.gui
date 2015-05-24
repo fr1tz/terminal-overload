@@ -1,3 +1,4 @@
+exec("./profiles.cs");
 exec("content/xa/notc/core/client/gui/HudWindow/v1/profiles.cs");
 
 //--- OBJECT WRITE BEGIN ---
@@ -277,7 +278,7 @@ exec("content/xa/notc/core/client/gui/HudWindow/v1/profiles.cs");
             minExtent = "8 8";
             horizSizing = "width";
             vertSizing = "height";
-            profile = "ChatHudScrollProfile";
+            profile = "notcChatHudScrollProfile";
             visible = "1";
             active = "1";
             tooltipProfile = "GuiToolTipProfile";
@@ -297,7 +298,7 @@ exec("content/xa/notc/core/client/gui/HudWindow/v1/profiles.cs");
                minExtent = "8 8";
                horizSizing = "relative";
                vertSizing = "relative";
-               profile = "ChatHudMessageProfile";
+               profile = "notcChatHudMessageProfile";
                visible = "1";
                active = "1";
                tooltipProfile = "GuiToolTipProfile";

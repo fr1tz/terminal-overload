@@ -314,33 +314,42 @@ function MessageHud::open(%this)
 {
    %offset = 6;
 
-   if(%this.isVisible())
+   if(%this.isAwake())
       return;
 
    if(%this.isTeamMsg)
-      %text = "CHAT.TEAM> ";
+   {
+      notcMessageHud_Text.setText("CHAT.TEAM>");
+      notcMessageHud_Edit.setPosition(107, 2);
+      notcMessageHud_Edit.setExtent("386, 24");
+      notcMessageHud_Edit.setText(notcMessageHud_Edit.zCurrentTeamMsg);
+   }
    else
-      %text = "CHAT.GLOBAL> ";
-
-   MessageHud_Edit.setValue(%text);
-   MessageHud_Edit.extent = "439 24";
+   {
+      notcMessageHud_Text.setText("CHAT.GLOBAL>");
+      notcMessageHud_Edit.setPosition(126, 2);
+      notcMessageHud_Edit.setExtent("367 24");
+      notcMessageHud_Edit.setText(notcMessageHud_Edit.zCurrentMsg);
+   }
 
    Canvas.pushDialog(%this);
 
-   %this.setVisible(true);
+   //%this.setVisible(true);
    deactivateKeyboard();
-   MessageHud_Edit.makeFirstResponder(true);
+   notcMessageHud_Edit.makeFirstResponder(true);
 }
 
 //------------------------------------------------------------------------------
 
 function MessageHud::close(%this)
 {
-   if(!%this.isVisible())
-      return;
+   if(%this.isTeamMsg)
+      notcMessageHud_Edit.zCurrentTeamMsg = notcMessageHud_Edit.getText();
+   else
+      notcMessageHud_Edit.zCurrentMsg = notcMessageHud_Edit.getText();
 
    Canvas.popDialog(%this);
-   %this.setVisible(false);
+   //%this.setVisible(false);
    if ( $enableDirectInput )
       activateKeyboard();
 }
@@ -350,7 +359,7 @@ function MessageHud::close(%this)
 
 function MessageHud::toggleState(%this)
 {
-   if(%this.isVisible())
+   if(%this.isAwake())
       %this.close();
    else
       %this.open();
@@ -358,26 +367,26 @@ function MessageHud::toggleState(%this)
 
 //------------------------------------------------------------------------------
 
-function MessageHud_Edit::onEscape(%this)
+function notcMessageHud_Edit::onEscape(%this)
 {
    MessageHud.close();
 }
 
 //------------------------------------------------------------------------------
 
-function MessageHud_Edit::eval(%this)
+function notcMessageHud_Edit::eval(%this)
 {
    %text = collapseEscape(trim(%this.getValue()));
 
    if(%text !$= "")
    {
-      if(getWord(%text, 0) $= "CHAT.TEAM>")
-         commandToServer('teamMessageSent', getWords(%text,1));
-      else if(getWord(%text, 0) $= "CHAT.GLOBAL>")
-         commandToServer('messageSent', getWords(%text,1));
+      if(MessageHud.isTeamMsg)
+         commandToServer('teamMessageSent', %text);
+      else
+         commandToServer('messageSent', %text);
    }
    
-   MessageHud_Edit.setValue("");
+   notcMessageHud_Edit.setValue("");
 
    MessageHud.close();
 }
