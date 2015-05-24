@@ -27,6 +27,7 @@ class GuiDiscTargetsHud : public GuiControl, public virtual ITickable
    StringTableEntry mText;
    Point2I mTextOffset;
 
+   S32 mScreenRadius;
    U32 mCurrTick;
 
 protected:
@@ -124,6 +125,10 @@ void GuiDiscTargetsHud::onRender( Point2I, const RectI &updateRect)
    GameBase * control = dynamic_cast<GameBase*>(conn->getControlObject());
    if (!control) return;
 
+	S32 w = updateRect.extent.x;
+	S32 h = updateRect.extent.y;
+	mScreenRadius = ((w > h) ? h : w)/2;
+
 	control->disableCollision();
 
 	SimSet* hudInfoSet = Sim::getClientHudInfoSet();
@@ -186,6 +191,10 @@ void GuiDiscTargetsHud::drawTarget(GameBase* control, HudInfo* hudInfo)
 
       S32 offset = s/4;
       if( offset < 6 ) offset = 6;
+
+      S32 age = hudInfo->getAge();
+      if(age < 5)
+         offset = ((mScreenRadius-offset)/5)*(5-age);
 
       F32 ulOffset = 0.5f - GFX->getFillConventionOffset();
       Point2F upperLeft(-offset,-offset);
