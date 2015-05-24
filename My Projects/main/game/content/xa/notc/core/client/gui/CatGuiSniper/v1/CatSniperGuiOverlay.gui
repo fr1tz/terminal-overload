@@ -56,7 +56,7 @@
       minExtent = "8 2";
       horizSizing = "relative";
       vertSizing = "relative";
-      profile = "notcCatSniperGuiFeedOverlayProfile";
+      profile = "GuiDefaultProfile";
       visible = "1";
       active = "1";
       tooltipProfile = "GuiToolTipProfile";
@@ -73,7 +73,7 @@
       fadeInEase = "0 1 -1 -1";
       fadeOutEase = "0 0 -1 -1";
       done = "1";
-      bitmap = "content/xa/notc/core/client/gui/CatHud/v1/transparent.png";
+      bitmap = "content/xa/notc/core/client/gui/CatHud/v1/graphics/transparent.png";
       wrap = "0";
       position = "0 0";
       extent = "640 480";
