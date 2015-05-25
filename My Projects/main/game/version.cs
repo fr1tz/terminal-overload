@@ -1,7 +1,7 @@
-$GameVersionString = "0.7.0-dev2+dev";
+$GameVersionString = "0.7.0";
 
 // Version Type. Either "dev", "testing" or "public"
-$GameVersionType = "dev";
+$GameVersionType = "public";
 
 // Version Feedback URL (Optional, without "http://").
 $GameVersionFeedbackURL = "";
