@@ -555,6 +555,7 @@ void TacticalZone::computePolys()
 	//mBorderPolys[5].addCoat(coat);
 	//mTerrainPolys.addCoat(coat);
 	mTerrainPolys.addTexture(4);
+	mInteriorPolys.addTexture(4);
 
    this->createRenderDataTriangles(&mInteriorPolys, &mRenderData[Other]);
    this->createRenderDataTriangles(&mTerrainPolys, &mRenderData[Terrain]);
