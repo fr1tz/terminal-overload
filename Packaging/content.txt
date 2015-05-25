@@ -2,9 +2,11 @@ fonts/
 xa/rotc_hack/
 xa/notc/core/
 xa/notc/mis/eth1/
+xa/notc/mis/eth2/
 xa/notc/mis/eth4/
 xa/notc/mis/eth3/
 xa/notc/mis/te1/
+xa/notc/mis/te2/
 xa/notc/mis/ctf1/
 xa/notc/mis/dm1/shapes/
 xa/notc/mis/eth5/
