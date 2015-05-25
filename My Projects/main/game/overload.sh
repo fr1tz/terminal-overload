@@ -38,7 +38,7 @@ echo
 # On some systems these are not part of the user's default $PATH
 PATH="/sbin:/usr/sbin:$PATH" 
 
-CMDS="dirname grep ldconfig objdump test"
+CMDS="readlink dirname grep ldconfig objdump test"
 echo "Checking for commands required by this script..."
 for CMD in $CMDS
 do
@@ -76,10 +76,11 @@ test "x$MISSING_LIBS" = "x" || {
 	exit 1
 }
 
+PATH="$PATHBAK"
+GAME_DIR="$(dirname "$(readlink -f "$THIS")")"
+echo
+echo "Game directory:" "$GAME_DIR"
 echo "Starting game..."
 
-PATH="$PATHBAK"
-
-cd "$(dirname "$THIS")" && 
-export LD_LIBRARY_PATH="$(pwd)/lib:$LD_LIBRARY_PATH" &&
-./lib/ld-linux.so.2 ./overload $GAME_ARGS || help_reminder
+export LD_LIBRARY_PATH="$GAME_DIR/lib:$LD_LIBRARY_PATH" &&
+cd "$GAME_DIR" && ./lib/ld-linux.so.2 ./overload $GAME_ARGS || help_reminder
