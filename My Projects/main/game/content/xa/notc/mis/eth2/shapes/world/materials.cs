@@ -6,7 +6,7 @@ singleton Material(notc_mis_eth2_shapes_world_mat1)
    diffuseColor[0] = "0.00784314 0.533333 0.996078 1";
    specular[0] = "0.00784314 0.533333 0.996078 1";
    specularPower[0] = "25";
-   translucentBlendOp = "AddAlpha";
+   translucentBlendOp = "None";
    diffuseColor[1] = "0.00784314 0.972549 0.996078 0";
    glow[1] = "1";
    emissive[1] = "1";
@@ -25,6 +25,9 @@ singleton Material(notc_mis_eth2_shapes_world_mat1)
    effectColor[0] = "InvisibleBlack";
    rotPivotOffset[0] = "-0.53 -0.57";
    detailScale[1] = "24 24";
+   showDust = "1";
+   footstepSoundId = "2";
+   impactSoundId = "2";
 };
 
 singleton Material(notc_mis_eth2_shapes_world_mat2)
