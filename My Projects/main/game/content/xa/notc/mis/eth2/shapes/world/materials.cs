@@ -33,10 +33,10 @@ singleton Material(notc_mis_eth2_shapes_world_mat1)
 singleton Material(notc_mis_eth2_shapes_world_mat2)
 {
    mapTo = "notc_mis_eth2_shapes_world_mat2";
-   diffuseColor[0] = "0.2 0.976471 0.996078 0.091";
+   diffuseColor[0] = "0.00784314 0.996078 0.972549 0.12";
    specular[0] = "0.5 0.5 0.5 1";
    specularPower[0] = "50";
-   translucentBlendOp = "AddAlpha";
+   translucentBlendOp = "LerpAlpha";
    diffuseColor[1] = "0.027451 0.470588 0.00392157 0";
    glow[0] = "0";
    emissive[0] = "1";
