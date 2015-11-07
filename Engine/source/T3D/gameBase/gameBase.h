@@ -24,6 +24,7 @@
 class NetConnection;
 class ProcessList;
 class GameBase;
+class ServerSideController;
 struct Move;
 
 //----------------------------------------------------------------------------
@@ -182,6 +183,7 @@ class GameBase : public SceneObject
    
    // Control interface
    GameConnection* mControllingClient;
+   ServerSideController* mServerSideController; 
 
    U32 mGhostCleanupCountdown; ///< Only used on server (obviously)
 
@@ -241,6 +243,7 @@ public:
    bool onAdd();
    void onRemove();
    void inspectPostApply();
+   void onDeleteNotify(SimObject* object);
    static void initPersistFields();
    static void consoleInit();
 
@@ -399,6 +402,12 @@ public:
    virtual GameBase * getControllingObject() { return NULL; }
    virtual GameBase * getControlObject() { return NULL; }
    virtual void setControlObject( GameBase * ) { }
+   /// @}
+
+   /// @name server-side controller (added for VITC)
+   /// @{
+   ServerSideController* getServerSideController() { return mServerSideController; }
+   void setServerSideController(ServerSideController* ssc);
    /// @}
 
    /// @name Team ID (added for NOTC)

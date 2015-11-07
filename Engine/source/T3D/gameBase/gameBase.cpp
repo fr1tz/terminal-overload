@@ -12,6 +12,7 @@
 #include "math/mathIO.h"
 #include "T3D/gameBase/moveManager.h"
 #include "T3D/gameBase/gameProcess.h"
+#include "VITC/serverSideControl.h"
 
 #ifdef TORQUE_DEBUG_NET_MOVES
 #include "T3D/aiConnection.h"
@@ -222,6 +223,7 @@ ConsoleDocClass( GameBase,
 GameBase::GameBase()
 : mDataBlock( NULL ),  
   mControllingClient( NULL ),
+  mServerSideController( NULL ),
   mCurrentWaterObject( NULL )
 {
    mNetFlags.set(Ghostable);
@@ -310,6 +312,14 @@ void GameBase::inspectPostApply()
 {
    Parent::inspectPostApply();
    setMaskBits(ExtendedInfoMask);
+}
+
+void GameBase::onDeleteNotify(SimObject* object)
+{
+	if(object == mServerSideController)
+		mServerSideController = NULL;
+
+	Parent::onDeleteNotify(object);
 }
 
 //----------------------------------------------------------------------------
@@ -488,6 +498,15 @@ void GameBase::scriptOnRemove()
    // the object state is still valid.
    if (!isGhost() && mDataBlock)
       mDataBlock->onRemove_callback( this );
+}
+
+//----------------------------------------------------------------------------
+
+void GameBase::setServerSideController(ServerSideController* ssc)
+{
+	mServerSideController = ssc;
+	if(mServerSideController)
+		this->deleteNotify(mServerSideController);
 }
 
 //----------------------------------------------------------------------------
@@ -730,6 +749,21 @@ DefineEngineMethod( GameBase, applyRadialImpulse, void, ( Point3F origin, F32 ra
    "@note Not all objects that derrive from GameBase have this defined.\n")
 {
    object->applyRadialImpulse( origin, radius, magnitude );
+}
+
+//----------------------------------------------------------------------------
+
+DefineEngineMethod( GameBase, useServerSideController, bool, ( ServerSideController* ssc ),,
+	"@brief Let a server-side controller object generate "
+	"GameConnection moves for this.\n\n"
+	"@param ssc The ServerSideController\n")
+{
+	if(ssc) 
+	{
+		object->setServerSideController(ssc);
+		return true;
+	}
+	return false;
 }
 
 DefineEngineMethod( GameBase, setTeamId, void, ( S32 teamId ),,

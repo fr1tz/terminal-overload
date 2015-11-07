@@ -28,6 +28,7 @@
 #include "gfx/gfxDrawUtil.h"
 #include "materials/materialDefinition.h"
 #include "NOTC/tacticalzone.h"
+#include "VITC/serverSideControl.h"
 
 
 namespace {
@@ -806,6 +807,14 @@ void Vehicle::processTick(const Move* move)
    PROFILE_SCOPE( Vehicle_ProcessTick );
 
    Parent::processTick(move);
+
+   // If we don't have a move, we might have
+   // a server-side controller that could give us one
+   if(!move && isServerObject() && this->getServerSideController())
+   {
+      Move sscMove = this->getServerSideController()->getMove(this);
+      move = &sscMove;
+   }
 
    // Warp to catch up to server
    if (mDelta.warpCount < mDelta.warpTicks)

@@ -38,6 +38,7 @@
 #include "T3D/decal/decalData.h"
 #include "materials/baseMatInstance.h"
 #include "NOTC/tacticalzone.h"
+#include "VITC/serverSideControl.h"
 
 #ifdef TORQUE_EXTENDED_MOVE
    #include "T3D/gameBase/extended/extendedMove.h"
@@ -2492,6 +2493,14 @@ void Player::processTick(const Move* move)
    Move aiMove;
    if (!move && isServerObject() && getAIMove(&aiMove))
       move = &aiMove;
+
+   // If we still don't have a move, we might have
+   // a server-side controller that could give us one
+   if(!move && isServerObject() && this->getServerSideController())
+   {
+      Move sscMove = this->getServerSideController()->getMove(this);
+      move = &sscMove;
+   }
 
    // Manage the control object and filter moves for the player
    Move pMove,cMove;
