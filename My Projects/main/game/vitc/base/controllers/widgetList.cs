@@ -32,11 +32,15 @@ function WidgetList::getString(%this, %id)
    return "";
 }
 
-function WidgetList::addWidget(%this, %id, %type, %state, %unitName)
+function WidgetList::addWidget(%this, %widget, %state)
 {
    %dirty = false;
+   %id = %widget.getId();
+   %type = %widget.getType();
+   %gridSizeN = %widget.getGridSizeN();
+   %unitName = %widget.unitObj.getShapeName();
    %index = %this.array.getIndexFromKey(%id);
-   %newString = %id SPC %type SPC %state SPC %unitName;
+   %newString = %id SPC %type SPC %gridSizeN SPC %state SPC %unitName;
    if(%index == -1)
    {
       %this.array.push_back(%id, %newString);
@@ -54,9 +58,10 @@ function WidgetList::addWidget(%this, %id, %type, %state, %unitName)
    return %dirty;
 }
 
-function WidgetList::removeWidget(%this, %id)
+function WidgetList::removeWidget(%this, %widget)
 {
    %dirty = false;
+   %id = %widget.getId();
    %index = %this.array.getIndexFromKey(%id);
    if(%index != -1)
    {
@@ -73,7 +78,7 @@ function WidgetList::setWidgetState(%this, %id, %state)
    if(%index != -1)
    {
       %oldString = %this.array.getValue(%index);
-      %newString = setWord(%oldString, 2, %state);
+      %newString = setWord(%oldString, 3, %state);
       if(%newString !$= %oldString)
       {
          %this.array.setValue(%index, %newString);

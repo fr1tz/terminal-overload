@@ -7,7 +7,6 @@ function executeBaseServerScripts()
    exec("./audioDescriptions.cs");
    exec("./bleedfx.cs");
    exec("./commands.cs");
-   exec("./controller.cs");
    exec("./deathCamera.cs");
    exec("./game.cs");
    exec("./gameCore.cs");

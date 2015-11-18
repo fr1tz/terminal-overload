@@ -374,6 +374,8 @@ datablock WheeledVehicleData(Wheels1)
 function Wheels1::onAdd(%this, %obj)
 {
    VehicleData::onAdd(%this, %obj);  // NOTE: we're skipping WheeledVehicleData
+
+   %obj.setShapeName("Tank" @ %obj.getId());
    
    for(%i = 0; %i <= 1; %i++)
    {
@@ -393,7 +395,7 @@ function Wheels1::onAdd(%this, %obj)
 
    %obj.ssc = new SimpleServerSideController();
    %obj.useServerSideController(%obj.ssc);
-   %obj.speedWidget = createWidget(%obj, 1, "Wheels1SpeedWidget");
+   %obj.speedWidget = createWidget(%obj, "Wheels1SpeedWidget");
    
    $x = %obj;
 }
@@ -406,9 +408,14 @@ function Wheels1::onRemove(%this, %obj)
    %obj.speedWidget.delete();
 }
 
-function Wheels1SpeedWidget::getGridSize(%this)
+function Wheels1SpeedWidget::getType(%this)
 {
-   return "3 3";	
+   return 1;	
+}
+
+function Wheels1SpeedWidget::getGridSizeN(%this)
+{
+   return "4 4";	
 }
 
 function Wheels1SpeedWidget::update(%this, %args)

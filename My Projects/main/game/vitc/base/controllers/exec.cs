@@ -3,6 +3,7 @@
 
 function executeControllersServerScripts()
 {
+   exec("./controller.cs");
    exec("./widgetGrid.cs");
    exec("./widgetList.cs");
    exec("./smartphoneController.cs");

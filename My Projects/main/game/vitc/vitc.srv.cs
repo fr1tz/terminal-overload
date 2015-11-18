@@ -230,7 +230,7 @@ function createServer(%gameType, %args)
    
    $Server::MissionType = $Server::MissionType SPC %modeVariant;
    
-   %level = "content/xa/notc/mis/" @ %map @ "/mission.mis";
+   %level = "content/vitc/mis/" @ %map @ "/mission.mis";
 
    // Make sure our level name is relative so that it can send
    // across the network correctly
