@@ -1,13 +1,14 @@
 // Copyright information can be found in the file named COPYING
 // located in the root directory of this distribution.
 
-function createWidget(%unitObj, %class)
+function createWidget(%moduleObj, %class)
 {
    %widget = new ScriptObject() {
       class = %class;
       superClass = "Widget";
-      unitObj = %unitObj;
+      moduleObj = %moduleObj;
       controller = "";
+      numPieces = 0;
    };
    Game.widgets.add(%widget);
    
@@ -40,6 +41,8 @@ function Widget::onAdd(%this)
 function Widget::onRemove(%this)
 {
    echo("Widget::onRemove()");
+   if(isObject(%this.controller))
+      %this.controller.removeWidget(%this);
    for(%idx = ControllerGroup.getCount()-1; %idx >= 0; %idx--)
    {
       %controller = ControllerGroup.getObject(%idx);
@@ -47,3 +50,7 @@ function Widget::onRemove(%this)
    }
 }
 
+function Widget::getDescription(%this)
+{
+   return "";
+}

@@ -103,6 +103,7 @@ function WidgetGrid::findFree(%this, %sizeX, %sizeY)
 function WidgetGrid::rebuildCells(%this)
 {
    %n = %this.sizeX * %this.sizeY;
+   %this.cells = "";
    while(%n-- >= 0)
       %this.cells = %this.cells @ "0 ";	
    for(%idx = %this.pieces.getCount()-1; %idx >= 0; %idx--)
@@ -172,7 +173,8 @@ function WidgetGrid::addPiece(%this, %widget, %gridPos, %orientation)
    if(%gridPiece $= "")
    {
       %gridPiece = createWidgetGridPiece(%widget);
-      %this.pieces.add(%gridPiece);	
+      %this.pieces.add(%gridPiece);
+      %widget.numPieces++;
    }
 
    %gridPiece.gridPosX = %gridPosX;
@@ -182,3 +184,19 @@ function WidgetGrid::addPiece(%this, %widget, %gridPos, %orientation)
    %this.rebuildCells();
    return %gridPiece;
 }
+
+function WidgetGrid::removePiece(%this, %widget)
+{
+   echo("WidgetGrid::removePiece()" SPC %widget);
+   for(%idx = %this.pieces.getCount()-1; %idx >= 0; %idx--)
+   {
+      %gp = %this.pieces.getObject(%idx);
+	  if(%gp.widget == %widget)
+	  {
+         %gp.delete();
+         %widget.numPieces--;
+	  }
+   }   
+   %this.rebuildCells();   
+}
+

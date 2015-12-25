@@ -26,10 +26,12 @@ function GameCoreBase::prepareMissionLoad(%game)
    
    requiredContent_addFromDataBlocks();
    requiredContent_addFromPattern("content/xa/notc/core/*");
+   requiredContent_addFromPattern("content/vitc/shapes/*");
    requiredContent_addFromPattern("content/xa/rotc_hack/*");
    requiredContent_addFromPattern(filePath($Server::MissionFile)@"/*");
    
    %game.zMaterialPaths = "content/xa/notc/core" SPC
+      "content/vitc/shapes" SPC
       "content/xa/rotc_hack" SPC
       filePath($Server::MissionFile);
       

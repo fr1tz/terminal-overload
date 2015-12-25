@@ -38,9 +38,11 @@ function WidgetList::addWidget(%this, %widget, %state)
    %id = %widget.getId();
    %type = %widget.getType();
    %gridSizeN = %widget.getGridSizeN();
-   %unitName = %widget.unitObj.getShapeName();
+   %unitName = %widget.moduleObj.getShapeName();
+   %widgetDesc = %widget.getDescription();
+   %desc = strreplace(%unitName SPC %widgetDesc, " ", "_");
    %index = %this.array.getIndexFromKey(%id);
-   %newString = %id SPC %type SPC %gridSizeN SPC %state SPC %unitName;
+   %newString = %id SPC %type SPC %gridSizeN SPC %state SPC %desc;
    if(%index == -1)
    {
       %this.array.push_back(%id, %newString);

@@ -17,6 +17,8 @@ function SmartphoneController::onAdd(%this)
 {
    echo("SmartphoneController::onAdd()");
    %this.widgetList = createWidgetList();
+   %this.initGrid(4, 2, 3);
+   %this.initGrid(3, 4, 6);
    %this.initGrid(2, 8, 12);
    %this.initGrid(1, 8, 12);
    %this.initGrid(0, 8, 12);
@@ -24,9 +26,7 @@ function SmartphoneController::onAdd(%this)
    {
       %widget = Game.widgets.getObject(%idx);
       %state = "free";
-      if(isObject(%widget.controller))
-         %state = "taken";
-      if(true) // TODO: check controller team id against unit obj team id
+      if(!isObject(%widget.controller))
          %this.addToWidgetList(%widget, %state);
    }
 }
@@ -42,14 +42,14 @@ function SmartphoneController::onRemove(%this)
 
 function SmartphoneController::processMsg(%this, %msg)
 {
-   %this.sendMsg("ECHO" SPC %msg);
+   //%this.sendMsg("ECHO" SPC %msg);
 
-   %cmd = getWord(%msg, 0);
-   if(%cmd $= "REQUEST_WIDGET")
+   %msgType = getWord(%msg, 0);
+   if(%msgType $= "WIDGET_ADD_REQUEST")
    {
       if(getWordCount(%msg) < 3)
 	  {
-	       %this.sendMsg("DEBUG REQUEST_WIDGET Malformed request");
+	       %this.sendMsg("DEBUG WIDGET_ADD_REQUEST Malformed request");
 		   return;
       }
 	
@@ -59,7 +59,7 @@ function SmartphoneController::processMsg(%this, %msg)
 	  %widget = findWidget(%widgetId);
 	  if(!isObject(%widget))
 	  {
-	    %this.sendMsg("DEBUG REQUEST_WIDGET No widget with ID" SPC %widgetId);	
+	    %this.sendMsg("DEBUG WIDGET_ADD_REQUEST No widget with ID" SPC %widgetId);	
 		return;
       }
 	
@@ -77,7 +77,7 @@ function SmartphoneController::processMsg(%this, %msg)
            %gridSize = getWord(%gridSizeN, 0) SPC getWord(%gridSizeN, 1);	
 		if(!%this.isFree(%gridNo, %gridPos, %gridSize, %widgetId))
 		{
-		   %this.sendMsg("DEBUG REQUEST_WIDGET Specified area not free on grid" SPC %gridNo);		
+		   %this.sendMsg("DEBUG WIDGET_ADD_REQUEST Specified area not free on grid" SPC %gridNo);		
 		   return;
 		}
 	  }
@@ -97,19 +97,48 @@ function SmartphoneController::processMsg(%this, %msg)
 
 		if(%gridPos $= "")
 		{
-	       %this.sendMsg("DEBUG REQUEST_WIDGET No free space on grid" SPC %gridNo);	
+	       %this.sendMsg("DEBUG WIDGET_ADD_REQUEST No free space on grid" SPC %gridNo);	
 		   return;			
 		}
 	  }
 	
 	  if(!%this.addWidget(%widget, %gridNo, %gridPos, %orientation))
-	     %this.sendMsg("DEBUG REQUEST_WIDGET Internal server error");		
+	     %this.sendMsg("DEBUG WIDGET_ADD_REQUEST Internal server error");		
    }
-   else if(%cmd $= "UPDATE_WIDGET")
+   else if(%msgType $= "WIDGET_REMOVE_REQUEST")
+   {
+      if(getWordCount(%msg) < 2)
+	  {
+	       %this.sendMsg("DEBUG WIDGET_REMOVE_REQUEST Malformed request");
+		   return;
+      }
+      
+	  %widgetId = getWord(%msg, 1);
+	  %gridNo = "";
+	  if(getWordCount(%msg) >= 3)
+	     %gridNo = getWord(%msg, 2);
+	
+	  %widget = findWidget(%widgetId);
+	  if(!isObject(%widget))
+	  {
+	    %this.sendMsg("DEBUG WIDGET_REMOVE_REQUEST No widget with ID" SPC %widgetId);	
+		return;
+      }     
+      
+      if(%widget.controller != %this)
+	  {
+	    %this.sendMsg("DEBUG WIDGET_REMOVE_REQUEST Widget" SPC %widgetId SPC "not under your control");	
+		return;
+      }         	  
+      
+	  if(!%this.removeWidget(%widget, %gridNo))
+	     %this.sendMsg("DEBUG WIDGET_REMOVE_REQUEST Internal server error");      
+   }
+   else if(%msgType $= "WIDGET_UPDATE")
    {
       if(getWordCount(%msg) < 3)
 	  {
-	       %this.sendMsg("DEBUG UPDATE_WIDGET Malformed UPDATE_WIDGET request");
+	       %this.sendMsg("DEBUG WIDGET_UPDATE Malformed WIDGET_UPDATE request");
 		   return;
       }
 	
@@ -117,7 +146,7 @@ function SmartphoneController::processMsg(%this, %msg)
 	  %widget = findWidget(%widgetId);
 	  if(!isObject(%widget))
 	  {
-	    %this.sendMsg("DEBUG UPDATE_WIDGET No widget with ID" SPC %widgetId);	
+	    %this.sendMsg("DEBUG WIDGET_UPDATE No widget with ID" SPC %widgetId);	
 		return;
       }	
 	  %args = getWords(%msg, 2, -1);
@@ -205,8 +234,52 @@ function SmartphoneController::addWidget(%this, %widget, %gridNo, %gridPos, %ori
    %widgetGridPiece = %this.widgetGrid[%gridNo].addPiece(%widget, %gridPos, %orientation);
    if(!isObject(%widgetGridPiece))
       return false;
+   if(%widget.controller != %this)
+   {
+   	  if(isObject(%widget.controller))
+   	     %widget.controller.removeWidget(%widget);
+      %widget.controller = %this;
+      if(%widget.isMethod("onNewController"))
+         %widget.onNewController();
+      for(%idx = ControllerGroup.getCount()-1; %idx >= 0; %idx--)
+      {
+	     %controller = ControllerGroup.getObject(%idx);
+	     if(%controller != %this)
+	        %controller.removeFromWidgetList(%widget);
+      }     
+   }
    %this.sendMsg("WIDGET add" SPC %widget.getId() SPC %widget.getType() SPC
        %widget.getGridSizeN() SPC %gridNo SPC %gridPos SPC %orientation);	
+   return true;
+}
+
+function SmartphoneController::removeWidget(%this, %widget, %gridNo)
+{
+   echo("SmartphoneController::removeWidget()" SPC %widget SPC %gridNo);
+   if(%gridNo $= "")
+   {
+      for(%grid = 0; %grid < 5; %grid++)
+         if(isObject(%this.widgetGrid[%grid]))
+            %this.widgetGrid[%grid].removePiece(%widget);
+   }
+   else
+   {
+      if(!isObject(%this.widgetGrid[%gridNo]))
+         return false;   	   
+      %this.widgetGrid[%gridNo].removePiece(%widget);     
+   }
+   if(%widget.numPieces == 0)
+   {
+      %widget.controller = "";
+      for(%idx = ControllerGroup.getCount()-1; %idx >= 0; %idx--)
+      {
+	     %controller = ControllerGroup.getObject(%idx);
+	     %controller.addToWidgetList(%widget, "free");
+      }      
+   }
+   if(%gridNo $= "")
+      %gridNo = "*";  
+   %this.sendMsg("WIDGET remove" SPC %widget.getId() SPC %gridNo);	
    return true;
 }
 
