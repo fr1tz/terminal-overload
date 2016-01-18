@@ -13,6 +13,7 @@
 #include "T3D/fx/cameraFXMgr.h"
 #include "T3D/gameBase/gameConnection.h"
 #include "T3D/physics/physicsBody.h"
+#include "VITC/serverSideControl.h"
 
 //----------------------------------------------------------------------------
 
@@ -552,6 +553,14 @@ void TurretShape::updateDamageLevel()
 
 void TurretShape::processTick(const Move* move)
 {
+   // If we don't have a move, we might have
+   // a server-side controller that could give us one.
+   if (!move && isServerObject() && this->getServerSideController())
+   {
+      Move sscMove = this->getServerSideController()->getMove(this);
+      move = &sscMove;
+   }
+
    // Image Triggers
    if (getAllowManualFire() && move && mDamageState == Enabled)
    {
