@@ -16,16 +16,23 @@ IMPLEMENT_CONOBJECT(SimpleServerSideController);
 
 SimpleServerSideController::SimpleServerSideController()
 {
-
+	mResetMove = false;
 }
 
 Move SimpleServerSideController::getMove(ShapeBase* obj)
 {
-	return mMove;
+	Move ret = mMove;
+	if (mResetMove)
+	{
+		Move empty_move;
+		mMove = empty_move;
+	}
+	return ret;
 }
 
 void SimpleServerSideController::initPersistFields()
 {
+   addField("reset",   TypeBool, Offset(mResetMove, SimpleServerSideController));
    addField("x",       TypeF32,  Offset(mMove.x, SimpleServerSideController));
    addField("y",       TypeF32,  Offset(mMove.y, SimpleServerSideController));
    addField("z",       TypeF32,  Offset(mMove.z, SimpleServerSideController));

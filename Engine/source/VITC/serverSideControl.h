@@ -33,6 +33,7 @@ class SimpleServerSideController : public ServerSideController
 	typedef ServerSideController Parent;
 
 	Move mMove;
+	bool mResetMove;
 
 public:
 	SimpleServerSideController();
