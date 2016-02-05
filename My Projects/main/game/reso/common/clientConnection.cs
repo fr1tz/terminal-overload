@@ -1,0 +1,275 @@
+// Copyright information can be found in the file named COPYING
+// located in the root directory of this distribution.
+
+
+//-----------------------------------------------------------------------------
+// This script function is called before a client connection
+// is accepted.  Returning "" will accept the connection,
+// anything else will be sent back as an error to the client.
+// All the connect args are passed also to onConnectRequest
+//
+function GameConnection::onConnectRequest( %client, %netAddress,
+   %arg0, %arg1, %arg2, %arg3, %arg4, %arg5, %arg6, %arg7,
+   %arg8, %arg9, %arg10, %arg11, %arg12, %arg13, %arg14, %arg15 )
+{
+	%args = "";
+   for(%i = 0; %i < 16; %i++)
+      %args = %args SPC %arg[%i];
+
+   echo("Connect request from: " @ %netAddress SPC "args:" SPC %args);
+   
+   if($Server::PlayerCount >= $pref::Server::MaxPlayers)
+      return "CR_SERVERFULL";
+   return "";
+}
+
+//-----------------------------------------------------------------------------
+// This script function is the first called on a client accept
+//
+function GameConnection::onConnect( %client,
+   %arg0, %arg1, %arg2, %arg3, %arg4, %arg5, %arg6, %arg7,
+   %arg8, %arg9, %arg10, %arg11, %arg12, %arg13, %arg14, %arg15 )
+{
+   %name = %arg0;
+   %authAlgs = %arg1;
+
+   // Send down the connection error info, the client is
+   // responsible for displaying this message if a connection
+   // error occures.
+   messageClient(%client,'MsgConnectionError',"",$Pref::Server::ConnectionError);
+
+   %client.authAlg = "";
+   %client.authStage = 0;
+   if(%authAlgs $= "")
+   {
+      %client.authAlg = "pseudo";
+   }
+   else
+   {
+      for(%i = 0; %i < getWordCount(%authAlgs); %i++)
+      {
+         %alg = getWord(%authAlgs, %i);
+         if(%alg $= "aims/playerdb/auth.1")
+         {
+            %client.authAlg = %alg;
+            break;
+         }
+      }
+   }
+
+   if(%client.authAlg $= "pseudo")
+   {
+      %client.playerName = "/tmp/" @ %name;
+      %client.onAuthComplete();
+   }
+   else if(%client.authAlg $= "aims/playerdb/auth.1")
+   {
+      // Send authentication challenge
+      %client.authServerTime = getSimTime(); //getTime();
+      %client.authServerRand = getRandom(999999);
+      commandToClient(%client, 'AuthChallenge',
+         %client.authAlg,
+         $Pref::Server::Name,
+         %client.authServerTime,
+         %client.authServerRand
+      );
+      %client.authStage = 1;
+      %timeoutMsg = "Authentication time exceeded.";
+      %client.zAuthTimeoutThread = %client.schedule(10000, "delete", %timeoutMsg);
+   }
+   else
+   {
+      %client.schedule(0, "delete", "Unable to agree on authentication algorithm");
+   }
+}
+
+function GameConnection::onAuthComplete(%client)
+{
+   if(%client.zAuthTimeoutThread !$= "")
+   {
+      cancel(%client.zAuthTimeoutThread);
+      %client.zAuthTimeoutThread = "";
+   }
+
+   // Send mission information to the client
+   sendLoadInfoToClient( %client );
+
+   // Simulated client lag for testing...
+   // %client.setSimulatedNetParams(0.1, 30);
+
+   // Get the client's unique id:
+   // %authInfo = %client.getAuthInfo();
+   // %client.guid = getField( %authInfo, 3 );
+   %client.guid = 0;
+   addToServerGuidList( %client.guid );
+
+   // Set admin status
+   if (%client.getAddress() $= "local") {
+      %client.isAdmin = true;
+      %client.isSuperAdmin = true;
+   }
+   else {
+      %client.isAdmin = false;
+      %client.isSuperAdmin = false;
+   }
+
+   // Save client preferences on the connection object for later use.
+   %client.gender = "Male";
+   %client.armor = "Light";
+   %client.race = "Human";
+   %client.skin = addTaggedString( "base" );
+   %client.team = "";
+   %client.score = 0;
+
+   //
+   echo("CADD: " @ %client @ " " @ %client.getAddress());
+
+   // Inform the client of all the other clients
+   %count = ClientGroup.getCount();
+   for (%cl = 0; %cl < %count; %cl++) {
+      %other = ClientGroup.getObject(%cl);
+      if ((%other != %client)) {
+         // These should be "silent" versions of these messages...
+         messageClient(%client, 'MsgClientJoin', "",
+               %other.playerName,
+               %other,
+               %other.sendGuid,
+               %other.team,
+               %other.score,
+               %other.isAIControlled(),
+               %other.isAdmin,
+               %other.isSuperAdmin);
+      }
+   }
+
+   // Inform all the other clients of the new guy
+   messageAllExcept(%client, -1, 'MsgClientJoin', '\c1%1 joined the game.',
+      %client.playerName,
+      %client,
+      %client.sendGuid,
+      %client.team,
+      %client.score,
+      %client.isAiControlled(),
+      %client.isAdmin,
+      %client.isSuperAdmin);
+
+   // Preload
+   commandToClient(%client, 'InitPreload');
+   if(isObject($Server::RequiredContent))
+   {
+      %s = $Server::RequiredContent.count();
+      for(%i = 0; %i < %s; %i++)
+      {
+         %file = $Server::RequiredContent.getKey(%i);
+         %val = $Server::RequiredContent.getValue(%i);
+         %crc = getWord(%val, 0);
+         %size = getWord(%val, 1);
+         commandToClient(%client, 'CheckFile', %file, %size, %crc);
+      }
+   }
+   commandToClient(%client, 'FinishPreload');
+}
+
+//-----------------------------------------------------------------------------
+// A player's name could be obtained from the auth server, but for
+// now we use the one passed from the client.
+// %realName = getField( %authInfo, 0 );
+//
+function GameConnection::setPlayerName(%client,%name)
+{
+   %client.sendGuid = 0;
+
+   // Minimum length requirements
+   %name = trim( strToPlayerName( %name ) );
+   if ( strlen( %name ) < 3 )
+      %name = "Poser";
+
+   // Make sure the alias is unique, we'll hit something eventually
+   if (!isNameUnique(%name))
+   {
+      %isUnique = false;
+      for (%suffix = 1; !%isUnique; %suffix++)  {
+         %nameTry = %name @ "." @ %suffix;
+         %isUnique = isNameUnique(%nameTry);
+      }
+      %name = %nameTry;
+   }
+
+   // Tag the name with the "smurf" color:
+   %client.nameBase = %name;
+   %client.playerName = addTaggedString("\cp\c8" @ %name @ "\co");
+}
+
+function isNameUnique(%name)
+{
+   %count = ClientGroup.getCount();
+   for ( %i = 0; %i < %count; %i++ )
+   {
+      %test = ClientGroup.getObject( %i );
+      %rawName = stripChars( detag( getTaggedString( %test.playerName ) ), "\cp\co\c6\c7\c8\c9" );
+      if ( strcmp( %name, %rawName ) == 0 )
+         return false;
+   }
+   return true;
+}
+
+//-----------------------------------------------------------------------------
+// This function is called when a client drops for any reason
+//
+function GameConnection::onDrop(%client, %reason)
+{
+   %client.onClientLeaveGame();
+   
+   removeFromServerGuidList( %client.guid );
+   messageAllExcept(%client, -1, 'MsgClientDrop', '\c1%1 has left the game.', %client.playerName, %client);
+
+   removeTaggedString(%client.playerName);
+   echo("CDROP: " @ %client @ " " @ %client.getAddress());
+   
+	if(%client.countedAsPlayer)
+      $Server::PlayerCount--;
+   
+   // Reset the server if everyone has left the game
+   if( $Server::PlayerCount == 0 && $Server::Dedicated)
+      schedule(0, 0, "resetServerDefaults");
+}
+
+
+//-----------------------------------------------------------------------------
+
+function GameConnection::startMission(%this)
+{
+   // Inform the client the mission starting
+   commandToClient(%this, 'MissionStart', $missionSequence);
+}
+
+
+function GameConnection::endMission(%this)
+{
+   // Inform the client the mission is done.  Note that if this is
+   // called as part of the server destruction routine, the client will
+   // actually never see this comment since the client connection will
+   // be destroyed before another round of command processing occurs.
+   // In this case, the client will only see the disconnect from the server
+   // and should manually trigger a mission cleanup.
+   commandToClient(%this, 'MissionEnd', $missionSequence);
+}
+
+
+//--------------------------------------------------------------------------
+// Sync the clock on the client.
+
+function GameConnection::syncClock(%client, %time)
+{
+   commandToClient(%client, 'syncClock', %time);
+}
+
+
+//--------------------------------------------------------------------------
+// Update all the clients with the new score
+
+function GameConnection::incScore(%this,%delta)
+{
+   %this.score += %delta;
+   messageAll('MsgClientScoreChanged', "", %this.score, %this);
+}

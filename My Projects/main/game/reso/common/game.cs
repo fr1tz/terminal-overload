@@ -1,0 +1,189 @@
+// Copyright information can be found in the file named COPYING
+// located in the root directory of this distribution.
+
+//-----------------------------------------------------------------------------
+// The default hooks that are most likely be overridden/implemented by a game
+//-----------------------------------------------------------------------------
+
+function onServerCreated()
+{
+   // Invoked by createServer(), when server is created and ready to go
+
+   // Server::GameType is sent to the master server.
+   // This variable should uniquely identify your game and/or mod.
+   $Server::GameType = "Test App";
+   
+   // Load up any objects or datablocks saved to the editor managed scripts
+   %datablockFiles = new ArrayObject();
+   %datablockFiles.add( "content/o/torque3d/3.0/particles/managedParticleData.cs" );
+   %datablockFiles.add( "content/o/torque3d/3.0/particles/managedParticleEmitterData.cs" );
+   %datablockFiles.add( "content/o/torque3d/3.0/decals/managedDecalData.cs" );
+   %datablockFiles.add( "content/o/torque3d/3.0/datablocks/managedDatablocks.cs" );
+   %datablockFiles.add( "content/o/torque3d/3.0/forest/managedItemData.cs" );
+   %datablockFiles.add( "content/o/torque3d/3.0/datablocks/datablockExec.cs" );   
+   loadDatablockFiles( %datablockFiles, true );
+
+   // Run the other gameplay scripts in this folder
+   exec("./scriptExec.cs");
+
+   // For backwards compatibility...
+   createGame();
+}
+
+function loadDatablockFiles( %datablockFiles, %recurse )
+{
+   if ( %recurse )
+   {
+      recursiveLoadDatablockFiles( %datablockFiles, 9999 );
+      return;
+   }
+   
+   %count = %datablockFiles.count();
+   for ( %i=0; %i < %count; %i++ )
+   {
+      %file = %datablockFiles.getKey( %i );
+      if ( !isScriptFile( %file ) )
+         continue;
+                  
+      exec( %file );
+   }
+      
+   // Destroy the incoming list.
+   %datablockFiles.delete();
+}
+
+function recursiveLoadDatablockFiles( %datablockFiles, %previousErrors )
+{
+   %reloadDatablockFiles = new ArrayObject();
+
+   // Keep track of the number of datablocks that 
+   // failed during this pass.
+   %failedDatablocks = 0;
+   
+   // Try re-executing the list of datablock files.
+   %count = %datablockFiles.count();
+   for ( %i=0; %i < %count; %i++ )
+   {      
+      %file = %datablockFiles.getKey( %i );
+      if ( !isScriptFile( %file ) )
+         continue;
+         
+      // Start counting copy constructor creation errors.
+      $Con::objectCopyFailures = 0;
+                                       
+      exec( %file );
+                                    
+      // If errors occured then store this file for re-exec later.
+      if ( $Con::objectCopyFailures > 0 )
+      {
+         %reloadDatablockFiles.add( %file );
+         %failedDatablocks = %failedDatablocks + $Con::objectCopyFailures;
+      }
+   }
+            
+   // Clear the object copy failure counter so that
+   // we get console error messages again.
+   $Con::objectCopyFailures = -1;
+                  
+   // Delete the old incoming list... we're done with it.
+   %datablockFiles.delete();
+               
+   // If we still have datablocks to retry.
+   %newCount = %reloadDatablockFiles.count();
+   if ( %newCount > 0 )
+   {
+      // If the datablock failures have not been reduced
+      // from the last pass then we must have a real syntax
+      // error and not just a bad dependancy.         
+      if ( %lastFailures > %failedDatablocks )
+         recursiveLoadDatablockFiles( %reloadDatablockFiles, %failedDatablocks );
+                  
+      else
+      {      
+         // Since we must have real syntax errors do one 
+         // last normal exec to output error messages.
+         loadDatablockFiles( %reloadDatablockFiles, false );
+      }
+      
+      return;
+   }
+                  
+   // Cleanup the empty reload list.
+   %reloadDatablockFiles.delete();         
+}
+
+function onServerDestroyed()
+{
+   // Invoked by destroyServer(), right before the server is destroyed
+   destroyGame();
+}
+
+function onMissionLoaded()
+{
+   // Called by loadMission() once the mission is finished loading
+   startGame();
+}
+
+function onMissionEnded()
+{
+   // Called by endMission(), right before the mission is destroyed
+   endGame();
+}
+
+function onMissionReset()
+{
+   // Called by resetMission(), after all the temporary mission objects
+   // have been deleted.
+}
+
+
+//-----------------------------------------------------------------------------
+// These methods are extensions to the GameConnection class. Extending
+// GameConnection make is easier to deal with some of this functionality,
+// but these could also be implemented as stand-alone functions.
+//-----------------------------------------------------------------------------
+
+function GameConnection::onClientEnterGame(%this)
+{
+   // Called for each client after it's finished downloading the
+   // mission and is ready to start playing.
+}
+
+function GameConnection::onClientLeaveGame(%this)
+{
+   // Call for each client that drops
+}
+
+
+//-----------------------------------------------------------------------------
+// Functions that implement game-play
+// These are here for backwards compatibilty only, games and/or mods should
+// really be overloading the server and mission functions listed ubove.
+//-----------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------
+
+function createGame()
+{
+   // This function is called by onServerCreated (above)
+}
+
+function destroyGame()
+{
+   // This function is called by onServerDestroyed (above)
+}
+
+
+//-----------------------------------------------------------------------------
+
+function startGame()
+{
+   // This is where the game play should start
+   // The default onMissionLoaded function starts the game.
+}
+
+function endGame()
+{
+   // This is where the game play should end
+   // The default onMissionEnded function shuts down the game.
+}
