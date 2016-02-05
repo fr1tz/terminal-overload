@@ -14,6 +14,10 @@
 
 IMPLEMENT_CONOBJECT(vitcPacketReceiveNotificationObject);
 
+IMPLEMENT_CALLBACK(vitcPacketReceiveNotificationObject, onAdd, void, (), (),
+	"Called when the object is registered with the system after the object has been created.");
+IMPLEMENT_CALLBACK(vitcPacketReceiveNotificationObject, onRemove, void, (), (),
+	"Called when the object is removed from the system before it is deleted.");
 IMPLEMENT_CALLBACK(vitcPacketReceiveNotificationObject, onPacketReceive, void, (const char* address, const char* base64data), (address, base64data),
    "@brief Called whenever a packet has been received.\n\n"
    "@param address Packet source address.\n"
@@ -35,7 +39,7 @@ bool vitcPacketReceiveNotificationObject::onAdd()
    if(!Parent::onAdd())
       return false;
 
-   const char *name = getName();
+   const char *name = this->getName();
 
    if(name && name[0] && getClassRep())
    {
@@ -44,7 +48,18 @@ bool vitcPacketReceiveNotificationObject::onAdd()
       mNameSpace = Con::lookupNamespace(name);
    }
 
+   // Notify Script.
+   onAdd_callback();
+
    return true;
+}
+
+void vitcPacketReceiveNotificationObject::onRemove()
+{
+	// Notify Script.
+	onRemove_callback();
+
+	Parent::onRemove();
 }
 
 void vitcPacketReceiveNotificationObject::processPacketReceiveEvent(NetAddress srcAddress, RawData packetData)

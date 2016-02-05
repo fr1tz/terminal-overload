@@ -13,6 +13,8 @@
 class vitcPacketReceiveNotificationObject : public SimObject
 {
 public:
+	DECLARE_CALLBACK(void, onAdd, ());
+	DECLARE_CALLBACK(void, onRemove, ());
 	DECLARE_CALLBACK(void, onPacketReceive, (const char* address, const char* base64data));
 
 protected:
@@ -25,6 +27,7 @@ public:
    void processPacketReceiveEvent(NetAddress srcAddress, RawData packetData);
 
    bool onAdd();
+   void onRemove();
 
    DECLARE_CONOBJECT(vitcPacketReceiveNotificationObject);
 };
